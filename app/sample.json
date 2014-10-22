@@ -1,0 +1,173 @@
+[{
+	"type": "Feature",
+	"id": "featureId",
+	"data": {
+		"version": "<Generator version>",
+		"timestamp": "<date generated>"
+	},
+	"modules": [
+		{
+			"type": "theme",
+			"id": "",
+			"data": {
+				"style": [ "custom css <url>" ],
+				"script": [ "custom js <url>" ]
+			},
+			"modules": [ ]
+		},
+		{
+			"type": "content",
+			"id": "content-en-Us",
+			"data": {
+				"language": "en-US",
+				"title": "Contnet Title",
+				"description": "Contnet Description"
+			},
+			"modules": [
+				{
+					"type": "theme",
+					"id": "theme-en-US",
+					"data": {
+						"style": [ "language-specific css <url>" ],
+						"script": [ "language-specific js <url>" ]
+					},
+					"modules": [ ]
+				},
+				{
+					"type": "header",
+					"id": "header-content",
+					"data": { },
+					"modules": [
+						{
+							"type": "HTML",
+							"id": "npHtml-header",
+							"data": {
+								"output": "<div>html header</div>"
+							},
+							"modules": [ ]
+						}
+					]
+				},
+				{
+					"type": "page",
+					"id": "page-1",
+					"data": {
+						"parent": "",
+						"title": "title",
+						"subtitle": "subtitle",
+						"inMenu": true,
+						"required": true
+					},
+					"modules": [
+						{
+							"type": "theme",
+							"id": "theme-page-1",
+							"data": {
+								"style": [ "page-specific css <url>" ],
+								"script": [ "page-specific js <url>" ]
+							},
+							"modules": [ ]
+						},
+						{
+							"type": "HTML",
+							"data": {
+								"id": "<unique ID>",
+								"output": "<html code>"
+							},
+							"modules": [ ]
+						},
+						{
+							"type": "matchQuestion",
+							"plugin": ["dragable"],
+							"data": {
+								"id": "<unique ID>",
+								"challenge": "<question or description>",
+								"points": 10,
+								"terms": [ "term1", "term2" ],
+								"definitions": [ "def1", "def2" ]
+							},
+							"modules": [
+								{
+									"type": "timed",
+									"data": {
+										"timeout": 2000,
+										"callback": "<url>"
+									},
+									"modules": [ ]
+								}
+							]
+						},
+						{
+							"type": "column",
+							"data": {
+								"id": "<unique ID>",
+								"width": "<css width val>"
+							},
+							"modules": [
+								{
+									"type": "HTML",
+									"data": {
+										"id": "<unique ID>",
+										"output": "<html code>"
+									},
+									"modules": [ ]
+								}
+							]
+						},
+						{
+							"type": "column",
+							"data": {
+								"id": "<unique ID>",
+								"width": "<css width val>"
+							},
+							"modules": [
+								{
+									"type": "video",
+									"data": {
+										"id": "<unique ID>",
+										"source": "<url>",
+										"poster": "<url>"
+									},
+									"modules": [ ]
+								}
+							]
+						},
+						{
+							"type": "button",
+							"data": {
+								"id": "<unique ID>",
+								"link": "<url>",
+								"output": "<strong>button 1</strong>"
+							},
+							"modules": [ ]
+						},
+						{
+							"type": "button",
+							"data": {
+								"id": "<unique ID>",
+								"link": "<url>",
+								"output": "<em>button 2</em>"
+							},
+							"modules": [ ]
+						},
+						{
+							"type": "button",
+							"data": {
+								"id": "<unique ID>",
+								"link": "<url>",
+								"output": "button 3"
+							},
+							"modules": [ ]
+						}
+					]
+				},
+				{
+					"type": "footer",
+					"id": "header-content",
+					"data": { },
+					"modules": [ ]
+				}
+			]
+		}
+	]
+}]
