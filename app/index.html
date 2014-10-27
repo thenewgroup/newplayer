@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" ng-app="newplayer" ng-controller="AppController">
 	<head>
 		<meta charset="utf-8">
 		<title>newplayer</title>
@@ -20,21 +20,20 @@
 		<!-- endbuild -->
 
 	</head>
-	<body ng-app="newplayer" ng-controller="AppController" >
+	<body>
 		<!--[if lt IE 10]>
 			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 		<![endif]-->
 
-		<div class="main" ng-class="{'cover':coverSupported}">
-			<div ui-view="main" autoscroll='true'>
-				<div class="preloader">
-					<i class="fa fa-refresh fa-spin"></i>
+		<div class="container">
+			<div class="main" ng-class="{'cover':coverSupported}">
+				<div ui-view="init" autoscroll='true'>
+					<div class="preloader">
+						<i class="fa fa-refresh fa-spin"></i>
+					</div>
 				</div>
 			</div>
-		</div>
-		<hr />
 
-		<div class="container">
 
 			<!--
 			<div class="header">
@@ -49,6 +48,8 @@
 				<p><a class="btn btn-lg btn-success" href="#">Splendid! <span class="glyphicon glyphicon-ok"></span></a></p>
 			</div>
 			-->
+
+<!--
 			<div class="row marketing">
 				<div class="col-lg-12">
 					<h4>HTML5 Boilerplate</h4>
@@ -66,6 +67,8 @@
 
 				</div>
 			</div>
+-->
+
 
 		</div>
 
@@ -88,6 +91,8 @@
 		<script src="bower_components/angular/angular.js"></script>
 		<script src="bower_components/ui-router/release/angular-ui-router.js"></script>
 		<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+		<script src="bower_components/oclazyload/dist/ocLazyLoad.min.js"></script>
+		<script src="bower_components/angular-touch/angular-touch.js"></script>
 		<!-- endbower -->
 		<!-- endbuild -->
 
@@ -105,10 +110,12 @@
 
 		<!-- build:js({app,.tmp}) scripts/main.js -->
 		<script src="scripts/api/APIService.js"></script>
-		<script src="scripts/home/HomeService.js"></script>
+		<!--<script src="scripts/home/HomeService.js"></script>-->
 		<script src="scripts/home/HomeCtrl.js"></script>
 		<script src="scripts/manifest/ManifestService.js"></script>
 		<script src="scripts/manifest/ManifestCtrl.js"></script>
+		<script src="scripts/component/ComponentService.js"></script>
+		<script src="scripts/component/ComponentDirective.js"></script>
 		<script src="scripts/Router.js"></script>
 		<script src="scripts/AppCtrl.js"></script>
 		<script src="scripts/main.js"></script>

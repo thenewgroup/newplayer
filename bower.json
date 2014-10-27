@@ -1,12 +1,17 @@
 {
-  "name": "newplayer",
-  "private": true,
-  "dependencies": {
-    "bootstrap-sass-official": "~3.2.0",
-    "modernizr": "~2.8.2",
-    "angular": "1.2.8",
-    "ui-router": "~0.2.11",
-    "Font-Awesome": "~4.2.0",
-    "angular-sanitize": "1.2.8"
-  }
+	"name": "newplayer",
+	"private": true,
+	"dependencies": {
+		"bootstrap-sass-official": "~3.2.0",
+		"modernizr": "~2.8.2",
+		"angular": "~1.2.27",
+		"ui-router": "~0.2.11",
+		"Font-Awesome": "~4.2.0",
+		"angular-sanitize": "~1.2.27",
+		"oclazyload": "~0.3.8",
+		"angular-touch": "~1.2.26"
+	},
+	"resolutions": {
+		"angular": "~1.2.27"
+	}
 }

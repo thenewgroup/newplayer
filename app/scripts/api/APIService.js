@@ -1,15 +1,28 @@
 'use strict';
 /** @ngInject */
-function APIService( $log, $timeout, $http, $q, $state, $rootScope )
+function APIService( $log, $timeout, $http/*, $q, $state, $rootScope*/ )
 {
-	var baseUrl = '';
-	$log.debug( 'ApiService: Init', 'base url:', baseUrl );
-	var promise;
-	return {
-		getData: function( manifestId )
+	$log.debug( '\nApiService: Init\n' );
+
+	var Service = function()
+	{
+		var self = this;
+		var baseUrl = '';
+		var promise = null;
+
+		function getPromise()
 		{
-			$log.debug( 'APIService: current promise:', this.getPromise() );
-			if ( !this.getPromise() )
+			return self.promise;
+		}
+		function setPromise( promise )
+		{
+			self.promise = promise;
+		}
+
+		this.getData = function( manifestId )
+		{
+			$log.debug( 'APIService: current promise:', getPromise() );
+			if ( !getPromise() )
 			{
 				var aPromise =
 					$http.get(
@@ -25,39 +38,35 @@ function APIService( $log, $timeout, $http, $q, $state, $rootScope )
 					.then(
 						function(data)
 						{
-							$log.debug( "APIService: Received data from server ", data );
+							$log.debug( 'APIService: Received data from server ', data );
 							return data.data;
 						}
 					);
-				this.setPromise( aPromise );
-				$log.debug( 'APIService: new promise:', this.getPromise() );
+				setPromise( aPromise );
+				$log.debug( 'APIService: new promise:', getPromise() );
+			} else {
+				$log.debug( 'APIService: old promise:', getPromise() );
 			}
-			return this.getPromise();
-		},
-		getPromise: function()
+			return getPromise();
+		};
+
+		this.reset = function()
 		{
-			return this.promise;
-		},
-		setPromise: function( promise )
-		{
-			this.promise = promise;
+			setPromise( null );
+		};
+
+/*,
+		sendData:function(data){
+			$log.debug('APIService::Sending data to '+baseUrl+'/npAPI/',data);
+			return $http({
+				method: 'POST',
+				url: baseUrl+'/npAPI/',
+				data: data
+			});
 		}
-		/*,
-    sendData:function(data){
-      $log.debug("APIService: Sending data to "+baseUrl+'post.ashx becasue detected hostname is '+location.hostname,data);
-      return $http({
-        method: 'POST',
-        url: baseUrl+'post.ashx',
-        data: data
-      });
-    },
-    getSavedList:function(id){
-      $log.debug("APIService: Getting saved list from server for ID "+id);
-      return $http({
-        method: 'GET',
-        url: baseUrl+'get.ashx?unique_id='+id
-      });
-    }
-		*/
+*/
 	};
+	return new Service();
+
 }
+

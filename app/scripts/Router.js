@@ -7,6 +7,55 @@ function Router($logProvider, $stateProvider, $urlRouterProvider, $uiViewScrollP
 	$uiViewScrollProvider.useAnchorScroll();
 	$urlRouterProvider.otherwise('/sample');
 	$stateProvider
+		.state(
+			'manifest',
+			{
+				url: '/{manifestId}',
+				resolve:
+				{
+					'manifestId':
+						function($stateParams)
+						{
+							return $stateParams.manifestId;
+						},
+					'manifestData':
+						function(ManifestService, $stateParams, $log)
+						{
+							$log.debug( 'Router::manifestId:', $stateParams.manifestId );
+							var mData = ManifestService.loadData( $stateParams.manifestId );
+							$log.debug( 'Router::manifestData:', mData );
+							return mData;
+						}
+				},
+				views: {
+					'init':{
+						templateUrl:'scripts/manifest/init.html',
+						controller:'ManifestController',
+						controllerAs:'vm'
+					}
+				}
+			}
+		)
+		.state(
+			'manifest.page',
+			{
+				url: '/{lang}/{pageId}',
+				resolve:{
+					'manifestService': function(ManifestService, manifestId, $stateParams, $log){
+						$log.debug( 'Router::manifestId:', manifestId, 'lang:', $stateParams.lang, 'page:', $stateParams.pageId );
+						return ManifestService.getPage( $stateParams.lang, $stateParams.pageId );
+					}
+				},
+				views: {
+					'manifest':{
+						templateUrl:'scripts/manifest/manifest.html'
+						//,controller:'ManifestController'
+						//,controllerAs:'vm'
+					}
+				}
+			}
+		);
+		/*
 		.state('home', {
 			url: '/home',
 			views: {
@@ -17,7 +66,6 @@ function Router($logProvider, $stateProvider, $urlRouterProvider, $uiViewScrollP
 				}
 			}
 		})
-		/*
 		.state('manifest', {
 			url: '/{manifestId}/{params:.*}',
 			resolve:
@@ -38,7 +86,7 @@ function Router($logProvider, $stateProvider, $urlRouterProvider, $uiViewScrollP
 					function( ManifestService, $state, $stateParams, lang, pageId, $log )
 					{
 						$log.debug( 'Router: manifestId:', $stateParams.manifestId );
-						var mData = ManifestService.getData( $stateParams.manifestId );
+						var mData = ManifestService.loadData( $stateParams.manifestId );
 						$log.debug( 'Router: manifestData:', mData );
 						return mData;
 					},
@@ -80,54 +128,6 @@ function Router($logProvider, $stateProvider, $urlRouterProvider, $uiViewScrollP
 					controllerAs:'vm'
 				}
 			}
-		})
+		});
 		*/
-		.state(
-			'manifest',
-			{
-				url: '/{manifestId}',
-				resolve:
-				{
-					'manifestId':
-						function($stateParams)
-						{
-							return $stateParams.manifestId;
-						},
-					'manifestData':
-						function(ManifestService, $stateParams, $log)
-						{
-							$log.debug( 'Router: manifestId:', $stateParams.manifestId );
-							var mData = ManifestService.getData( $stateParams.manifestId );
-							$log.debug( 'Router: manifestData:', mData );
-							return mData;
-						}
-				},
-				views: {
-					'main':{
-						templateUrl:'scripts/manifest/init.html',
-						controller:'ManifestController',
-						controllerAs:'vm'
-					}
-				}
-			}
-		)
-		.state(
-			'manifest.page',
-			{
-				url: '/{lang}/{pageId}',
-				resolve:{
-					'manifestService': function(ManifestService, manifestId, $stateParams, $log){
-						$log.debug( 'Router: manifestId:', manifestId, 'lang:', $stateParams.lang, 'page:', $stateParams.pageId );
-						return ManifestService.getPage( $stateParams.lang, $stateParams.pageId );
-					}
-				},
-				views: {
-					'page':{
-						templateUrl:'scripts/manifest/page.html',
-						controller:'ManifestController',
-						controllerAs:'vm'
-					}
-				}
-			}
-		)
 }

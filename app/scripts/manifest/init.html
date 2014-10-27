@@ -1,3 +1,6 @@
-<div ui-view="page" autoscroll='true'>
-	Manifest - init - {{vm.manifestId}}
+<div id="manifestWrapper">
+	<p>Manifest - init - {{vm.manifestId}}.json</p>
+	<div ui-view="manifest" autoscroll='true'>
+		Manifest - components should load here!
+	</div>
 </div>

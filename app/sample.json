@@ -1,57 +1,45 @@
 [{
 	"type": "Feature",
-	"id": "featureId",
 	"data": {
-		"version": "<Generator version>",
-		"timestamp": "<date generated>"
+		"id": "fooFeature",
+		"deps": [ "Feature.css" ],
+		"version": "0.0.1",
+		"timestamp": "1970-01-01_00:00:00"
 	},
 	"modules": [
 		{
-			"type": "theme",
-			"id": "",
+			"type": "Content",
 			"data": {
-				"style": [ "custom css <url>" ],
-				"script": [ "custom js <url>" ]
-			},
-			"modules": [ ]
-		},
-		{
-			"type": "content",
-			"id": "content-en-Us",
-			"data": {
+				"id": "content-en-Us",
+				"template": "Content.html",
 				"language": "en-US",
 				"title": "Contnet Title",
 				"description": "Contnet Description"
 			},
 			"modules": [
 				{
-					"type": "theme",
-					"id": "theme-en-US",
+					"type": "Header",
 					"data": {
-						"style": [ "language-specific css <url>" ],
-						"script": [ "language-specific js <url>" ]
+						"id": "header-content",
+						"template": "Header.html"
 					},
-					"modules": [ ]
-				},
-				{
-					"type": "header",
-					"id": "header-content",
-					"data": { },
 					"modules": [
 						{
 							"type": "HTML",
-							"id": "npHtml-header",
 							"data": {
-								"output": "<div>html header</div>"
+								"id": "globalHeader",
+								"template": "HTML.html",
+								"output": "<div><img class=\"logo1\" src=\"http://dev.standard.tngdev.com/retirement/assets/logo-theStandard.png\"/><div class=\"standard-slogan\">Insurance, Retirement,<br>Investments and Advice.</div><img class=\"logo2\" src=\"http://dev.standard.tngdev.com/retirement/assets/logo-hilliard-lyons.png\"></div>"
 							},
 							"modules": [ ]
 						}
 					]
 				},
 				{
-					"type": "page",
-					"id": "page-1",
+					"type": "Page",
 					"data": {
+						"id": "page-1",
+						"template": "Page.html",
 						"parent": "",
 						"title": "title",
 						"subtitle": "subtitle",
@@ -60,24 +48,16 @@
 					},
 					"modules": [
 						{
-							"type": "theme",
-							"id": "theme-page-1",
-							"data": {
-								"style": [ "page-specific css <url>" ],
-								"script": [ "page-specific js <url>" ]
-							},
-							"modules": [ ]
-						},
-						{
 							"type": "HTML",
 							"data": {
 								"id": "<unique ID>",
+								"template": "HTML.html",
 								"output": "<html code>"
 							},
 							"modules": [ ]
 						},
 						{
-							"type": "matchQuestion",
+							"type": "MatchQuestion",
 							"plugin": ["dragable"],
 							"data": {
 								"id": "<unique ID>",
@@ -88,7 +68,7 @@
 							},
 							"modules": [
 								{
-									"type": "timed",
+									"type": "Timed",
 									"data": {
 										"timeout": 2000,
 										"callback": "<url>"
@@ -98,7 +78,7 @@
 							]
 						},
 						{
-							"type": "column",
+							"type": "Column",
 							"data": {
 								"id": "<unique ID>",
 								"width": "<css width val>"
@@ -108,6 +88,7 @@
 									"type": "HTML",
 									"data": {
 										"id": "<unique ID>",
+										"template": "HTML.html",
 										"output": "<html code>"
 									},
 									"modules": [ ]
@@ -115,14 +96,14 @@
 							]
 						},
 						{
-							"type": "column",
+							"type": "Column",
 							"data": {
 								"id": "<unique ID>",
 								"width": "<css width val>"
 							},
 							"modules": [
 								{
-									"type": "video",
+									"type": "Video",
 									"data": {
 										"id": "<unique ID>",
 										"source": "<url>",
@@ -133,7 +114,7 @@
 							]
 						},
 						{
-							"type": "button",
+							"type": "Button",
 							"data": {
 								"id": "<unique ID>",
 								"link": "<url>",
@@ -142,7 +123,7 @@
 							"modules": [ ]
 						},
 						{
-							"type": "button",
+							"type": "Button",
 							"data": {
 								"id": "<unique ID>",
 								"link": "<url>",
@@ -151,7 +132,7 @@
 							"modules": [ ]
 						},
 						{
-							"type": "button",
+							"type": "Button",
 							"data": {
 								"id": "<unique ID>",
 								"link": "<url>",
@@ -162,9 +143,10 @@
 					]
 				},
 				{
-					"type": "footer",
-					"id": "header-content",
-					"data": { },
+					"type": "Footer",
+					"data": {
+						"id": "globalFooter"
+					},
 					"modules": [ ]
 				}
 			]

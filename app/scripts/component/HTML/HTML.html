@@ -1,0 +1,7 @@
+<div class="npComponent np{{cmpType}}" ng-controller="HTMLController">
+	<h3>{{cmpType}}</h3>
+	<small>{{cmpIdx}} -- {{template}}</small>
+	<div ng-bind-html="content"></div>
+	<np-component ng-if="subCmp" idx="{{subIdx}}"></np-component>
+</div>
+<np-component ng-if="sibCmp" idx="{{sibIdx}}"></np-component>
