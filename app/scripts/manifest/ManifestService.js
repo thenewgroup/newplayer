@@ -52,9 +52,9 @@ function ManifestService( $log, APIService/*, $timeout, $http, $q, $state, $root
 				idx = [0];
 			} else {
 				var cmp = self.getComponent( idx );
-				if ( !!cmp.modules && cmp.modules.length > 0 )
+				if ( !!cmp.components && cmp.components.length > 0 )
 				{
-					// sub-modules - go deeper
+					// sub-components - go deeper
 					idx.push( 0 );
 				} else {
 					// try to get sibling
@@ -99,17 +99,19 @@ function ManifestService( $log, APIService/*, $timeout, $http, $q, $state, $root
 				APIService.reset();
 				setComponentIdx( null );
 				this.setManifestId( manifestId );
-				$log.debug('ManifestService: getData:', manifestId);
+				$log.debug('ManifestService: loadData:', manifestId);
 				var aPromise =
 					APIService.getData( manifestId ).then
 					(
 						function(res)
 						{
-							$log.debug('ManifestService: setData:', res);
+							$log.debug('ManifestService: loadData: success', res);
 							return res;
 						}
 					);
 				setPromise( aPromise );
+			} else {
+				$log.debug( 'ManifestService: loadData: data already loaded:', this.getData() );
 			}
 			return getPromise();
 		};
@@ -124,35 +126,63 @@ function ManifestService( $log, APIService/*, $timeout, $http, $q, $state, $root
 		 */
 		this.getComponent = function( idx )
 		{
-			$log.debug('ManifestService: getComponent', idx, this.getCount );
+			$log.debug('ManifestService:: getComponent', idx, this.getCount );
+
 			// FIXME - temporary hack to prevent buggy infinite loops
 			this.getCount++;
+
 			var cmp;
 			if ( !idx )
 			{
 				// idx not specified, get next using services idx
+				$log.debug('ManifestService:: getComponent: getNextComponent' );
 				cmp = getNextComponent();
+				// set it's index
+				if ( !!cmp )
+				{
+					cmp.idx = getComponentIdx().slice(0);
+					$log.debug('ManifestService:: getComponent: set cmp idx', cmp );
+				}
 			} else {
+
 				if ( typeof( idx ) === 'string' )
 				{
+					// convert string rep of array to integer array
 					idx = idx.replace(/[\[\]]/g, '');
 					idx = idx.split(',');
-					for(var i=0; i<idx.length;i++) { idx[i] = +idx[i]; }
+					for(var i=0; i<idx.length;i++)
+					{
+						// force integer
+						idx[i] = +idx[i];
+					}
 				}
 				setComponentIdx( idx );
+				$log.debug('ManifestService:: getComponent: set serv idx', idx );
+
+				// traverse idx array to get to this particular cmp
 				cmp = this.getData()[ idx[0] ];
-				for ( var j in idx )
+				if ( !!cmp )
 				{
-					if (j>0)
+					for ( var j in idx )
 					{
-						var modules = cmp.modules;
-						if ( modules )
+						if (j>0)
 						{
-							cmp = modules[ idx[j] ];
-						} else {
-							return null;
+							var components = cmp.components;
+							if ( !!components )
+							{
+								cmp = components[ idx[j] ];
+							} else {
+								// invalid index!?
+								return null;
+							}
 						}
 					}
+				}
+				if ( !!cmp )
+				{
+					// found a component
+				} else {
+					$log.debug('ManifestService:: getComponent: bad idx', idx );
 				}
 			}
 			return cmp;
@@ -174,6 +204,7 @@ function ManifestService( $log, APIService/*, $timeout, $http, $q, $state, $root
 
 		this.getData = function()
 		{
+			$log.debug('ManifestService: getData', this.data);
 			return this.data;
 		};
 		this.setData = function(data)

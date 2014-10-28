@@ -1,7 +1,7 @@
-<div class="npComponent np{{cmpType}}" ng-controller="HTMLController">
+<div class="npComponent np{{cmpType}}" ng-controller="ImageController">
 	<h3 class="debug">{{cmpType}}</h3>
 	<small class="debug">{{cmpIdx}} -- {{template}}</small>
-	<div ng-bind-html="content"></div>
+	<img src="{{src}}" />
 	<div ng-if="subCmp" ng-repeat="component in components">
 		<np-component idx="{{component.idx}}"></np-component>
 	</div>

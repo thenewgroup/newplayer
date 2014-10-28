@@ -74,23 +74,32 @@ function ComponentService( $log, ManifestService, $ocLazyLoad /*, $timeout, $htt
 
 		this.getTemplateURL = function( componentObj )
 		{
+			var template = DEFAULT_TEMPLATE;
 			// TBD validate incoming data
 			if ( !!componentObj )
 			{
 				var cmpType = componentObj.type;
-				var cmpData = componentObj.data;
-				if ( !!cmpType && !!cmpData )
+				if ( !!cmpType )
 				{
-					// "data"."template" - string URL to template
-					var cmpTemplate = cmpData.template;
-					$log.debug( 'ComponentService: load: parseTemplate', componentObj, cmpTemplate );
-					if ( !!cmpTemplate && typeof(cmpTemplate) === 'string' )
+					var cmpData = componentObj.data;
+					if ( !!cmpData )
 					{
-						// TBD validate incoming data
-						return cleanURL( cmpType, cmpTemplate );
+						// "data"."template" - string URL to template
+						var cmpTemplate = cmpData.template || cmpType + '.html';
+						if ( !!cmpTemplate && typeof(cmpTemplate) === 'string' )
+						{
+							// TBD validate incoming data
+							$log.debug( 'ComponentService: load: parseTemplate', componentObj, cmpTemplate );
+							template = cleanURL( cmpType, cmpTemplate );
+						}
 					}
 				}
 			}
+			return template;
+		};
+
+		this.getDefaultTemplate = function()
+		{
 			return DEFAULT_TEMPLATE;
 		};
 

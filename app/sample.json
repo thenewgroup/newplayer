@@ -2,114 +2,139 @@
 	"type": "Feature",
 	"data": {
 		"id": "fooFeature",
-		"deps": [ "Feature.css" ],
+		"deps": ["//dev.standard.tngdev.com/retirement/v2/style.css"],
 		"version": "0.0.1",
 		"timestamp": "1970-01-01_00:00:00"
 	},
-	"modules": [
+	"components": [
 		{
 			"type": "Content",
 			"data": {
 				"id": "content-en-Us",
-				"template": "Content.html",
 				"language": "en-US",
 				"title": "Contnet Title",
 				"description": "Contnet Description"
 			},
-			"modules": [
+			"components": [
 				{
 					"type": "Header",
 					"data": {
-						"id": "header-content",
-						"template": "Header.html"
+						"id": "globalHeader"
 					},
-					"modules": [
+					"components": [
 						{
-							"type": "HTML",
+							"type": "Column",
 							"data": {
-								"id": "globalHeader",
-								"template": "HTML.html",
-								"output": "<div><img class=\"logo1\" src=\"http://dev.standard.tngdev.com/retirement/assets/logo-theStandard.png\"/><div class=\"standard-slogan\">Insurance, Retirement,<br>Investments and Advice.</div><img class=\"logo2\" src=\"http://dev.standard.tngdev.com/retirement/assets/logo-hilliard-lyons.png\"></div>"
+								"id": "headerCols",
+								"cols": "3"
 							},
-							"modules": [ ]
+							"components": [
+								{
+									"type": "Image",
+									"data": {
+										"id": "standardLogo",
+										"src": "//dev.standard.tngdev.com/retirement/v2/logo-theStandard.png",
+										"alt": "logo"
+									},
+									"components": [ ]
+								},
+								{
+									"type": "HTML",
+									"data": {
+										"id": "standardLogo",
+										"output": "Insurance, Retirement,<br>Investments and Advice."
+									},
+									"components": [ ]
+								},
+								{
+									"type": "Image",
+									"data": {
+										"id": "companyLogo",
+										"src": "//dev.standard.tngdev.com/retirement/v2/logo-TBD.png",
+										"alt": "logo"
+									},
+									"components": [ ]
+								}
+							]
 						}
 					]
 				},
 				{
 					"type": "Page",
 					"data": {
-						"id": "page-1",
-						"template": "Page.html",
+						"id": "welcome",
 						"parent": "",
-						"title": "title",
-						"subtitle": "subtitle",
+						"title": "Welcome",
+						"subtitle": "",
 						"inMenu": true,
-						"required": true
+						"required": false
 					},
-					"modules": [
+					"components": [
+						{
+							"type": "Video",
+							"data": {
+								"id": "welcomeVideo",
+								"src": ""
+							},
+							"components": [ ]
+						},
 						{
 							"type": "HTML",
 							"data": {
-								"id": "<unique ID>",
-								"template": "HTML.html",
-								"output": "<html code>"
+								"id": "welcomeText",
+								"output": "Congratulations [your employer] has enrolled you in a valuable retirement planning program. Enroll now to customize the plan to fit your needs. If you have questions, please call [contact name] at [contact #]."
 							},
-							"modules": [ ]
-						},
-						{
-							"type": "MatchQuestion",
-							"plugin": ["dragable"],
-							"data": {
-								"id": "<unique ID>",
-								"challenge": "<question or description>",
-								"points": 10,
-								"terms": [ "term1", "term2" ],
-								"definitions": [ "def1", "def2" ]
-							},
-							"modules": [
-								{
-									"type": "Timed",
-									"data": {
-										"timeout": 2000,
-										"callback": "<url>"
-									},
-									"modules": [ ]
-								}
-							]
+							"components": [ ]
 						},
 						{
 							"type": "Column",
 							"data": {
-								"id": "<unique ID>",
-								"width": "<css width val>"
+								"id": "planDetailsCols",
+								"cols": "2"
 							},
-							"modules": [
+							"components": [
 								{
 									"type": "HTML",
 									"data": {
-										"id": "<unique ID>",
-										"template": "HTML.html",
-										"output": "<html code>"
+										"id": "planDetailsText",
+										"output": "<strong>Your plan details</strong><p>Default contribution amount: 2% of salary up to $100 per month.<br/>Default investment fund: Retirement Growth Fund<br/>Effective Date: 1/2/2014</p>"
 									},
-									"modules": [ ]
+									"components": [ ]
+								},
+								{
+									"type": "Image",
+									"data": {
+										"id": "companyLogo2",
+										"src": "//dev.standard.tngdev.com/retirement/v2/logo-TBD.png",
+										"alt": "logo"
+									},
+									"components": [ ]
 								}
 							]
 						},
 						{
 							"type": "Column",
 							"data": {
-								"id": "<unique ID>",
-								"width": "<css width val>"
+								"id": "planDetailsCols",
+								"cols": "2"
 							},
-							"modules": [
+							"components": [
 								{
-									"type": "Video",
+									"type": "HTML",
 									"data": {
-										"id": "<unique ID>",
-										"source": "<url>",
-										"poster": "<url>"
+										"id": "employerContributionText",
+										"output": "<strong>Employer Contribution</strong><p>Your employer will match 2% of your contributions up to $100 per month</p>"
 									},
-									"modules": [ ]
+									"components": [ ]
+								},
+								{
+									"type": "Button",
+									"data": {
+										"id": "button01",
+										"link": "/",
+										"alt": "logo"
+									},
+									"components": [ ]
 								}
 							]
 						},
@@ -120,7 +145,7 @@
 								"link": "<url>",
 								"output": "<strong>button 1</strong>"
 							},
-							"modules": [ ]
+							"components": [ ]
 						},
 						{
 							"type": "Button",
@@ -129,7 +154,7 @@
 								"link": "<url>",
 								"output": "<em>button 2</em>"
 							},
-							"modules": [ ]
+							"components": [ ]
 						},
 						{
 							"type": "Button",
@@ -138,16 +163,60 @@
 								"link": "<url>",
 								"output": "button 3"
 							},
-							"modules": [ ]
+							"components": [ ]
+						},
+						{
+							"type": "HTML",
+							"data": {
+								"id": "legal",
+								"output": "<small>The Standard is the marketing name for StanCorp Financial Group, Inc., and its subsidiaries. StanCorp Equities, Inc., member FINRA, wholesales a group annuity contract issued by Standard Insurance Company and a mutual fund trust platform for retirement plans. Third-party administrative services are provided by Standard Retirement Services, Inc. Investment advisory services are provided by StanCorp Investment Advisers, Inc., a registered investment advisor. StanCorp Equities, Inc., Standard Insurance Company, Standard Retirement Services, Inc., and StanCorp Investment Advisers, Inc., are subsidiaries of StanCorp Financial Group, Inc., and all are Oregon corporations.</small>"
+							},
+							"components": [ ]
 						}
 					]
+				},
+				{
+					"type": "Page",
+					"data": {
+						"id": "YourPlan",
+						"parent": "",
+						"title": "Your Plan",
+						"subtitle": "",
+						"inMenu": true,
+						"required": false
+					},
+					"components": [ ]
+				},
+				{
+					"type": "Page",
+					"data": {
+						"id": "EmployerHelping",
+						"parent": "YourPlan",
+						"title": "Your Employer Is Helping",
+						"subtitle": "",
+						"inMenu": true,
+						"required": false
+					},
+					"components": [ ]
+				},
+				{
+					"type": "Page",
+					"data": {
+						"id": "StartPlanning",
+						"parent": "",
+						"title": "Start Planning",
+						"subtitle": "",
+						"inMenu": true,
+						"required": false
+					},
+					"components": [ ]
 				},
 				{
 					"type": "Footer",
 					"data": {
 						"id": "globalFooter"
 					},
-					"modules": [ ]
+					"components": [ ]
 				}
 			]
 		}

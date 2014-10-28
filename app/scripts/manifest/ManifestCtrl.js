@@ -6,6 +6,15 @@ function ManifestController( $log, ManifestService, manifestData, ComponentServi
 	$log.debug('ManifestController::Init');
 
 	ManifestService.setData( manifestData );
+	var cmp = ManifestService.getComponent();
+	while ( !!cmp )
+	{
+		$log.debug( 'ManifestController:: initialParse', cmp );
+		cmp = ManifestService.getComponent();
+	}
+	/*
+	*/
+
 	var vm = this;
 
 	function activate()

@@ -1,6 +1,8 @@
-<div class="npComponent np{{cmpType}}">
-	<h3>{{cmpType}}</h3>
-	<small>{{cmpIdx}} -- {{template}}</small>
-	<np-component ng-if="subCmp" idx="{{subIdx}}"></np-component>
+<div class="npComponent np{{cmpType}}" ngcontroller="{{cmpType}}Controller">
+	<h3 class="debug">{{cmpType}}</h3>
+	<small class="debug">{{cmpIdx}} -- {{template}}</small>
+	<div ng-if="subCmp" ng-repeat="component in components">
+		<np-component idx="{{component.idx}}"></np-component>
+	</div>
 </div>
-<np-component ng-if="sibCmp" idx="{{sibIdx}}"></np-component>
+<!--<np-component ng-if="sibCmp" idx="{{sibIdx}}"></np-component>-->
