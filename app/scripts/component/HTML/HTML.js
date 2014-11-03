@@ -13,8 +13,8 @@ angular
 	.controller( 'HTMLController',
 		function( $log, $scope, $sce )
 		{
-			$log.debug( 'HTML::setting html scope', $scope );
-			$scope.content = $sce.trustAsHtml( $scope.$parent.cmpData.output );
+			$log.debug( 'HTML::component', $scope.component );
+			$scope.content = $sce.trustAsHtml( $scope.component.data.output );
 			$log.debug( 'HTML::content', $scope.content );
 		}
 	)

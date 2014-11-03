@@ -1,11 +1,12 @@
-<div class="npComponent np{{cmpType}}">
-	<section>
-		<h3 class="debug">{{cmpType}}</h3>
-		<small class="debug">{{cmpIdx}} -- {{template}}</small>
-		<h1>{{cmpData.title}}</h1>
-		<div ng-if="subCmp" ng-repeat="component in components">
-			<np-component idx="{{component.idx}}"></np-component>
-		</div>
-	</section>
-</div>
-<!--<np-component ng-if="sibCmp" idx="{{sibIdx}}"></np-component>-->
+<section  ng-show="currentPage" class="npComponent np-{{component.type}}" ng-controller="PageController">
+	<div class="debug">
+		<h3>{{component.type}}</h3>
+		<small>{{component.idx}} -- {{template}}</small>
+	</div>
+
+	<h1 class="np-Page_title">{{component.data.title}}</h1>
+
+	<div ng-if="subCmp" ng-repeat="component in components">
+		<np-component idx="{{component.idx}}"></np-component>
+	</div>
+</section>

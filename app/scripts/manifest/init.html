@@ -1,6 +1,11 @@
-<div id="manifestWrapper">
-	<p class="debug">Manifest - init - {{vm.manifestId}}.json</p>
-	<div ui-view="manifest" autoscroll='true'>
-		Manifest - components should load here!
+<div id="manifestWrapper" class="xdebug">
+
+	<div class="debug">
+		Manifest - init - {{vm.manifestId}}.json
 	</div>
+
+	<div ui-view="load" autoscroll='true'>
+		Manifest - initializing.
+	</div>
+
 </div>

@@ -1,67 +1,67 @@
 'use strict';
 
 /** @ngInject */
-function ManifestController( $log, ManifestService, manifestData, ComponentService, $timeout, $scope, $state )
+function ManifestController( $log, ManifestService, manifestData, ComponentService, $timeout, $scope, $state, $stateParams )
 {
-	$log.debug('ManifestController::Init');
-
-	ManifestService.setData( manifestData );
-	var cmp = ManifestService.getComponent();
-	while ( !!cmp )
-	{
-		$log.debug( 'ManifestController:: initialParse', cmp );
-		cmp = ManifestService.getComponent();
-	}
-	/*
-	*/
+	$log.debug('ManifestCtrl::Init');
 
 	var vm = this;
 
-	function activate()
+	function initialize()
 	{
+		$log.debug( 'ManifestCtrl:: manifestId ', ManifestService.getManifestId() );
 		vm.manifestId = ManifestService.getManifestId();
-		vm.lang = ManifestService.getLang();
-		vm.pageId = ManifestService.getPageId();
 
+
+		$log.debug( 'ManifestCtrl:: data initialized? ', ManifestService.getData() );
+		// give the manifest data to the manifest service
+		if ( ! ManifestService.getData() )
+		{
+			ManifestService.setData( manifestData );
+			// index all components
+			var cmp = ManifestService.getComponent();
+			while ( !!cmp )
+			{
+				$log.debug( 'ManifestCtrl:: initialParse', cmp );
+				cmp = ManifestService.getComponent();
+			}
+			// store the data for component awareness
+			$scope.npManifest = manifestData;
+		} else {
+			$log.debug( 'ManifestCtrl:: data already loaded' );
+		}
+
+
+		$log.debug( 'ManifestCtrl::state is ', $state.current );
 		if ( $state.is( 'manifest' ) )
 		{
-			$log.debug( 'ManifestCtrl: state is ', $state.current, ' redirect!?' );
 			$state.go(
-				'manifest.page',
+				'manifest.lang.page',
 				{
-					lang: vm.lang,
-					pageId: vm.pageId
+					lang: 'tbd',
+					pageId: 'tbd'
 				},
 				{
 					location: 'replace'
 				}
 			);
-		} else {
-			$log.debug( 'ManifestCtrl: state is ', $state.current );
-			parse();
-		}
-	}
-
-	function parse()
-	{
-		// use manifestService to iterate through components
-		// - ocLazyLoad each component w/ componentService
-		// - loaded component can decorate componentService to change loading behavior
-		// - promise kicks off next iteration
-		/*
-		 * moving this into componentDirective
-		var nextCmp = ManifestService.getComponent();
-		$log.debug( 'ManifestCtrl: parse next', nextCmp );
-		if ( nextCmp )
+		} else
+		if ( $state.is( 'manifest.lang' ) )
 		{
-			ComponentService.load(
-				nextCmp
-			).then( function() {
-				parse();
-			} );
+			$state.go(
+				'manifest.lang.page',
+				{
+					lang: $stateParams.lang,
+					pageId: 'tbd'
+				},
+				{
+					location: 'replace'
+				}
+			);
 		}
-		*/
+
+
 	}
 
-	activate();
+	initialize();
 }

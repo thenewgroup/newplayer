@@ -4,10 +4,10 @@
 		<small>{{component.idx}} -- {{template}}</small>
 	</div>
 
-	<header id="{{component.data.id}}">
+	<button id="{{component.data.id}}">
 		<div ng-if="subCmp" ng-repeat="component in components">
 			<np-component idx="{{component.idx}}"></np-component>
 		</div>
-	</header>
+	</button>
 
 </div>

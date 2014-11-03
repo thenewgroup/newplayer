@@ -121,8 +121,8 @@ function ComponentService( $log, ManifestService, $ocLazyLoad /*, $timeout, $htt
 			var cmpData = componentObj.data;
 			if ( !!cmpType && !!cmpData )
 			{
-				// "data"."deps" - array of URLs to additional dependencies of this component
-				var cmpDependencies = cmpData.deps;
+				// "data"."req" - array of URLs to additional dependencies of this component
+				var cmpDependencies = cmpData.req;
 				if ( !!cmpDependencies )
 				{
 					// TBD validate incoming data

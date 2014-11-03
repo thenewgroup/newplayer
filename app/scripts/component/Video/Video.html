@@ -1,10 +1,12 @@
-<div class="npComponent np-{{component.type}}" ng-controller="ImageController">
+<div class="npComponent np-{{component.type}}" ng-controller="VideoController">
 	<div class="debug">
 		<h3>{{component.type}}</h3>
 		<small>{{component.idx}} -- {{template}}</small>
 	</div>
 
-	<img src="{{src}}" />
+	<videogular vg-theme="config.theme.url">
+		<vg-video vg-src="config.sources" vg-native-controls="true"></vg-video>
+	</videogular>
 
 	<div ng-if="subCmp" ng-repeat="component in components">
 		<np-component idx="{{component.idx}}"></np-component>

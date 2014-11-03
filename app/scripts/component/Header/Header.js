@@ -2,18 +2,18 @@
 
 angular
 	.module(
-		'Column',
+		'Header',
 		[ ]
 	);
 
 angular
-	.module('Column')
+	.module('Header')
 
 	/** @ngInject */
-	.controller( 'ColumnController',
+	.controller( 'HeaderController',
 		function( $log, $scope, $sce )
 		{
-			$log.debug( 'Column::scope', $scope );
+			$log.debug( 'Header::scope', $scope );
 		}
 	)
 
@@ -21,7 +21,7 @@ angular
 	.run(
 		function( $log, $rootScope )
 		{
-			$log.debug('Column::component loaded!');
+			$log.debug('Header::component loaded!');
 		}
 	);
 

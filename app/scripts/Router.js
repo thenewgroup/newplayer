@@ -37,20 +37,51 @@ function Router($logProvider, $stateProvider, $urlRouterProvider, $uiViewScrollP
 			}
 		)
 		.state(
-			'manifest.page',
+			'manifest.lang',
 			{
-				url: '/{lang}/{pageId}',
-				resolve:{
-					'manifestService': function(ManifestService, manifestId, $stateParams, $log){
-						$log.debug( 'Router::manifestId:', manifestId, 'lang:', $stateParams.lang, 'page:', $stateParams.pageId );
-						return ManifestService.getPage( $stateParams.lang, $stateParams.pageId );
+				url: '/{lang}',
+				resolve:
+				{
+					'lang':
+						function($stateParams, $log)
+						{
+							$log.debug( 'Router: manifest.lang: lang:', $stateParams.lang );
+							return $stateParams.lang;
+						}
+				},
+				views: {
+					'load':{
+						templateUrl:'scripts/manifest/load.html',
+						controller:'ManifestController',
+						controllerAs:'vm'
 					}
+				}
+			}
+		)
+		.state(
+			'manifest.lang.page',
+			{
+				url: '/{pageId}',
+				resolve:
+				{
+					'lang':
+						function($stateParams, $log)
+						{
+							$log.debug( 'Router: manifest.lang.page: lang:', $stateParams.lang );
+							return $stateParams.lang;
+						},
+					'pageId':
+						function($stateParams, $log)
+						{
+							$log.debug( 'Router: manifest.lang.page: pageId:', $stateParams.pageId );
+							return $stateParams.pageId;
+						}
 				},
 				views: {
 					'manifest':{
-						templateUrl:'scripts/manifest/manifest.html'
-						//,controller:'ManifestController'
-						//,controllerAs:'vm'
+						templateUrl:'scripts/manifest/manifest.html',
+						controller:'ManifestController',
+						controllerAs:'vm'
 					}
 				}
 			}

@@ -31,9 +31,9 @@ function ComponentDirective( $log, ManifestService, ComponentService, $http, $co
 		 */
 		function parseComponent( $scope, $element, $attributes )
 		{
-			var cmpIdx = $attributes.idx;
-			var cmp = ManifestService.getComponent( cmpIdx );
-			cmpIdx = ManifestService.getComponentIdx().slice(0);
+			var cmp = ManifestService.getComponent( $attributes.idx );
+			var cmpIdx = cmp.idx || [0];
+
 			$log.debug( 'ComponentDirective::parseComponent', cmp, cmpIdx, $attributes );
 			if ( !!cmp )
 			{
@@ -43,18 +43,29 @@ function ComponentDirective( $log, ManifestService, ComponentService, $http, $co
 				.then(
 					function()
 					{
+						$log.debug( 'ComponentDirective::parseComponent then', cmp, cmpIdx );
 						// reset scope!!!
 						$scope.sibCmp = false;
 						$scope.subCmp = false;
+						$scope.component = cmp;
 						$scope.components = null;
-						$scope.cmpType = cmp.type;
-						$scope.cmpData = cmp.data;
+
 						$scope.cmpIdx = cmpIdx.toString();
+
+						$element.attr('data-cmpType', cmp.type );
+
+						if ( !!cmp.data )
+						{
+							// set known data values
+							// TODO: VALIDATE
+							$element.attr('id', cmp.data.id );
+							$scope.cmpId = cmp.data.id;
+						}
 						if ( !!cmp.components && cmp.components.length > 0 )
 						{
 							var subIdx = cmpIdx.slice(0);
 							subIdx.push(0);
-							$log.debug( 'ComponentDirective::parseComponent - HAS SUBS:', cmp, cmpIdx, subIdx );
+							$log.debug( 'ComponentDirective::parseComponent - HAS SUBS:', cmp, subIdx );
 							$scope.subCmp = true;
 							$scope.subIdx = subIdx;
 							$scope.components = cmp.components;

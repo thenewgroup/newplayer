@@ -95,21 +95,23 @@ body {
 .debug {
 	display: none;
 }
-.manifest.debug {
-	display: block;
-	.debug {
+#manifestWrapper {
+	&.debug {
 		display: block;
-	}
-	.npComponent {
-		margin: 0.5em;
-		padding: 0.5em;
-		border: 1px dashed red;
+		.debug {
+			display: block;
+		}
+		.npComponent {
+			margin: 0.5em;
+			padding: 0.5em;
+			border: 1px dashed red;
+		}
 	}
 }
 .hide {
 	display: none;
 }
-.npColumn {
+.np-Column {
 
 	&:after {
 		content: "."; 

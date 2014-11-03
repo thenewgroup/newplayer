@@ -2,18 +2,18 @@
 
 angular
 	.module(
-		'Column',
+		'Footer',
 		[ ]
 	);
 
 angular
-	.module('Column')
+	.module('Footer')
 
 	/** @ngInject */
-	.controller( 'ColumnController',
+	.controller( 'FooterController',
 		function( $log, $scope, $sce )
 		{
-			$log.debug( 'Column::scope', $scope );
+			$log.debug( 'Footer::scope', $scope );
 		}
 	)
 
@@ -21,7 +21,7 @@ angular
 	.run(
 		function( $log, $rootScope )
 		{
-			$log.debug('Column::component loaded!');
+			$log.debug('Footer::component loaded!');
 		}
 	);
 

@@ -8,7 +8,7 @@
 /** @ngInject */
 function ManifestService( $log, APIService/*, $timeout, $http, $q, $state, $rootScope,*/ )
 {
-	$log.debug('\nManifestService: Init\n');
+	$log.debug('\nManifestService::Init\n');
 
 	var Service = function()
 	{
@@ -38,7 +38,6 @@ function ManifestService( $log, APIService/*, $timeout, $http, $q, $state, $root
 		{
 			return componentIdx;
 		}
-		this.getComponentIdx = getComponentIdx;
 		function setComponentIdx( cmpIdx )
 		{
 			componentIdx = cmpIdx;
@@ -99,19 +98,19 @@ function ManifestService( $log, APIService/*, $timeout, $http, $q, $state, $root
 				APIService.reset();
 				setComponentIdx( null );
 				this.setManifestId( manifestId );
-				$log.debug('ManifestService: loadData:', manifestId);
+				$log.debug('ManifestService::loadData:', manifestId);
 				var aPromise =
 					APIService.getData( manifestId ).then
 					(
 						function(res)
 						{
-							$log.debug('ManifestService: loadData: success', res);
+							$log.debug('ManifestService::loadData: success', res);
 							return res;
 						}
 					);
 				setPromise( aPromise );
 			} else {
-				$log.debug( 'ManifestService: loadData: data already loaded:', this.getData() );
+				$log.debug( 'ManifestService::loadData: data already loaded:', this.getData() );
 			}
 			return getPromise();
 		};
@@ -126,7 +125,7 @@ function ManifestService( $log, APIService/*, $timeout, $http, $q, $state, $root
 		 */
 		this.getComponent = function( idx )
 		{
-			$log.debug('ManifestService:: getComponent', idx, this.getCount );
+			$log.debug('ManifestService::getComponent', idx, this.getCount );
 
 			// FIXME - temporary hack to prevent buggy infinite loops
 			this.getCount++;
@@ -135,13 +134,13 @@ function ManifestService( $log, APIService/*, $timeout, $http, $q, $state, $root
 			if ( !idx )
 			{
 				// idx not specified, get next using services idx
-				$log.debug('ManifestService:: getComponent: getNextComponent' );
+				$log.debug('ManifestService::getComponent: getNextComponent' );
 				cmp = getNextComponent();
 				// set it's index
 				if ( !!cmp )
 				{
 					cmp.idx = getComponentIdx().slice(0);
-					$log.debug('ManifestService:: getComponent: set cmp idx', cmp );
+					$log.debug('ManifestService::getComponent: set cmp idx', cmp );
 				}
 			} else {
 
@@ -157,7 +156,7 @@ function ManifestService( $log, APIService/*, $timeout, $http, $q, $state, $root
 					}
 				}
 				setComponentIdx( idx );
-				$log.debug('ManifestService:: getComponent: set serv idx', idx );
+				$log.debug('ManifestService::getComponent: set serv idx', idx );
 
 				// traverse idx array to get to this particular cmp
 				cmp = this.getData()[ idx[0] ];
@@ -182,7 +181,7 @@ function ManifestService( $log, APIService/*, $timeout, $http, $q, $state, $root
 				{
 					// found a component
 				} else {
-					$log.debug('ManifestService:: getComponent: bad idx', idx );
+					$log.debug('ManifestService::getComponent: bad idx', idx );
 				}
 			}
 			return cmp;
@@ -204,7 +203,7 @@ function ManifestService( $log, APIService/*, $timeout, $http, $q, $state, $root
 
 		this.getData = function()
 		{
-			$log.debug('ManifestService: getData', this.data);
+			$log.debug('ManifestService::getData', this.data);
 			return this.data;
 		};
 		this.setData = function(data)
@@ -212,13 +211,49 @@ function ManifestService( $log, APIService/*, $timeout, $http, $q, $state, $root
 			this.data = data;
 		};
 
+		this.getFirst = function( cmpType, context )
+		{
+			if ( !context )
+			{
+				context = [0];
+			}
+
+			$log.debug( 'ManifestService::getFirst', cmpType, context );
+			var cmp = self.getComponent( context );
+			while ( !!cmp && cmp.type !== cmpType )
+			{
+				cmp = getNextComponent();
+			}
+
+			return cmp;
+		};
+
+		this.getAll = function( cmpType, context )
+		{
+			if ( !context )
+			{
+				context = [0];
+			}
+			var cmps = [];
+
+			$log.debug( 'ManifestService::getAll', cmpType, context );
+			var cmp = self.getComponent( context );
+			while ( !!cmp )
+			{
+				$log.debug( 'ManifestService::getAll:match?', cmp.type, cmpType );
+				if ( cmp.type === cmpType )
+				{
+					cmps.push( cmp );
+					$log.debug( 'ManifestService::getAll:match!', cmps );
+				}
+				cmp = getNextComponent();
+			}
+
+			return cmps;
+		};
+
 		this.getLang = function()
 		{
-			if (!this.lang)
-			{
-				// determine lang from data
-				this.setLang( 'en-US' );
-			}
 			return this.lang;
 		};
 		this.setLang = function(lang)
@@ -228,11 +263,6 @@ function ManifestService( $log, APIService/*, $timeout, $http, $q, $state, $root
 
 		this.getPageId = function()
 		{
-			if (!this.pageId)
-			{
-				// determine default pageId from data
-				this.setPageId( 'page1' );
-			}
 			return this.pageId;
 		};
 		this.setPageId = function(pageId)

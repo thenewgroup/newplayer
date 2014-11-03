@@ -2,18 +2,18 @@
 
 angular
 	.module(
-		'Column',
+		'Button',
 		[ ]
 	);
 
 angular
-	.module('Column')
+	.module('Button')
 
 	/** @ngInject */
-	.controller( 'ColumnController',
+	.controller( 'ButtonController',
 		function( $log, $scope, $sce )
 		{
-			$log.debug( 'Column::scope', $scope );
+			$log.debug( 'Button::scope', $scope );
 		}
 	)
 
@@ -21,7 +21,7 @@ angular
 	.run(
 		function( $log, $rootScope )
 		{
-			$log.debug('Column::component loaded!');
+			$log.debug('Button::component loaded!');
 		}
 	);
 

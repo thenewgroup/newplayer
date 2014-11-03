@@ -13,8 +13,9 @@ angular
 	.controller( 'ImageController',
 		function( $log, $scope, $sce )
 		{
-			$log.debug( 'Image::setting html scope', $scope );
-			$scope.src = $scope.$parent.cmpData.src;
+			$log.debug( 'Image::scope', $scope );
+			// TODO - use sce for URL whitelist?
+			$scope.src = $scope.component.data.src;
 			$log.debug( 'Image::src', $scope.src );
 		}
 	)

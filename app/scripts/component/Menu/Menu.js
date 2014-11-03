@@ -2,18 +2,18 @@
 
 angular
 	.module(
-		'Column',
+		'Menu',
 		[ ]
 	);
 
 angular
-	.module('Column')
+	.module('Menu')
 
 	/** @ngInject */
-	.controller( 'ColumnController',
+	.controller( 'MenuController',
 		function( $log, $scope, $sce )
 		{
-			$log.debug( 'Column::scope', $scope );
+			$log.debug( 'Menu::pages', $scope.pages );
 		}
 	)
 
@@ -21,7 +21,7 @@ angular
 	.run(
 		function( $log, $rootScope )
 		{
-			$log.debug('Column::component loaded!');
+			$log.debug('Menu::component loaded!');
 		}
 	);
 

@@ -2,7 +2,7 @@
 	"type": "Feature",
 	"data": {
 		"id": "fooFeature",
-		"deps": ["//dev.standard.tngdev.com/retirement/v2/style.css"],
+		"req": "/assets/theStandard.css",
 		"version": "0.0.1",
 		"timestamp": "1970-01-01_00:00:00"
 	},
@@ -17,6 +17,13 @@
 			},
 			"components": [
 				{
+					"type": "Menu",
+					"data": {
+						"id": "globalNav"
+					},
+					"components": [ ]
+				},
+				{
 					"type": "Header",
 					"data": {
 						"id": "globalHeader"
@@ -26,31 +33,40 @@
 							"type": "Column",
 							"data": {
 								"id": "headerCols",
-								"cols": "3"
+								"cols": "2"
 							},
 							"components": [
 								{
-									"type": "Image",
-									"data": {
-										"id": "standardLogo",
-										"src": "//dev.standard.tngdev.com/retirement/v2/logo-theStandard.png",
-										"alt": "logo"
-									},
-									"components": [ ]
-								},
-								{
 									"type": "HTML",
 									"data": {
-										"id": "standardLogo",
-										"output": "Insurance, Retirement,<br>Investments and Advice."
+										"id": "standardLogoSlogan",
+										"output": ""
 									},
-									"components": [ ]
+									"components": [
+										{
+											"type": "Image",
+											"data": {
+												"id": "standardLogo",
+												"src": "/assets/logo-theStandard.png",
+												"alt": "logo"
+											},
+											"components": [ ]
+										},
+										{
+											"type": "HTML",
+											"data": {
+												"id": "standardSlogan",
+												"output": "Insurance, Retirement,<br>Investments and Advice."
+											},
+											"components": [ ]
+										}
+									]
 								},
 								{
 									"type": "Image",
 									"data": {
 										"id": "companyLogo",
-										"src": "//dev.standard.tngdev.com/retirement/v2/logo-TBD.png",
+										"src": "/assets/logo-TBD.png",
 										"alt": "logo"
 									},
 									"components": [ ]
@@ -63,7 +79,7 @@
 					"type": "Page",
 					"data": {
 						"id": "welcome",
-						"parent": "",
+						"parentId": "",
 						"title": "Welcome",
 						"subtitle": "",
 						"inMenu": true,
@@ -74,7 +90,22 @@
 							"type": "Video",
 							"data": {
 								"id": "welcomeVideo",
-								"src": ""
+								"req": ["videogular.min.js"],
+								"config": {
+									"sources": [
+										{
+											"src": "/assets/en/vid/welcome.mp4",
+											"type": "video/mp4"
+										},
+										{
+											"src": "/assets/en/vid/welcome.ogv",
+											"type": "video/ogg"
+										}
+									],
+									"theme": {
+										"url": "/scripts/component/Video/videogular.css"
+									}
+								}
 							},
 							"components": [ ]
 						},
@@ -105,7 +136,7 @@
 									"type": "Image",
 									"data": {
 										"id": "companyLogo2",
-										"src": "//dev.standard.tngdev.com/retirement/v2/logo-TBD.png",
+										"src": "/assets/logo-TBD.png",
 										"alt": "logo"
 									},
 									"components": [ ]
@@ -179,7 +210,7 @@
 					"type": "Page",
 					"data": {
 						"id": "YourPlan",
-						"parent": "",
+						"parentId": "",
 						"title": "Your Plan",
 						"subtitle": "",
 						"inMenu": true,
@@ -191,7 +222,7 @@
 					"type": "Page",
 					"data": {
 						"id": "EmployerHelping",
-						"parent": "YourPlan",
+						"parentId": "YourPlan",
 						"title": "Your Employer Is Helping",
 						"subtitle": "",
 						"inMenu": true,
@@ -202,9 +233,153 @@
 				{
 					"type": "Page",
 					"data": {
+						"id": "RothContributions",
+						"parentId": "YourPlan",
+						"title": "Roth Contributions",
+						"subtitle": "",
+						"inMenu": true,
+						"required": false
+					},
+					"components": [ ]
+				},
+				{
+					"type": "Page",
+					"data": {
+						"id": "Rollovers",
+						"parentId": "YourPlan",
+						"title": "Rollovers",
+						"subtitle": "",
+						"inMenu": true,
+						"required": false
+					},
+					"components": [ ]
+				},
+				{
+					"type": "Page",
+					"data": {
+						"id": "FourOThreeB",
+						"parentId": "YourPlan",
+						"title": "403(b)",
+						"subtitle": "",
+						"inMenu": true,
+						"required": false
+					},
+					"components": [ ]
+				},
+				{
+					"type": "Page",
+					"data": {
+						"id": "ManageOnline",
+						"parentId": "YourPlan",
+						"title": "Manage My Account Online",
+						"subtitle": "",
+						"inMenu": true,
+						"required": false
+					},
+					"components": [ ]
+				},
+				{
+					"type": "Page",
+					"data": {
 						"id": "StartPlanning",
-						"parent": "",
+						"parentId": "",
 						"title": "Start Planning",
+						"subtitle": "",
+						"inMenu": true,
+						"required": false
+					},
+					"components": [ ]
+				},
+				{
+					"type": "Page",
+					"data": {
+						"id": "TakeAction",
+						"parentId": "StartPlanning",
+						"title": "Take Action",
+						"subtitle": "",
+						"inMenu": true,
+						"required": false
+					},
+					"components": [ ]
+				},
+				{
+					"type": "Page",
+					"data": {
+						"id": "SaveMore",
+						"parentId": "StartPlanning",
+						"title": "Why Save More?",
+						"subtitle": "",
+						"inMenu": true,
+						"required": false
+					},
+					"components": [ ]
+				},
+				{
+					"type": "Page",
+					"data": {
+						"id": "TaxAdvantages",
+						"parentId": "StartPlanning",
+						"title": "Tax Advantages",
+						"subtitle": "",
+						"inMenu": true,
+						"required": false
+					},
+					"components": [ ]
+				},
+				{
+					"type": "Page",
+					"data": {
+						"id": "RetirementCalculator",
+						"parentId": "StartPlanning",
+						"title": "Retirement Calculator",
+						"subtitle": "",
+						"inMenu": true,
+						"required": false
+					},
+					"components": [ ]
+				},
+				{
+					"type": "Page",
+					"data": {
+						"id": "InvestmentBasics",
+						"parentId": "",
+						"title": "Investment Basics",
+						"subtitle": "",
+						"inMenu": true,
+						"required": false
+					},
+					"components": [ ]
+				},
+				{
+					"type": "Page",
+					"data": {
+						"id": "InvestmentStrategies",
+						"parentId": "InvestmentBasics",
+						"title": "Investment Strategies",
+						"subtitle": "",
+						"inMenu": true,
+						"required": false
+					},
+					"components": [ ]
+				},
+				{
+					"type": "Page",
+					"data": {
+						"id": "KeepingTrack",
+						"parentId": "InvestmentBasics",
+						"title": "Keeping Track",
+						"subtitle": "",
+						"inMenu": true,
+						"required": false
+					},
+					"components": [ ]
+				},
+				{
+					"type": "Page",
+					"data": {
+						"id": "Rebalancer",
+						"parentId": "InvestmentBasics",
+						"title": "Automatic Rebalancer",
 						"subtitle": "",
 						"inMenu": true,
 						"required": false
