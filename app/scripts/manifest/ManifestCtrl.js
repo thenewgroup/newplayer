@@ -1,7 +1,7 @@
 'use strict';
 
 /** @ngInject */
-function ManifestController( $log, ManifestService, manifestData, ComponentService, $timeout, $scope, $state, $stateParams )
+function ManifestController( $log, ManifestService, $scope, $state, $stateParams, manifestData/*, ComponentService, $timeout*/ )
 {
 	$log.debug('ManifestCtrl::Init');
 

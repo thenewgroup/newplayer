@@ -15,20 +15,21 @@ console.log('main::module created', angular.module('newplayer') );
 angular
 	.module('newplayer')
 	/** @ngInject */
-	.controller('AppController' , AppController)
-	/** @ngInject */
 	.factory('APIService' , APIService)
-	/** @ngInject */
-	//.factory('HomeService' , HomeService)
 	/** @ngInject */
 	.factory('ManifestService' , ManifestService)
 	/** @ngInject */
 	.factory('ComponentService' , ComponentService)
 	/** @ngInject */
+	.controller('AppController' , AppController)
+	/** @ngInject 
+	.controller('ManifestController' , ManifestController)*/
+	/** @ngInject */
 	.directive('npComponent' , ComponentDirective)
 
 	/** @ngInject */
 	.config(Router)
+
 	/** @ngInject */
 	.run(
 		function($rootScope, $state, $stateParams)

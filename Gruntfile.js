@@ -323,17 +323,33 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             'images/{,*/}*.webp',
             '{,*/}*.html',
-            'styles/fonts/{,*/}*.*'
+            'styles/fonts/{,*/}*.*',
+            'assets/**'     // NP - KJP - copy all project-specific assets
           ]
         }, {
           src: 'node_modules/apache-server-configs/dist/.htaccess',
           dest: '<%= config.dist %>/.htaccess'
+/*
         }, {
           expand: true,
           dot: true,
           cwd: '.',
           src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
           dest: '<%= config.dist %>'
+*/
+        }, {  // NP - KJP - fix - include Font Awesome fonts
+          expand: true,
+          dot: true,
+          flatten: true,
+          cwd: '.',
+          src: 'bower_components/Font-Awesome/fonts/*',
+          dest: '<%= config.dist %>/fonts/'
+        }, {  // NP - KJP - copy all component templates
+          expand: true,
+          dot: true,
+          cwd: '<%= config.app %>/scripts/component/',
+          src: '{,*/}*.{js,html,css}',
+          dest: '<%= config.dist %>/scripts/component/'
         }]
       },
       styles: {

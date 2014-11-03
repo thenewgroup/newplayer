@@ -3,7 +3,7 @@
 /** @ngInject */
 function ComponentService( $log, ManifestService, $ocLazyLoad /*, $timeout, $http, $q, $state, $rootScope*/ )
 {
-	$log.debug('\nComponentService: Init\n');
+	$log.debug('\nComponentService::Init\n');
 
 	var Service = function()
 	{
@@ -20,7 +20,7 @@ function ComponentService( $log, ManifestService, $ocLazyLoad /*, $timeout, $htt
 
 		function initCmp( cmpType )
 		{
-			$log.debug( 'ComponentService: initCmp:', cmpType, COMPONENT_ROOT );
+			//$log.debug( 'ComponentService::initCmp:', cmpType, COMPONENT_ROOT );
 
 			// add base dependency
 			addCmpDependencies( cmpType, cmpType + '.js' );
@@ -28,7 +28,7 @@ function ComponentService( $log, ManifestService, $ocLazyLoad /*, $timeout, $htt
 
 		var cleanURL = function( cmpType, cmpURL )
 		{
-			$log.debug( 'ComponentService: cleanURL: in:', cmpType, cmpURL );
+			//$log.debug( 'ComponentService::cleanURL: in:', cmpType, cmpURL );
 			if ( !!cmpURL && typeof( cmpURL ) === 'string' )
 			{
 				if ( cmpURL.indexOf( COMPONENT_ROOT ) === -1 )
@@ -45,7 +45,7 @@ function ComponentService( $log, ManifestService, $ocLazyLoad /*, $timeout, $htt
 					}
 				}
 			}
-			$log.debug( 'ComponentService: cleanURL: out:', cmpURL );
+			//$log.debug( 'ComponentService::cleanURL: out:', cmpURL );
 			return cmpURL;
 		};
 
@@ -59,7 +59,7 @@ function ComponentService( $log, ManifestService, $ocLazyLoad /*, $timeout, $htt
 		};
 		function addCmpDependencies( cmpType, cmpDeps )
 		{
-			$log.debug( 'ComponentService: addCmpDependencies:', cmpType, cmpDeps );
+			$log.debug( 'ComponentService::addCmpDependencies:', cmpType, cmpDeps );
 			if ( typeof( cmpDeps ) === 'string' )
 			{
 				cmpDependencies.push( cleanURL( cmpType, cmpDeps ) );
@@ -89,7 +89,7 @@ function ComponentService( $log, ManifestService, $ocLazyLoad /*, $timeout, $htt
 						if ( !!cmpTemplate && typeof(cmpTemplate) === 'string' )
 						{
 							// TBD validate incoming data
-							$log.debug( 'ComponentService: load: parseTemplate', componentObj, cmpTemplate );
+							$log.debug( 'ComponentService::load: parseTemplate', componentObj, cmpTemplate );
 							template = cleanURL( cmpType, cmpTemplate );
 						}
 					}
@@ -105,7 +105,7 @@ function ComponentService( $log, ManifestService, $ocLazyLoad /*, $timeout, $htt
 
 		this.load = function( componentObj )
 		{
-			$log.debug( '\nComponentService: load:', componentObj );
+			$log.debug( '\nComponentService::load:', componentObj.type );
 
 			// TBD - reset specific-component values
 			setCmpDependencies( [] );
@@ -130,7 +130,7 @@ function ComponentService( $log, ManifestService, $ocLazyLoad /*, $timeout, $htt
 				}
 			}
 
-			$log.debug( 'ComponentService: loading:', cmpName, getCmpDependencies() );
+			$log.debug( 'ComponentService::loading:', cmpName, getCmpDependencies() );
 			var aPromise =
 				$ocLazyLoad.load(
 					{
@@ -151,7 +151,7 @@ function ComponentService( $log, ManifestService, $ocLazyLoad /*, $timeout, $htt
 					function(err)
 					{
 						// error
-						$log.debug( 'ComponentService: load err:', err );
+						$log.debug( 'ComponentService::load err:', err );
 						self.onLoad( componentObj );
 					}
 				);
@@ -161,7 +161,7 @@ function ComponentService( $log, ManifestService, $ocLazyLoad /*, $timeout, $htt
 		// loaded component can decorate componentService to change loading behavior!?
 		this.onLoad = function( componentObj )
 		{
-			$log.debug( 'ComponentService: loaded', componentObj, '\n' );
+			$log.debug( 'ComponentService::loaded', componentObj, '\n' );
 		};
 
 	};
