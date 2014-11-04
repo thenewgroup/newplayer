@@ -285,6 +285,23 @@ module.exports = function (grunt) {
       }
     },
 
+    // ngmin tries to make the code safe for minification automatically by
+    // using the Angular long form for dependency injection. It doesn't work on
+    // things like resolve or inject so those have to be done manually.
+    ngAnnotate: {
+      options: {
+        singleQuotes: true
+      },
+      dist: {
+        files: [{
+            expand: true,
+            cwd: '.tmp/concat/scripts',
+            src: '*.js',
+            dest: '.tmp/concat/scripts'
+        }]
+      }
+    },
+
     // By default, your `index.html`'s <!-- Usemin block --> will take care
     // of minification. These next options are pre-configured if you do not
     // wish to use the Usemin blocks.
@@ -350,6 +367,12 @@ module.exports = function (grunt) {
           cwd: '<%= config.app %>/scripts/component/',
           src: '{,*/}*.{js,html,css}',
           dest: '<%= config.dist %>/scripts/component/'
+        }, {  // NP - KJP - copy manifest templates
+          expand: true,
+          dot: true,
+          cwd: '<%= config.app %>/scripts/manifest/',
+          src: '{,*/}*.html',
+          dest: '<%= config.dist %>/scripts/manifest/'
         }]
       },
       styles: {
@@ -442,6 +465,7 @@ module.exports = function (grunt) {
     'concurrent:dist',
     'autoprefixer',
     'concat',
+    'ngAnnotate',
     'cssmin',
     'uglify',
     'copy:dist',

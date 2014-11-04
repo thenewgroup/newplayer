@@ -2,7 +2,7 @@
 	"type": "Feature",
 	"data": {
 		"id": "fooFeature",
-		"req": "/assets/theStandard.css",
+		"req": "../../../assets/theStandard.css",
 		"version": "0.0.1",
 		"timestamp": "1970-01-01_00:00:00"
 	},
@@ -47,7 +47,7 @@
 											"type": "Image",
 											"data": {
 												"id": "standardLogo",
-												"src": "/assets/logo-theStandard.png",
+												"src": "assets/logo-theStandard.png",
 												"alt": "logo"
 											},
 											"components": [ ]
@@ -66,7 +66,7 @@
 									"type": "Image",
 									"data": {
 										"id": "companyLogo",
-										"src": "/assets/logo-TBD.png",
+										"src": "assets/logo-TBD.png",
 										"alt": "logo"
 									},
 									"components": [ ]
@@ -94,16 +94,16 @@
 								"config": {
 									"sources": [
 										{
-											"src": "/assets/en/vid/welcome.mp4",
+											"src": "assets/en/vid/welcome.mp4",
 											"type": "video/mp4"
 										},
 										{
-											"src": "/assets/en/vid/welcome.ogv",
+											"src": "assets/en/vid/welcome.ogv",
 											"type": "video/ogg"
 										}
 									],
 									"theme": {
-										"url": "/scripts/component/Video/videogular.css"
+										"url": "scripts/component/Video/videogular.css"
 									}
 								}
 							},
@@ -136,7 +136,7 @@
 									"type": "Image",
 									"data": {
 										"id": "companyLogo2",
-										"src": "/assets/logo-TBD.png",
+										"src": "assets/logo-TBD.png",
 										"alt": "logo"
 									},
 									"components": [ ]

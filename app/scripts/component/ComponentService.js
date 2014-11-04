@@ -10,8 +10,8 @@ function ComponentService( $log, ManifestService, $ocLazyLoad /*, $timeout, $htt
 		var self=this;
 
 		// const
-		var COMPONENT_ROOT = '/scripts/component/';
-		var DEFAULT_TEMPLATE = '/scripts/component/blank.html';
+		var COMPONENT_ROOT = 'scripts/component/';
+		var DEFAULT_TEMPLATE = 'scripts/component/blank.html';
 
 		// must be used during initial load
 		// can't be relied upon after prmoise resolves
