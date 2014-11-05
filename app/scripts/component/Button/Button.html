@@ -1,10 +1,11 @@
-<div class="npComponent np-{{component.type}}">
+<div class="npComponent np-{{component.type}}" ng-controller="ButtonController as npButton">
 	<div class="debug">
 		<h3>{{component.type}}</h3>
 		<small>{{component.idx}} -- {{template}}</small>
 	</div>
 
-	<button id="{{component.data.id}}">
+	<button id="{{component.data.id}}" ng-click="npButton.go()">
+		<div ng-bind-html="npButton.content"></div>
 		<div ng-if="subCmp" ng-repeat="component in components">
 			<np-component idx="{{component.idx}}"></np-component>
 		</div>

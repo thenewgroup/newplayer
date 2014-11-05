@@ -161,9 +161,9 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "button01",
-										"link": "/",
-										"alt": "logo"
+										"id": "btnEmpHlp",
+										"link": "/sample/en-US/EmployerHelping",
+										"output": "<tt>Employer Helping</tt>"
 									},
 									"components": [ ]
 								}
@@ -172,27 +172,27 @@
 						{
 							"type": "Button",
 							"data": {
-								"id": "<unique ID>",
+								"id": "btn2",
 								"link": "<url>",
-								"output": "<strong>button 1</strong>"
+								"output": "<strong>button 2</strong>"
 							},
 							"components": [ ]
 						},
 						{
 							"type": "Button",
 							"data": {
-								"id": "<unique ID>",
+								"id": "btn3",
 								"link": "<url>",
-								"output": "<em>button 2</em>"
+								"output": "<em>button 3</em>"
 							},
 							"components": [ ]
 						},
 						{
 							"type": "Button",
 							"data": {
-								"id": "<unique ID>",
+								"id": "btn4",
 								"link": "<url>",
-								"output": "button 3"
+								"output": "button 4"
 							},
 							"components": [ ]
 						},
