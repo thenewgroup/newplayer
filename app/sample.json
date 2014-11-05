@@ -12,14 +12,21 @@
 			"data": {
 				"id": "content-en-Us",
 				"language": "en-US",
-				"title": "Contnet Title",
-				"description": "Contnet Description"
+				"title": "Retirement Planning",
+				"description": "Retirement planning presentation"
 			},
 			"components": [
 				{
 					"type": "Menu",
 					"data": {
-						"id": "globalNav"
+						"id": "globalNav",
+						"items": [
+							{
+								"link": "/EnrollNow",
+								"text": "Enroll Now"
+							},
+							"pages"
+						]
 					},
 					"components": [ ]
 				},
@@ -78,10 +85,9 @@
 				{
 					"type": "Page",
 					"data": {
-						"id": "welcome",
+						"id": "Welcome",
 						"parentId": "",
 						"title": "Welcome",
-						"subtitle": "",
 						"inMenu": true,
 						"required": false
 					},
@@ -162,7 +168,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnEmpHlp",
-										"link": "/sample/en-US/EmployerHelping",
+										"link": "#/sample/en-US/EmployerHelping",
 										"output": "<tt>Employer Helping</tt>"
 									},
 									"components": [ ]
@@ -173,8 +179,8 @@
 							"type": "Button",
 							"data": {
 								"id": "btn2",
-								"link": "<url>",
-								"output": "<strong>button 2</strong>"
+								"link": "http://google.com/",
+								"output": "<strong>GOogle</strong>"
 							},
 							"components": [ ]
 						},
@@ -182,8 +188,8 @@
 							"type": "Button",
 							"data": {
 								"id": "btn3",
-								"link": "<url>",
-								"output": "<em>button 3</em>"
+								"link": "/test",
+								"output": "<em>domain relative</em>"
 							},
 							"components": [ ]
 						},
@@ -212,7 +218,6 @@
 						"id": "YourPlan",
 						"parentId": "",
 						"title": "Your Plan",
-						"subtitle": "",
 						"inMenu": true,
 						"required": false
 					},
@@ -221,11 +226,11 @@
 				{
 					"type": "Page",
 					"data": {
-						"id": "EmployerHelping",
+						"id": "EmployerContributions",
 						"parentId": "YourPlan",
-						"title": "Your Employer Is Helping",
-						"subtitle": "",
+						"title": "Your Employer Is Helping Too",
 						"inMenu": true,
+						"menuTitle": "Employer Contributions",
 						"required": false
 					},
 					"components": [ ]
@@ -236,7 +241,6 @@
 						"id": "RothContributions",
 						"parentId": "YourPlan",
 						"title": "Roth Contributions",
-						"subtitle": "",
 						"inMenu": true,
 						"required": false
 					},
@@ -248,7 +252,6 @@
 						"id": "Rollovers",
 						"parentId": "YourPlan",
 						"title": "Rollovers",
-						"subtitle": "",
 						"inMenu": true,
 						"required": false
 					},
@@ -257,10 +260,9 @@
 				{
 					"type": "Page",
 					"data": {
-						"id": "FourOThreeB",
+						"id": "403b",
 						"parentId": "YourPlan",
 						"title": "403(b)",
-						"subtitle": "",
 						"inMenu": true,
 						"required": false
 					},
@@ -272,8 +274,8 @@
 						"id": "ManageOnline",
 						"parentId": "YourPlan",
 						"title": "Manage My Account Online",
-						"subtitle": "",
 						"inMenu": true,
+						"menuTitle": "Online Management",
 						"required": false
 					},
 					"components": [ ]
@@ -284,7 +286,6 @@
 						"id": "StartPlanning",
 						"parentId": "",
 						"title": "Start Planning",
-						"subtitle": "",
 						"inMenu": true,
 						"required": false
 					},
@@ -293,10 +294,9 @@
 				{
 					"type": "Page",
 					"data": {
-						"id": "TakeAction",
+						"id": "WhySaveNow",
 						"parentId": "StartPlanning",
-						"title": "Take Action",
-						"subtitle": "",
+						"title": "Why Save Now",
 						"inMenu": true,
 						"required": false
 					},
@@ -305,10 +305,9 @@
 				{
 					"type": "Page",
 					"data": {
-						"id": "SaveMore",
+						"id": "WhySaveMore",
 						"parentId": "StartPlanning",
-						"title": "Why Save More?",
-						"subtitle": "",
+						"title": "Why Save More",
 						"inMenu": true,
 						"required": false
 					},
@@ -319,9 +318,9 @@
 					"data": {
 						"id": "TaxAdvantages",
 						"parentId": "StartPlanning",
-						"title": "Tax Advantages",
-						"subtitle": "",
+						"title": "Tax Advantages to saving",
 						"inMenu": true,
+						"menuTitle": "Tax Advantages",
 						"required": false
 					},
 					"components": [ ]
@@ -331,9 +330,9 @@
 					"data": {
 						"id": "RetirementCalculator",
 						"parentId": "StartPlanning",
-						"title": "Retirement Calculator",
-						"subtitle": "",
+						"title": "Retirement Needs Calculator",
 						"inMenu": true,
+						"menuTitle": "Retirement Calculator",
 						"required": false
 					},
 					"components": [ ]
@@ -344,7 +343,6 @@
 						"id": "InvestmentBasics",
 						"parentId": "",
 						"title": "Investment Basics",
-						"subtitle": "",
 						"inMenu": true,
 						"required": false
 					},
@@ -356,7 +354,6 @@
 						"id": "InvestmentStrategies",
 						"parentId": "InvestmentBasics",
 						"title": "Investment Strategies",
-						"subtitle": "",
 						"inMenu": true,
 						"required": false
 					},
@@ -367,9 +364,9 @@
 					"data": {
 						"id": "KeepingTrack",
 						"parentId": "InvestmentBasics",
-						"title": "Keeping Track",
-						"subtitle": "",
+						"title": "Keep Track of Your Savings",
 						"inMenu": true,
+						"menuTitle": "Keeping Track",
 						"required": false
 					},
 					"components": [ ]
@@ -377,11 +374,11 @@
 				{
 					"type": "Page",
 					"data": {
-						"id": "Rebalancer",
+						"id": "AutomaticRebalancer",
 						"parentId": "InvestmentBasics",
-						"title": "Automatic Rebalancer",
-						"subtitle": "",
+						"title": "Automatic Rebalance",
 						"inMenu": true,
+						"menuTitle": "Automatic Rebalancer",
 						"required": false
 					},
 					"components": [ ]
