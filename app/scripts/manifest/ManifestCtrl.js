@@ -1,7 +1,9 @@
 'use strict';
 
 /** @ngInject */
-function ManifestController( $log, ManifestService, $scope, $state, $stateParams, manifestData/*, ComponentService, $timeout*/ )
+function ManifestController(
+	$log, ManifestService, $scope, $state, $stateParams, manifestData/*, ComponentService, $timeout*/
+)
 {
 	$log.debug('ManifestCtrl::Init');
 
@@ -11,28 +13,10 @@ function ManifestController( $log, ManifestService, $scope, $state, $stateParams
 	{
 		$log.debug( 'ManifestCtrl:: manifestId ', ManifestService.getManifestId() );
 		vm.manifestId = ManifestService.getManifestId();
+		vm.lang = $stateParams.lang;
+		vm.pageId = $stateParams.pageId;
 
-
-		$log.debug( 'ManifestCtrl:: data initialized? ', ManifestService.getData() );
-		// give the manifest data to the manifest service
-		if ( ! ManifestService.getData() )
-		{
-			ManifestService.setData( manifestData );
-			// index all components
-			var cmp = ManifestService.getComponent();
-			while ( !!cmp )
-			{
-				$log.debug( 'ManifestCtrl:: initialParse', cmp );
-				cmp = ManifestService.getComponent();
-			}
-			// store the data for component awareness
-			$scope.npManifest = manifestData;
-		} else {
-			$log.debug( 'ManifestCtrl:: data already loaded' );
-		}
-
-
-		$log.debug( 'ManifestCtrl::state is ', $state.current );
+		$log.debug( 'ManifestCtrl::state is ', $state.current, vm.manifestId, vm.lang, vm.pageId );
 		if ( $state.is( 'manifest' ) )
 		{
 			$state.go(

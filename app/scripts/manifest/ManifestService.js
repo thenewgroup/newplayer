@@ -6,7 +6,9 @@
  */
 
 /** @ngInject */
-function ManifestService( $log, APIService/*, $timeout, $http, $q, $state, $rootScope,*/ )
+function ManifestService(
+	$log, APIService/*, $timeout, $http, $q, $state, $rootScope,*/
+)
 {
 	$log.debug('\nManifestService::Init\n');
 
@@ -32,6 +34,16 @@ function ManifestService( $log, APIService/*, $timeout, $http, $q, $state, $root
 		function setPromise( prms )
 		{
 			promise = prms;
+		}
+
+		function getData()
+		{
+			$log.debug('ManifestService::getData', data);
+			return data;
+		}
+		function setData( d )
+		{
+			data = d;
 		}
 
 		function getComponentIdx()
@@ -91,9 +103,25 @@ function ManifestService( $log, APIService/*, $timeout, $http, $q, $state, $root
 			return self.getComponent( getComponentIdx() );
 		}
 
+		function initialize( data )
+		{
+			$log.debug('ManifestService::initialize:', data);
+
+			setData( data );
+			// index all components
+			var cmp = self.getComponent();
+			while ( !!cmp )
+			{
+				$log.debug( 'ManifestCtrl:: initialParse', cmp );
+				cmp = self.getComponent();
+			}
+
+			$log.debug('ManifestService::initialized:', getData() );
+		}
+
 		this.loadData = function( manifestId )
 		{
-			if ( !this.getData() || manifestId !== this.getManifestId() )
+			if ( !getData() || manifestId !== this.getManifestId() )
 			{
 				APIService.reset();
 				setComponentIdx( null );
@@ -105,12 +133,13 @@ function ManifestService( $log, APIService/*, $timeout, $http, $q, $state, $root
 						function(res)
 						{
 							$log.debug('ManifestService::loadData: success', res);
-							return res;
+							initialize( res );
+							return getData();
 						}
 					);
 				setPromise( aPromise );
 			} else {
-				$log.debug( 'ManifestService::loadData: data already loaded:', this.getData() );
+				$log.debug( 'ManifestService::loadData: data already loaded:', getData() );
 			}
 			return getPromise();
 		};
@@ -159,7 +188,7 @@ function ManifestService( $log, APIService/*, $timeout, $http, $q, $state, $root
 				$log.debug('ManifestService::getComponent: set serv idx', idx );
 
 				// traverse idx array to get to this particular cmp
-				cmp = this.getData()[ idx[0] ];
+				cmp = getData()[ idx[0] ];
 				if ( !!cmp )
 				{
 					for ( var j in idx )
@@ -199,16 +228,6 @@ function ManifestService( $log, APIService/*, $timeout, $http, $q, $state, $root
 		this.setManifestId = function(manifestId)
 		{
 			this.manifestId = manifestId;
-		};
-
-		this.getData = function()
-		{
-			$log.debug('ManifestService::getData', this.data);
-			return this.data;
-		};
-		this.setData = function(data)
-		{
-			this.data = data;
 		};
 
 		this.getFirst = function( cmpType, context )
