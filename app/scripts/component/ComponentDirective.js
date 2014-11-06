@@ -86,7 +86,7 @@ function ComponentDirective( $log, ManifestService, ComponentService, $http, $co
 						}
 
 						var templateURL = ComponentService.getTemplateURL( cmp );
-						$log.debug('ComponentDirective::parseComponent: templateURL:', cmp, templateURL );
+						$log.debug('ComponentDirective::parseComponent: cmp,templateURL:', cmp, templateURL );
 						if ( !!templateURL )
 						{
 							$scope.template = templateURL;
@@ -98,6 +98,7 @@ function ComponentDirective( $log, ManifestService, ComponentService, $http, $co
 								},
 								function()
 								{
+									$log.debug('ComponentDirective::parseComponent: load failed!');
 									templateURL = ComponentService.getDefaultTemplate();
 									$scope.template = templateURL;
 									$http.get( templateURL, {cache:false} )

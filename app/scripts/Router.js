@@ -21,9 +21,8 @@ function Router($logProvider, $stateProvider, $urlRouterProvider, $uiViewScrollP
 					'manifestData':
 						function(ManifestService, $stateParams, $log)
 						{
-							$log.debug( 'Router::manifestId:', $stateParams.manifestId );
 							var mData = ManifestService.loadData( $stateParams.manifestId );
-							$log.debug( 'Router::manifestData:', mData );
+							$log.debug( 'Router::manifest:', $stateParams.manifestId, mData );
 							return mData;
 						}
 				},
@@ -39,13 +38,13 @@ function Router($logProvider, $stateProvider, $urlRouterProvider, $uiViewScrollP
 		.state(
 			'manifest.lang',
 			{
-				url: '/{lang}',
+				url: '/{lang:[a-z]{2}-[A-Z]{2}|tbd}',
 				resolve:
 				{
 					'lang':
 						function($stateParams, $log)
 						{
-							$log.debug( 'Router: manifest.lang: lang:', $stateParams.lang );
+							$log.debug( 'Router::manifest.lang:', $stateParams.lang );
 							return $stateParams.lang;
 						}
 				},
@@ -64,16 +63,10 @@ function Router($logProvider, $stateProvider, $urlRouterProvider, $uiViewScrollP
 				url: '/{pageId}',
 				resolve:
 				{
-					'lang':
-						function($stateParams, $log)
-						{
-							$log.debug( 'Router: manifest.lang.page: lang:', $stateParams.lang );
-							return $stateParams.lang;
-						},
 					'pageId':
 						function($stateParams, $log)
 						{
-							$log.debug( 'Router: manifest.lang.page: pageId:', $stateParams.pageId );
+							$log.debug( 'Router::manifest.lang.page:', $stateParams.pageId );
 							return $stateParams.pageId;
 						}
 				},
@@ -85,18 +78,29 @@ function Router($logProvider, $stateProvider, $urlRouterProvider, $uiViewScrollP
 					}
 				}
 			}
-		);
-		/*
-		.state('home', {
-			url: '/home',
-			views: {
-				'main':{
-					templateUrl:'scripts/home/home.html',
-					controller:'HomeController',
-					controllerAs:'vm'
+		).state(
+			'manifest.page',
+			{
+				url: '/{pageId}',
+				resolve:
+				{
+					'pageId':
+						function($stateParams, $log)
+						{
+							$log.debug( 'Router: manifest.page: pageId:', $stateParams.pageId );
+							return $stateParams.pageId;
+						}
+				},
+				views: {
+					'load':{
+						templateUrl:'scripts/manifest/manifest.html',
+						controller:'ManifestController',
+						controllerAs:'vm'
+					}
 				}
 			}
-		})
+		);
+		/*
 		.state('manifest', {
 			url: '/{manifestId}/{params:.*}',
 			resolve:

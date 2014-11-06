@@ -34,12 +34,13 @@ angular
 			}
 
 			var cmpLang = $scope.component.data.language;
-			$log.debug( 'Content::does content match lang?', cmpLang, manifestLang );
 			if ( cmpLang === manifestLang )
 			{
+				$log.debug( 'Content::lang match', cmpLang, manifestLang );
 				$scope.currentLang = true;
 				$scope.npContent = $scope;
 			} else {
+				$log.debug( 'Content::wrong lang', cmpLang, manifestLang );
 				$scope.currentLang = false;
 			}
 		}

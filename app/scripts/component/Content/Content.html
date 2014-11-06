@@ -1,10 +1,10 @@
-<div class="npComponent np-{{component.type}}" ng-controller="ContentController">
+<div ng-show="currentLang" class="np-component np-{{component.type}}" ng-controller="ContentController">
 	<div class="debug">
 		<h3>{{component.type}}</h3>
 		<small>{{component.idx}} -- {{template}}</small>
 	</div>
 
-	<div ng-show="currentLang" ng-if="subCmp" ng-repeat="component in components">
+	<div ng-if="subCmp" ng-repeat="component in components">
 		<np-component idx="{{component.idx}}"></np-component>
 	</div>
 

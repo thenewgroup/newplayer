@@ -15,7 +15,6 @@ angular
 		{
 			$log.debug( 'Page::this component', $scope.component,
 			            'is page', $scope.component.data.id,
-			            'has manifest', $scope.npManifest,
 			            'inside content scope', $scope.npContent,
 			            'for page', ManifestService.getPageId() );
 
