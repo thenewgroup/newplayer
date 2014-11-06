@@ -1,12 +1,14 @@
 <section ng-show="currentPage" class="np-component np-{{component.type}}" ng-controller="PageController">
-	<div class="debug">
-		<h3>{{component.type}}</h3>
-		<small>{{component.idx}} -- {{template}}</small>
-	</div>
+	<div ng-if="currentPage" class="np-Page-wrapper">
+		<div class="debug">
+			<h3>{{component.type}}</h3>
+			<small>{{component.idx}} -- {{template}}</small>
+		</div>
 
-	<h1 class="np-Page-title">{{component.data.title}}</h1>
+		<h1 class="np-Page-title">{{component.data.title}}</h1>
 
-	<div ng-if="subCmp" ng-repeat="component in components">
-		<np-component idx="{{component.idx}}"></np-component>
+		<div ng-if="subCmp" ng-repeat="component in components">
+			<np-component idx="{{component.idx}}"></np-component>
+		</div>
 	</div>
 </section>

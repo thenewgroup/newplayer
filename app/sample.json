@@ -10,7 +10,7 @@
 		{
 			"type": "Content",
 			"data": {
-				"id": "content-en-Us",
+				"id": "content_en-US",
 				"language": "en-US",
 				"title": "Retirement Planning",
 				"description": "Retirement planning presentation"
@@ -19,7 +19,7 @@
 				{
 					"type": "Menu",
 					"data": {
-						"id": "globalNav",
+						"id": "stndMenu",
 						"items": [
 							{
 								"link": "/EnrollNow",
@@ -33,7 +33,7 @@
 				{
 					"type": "Header",
 					"data": {
-						"id": "globalHeader"
+						"id": "stndHeader"
 					},
 					"components": [
 						{
@@ -46,14 +46,14 @@
 								{
 									"type": "HTML",
 									"data": {
-										"id": "standardLogoSlogan",
+										"id": "stndLogoSlogan",
 										"output": ""
 									},
 									"components": [
 										{
 											"type": "Image",
 											"data": {
-												"id": "standardLogo",
+												"id": "stndLogo",
 												"src": "assets/logo-theStandard.png",
 												"alt": "logo"
 											},
@@ -62,7 +62,7 @@
 										{
 											"type": "HTML",
 											"data": {
-												"id": "standardSlogan",
+												"id": "stndSlogan",
 												"output": "Insurance, Retirement,<br>Investments and Advice."
 											},
 											"components": [ ]
@@ -72,7 +72,7 @@
 								{
 									"type": "Image",
 									"data": {
-										"id": "companyLogo",
+										"id": "clientLogo",
 										"src": "assets/logo-TBD.png",
 										"alt": "logo"
 									},
@@ -95,7 +95,7 @@
 						{
 							"type": "Video",
 							"data": {
-								"id": "welcomeVideo",
+								"id": "vidMain",
 								"req": ["videogular.min.js"],
 								"config": {
 									"sources": [
@@ -118,7 +118,7 @@
 						{
 							"type": "HTML",
 							"data": {
-								"id": "welcomeText",
+								"id": "captionMain",
 								"output": "[Custom Message from Plan Sponsor] Congratulations [your employer] has enrolled you in a valuable retirement planning program. Enroll now to customize the plan to fit your needs. If you have questions, please call [contact name] at [contact #]."
 							},
 							"components": [ ]
@@ -155,7 +155,7 @@
 										{
 											"type": "Button",
 											"data": {
-												"id": "btnEmpHlp",
+												"id": "btnEmployerContributions",
 												"link": "#/sample/en-US/EmployerContributions",
 												"output": "Learn More about employer contributions"
 											},
@@ -166,7 +166,7 @@
 								{
 									"type": "Image",
 									"data": {
-										"id": "companyLogo2",
+										"id": "clientLogo2",
 										"src": "assets/logo-TBD.png",
 										"alt": "logo"
 									},
@@ -184,7 +184,7 @@
 						{
 							"type": "Button",
 							"data": {
-								"id": "enrollNow",
+								"id": "btnEnrollNow",
 								"link": "/EnrollNow",
 								"output": "<strong>Enroll Now</strong><br/>or Increase My Contributions"
 							},
@@ -193,7 +193,7 @@
 						{
 							"type": "Column",
 							"data": {
-								"id": "planDetailsCols",
+								"id": "colsBtnSection",
 								"cols": "2"
 							},
 							"components":
@@ -201,7 +201,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "learnMore",
+										"id": "btnYourPlan",
 										"link": "#/sample/en-US/YourPlan",
 										"output": "Learn More About Your Plan"
 									},
@@ -210,7 +210,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "btn4",
+										"id": "btnRetirementCalculator",
 										"link": "#/sample/en-US/RetirementCalculator",
 										"output": "Estimate Your Retirement Needs"
 									},
@@ -221,7 +221,7 @@
 						{
 							"type": "HTML",
 							"data": {
-								"id": "legal",
+								"id": "disclaimer",
 								"output": "<small>1) A.C.S. “Too thin a cushion” Economist, 2 April 2013 Web 22 June 2014. &lt;<a href=\"http://www.economist.com/blogs/freeexchange/2013/04/saving\" target=\"blank\">http://www.economist.com/blogs/freeexchange/2013/04/saving</a>&gt;</small>"
 							},
 							"components": [ ]
@@ -242,7 +242,7 @@
 						{
 							"type": "Video",
 							"data": {
-								"id": "yourPlanVideo",
+								"id": "vidMain",
 								"req": ["videogular.min.js"],
 								"config": {
 									"sources": [
@@ -261,7 +261,7 @@
 						{
 							"type": "HTML",
 							"data": {
-								"id": "yourPlanCaption",
+								"id": "captionMain",
 								"output": "The plan your employer is offering has many features that will make saving for retirement easier and more effective."
 							},
 							"components": [ ]
@@ -278,7 +278,7 @@
 						{
 							"type": "Column",
 							"data": {
-								"id": "planDetailsCols",
+								"id": "colsBtnSection",
 								"cols": "2"
 							},
 							"components":
@@ -286,7 +286,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btnEmployerContributions",
 										"link": "#/sample/en-US/EmployerContributions",
 										"output": "Your employer is helping too"
 									},
@@ -295,7 +295,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btnRothContributions",
 										"link": "#/sample/en-US/RothContributions",
 										"output": "Roth Contributions"
 									},
@@ -304,7 +304,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btnRollovers",
 										"link": "#/sample/en-US/Rollovers",
 										"output": "Rollovers"
 									},
@@ -313,7 +313,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btn403b",
 										"link": "#/sample/en-US/403b",
 										"output": "403(b)"
 									},
@@ -322,7 +322,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btnManageOnline",
 										"link": "#/sample/en-US/ManageOnline",
 										"output": "Manage my account online"
 									},
@@ -340,7 +340,7 @@
 						{
 							"type": "Column",
 							"data": {
-								"id": "planDetailsCols",
+								"id": "colsBtnSections",
 								"cols": "2"
 							},
 							"components":
@@ -348,7 +348,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btnStartPlanning",
 										"link": "#/sample/en-US/StartPlanning",
 										"output": "Start Planning"
 									},
@@ -357,7 +357,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "learnMore",
+										"id": "btnInvestmentBasics",
 										"link": "#/sample/en-US/InvestmentBasics",
 										"output": "Learn Investment Basics"
 									},
@@ -366,7 +366,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "btn4",
+										"id": "btnRetirementCalculator",
 										"link": "#/sample/en-US/RetirementCalculator",
 										"output": "Estimate Your Retirement Needs"
 									},
@@ -377,7 +377,7 @@
 						{
 							"type": "HTML",
 							"data": {
-								"id": "yourPlanDisclaimer",
+								"id": "disclaimer",
 								"output": "1) Wesley, Daniel. “How The Average U.S. Consumer Spends Their Paycheck.” Credit Loan.com 25 Sept. 2013. Web. 22 June 2014. <creditloan.com/blog/how-the-average-us-consumer-spends-their-paycheck/>"
 							},
 							"components": [ ]
@@ -399,7 +399,7 @@
 						{
 							"type": "Video",
 							"data": {
-								"id": "yourPlanVideo",
+								"id": "vidMain",
 								"req": ["videogular.min.js"],
 								"config": {
 									"sources": [
@@ -418,7 +418,7 @@
 						{
 							"type": "HTML",
 							"data": {
-								"id": "contribCaption",
+								"id": "captionMain",
 								"output": "[VARIABLE TEXT] Employer Matching Funds - Congratulations, your employer is helping you move toward a more secure retirement by contributing: XXXXXXXXXXXX"
 							},
 							"components": [ ]
@@ -435,7 +435,7 @@
 						{
 							"type": "Column",
 							"data": {
-								"id": "planDetailsCols",
+								"id": "colsBtnSection",
 								"cols": "2"
 							},
 							"components":
@@ -443,7 +443,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btnEmployerContributions",
 										"link": "#/sample/en-US/EmployerContributions",
 										"output": "Your employer is helping too"
 									},
@@ -452,7 +452,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btnRothContributions",
 										"link": "#/sample/en-US/RothContributions",
 										"output": "Roth Contributions"
 									},
@@ -461,7 +461,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btnRollovers",
 										"link": "#/sample/en-US/Rollovers",
 										"output": "Rollovers"
 									},
@@ -470,7 +470,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btn403b",
 										"link": "#/sample/en-US/403b",
 										"output": "403(b)"
 									},
@@ -479,7 +479,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btnManageOnline",
 										"link": "#/sample/en-US/ManageOnline",
 										"output": "Manage my account online"
 									},
@@ -497,7 +497,7 @@
 						{
 							"type": "Column",
 							"data": {
-								"id": "planDetailsCols",
+								"id": "colsBtnSections",
 								"cols": "2"
 							},
 							"components":
@@ -505,7 +505,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btnStartPlanning",
 										"link": "#/sample/en-US/StartPlanning",
 										"output": "Start Planning"
 									},
@@ -514,7 +514,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "learnMore",
+										"id": "btnInvestmentBasics",
 										"link": "#/sample/en-US/InvestmentBasics",
 										"output": "Learn Investment Basics"
 									},
@@ -523,7 +523,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "btn4",
+										"id": "btnRetirementCalculator",
 										"link": "#/sample/en-US/RetirementCalculator",
 										"output": "Estimate Your Retirement Needs"
 									},
@@ -534,7 +534,7 @@
 						{
 							"type": "HTML",
 							"data": {
-								"id": "yourPlanDisclaimer",
+								"id": "disclaimer",
 								"output": "1) Wesley, Daniel. “How The Average U.S. Consumer Spends Their Paycheck.” Credit Loan.com 25 Sept. 2013. Web. 22 June 2014. <creditloan.com/blog/how-the-average-us-consumer-spends-their-paycheck/>"
 							},
 							"components": [ ]
@@ -555,7 +555,7 @@
 						{
 							"type": "Video",
 							"data": {
-								"id": "yourPlanVideo",
+								"id": "vidMain",
 								"req": ["videogular.min.js"],
 								"config": {
 									"sources": [
@@ -574,7 +574,7 @@
 						{
 							"type": "HTML",
 							"data": {
-								"id": "TBDCaption",
+								"id": "captionMain",
 								"output": ""
 							},
 							"components": [ ]
@@ -591,7 +591,7 @@
 						{
 							"type": "Column",
 							"data": {
-								"id": "planDetailsCols",
+								"id": "colsBtnSection",
 								"cols": "2"
 							},
 							"components":
@@ -599,7 +599,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btnEmployerContributions",
 										"link": "#/sample/en-US/EmployerContributions",
 										"output": "Your employer is helping too"
 									},
@@ -608,7 +608,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btnRothContributions",
 										"link": "#/sample/en-US/RothContributions",
 										"output": "Roth Contributions"
 									},
@@ -617,7 +617,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btnRollovers",
 										"link": "#/sample/en-US/Rollovers",
 										"output": "Rollovers"
 									},
@@ -626,7 +626,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btn403b",
 										"link": "#/sample/en-US/403b",
 										"output": "403(b)"
 									},
@@ -635,7 +635,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btnManageOnline",
 										"link": "#/sample/en-US/ManageOnline",
 										"output": "Manage my account online"
 									},
@@ -653,7 +653,7 @@
 						{
 							"type": "Column",
 							"data": {
-								"id": "planDetailsCols",
+								"id": "colsBtnSections",
 								"cols": "2"
 							},
 							"components":
@@ -661,7 +661,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btnStartPlanning",
 										"link": "#/sample/en-US/StartPlanning",
 										"output": "Start Planning"
 									},
@@ -670,7 +670,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "learnMore",
+										"id": "btnInvestmentBasics",
 										"link": "#/sample/en-US/InvestmentBasics",
 										"output": "Learn Investment Basics"
 									},
@@ -679,7 +679,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "btn4",
+										"id": "btnRetirementCalculator",
 										"link": "#/sample/en-US/RetirementCalculator",
 										"output": "Estimate Your Retirement Needs"
 									},
@@ -690,7 +690,7 @@
 						{
 							"type": "HTML",
 							"data": {
-								"id": "TBDDisclaimer",
+								"id": "disclaimer",
 								"output": ""
 							},
 							"components": [ ]
@@ -711,7 +711,7 @@
 						{
 							"type": "Video",
 							"data": {
-								"id": "yourPlanVideo",
+								"id": "vidMain",
 								"req": ["videogular.min.js"],
 								"config": {
 									"sources": [
@@ -730,7 +730,7 @@
 						{
 							"type": "HTML",
 							"data": {
-								"id": "TBDCaption",
+								"id": "captionMain",
 								"output": ""
 							},
 							"components": [ ]
@@ -747,7 +747,7 @@
 						{
 							"type": "Column",
 							"data": {
-								"id": "planDetailsCols",
+								"id": "colsBtnSection",
 								"cols": "2"
 							},
 							"components":
@@ -755,7 +755,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btnEmployerContributions",
 										"link": "#/sample/en-US/EmployerContributions",
 										"output": "Your employer is helping too"
 									},
@@ -764,7 +764,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btnRothContributions",
 										"link": "#/sample/en-US/RothContributions",
 										"output": "Roth Contributions"
 									},
@@ -773,7 +773,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btnRollovers",
 										"link": "#/sample/en-US/Rollovers",
 										"output": "Rollovers"
 									},
@@ -782,7 +782,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btn403b",
 										"link": "#/sample/en-US/403b",
 										"output": "403(b)"
 									},
@@ -791,7 +791,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btnManageOnline",
 										"link": "#/sample/en-US/ManageOnline",
 										"output": "Manage my account online"
 									},
@@ -809,7 +809,7 @@
 						{
 							"type": "Column",
 							"data": {
-								"id": "planDetailsCols",
+								"id": "colsBtnSections",
 								"cols": "2"
 							},
 							"components":
@@ -817,7 +817,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btnStartPlanning",
 										"link": "#/sample/en-US/StartPlanning",
 										"output": "Start Planning"
 									},
@@ -826,7 +826,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "learnMore",
+										"id": "btnInvestmentBasics",
 										"link": "#/sample/en-US/InvestmentBasics",
 										"output": "Learn Investment Basics"
 									},
@@ -835,7 +835,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "btn4",
+										"id": "btnRetirementCalculator",
 										"link": "#/sample/en-US/RetirementCalculator",
 										"output": "Estimate Your Retirement Needs"
 									},
@@ -846,7 +846,7 @@
 						{
 							"type": "HTML",
 							"data": {
-								"id": "TBDDisclaimer",
+								"id": "disclaimer",
 								"output": ""
 							},
 							"components": [ ]
@@ -867,7 +867,7 @@
 						{
 							"type": "Video",
 							"data": {
-								"id": "yourPlanVideo",
+								"id": "vidMain",
 								"req": ["videogular.min.js"],
 								"config": {
 									"sources": [
@@ -886,7 +886,7 @@
 						{
 							"type": "HTML",
 							"data": {
-								"id": "TBDCaption",
+								"id": "captionMain",
 								"output": ""
 							},
 							"components": [ ]
@@ -903,7 +903,7 @@
 						{
 							"type": "Column",
 							"data": {
-								"id": "planDetailsCols",
+								"id": "colsBtnSection",
 								"cols": "2"
 							},
 							"components":
@@ -911,7 +911,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btnEmployerContributions",
 										"link": "#/sample/en-US/EmployerContributions",
 										"output": "Your employer is helping too"
 									},
@@ -920,7 +920,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btnRothContributions",
 										"link": "#/sample/en-US/RothContributions",
 										"output": "Roth Contributions"
 									},
@@ -929,7 +929,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btnRollovers",
 										"link": "#/sample/en-US/Rollovers",
 										"output": "Rollovers"
 									},
@@ -938,7 +938,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btn403b",
 										"link": "#/sample/en-US/403b",
 										"output": "403(b)"
 									},
@@ -947,7 +947,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btnManageOnline",
 										"link": "#/sample/en-US/ManageOnline",
 										"output": "Manage my account online"
 									},
@@ -965,7 +965,7 @@
 						{
 							"type": "Column",
 							"data": {
-								"id": "planDetailsCols",
+								"id": "colsBtnSections",
 								"cols": "2"
 							},
 							"components":
@@ -973,7 +973,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btnStartPlanning",
 										"link": "#/sample/en-US/StartPlanning",
 										"output": "Start Planning"
 									},
@@ -982,7 +982,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "learnMore",
+										"id": "btnInvestmentBasics",
 										"link": "#/sample/en-US/InvestmentBasics",
 										"output": "Learn Investment Basics"
 									},
@@ -991,7 +991,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "btn4",
+										"id": "btnRetirementCalculator",
 										"link": "#/sample/en-US/RetirementCalculator",
 										"output": "Estimate Your Retirement Needs"
 									},
@@ -1002,7 +1002,7 @@
 						{
 							"type": "HTML",
 							"data": {
-								"id": "TBDDisclaimer",
+								"id": "disclaimer",
 								"output": ""
 							},
 							"components": [ ]
@@ -1024,7 +1024,7 @@
 						{
 							"type": "Video",
 							"data": {
-								"id": "yourPlanVideo",
+								"id": "vidMain",
 								"req": ["videogular.min.js"],
 								"config": {
 									"sources": [
@@ -1043,7 +1043,7 @@
 						{
 							"type": "HTML",
 							"data": {
-								"id": "TBDCaption",
+								"id": "captionMain",
 								"output": ""
 							},
 							"components": [ ]
@@ -1060,7 +1060,7 @@
 						{
 							"type": "Column",
 							"data": {
-								"id": "planDetailsCols",
+								"id": "colsBtnSection",
 								"cols": "2"
 							},
 							"components":
@@ -1068,7 +1068,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btnEmployerContributions",
 										"link": "#/sample/en-US/EmployerContributions",
 										"output": "Your employer is helping too"
 									},
@@ -1077,7 +1077,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btnRothContributions",
 										"link": "#/sample/en-US/RothContributions",
 										"output": "Roth Contributions"
 									},
@@ -1086,7 +1086,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btnRollovers",
 										"link": "#/sample/en-US/Rollovers",
 										"output": "Rollovers"
 									},
@@ -1095,7 +1095,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btn403b",
 										"link": "#/sample/en-US/403b",
 										"output": "403(b)"
 									},
@@ -1104,7 +1104,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btnManageOnline",
 										"link": "#/sample/en-US/ManageOnline",
 										"output": "Manage my account online"
 									},
@@ -1122,7 +1122,7 @@
 						{
 							"type": "Column",
 							"data": {
-								"id": "planDetailsCols",
+								"id": "colsBtnSections",
 								"cols": "2"
 							},
 							"components":
@@ -1130,7 +1130,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "TBD",
+										"id": "btnStartPlanning",
 										"link": "#/sample/en-US/StartPlanning",
 										"output": "Start Planning"
 									},
@@ -1139,7 +1139,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "learnMore",
+										"id": "btnInvestmentBasics",
 										"link": "#/sample/en-US/InvestmentBasics",
 										"output": "Learn Investment Basics"
 									},
@@ -1148,7 +1148,7 @@
 								{
 									"type": "Button",
 									"data": {
-										"id": "btn4",
+										"id": "btnRetirementCalculator",
 										"link": "#/sample/en-US/RetirementCalculator",
 										"output": "Estimate Your Retirement Needs"
 									},
@@ -1159,7 +1159,7 @@
 						{
 							"type": "HTML",
 							"data": {
-								"id": "TBDDisclaimer",
+								"id": "disclaimer",
 								"output": ""
 							},
 							"components": [ ]
@@ -1278,7 +1278,7 @@
 						{
 							"type": "HTML",
 							"data": {
-								"id": "standardFooter",
+								"id": "stndFooter",
 								"output": "FOOTER"
 							},
 							"components": [ ]
