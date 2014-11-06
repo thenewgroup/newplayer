@@ -286,6 +286,12 @@ function ManifestService(
 		};
 		this.setPageId = function(pageId)
 		{
+			// reset component index for reparsing new page
+			setComponentIdx( null );
+
+			// FIXME - temporary hack to prevent buggy infinite loops
+			this.getCount = 0;
+
 			this.pageId = pageId;
 		};
 

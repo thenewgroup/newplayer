@@ -16,7 +16,15 @@ function ManifestController(
 		vm.lang = $stateParams.lang;
 		vm.pageId = $stateParams.pageId;
 
-		$log.debug( 'ManifestCtrl::state is ', $state.current, vm.manifestId, vm.lang, vm.pageId );
+		$log.debug(
+			'ManifestCtrl::', {
+				'state': $state.current.name,
+				'url': $state.current.url,
+				'manifestId': vm.manifestId,
+				'lang': vm.lang,
+				'pageId': vm.pageId
+			}
+		);
 		if ( $state.is( 'manifest' ) )
 		{
 			$state.go(
@@ -32,16 +40,29 @@ function ManifestController(
 		} else
 		if ( $state.is( 'manifest.lang' ) )
 		{
+			var lang = $stateParams.lang;
+			if ( lang !== 'tbd' )
+			{
+				ManifestService.setLang( lang );
+			}
 			$state.go(
 				'manifest.lang.page',
 				{
-					lang: $stateParams.lang,
+					lang: lang,
 					pageId: 'tbd'
 				},
 				{
 					location: 'replace'
 				}
 			);
+		}
+		if ( $state.is( 'manifest.page' ) ||  $state.is( 'manifest.lang.page' ) )
+		{
+			var pageId = $stateParams.pageId;
+			if ( pageId !== 'tbd' )
+			{
+				ManifestService.setPageId( pageId );
+			}
 		}
 
 
