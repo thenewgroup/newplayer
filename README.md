@@ -22,6 +22,10 @@ High-level TBDs:
 - finish menu component
 	- Menu controller can getAll('Page')
 
+- GTM component
+	- req presentation-specific dataLayer code
+	- inserts GTM code
+
 - fix Column component or fork to Grid component
 	- ltr flow, calc remaining widths for sub-components
 
@@ -30,5 +34,11 @@ High-level TBDs:
 - whitelist core components and bake 'em into main script
 	- try to keep them agnostic of eachother
 	- component service doesn't load external js for whitelisted core components
-		
+
+- make another format for replacing module values!?
+- recursively load manifests?
+	- defaultManifest
+
+- abstract method "getId" available to components?
+	- overriden by components to set smart IDs when not in manifest.
 

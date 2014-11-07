@@ -1175,7 +1175,143 @@
 						"inMenu": true,
 						"required": false
 					},
-					"components": [ ]
+					"components":
+					[
+						{
+							"type": "Video",
+							"data": {
+								"id": "vidMain",
+								"req": ["videogular.min.js"],
+								"config": {
+									"sources": [
+										{
+											"src": "assets/en/vid/_3.1.mp4",
+											"type": "video/mp4"
+										}
+									],
+									"theme": {
+										"url": "scripts/component/Video/videogular.css"
+									}
+								}
+							},
+							"components": [ ]
+						},
+						{
+							"type": "HTML",
+							"data": {
+								"id": "captionMain",
+								"output": "What's your personal path to a retirement that will replace your income and be rewarding? Take a moment to reflect on the future to make sure it gives you what you truly desire."
+							},
+							"components": [ ]
+						},
+						{
+							"type": "Button",
+							"data": {
+								"id": "enrollNow",
+								"link": "/EnrollNow",
+								"output": "<strong>Enroll Now</strong><br/>or Increase My Contributions"
+							},
+							"components": [ ]
+						},
+						{
+							"type": "Column",
+							"data": {
+								"id": "colsBtnSection",
+								"cols": "2"
+							},
+							"components":
+							[
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnWhySaveNow",
+										"link": "#/sample/en-US/WhySaveNow",
+										"output": "Why Save Now"
+									},
+									"components": [ ]
+								},
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnWhySaveMore",
+										"link": "#/sample/en-US/WhySaveMore",
+										"output": "Why Save More"
+									},
+									"components": [ ]
+								},
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnTaxAdvantages",
+										"link": "#/sample/en-US/TaxAdvantages",
+										"output": "Tax Advantages to saving"
+									},
+									"components": [ ]
+								},
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnRetirementNeeds",
+										"link": "#/sample/en-US/RetirementCalculator",
+										"output": "Retirement needs calculator"
+									},
+									"components": [ ]
+								}
+							]
+						},
+						{
+							"type": "HTML",
+							"data": {
+								"output": "<hr/>"
+							},
+							"components": [ ]
+						},
+						{
+							"type": "Column",
+							"data": {
+								"id": "colsBtnSections",
+								"cols": "2"
+							},
+							"components":
+							[
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnInvestmentBasics",
+										"link": "#/sample/en-US/InvestmentBasics",
+										"output": "Learn Investment Basics"
+									},
+									"components": [ ]
+								},
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnYourPlan",
+										"link": "#/sample/en-US/YourPlan",
+										"output": "Explore Your Plan"
+									},
+									"components": [ ]
+								},
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnRetirementCalculator",
+										"link": "#/sample/en-US/RetirementCalculator",
+										"output": "Estimate Your Retirement Needs"
+									},
+									"components": [ ]
+								}
+							]
+						},
+						{
+							"type": "HTML",
+							"data": {
+								"id": "disclaimer",
+								"output": "1) Source: 2014 Social Security Administration. Visit ssa.gov/planners/lifeexpectancy.<br/>2) This example is hypothetical and for illustrative purposes onl<br/>3) Social Security Retirement Estimator, http://www.ssa.gov/estimator/. This chart assumes a normal retirement age of 67 and is for illustrative purposes only. To estimate your own Social Security benefits, call 800.772.1213 or visit www.ssa.gov for a personal Earnings and Benefit Estimate statement."
+							},
+							"components": [ ]
+						}
+					]
 				},
 				{
 					"type": "Page",
@@ -1184,9 +1320,146 @@
 						"parentId": "StartPlanning",
 						"title": "Why Save Now",
 						"inMenu": true,
+						"menuTitle": "Employer Contributions",
 						"required": false
 					},
-					"components": [ ]
+					"components":
+					[
+						{
+							"type": "Video",
+							"data": {
+								"id": "vidMain",
+								"req": ["videogular.min.js"],
+								"config": {
+									"sources": [
+										{
+											"src": "assets/en/vid/_3.3.mp4",
+											"type": "video/mp4"
+										}
+									],
+									"theme": {
+										"url": "scripts/component/Video/videogular.css"
+									}
+								}
+							},
+							"components": [ ]
+						},
+						{
+							"type": "HTML",
+							"data": {
+								"id": "captionMain",
+								"output": ""
+							},
+							"components": [ ]
+						},
+						{
+							"type": "Button",
+							"data": {
+								"id": "enrollNow",
+								"link": "/EnrollNow",
+								"output": "<strong>Enroll Now</strong><br/>or Increase My Contributions"
+							},
+							"components": [ ]
+						},
+						{
+							"type": "Column",
+							"data": {
+								"id": "colsBtnSection",
+								"cols": "2"
+							},
+							"components":
+							[
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnWhySaveNow",
+										"link": "#/sample/en-US/WhySaveNow",
+										"output": "Why Save Now"
+									},
+									"components": [ ]
+								},
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnWhySaveMore",
+										"link": "#/sample/en-US/WhySaveMore",
+										"output": "Why Save More"
+									},
+									"components": [ ]
+								},
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnTaxAdvantages",
+										"link": "#/sample/en-US/TaxAdvantages",
+										"output": "Tax Advantages to saving"
+									},
+									"components": [ ]
+								},
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnRetirementNeeds",
+										"link": "#/sample/en-US/RetirementCalculator",
+										"output": "Retirement needs calculator"
+									},
+									"components": [ ]
+								}
+							]
+						},
+						{
+							"type": "HTML",
+							"data": {
+								"output": "<hr/>"
+							},
+							"components": [ ]
+						},
+						{
+							"type": "Column",
+							"data": {
+								"id": "colsBtnSections",
+								"cols": "2"
+							},
+							"components":
+							[
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnInvestmentBasics",
+										"link": "#/sample/en-US/InvestmentBasics",
+										"output": "Learn Investment Basics"
+									},
+									"components": [ ]
+								},
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnYourPlan",
+										"link": "#/sample/en-US/YourPlan",
+										"output": "Explore Your Plan"
+									},
+									"components": [ ]
+								},
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnRetirementCalculator",
+										"link": "#/sample/en-US/RetirementCalculator",
+										"output": "Estimate Your Retirement Needs"
+									},
+									"components": [ ]
+								}
+							]
+						},
+						{
+							"type": "HTML",
+							"data": {
+								"id": "disclaimer",
+								"output": "1) Disclosure: This chart assumes that the account earns an average annual rate of return of XXX percent. This example is hypothetical and for illustrative purposes only and is not indicative of the performance of any specific investment or investment portfolio."
+							},
+							"components": [ ]
+						}
+					]
 				},
 				{
 					"type": "Page",
@@ -1197,7 +1470,143 @@
 						"inMenu": true,
 						"required": false
 					},
-					"components": [ ]
+					"components":
+					[
+						{
+							"type": "Video",
+							"data": {
+								"id": "vidMain",
+								"req": ["videogular.min.js"],
+								"config": {
+									"sources": [
+										{
+											"src": "assets/en/vid/_3.4.mp4",
+											"type": "video/mp4"
+										}
+									],
+									"theme": {
+										"url": "scripts/component/Video/videogular.css"
+									}
+								}
+							},
+							"components": [ ]
+						},
+						{
+							"type": "HTML",
+							"data": {
+								"id": "captionMain",
+								"output": ""
+							},
+							"components": [ ]
+						},
+						{
+							"type": "Button",
+							"data": {
+								"id": "enrollNow",
+								"link": "/EnrollNow",
+								"output": "<strong>Enroll Now</strong><br/>or Increase My Contributions"
+							},
+							"components": [ ]
+						},
+						{
+							"type": "Column",
+							"data": {
+								"id": "colsBtnSection",
+								"cols": "2"
+							},
+							"components":
+							[
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnWhySaveNow",
+										"link": "#/sample/en-US/WhySaveNow",
+										"output": "Why Save Now"
+									},
+									"components": [ ]
+								},
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnWhySaveMore",
+										"link": "#/sample/en-US/WhySaveMore",
+										"output": "Why Save More"
+									},
+									"components": [ ]
+								},
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnTaxAdvantages",
+										"link": "#/sample/en-US/TaxAdvantages",
+										"output": "Tax Advantages to saving"
+									},
+									"components": [ ]
+								},
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnRetirementNeeds",
+										"link": "#/sample/en-US/RetirementCalculator",
+										"output": "Retirement needs calculator"
+									},
+									"components": [ ]
+								}
+							]
+						},
+						{
+							"type": "HTML",
+							"data": {
+								"output": "<hr/>"
+							},
+							"components": [ ]
+						},
+						{
+							"type": "Column",
+							"data": {
+								"id": "colsBtnSections",
+								"cols": "2"
+							},
+							"components":
+							[
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnInvestmentBasics",
+										"link": "#/sample/en-US/InvestmentBasics",
+										"output": "Learn Investment Basics"
+									},
+									"components": [ ]
+								},
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnYourPlan",
+										"link": "#/sample/en-US/YourPlan",
+										"output": "Explore Your Plan"
+									},
+									"components": [ ]
+								},
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnRetirementCalculator",
+										"link": "#/sample/en-US/RetirementCalculator",
+										"output": "Estimate Your Retirement Needs"
+									},
+									"components": [ ]
+								}
+							]
+						},
+						{
+							"type": "HTML",
+							"data": {
+								"id": "disclaimer",
+								"output": "1) Epperson, Sharon. “Afford to Retire? More are Confident, But Few Save Enough.” NBC News. 18 March 2014. Web. 23 June 2014. <nbcnews.com/business/retirement/afford-retire-more-are-confident-few-save-enough-n55691>"
+							},
+							"components": [ ]
+						}
+					]
 				},
 				{
 					"type": "Page",
@@ -1209,7 +1618,143 @@
 						"menuTitle": "Tax Advantages",
 						"required": false
 					},
-					"components": [ ]
+					"components":
+					[
+						{
+							"type": "Video",
+							"data": {
+								"id": "vidMain",
+								"req": ["videogular.min.js"],
+								"config": {
+									"sources": [
+										{
+											"src": "assets/en/vid/_3.5.mp4",
+											"type": "video/mp4"
+										}
+									],
+									"theme": {
+										"url": "scripts/component/Video/videogular.css"
+									}
+								}
+							},
+							"components": [ ]
+						},
+						{
+							"type": "HTML",
+							"data": {
+								"id": "captionMain",
+								"output": ""
+							},
+							"components": [ ]
+						},
+						{
+							"type": "Button",
+							"data": {
+								"id": "enrollNow",
+								"link": "/EnrollNow",
+								"output": "<strong>Enroll Now</strong><br/>or Increase My Contributions"
+							},
+							"components": [ ]
+						},
+						{
+							"type": "Column",
+							"data": {
+								"id": "colsBtnSection",
+								"cols": "2"
+							},
+							"components":
+							[
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnWhySaveNow",
+										"link": "#/sample/en-US/WhySaveNow",
+										"output": "Why Save Now"
+									},
+									"components": [ ]
+								},
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnWhySaveMore",
+										"link": "#/sample/en-US/WhySaveMore",
+										"output": "Why Save More"
+									},
+									"components": [ ]
+								},
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnTaxAdvantages",
+										"link": "#/sample/en-US/TaxAdvantages",
+										"output": "Tax Advantages to saving"
+									},
+									"components": [ ]
+								},
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnRetirementNeeds",
+										"link": "#/sample/en-US/RetirementCalculator",
+										"output": "Retirement needs calculator"
+									},
+									"components": [ ]
+								}
+							]
+						},
+						{
+							"type": "HTML",
+							"data": {
+								"output": "<hr/>"
+							},
+							"components": [ ]
+						},
+						{
+							"type": "Column",
+							"data": {
+								"id": "colsBtnSections",
+								"cols": "2"
+							},
+							"components":
+							[
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnInvestmentBasics",
+										"link": "#/sample/en-US/InvestmentBasics",
+										"output": "Learn Investment Basics"
+									},
+									"components": [ ]
+								},
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnYourPlan",
+										"link": "#/sample/en-US/YourPlan",
+										"output": "Explore Your Plan"
+									},
+									"components": [ ]
+								},
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnRetirementCalculator",
+										"link": "#/sample/en-US/RetirementCalculator",
+										"output": "Estimate Your Retirement Needs"
+									},
+									"components": [ ]
+								}
+							]
+						},
+						{
+							"type": "HTML",
+							"data": {
+								"id": "disclaimer",
+								"output": ""
+							},
+							"components": [ ]
+						}
+					]
 				},
 				{
 					"type": "Page",
@@ -1221,7 +1766,143 @@
 						"menuTitle": "Retirement Calculator",
 						"required": false
 					},
-					"components": [ ]
+					"components":
+					[
+						{
+							"type": "Video",
+							"data": {
+								"id": "vidMain",
+								"req": ["videogular.min.js"],
+								"config": {
+									"sources": [
+										{
+											"src": "assets/en/vid/_3.6.mp4",
+											"type": "video/mp4"
+										}
+									],
+									"theme": {
+										"url": "scripts/component/Video/videogular.css"
+									}
+								}
+							},
+							"components": [ ]
+						},
+						{
+							"type": "HTML",
+							"data": {
+								"id": "captionMain",
+								"output": ""
+							},
+							"components": [ ]
+						},
+						{
+							"type": "Button",
+							"data": {
+								"id": "enrollNow",
+								"link": "/EnrollNow",
+								"output": "<strong>Enroll Now</strong><br/>or Increase My Contributions"
+							},
+							"components": [ ]
+						},
+						{
+							"type": "Column",
+							"data": {
+								"id": "colsBtnSection",
+								"cols": "2"
+							},
+							"components":
+							[
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnWhySaveNow",
+										"link": "#/sample/en-US/WhySaveNow",
+										"output": "Why Save Now"
+									},
+									"components": [ ]
+								},
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnWhySaveMore",
+										"link": "#/sample/en-US/WhySaveMore",
+										"output": "Why Save More"
+									},
+									"components": [ ]
+								},
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnTaxAdvantages",
+										"link": "#/sample/en-US/TaxAdvantages",
+										"output": "Tax Advantages to saving"
+									},
+									"components": [ ]
+								},
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnRetirementNeeds",
+										"link": "#/sample/en-US/RetirementCalculator",
+										"output": "Retirement needs calculator"
+									},
+									"components": [ ]
+								}
+							]
+						},
+						{
+							"type": "HTML",
+							"data": {
+								"output": "<hr/>"
+							},
+							"components": [ ]
+						},
+						{
+							"type": "Column",
+							"data": {
+								"id": "colsBtnSections",
+								"cols": "2"
+							},
+							"components":
+							[
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnInvestmentBasics",
+										"link": "#/sample/en-US/InvestmentBasics",
+										"output": "Learn Investment Basics"
+									},
+									"components": [ ]
+								},
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnYourPlan",
+										"link": "#/sample/en-US/YourPlan",
+										"output": "Explore Your Plan"
+									},
+									"components": [ ]
+								},
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnRetirementCalculator",
+										"link": "#/sample/en-US/RetirementCalculator",
+										"output": "Estimate Your Retirement Needs"
+									},
+									"components": [ ]
+								}
+							]
+						},
+						{
+							"type": "HTML",
+							"data": {
+								"id": "disclaimer",
+								"output": ""
+							},
+							"components": [ ]
+						}
+					]
 				},
 				{
 					"type": "Page",
