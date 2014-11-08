@@ -1,7 +1,7 @@
 'use strict';
 
 /** @ngInject */
-function ComponentService( $log, ManifestService, $ocLazyLoad /*, $timeout, $http, $q, $state, $rootScope*/ )
+function ComponentService( $log, ManifestService, $http, $ocLazyLoad /*, $timeout, $http, $q, $state, $rootScope*/ )
 {
 	$log.debug('\nComponentService::Init\n');
 
@@ -18,13 +18,32 @@ function ComponentService( $log, ManifestService, $ocLazyLoad /*, $timeout, $htt
 		var cmpDependencies = [];
 
 
-		function initCmp( cmpType )
+		var initCmp = function( componentObj )
 		{
 			//$log.debug( 'ComponentService::initCmp:', cmpType, COMPONENT_ROOT );
 
+			// reset specific-component values
+			setCmpDependencies( [] );
+
+			// parse component "type"
+			// TBD validate incoming data
+			var cmpType = componentObj.type || 'empty';
+			var cmpData = componentObj.data;
 			// add base dependency
 			addCmpDependencies( cmpType, cmpType + '.js' );
-		}
+
+			// parse component "data" required during component load
+			if ( !!cmpType && !!cmpData )
+			{
+				// "data"."req" - array of URLs to additional dependencies of this component
+				var cmpDependencies = cmpData.req;
+				if ( !!cmpDependencies )
+				{
+					// TBD validate incoming data
+					addCmpDependencies( cmpType, cmpDependencies );
+				}
+			}
+		};
 
 		var cleanURL = function( cmpType, cmpURL )
 		{
@@ -49,15 +68,15 @@ function ComponentService( $log, ManifestService, $ocLazyLoad /*, $timeout, $htt
 			return cmpURL;
 		};
 
-		function getCmpDependencies()
+		var getCmpDependencies = function()
 		{
 			return cmpDependencies;
-		}
+		};
 		var setCmpDependencies = function ( cmpDeps )
 		{
 			cmpDependencies = cmpDeps;
 		};
-		function addCmpDependencies( cmpType, cmpDeps )
+		var addCmpDependencies = function( cmpType, cmpDeps )
 		{
 			$log.debug( 'ComponentService::addCmpDependencies:', cmpType, cmpDeps );
 			if ( typeof( cmpDeps ) === 'string' )
@@ -70,9 +89,9 @@ function ComponentService( $log, ManifestService, $ocLazyLoad /*, $timeout, $htt
 					cmpDependencies.push( cleanURL( cmpType, cmpDep ) );
 				}
 			}
-		}
+		};
 
-		this.getTemplateURL = function( componentObj )
+		var getTemplateURL = function( componentObj )
 		{
 			var template = DEFAULT_TEMPLATE;
 			// TBD validate incoming data
@@ -98,43 +117,55 @@ function ComponentService( $log, ManifestService, $ocLazyLoad /*, $timeout, $htt
 			return template;
 		};
 
-		this.getDefaultTemplate = function()
+		var getDefaultTemplate = function()
 		{
 			return DEFAULT_TEMPLATE;
+		};
+
+		this.getTemplate = function( componentObj )
+		{
+			var templateURL = getTemplateURL( componentObj );
+
+			$log.debug('ComponentService::getTemlpate: cmp,templateURL:', componentObj, templateURL );
+			if ( !!templateURL )
+			{
+				var tmplPromise =
+					$http.get( templateURL , {cache:true} )
+						.then(
+							function( data )
+							{
+								//$log.debug('ComponentService::getTemplate: success!', data);
+								return data;
+							},
+							function()
+							{
+								$log.debug('ComponentService::getTemplate: load failed!');
+								templateURL = self.getDefaultTemplate();
+								$http.get( templateURL, {cache:true} )
+									.then(
+										function( data )
+										{
+											return data;
+										}
+									);
+							}
+						);
+				return tmplPromise;
+			}
 		};
 
 		this.load = function( componentObj )
 		{
 			$log.debug( '\nComponentService::load:', componentObj.type );
 
-			// TBD - reset specific-component values
-			setCmpDependencies( [] );
+			initCmp( componentObj );
 
-			// parse component "type"
-			// TBD validate incoming data
-			var cmpName = componentObj.type || 'empty';
-			initCmp( cmpName );
-
-			// parse component "data" required during component load
-			// TBD validate incoming data
-			var cmpType = componentObj.type;
-			var cmpData = componentObj.data;
-			if ( !!cmpType && !!cmpData )
-			{
-				// "data"."req" - array of URLs to additional dependencies of this component
-				var cmpDependencies = cmpData.req;
-				if ( !!cmpDependencies )
-				{
-					// TBD validate incoming data
-					addCmpDependencies( cmpType, cmpDependencies );
-				}
-			}
-
-			$log.debug( 'ComponentService::loading:', cmpName, getCmpDependencies() );
+			var cmpType = componentObj.type || 'empty';
+			$log.debug( 'ComponentService::loading:', cmpType, getCmpDependencies() );
 			var aPromise =
 				$ocLazyLoad.load(
 					{
-						name: cmpName,
+						name: cmpType,
 						files: getCmpDependencies()
 					}
 				)

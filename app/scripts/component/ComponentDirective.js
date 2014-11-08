@@ -2,7 +2,7 @@
 
 /** @ngInject */
 function ComponentDirective(
-	$log, ManifestService, ComponentService, $http, $compile/*, $stateParams, $state, $timeout*/
+	$log, ManifestService, ComponentService, $compile/*, $stateParams, $state, $timeout*/
 )
 {
 	$log.debug('\nComponentDirective::Init\n');
@@ -31,16 +31,7 @@ function ComponentDirective(
 				$log.debug('ComponentDirective::compile!');
 
 				parseComponent( $scope, $element, $attributes );
-
-				/*
-				$http.get('scripts/component/component.html',{cache:true}).then(function(data) {
-					var compiled = $compile(angular.element(data.data));
-					var linked = compiled($scope);
-					$element.append(linked);
-				});
-				*/
-
- 			};
+			};
 		};
 
 
@@ -119,32 +110,17 @@ function ComponentDirective(
 							$scope.subCmp = false;
 						}
 
-						var templateURL = ComponentService.getTemplateURL( cmp );
-						$log.debug('ComponentDirective::parseComponent: cmp,templateURL:', cmp, templateURL );
-						if ( !!templateURL )
-						{
-							$scope.template = templateURL;
-							$http.get( templateURL , {cache:false} )
-							.then(
-								function( data )
-								{
-									templateLoaded( data, $scope, $element );
-								},
-								function()
-								{
-									$log.debug('ComponentDirective::parseComponent: load failed!');
-									templateURL = ComponentService.getDefaultTemplate();
-									$scope.template = templateURL;
-									$http.get( templateURL, {cache:false} )
-									.then(
-										function( data )
-										{
-											templateLoaded( data, $scope, $element );
-										}
-									);
-								}
-							);
-						}
+						ComponentService.getTemplate(
+							cmp
+						)
+						.then(
+							function( data )
+							{
+								$log.debug('ComponentDirective::parseComponent: template', data);
+								templateLoaded( data, $scope, $element );
+							}
+						);
+
 					}
 				);
 			}
