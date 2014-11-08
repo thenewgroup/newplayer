@@ -166,7 +166,7 @@
 											"type": "Button",
 											"data": {
 												"id": "btnEmployerContributions",
-												"link": "#/sample/en-US/EmployerContributions",
+												"link": "#/sample/EmployerContributions",
 												"output": "Learn More about employer contributions"
 											},
 											"components": [ ]
@@ -212,7 +212,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnYourPlan",
-										"link": "#/sample/en-US/YourPlan",
+										"link": "#/sample/YourPlan",
 										"output": "Learn More About Your Plan"
 									},
 									"components": [ ]
@@ -221,7 +221,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRetirementCalculator",
-										"link": "#/sample/en-US/RetirementCalculator",
+										"link": "#/sample/RetirementCalculator",
 										"output": "Estimate Your Retirement Needs"
 									},
 									"components": [ ]
@@ -297,7 +297,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnEmployerContributions",
-										"link": "#/sample/en-US/EmployerContributions",
+										"link": "#/sample/EmployerContributions",
 										"output": "Your employer is helping too"
 									},
 									"components": [ ]
@@ -306,7 +306,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRothContributions",
-										"link": "#/sample/en-US/RothContributions",
+										"link": "#/sample/RothContributions",
 										"output": "Roth Contributions"
 									},
 									"components": [ ]
@@ -315,7 +315,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRollovers",
-										"link": "#/sample/en-US/Rollovers",
+										"link": "#/sample/Rollovers",
 										"output": "Rollovers"
 									},
 									"components": [ ]
@@ -324,7 +324,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btn403b",
-										"link": "#/sample/en-US/403b",
+										"link": "#/sample/403b",
 										"output": "403(b)"
 									},
 									"components": [ ]
@@ -333,7 +333,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnManageOnline",
-										"link": "#/sample/en-US/ManageOnline",
+										"link": "#/sample/ManageOnline",
 										"output": "Manage my account online"
 									},
 									"components": [ ]
@@ -359,7 +359,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnStartPlanning",
-										"link": "#/sample/en-US/StartPlanning",
+										"link": "#/sample/StartPlanning",
 										"output": "Start Planning"
 									},
 									"components": [ ]
@@ -368,7 +368,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnInvestmentBasics",
-										"link": "#/sample/en-US/InvestmentBasics",
+										"link": "#/sample/InvestmentBasics",
 										"output": "Learn Investment Basics"
 									},
 									"components": [ ]
@@ -377,7 +377,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRetirementCalculator",
-										"link": "#/sample/en-US/RetirementCalculator",
+										"link": "#/sample/RetirementCalculator",
 										"output": "Estimate Your Retirement Needs"
 									},
 									"components": [ ]
@@ -454,7 +454,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnEmployerContributions",
-										"link": "#/sample/en-US/EmployerContributions",
+										"link": "#/sample/EmployerContributions",
 										"output": "Your employer is helping too"
 									},
 									"components": [ ]
@@ -463,7 +463,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRothContributions",
-										"link": "#/sample/en-US/RothContributions",
+										"link": "#/sample/RothContributions",
 										"output": "Roth Contributions"
 									},
 									"components": [ ]
@@ -472,7 +472,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRollovers",
-										"link": "#/sample/en-US/Rollovers",
+										"link": "#/sample/Rollovers",
 										"output": "Rollovers"
 									},
 									"components": [ ]
@@ -481,7 +481,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btn403b",
-										"link": "#/sample/en-US/403b",
+										"link": "#/sample/403b",
 										"output": "403(b)"
 									},
 									"components": [ ]
@@ -490,7 +490,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnManageOnline",
-										"link": "#/sample/en-US/ManageOnline",
+										"link": "#/sample/ManageOnline",
 										"output": "Manage my account online"
 									},
 									"components": [ ]
@@ -516,7 +516,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnStartPlanning",
-										"link": "#/sample/en-US/StartPlanning",
+										"link": "#/sample/StartPlanning",
 										"output": "Start Planning"
 									},
 									"components": [ ]
@@ -525,7 +525,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnInvestmentBasics",
-										"link": "#/sample/en-US/InvestmentBasics",
+										"link": "#/sample/InvestmentBasics",
 										"output": "Learn Investment Basics"
 									},
 									"components": [ ]
@@ -534,7 +534,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRetirementCalculator",
-										"link": "#/sample/en-US/RetirementCalculator",
+										"link": "#/sample/RetirementCalculator",
 										"output": "Estimate Your Retirement Needs"
 									},
 									"components": [ ]
@@ -610,7 +610,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnEmployerContributions",
-										"link": "#/sample/en-US/EmployerContributions",
+										"link": "#/sample/EmployerContributions",
 										"output": "Your employer is helping too"
 									},
 									"components": [ ]
@@ -619,7 +619,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRothContributions",
-										"link": "#/sample/en-US/RothContributions",
+										"link": "#/sample/RothContributions",
 										"output": "Roth Contributions"
 									},
 									"components": [ ]
@@ -628,7 +628,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRollovers",
-										"link": "#/sample/en-US/Rollovers",
+										"link": "#/sample/Rollovers",
 										"output": "Rollovers"
 									},
 									"components": [ ]
@@ -637,7 +637,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btn403b",
-										"link": "#/sample/en-US/403b",
+										"link": "#/sample/403b",
 										"output": "403(b)"
 									},
 									"components": [ ]
@@ -646,7 +646,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnManageOnline",
-										"link": "#/sample/en-US/ManageOnline",
+										"link": "#/sample/ManageOnline",
 										"output": "Manage my account online"
 									},
 									"components": [ ]
@@ -672,7 +672,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnStartPlanning",
-										"link": "#/sample/en-US/StartPlanning",
+										"link": "#/sample/StartPlanning",
 										"output": "Start Planning"
 									},
 									"components": [ ]
@@ -681,7 +681,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnInvestmentBasics",
-										"link": "#/sample/en-US/InvestmentBasics",
+										"link": "#/sample/InvestmentBasics",
 										"output": "Learn Investment Basics"
 									},
 									"components": [ ]
@@ -690,7 +690,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRetirementCalculator",
-										"link": "#/sample/en-US/RetirementCalculator",
+										"link": "#/sample/RetirementCalculator",
 										"output": "Estimate Your Retirement Needs"
 									},
 									"components": [ ]
@@ -766,7 +766,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnEmployerContributions",
-										"link": "#/sample/en-US/EmployerContributions",
+										"link": "#/sample/EmployerContributions",
 										"output": "Your employer is helping too"
 									},
 									"components": [ ]
@@ -775,7 +775,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRothContributions",
-										"link": "#/sample/en-US/RothContributions",
+										"link": "#/sample/RothContributions",
 										"output": "Roth Contributions"
 									},
 									"components": [ ]
@@ -784,7 +784,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRollovers",
-										"link": "#/sample/en-US/Rollovers",
+										"link": "#/sample/Rollovers",
 										"output": "Rollovers"
 									},
 									"components": [ ]
@@ -793,7 +793,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btn403b",
-										"link": "#/sample/en-US/403b",
+										"link": "#/sample/403b",
 										"output": "403(b)"
 									},
 									"components": [ ]
@@ -802,7 +802,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnManageOnline",
-										"link": "#/sample/en-US/ManageOnline",
+										"link": "#/sample/ManageOnline",
 										"output": "Manage my account online"
 									},
 									"components": [ ]
@@ -828,7 +828,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnStartPlanning",
-										"link": "#/sample/en-US/StartPlanning",
+										"link": "#/sample/StartPlanning",
 										"output": "Start Planning"
 									},
 									"components": [ ]
@@ -837,7 +837,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnInvestmentBasics",
-										"link": "#/sample/en-US/InvestmentBasics",
+										"link": "#/sample/InvestmentBasics",
 										"output": "Learn Investment Basics"
 									},
 									"components": [ ]
@@ -846,7 +846,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRetirementCalculator",
-										"link": "#/sample/en-US/RetirementCalculator",
+										"link": "#/sample/RetirementCalculator",
 										"output": "Estimate Your Retirement Needs"
 									},
 									"components": [ ]
@@ -922,7 +922,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnEmployerContributions",
-										"link": "#/sample/en-US/EmployerContributions",
+										"link": "#/sample/EmployerContributions",
 										"output": "Your employer is helping too"
 									},
 									"components": [ ]
@@ -931,7 +931,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRothContributions",
-										"link": "#/sample/en-US/RothContributions",
+										"link": "#/sample/RothContributions",
 										"output": "Roth Contributions"
 									},
 									"components": [ ]
@@ -940,7 +940,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRollovers",
-										"link": "#/sample/en-US/Rollovers",
+										"link": "#/sample/Rollovers",
 										"output": "Rollovers"
 									},
 									"components": [ ]
@@ -949,7 +949,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btn403b",
-										"link": "#/sample/en-US/403b",
+										"link": "#/sample/403b",
 										"output": "403(b)"
 									},
 									"components": [ ]
@@ -958,7 +958,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnManageOnline",
-										"link": "#/sample/en-US/ManageOnline",
+										"link": "#/sample/ManageOnline",
 										"output": "Manage my account online"
 									},
 									"components": [ ]
@@ -984,7 +984,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnStartPlanning",
-										"link": "#/sample/en-US/StartPlanning",
+										"link": "#/sample/StartPlanning",
 										"output": "Start Planning"
 									},
 									"components": [ ]
@@ -993,7 +993,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnInvestmentBasics",
-										"link": "#/sample/en-US/InvestmentBasics",
+										"link": "#/sample/InvestmentBasics",
 										"output": "Learn Investment Basics"
 									},
 									"components": [ ]
@@ -1002,7 +1002,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRetirementCalculator",
-										"link": "#/sample/en-US/RetirementCalculator",
+										"link": "#/sample/RetirementCalculator",
 										"output": "Estimate Your Retirement Needs"
 									},
 									"components": [ ]
@@ -1079,7 +1079,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnEmployerContributions",
-										"link": "#/sample/en-US/EmployerContributions",
+										"link": "#/sample/EmployerContributions",
 										"output": "Your employer is helping too"
 									},
 									"components": [ ]
@@ -1088,7 +1088,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRothContributions",
-										"link": "#/sample/en-US/RothContributions",
+										"link": "#/sample/RothContributions",
 										"output": "Roth Contributions"
 									},
 									"components": [ ]
@@ -1097,7 +1097,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRollovers",
-										"link": "#/sample/en-US/Rollovers",
+										"link": "#/sample/Rollovers",
 										"output": "Rollovers"
 									},
 									"components": [ ]
@@ -1106,7 +1106,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btn403b",
-										"link": "#/sample/en-US/403b",
+										"link": "#/sample/403b",
 										"output": "403(b)"
 									},
 									"components": [ ]
@@ -1115,7 +1115,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnManageOnline",
-										"link": "#/sample/en-US/ManageOnline",
+										"link": "#/sample/ManageOnline",
 										"output": "Manage my account online"
 									},
 									"components": [ ]
@@ -1141,7 +1141,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnStartPlanning",
-										"link": "#/sample/en-US/StartPlanning",
+										"link": "#/sample/StartPlanning",
 										"output": "Start Planning"
 									},
 									"components": [ ]
@@ -1150,7 +1150,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnInvestmentBasics",
-										"link": "#/sample/en-US/InvestmentBasics",
+										"link": "#/sample/InvestmentBasics",
 										"output": "Learn Investment Basics"
 									},
 									"components": [ ]
@@ -1159,7 +1159,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRetirementCalculator",
-										"link": "#/sample/en-US/RetirementCalculator",
+										"link": "#/sample/RetirementCalculator",
 										"output": "Estimate Your Retirement Needs"
 									},
 									"components": [ ]
@@ -1235,7 +1235,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnWhySaveNow",
-										"link": "#/sample/en-US/WhySaveNow",
+										"link": "#/sample/WhySaveNow",
 										"output": "Why Save Now"
 									},
 									"components": [ ]
@@ -1244,7 +1244,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnWhySaveMore",
-										"link": "#/sample/en-US/WhySaveMore",
+										"link": "#/sample/WhySaveMore",
 										"output": "Why Save More"
 									},
 									"components": [ ]
@@ -1253,7 +1253,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnTaxAdvantages",
-										"link": "#/sample/en-US/TaxAdvantages",
+										"link": "#/sample/TaxAdvantages",
 										"output": "Tax Advantages to saving"
 									},
 									"components": [ ]
@@ -1262,7 +1262,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRetirementNeeds",
-										"link": "#/sample/en-US/RetirementCalculator",
+										"link": "#/sample/RetirementCalculator",
 										"output": "Retirement needs calculator"
 									},
 									"components": [ ]
@@ -1288,7 +1288,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnInvestmentBasics",
-										"link": "#/sample/en-US/InvestmentBasics",
+										"link": "#/sample/InvestmentBasics",
 										"output": "Learn Investment Basics"
 									},
 									"components": [ ]
@@ -1297,7 +1297,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnYourPlan",
-										"link": "#/sample/en-US/YourPlan",
+										"link": "#/sample/YourPlan",
 										"output": "Explore Your Plan"
 									},
 									"components": [ ]
@@ -1306,7 +1306,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRetirementCalculator",
-										"link": "#/sample/en-US/RetirementCalculator",
+										"link": "#/sample/RetirementCalculator",
 										"output": "Estimate Your Retirement Needs"
 									},
 									"components": [ ]
@@ -1383,7 +1383,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnWhySaveNow",
-										"link": "#/sample/en-US/WhySaveNow",
+										"link": "#/sample/WhySaveNow",
 										"output": "Why Save Now"
 									},
 									"components": [ ]
@@ -1392,7 +1392,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnWhySaveMore",
-										"link": "#/sample/en-US/WhySaveMore",
+										"link": "#/sample/WhySaveMore",
 										"output": "Why Save More"
 									},
 									"components": [ ]
@@ -1401,7 +1401,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnTaxAdvantages",
-										"link": "#/sample/en-US/TaxAdvantages",
+										"link": "#/sample/TaxAdvantages",
 										"output": "Tax Advantages to saving"
 									},
 									"components": [ ]
@@ -1410,7 +1410,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRetirementNeeds",
-										"link": "#/sample/en-US/RetirementCalculator",
+										"link": "#/sample/RetirementCalculator",
 										"output": "Retirement needs calculator"
 									},
 									"components": [ ]
@@ -1436,7 +1436,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnInvestmentBasics",
-										"link": "#/sample/en-US/InvestmentBasics",
+										"link": "#/sample/InvestmentBasics",
 										"output": "Learn Investment Basics"
 									},
 									"components": [ ]
@@ -1445,7 +1445,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnYourPlan",
-										"link": "#/sample/en-US/YourPlan",
+										"link": "#/sample/YourPlan",
 										"output": "Explore Your Plan"
 									},
 									"components": [ ]
@@ -1454,7 +1454,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRetirementCalculator",
-										"link": "#/sample/en-US/RetirementCalculator",
+										"link": "#/sample/RetirementCalculator",
 										"output": "Estimate Your Retirement Needs"
 									},
 									"components": [ ]
@@ -1530,7 +1530,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnWhySaveNow",
-										"link": "#/sample/en-US/WhySaveNow",
+										"link": "#/sample/WhySaveNow",
 										"output": "Why Save Now"
 									},
 									"components": [ ]
@@ -1539,7 +1539,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnWhySaveMore",
-										"link": "#/sample/en-US/WhySaveMore",
+										"link": "#/sample/WhySaveMore",
 										"output": "Why Save More"
 									},
 									"components": [ ]
@@ -1548,7 +1548,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnTaxAdvantages",
-										"link": "#/sample/en-US/TaxAdvantages",
+										"link": "#/sample/TaxAdvantages",
 										"output": "Tax Advantages to saving"
 									},
 									"components": [ ]
@@ -1557,7 +1557,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRetirementNeeds",
-										"link": "#/sample/en-US/RetirementCalculator",
+										"link": "#/sample/RetirementCalculator",
 										"output": "Retirement needs calculator"
 									},
 									"components": [ ]
@@ -1583,7 +1583,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnInvestmentBasics",
-										"link": "#/sample/en-US/InvestmentBasics",
+										"link": "#/sample/InvestmentBasics",
 										"output": "Learn Investment Basics"
 									},
 									"components": [ ]
@@ -1592,7 +1592,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnYourPlan",
-										"link": "#/sample/en-US/YourPlan",
+										"link": "#/sample/YourPlan",
 										"output": "Explore Your Plan"
 									},
 									"components": [ ]
@@ -1601,7 +1601,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRetirementCalculator",
-										"link": "#/sample/en-US/RetirementCalculator",
+										"link": "#/sample/RetirementCalculator",
 										"output": "Estimate Your Retirement Needs"
 									},
 									"components": [ ]
@@ -1678,7 +1678,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnWhySaveNow",
-										"link": "#/sample/en-US/WhySaveNow",
+										"link": "#/sample/WhySaveNow",
 										"output": "Why Save Now"
 									},
 									"components": [ ]
@@ -1687,7 +1687,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnWhySaveMore",
-										"link": "#/sample/en-US/WhySaveMore",
+										"link": "#/sample/WhySaveMore",
 										"output": "Why Save More"
 									},
 									"components": [ ]
@@ -1696,7 +1696,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnTaxAdvantages",
-										"link": "#/sample/en-US/TaxAdvantages",
+										"link": "#/sample/TaxAdvantages",
 										"output": "Tax Advantages to saving"
 									},
 									"components": [ ]
@@ -1705,7 +1705,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRetirementNeeds",
-										"link": "#/sample/en-US/RetirementCalculator",
+										"link": "#/sample/RetirementCalculator",
 										"output": "Retirement needs calculator"
 									},
 									"components": [ ]
@@ -1731,7 +1731,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnInvestmentBasics",
-										"link": "#/sample/en-US/InvestmentBasics",
+										"link": "#/sample/InvestmentBasics",
 										"output": "Learn Investment Basics"
 									},
 									"components": [ ]
@@ -1740,7 +1740,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnYourPlan",
-										"link": "#/sample/en-US/YourPlan",
+										"link": "#/sample/YourPlan",
 										"output": "Explore Your Plan"
 									},
 									"components": [ ]
@@ -1749,7 +1749,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRetirementCalculator",
-										"link": "#/sample/en-US/RetirementCalculator",
+										"link": "#/sample/RetirementCalculator",
 										"output": "Estimate Your Retirement Needs"
 									},
 									"components": [ ]
@@ -1826,7 +1826,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnWhySaveNow",
-										"link": "#/sample/en-US/WhySaveNow",
+										"link": "#/sample/WhySaveNow",
 										"output": "Why Save Now"
 									},
 									"components": [ ]
@@ -1835,7 +1835,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnWhySaveMore",
-										"link": "#/sample/en-US/WhySaveMore",
+										"link": "#/sample/WhySaveMore",
 										"output": "Why Save More"
 									},
 									"components": [ ]
@@ -1844,7 +1844,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnTaxAdvantages",
-										"link": "#/sample/en-US/TaxAdvantages",
+										"link": "#/sample/TaxAdvantages",
 										"output": "Tax Advantages to saving"
 									},
 									"components": [ ]
@@ -1853,7 +1853,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRetirementNeeds",
-										"link": "#/sample/en-US/RetirementCalculator",
+										"link": "#/sample/RetirementCalculator",
 										"output": "Retirement needs calculator"
 									},
 									"components": [ ]
@@ -1879,7 +1879,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnInvestmentBasics",
-										"link": "#/sample/en-US/InvestmentBasics",
+										"link": "#/sample/InvestmentBasics",
 										"output": "Learn Investment Basics"
 									},
 									"components": [ ]
@@ -1888,7 +1888,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnYourPlan",
-										"link": "#/sample/en-US/YourPlan",
+										"link": "#/sample/YourPlan",
 										"output": "Explore Your Plan"
 									},
 									"components": [ ]
@@ -1897,7 +1897,7 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRetirementCalculator",
-										"link": "#/sample/en-US/RetirementCalculator",
+										"link": "#/sample/RetirementCalculator",
 										"output": "Estimate Your Retirement Needs"
 									},
 									"components": [ ]
