@@ -51,13 +51,23 @@
 									},
 									"components": [
 										{
-											"type": "Image",
+											"type": "Button",
 											"data": {
-												"id": "stndLogo",
-												"src": "assets/logo-theStandard.png",
-												"alt": "logo"
+												"id": "btnHomeLogo",
+												"link": "#/sample/Welcome"
 											},
-											"components": [ ]
+											"components":
+											[
+												{
+													"type": "Image",
+													"data": {
+														"id": "stndLogo",
+														"src": "assets/logo-theStandard.png",
+														"alt": "logo"
+													},
+													"components": [ ]
+												}
+											]
 										},
 										{
 											"type": "HTML",
