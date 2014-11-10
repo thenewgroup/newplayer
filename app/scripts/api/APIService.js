@@ -1,14 +1,14 @@
 'use strict';
 /** @ngInject */
-function APIService( $log, $timeout, $http/*, $q, $state, $rootScope*/ )
+function APIService( $log, $http/*, $timeout, $q, $state, $rootScope*/ )
 {
 	$log.debug( '\nApiService: Init\n' );
 
 	var Service = function()
 	{
 		var self = this;
-		var baseUrl = '';
 		var promise = null;
+		var manifestURL = null;
 
 		function getPromise()
 		{
@@ -19,14 +19,39 @@ function APIService( $log, $timeout, $http/*, $q, $state, $rootScope*/ )
 			self.promise = promise;
 		}
 
-		this.getData = function( manifestId )
+		function getManifestURL()
 		{
-			$log.debug( 'APIService: current promise:', getPromise() );
+			return self.manifestURL;
+		}
+		function setManifestURL( url )
+		{
+			self.manifestURL = url;
+		}
+		this.getManifestURL = function()
+		{
+			return getManifestURL();
+		};
+
+		this.initialize = function( npConfig, manifestId )
+		{
+			$log.debug( 'APIService: initialize:', npConfig, manifestId );
+			var manifestURL = npConfig[0].manifestURL;
+			if ( !!manifestURL )
+			{
+				setManifestURL( manifestURL.replace( '{manifestId}', manifestId ) );
+			} else {
+				setManifestURL( 'sample.json' );
+			}
+		};
+
+		this.getData = function( url )
+		{
+			$log.debug( 'APIService: getData: URL:', url );
 			if ( !getPromise() )
 			{
 				var aPromise =
 					$http.get(
-						baseUrl + manifestId + '.json',
+						url,
 						{
 							cache: true,
 							transformRequest: function(data)

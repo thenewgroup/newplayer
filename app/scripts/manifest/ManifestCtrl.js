@@ -11,8 +11,8 @@ function ManifestController(
 
 	function initialize()
 	{
-		$log.debug( 'ManifestCtrl:: manifestId ', ManifestService.getManifestId() );
-		vm.manifestId = ManifestService.getManifestId();
+		$log.debug( 'ManifestCtrl:: manifestData ', manifestData );
+		//vm.manifestId = ManifestService.getManifestId();
 		vm.lang = $stateParams.lang;
 		vm.pageId = $stateParams.pageId;
 
@@ -20,7 +20,7 @@ function ManifestController(
 			'ManifestCtrl::', {
 				'state': $state.current.name,
 				'url': $state.current.url,
-				'manifestId': vm.manifestId,
+				'manifestData': vm.manifestData,
 				'lang': vm.lang,
 				'pageId': vm.pageId
 			}

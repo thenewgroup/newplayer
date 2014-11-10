@@ -103,7 +103,7 @@ function ManifestService(
 			return self.getComponent( getComponentIdx() );
 		}
 
-		function initialize( data )
+		this.initialize = function( data )
 		{
 			$log.debug('ManifestService::initialize:', data);
 
@@ -117,31 +117,6 @@ function ManifestService(
 			}
 
 			$log.debug('ManifestService::initialized:', getData() );
-		}
-
-		this.loadData = function( manifestId )
-		{
-			if ( !getData() || manifestId !== this.getManifestId() )
-			{
-				APIService.reset();
-				setComponentIdx( null );
-				this.setManifestId( manifestId );
-				$log.debug('ManifestService::loadData:', manifestId);
-				var aPromise =
-					APIService.getData( manifestId ).then
-					(
-						function(res)
-						{
-							$log.debug('ManifestService::loadData: success', res);
-							initialize( res );
-							return getData();
-						}
-					);
-				setPromise( aPromise );
-			} else {
-				$log.debug( 'ManifestService::loadData: data already loaded:', getData() );
-			}
-			return getPromise();
 		};
 
 		// FIXME - temporary hack to prevent buggy infinite loops
