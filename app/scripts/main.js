@@ -17,7 +17,7 @@ angular
 	/** @ngInject */
 	.factory('APIService' , APIService)
 	/** @ngInject */
-	.factory('ConfigService' , APIService)
+	.factory('ConfigService' , ConfigService)
 	/** @ngInject */
 	.factory('ManifestService' , ManifestService)
 	/** @ngInject */

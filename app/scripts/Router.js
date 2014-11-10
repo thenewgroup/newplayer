@@ -3,7 +3,7 @@
 /** @ngInject */
 function Router($logProvider, $stateProvider, $urlRouterProvider, $uiViewScrollProvider)
 {
-	$logProvider.debugEnabled(true);
+	$logProvider.debugEnabled(false);
 	$uiViewScrollProvider.useAnchorScroll();
 	$urlRouterProvider.otherwise('/sample');
 	$stateProvider
@@ -21,16 +21,16 @@ function Router($logProvider, $stateProvider, $urlRouterProvider, $uiViewScrollP
 					'configData':
 						function(ConfigService, $stateParams, $log)
 						{
-							var cData = ConfigService.getData( 'config.json' );
+							ConfigService.setManifestId( $stateParams.manifestId );
+							var cData = ConfigService.getConfigData( 'config.json' );
 							$log.debug( 'Router::manifest:configData:', cData );
 							return cData;
 						},
 					'manifestData':
-						function(APIService, configData, $stateParams, $log)
+						function(APIService, ConfigService, configData, $stateParams, $log)
 						{
-							$log.debug( 'Router::manifest:manifestData:configData:', configData );
-							APIService.initialize( configData, $stateParams.manifestId );
-							var mData = APIService.getData( APIService.getManifestURL() );
+							$log.debug( 'Router::manifest:manifestData:configData:', configData, ConfigService.getManifestURL() );
+							var mData = APIService.getData( ConfigService.getManifestURL() );
 							$log.debug( 'Router::manifest:manifestData:', $stateParams.manifestId, mData );
 							return mData;
 						},
