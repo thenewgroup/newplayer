@@ -22,17 +22,17 @@ function Router($logProvider, $stateProvider, $urlRouterProvider, $uiViewScrollP
 						function(ConfigService, $stateParams, $log)
 						{
 							ConfigService.setManifestId( $stateParams.manifestId );
-							var cData = ConfigService.getConfigData( 'config.json' );
-							$log.debug( 'Router::manifest:configData:', cData );
-							return cData;
+							var configData = ConfigService.getConfigData( 'config.json' );
+							$log.debug( 'Router::manifest:configData:', configData );
+							return configData;
 						},
 					'manifestData':
 						function(APIService, ConfigService, configData, $stateParams, $log)
 						{
 							$log.debug( 'Router::manifest:manifestData:configData:', configData, ConfigService.getManifestURL() );
-							var mData = APIService.getData( ConfigService.getManifestURL() );
-							$log.debug( 'Router::manifest:manifestData:', $stateParams.manifestId, mData );
-							return mData;
+							var manifestData = APIService.getData( ConfigService.getManifestURL() );
+							$log.debug( 'Router::manifest:manifestData:', $stateParams.manifestId, manifestData );
+							return manifestData;
 						},
 					'manifestService':
 						function(ManifestService, manifestData, $stateParams, $log)

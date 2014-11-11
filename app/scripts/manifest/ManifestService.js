@@ -15,9 +15,7 @@ function ManifestService(
 	var Service = function()
 	{
 		var self = this;
-		var manifestId;  // unique ID of manifest defined by CMS (manifest generator)
 		var data;
-		var promise;
 
 		var componentIdx;
 
@@ -26,15 +24,6 @@ function ManifestService(
 		// what the values should be
 		var lang;
 		var pageId;
-
-		function getPromise()
-		{
-			return promise;
-		}
-		function setPromise( prms )
-		{
-			promise = prms;
-		}
 
 		function getData()
 		{
@@ -194,15 +183,6 @@ function ManifestService(
 		this.getPage = function( lang, pageId )
 		{
 			return;
-		};
-
-		this.getManifestId = function()
-		{
-			return this.manifestId;
-		};
-		this.setManifestId = function(manifestId)
-		{
-			this.manifestId = manifestId;
 		};
 
 		this.getFirst = function( cmpType, context )

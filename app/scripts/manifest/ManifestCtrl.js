@@ -2,7 +2,7 @@
 
 /** @ngInject */
 function ManifestController(
-	$log, ManifestService, $scope, $state, $stateParams, manifestData/*, ComponentService, $timeout*/
+	$log, ManifestService, ConfigService, $scope, $state, $stateParams, manifestData/*, ComponentService, $timeout*/
 )
 {
 	$log.debug('ManifestCtrl::Init');
@@ -25,13 +25,26 @@ function ManifestController(
 				'pageId': vm.pageId
 			}
 		);
+
+		var lang = 'tbd';
+		var pageId = 'tbd';
+		var config = ConfigService.getConfig();
 		if ( $state.is( 'manifest' ) )
 		{
+			
+			if ( !!config && !!config.Content && typeof( config.Content.lang ) === 'string' )
+			{
+				lang = config.Content.lang;
+			}
+			if ( !!config && !!config.Page && typeof( config.Page.pageId ) === 'string' )
+			{
+				pageId = config.Page.pageId;
+			}
 			$state.go(
 				'manifest.lang.page',
 				{
-					lang: 'tbd',
-					pageId: 'tbd'
+					lang: lang,
+					pageId: pageId
 				},
 				{
 					location: 'replace'
@@ -40,16 +53,20 @@ function ManifestController(
 		} else
 		if ( $state.is( 'manifest.lang' ) )
 		{
-			var lang = $stateParams.lang;
+			lang = $stateParams.lang;
 			if ( lang !== 'tbd' )
 			{
 				ManifestService.setLang( lang );
+			}
+			if ( !!config && !!config.Page && typeof( config.Page.pageId ) === 'string' )
+			{
+				pageId = config.Page.pageId;
 			}
 			$state.go(
 				'manifest.lang.page',
 				{
 					lang: lang,
-					pageId: 'tbd'
+					pageId: pageId
 				},
 				{
 					location: 'replace'
@@ -58,7 +75,7 @@ function ManifestController(
 		}
 		if ( $state.is( 'manifest.page' ) ||  $state.is( 'manifest.lang.page' ) )
 		{
-			var pageId = $stateParams.pageId;
+			pageId = $stateParams.pageId;
 			if ( pageId !== 'tbd' )
 			{
 				ManifestService.setPageId( pageId );
