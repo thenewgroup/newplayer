@@ -9,21 +9,8 @@ Dev Notes:
 
 High-level TBDs:
 
-- fix lang/page routing
-	- determine default lang & page if only manifest is specified
-		- Router needs variable that triggers reroute if populated?
-		- Content & Page components need hooks
-			- postParse( manifest ) after initial manifest parse
-				- Content.postParse appends lang (or blank if only one) to reroute var
-				- Page.postParse appends pageId to reroute var
-
 - finish menu component
 	- Menu controller can getAll('Page')
-
-- data massaging component (can it be generic?)
-	- define another format for replacing module values!?
-	- recursively load manifests?
-		- defaultManifest
 
 - GTM component
 	- req references presentation-specific dataLayer code?
@@ -39,6 +26,15 @@ High-level TBDs:
 	- try to keep them agnostic of eachother
 	- component service doesn't load external js (incl req scripts?) for whitelisted core components
 
-- abstract method "getId" available to components?
-	- overriden by components to set smart IDs when not in manifest.
+- recursively load manifests?
+	- defaultManifest
+
+- Event hooks?
+	- manifest onLoad
+	- manifest parsed - after initial manifest parse
+	- components parsed
+	- Ex:
+		- Content.postParse appends lang (or blank if only one) to reroute var
+		- Page.postParse appends pageId to reroute var
+		- Router.postParse checks reroute var
 
