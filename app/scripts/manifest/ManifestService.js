@@ -15,7 +15,9 @@ function ManifestService(
 	var Service = function()
 	{
 		var self = this;
+		var manifestInitialized = false;
 		var data;
+		var overrides;
 
 		var componentIdx;
 
@@ -27,12 +29,20 @@ function ManifestService(
 
 		function getData()
 		{
-			$log.debug('ManifestService::getData', data);
 			return data;
 		}
 		function setData( d )
 		{
 			data = d;
+		}
+
+		function getOverrides()
+		{
+			return overrides;
+		}
+		function setOverrides( data )
+		{
+			overrides = data;
 		}
 
 		function getComponentIdx()
@@ -44,27 +54,39 @@ function ManifestService(
 			componentIdx = cmpIdx;
 		}
 
+		/*
+		 * Determines manifest idx of next component when recursing the manifest
+		 * first looks for sub-component
+		 * next looks for sibling
+		 * then it backs up to the parent and looks for sibling until it finds
+		 * one or gets back to the root
+		 */
 		function getNextComponent()
 		{
 			var idx = getComponentIdx();
+			var cmp = null;
 			if ( !idx )
 			{
 				idx = [0];
+				cmp = self.getComponent( idx );
 			} else {
-				var cmp = self.getComponent( idx );
+				// get current Component and find next
+				cmp = self.getComponent( idx );
+
 				if ( !!cmp.components && cmp.components.length > 0 )
 				{
-					// sub-components - go deeper
+					// sub-components exist - go deeper
 					idx.push( 0 );
+					cmp = self.getComponent( idx );
 				} else {
-					// try to get sibling
+					// no children - try to find next sibling
 					var lastIdx = idx.pop();
 					idx.push( ++lastIdx );
 					cmp = self.getComponent( idx );
-					if ( !!cmp )
+
+					if ( !cmp )
 					{
-						// found sibling
-					} else {
+						// no sibling - find closest ancestor's sibling
 						var backup = true;
 						while ( !cmp && backup )
 						{
@@ -89,28 +111,90 @@ function ManifestService(
 			{
 				return null;
 			}
-			return self.getComponent( getComponentIdx() );
+			return cmp;
 		}
 
-		this.initialize = function( data )
+		function deserializeIdx( idx )
 		{
-			$log.debug('ManifestService::initialize:', data);
-
-			setData( data );
-			// index all components
-			var cmp = self.getComponent();
-			while ( !!cmp )
+			if ( angular.isArray( idx ) )
 			{
-				$log.debug( 'ManifestCtrl:: initialParse', cmp );
-				cmp = self.getComponent();
+				return idx;
+			}
+			if ( typeof( idx ) === 'string' )
+			{
+				// convert string rep of array to integer array
+				idx = idx.replace(/[\[\]]/g, '');
+				var arr = idx.split(',');
+				// force array values to integer
+				for(var i=0; i<arr.length;i++)
+				{
+					arr[i] = +arr[i] || 0;  // default to 0 if NaN!?
+				}
+				return arr;
+			}
+			return [0];
+		}
+
+		/*
+		 * Initializes the component for the manifest
+		 */
+		function initializeComponent( cmp )
+		{
+			if ( !cmp )
+			{
+				return;
 			}
 
-			$log.debug('ManifestService::initialized:', getData() );
-		};
+			if ( !manifestInitialized )
+			{
+				// first pass, check overrides and modify this component
+				var cmpId = (cmp.data||{}).cmpId;
+				var newData = getOverrides()[ cmpId ];
+				if ( !!cmpId && !!newData )
+				{
+					// found override for this component!
+					$log.debug('ManifestService::getComponent: override cmpId:', cmpId, newData );
+					if ( typeof( newData ) === 'string' )
+					{
+						switch( newData )
+						{
+							case 'delete':
+								// get parent cmp
+								var cmpIdx = getComponentIdx().slice(0);
+								var childIdx = cmpIdx.pop();
+								var parentCmp = self.getComponent( cmpIdx );
+								// and delete sub component's idx
+								var thisChild = parentCmp.components.splice( childIdx, 1 );
+								$log.debug( 'ManifestService::getComponent: override: delete cmpId', cmpIdx, cmp );
+								// fix current idx (-1 or pop if 0)
+								if ( childIdx > 0 )
+								{
+									getComponentIdx()[ getComponentIdx().length-1 ] = childIdx-1;
+								} else {
+									getComponentIdx().pop();
+								}
+								break;
+							default:
+								try {
+									newData = angular.fromJson( newData );
+								} catch(e) {
+									$log.debug( 'ManifestService::getComponent: override: did not know what to do with cmpId:', cmpId, newData );
+								}
+								break;
+						}
+					}
+					if ( typeof( newData ) === 'object' )
+					{
+						angular.extend( cmp.data, newData );
+					}
+				}
+			}
 
-		// FIXME - temporary hack to prevent buggy infinite loops
-		// count how many time a component is retrieved
-		this.getCount = 0;
+			// will we ever re-index after manifest initialization!?
+			// index component
+			cmp.idx = getComponentIdx().slice(0);
+			$log.debug('ManifestService::getComponent: initialized:', cmp.idx, cmp );
+		}
 
 		/*
 		 * Gets the component from the manifest specified by the idx array
@@ -118,71 +202,51 @@ function ManifestService(
 		 */
 		this.getComponent = function( idx )
 		{
-			$log.debug('ManifestService::getComponent', idx, this.getCount );
-
-			// FIXME - temporary hack to prevent buggy infinite loops
-			this.getCount++;
-
 			var cmp;
 			if ( !idx )
 			{
 				// idx not specified, get next using services idx
 				$log.debug('ManifestService::getComponent: getNextComponent' );
 				cmp = getNextComponent();
-				// set it's index
-				if ( !!cmp )
-				{
-					cmp.idx = getComponentIdx().slice(0);
-					$log.debug('ManifestService::getComponent: set cmp idx', cmp );
-				}
+
+				// initialize the component
+				initializeComponent( cmp );
 			} else {
 
-				if ( typeof( idx ) === 'string' )
-				{
-					// convert string rep of array to integer array
-					idx = idx.replace(/[\[\]]/g, '');
-					idx = idx.split(',');
-					for(var i=0; i<idx.length;i++)
-					{
-						// force integer
-						idx[i] = +idx[i];
-					}
-				}
+				idx = deserializeIdx( idx );
 				setComponentIdx( idx );
-				$log.debug('ManifestService::getComponent: set serv idx', idx );
+				$log.debug('ManifestService::getComponent: find component:', idx );
 
-				// traverse idx array to get to this particular cmp
+				// traverse idx array to retrieve this particular cmp
 				cmp = getData()[ idx[0] ];
 				if ( !!cmp )
 				{
 					for ( var j in idx )
 					{
-						if (j>0)
+						if ( j>0 )
 						{
 							var components = cmp.components;
 							if ( !!components )
 							{
 								cmp = components[ idx[j] ];
+								if ( !cmp )
+								{
+									// child idx out of range
+									return null;
+								}
 							} else {
-								// invalid index!?
+								// no children
 								return null;
 							}
 						}
 					}
-				}
-				if ( !!cmp )
-				{
-					// found a component
 				} else {
-					$log.debug('ManifestService::getComponent: bad idx', idx );
+					// root index out of range
+					return null;
 				}
+				$log.debug('ManifestService::getComponent: found:', idx, cmp );
 			}
 			return cmp;
-		};
-
-		this.getPage = function( lang, pageId )
-		{
-			return;
 		};
 
 		this.getFirst = function( cmpType, context )
@@ -244,10 +308,27 @@ function ManifestService(
 			// reset component index for reparsing new page
 			setComponentIdx( null );
 
-			// FIXME - temporary hack to prevent buggy infinite loops
-			this.getCount = 0;
-
 			this.pageId = pageId;
+		};
+
+		this.initialize = function( data, overrides )
+		{
+			$log.debug('ManifestService::initialize:', data, overrides);
+
+			setData( data );
+			setOverrides( overrides[0] );
+
+			// index all components
+			var cmp = self.getComponent();
+			while ( !!cmp )
+			{
+				$log.debug( 'ManifestService:: initialParse', cmp );
+				cmp = self.getComponent();
+			}
+
+			manifestInitialized = true;
+
+			$log.debug('ManifestService::initialized:', getData() );
 		};
 
 	};

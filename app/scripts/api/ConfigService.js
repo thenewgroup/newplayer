@@ -11,6 +11,8 @@ function ConfigService( $log, APIService, ManifestService/*, $timeout, $q, $stat
 		var configData = null;
 		var manifestId = null;
 		var manifestURL = null;
+		var overrideURL = null;
+		var overrideData = null;
 
 		this.setManifestId = function( id )
 		{
@@ -31,22 +33,43 @@ function ConfigService( $log, APIService, ManifestService/*, $timeout, $q, $stat
 			return self.manifestURL;
 		};
 
+		function setOverrideURL( url )
+		{
+			self.overrideURL = url;
+		}
+		this.getOverrideURL = function()
+		{
+			return self.overrideURL;
+		};
+
 		function initialize( npConfig )
 		{
-			$log.debug( 'ConfigService::initialize:', arguments );
-			var manifestURL = npConfig[0].manifestURL;
+			$log.debug( 'ConfigService::initialize:config:', npConfig );
+
+			var manifestURL = npConfig.manifestURL;
 			if ( !!manifestURL )
 			{
 				setManifestURL( manifestURL.replace( '{manifestId}', self.getManifestId() ) );
 			} else {
 				setManifestURL( 'sample.json' );
 			}
+
+			var overrideURL = npConfig.overrideURL;
+			if ( !!overrideURL )
+			{
+				setOverrideURL( overrideURL.replace( '{manifestId}', self.getManifestId() ) );
+			} else {
+				setOverrideURL( 'sample-override.json' );
+			}
+
+			$log.debug( 'ConfigService::initialize: config override data:', npConfig.overrideManifest );
+			setOverride( npConfig.overrideManifest );
 		}
 
 		function setConfig( data )
 		{
 			$log.debug( 'ConfigService::setConfigData:', data );
-			self.configData = data[0];
+			self.configData = data;
 		}
 		this.getConfig = function( )
 		{
@@ -55,15 +78,37 @@ function ConfigService( $log, APIService, ManifestService/*, $timeout, $q, $stat
 		this.getConfigData = function( url )
 		{
 			$log.debug( 'ConfigService::getConfigData:', url );
-			var aPromise = self.getData( url );
-			aPromise.then(
+			var configPromise = self.getData( url );
+			configPromise.then(
 				function( configData ) {
-					$log.debug( 'ConfigService:: data from server ', configData );
-					initialize( configData );
-					setConfig( configData );
+					$log.debug( 'ConfigService::config data from server ', configData );
+					setConfig( configData[0] );
+					initialize( configData[0] );
 				}
 			);
-			return aPromise;
+			return configPromise;
+		};
+
+		function setOverride( data )
+		{
+			$log.debug( 'ConfigService::setOverrideData:', data );
+			self.overrideData = data;
+		}
+		this.getOverride = function( )
+		{
+			return self.overrideData;
+		};
+		this.getOverrideData = function( url )
+		{
+			$log.debug( 'ConfigService::getOverrideData:', url );
+			var overridePromise = self.getData( url );
+			overridePromise.then(
+				function( overrideData ) {
+					angular.extend( (self.getOverride()||{}), overrideData[0] );
+					$log.debug( 'ConfigService::getOverrideData: merged:', self.getOverride() );
+				}
+			);
+			return overridePromise;
 		};
 
 	};

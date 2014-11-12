@@ -104,12 +104,6 @@ function ComponentDirective(
 							$scope.components = cmp.components;
 						}
 
-						// FIXME - temporary hack to prevent buggy infinite loops
-						if ( ManifestService.getCount > 1000 ) {
-							$scope.components = null;
-							$scope.subCmp = false;
-						}
-
 						ComponentService.getTemplate(
 							cmp
 						)

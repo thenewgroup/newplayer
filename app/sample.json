@@ -83,6 +83,7 @@
 									"type": "Image",
 									"data": {
 										"id": "clientLogo",
+										"cmpId": "Client Logo",
 										"src": "assets/logo-TBD.png",
 										"alt": "logo"
 									},
@@ -177,6 +178,7 @@
 									"type": "Image",
 									"data": {
 										"id": "clientLogo2",
+										"cmpId": "Client Logo",
 										"src": "assets/logo-TBD.png",
 										"alt": "logo"
 									},

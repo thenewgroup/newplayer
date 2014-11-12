@@ -1,6 +1,13 @@
 [{
-	"manifestURL": "./sample.json",
-	"overrideURL": "./{manifestId}.json",
+	"comment": "Sample NewPlayer configuration file!",
+	"manifestURL": "./{manifestId}.json",
+	"overrideManifest":
+	{
+		"GTMComponent": {
+			"containerId": "GTM-54LSVR"
+		}
+	},
+	"overrideURL": "./{manifestId}-override.json",
 	"Content":
 	{
 		"lang": "en-US"

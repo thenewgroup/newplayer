@@ -3,7 +3,7 @@
 /** @ngInject */
 function Router($logProvider, $stateProvider, $urlRouterProvider, $uiViewScrollProvider)
 {
-	$logProvider.debugEnabled(false);
+	$logProvider.debugEnabled(true);
 	$uiViewScrollProvider.useAnchorScroll();
 	$urlRouterProvider.otherwise('/sample');
 	$stateProvider
@@ -29,16 +29,30 @@ function Router($logProvider, $stateProvider, $urlRouterProvider, $uiViewScrollP
 					'manifestData':
 						function(APIService, ConfigService, configData, $stateParams, $log)
 						{
-							$log.debug( 'Router::manifest:manifestData:configData:', configData, ConfigService.getManifestURL() );
-							var manifestData = APIService.getData( ConfigService.getManifestURL() );
+							var manifestURL = ConfigService.getManifestURL();
+							$log.debug( 'Router::manifest:manifestData:manifestURL:', manifestURL );
+							var manifestData = APIService.getData( manifestURL );
 							$log.debug( 'Router::manifest:manifestData:', $stateParams.manifestId, manifestData );
 							return manifestData;
 						},
+					'overrideData':
+						function(ConfigService, configData, $log)
+						{
+							var overrideData = null;
+							var overrideURL = ConfigService.getOverrideURL();
+							$log.debug( 'Router::manifest:overrideData:URL', overrideURL );
+							if ( !!overrideURL )
+							{
+								overrideData = ConfigService.getOverrideData( overrideURL );
+								$log.debug( 'Router::manifest:overrideData:', overrideData );
+							}
+							return overrideData;
+						},
 					'manifestService':
-						function(ManifestService, manifestData, $stateParams, $log)
+						function(ManifestService, manifestData, overrideData, $log)
 						{
 							$log.debug( 'Router::manifest:manifestService:manifestData', manifestData );
-							ManifestService.initialize( manifestData );
+							ManifestService.initialize( manifestData, overrideData );
 						}
 				},
 				views: {
