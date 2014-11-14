@@ -11,7 +11,7 @@ angular
 
 	/** @ngInject */
 	.controller( 'ButtonController',
-		function( $log, $scope, $sce, $location, $element )
+		function( $log, $scope, $sce, $location, $element, ConfigService )
 		{
 			var cmpData = $scope.component.data;
 			$log.debug( 'Button::data', cmpData );
@@ -25,14 +25,19 @@ angular
 			}
 
 			this.link = '';
-			this.linkInternal = false;
+			this.linkInternal = true;
 			var btnLink = cmpData.link;
 			if ( !!btnLink && typeof( btnLink ) === 'string' )
 			{
+				if ( btnLink.indexOf( '/' ) === 0 )
+				{
+					this.linkInternal = false;
+				}
 				if ( btnLink.indexOf( '#' ) === 0 )
 				{
-					this.linkInternal = true;
 					btnLink = btnLink.substr(1);
+				} else {
+					btnLink = '/' + ConfigService.getManifestId() + '/' + btnLink;
 				}
 				this.link = $sce.trustAsResourceUrl( btnLink );
 				$log.debug( 'Button::link', this.link );
