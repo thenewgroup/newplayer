@@ -11,16 +11,17 @@ angular
 
 	/** @ngInject */
 	.controller( 'ButtonController',
-		function( $log, $scope, $sce, $location )
+		function( $log, $scope, $sce, $location, $element )
 		{
 			var cmpData = $scope.component.data;
 			$log.debug( 'Button::data', cmpData );
 
 			this.content = '';
-			var btnContent = cmpData.output;
+			var btnContent = cmpData.content;
 			if ( !!btnContent && typeof( btnContent ) === 'string' )
 			{
 				this.content = $sce.trustAsHtml( btnContent );
+				//$element.append( btnContent );
 			}
 
 			this.link = '';

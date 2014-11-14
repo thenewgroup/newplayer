@@ -148,37 +148,39 @@ function ManifestService(
 			if ( !manifestInitialized )
 			{
 				// first pass, check overrides and modify this component
-				var cmpId = (cmp.data||{}).cmpId;
-				var newData = getOverrides()[ cmpId ];
-				if ( !!cmpId && !!newData )
+				var builderId = (cmp.data||{}).builderId;
+				var newData = getOverrides()[ builderId ];
+				if ( !!builderId && !!newData )
 				{
 					// found override for this component!
-					$log.debug('ManifestService::getComponent: override cmpId:', cmpId, newData );
+					$log.debug('ManifestService::initializeComponent: override builderId:', builderId, newData );
 					if ( typeof( newData ) === 'string' )
 					{
 						switch( newData )
 						{
 							case 'delete':
-								// get parent cmp
-								var cmpIdx = getComponentIdx().slice(0);
+								// get current component's idx
+								var cmpIdx = getComponentIdx();
+								// get the idx for this component in context of its parent
 								var childIdx = cmpIdx.pop();
+								// get the parent component
 								var parentCmp = self.getComponent( cmpIdx );
-								// and delete sub component's idx
+								// and delete parent's sub component with index: childIdx
 								var thisChild = parentCmp.components.splice( childIdx, 1 );
-								$log.debug( 'ManifestService::getComponent: override: delete cmpId', cmpIdx, cmp );
-								// fix current idx (-1 or pop if 0)
+								// parser's current idx is deleted component's parent
+								// if deleted component had a older sibling:
 								if ( childIdx > 0 )
 								{
-									getComponentIdx()[ getComponentIdx().length-1 ] = childIdx-1;
-								} else {
-									getComponentIdx().pop();
+									// repoint to deleted component's older sibling
+									cmpIdx.push( childIdx-1 );
+									setComponentIdx( cmpIdx );
 								}
 								break;
 							default:
 								try {
 									newData = angular.fromJson( newData );
 								} catch(e) {
-									$log.debug( 'ManifestService::getComponent: override: did not know what to do with cmpId:', cmpId, newData );
+									$log.debug( 'ManifestService::initializeComponent: override: did not know what to do with builderId:', builderId, newData, e );
 								}
 								break;
 						}
@@ -193,7 +195,7 @@ function ManifestService(
 			// will we ever re-index after manifest initialization!?
 			// index component
 			cmp.idx = getComponentIdx().slice(0);
-			$log.debug('ManifestService::getComponent: initialized:', cmp.idx, cmp );
+			$log.debug('ManifestService::initializeComponent: initialized:', cmp.idx, cmp );
 		}
 
 		/*

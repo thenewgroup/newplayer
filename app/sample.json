@@ -2,7 +2,7 @@
 	"type": "Feature",
 	"data": {
 		"id": "samplePresentation",
-		"req": "../../../assets/theStandard.css",
+		"req": ["../../../assets/theStandard.css","../../../assets/theStandard.js"],
 		"version": "0.0.1",
 		"timestamp": "1970-01-01_00:00:00"
 	},
@@ -13,6 +13,8 @@
 				"id": "content_en-US",
 				"language": "en-US",
 				"title": "Retirement Planning",
+				"builderId": "Highlight Color",
+				"data-highlight-color": "#999",
 				"description": "Retirement planning presentation"
 			},
 			"components": [
@@ -47,7 +49,7 @@
 									"type": "HTML",
 									"data": {
 										"id": "stndLogoSlogan",
-										"output": ""
+										"content": ""
 									},
 									"components": [
 										{
@@ -62,6 +64,7 @@
 													"type": "Image",
 													"data": {
 														"id": "stndLogo",
+														"builderId": "Standard Logo",
 														"src": "assets/logo-theStandard.png",
 														"alt": "logo"
 													},
@@ -73,7 +76,8 @@
 											"type": "HTML",
 											"data": {
 												"id": "stndSlogan",
-												"output": "Insurance, Retirement,<br>Investments and Advice."
+												"builderId": "Standard Logo",
+												"content": "Insurance, Retirement,<br>Investments and Advice."
 											},
 											"components": [ ]
 										}
@@ -83,7 +87,7 @@
 									"type": "Image",
 									"data": {
 										"id": "clientLogo",
-										"cmpId": "Client Logo",
+										"builderId": "Client Logo",
 										"src": "assets/logo-TBD.png",
 										"alt": "logo"
 									},
@@ -130,7 +134,25 @@
 							"type": "HTML",
 							"data": {
 								"id": "captionMain",
-								"output": "[Custom Message from Plan Sponsor] Congratulations [your employer] has enrolled you in a valuable retirement planning program. Enroll now to customize the plan to fit your needs. If you have questions, please call [contact name] at [contact #]."
+								"builderId": "field_welcome_message",
+								"content": "Congratulations! We are pleased to offer a retirement savings plan to eligible employees. Start planning by choosing how much you want to save or by learning more about your plan."
+							},
+							"components": [ ]
+						},
+						{
+							"type": "HTML",
+							"data": {
+								"id": "keyDetailsHeader",
+								"content": "<h4>Key Details of your Plan</h4>"
+							},
+							"components": [ ]
+						},
+						{
+							"type": "HTML",
+							"data": {
+								"id": "keyDetailsText",
+								"builderId": "field_entry_dates",
+								"content": "Eligibility details"
 							},
 							"components": [ ]
 						},
@@ -138,14 +160,14 @@
 							"type": "HTML",
 							"data": {
 								"id": "planDetailsText",
-								"output": "<h4>Your Employer's Plan</h4>[IF AE][VARIABLE TEXT]Your default contribution rate: XX% per paycheck<br/>[IF AE][VARIABLE TEXT]Your default investment: XXXXX<br/>[VARIABLE TEXT]To be eligible for the plan, you must: XXXXX<br/>[VARIABLE TEXT]As a new hire, you can participate in the plan: XXXXXXXXXX"
+								"content": "<h4>Your Employer's Plan</h4>[IF AE][VARIABLE TEXT]Your default contribution rate: XX% per paycheck<br/>[IF AE][VARIABLE TEXT]Your default investment: XXXXX<br/>[VARIABLE TEXT]To be eligible for the plan, you must: XXXXX<br/>[VARIABLE TEXT]As a new hire, you can participate in the plan: XXXXXXXXXX"
 							},
 							"components": [ ]
 						},
 						{
 							"type": "HTML",
 							"data": {
-								"output": "<hr/>"
+								"content": "<hr/>"
 							},
 							"components": [ ]
 						},
@@ -160,7 +182,7 @@
 									"type": "HTML",
 									"data": {
 										"id": "employerContributionText",
-										"output": "<strong>Employer Contribution</strong><p>Your employer will match 2% of your contributions up to $100 per month</p>"
+										"content": "<strong>Employer Contribution</strong><p>Your employer will match 2% of your contributions up to $100 per month</p>"
 									},
 									"components": [
 										{
@@ -168,7 +190,7 @@
 											"data": {
 												"id": "btnEmployerContributions",
 												"link": "#/sample/EmployerContributions",
-												"output": "Learn More about employer contributions"
+												"content": "Learn More about employer contributions"
 											},
 											"components": [ ]
 										}
@@ -178,7 +200,7 @@
 									"type": "Image",
 									"data": {
 										"id": "clientLogo2",
-										"cmpId": "Client Logo",
+										"builderId": "Client Logo",
 										"src": "assets/logo-TBD.png",
 										"alt": "logo"
 									},
@@ -189,7 +211,7 @@
 						{
 							"type": "HTML",
 							"data": {
-								"output": "<hr/>"
+								"content": "<hr/>"
 							},
 							"components": [ ]
 						},
@@ -198,7 +220,7 @@
 							"data": {
 								"id": "btnEnrollNow",
 								"link": "/EnrollNow",
-								"output": "<strong>Enroll Now</strong><br/>or Increase My Contributions"
+								"content": "<strong>Enroll Now</strong><br/>or Increase My Contributions"
 							},
 							"components": [ ]
 						},
@@ -215,7 +237,7 @@
 									"data": {
 										"id": "btnYourPlan",
 										"link": "#/sample/YourPlan",
-										"output": "Learn More About Your Plan"
+										"content": "Learn More About Your Plan"
 									},
 									"components": [ ]
 								},
@@ -224,7 +246,7 @@
 									"data": {
 										"id": "btnRetirementCalculator",
 										"link": "#/sample/RetirementCalculator",
-										"output": "Estimate Your Retirement Needs"
+										"content": "Estimate Your Retirement Needs"
 									},
 									"components": [ ]
 								}
@@ -234,7 +256,7 @@
 							"type": "HTML",
 							"data": {
 								"id": "disclaimer",
-								"output": "<small>1) A.C.S. “Too thin a cushion” Economist, 2 April 2013 Web 22 June 2014. &lt;<a href=\"http://www.economist.com/blogs/freeexchange/2013/04/saving\" target=\"blank\">http://www.economist.com/blogs/freeexchange/2013/04/saving</a>&gt;</small>"
+								"content": "<small>1) A.C.S. “Too thin a cushion” Economist, 2 April 2013 Web 22 June 2014. &lt;<a href=\"http://www.economist.com/blogs/freeexchange/2013/04/saving\" target=\"blank\">http://www.economist.com/blogs/freeexchange/2013/04/saving</a>&gt;</small>"
 							},
 							"components": [ ]
 						}
@@ -274,7 +296,7 @@
 							"type": "HTML",
 							"data": {
 								"id": "captionMain",
-								"output": "The plan your employer is offering has many features that will make saving for retirement easier and more effective."
+								"content": "The plan your employer is offering has many features that will make saving for retirement easier and more effective."
 							},
 							"components": [ ]
 						},
@@ -283,7 +305,7 @@
 							"data": {
 								"id": "enrollNow",
 								"link": "/EnrollNow",
-								"output": "<strong>Enroll Now</strong><br/>or Increase My Contributions"
+								"content": "<strong>Enroll Now</strong><br/>or Increase My Contributions"
 							},
 							"components": [ ]
 						},
@@ -300,7 +322,7 @@
 									"data": {
 										"id": "btnEmployerContributions",
 										"link": "#/sample/EmployerContributions",
-										"output": "Your employer is helping too"
+										"content": "Your employer is helping too"
 									},
 									"components": [ ]
 								},
@@ -308,8 +330,9 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRothContributions",
+										"builderId": "field_roth_contributions",
 										"link": "#/sample/RothContributions",
-										"output": "Roth Contributions"
+										"content": "Roth Contributions"
 									},
 									"components": [ ]
 								},
@@ -318,7 +341,7 @@
 									"data": {
 										"id": "btnRollovers",
 										"link": "#/sample/Rollovers",
-										"output": "Rollovers"
+										"content": "Rollovers"
 									},
 									"components": [ ]
 								},
@@ -327,7 +350,7 @@
 									"data": {
 										"id": "btn403b",
 										"link": "#/sample/403b",
-										"output": "403(b)"
+										"content": "403(b)"
 									},
 									"components": [ ]
 								},
@@ -336,7 +359,7 @@
 									"data": {
 										"id": "btnManageOnline",
 										"link": "#/sample/ManageOnline",
-										"output": "Manage my account online"
+										"content": "Manage my account online"
 									},
 									"components": [ ]
 								}
@@ -345,7 +368,7 @@
 						{
 							"type": "HTML",
 							"data": {
-								"output": "<hr/>"
+								"content": "<hr/>"
 							},
 							"components": [ ]
 						},
@@ -362,7 +385,7 @@
 									"data": {
 										"id": "btnStartPlanning",
 										"link": "#/sample/StartPlanning",
-										"output": "Start Planning"
+										"content": "Start Planning"
 									},
 									"components": [ ]
 								},
@@ -371,7 +394,7 @@
 									"data": {
 										"id": "btnInvestmentBasics",
 										"link": "#/sample/InvestmentBasics",
-										"output": "Learn Investment Basics"
+										"content": "Learn Investment Basics"
 									},
 									"components": [ ]
 								},
@@ -380,7 +403,7 @@
 									"data": {
 										"id": "btnRetirementCalculator",
 										"link": "#/sample/RetirementCalculator",
-										"output": "Estimate Your Retirement Needs"
+										"content": "Estimate Your Retirement Needs"
 									},
 									"components": [ ]
 								}
@@ -390,7 +413,7 @@
 							"type": "HTML",
 							"data": {
 								"id": "disclaimer",
-								"output": "1) Wesley, Daniel. “How The Average U.S. Consumer Spends Their Paycheck.” Credit Loan.com 25 Sept. 2013. Web. 22 June 2014. <creditloan.com/blog/how-the-average-us-consumer-spends-their-paycheck/>"
+								"content": "1) Wesley, Daniel. “How The Average U.S. Consumer Spends Their Paycheck.” Credit Loan.com 25 Sept. 2013. Web. 22 June 2014. <creditloan.com/blog/how-the-average-us-consumer-spends-their-paycheck/>"
 							},
 							"components": [ ]
 						}
@@ -431,7 +454,7 @@
 							"type": "HTML",
 							"data": {
 								"id": "captionMain",
-								"output": "[VARIABLE TEXT] Employer Matching Funds - Congratulations, your employer is helping you move toward a more secure retirement by contributing: XXXXXXXXXXXX"
+								"content": "[VARIABLE TEXT] Employer Matching Funds - Congratulations, your employer is helping you move toward a more secure retirement by contributing: XXXXXXXXXXXX"
 							},
 							"components": [ ]
 						},
@@ -440,7 +463,7 @@
 							"data": {
 								"id": "enrollNow",
 								"link": "/EnrollNow",
-								"output": "<strong>Enroll Now</strong><br/>or Increase My Contributions"
+								"content": "<strong>Enroll Now</strong><br/>or Increase My Contributions"
 							},
 							"components": [ ]
 						},
@@ -457,7 +480,7 @@
 									"data": {
 										"id": "btnEmployerContributions",
 										"link": "#/sample/EmployerContributions",
-										"output": "Your employer is helping too"
+										"content": "Your employer is helping too"
 									},
 									"components": [ ]
 								},
@@ -465,8 +488,9 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRothContributions",
+										"builderId": "field_roth_contributions",
 										"link": "#/sample/RothContributions",
-										"output": "Roth Contributions"
+										"content": "Roth Contributions"
 									},
 									"components": [ ]
 								},
@@ -475,7 +499,7 @@
 									"data": {
 										"id": "btnRollovers",
 										"link": "#/sample/Rollovers",
-										"output": "Rollovers"
+										"content": "Rollovers"
 									},
 									"components": [ ]
 								},
@@ -484,7 +508,7 @@
 									"data": {
 										"id": "btn403b",
 										"link": "#/sample/403b",
-										"output": "403(b)"
+										"content": "403(b)"
 									},
 									"components": [ ]
 								},
@@ -493,7 +517,7 @@
 									"data": {
 										"id": "btnManageOnline",
 										"link": "#/sample/ManageOnline",
-										"output": "Manage my account online"
+										"content": "Manage my account online"
 									},
 									"components": [ ]
 								}
@@ -502,7 +526,7 @@
 						{
 							"type": "HTML",
 							"data": {
-								"output": "<hr/>"
+								"content": "<hr/>"
 							},
 							"components": [ ]
 						},
@@ -519,7 +543,7 @@
 									"data": {
 										"id": "btnStartPlanning",
 										"link": "#/sample/StartPlanning",
-										"output": "Start Planning"
+										"content": "Start Planning"
 									},
 									"components": [ ]
 								},
@@ -528,7 +552,7 @@
 									"data": {
 										"id": "btnInvestmentBasics",
 										"link": "#/sample/InvestmentBasics",
-										"output": "Learn Investment Basics"
+										"content": "Learn Investment Basics"
 									},
 									"components": [ ]
 								},
@@ -537,7 +561,7 @@
 									"data": {
 										"id": "btnRetirementCalculator",
 										"link": "#/sample/RetirementCalculator",
-										"output": "Estimate Your Retirement Needs"
+										"content": "Estimate Your Retirement Needs"
 									},
 									"components": [ ]
 								}
@@ -547,7 +571,7 @@
 							"type": "HTML",
 							"data": {
 								"id": "disclaimer",
-								"output": "1) Wesley, Daniel. “How The Average U.S. Consumer Spends Their Paycheck.” Credit Loan.com 25 Sept. 2013. Web. 22 June 2014. <creditloan.com/blog/how-the-average-us-consumer-spends-their-paycheck/>"
+								"content": "1) Wesley, Daniel. “How The Average U.S. Consumer Spends Their Paycheck.” Credit Loan.com 25 Sept. 2013. Web. 22 June 2014. <creditloan.com/blog/how-the-average-us-consumer-spends-their-paycheck/>"
 							},
 							"components": [ ]
 						}
@@ -557,6 +581,7 @@
 					"type": "Page",
 					"data": {
 						"id": "RothContributions",
+						"builderId": "field_roth_contributions",
 						"parentId": "YourPlan",
 						"title": "Roth Contributions",
 						"inMenu": true,
@@ -587,7 +612,7 @@
 							"type": "HTML",
 							"data": {
 								"id": "captionMain",
-								"output": ""
+								"content": ""
 							},
 							"components": [ ]
 						},
@@ -596,7 +621,7 @@
 							"data": {
 								"id": "enrollNow",
 								"link": "/EnrollNow",
-								"output": "<strong>Enroll Now</strong><br/>or Increase My Contributions"
+								"content": "<strong>Enroll Now</strong><br/>or Increase My Contributions"
 							},
 							"components": [ ]
 						},
@@ -613,7 +638,7 @@
 									"data": {
 										"id": "btnEmployerContributions",
 										"link": "#/sample/EmployerContributions",
-										"output": "Your employer is helping too"
+										"content": "Your employer is helping too"
 									},
 									"components": [ ]
 								},
@@ -621,8 +646,9 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRothContributions",
+										"builderId": "field_roth_contributions",
 										"link": "#/sample/RothContributions",
-										"output": "Roth Contributions"
+										"content": "Roth Contributions"
 									},
 									"components": [ ]
 								},
@@ -631,7 +657,7 @@
 									"data": {
 										"id": "btnRollovers",
 										"link": "#/sample/Rollovers",
-										"output": "Rollovers"
+										"content": "Rollovers"
 									},
 									"components": [ ]
 								},
@@ -640,7 +666,7 @@
 									"data": {
 										"id": "btn403b",
 										"link": "#/sample/403b",
-										"output": "403(b)"
+										"content": "403(b)"
 									},
 									"components": [ ]
 								},
@@ -649,7 +675,7 @@
 									"data": {
 										"id": "btnManageOnline",
 										"link": "#/sample/ManageOnline",
-										"output": "Manage my account online"
+										"content": "Manage my account online"
 									},
 									"components": [ ]
 								}
@@ -658,7 +684,7 @@
 						{
 							"type": "HTML",
 							"data": {
-								"output": "<hr/>"
+								"content": "<hr/>"
 							},
 							"components": [ ]
 						},
@@ -675,7 +701,7 @@
 									"data": {
 										"id": "btnStartPlanning",
 										"link": "#/sample/StartPlanning",
-										"output": "Start Planning"
+										"content": "Start Planning"
 									},
 									"components": [ ]
 								},
@@ -684,7 +710,7 @@
 									"data": {
 										"id": "btnInvestmentBasics",
 										"link": "#/sample/InvestmentBasics",
-										"output": "Learn Investment Basics"
+										"content": "Learn Investment Basics"
 									},
 									"components": [ ]
 								},
@@ -693,7 +719,7 @@
 									"data": {
 										"id": "btnRetirementCalculator",
 										"link": "#/sample/RetirementCalculator",
-										"output": "Estimate Your Retirement Needs"
+										"content": "Estimate Your Retirement Needs"
 									},
 									"components": [ ]
 								}
@@ -703,7 +729,7 @@
 							"type": "HTML",
 							"data": {
 								"id": "disclaimer",
-								"output": ""
+								"content": ""
 							},
 							"components": [ ]
 						}
@@ -743,7 +769,7 @@
 							"type": "HTML",
 							"data": {
 								"id": "captionMain",
-								"output": ""
+								"content": ""
 							},
 							"components": [ ]
 						},
@@ -752,7 +778,7 @@
 							"data": {
 								"id": "enrollNow",
 								"link": "/EnrollNow",
-								"output": "<strong>Enroll Now</strong><br/>or Increase My Contributions"
+								"content": "<strong>Enroll Now</strong><br/>or Increase My Contributions"
 							},
 							"components": [ ]
 						},
@@ -769,7 +795,7 @@
 									"data": {
 										"id": "btnEmployerContributions",
 										"link": "#/sample/EmployerContributions",
-										"output": "Your employer is helping too"
+										"content": "Your employer is helping too"
 									},
 									"components": [ ]
 								},
@@ -777,8 +803,9 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRothContributions",
+										"builderId": "field_roth_contributions",
 										"link": "#/sample/RothContributions",
-										"output": "Roth Contributions"
+										"content": "Roth Contributions"
 									},
 									"components": [ ]
 								},
@@ -787,7 +814,7 @@
 									"data": {
 										"id": "btnRollovers",
 										"link": "#/sample/Rollovers",
-										"output": "Rollovers"
+										"content": "Rollovers"
 									},
 									"components": [ ]
 								},
@@ -796,7 +823,7 @@
 									"data": {
 										"id": "btn403b",
 										"link": "#/sample/403b",
-										"output": "403(b)"
+										"content": "403(b)"
 									},
 									"components": [ ]
 								},
@@ -805,7 +832,7 @@
 									"data": {
 										"id": "btnManageOnline",
 										"link": "#/sample/ManageOnline",
-										"output": "Manage my account online"
+										"content": "Manage my account online"
 									},
 									"components": [ ]
 								}
@@ -814,7 +841,7 @@
 						{
 							"type": "HTML",
 							"data": {
-								"output": "<hr/>"
+								"content": "<hr/>"
 							},
 							"components": [ ]
 						},
@@ -831,7 +858,7 @@
 									"data": {
 										"id": "btnStartPlanning",
 										"link": "#/sample/StartPlanning",
-										"output": "Start Planning"
+										"content": "Start Planning"
 									},
 									"components": [ ]
 								},
@@ -840,7 +867,7 @@
 									"data": {
 										"id": "btnInvestmentBasics",
 										"link": "#/sample/InvestmentBasics",
-										"output": "Learn Investment Basics"
+										"content": "Learn Investment Basics"
 									},
 									"components": [ ]
 								},
@@ -849,7 +876,7 @@
 									"data": {
 										"id": "btnRetirementCalculator",
 										"link": "#/sample/RetirementCalculator",
-										"output": "Estimate Your Retirement Needs"
+										"content": "Estimate Your Retirement Needs"
 									},
 									"components": [ ]
 								}
@@ -859,7 +886,7 @@
 							"type": "HTML",
 							"data": {
 								"id": "disclaimer",
-								"output": ""
+								"content": ""
 							},
 							"components": [ ]
 						}
@@ -899,7 +926,7 @@
 							"type": "HTML",
 							"data": {
 								"id": "captionMain",
-								"output": ""
+								"content": ""
 							},
 							"components": [ ]
 						},
@@ -908,7 +935,7 @@
 							"data": {
 								"id": "enrollNow",
 								"link": "/EnrollNow",
-								"output": "<strong>Enroll Now</strong><br/>or Increase My Contributions"
+								"content": "<strong>Enroll Now</strong><br/>or Increase My Contributions"
 							},
 							"components": [ ]
 						},
@@ -925,7 +952,7 @@
 									"data": {
 										"id": "btnEmployerContributions",
 										"link": "#/sample/EmployerContributions",
-										"output": "Your employer is helping too"
+										"content": "Your employer is helping too"
 									},
 									"components": [ ]
 								},
@@ -933,8 +960,9 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRothContributions",
+										"builderId": "field_roth_contributions",
 										"link": "#/sample/RothContributions",
-										"output": "Roth Contributions"
+										"content": "Roth Contributions"
 									},
 									"components": [ ]
 								},
@@ -943,7 +971,7 @@
 									"data": {
 										"id": "btnRollovers",
 										"link": "#/sample/Rollovers",
-										"output": "Rollovers"
+										"content": "Rollovers"
 									},
 									"components": [ ]
 								},
@@ -952,7 +980,7 @@
 									"data": {
 										"id": "btn403b",
 										"link": "#/sample/403b",
-										"output": "403(b)"
+										"content": "403(b)"
 									},
 									"components": [ ]
 								},
@@ -961,7 +989,7 @@
 									"data": {
 										"id": "btnManageOnline",
 										"link": "#/sample/ManageOnline",
-										"output": "Manage my account online"
+										"content": "Manage my account online"
 									},
 									"components": [ ]
 								}
@@ -970,7 +998,7 @@
 						{
 							"type": "HTML",
 							"data": {
-								"output": "<hr/>"
+								"content": "<hr/>"
 							},
 							"components": [ ]
 						},
@@ -987,7 +1015,7 @@
 									"data": {
 										"id": "btnStartPlanning",
 										"link": "#/sample/StartPlanning",
-										"output": "Start Planning"
+										"content": "Start Planning"
 									},
 									"components": [ ]
 								},
@@ -996,7 +1024,7 @@
 									"data": {
 										"id": "btnInvestmentBasics",
 										"link": "#/sample/InvestmentBasics",
-										"output": "Learn Investment Basics"
+										"content": "Learn Investment Basics"
 									},
 									"components": [ ]
 								},
@@ -1005,7 +1033,7 @@
 									"data": {
 										"id": "btnRetirementCalculator",
 										"link": "#/sample/RetirementCalculator",
-										"output": "Estimate Your Retirement Needs"
+										"content": "Estimate Your Retirement Needs"
 									},
 									"components": [ ]
 								}
@@ -1015,7 +1043,7 @@
 							"type": "HTML",
 							"data": {
 								"id": "disclaimer",
-								"output": ""
+								"content": ""
 							},
 							"components": [ ]
 						}
@@ -1056,7 +1084,7 @@
 							"type": "HTML",
 							"data": {
 								"id": "captionMain",
-								"output": ""
+								"content": ""
 							},
 							"components": [ ]
 						},
@@ -1065,7 +1093,7 @@
 							"data": {
 								"id": "enrollNow",
 								"link": "/EnrollNow",
-								"output": "<strong>Enroll Now</strong><br/>or Increase My Contributions"
+								"content": "<strong>Enroll Now</strong><br/>or Increase My Contributions"
 							},
 							"components": [ ]
 						},
@@ -1082,7 +1110,7 @@
 									"data": {
 										"id": "btnEmployerContributions",
 										"link": "#/sample/EmployerContributions",
-										"output": "Your employer is helping too"
+										"content": "Your employer is helping too"
 									},
 									"components": [ ]
 								},
@@ -1090,8 +1118,9 @@
 									"type": "Button",
 									"data": {
 										"id": "btnRothContributions",
+										"builderId": "field_roth_contributions",
 										"link": "#/sample/RothContributions",
-										"output": "Roth Contributions"
+										"content": "Roth Contributions"
 									},
 									"components": [ ]
 								},
@@ -1100,7 +1129,7 @@
 									"data": {
 										"id": "btnRollovers",
 										"link": "#/sample/Rollovers",
-										"output": "Rollovers"
+										"content": "Rollovers"
 									},
 									"components": [ ]
 								},
@@ -1109,7 +1138,7 @@
 									"data": {
 										"id": "btn403b",
 										"link": "#/sample/403b",
-										"output": "403(b)"
+										"content": "403(b)"
 									},
 									"components": [ ]
 								},
@@ -1118,7 +1147,7 @@
 									"data": {
 										"id": "btnManageOnline",
 										"link": "#/sample/ManageOnline",
-										"output": "Manage my account online"
+										"content": "Manage my account online"
 									},
 									"components": [ ]
 								}
@@ -1127,7 +1156,7 @@
 						{
 							"type": "HTML",
 							"data": {
-								"output": "<hr/>"
+								"content": "<hr/>"
 							},
 							"components": [ ]
 						},
@@ -1144,7 +1173,7 @@
 									"data": {
 										"id": "btnStartPlanning",
 										"link": "#/sample/StartPlanning",
-										"output": "Start Planning"
+										"content": "Start Planning"
 									},
 									"components": [ ]
 								},
@@ -1153,7 +1182,7 @@
 									"data": {
 										"id": "btnInvestmentBasics",
 										"link": "#/sample/InvestmentBasics",
-										"output": "Learn Investment Basics"
+										"content": "Learn Investment Basics"
 									},
 									"components": [ ]
 								},
@@ -1162,7 +1191,7 @@
 									"data": {
 										"id": "btnRetirementCalculator",
 										"link": "#/sample/RetirementCalculator",
-										"output": "Estimate Your Retirement Needs"
+										"content": "Estimate Your Retirement Needs"
 									},
 									"components": [ ]
 								}
@@ -1172,7 +1201,7 @@
 							"type": "HTML",
 							"data": {
 								"id": "disclaimer",
-								"output": ""
+								"content": ""
 							},
 							"components": [ ]
 						}
@@ -1212,7 +1241,7 @@
 							"type": "HTML",
 							"data": {
 								"id": "captionMain",
-								"output": "What's your personal path to a retirement that will replace your income and be rewarding? Take a moment to reflect on the future to make sure it gives you what you truly desire."
+								"content": "What's your personal path to a retirement that will replace your income and be rewarding? Take a moment to reflect on the future to make sure it gives you what you truly desire."
 							},
 							"components": [ ]
 						},
@@ -1221,7 +1250,7 @@
 							"data": {
 								"id": "enrollNow",
 								"link": "/EnrollNow",
-								"output": "<strong>Enroll Now</strong><br/>or Increase My Contributions"
+								"content": "<strong>Enroll Now</strong><br/>or Increase My Contributions"
 							},
 							"components": [ ]
 						},
@@ -1238,7 +1267,7 @@
 									"data": {
 										"id": "btnWhySaveNow",
 										"link": "#/sample/WhySaveNow",
-										"output": "Why Save Now"
+										"content": "Why Save Now"
 									},
 									"components": [ ]
 								},
@@ -1247,7 +1276,7 @@
 									"data": {
 										"id": "btnWhySaveMore",
 										"link": "#/sample/WhySaveMore",
-										"output": "Why Save More"
+										"content": "Why Save More"
 									},
 									"components": [ ]
 								},
@@ -1256,7 +1285,7 @@
 									"data": {
 										"id": "btnTaxAdvantages",
 										"link": "#/sample/TaxAdvantages",
-										"output": "Tax Advantages to saving"
+										"content": "Tax Advantages to saving"
 									},
 									"components": [ ]
 								},
@@ -1265,7 +1294,7 @@
 									"data": {
 										"id": "btnRetirementNeeds",
 										"link": "#/sample/RetirementCalculator",
-										"output": "Retirement needs calculator"
+										"content": "Retirement needs calculator"
 									},
 									"components": [ ]
 								}
@@ -1274,7 +1303,7 @@
 						{
 							"type": "HTML",
 							"data": {
-								"output": "<hr/>"
+								"content": "<hr/>"
 							},
 							"components": [ ]
 						},
@@ -1291,7 +1320,7 @@
 									"data": {
 										"id": "btnInvestmentBasics",
 										"link": "#/sample/InvestmentBasics",
-										"output": "Learn Investment Basics"
+										"content": "Learn Investment Basics"
 									},
 									"components": [ ]
 								},
@@ -1300,7 +1329,7 @@
 									"data": {
 										"id": "btnYourPlan",
 										"link": "#/sample/YourPlan",
-										"output": "Explore Your Plan"
+										"content": "Explore Your Plan"
 									},
 									"components": [ ]
 								},
@@ -1309,7 +1338,7 @@
 									"data": {
 										"id": "btnRetirementCalculator",
 										"link": "#/sample/RetirementCalculator",
-										"output": "Estimate Your Retirement Needs"
+										"content": "Estimate Your Retirement Needs"
 									},
 									"components": [ ]
 								}
@@ -1319,7 +1348,7 @@
 							"type": "HTML",
 							"data": {
 								"id": "disclaimer",
-								"output": "1) Source: 2014 Social Security Administration. Visit ssa.gov/planners/lifeexpectancy.<br/>2) This example is hypothetical and for illustrative purposes onl<br/>3) Social Security Retirement Estimator, http://www.ssa.gov/estimator/. This chart assumes a normal retirement age of 67 and is for illustrative purposes only. To estimate your own Social Security benefits, call 800.772.1213 or visit www.ssa.gov for a personal Earnings and Benefit Estimate statement."
+								"content": "1) Source: 2014 Social Security Administration. Visit ssa.gov/planners/lifeexpectancy.<br/>2) This example is hypothetical and for illustrative purposes onl<br/>3) Social Security Retirement Estimator, http://www.ssa.gov/estimator/. This chart assumes a normal retirement age of 67 and is for illustrative purposes only. To estimate your own Social Security benefits, call 800.772.1213 or visit www.ssa.gov for a personal Earnings and Benefit Estimate statement."
 							},
 							"components": [ ]
 						}
@@ -1360,7 +1389,7 @@
 							"type": "HTML",
 							"data": {
 								"id": "captionMain",
-								"output": ""
+								"content": ""
 							},
 							"components": [ ]
 						},
@@ -1369,7 +1398,7 @@
 							"data": {
 								"id": "enrollNow",
 								"link": "/EnrollNow",
-								"output": "<strong>Enroll Now</strong><br/>or Increase My Contributions"
+								"content": "<strong>Enroll Now</strong><br/>or Increase My Contributions"
 							},
 							"components": [ ]
 						},
@@ -1386,7 +1415,7 @@
 									"data": {
 										"id": "btnWhySaveNow",
 										"link": "#/sample/WhySaveNow",
-										"output": "Why Save Now"
+										"content": "Why Save Now"
 									},
 									"components": [ ]
 								},
@@ -1395,7 +1424,7 @@
 									"data": {
 										"id": "btnWhySaveMore",
 										"link": "#/sample/WhySaveMore",
-										"output": "Why Save More"
+										"content": "Why Save More"
 									},
 									"components": [ ]
 								},
@@ -1404,7 +1433,7 @@
 									"data": {
 										"id": "btnTaxAdvantages",
 										"link": "#/sample/TaxAdvantages",
-										"output": "Tax Advantages to saving"
+										"content": "Tax Advantages to saving"
 									},
 									"components": [ ]
 								},
@@ -1413,7 +1442,7 @@
 									"data": {
 										"id": "btnRetirementNeeds",
 										"link": "#/sample/RetirementCalculator",
-										"output": "Retirement needs calculator"
+										"content": "Retirement needs calculator"
 									},
 									"components": [ ]
 								}
@@ -1422,7 +1451,7 @@
 						{
 							"type": "HTML",
 							"data": {
-								"output": "<hr/>"
+								"content": "<hr/>"
 							},
 							"components": [ ]
 						},
@@ -1439,7 +1468,7 @@
 									"data": {
 										"id": "btnInvestmentBasics",
 										"link": "#/sample/InvestmentBasics",
-										"output": "Learn Investment Basics"
+										"content": "Learn Investment Basics"
 									},
 									"components": [ ]
 								},
@@ -1448,7 +1477,7 @@
 									"data": {
 										"id": "btnYourPlan",
 										"link": "#/sample/YourPlan",
-										"output": "Explore Your Plan"
+										"content": "Explore Your Plan"
 									},
 									"components": [ ]
 								},
@@ -1457,7 +1486,7 @@
 									"data": {
 										"id": "btnRetirementCalculator",
 										"link": "#/sample/RetirementCalculator",
-										"output": "Estimate Your Retirement Needs"
+										"content": "Estimate Your Retirement Needs"
 									},
 									"components": [ ]
 								}
@@ -1467,7 +1496,7 @@
 							"type": "HTML",
 							"data": {
 								"id": "disclaimer",
-								"output": "1) Disclosure: This chart assumes that the account earns an average annual rate of return of XXX percent. This example is hypothetical and for illustrative purposes only and is not indicative of the performance of any specific investment or investment portfolio."
+								"content": "1) Disclosure: This chart assumes that the account earns an average annual rate of return of XXX percent. This example is hypothetical and for illustrative purposes only and is not indicative of the performance of any specific investment or investment portfolio."
 							},
 							"components": [ ]
 						}
@@ -1488,11 +1517,12 @@
 							"type": "Video",
 							"data": {
 								"id": "vidMain",
+								"builderId": "field_automatic_enrollment",
 								"req": ["videogular.min.js"],
 								"config": {
 									"sources": [
 										{
-											"src": "assets/en/vid/_3.4.mp4",
+											"src": "assets/en/vid/_3.3.mp4",
 											"type": "video/mp4"
 										}
 									],
@@ -1507,7 +1537,7 @@
 							"type": "HTML",
 							"data": {
 								"id": "captionMain",
-								"output": ""
+								"content": ""
 							},
 							"components": [ ]
 						},
@@ -1516,7 +1546,7 @@
 							"data": {
 								"id": "enrollNow",
 								"link": "/EnrollNow",
-								"output": "<strong>Enroll Now</strong><br/>or Increase My Contributions"
+								"content": "<strong>Enroll Now</strong><br/>or Increase My Contributions"
 							},
 							"components": [ ]
 						},
@@ -1533,7 +1563,7 @@
 									"data": {
 										"id": "btnWhySaveNow",
 										"link": "#/sample/WhySaveNow",
-										"output": "Why Save Now"
+										"content": "Why Save Now"
 									},
 									"components": [ ]
 								},
@@ -1542,7 +1572,7 @@
 									"data": {
 										"id": "btnWhySaveMore",
 										"link": "#/sample/WhySaveMore",
-										"output": "Why Save More"
+										"content": "Why Save More"
 									},
 									"components": [ ]
 								},
@@ -1551,7 +1581,7 @@
 									"data": {
 										"id": "btnTaxAdvantages",
 										"link": "#/sample/TaxAdvantages",
-										"output": "Tax Advantages to saving"
+										"content": "Tax Advantages to saving"
 									},
 									"components": [ ]
 								},
@@ -1560,7 +1590,7 @@
 									"data": {
 										"id": "btnRetirementNeeds",
 										"link": "#/sample/RetirementCalculator",
-										"output": "Retirement needs calculator"
+										"content": "Retirement needs calculator"
 									},
 									"components": [ ]
 								}
@@ -1569,7 +1599,7 @@
 						{
 							"type": "HTML",
 							"data": {
-								"output": "<hr/>"
+								"content": "<hr/>"
 							},
 							"components": [ ]
 						},
@@ -1586,7 +1616,7 @@
 									"data": {
 										"id": "btnInvestmentBasics",
 										"link": "#/sample/InvestmentBasics",
-										"output": "Learn Investment Basics"
+										"content": "Learn Investment Basics"
 									},
 									"components": [ ]
 								},
@@ -1595,7 +1625,7 @@
 									"data": {
 										"id": "btnYourPlan",
 										"link": "#/sample/YourPlan",
-										"output": "Explore Your Plan"
+										"content": "Explore Your Plan"
 									},
 									"components": [ ]
 								},
@@ -1604,7 +1634,7 @@
 									"data": {
 										"id": "btnRetirementCalculator",
 										"link": "#/sample/RetirementCalculator",
-										"output": "Estimate Your Retirement Needs"
+										"content": "Estimate Your Retirement Needs"
 									},
 									"components": [ ]
 								}
@@ -1614,7 +1644,7 @@
 							"type": "HTML",
 							"data": {
 								"id": "disclaimer",
-								"output": "1) Epperson, Sharon. “Afford to Retire? More are Confident, But Few Save Enough.” NBC News. 18 March 2014. Web. 23 June 2014. <nbcnews.com/business/retirement/afford-retire-more-are-confident-few-save-enough-n55691>"
+								"content": "1) Epperson, Sharon. “Afford to Retire? More are Confident, But Few Save Enough.” NBC News. 18 March 2014. Web. 23 June 2014. <nbcnews.com/business/retirement/afford-retire-more-are-confident-few-save-enough-n55691>"
 							},
 							"components": [ ]
 						}
@@ -1655,7 +1685,7 @@
 							"type": "HTML",
 							"data": {
 								"id": "captionMain",
-								"output": ""
+								"content": ""
 							},
 							"components": [ ]
 						},
@@ -1664,7 +1694,7 @@
 							"data": {
 								"id": "enrollNow",
 								"link": "/EnrollNow",
-								"output": "<strong>Enroll Now</strong><br/>or Increase My Contributions"
+								"content": "<strong>Enroll Now</strong><br/>or Increase My Contributions"
 							},
 							"components": [ ]
 						},
@@ -1681,7 +1711,7 @@
 									"data": {
 										"id": "btnWhySaveNow",
 										"link": "#/sample/WhySaveNow",
-										"output": "Why Save Now"
+										"content": "Why Save Now"
 									},
 									"components": [ ]
 								},
@@ -1690,7 +1720,7 @@
 									"data": {
 										"id": "btnWhySaveMore",
 										"link": "#/sample/WhySaveMore",
-										"output": "Why Save More"
+										"content": "Why Save More"
 									},
 									"components": [ ]
 								},
@@ -1699,7 +1729,7 @@
 									"data": {
 										"id": "btnTaxAdvantages",
 										"link": "#/sample/TaxAdvantages",
-										"output": "Tax Advantages to saving"
+										"content": "Tax Advantages to saving"
 									},
 									"components": [ ]
 								},
@@ -1708,7 +1738,7 @@
 									"data": {
 										"id": "btnRetirementNeeds",
 										"link": "#/sample/RetirementCalculator",
-										"output": "Retirement needs calculator"
+										"content": "Retirement needs calculator"
 									},
 									"components": [ ]
 								}
@@ -1717,7 +1747,7 @@
 						{
 							"type": "HTML",
 							"data": {
-								"output": "<hr/>"
+								"content": "<hr/>"
 							},
 							"components": [ ]
 						},
@@ -1734,7 +1764,7 @@
 									"data": {
 										"id": "btnInvestmentBasics",
 										"link": "#/sample/InvestmentBasics",
-										"output": "Learn Investment Basics"
+										"content": "Learn Investment Basics"
 									},
 									"components": [ ]
 								},
@@ -1743,7 +1773,7 @@
 									"data": {
 										"id": "btnYourPlan",
 										"link": "#/sample/YourPlan",
-										"output": "Explore Your Plan"
+										"content": "Explore Your Plan"
 									},
 									"components": [ ]
 								},
@@ -1752,7 +1782,7 @@
 									"data": {
 										"id": "btnRetirementCalculator",
 										"link": "#/sample/RetirementCalculator",
-										"output": "Estimate Your Retirement Needs"
+										"content": "Estimate Your Retirement Needs"
 									},
 									"components": [ ]
 								}
@@ -1762,7 +1792,7 @@
 							"type": "HTML",
 							"data": {
 								"id": "disclaimer",
-								"output": ""
+								"content": ""
 							},
 							"components": [ ]
 						}
@@ -1803,7 +1833,7 @@
 							"type": "HTML",
 							"data": {
 								"id": "captionMain",
-								"output": ""
+								"content": ""
 							},
 							"components": [ ]
 						},
@@ -1812,7 +1842,7 @@
 							"data": {
 								"id": "enrollNow",
 								"link": "/EnrollNow",
-								"output": "<strong>Enroll Now</strong><br/>or Increase My Contributions"
+								"content": "<strong>Enroll Now</strong><br/>or Increase My Contributions"
 							},
 							"components": [ ]
 						},
@@ -1829,7 +1859,7 @@
 									"data": {
 										"id": "btnWhySaveNow",
 										"link": "#/sample/WhySaveNow",
-										"output": "Why Save Now"
+										"content": "Why Save Now"
 									},
 									"components": [ ]
 								},
@@ -1838,7 +1868,7 @@
 									"data": {
 										"id": "btnWhySaveMore",
 										"link": "#/sample/WhySaveMore",
-										"output": "Why Save More"
+										"content": "Why Save More"
 									},
 									"components": [ ]
 								},
@@ -1847,7 +1877,7 @@
 									"data": {
 										"id": "btnTaxAdvantages",
 										"link": "#/sample/TaxAdvantages",
-										"output": "Tax Advantages to saving"
+										"content": "Tax Advantages to saving"
 									},
 									"components": [ ]
 								},
@@ -1856,7 +1886,7 @@
 									"data": {
 										"id": "btnRetirementNeeds",
 										"link": "#/sample/RetirementCalculator",
-										"output": "Retirement needs calculator"
+										"content": "Retirement needs calculator"
 									},
 									"components": [ ]
 								}
@@ -1865,7 +1895,7 @@
 						{
 							"type": "HTML",
 							"data": {
-								"output": "<hr/>"
+								"content": "<hr/>"
 							},
 							"components": [ ]
 						},
@@ -1882,7 +1912,7 @@
 									"data": {
 										"id": "btnInvestmentBasics",
 										"link": "#/sample/InvestmentBasics",
-										"output": "Learn Investment Basics"
+										"content": "Learn Investment Basics"
 									},
 									"components": [ ]
 								},
@@ -1891,7 +1921,7 @@
 									"data": {
 										"id": "btnYourPlan",
 										"link": "#/sample/YourPlan",
-										"output": "Explore Your Plan"
+										"content": "Explore Your Plan"
 									},
 									"components": [ ]
 								},
@@ -1900,7 +1930,7 @@
 									"data": {
 										"id": "btnRetirementCalculator",
 										"link": "#/sample/RetirementCalculator",
-										"output": "Estimate Your Retirement Needs"
+										"content": "Estimate Your Retirement Needs"
 									},
 									"components": [ ]
 								}
@@ -1910,7 +1940,7 @@
 							"type": "HTML",
 							"data": {
 								"id": "disclaimer",
-								"output": ""
+								"content": ""
 							},
 							"components": [ ]
 						}
@@ -1954,6 +1984,7 @@
 					"type": "Page",
 					"data": {
 						"id": "AutomaticRebalancer",
+						"builderId": "field_automatic_rebalancer",
 						"parentId": "InvestmentBasics",
 						"title": "Automatic Rebalance",
 						"inMenu": true,
@@ -1972,7 +2003,7 @@
 							"type": "HTML",
 							"data": {
 								"id": "stndFooter",
-								"output": "FOOTER"
+								"content": "FOOTER"
 							},
 							"components": [ ]
 						}

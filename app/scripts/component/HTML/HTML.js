@@ -14,7 +14,7 @@ angular
 		function( $log, $scope, $sce )
 		{
 			$log.debug( 'HTML::component', $scope.component );
-			$scope.content = $sce.trustAsHtml( $scope.component.data.output );
+			$scope.content = $sce.trustAsHtml( $scope.component.data.content );
 			$log.debug( 'HTML::content', $scope.content );
 		}
 	)
