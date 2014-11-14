@@ -19,20 +19,6 @@
 			},
 			"components": [
 				{
-					"type": "Menu",
-					"data": {
-						"id": "stndMenu",
-						"items": [
-							{
-								"link": "/EnrollNow",
-								"text": "Enroll Now"
-							},
-							"pages"
-						]
-					},
-					"components": [ ]
-				},
-				{
 					"type": "Header",
 					"data": {
 						"id": "stndHeader"
@@ -107,6 +93,22 @@
 						"required": false
 					},
 					"components": [
+						{
+							"type": "Menu",
+							"data": {
+								"id": "stndMenu",
+								"items": [
+									{
+										"id": "EnrollNow",
+										"link": "/EnrollNow",
+										"text": "Enroll Now",
+										"children": []
+									},
+									"pages"
+								]
+							},
+							"components": [ ]
+						},
 						{
 							"type": "Video",
 							"data": {
@@ -274,6 +276,22 @@
 					"components":
 					[
 						{
+							"type": "Menu",
+							"data": {
+								"id": "stndMenu",
+								"items": [
+									{
+										"id": "EnrollNow",
+										"link": "/EnrollNow",
+										"text": "Enroll Now",
+										"children": []
+									},
+									"pages"
+								]
+							},
+							"components": [ ]
+						},
+						{
 							"type": "Video",
 							"data": {
 								"id": "vidMain",
@@ -431,6 +449,22 @@
 					},
 					"components":
 					[
+						{
+							"type": "Menu",
+							"data": {
+								"id": "stndMenu",
+								"items": [
+									{
+										"id": "EnrollNow",
+										"link": "/EnrollNow",
+										"text": "Enroll Now",
+										"children": []
+									},
+									"pages"
+								]
+							},
+							"components": [ ]
+						},
 						{
 							"type": "Video",
 							"data": {
@@ -590,6 +624,22 @@
 					"components":
 					[
 						{
+							"type": "Menu",
+							"data": {
+								"id": "stndMenu",
+								"items": [
+									{
+										"id": "EnrollNow",
+										"link": "/EnrollNow",
+										"text": "Enroll Now",
+										"children": []
+									},
+									"pages"
+								]
+							},
+							"components": [ ]
+						},
+						{
 							"type": "Video",
 							"data": {
 								"id": "vidMain",
@@ -747,6 +797,22 @@
 					"components":
 					[
 						{
+							"type": "Menu",
+							"data": {
+								"id": "stndMenu",
+								"items": [
+									{
+										"id": "EnrollNow",
+										"link": "/EnrollNow",
+										"text": "Enroll Now",
+										"children": []
+									},
+									"pages"
+								]
+							},
+							"components": [ ]
+						},
+						{
 							"type": "Video",
 							"data": {
 								"id": "vidMain",
@@ -903,6 +969,22 @@
 					},
 					"components":
 					[
+						{
+							"type": "Menu",
+							"data": {
+								"id": "stndMenu",
+								"items": [
+									{
+										"id": "EnrollNow",
+										"link": "/EnrollNow",
+										"text": "Enroll Now",
+										"children": []
+									},
+									"pages"
+								]
+							},
+							"components": [ ]
+						},
 						{
 							"type": "Video",
 							"data": {
@@ -1062,6 +1144,22 @@
 					"components":
 					[
 						{
+							"type": "Menu",
+							"data": {
+								"id": "stndMenu",
+								"items": [
+									{
+										"id": "EnrollNow",
+										"link": "/EnrollNow",
+										"text": "Enroll Now",
+										"children": []
+									},
+									"pages"
+								]
+							},
+							"components": [ ]
+						},
+						{
 							"type": "Video",
 							"data": {
 								"id": "vidMain",
@@ -1219,6 +1317,22 @@
 					"components":
 					[
 						{
+							"type": "Menu",
+							"data": {
+								"id": "stndMenu",
+								"items": [
+									{
+										"id": "EnrollNow",
+										"link": "/EnrollNow",
+										"text": "Enroll Now",
+										"children": []
+									},
+									"pages"
+								]
+							},
+							"components": [ ]
+						},
+						{
 							"type": "Video",
 							"data": {
 								"id": "vidMain",
@@ -1361,11 +1475,26 @@
 						"parentId": "StartPlanning",
 						"title": "Why Save Now",
 						"inMenu": true,
-						"menuTitle": "Employer Contributions",
 						"required": false
 					},
 					"components":
 					[
+						{
+							"type": "Menu",
+							"data": {
+								"id": "stndMenu",
+								"items": [
+									{
+										"id": "EnrollNow",
+										"link": "/EnrollNow",
+										"text": "Enroll Now",
+										"children": []
+									},
+									"pages"
+								]
+							},
+							"components": [ ]
+						},
 						{
 							"type": "Video",
 							"data": {
@@ -1513,6 +1642,22 @@
 					},
 					"components":
 					[
+						{
+							"type": "Menu",
+							"data": {
+								"id": "stndMenu",
+								"items": [
+									{
+										"id": "EnrollNow",
+										"link": "/EnrollNow",
+										"text": "Enroll Now",
+										"children": []
+									},
+									"pages"
+								]
+							},
+							"components": [ ]
+						},
 						{
 							"type": "Video",
 							"data": {
@@ -1663,6 +1808,22 @@
 					"components":
 					[
 						{
+							"type": "Menu",
+							"data": {
+								"id": "stndMenu",
+								"items": [
+									{
+										"id": "EnrollNow",
+										"link": "/EnrollNow",
+										"text": "Enroll Now",
+										"children": []
+									},
+									"pages"
+								]
+							},
+							"components": [ ]
+						},
+						{
 							"type": "Video",
 							"data": {
 								"id": "vidMain",
@@ -1811,6 +1972,22 @@
 					"components":
 					[
 						{
+							"type": "Menu",
+							"data": {
+								"id": "stndMenu",
+								"items": [
+									{
+										"id": "EnrollNow",
+										"link": "/EnrollNow",
+										"text": "Enroll Now",
+										"children": []
+									},
+									"pages"
+								]
+							},
+							"components": [ ]
+						},
+						{
 							"type": "Video",
 							"data": {
 								"id": "vidMain",
@@ -1955,7 +2132,24 @@
 						"inMenu": true,
 						"required": false
 					},
-					"components": [ ]
+					"components": [
+						{
+							"type": "Menu",
+							"data": {
+								"id": "stndMenu",
+								"items": [
+									{
+										"id": "EnrollNow",
+										"link": "/EnrollNow",
+										"text": "Enroll Now",
+										"children": []
+									},
+									"pages"
+								]
+							},
+							"components": [ ]
+						}
+					]
 				},
 				{
 					"type": "Page",

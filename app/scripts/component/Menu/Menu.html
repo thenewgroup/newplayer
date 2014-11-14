@@ -1,12 +1,14 @@
-<div class="np-component np-{{component.type}}" ng-controller="MenuController">
+<nav class="np-component np-{{component.type}}" ng-controller="MenuController">
 	<div class="debug">
 		<h3>{{component.type}}</h3>
 		<small>{{component.idx}} -- {{template}}</small>
 	</div>
 
+	<ul>
+		<li ng-repeat="child in items">
+			<np-menu menuitem="child"></np-menu>
+		</li>
+	</ul>
 
-
-	<div ng-if="subCmp" ng-repeat="component in components">
-		<np-component idx="{{component.idx}}"></np-component>
-	</div>
-</div>
+	<np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></np-component>
+</nav>
