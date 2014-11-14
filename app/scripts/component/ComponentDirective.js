@@ -38,8 +38,9 @@ function ComponentDirective(
 		function templateLoaded( data, $scope, $element )
 		{
 			var compiled = $compile(data.data);
-			var linked = compiled($scope);
-			$element.append(linked);
+			compiled($scope, function(clone){
+				$element.append(clone);
+			});
 			/*
 			// if moving back up to parent
 			if ( !!cmp.components && cmp.components.length > 0 )
@@ -81,21 +82,23 @@ function ComponentDirective(
 						if ( !!cmp.data )
 						{
 							// set known data values
-							var cmpId = cmp.data.id;
-							if ( !cmpId )
+							var attrId = cmp.data.id;
+							if ( !attrId )
 							{
-								cmpId = cmp.type + ':' + cmpIdx.toString();
+								attrId = cmp.type + ':' + cmpIdx.toString();
 							}
 							// id must start with letter (according to HTML4 spec)
-							if ( /^[^a-zA-Z]/.test( cmpId ) )
+							if ( /^[^a-zA-Z]/.test( attrId ) )
 							{
-								cmpId = 'np' + cmpId;
+								attrId = 'np' + attrId;
 							}
 							// replace invalid id characters (according to HTML4 spec)
-							cmpId = cmpId.replace(/[^\w\-.:]/g,'_');
+							attrId = attrId.replace(/[^\w\-.:]/g,'_');
 
 							// TODO: VALIDATE
-							$element.attr('id', cmpId );
+							$element.attr('id', attrId );
+
+							// TODO: pass all "data-*" attributes into element
 						}
 						if ( !!cmp.components && cmp.components.length > 0 )
 						{
