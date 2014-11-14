@@ -135,6 +135,34 @@ function ManifestService(
 			return [0];
 		}
 
+		function extendDeep(dst)
+		{
+			angular.forEach
+			(
+				arguments,
+				function(obj)
+				{
+					if (obj !== dst)
+					{
+						angular.forEach
+						(
+							obj,
+							function(value, key)
+							{
+								if (dst[key] && dst[key].constructor && dst[key].constructor === Object)
+								{
+									extendDeep(dst[key], value);
+								} else {
+									dst[key] = value;
+								}
+							}
+						);
+					}
+				}
+			);
+			return dst;
+		}
+
 		/*
 		 * Initializes the component for the manifest
 		 */
@@ -187,7 +215,8 @@ function ManifestService(
 					}
 					if ( typeof( newData ) === 'object' )
 					{
-						angular.extend( cmp.data, newData );
+						$log.debug( 'ManifestService::initializeComponent: override: extend:', cmp.data, newData );
+						extendDeep( cmp.data, newData );
 					}
 				}
 			}

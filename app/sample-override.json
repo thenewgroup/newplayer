@@ -14,7 +14,7 @@
 		"field_mainspring_managed":"delete",
 		"field_entry_dates":"{\"content\":\"An employee is eligible to participate in the plan on the first entry date after satisfying the following: 18 months of service. 40 hours of service during the 12-month period beginning on your date of hire or any plan year beginning after your date of hire. You must be age 18 or older. Entry dates are: Monthly.\"}",
 		"field_other":"",
-		"field_automatic_enrollment":"{\"config\":{\"sources\":[{\"src\":\"assets/en/vid/_3.4.mp4\",\"type\":\"video/mp4\"}],\"theme\":{\"url\":\"scripts/component/Video/videogular.css\"}}}",
+		"field_automatic_enrollment":"{\"config\":{\"sources\":[{\"src\":\"assets/en/vid/_3.4.mp4\",\"type\":\"video/mp4\"}]}}",
 		"field_automatic_contribution_amo":"{\"content\":\"Your default contribution: 3.2% of your compensation.\"}",
 		"field_deferral_may_change":"",
 		"field_details_of_plan":"{\"content\":\"Test\"}",
@@ -26,6 +26,15 @@
 		"field_discretionary_match":"1",
 		"field_matching_formula":"1",
 		"field_custom_match_message_add":"{\"content\":\"Another custom match text message\"}",
-		"field_profit_sharing_contributio":"{\"content\":\"Your employer may also make a profit sharing contribution. See your Summary Plan Description for more details.\"}"
+		"field_profit_sharing_contributio":"{\"content\":\"Your employer may also make a profit sharing contribution. See your Summary Plan Description for more details.\"}",
+		"krazy": {
+			"bar": "baz",
+			"nested":[{
+				"prop1":"test",
+				"obj1":{
+					"prop2": "foo"
+				}
+			}]
+		}
 	}
 ]
