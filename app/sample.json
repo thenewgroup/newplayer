@@ -142,38 +142,6 @@
 							"components": [ ]
 						},
 						{
-							"type": "HTML",
-							"data": {
-								"id": "keyDetailsHeader",
-								"content": "<h4>Key Details of your Plan</h4>"
-							},
-							"components": [ ]
-						},
-						{
-							"type": "HTML",
-							"data": {
-								"id": "keyDetailsText",
-								"builderId": "field_entry_dates",
-								"content": "Eligibility details"
-							},
-							"components": [ ]
-						},
-						{
-							"type": "HTML",
-							"data": {
-								"id": "planDetailsText",
-								"content": "<h4>Your Employer's Plan</h4>[IF AE][VARIABLE TEXT]Your default contribution rate: XX% per paycheck<br/>[IF AE][VARIABLE TEXT]Your default investment: XXXXX<br/>[VARIABLE TEXT]To be eligible for the plan, you must: XXXXX<br/>[VARIABLE TEXT]As a new hire, you can participate in the plan: XXXXXXXXXX"
-							},
-							"components": [ ]
-						},
-						{
-							"type": "HTML",
-							"data": {
-								"content": "<hr/>"
-							},
-							"components": [ ]
-						},
-						{
 							"type": "Column",
 							"data": {
 								"id": "planDetailsCols",
@@ -183,16 +151,34 @@
 								{
 									"type": "HTML",
 									"data": {
-										"id": "employerContributionText",
-										"content": "<strong>Employer Contribution</strong><p>Your employer will match 2% of your contributions up to $100 per month</p>"
+										"id": "keyDetailsHeader",
+										"content": "<h4>Key Details of your Plan</h4>"
 									},
 									"components": [
 										{
-											"type": "Button",
+											"type": "HTML",
 											"data": {
-												"id": "btnEmployerContributions",
-												"link": "EmployerContributions",
-												"content": "Learn More about employer contributions"
+												"id": "keyDetailsText",
+												"builderId": "field_entry_dates",
+												"content": "Eligibility details"
+											},
+											"components": [ ]
+										},
+										{
+											"type": "HTML",
+											"data": {
+												"id": "",
+												"builderId": "field_automatic_contribution_amo",
+												"content": ""
+											},
+											"components": [ ]
+										},
+										{
+											"type": "HTML",
+											"data": {
+												"id": "",
+												"builderId": "field_details_of_plan",
+												"content": ""
 											},
 											"components": [ ]
 										}
@@ -216,6 +202,41 @@
 								"content": "<hr/>"
 							},
 							"components": [ ]
+						},
+						{
+							"type": "HTML",
+							"data": {
+								"id": "employerContributionHeader",
+								"builderId": "field_safe_harbor_matching_or_no",
+								"content": "<strong>Employer Contribution</strong>"
+							},
+							"components": [
+								{
+									"type": "HTML",
+									"data": {
+										"id": "employerContributionText",
+										"builderId": "field_safe_harbor_contribution_t",
+										"content": "<p>Your employer will match your contributions up to x%...</p>"
+									},
+									"components": [ ]
+								},
+								{
+									"type": "Button",
+									"data": {
+										"id": "btnEmployerContributions",
+										"link": "EmployerContributions",
+										"content": "Learn More about employer contributions"
+									},
+									"components": [ ]
+								},
+								{
+									"type": "HTML",
+									"data": {
+										"content": "<hr/>"
+									},
+									"components": [ ]
+								}
+							]
 						},
 						{
 							"type": "Button",
