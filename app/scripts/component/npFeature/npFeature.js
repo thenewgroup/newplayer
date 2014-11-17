@@ -2,15 +2,15 @@
 
 angular
 	.module(
-		'Feature',
+		'npFeature',
 		[ ]
 	);
 
 angular
-	.module('Feature')
+	.module('npFeature')
 
 	/** @ngInject */
-	.controller( 'FeatureController',
+	.controller( 'npFeatureController',
 		function( /*$log, $scope, $state, ManifestService*/ )
 		{
 		}
