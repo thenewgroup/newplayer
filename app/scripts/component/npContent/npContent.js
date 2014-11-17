@@ -38,7 +38,7 @@ angular
 			{
 				$log.debug( 'npContent::lang match', cmpLang, manifestLang );
 				$scope.currentLang = true;
-				$scope.npContent = $scope;
+				$scope.currentContent = $scope;
 			} else {
 				$log.debug( 'npContent::wrong lang', cmpLang, manifestLang );
 				$scope.currentLang = false;

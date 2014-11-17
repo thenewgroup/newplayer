@@ -15,7 +15,7 @@ angular
 		{
 			$log.debug( 'npPage::this component', $scope.component,
 			            'is page', $scope.component.data.id,
-			            'inside content scope', $scope.npContent,
+			            'inside content scope', $scope.currentContent,
 			            'for page', ManifestService.getPageId() );
 
 			var parentIdx = $scope.component.idx.slice(0);
@@ -43,7 +43,7 @@ angular
 			}
 
 			// have pages been indexed?
-			if ( ! $scope.npContent.pages )
+			if ( ! $scope.currentContent.pages )
 			{
 				// index pages
 				var pages = ManifestService.getAll( 'npPage', parentIdx );
@@ -80,8 +80,8 @@ angular
 						}
 					}
 				}
-				$log.debug( 'npPage::index reulsts:', nestedPages );
-				$scope.npContent.pages = nestedPages;
+				$log.debug( 'npPage::index results:', nestedPages );
+				$scope.currentContent.pages = nestedPages;
 			}
 
 
