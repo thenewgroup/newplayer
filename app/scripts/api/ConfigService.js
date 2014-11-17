@@ -44,7 +44,7 @@ function ConfigService( $log, APIService, ManifestService/*, $timeout, $q, $stat
 
 		function initialize( npConfig )
 		{
-			$log.debug( 'ConfigService::initialize:config:', npConfig );
+			$log.debug( 'ConfigService::initialize:config:', npConfig, self.getManifestId() );
 
 			var manifestURL = npConfig.manifestURL;
 			if ( !!manifestURL )
@@ -68,7 +68,6 @@ function ConfigService( $log, APIService, ManifestService/*, $timeout, $q, $stat
 
 		function setConfig( data )
 		{
-			$log.debug( 'ConfigService::setConfigData:', data );
 			self.configData = data;
 		}
 		this.getConfig = function( )

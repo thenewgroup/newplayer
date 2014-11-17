@@ -344,22 +344,24 @@ function ManifestService(
 
 		this.initialize = function( data, overrides )
 		{
-			$log.debug('ManifestService::initialize:', data, overrides);
+			$log.debug( 'ManifestService::initialize:', data, overrides );
 
 			setData( data );
 			setOverrides( overrides[0] );
+			manifestInitialized = false;
 
 			// index all components
+			setComponentIdx( null );
 			var cmp = self.getComponent();
+			$log.debug( 'ManifestService::initialize:initialParse', cmp );
 			while ( !!cmp )
 			{
-				$log.debug( 'ManifestService:: initialParse', cmp );
 				cmp = self.getComponent();
 			}
 
 			manifestInitialized = true;
 
-			$log.debug('ManifestService::initialized:', getData() );
+			$log.debug('ManifestService::initialize:manifest data:', getData() );
 		};
 
 	};

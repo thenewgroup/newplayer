@@ -3,9 +3,9 @@
 /** @ngInject */
 function Router($logProvider, $stateProvider, $urlRouterProvider, $uiViewScrollProvider)
 {
-	$logProvider.debugEnabled(true);
+	$logProvider.debugEnabled( false );
 	$uiViewScrollProvider.useAnchorScroll();
-	$urlRouterProvider.otherwise('/sample');
+	$urlRouterProvider.otherwise( '/sample' );
 	$stateProvider
 		.state(
 			'manifest',
@@ -23,35 +23,35 @@ function Router($logProvider, $stateProvider, $urlRouterProvider, $uiViewScrollP
 						{
 							ConfigService.setManifestId( $stateParams.manifestId );
 							var configData = ConfigService.getConfigData( 'config.json' );
-							$log.debug( 'Router::manifest:configData:', configData );
+							$log.debug( 'Router::manifest:configData:getting config.json for manifestId:', $stateParams.manifestId );
 							return configData;
 						},
 					'manifestData':
 						function(APIService, ConfigService, configData, $stateParams, $log)
 						{
+							$log.debug( 'Router::manifest:manifestData:got config data:', configData );
 							var manifestURL = ConfigService.getManifestURL();
-							$log.debug( 'Router::manifest:manifestData:manifestURL:', manifestURL );
 							var manifestData = APIService.getData( manifestURL );
-							$log.debug( 'Router::manifest:manifestData:', $stateParams.manifestId, manifestData );
+							$log.debug( 'Router::manifest:manifestData:getting manifest data from:', manifestURL );
 							return manifestData;
 						},
 					'overrideData':
 						function(ConfigService, configData, $log)
 						{
+							$log.debug( 'Router::manifest:overrideData:got config data:', configData );
 							var overrideData = null;
 							var overrideURL = ConfigService.getOverrideURL();
-							$log.debug( 'Router::manifest:overrideData:URL', overrideURL );
 							if ( !!overrideURL )
 							{
 								overrideData = ConfigService.getOverrideData( overrideURL );
-								$log.debug( 'Router::manifest:overrideData:', overrideData );
+								$log.debug( 'Router::manifest:overrideData:getting override data from:', overrideURL );
 							}
 							return overrideData;
 						},
 					'manifestService':
 						function(ManifestService, manifestData, overrideData, $log)
 						{
-							$log.debug( 'Router::manifest:manifestService:manifestData', manifestData );
+							$log.debug( 'Router::manifest:manifestService:initializing manifest data:', manifestData, ', with override data:', overrideData );
 							ManifestService.initialize( manifestData, overrideData );
 						}
 				},
