@@ -10,6 +10,13 @@ angular
 	.module('Feature')
 
 	/** @ngInject */
+	.controller( 'FeatureController',
+		function( /*$log, $scope, $state, ManifestService*/ )
+		{
+		}
+	)
+
+	/** @ngInject */
 	.run(
 		function( $log, $rootScope )
 		{
