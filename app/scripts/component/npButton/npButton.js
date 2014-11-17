@@ -2,19 +2,19 @@
 
 angular
 	.module(
-		'Button',
+		'npButton',
 		[ ]
 	);
 
 angular
-	.module('Button')
+	.module('npButton')
 
 	/** @ngInject */
-	.controller( 'ButtonController',
+	.controller( 'npButtonController',
 		function( $log, $scope, $sce, $location, $element, ConfigService )
 		{
 			var cmpData = $scope.component.data;
-			$log.debug( 'Button::data', cmpData );
+			$log.debug( 'npButton::data', cmpData );
 
 			this.content = '';
 			var btnContent = cmpData.content;
@@ -40,7 +40,7 @@ angular
 					btnLink = '/' + ConfigService.getManifestId() + '/' + btnLink;
 				}
 				this.link = $sce.trustAsResourceUrl( btnLink );
-				$log.debug( 'Button::link', this.link );
+				$log.debug( 'npButton::link', this.link );
 			}
 			this.go = function() {
 				if ( this.linkInternal )
@@ -57,7 +57,7 @@ angular
 	.run(
 		function( $log, $rootScope )
 		{
-			$log.debug('Button::component loaded!');
+			$log.debug('npButton::component loaded!');
 		}
 	);
 

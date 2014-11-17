@@ -20,7 +20,7 @@ angular
 	.run(
 		function( $log, $rootScope )
 		{
-			$log.debug('Feature::component loaded!');
+			$log.debug('npFeature::component loaded!');
 		}
 	);
 

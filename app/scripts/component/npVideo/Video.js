@@ -2,21 +2,21 @@
 
 angular
 	.module(
-		'Video',
+		'npVideo',
 		[ 'com.2fdevs.videogular' ]
 	);
 
 angular
-	.module('Video')
+	.module('npVideo')
 
 	/** @ngInject */
-	.controller( 'VideoController',
+	.controller( 'npVideoController',
 		function( $log, $scope, $sce, $element )
 		{
-			$log.debug( 'Video::$element', $element );
+			$log.debug( 'npVideo::$element', $element );
 			// TODO - use sce?
 			$scope.config = $scope.component.data.config;
-			$log.debug( 'Video::src', $scope.src );
+			$log.debug( 'npVideo::src', $scope.src );
 		}
 	)
 
@@ -24,7 +24,7 @@ angular
 	.run(
 		function( $log, $rootScope )
 		{
-			$log.debug('Video::component loaded!');
+			$log.debug('npVideo::component loaded!');
 		}
 	);
 

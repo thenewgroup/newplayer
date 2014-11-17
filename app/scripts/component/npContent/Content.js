@@ -2,25 +2,25 @@
 
 angular
 	.module(
-		'Content',
+		'npContent',
 		[ ]
 	);
 
 angular
-	.module('Content')
+	.module('npContent')
 
 	/** @ngInject */
-	.controller( 'ContentController',
+	.controller( 'npContentController',
 		function( $log, $scope, $state, ManifestService )
 		{
-			$log.debug( 'Content::' );
+			$log.debug( 'npContent::' );
 			var manifestLang = ManifestService.getLang();
 
 			if ( !manifestLang )
 			{
-				var firstContentCmp = ManifestService.getFirst('Content');
+				var firstContentCmp = ManifestService.getFirst('npContent');
 				manifestLang = firstContentCmp.data.language;
-				$log.debug('Content::set lang', manifestLang);
+				$log.debug('npContent::set lang', manifestLang);
 				ManifestService.setLang( manifestLang );
 				/* redirecting interrupts component loading
 				$state.go(
@@ -36,11 +36,11 @@ angular
 			var cmpLang = $scope.component.data.language;
 			if ( cmpLang === manifestLang )
 			{
-				$log.debug( 'Content::lang match', cmpLang, manifestLang );
+				$log.debug( 'npContent::lang match', cmpLang, manifestLang );
 				$scope.currentLang = true;
 				$scope.npContent = $scope;
 			} else {
-				$log.debug( 'Content::wrong lang', cmpLang, manifestLang );
+				$log.debug( 'npContent::wrong lang', cmpLang, manifestLang );
 				$scope.currentLang = false;
 			}
 		}
@@ -50,7 +50,7 @@ angular
 	.run(
 		function( $log, $rootScope )
 		{
-			$log.debug('Content component loaded!');
+			$log.debug('npContent component loaded!');
 		}
 	);
 

@@ -2,21 +2,21 @@
 
 angular
 	.module(
-		'Image',
+		'npImage',
 		[ ]
 	);
 
 angular
-	.module('Image')
+	.module('npImage')
 
 	/** @ngInject */
-	.controller( 'ImageController',
+	.controller( 'npImageController',
 		function( $log, $scope, $sce )
 		{
-			$log.debug( 'Image::scope', $scope );
+			$log.debug( 'npImage::scope', $scope );
 			// TODO - use sce for URL whitelist?
 			$scope.src = $scope.component.data.src;
-			$log.debug( 'Image::src', $scope.src );
+			$log.debug( 'npImage::src', $scope.src );
 		}
 	)
 
@@ -24,7 +24,7 @@ angular
 	.run(
 		function( $log, $rootScope )
 		{
-			$log.debug('Image::component loaded!');
+			$log.debug('npImage::component loaded!');
 		}
 	);
 

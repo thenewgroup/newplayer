@@ -2,12 +2,12 @@
 
 angular
 	.module(
-		'Menu',
+		'npMenu',
 		[ ]
 	);
 
 /** @ngInject */
-function MenuDirective(
+function npMenuDirective(
 	$log, $compile/*, $stateParams, $state, $timeout*/
 )
 {
@@ -47,13 +47,13 @@ function MenuDirective(
 }
 
 angular
-	.module('Menu')
+	.module('npMenu')
 
 	/** @ngInject */
-	.controller( 'MenuController',
+	.controller( 'npMenuController',
 		function( $log, $scope, $sce )
 		{
-			$log.debug( 'Menu::', $scope.component );
+			$log.debug( 'npMenu::', $scope.component );
 			var vm = this;
 
 			this.items = ($scope.component.data||{}).items;
@@ -64,24 +64,24 @@ angular
 					var item = vm.items[ itemIdx ];
 					if ( item === "pages" )
 					{
-						$log.debug( 'Menu::pages', $scope.pages );
+						$log.debug( 'npMenu::pages', $scope.pages );
 						var spliceArgs = [ itemIdx, 1 ].concat( $scope.pages );
 						Array.prototype.splice.apply( vm.items, spliceArgs );
 					}
 				}
-				$log.debug( 'Menu::items', vm.items );
+				$log.debug( 'npMenu::items', vm.items );
 				$scope.items = vm.items;
 			}
 		}
 	)
 
-	.directive( 'npMenu', MenuDirective )
+	.directive( 'npMenu', npMenuDirective )
 
 	/** @ngInject */
 	.run(
 		function( $log, $rootScope )
 		{
-			$log.debug('Menu::component loaded!');
+			$log.debug('npMenu::component loaded!');
 		}
 	);
 

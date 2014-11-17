@@ -2,18 +2,18 @@
 
 angular
 	.module(
-		'Column',
+		'npHeader',
 		[ ]
 	);
 
 angular
-	.module('Column')
+	.module('npHeader')
 
 	/** @ngInject */
-	.controller( 'ColumnController',
+	.controller( 'npHeaderController',
 		function( $log, $scope, $sce )
 		{
-			$log.debug( 'Column::scope', $scope );
+			$log.debug( 'npHeader::scope', $scope );
 		}
 	)
 
@@ -21,7 +21,7 @@ angular
 	.run(
 		function( $log, $rootScope )
 		{
-			$log.debug('Column::component loaded!');
+			$log.debug('npHeader::component loaded!');
 		}
 	);
 

@@ -2,18 +2,18 @@
 
 angular
 	.module(
-		'Footer',
+		'npColumn',
 		[ ]
 	);
 
 angular
-	.module('Footer')
+	.module('npColumn')
 
 	/** @ngInject */
-	.controller( 'FooterController',
+	.controller( 'npColumnController',
 		function( $log, $scope, $sce )
 		{
-			$log.debug( 'Footer::scope', $scope );
+			$log.debug( 'npColumn::scope', $scope );
 		}
 	)
 
@@ -21,7 +21,7 @@ angular
 	.run(
 		function( $log, $rootScope )
 		{
-			$log.debug('Footer::component loaded!');
+			$log.debug('npColumn::component loaded!');
 		}
 	);
 

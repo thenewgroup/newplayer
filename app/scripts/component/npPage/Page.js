@@ -2,18 +2,18 @@
 
 angular
 	.module(
-		'Page',
+		'npPage',
 		[ ]
 	);
 
 angular
-	.module('Page')
+	.module('npPage')
 
 	/** @ngInject */
-	.controller( 'PageController',
+	.controller( 'npPageController',
 		function( $log, $scope, $state, ManifestService, ConfigService )
 		{
-			$log.debug( 'Page::this component', $scope.component,
+			$log.debug( 'npPage::this component', $scope.component,
 			            'is page', $scope.component.data.id,
 			            'inside content scope', $scope.npContent,
 			            'for page', ManifestService.getPageId() );
@@ -24,10 +24,10 @@ angular
 			var pageId = ManifestService.getPageId();
 			if ( !pageId )
 			{
-				var firstPageCmp = ManifestService.getFirst('Page', parentIdx);
+				var firstPageCmp = ManifestService.getFirst('npPage', parentIdx);
 				pageId = firstPageCmp.data.id;
 				ManifestService.setPageId( pageId );
-				$log.debug('Page::set page', pageId);
+				$log.debug('npPage::set page', pageId);
 				/* redirecting interrupts component loading
 				$state.go(
 					'manifest.lang.page',
@@ -46,12 +46,12 @@ angular
 			if ( ! $scope.npContent.pages )
 			{
 				// index pages
-				var pages = ManifestService.getAll( 'Page', parentIdx );
+				var pages = ManifestService.getAll( 'npPage', parentIdx );
 				var nestedPages = [];
 				for (var pageIdx in pages)
 				{
 					var page = pages[pageIdx];
-					$log.debug( 'Page::index:', page );
+					$log.debug( 'npPage::index:', page );
 					if ( !!page.data && page.data.inMenu )
 					{
 						var aPage =
@@ -62,16 +62,16 @@ angular
 								children : []
 							};
 						var parentId = page.data.parentId;
-						$log.debug( 'Page::index:parent?', parentId );
+						$log.debug( 'npPage::index:parent?', parentId );
 						if ( ! parentId )
 						{
-							$log.debug( 'Page::index:top level:', aPage );
+							$log.debug( 'npPage::index:top level:', aPage );
 							nestedPages.push( aPage );
 						} else {
-							$log.debug( 'Page::index:nest:', parentId, aPage );
+							$log.debug( 'npPage::index:nest:', parentId, aPage );
 							for ( var parentPage in nestedPages )
 							{
-								$log.debug( 'Page::index:nest:isEqual?', parentId, nestedPages[parentPage].id );
+								$log.debug( 'npPage::index:nest:isEqual?', parentId, nestedPages[parentPage].id );
 								if ( nestedPages[parentPage].id === parentId )
 								{
 									nestedPages[parentPage].children.push( aPage );
@@ -80,13 +80,13 @@ angular
 						}
 					}
 				}
-				$log.debug( 'Page::index reulsts:', nestedPages );
+				$log.debug( 'npPage::index reulsts:', nestedPages );
 				$scope.npContent.pages = nestedPages;
 			}
 
 
 			// check if current route is for this page
-			$log.debug( 'Page::on current page?', ManifestService.getPageId(), $scope.component.data.id );
+			$log.debug( 'npPage::on current page?', ManifestService.getPageId(), $scope.component.data.id );
 			if ( $scope.component.data.id === pageId )
 			{
 				$scope.currentPage = true;
@@ -102,7 +102,7 @@ angular
 	.run(
 		function( $log, $rootScope )
 		{
-			$log.debug('Page::component loaded!');
+			$log.debug('npPage::component loaded!');
 		}
 	);
 

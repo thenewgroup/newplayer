@@ -2,20 +2,20 @@
 
 angular
 	.module(
-		'HTML',
+		'npHTML',
 		[ ]
 	);
 
 angular
-	.module('HTML')
+	.module('npHTML')
 
 	/** @ngInject */
-	.controller( 'HTMLController',
+	.controller( 'npHTMLController',
 		function( $log, $scope, $sce )
 		{
-			$log.debug( 'HTML::component', $scope.component );
+			$log.debug( 'npHTML::component', $scope.component );
 			$scope.content = $sce.trustAsHtml( $scope.component.data.content );
-			$log.debug( 'HTML::content', $scope.content );
+			$log.debug( 'npHTML::content', $scope.content );
 		}
 	)
 
@@ -23,7 +23,7 @@ angular
 	.run(
 		function( $log, $rootScope )
 		{
-			$log.debug('HTML::component loaded!');
+			$log.debug('npHTML::component loaded!');
 		}
 	);
 

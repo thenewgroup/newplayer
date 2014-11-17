@@ -2,18 +2,18 @@
 
 angular
 	.module(
-		'Header',
+		'npFooter',
 		[ ]
 	);
 
 angular
-	.module('Header')
+	.module('npFooter')
 
 	/** @ngInject */
-	.controller( 'HeaderController',
+	.controller( 'npFooterController',
 		function( $log, $scope, $sce )
 		{
-			$log.debug( 'Header::scope', $scope );
+			$log.debug( 'npFooter::scope', $scope );
 		}
 	)
 
@@ -21,7 +21,7 @@ angular
 	.run(
 		function( $log, $rootScope )
 		{
-			$log.debug('Header::component loaded!');
+			$log.debug('npFooter::component loaded!');
 		}
 	);
 
