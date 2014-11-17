@@ -1,11 +1,14 @@
-<div ng-show="currentLang" class="np-component np-{{component.type}}" ng-controller="ContentController">
-	<div class="debug">
-		<h3>{{component.type}}</h3>
-		<small>{{component.idx}} -- {{template}}</small>
-	</div>
+<div class="{{component.type}}" ng-controller="ContentController as npContent" id="{{component.data.id}}" ng-show="currentLang">
 
-	<div ng-if="subCmp" ng-repeat="component in components">
-		<np-component idx="{{component.idx}}"></np-component>
+	<div ng-if="currentLang" class="{{component.type}}-wrapper">
+
+		<div class="debug">
+			<h3>{{component.type}}</h3>
+			<small>{{component.idx}} -- {{template}}</small>
+		</div>
+
+		<np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></np-component>
+
 	</div>
 
 </div>

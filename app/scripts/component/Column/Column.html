@@ -1,10 +1,10 @@
-<div class="np-component np-{{component.type}}" ng-controller="ColumnController">
+<div class="{{component.type}}" ng-controller="ColumnController as npColumn" id="{{component.data.id}}">
+
 	<div class="debug">
 		<h3>{{component.type}}</h3>
 		<small>{{component.idx}} -- {{template}}</small>
 	</div>
 
-	<div ng-if="subCmp" ng-repeat="subComponent in components" class="column" style="width: {{100/component.data.cols}}%;">
-		<np-component idx="{{subComponent.idx}}"></np-component>
-	</div>
+	<np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></np-component>
+
 </div>

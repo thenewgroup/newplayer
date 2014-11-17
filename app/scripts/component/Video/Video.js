@@ -13,8 +13,7 @@ angular
 	.controller( 'VideoController',
 		function( $log, $scope, $sce, $element )
 		{
-			$log.debug( 'Video::setting html scope', $scope );
-			$element.addClass('sixteen-nine');
+			$log.debug( 'Video::$element', $element );
 			// TODO - use sce?
 			$scope.config = $scope.component.data.config;
 			$log.debug( 'Video::src', $scope.src );

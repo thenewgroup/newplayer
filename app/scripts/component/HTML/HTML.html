@@ -1,4 +1,4 @@
-<div class="np-component np-{{component.type}}" ng-controller="HTMLController">
+<section class="np-component np-{{component.type}}" ng-controller="HTMLController">
 	<div class="debug">
 		<h3>{{component.type}}</h3>
 		<small>{{component.idx}} -- {{template}}</small>
@@ -6,7 +6,5 @@
 
 	<div ng-bind-html="content"></div>
 
-	<div ng-if="subCmp" ng-repeat="component in components">
-		<np-component idx="{{component.idx}}"></np-component>
-	</div>
-</div>
+	<np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></np-component>
+</section>
