@@ -8,7 +8,8 @@
     "Font-Awesome": "~4.2.0",
     "angular-sanitize": "~1.2.27",
     "oclazyload": "~0.3.8",
-    "angular-touch": "~1.2.26"
+    "angular-touch": "~1.2.26",
+    "normalize.css": "~3.0.2"
   },
   "resolutions": {
     "angular": "~1.2.27"
