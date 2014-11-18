@@ -11,9 +11,12 @@ angular
 
 	/** @ngInject */
 	.controller( 'npFooterController',
-		function( $log, $scope, $sce )
+		function( $log, $scope/*, $sce*/ )
 		{
-			$log.debug( 'npFooter::scope', $scope );
+			var cmpData = $scope.component.data;
+			$log.debug( 'npFooter::data', cmpData );
+
+			this.id = cmpData.id;
 		}
 	)
 

@@ -16,6 +16,7 @@ angular
 			var cmpData = $scope.component.data;
 			$log.debug( 'npButton::data', cmpData );
 
+			this.id = cmpData.id;
 			this.content = '';
 			var btnContent = cmpData.content;
 			if ( !!btnContent && typeof( btnContent ) === 'string' )

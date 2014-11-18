@@ -11,8 +11,12 @@ angular
 
 	/** @ngInject */
 	.controller( 'npFeatureController',
-		function( /*$log, $scope, $state, ManifestService*/ )
+		function( $log, $scope/*, $state, ManifestService*/ )
 		{
+			var cmpData = $scope.component.data;
+			$log.debug( 'npFeature::data', cmpData );
+
+			this.id = cmpData.id;
 		}
 	)
 

@@ -1,12 +1,8 @@
 <div class="debug">
-	<h3>{{component.type}}</h3>
-	<small>{{component.idx}} -- {{template}}</small>
+	<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
 </div>
 
+<img class="{{component.type}}" ng-controller="npImageController as npImage" id="{{npImage.id}}" ng-src="{{npImage.src}}" alt="{{npImage.alt}}" />
 
-<img class="np-component np-{{component.type}}" ng-controller="npImageController" id="{{component.data.id}}" ng-src="{{src}}" alt="{{component.data.alt}}" />
+<np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></np-component>
 
-
-<div ng-if="subCmp" ng-repeat="component in components">
-	<np-component idx="{{component.idx}}"></np-component>
-</div>

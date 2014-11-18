@@ -1,13 +1,9 @@
-<div class="np-component np-{{component.type}}">
+<header class="{{component.type}}" ng-controller="npHeaderController as npHeader" id="{{npHeader.id}}">
+
 	<div class="debug">
-		<h3>{{component.type}}</h3>
-		<small>{{component.idx}} -- {{template}}</small>
+		<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
 	</div>
 
-	<header id="{{component.data.id}}">
-		<div ng-if="subCmp" ng-repeat="component in components">
-			<np-component idx="{{component.idx}}"></np-component>
-		</div>
-	</header>
+	<np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></np-component>
 
-</div>
+</header>

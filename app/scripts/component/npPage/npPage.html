@@ -1,13 +1,12 @@
-<div class="{{component.type}}" ng-controller="npPageController as npPage" id="{{component.data.id}}" ng-show="currentPage">
+<div class="{{component.type}}" ng-controller="npPageController as npPage" id="{{npPage.id}}" ng-show="currentPage">
 
-	<main ng-if="currentPage" class="np-Page-wrapper">
+	<main ng-if="currentPage" class="npPage-wrapper">
 
 		<div class="debug">
-			<h3>{{component.type}}</h3>
-			<small>{{component.idx}} -- {{template}}</small>
+			<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
 		</div>
 
-		<h1 class="np-Page-title">{{component.data.title}}</h1>
+		<h1 class="npPage-title">{{npPage.title}}</h1>
 
 		<np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></np-component>
 

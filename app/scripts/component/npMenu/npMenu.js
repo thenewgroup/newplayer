@@ -14,7 +14,6 @@ function npMenuDirective(
 	$log.debug('\nComponentDirective::Init\n');
 	var Directive = function()
 	{
-		var vm = this;
 		this.restrict = 'EA';
 		this.scope = { 'menuitem': '=' };
 		this.template =
@@ -24,7 +23,6 @@ function npMenuDirective(
 					'<np-menu menuitem="child"></np-menu>' +
 				'</li>' +
 			'</ul>';
-		this.controllerAs = 'vm';
 		this.compile = function (tElement, tAttrs, transclude)
 		{
 			var contents = tElement.contents().remove();
@@ -53,24 +51,25 @@ angular
 	.controller( 'npMenuController',
 		function( $log, $scope, $sce )
 		{
-			$log.debug( 'npMenu::', $scope.component );
-			var vm = this;
+			var cmpData = $scope.component.data;
+			$log.debug( 'npX::data', cmpData );
 
+			this.id = cmpData.id;
 			this.items = ($scope.component.data||{}).items;
-			if ( angular.isArray( vm.items ) )
+
+			if ( angular.isArray( this.items ) )
 			{
-				for ( var itemIdx in vm.items )
+				for ( var itemIdx in this.items )
 				{
-					var item = vm.items[ itemIdx ];
+					var item = this.items[ itemIdx ];
 					if ( item === "pages" )
 					{
 						$log.debug( 'npMenu::pages', $scope.pages );
 						var spliceArgs = [ itemIdx, 1 ].concat( $scope.pages );
-						Array.prototype.splice.apply( vm.items, spliceArgs );
+						Array.prototype.splice.apply( this.items, spliceArgs );
 					}
 				}
-				$log.debug( 'npMenu::items', vm.items );
-				$scope.items = vm.items;
+				$log.debug( 'npMenu::items', this.items );
 			}
 		}
 	)

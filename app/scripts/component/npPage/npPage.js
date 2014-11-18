@@ -13,10 +13,11 @@ angular
 	.controller( 'npPageController',
 		function( $log, $scope, $state, ManifestService, ConfigService )
 		{
-			$log.debug( 'npPage::this component', $scope.component,
-			            'is page', $scope.component.data.id,
-			            'inside content scope', $scope.currentContent,
-			            'for page', ManifestService.getPageId() );
+			var cmpData = $scope.component.data;
+			$log.debug( 'npPage::data', cmpData );
+
+			this.id = cmpData.id;
+			this.title = cmpData.title;
 
 			var parentIdx = $scope.component.idx.slice(0);
 			parentIdx.pop();
@@ -43,6 +44,7 @@ angular
 			}
 
 			// have pages been indexed?
+			$log.debug( 'inside content scope', $scope.currentContent );
 			if ( ! $scope.currentContent.pages )
 			{
 				// index pages

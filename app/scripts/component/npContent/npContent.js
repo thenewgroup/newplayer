@@ -13,7 +13,11 @@ angular
 	.controller( 'npContentController',
 		function( $log, $scope, $state, ManifestService )
 		{
-			$log.debug( 'npContent::' );
+			var cmpData = $scope.component.data;
+			$log.debug( 'npContent::data', cmpData );
+
+			this.id = cmpData.id;
+
 			var manifestLang = ManifestService.getLang();
 
 			if ( !manifestLang )
@@ -33,7 +37,7 @@ angular
 				*/
 			}
 
-			var cmpLang = $scope.component.data.language;
+			var cmpLang = cmpData.language;
 			if ( cmpLang === manifestLang )
 			{
 				$log.debug( 'npContent::lang match', cmpLang, manifestLang );

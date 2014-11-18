@@ -1,8 +1,7 @@
-<button class="{{component.type}}" ng-controller="npButtonController as npButton" id="{{component.data.id}}" ng-click="npButton.go()">
+<button class="{{component.type}}" ng-controller="npButtonController as npButton" id="{{npButton.id}}" ng-click="npButton.go()">
 
 	<div class="debug">
-		<h3>{{component.type}}</h3>
-		<small>{{component.idx}} -- {{template}}</small>
+		<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
 	</div>
 
 	<span ng-bind-html="npButton.content"></span>

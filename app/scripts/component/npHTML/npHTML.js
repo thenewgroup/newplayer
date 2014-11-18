@@ -13,8 +13,11 @@ angular
 	.controller( 'npHTMLController',
 		function( $log, $scope, $sce )
 		{
-			$log.debug( 'npHTML::component', $scope.component );
-			$scope.content = $sce.trustAsHtml( $scope.component.data.content );
+			var cmpData = $scope.component.data;
+			$log.debug( 'npHTML::data', cmpData );
+
+			this.id = cmpData.id;
+			this.content = $sce.trustAsHtml( cmpData.content );
 			$log.debug( 'npHTML::content', $scope.content );
 		}
 	)

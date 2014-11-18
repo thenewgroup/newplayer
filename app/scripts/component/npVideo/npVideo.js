@@ -13,10 +13,11 @@ angular
 	.controller( 'npVideoController',
 		function( $log, $scope, $sce, $element )
 		{
-			$log.debug( 'npVideo::$element', $element );
-			// TODO - use sce?
-			$scope.config = $scope.component.data.config;
-			$log.debug( 'npVideo::src', $scope.src );
+			var cmpData = $scope.component.data;
+			$log.debug( 'npVideo::data', cmpData, $element );
+
+			this.id = cmpData.id;
+			this.config = cmpData.config;
 		}
 	)
 

@@ -1,5 +1,5 @@
 [{
-	"type": "Feature",
+	"type": "npFeature",
 	"data": {
 		"id": "samplePresentation",
 		"req": ["../../../assets/theStandard.css","../../../assets/theStandard.js"],
@@ -8,7 +8,7 @@
 	},
 	"components": [
 		{
-			"type": "Content",
+			"type": "npContent",
 			"data": {
 				"id": "content_en-US",
 				"language": "en-US",
@@ -19,27 +19,27 @@
 			},
 			"components": [
 				{
-					"type": "Header",
+					"type": "npHeader",
 					"data": {
 						"id": "stndHeader"
 					},
 					"components": [
 						{
-							"type": "Column",
+							"type": "npColumn",
 							"data": {
 								"id": "headerCols",
 								"cols": "2"
 							},
 							"components": [
 								{
-									"type": "HTML",
+									"type": "npHTML",
 									"data": {
 										"id": "stndLogoSlogan",
 										"content": ""
 									},
 									"components": [
 										{
-											"type": "Button",
+											"type": "npButton",
 											"data": {
 												"id": "btnHomeLogo",
 												"link": "Welcome"
@@ -47,30 +47,21 @@
 											"components":
 											[
 												{
-													"type": "Image",
+													"type": "npImage",
 													"data": {
 														"id": "stndLogo",
 														"builderId": "Standard Logo",
-														"src": "assets/logo-theStandard.png",
+														"src": "//www.standard.com/sites/all/themes/custom/standard_aurora/logo.png",
 														"alt": "logo"
 													},
 													"components": [ ]
 												}
 											]
-										},
-										{
-											"type": "HTML",
-											"data": {
-												"id": "stndSlogan",
-												"builderId": "Standard Logo",
-												"content": "Insurance, Retirement,<br>Investments and Advice."
-											},
-											"components": [ ]
 										}
 									]
 								},
 								{
-									"type": "Image",
+									"type": "npImage",
 									"data": {
 										"id": "clientLogo",
 										"builderId": "Client Logo",
@@ -84,7 +75,7 @@
 					]
 				},
 				{
-					"type": "Page",
+					"type": "npPage",
 					"data": {
 						"id": "Welcome",
 						"parentId": "",
@@ -94,7 +85,7 @@
 					},
 					"components": [
 						{
-							"type": "Menu",
+							"type": "npMenu",
 							"data": {
 								"id": "stndMenu",
 								"items": [
@@ -110,7 +101,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Video",
+							"type": "npVideo",
 							"data": {
 								"id": "vidMain",
 								"req": ["videogular.min.js"],
@@ -126,14 +117,14 @@
 										}
 									],
 									"theme": {
-										"url": "scripts/component/Video/videogular.css"
+										"url": "scripts/component/npVideo/videogular.css"
 									}
 								}
 							},
 							"components": [ ]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"id": "captionMain",
 								"builderId": "field_welcome_message",
@@ -142,21 +133,21 @@
 							"components": [ ]
 						},
 						{
-							"type": "Column",
+							"type": "npColumn",
 							"data": {
 								"id": "planDetailsCols",
 								"cols": "2"
 							},
 							"components": [
 								{
-									"type": "HTML",
+									"type": "npHTML",
 									"data": {
 										"id": "keyDetailsHeader",
 										"content": "<h4>Key Details of your Plan</h4>"
 									},
 									"components": [
 										{
-											"type": "HTML",
+											"type": "npHTML",
 											"data": {
 												"id": "keyDetailsText",
 												"builderId": "field_entry_dates",
@@ -165,7 +156,7 @@
 											"components": [ ]
 										},
 										{
-											"type": "HTML",
+											"type": "npHTML",
 											"data": {
 												"id": "",
 												"builderId": "field_automatic_contribution_amo",
@@ -174,7 +165,7 @@
 											"components": [ ]
 										},
 										{
-											"type": "HTML",
+											"type": "npHTML",
 											"data": {
 												"id": "",
 												"builderId": "field_details_of_plan",
@@ -185,7 +176,7 @@
 									]
 								},
 								{
-									"type": "Image",
+									"type": "npImage",
 									"data": {
 										"id": "clientLogo2",
 										"builderId": "Client Logo",
@@ -197,14 +188,14 @@
 							]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"content": "<hr/>"
 							},
 							"components": [ ]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"id": "employerContributionHeader",
 								"builderId": "field_safe_harbor_matching_or_no",
@@ -212,7 +203,7 @@
 							},
 							"components": [
 								{
-									"type": "HTML",
+									"type": "npHTML",
 									"data": {
 										"id": "employerContributionText",
 										"builderId": "field_safe_harbor_contribution_t",
@@ -221,7 +212,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnEmployerContributions",
 										"link": "EmployerContributions",
@@ -230,7 +221,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "HTML",
+									"type": "npHTML",
 									"data": {
 										"content": "<hr/>"
 									},
@@ -239,7 +230,7 @@
 							]
 						},
 						{
-							"type": "Button",
+							"type": "npButton",
 							"data": {
 								"id": "btnEnrollNow",
 								"link": "/EnrollNow",
@@ -248,7 +239,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Column",
+							"type": "npColumn",
 							"data": {
 								"id": "colsBtnSection",
 								"cols": "2"
@@ -256,7 +247,7 @@
 							"components":
 							[
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnYourPlan",
 										"link": "YourPlan",
@@ -265,7 +256,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnRetirementCalculator",
 										"link": "RetirementCalculator",
@@ -276,7 +267,7 @@
 							]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"id": "disclaimer",
 								"content": "<small>1) A.C.S. “Too thin a cushion” Economist, 2 April 2013 Web 22 June 2014. &lt;<a href=\"http://www.economist.com/blogs/freeexchange/2013/04/saving\" target=\"blank\">http://www.economist.com/blogs/freeexchange/2013/04/saving</a>&gt;</small>"
@@ -286,7 +277,7 @@
 					]
 				},
 				{
-					"type": "Page",
+					"type": "npPage",
 					"data": {
 						"id": "YourPlan",
 						"parentId": "",
@@ -297,7 +288,7 @@
 					"components":
 					[
 						{
-							"type": "Menu",
+							"type": "npMenu",
 							"data": {
 								"id": "stndMenu",
 								"items": [
@@ -313,7 +304,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Video",
+							"type": "npVideo",
 							"data": {
 								"id": "vidMain",
 								"req": ["videogular.min.js"],
@@ -325,14 +316,14 @@
 										}
 									],
 									"theme": {
-										"url": "scripts/component/Video/videogular.css"
+										"url": "scripts/component/npVideo/videogular.css"
 									}
 								}
 							},
 							"components": [ ]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"id": "captionMain",
 								"content": "The plan your employer is offering has many features that will make saving for retirement easier and more effective."
@@ -340,7 +331,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Button",
+							"type": "npButton",
 							"data": {
 								"id": "enrollNow",
 								"link": "/EnrollNow",
@@ -349,7 +340,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Column",
+							"type": "npColumn",
 							"data": {
 								"id": "colsBtnSection",
 								"cols": "2"
@@ -357,7 +348,7 @@
 							"components":
 							[
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnEmployerContributions",
 										"link": "EmployerContributions",
@@ -366,7 +357,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnRothContributions",
 										"builderId": "field_roth_contributions",
@@ -376,7 +367,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnRollovers",
 										"link": "Rollovers",
@@ -385,7 +376,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btn403b",
 										"link": "403b",
@@ -394,7 +385,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnManageOnline",
 										"link": "ManageOnline",
@@ -405,14 +396,14 @@
 							]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"content": "<hr/>"
 							},
 							"components": [ ]
 						},
 						{
-							"type": "Column",
+							"type": "npColumn",
 							"data": {
 								"id": "colsBtnSections",
 								"cols": "2"
@@ -420,7 +411,7 @@
 							"components":
 							[
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnStartPlanning",
 										"link": "StartPlanning",
@@ -429,7 +420,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnInvestmentBasics",
 										"link": "InvestmentBasics",
@@ -438,7 +429,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnRetirementCalculator",
 										"link": "RetirementCalculator",
@@ -449,7 +440,7 @@
 							]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"id": "disclaimer",
 								"content": "1) Wesley, Daniel. “How The Average U.S. Consumer Spends Their Paycheck.” Credit Loan.com 25 Sept. 2013. Web. 22 June 2014. <creditloan.com/blog/how-the-average-us-consumer-spends-their-paycheck/>"
@@ -459,7 +450,7 @@
 					]
 				},
 				{
-					"type": "Page",
+					"type": "npPage",
 					"data": {
 						"id": "EmployerContributions",
 						"parentId": "YourPlan",
@@ -471,7 +462,7 @@
 					"components":
 					[
 						{
-							"type": "Menu",
+							"type": "npMenu",
 							"data": {
 								"id": "stndMenu",
 								"items": [
@@ -487,7 +478,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Video",
+							"type": "npVideo",
 							"data": {
 								"id": "vidMain",
 								"req": ["videogular.min.js"],
@@ -499,14 +490,14 @@
 										}
 									],
 									"theme": {
-										"url": "scripts/component/Video/videogular.css"
+										"url": "scripts/component/npVideo/videogular.css"
 									}
 								}
 							},
 							"components": [ ]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"id": "captionMain",
 								"content": "[VARIABLE TEXT] Employer Matching Funds - Congratulations, your employer is helping you move toward a more secure retirement by contributing: XXXXXXXXXXXX"
@@ -514,7 +505,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Button",
+							"type": "npButton",
 							"data": {
 								"id": "enrollNow",
 								"link": "/EnrollNow",
@@ -523,7 +514,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Column",
+							"type": "npColumn",
 							"data": {
 								"id": "colsBtnSection",
 								"cols": "2"
@@ -531,7 +522,7 @@
 							"components":
 							[
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnEmployerContributions",
 										"link": "EmployerContributions",
@@ -540,7 +531,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnRothContributions",
 										"builderId": "field_roth_contributions",
@@ -550,7 +541,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnRollovers",
 										"link": "Rollovers",
@@ -559,7 +550,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btn403b",
 										"link": "403b",
@@ -568,7 +559,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnManageOnline",
 										"link": "ManageOnline",
@@ -579,14 +570,14 @@
 							]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"content": "<hr/>"
 							},
 							"components": [ ]
 						},
 						{
-							"type": "Column",
+							"type": "npColumn",
 							"data": {
 								"id": "colsBtnSections",
 								"cols": "2"
@@ -594,7 +585,7 @@
 							"components":
 							[
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnStartPlanning",
 										"link": "StartPlanning",
@@ -603,7 +594,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnInvestmentBasics",
 										"link": "InvestmentBasics",
@@ -612,7 +603,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnRetirementCalculator",
 										"link": "RetirementCalculator",
@@ -623,7 +614,7 @@
 							]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"id": "disclaimer",
 								"content": "1) Wesley, Daniel. “How The Average U.S. Consumer Spends Their Paycheck.” Credit Loan.com 25 Sept. 2013. Web. 22 June 2014. <creditloan.com/blog/how-the-average-us-consumer-spends-their-paycheck/>"
@@ -633,7 +624,7 @@
 					]
 				},
 				{
-					"type": "Page",
+					"type": "npPage",
 					"data": {
 						"id": "RothContributions",
 						"builderId": "field_roth_contributions",
@@ -645,7 +636,7 @@
 					"components":
 					[
 						{
-							"type": "Menu",
+							"type": "npMenu",
 							"data": {
 								"id": "stndMenu",
 								"items": [
@@ -661,7 +652,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Video",
+							"type": "npVideo",
 							"data": {
 								"id": "vidMain",
 								"req": ["videogular.min.js"],
@@ -673,14 +664,14 @@
 										}
 									],
 									"theme": {
-										"url": "scripts/component/Video/videogular.css"
+										"url": "scripts/component/npVideo/videogular.css"
 									}
 								}
 							},
 							"components": [ ]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"id": "captionMain",
 								"content": ""
@@ -688,7 +679,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Button",
+							"type": "npButton",
 							"data": {
 								"id": "enrollNow",
 								"link": "/EnrollNow",
@@ -697,7 +688,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Column",
+							"type": "npColumn",
 							"data": {
 								"id": "colsBtnSection",
 								"cols": "2"
@@ -705,7 +696,7 @@
 							"components":
 							[
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnEmployerContributions",
 										"link": "EmployerContributions",
@@ -714,7 +705,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnRothContributions",
 										"builderId": "field_roth_contributions",
@@ -724,7 +715,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnRollovers",
 										"link": "Rollovers",
@@ -733,7 +724,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btn403b",
 										"link": "403b",
@@ -742,7 +733,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnManageOnline",
 										"link": "ManageOnline",
@@ -753,14 +744,14 @@
 							]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"content": "<hr/>"
 							},
 							"components": [ ]
 						},
 						{
-							"type": "Column",
+							"type": "npColumn",
 							"data": {
 								"id": "colsBtnSections",
 								"cols": "2"
@@ -768,7 +759,7 @@
 							"components":
 							[
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnStartPlanning",
 										"link": "StartPlanning",
@@ -777,7 +768,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnInvestmentBasics",
 										"link": "InvestmentBasics",
@@ -786,7 +777,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnRetirementCalculator",
 										"link": "RetirementCalculator",
@@ -797,7 +788,7 @@
 							]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"id": "disclaimer",
 								"content": ""
@@ -807,7 +798,7 @@
 					]
 				},
 				{
-					"type": "Page",
+					"type": "npPage",
 					"data": {
 						"id": "Rollovers",
 						"parentId": "YourPlan",
@@ -818,7 +809,7 @@
 					"components":
 					[
 						{
-							"type": "Menu",
+							"type": "npMenu",
 							"data": {
 								"id": "stndMenu",
 								"items": [
@@ -834,7 +825,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Video",
+							"type": "npVideo",
 							"data": {
 								"id": "vidMain",
 								"req": ["videogular.min.js"],
@@ -846,14 +837,14 @@
 										}
 									],
 									"theme": {
-										"url": "scripts/component/Video/videogular.css"
+										"url": "scripts/component/npVideo/videogular.css"
 									}
 								}
 							},
 							"components": [ ]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"id": "captionMain",
 								"content": ""
@@ -861,7 +852,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Button",
+							"type": "npButton",
 							"data": {
 								"id": "enrollNow",
 								"link": "/EnrollNow",
@@ -870,7 +861,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Column",
+							"type": "npColumn",
 							"data": {
 								"id": "colsBtnSection",
 								"cols": "2"
@@ -878,7 +869,7 @@
 							"components":
 							[
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnEmployerContributions",
 										"link": "EmployerContributions",
@@ -887,7 +878,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnRothContributions",
 										"builderId": "field_roth_contributions",
@@ -897,7 +888,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnRollovers",
 										"link": "Rollovers",
@@ -906,7 +897,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btn403b",
 										"link": "403b",
@@ -915,7 +906,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnManageOnline",
 										"link": "ManageOnline",
@@ -926,14 +917,14 @@
 							]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"content": "<hr/>"
 							},
 							"components": [ ]
 						},
 						{
-							"type": "Column",
+							"type": "npColumn",
 							"data": {
 								"id": "colsBtnSections",
 								"cols": "2"
@@ -941,7 +932,7 @@
 							"components":
 							[
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnStartPlanning",
 										"link": "StartPlanning",
@@ -950,7 +941,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnInvestmentBasics",
 										"link": "InvestmentBasics",
@@ -959,7 +950,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnRetirementCalculator",
 										"link": "RetirementCalculator",
@@ -970,7 +961,7 @@
 							]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"id": "disclaimer",
 								"content": ""
@@ -980,7 +971,7 @@
 					]
 				},
 				{
-					"type": "Page",
+					"type": "npPage",
 					"data": {
 						"id": "403b",
 						"parentId": "YourPlan",
@@ -991,7 +982,7 @@
 					"components":
 					[
 						{
-							"type": "Menu",
+							"type": "npMenu",
 							"data": {
 								"id": "stndMenu",
 								"items": [
@@ -1007,7 +998,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Video",
+							"type": "npVideo",
 							"data": {
 								"id": "vidMain",
 								"req": ["videogular.min.js"],
@@ -1019,14 +1010,14 @@
 										}
 									],
 									"theme": {
-										"url": "scripts/component/Video/videogular.css"
+										"url": "scripts/component/npVideo/videogular.css"
 									}
 								}
 							},
 							"components": [ ]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"id": "captionMain",
 								"content": ""
@@ -1034,7 +1025,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Button",
+							"type": "npButton",
 							"data": {
 								"id": "enrollNow",
 								"link": "/EnrollNow",
@@ -1043,7 +1034,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Column",
+							"type": "npColumn",
 							"data": {
 								"id": "colsBtnSection",
 								"cols": "2"
@@ -1051,7 +1042,7 @@
 							"components":
 							[
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnEmployerContributions",
 										"link": "EmployerContributions",
@@ -1060,7 +1051,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnRothContributions",
 										"builderId": "field_roth_contributions",
@@ -1070,7 +1061,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnRollovers",
 										"link": "Rollovers",
@@ -1079,7 +1070,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btn403b",
 										"link": "403b",
@@ -1088,7 +1079,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnManageOnline",
 										"link": "ManageOnline",
@@ -1099,14 +1090,14 @@
 							]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"content": "<hr/>"
 							},
 							"components": [ ]
 						},
 						{
-							"type": "Column",
+							"type": "npColumn",
 							"data": {
 								"id": "colsBtnSections",
 								"cols": "2"
@@ -1114,7 +1105,7 @@
 							"components":
 							[
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnStartPlanning",
 										"link": "StartPlanning",
@@ -1123,7 +1114,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnInvestmentBasics",
 										"link": "InvestmentBasics",
@@ -1132,7 +1123,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnRetirementCalculator",
 										"link": "RetirementCalculator",
@@ -1143,7 +1134,7 @@
 							]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"id": "disclaimer",
 								"content": ""
@@ -1153,7 +1144,7 @@
 					]
 				},
 				{
-					"type": "Page",
+					"type": "npPage",
 					"data": {
 						"id": "ManageOnline",
 						"parentId": "YourPlan",
@@ -1165,7 +1156,7 @@
 					"components":
 					[
 						{
-							"type": "Menu",
+							"type": "npMenu",
 							"data": {
 								"id": "stndMenu",
 								"items": [
@@ -1181,7 +1172,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Video",
+							"type": "npVideo",
 							"data": {
 								"id": "vidMain",
 								"req": ["videogular.min.js"],
@@ -1193,14 +1184,14 @@
 										}
 									],
 									"theme": {
-										"url": "scripts/component/Video/videogular.css"
+										"url": "scripts/component/npVideo/videogular.css"
 									}
 								}
 							},
 							"components": [ ]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"id": "captionMain",
 								"content": ""
@@ -1208,7 +1199,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Button",
+							"type": "npButton",
 							"data": {
 								"id": "enrollNow",
 								"link": "/EnrollNow",
@@ -1217,7 +1208,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Column",
+							"type": "npColumn",
 							"data": {
 								"id": "colsBtnSection",
 								"cols": "2"
@@ -1225,7 +1216,7 @@
 							"components":
 							[
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnEmployerContributions",
 										"link": "EmployerContributions",
@@ -1234,7 +1225,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnRothContributions",
 										"builderId": "field_roth_contributions",
@@ -1244,7 +1235,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnRollovers",
 										"link": "Rollovers",
@@ -1253,7 +1244,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btn403b",
 										"link": "403b",
@@ -1262,7 +1253,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnManageOnline",
 										"link": "ManageOnline",
@@ -1273,14 +1264,14 @@
 							]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"content": "<hr/>"
 							},
 							"components": [ ]
 						},
 						{
-							"type": "Column",
+							"type": "npColumn",
 							"data": {
 								"id": "colsBtnSections",
 								"cols": "2"
@@ -1288,7 +1279,7 @@
 							"components":
 							[
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnStartPlanning",
 										"link": "StartPlanning",
@@ -1297,7 +1288,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnInvestmentBasics",
 										"link": "InvestmentBasics",
@@ -1306,7 +1297,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnRetirementCalculator",
 										"link": "RetirementCalculator",
@@ -1317,7 +1308,7 @@
 							]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"id": "disclaimer",
 								"content": ""
@@ -1327,7 +1318,7 @@
 					]
 				},
 				{
-					"type": "Page",
+					"type": "npPage",
 					"data": {
 						"id": "StartPlanning",
 						"parentId": "",
@@ -1338,7 +1329,7 @@
 					"components":
 					[
 						{
-							"type": "Menu",
+							"type": "npMenu",
 							"data": {
 								"id": "stndMenu",
 								"items": [
@@ -1354,7 +1345,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Video",
+							"type": "npVideo",
 							"data": {
 								"id": "vidMain",
 								"req": ["videogular.min.js"],
@@ -1366,14 +1357,14 @@
 										}
 									],
 									"theme": {
-										"url": "scripts/component/Video/videogular.css"
+										"url": "scripts/component/npVideo/videogular.css"
 									}
 								}
 							},
 							"components": [ ]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"id": "captionMain",
 								"content": "What's your personal path to a retirement that will replace your income and be rewarding? Take a moment to reflect on the future to make sure it gives you what you truly desire."
@@ -1381,7 +1372,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Button",
+							"type": "npButton",
 							"data": {
 								"id": "enrollNow",
 								"link": "/EnrollNow",
@@ -1390,7 +1381,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Column",
+							"type": "npColumn",
 							"data": {
 								"id": "colsBtnSection",
 								"cols": "2"
@@ -1398,7 +1389,7 @@
 							"components":
 							[
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnWhySaveNow",
 										"link": "WhySaveNow",
@@ -1407,7 +1398,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnWhySaveMore",
 										"link": "WhySaveMore",
@@ -1416,7 +1407,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnTaxAdvantages",
 										"link": "TaxAdvantages",
@@ -1425,7 +1416,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnRetirementNeeds",
 										"link": "RetirementCalculator",
@@ -1436,14 +1427,14 @@
 							]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"content": "<hr/>"
 							},
 							"components": [ ]
 						},
 						{
-							"type": "Column",
+							"type": "npColumn",
 							"data": {
 								"id": "colsBtnSections",
 								"cols": "2"
@@ -1451,7 +1442,7 @@
 							"components":
 							[
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnInvestmentBasics",
 										"link": "InvestmentBasics",
@@ -1460,7 +1451,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnYourPlan",
 										"link": "YourPlan",
@@ -1469,7 +1460,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnRetirementCalculator",
 										"link": "RetirementCalculator",
@@ -1480,7 +1471,7 @@
 							]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"id": "disclaimer",
 								"content": "1) Source: 2014 Social Security Administration. Visit ssa.gov/planners/lifeexpectancy.<br/>2) This example is hypothetical and for illustrative purposes onl<br/>3) Social Security Retirement Estimator, http://www.ssa.gov/estimator/. This chart assumes a normal retirement age of 67 and is for illustrative purposes only. To estimate your own Social Security benefits, call 800.772.1213 or visit www.ssa.gov for a personal Earnings and Benefit Estimate statement."
@@ -1490,7 +1481,7 @@
 					]
 				},
 				{
-					"type": "Page",
+					"type": "npPage",
 					"data": {
 						"id": "WhySaveNow",
 						"parentId": "StartPlanning",
@@ -1501,7 +1492,7 @@
 					"components":
 					[
 						{
-							"type": "Menu",
+							"type": "npMenu",
 							"data": {
 								"id": "stndMenu",
 								"items": [
@@ -1517,7 +1508,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Video",
+							"type": "npVideo",
 							"data": {
 								"id": "vidMain",
 								"req": ["videogular.min.js"],
@@ -1529,14 +1520,14 @@
 										}
 									],
 									"theme": {
-										"url": "scripts/component/Video/videogular.css"
+										"url": "scripts/component/npVideo/videogular.css"
 									}
 								}
 							},
 							"components": [ ]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"id": "captionMain",
 								"content": ""
@@ -1544,7 +1535,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Button",
+							"type": "npButton",
 							"data": {
 								"id": "enrollNow",
 								"link": "/EnrollNow",
@@ -1553,7 +1544,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Column",
+							"type": "npColumn",
 							"data": {
 								"id": "colsBtnSection",
 								"cols": "2"
@@ -1561,7 +1552,7 @@
 							"components":
 							[
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnWhySaveNow",
 										"link": "WhySaveNow",
@@ -1570,7 +1561,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnWhySaveMore",
 										"link": "WhySaveMore",
@@ -1579,7 +1570,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnTaxAdvantages",
 										"link": "TaxAdvantages",
@@ -1588,7 +1579,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnRetirementNeeds",
 										"link": "RetirementCalculator",
@@ -1599,14 +1590,14 @@
 							]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"content": "<hr/>"
 							},
 							"components": [ ]
 						},
 						{
-							"type": "Column",
+							"type": "npColumn",
 							"data": {
 								"id": "colsBtnSections",
 								"cols": "2"
@@ -1614,7 +1605,7 @@
 							"components":
 							[
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnInvestmentBasics",
 										"link": "InvestmentBasics",
@@ -1623,7 +1614,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnYourPlan",
 										"link": "YourPlan",
@@ -1632,7 +1623,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnRetirementCalculator",
 										"link": "RetirementCalculator",
@@ -1643,7 +1634,7 @@
 							]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"id": "disclaimer",
 								"content": "1) Disclosure: This chart assumes that the account earns an average annual rate of return of XXX percent. This example is hypothetical and for illustrative purposes only and is not indicative of the performance of any specific investment or investment portfolio."
@@ -1653,7 +1644,7 @@
 					]
 				},
 				{
-					"type": "Page",
+					"type": "npPage",
 					"data": {
 						"id": "WhySaveMore",
 						"parentId": "StartPlanning",
@@ -1664,7 +1655,7 @@
 					"components":
 					[
 						{
-							"type": "Menu",
+							"type": "npMenu",
 							"data": {
 								"id": "stndMenu",
 								"items": [
@@ -1680,7 +1671,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Video",
+							"type": "npVideo",
 							"data": {
 								"id": "vidMain",
 								"builderId": "field_automatic_enrollment",
@@ -1693,14 +1684,14 @@
 										}
 									],
 									"theme": {
-										"url": "scripts/component/Video/videogular.css"
+										"url": "scripts/component/npVideo/videogular.css"
 									}
 								}
 							},
 							"components": [ ]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"id": "captionMain",
 								"content": ""
@@ -1708,7 +1699,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Button",
+							"type": "npButton",
 							"data": {
 								"id": "enrollNow",
 								"link": "/EnrollNow",
@@ -1717,7 +1708,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Column",
+							"type": "npColumn",
 							"data": {
 								"id": "colsBtnSection",
 								"cols": "2"
@@ -1725,7 +1716,7 @@
 							"components":
 							[
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnWhySaveNow",
 										"link": "WhySaveNow",
@@ -1734,7 +1725,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnWhySaveMore",
 										"link": "WhySaveMore",
@@ -1743,7 +1734,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnTaxAdvantages",
 										"link": "TaxAdvantages",
@@ -1752,7 +1743,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnRetirementNeeds",
 										"link": "RetirementCalculator",
@@ -1763,14 +1754,14 @@
 							]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"content": "<hr/>"
 							},
 							"components": [ ]
 						},
 						{
-							"type": "Column",
+							"type": "npColumn",
 							"data": {
 								"id": "colsBtnSections",
 								"cols": "2"
@@ -1778,7 +1769,7 @@
 							"components":
 							[
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnInvestmentBasics",
 										"link": "InvestmentBasics",
@@ -1787,7 +1778,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnYourPlan",
 										"link": "YourPlan",
@@ -1796,7 +1787,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnRetirementCalculator",
 										"link": "RetirementCalculator",
@@ -1807,7 +1798,7 @@
 							]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"id": "disclaimer",
 								"content": "1) Epperson, Sharon. “Afford to Retire? More are Confident, But Few Save Enough.” NBC News. 18 March 2014. Web. 23 June 2014. <nbcnews.com/business/retirement/afford-retire-more-are-confident-few-save-enough-n55691>"
@@ -1817,7 +1808,7 @@
 					]
 				},
 				{
-					"type": "Page",
+					"type": "npPage",
 					"data": {
 						"id": "TaxAdvantages",
 						"parentId": "StartPlanning",
@@ -1829,7 +1820,7 @@
 					"components":
 					[
 						{
-							"type": "Menu",
+							"type": "npMenu",
 							"data": {
 								"id": "stndMenu",
 								"items": [
@@ -1845,7 +1836,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Video",
+							"type": "npVideo",
 							"data": {
 								"id": "vidMain",
 								"req": ["videogular.min.js"],
@@ -1857,14 +1848,14 @@
 										}
 									],
 									"theme": {
-										"url": "scripts/component/Video/videogular.css"
+										"url": "scripts/component/npVideo/videogular.css"
 									}
 								}
 							},
 							"components": [ ]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"id": "captionMain",
 								"content": ""
@@ -1872,7 +1863,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Button",
+							"type": "npButton",
 							"data": {
 								"id": "enrollNow",
 								"link": "/EnrollNow",
@@ -1881,7 +1872,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Column",
+							"type": "npColumn",
 							"data": {
 								"id": "colsBtnSection",
 								"cols": "2"
@@ -1889,7 +1880,7 @@
 							"components":
 							[
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnWhySaveNow",
 										"link": "WhySaveNow",
@@ -1898,7 +1889,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnWhySaveMore",
 										"link": "WhySaveMore",
@@ -1907,7 +1898,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnTaxAdvantages",
 										"link": "TaxAdvantages",
@@ -1916,7 +1907,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnRetirementNeeds",
 										"link": "RetirementCalculator",
@@ -1927,14 +1918,14 @@
 							]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"content": "<hr/>"
 							},
 							"components": [ ]
 						},
 						{
-							"type": "Column",
+							"type": "npColumn",
 							"data": {
 								"id": "colsBtnSections",
 								"cols": "2"
@@ -1942,7 +1933,7 @@
 							"components":
 							[
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnInvestmentBasics",
 										"link": "InvestmentBasics",
@@ -1951,7 +1942,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnYourPlan",
 										"link": "YourPlan",
@@ -1960,7 +1951,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnRetirementCalculator",
 										"link": "RetirementCalculator",
@@ -1971,7 +1962,7 @@
 							]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"id": "disclaimer",
 								"content": ""
@@ -1981,7 +1972,7 @@
 					]
 				},
 				{
-					"type": "Page",
+					"type": "npPage",
 					"data": {
 						"id": "RetirementCalculator",
 						"parentId": "StartPlanning",
@@ -1993,7 +1984,7 @@
 					"components":
 					[
 						{
-							"type": "Menu",
+							"type": "npMenu",
 							"data": {
 								"id": "stndMenu",
 								"items": [
@@ -2009,7 +2000,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Video",
+							"type": "npVideo",
 							"data": {
 								"id": "vidMain",
 								"req": ["videogular.min.js"],
@@ -2021,14 +2012,14 @@
 										}
 									],
 									"theme": {
-										"url": "scripts/component/Video/videogular.css"
+										"url": "scripts/component/npVideo/videogular.css"
 									}
 								}
 							},
 							"components": [ ]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"id": "captionMain",
 								"content": ""
@@ -2036,7 +2027,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Button",
+							"type": "npButton",
 							"data": {
 								"id": "enrollNow",
 								"link": "/EnrollNow",
@@ -2045,7 +2036,7 @@
 							"components": [ ]
 						},
 						{
-							"type": "Column",
+							"type": "npColumn",
 							"data": {
 								"id": "colsBtnSection",
 								"cols": "2"
@@ -2053,7 +2044,7 @@
 							"components":
 							[
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnWhySaveNow",
 										"link": "WhySaveNow",
@@ -2062,7 +2053,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnWhySaveMore",
 										"link": "WhySaveMore",
@@ -2071,7 +2062,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnTaxAdvantages",
 										"link": "TaxAdvantages",
@@ -2080,7 +2071,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnRetirementNeeds",
 										"link": "RetirementCalculator",
@@ -2091,14 +2082,14 @@
 							]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"content": "<hr/>"
 							},
 							"components": [ ]
 						},
 						{
-							"type": "Column",
+							"type": "npColumn",
 							"data": {
 								"id": "colsBtnSections",
 								"cols": "2"
@@ -2106,7 +2097,7 @@
 							"components":
 							[
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnInvestmentBasics",
 										"link": "InvestmentBasics",
@@ -2115,7 +2106,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnYourPlan",
 										"link": "YourPlan",
@@ -2124,7 +2115,7 @@
 									"components": [ ]
 								},
 								{
-									"type": "Button",
+									"type": "npButton",
 									"data": {
 										"id": "btnRetirementCalculator",
 										"link": "RetirementCalculator",
@@ -2135,7 +2126,7 @@
 							]
 						},
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"id": "disclaimer",
 								"content": ""
@@ -2145,7 +2136,7 @@
 					]
 				},
 				{
-					"type": "Page",
+					"type": "npPage",
 					"data": {
 						"id": "InvestmentBasics",
 						"parentId": "",
@@ -2155,7 +2146,7 @@
 					},
 					"components": [
 						{
-							"type": "Menu",
+							"type": "npMenu",
 							"data": {
 								"id": "stndMenu",
 								"items": [
@@ -2173,7 +2164,7 @@
 					]
 				},
 				{
-					"type": "Page",
+					"type": "npPage",
 					"data": {
 						"id": "InvestmentStrategies",
 						"parentId": "InvestmentBasics",
@@ -2184,7 +2175,7 @@
 					"components": [ ]
 				},
 				{
-					"type": "Page",
+					"type": "npPage",
 					"data": {
 						"id": "KeepingTrack",
 						"parentId": "InvestmentBasics",
@@ -2196,7 +2187,7 @@
 					"components": [ ]
 				},
 				{
-					"type": "Page",
+					"type": "npPage",
 					"data": {
 						"id": "AutomaticRebalancer",
 						"builderId": "field_automatic_rebalancer",
@@ -2209,13 +2200,13 @@
 					"components": [ ]
 				},
 				{
-					"type": "Footer",
+					"type": "npFooter",
 					"data": {
 						"id": "globalFooter"
 					},
 					"components": [
 						{
-							"type": "HTML",
+							"type": "npHTML",
 							"data": {
 								"id": "stndFooter",
 								"content": "FOOTER"

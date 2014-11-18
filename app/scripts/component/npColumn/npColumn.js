@@ -13,13 +13,16 @@ angular
 	.controller( 'npColumnController',
 		function( $log, $scope, $sce )
 		{
-			$log.debug( 'npColumn::scope', $scope );
+			var cmpData = $scope.component.data;
+			$log.debug( 'npColumn::data', cmpData );
+
+			this.id = cmpData.id;
 		}
 	)
 
 	/** @ngInject */
 	.run(
-		function( $log, $rootScope )
+		function( $log )
 		{
 			$log.debug('npColumn::component loaded!');
 		}

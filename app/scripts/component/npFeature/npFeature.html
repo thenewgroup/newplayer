@@ -1,10 +1,9 @@
-<div class="np-component {{component.type}}" ng-controller="npFeatureController as npFeature">
+<div class="{{component.type}}" ng-controller="npFeatureController as npFeature" id="{{npFeature.id}}">
+
 	<div class="debug">
-		<h3>{{component.type}}</h3>
-		<small>{{component.idx}} -- {{template}}</small>
+		<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
 	</div>
 
-	<div ng-if="subCmp" ng-repeat="component in components">
-		<np-component idx="{{component.idx}}"></np-component>
-	</div>
+	<np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></np-component>
+
 </div>
