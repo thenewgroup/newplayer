@@ -63,6 +63,12 @@ angular
 								text : page.data.menuTitle || page.data.title,
 								children : []
 							};
+						if ( pageId === aPage.id )
+						{
+							$log.debug( 'npPage::index:current:', page );
+							aPage.current = true;
+						}
+
 						var parentId = page.data.parentId;
 						$log.debug( 'npPage::index:parent?', parentId );
 						if ( ! parentId )
@@ -88,8 +94,8 @@ angular
 
 
 			// check if current route is for this page
-			$log.debug( 'npPage::on current page?', ManifestService.getPageId(), $scope.component.data.id );
-			if ( $scope.component.data.id === pageId )
+			$log.debug( 'npPage::on current page?', ManifestService.getPageId(), cmpData.id );
+			if ( cmpData.id === pageId )
 			{
 				$scope.currentPage = true;
 				$scope.npPage = $scope;

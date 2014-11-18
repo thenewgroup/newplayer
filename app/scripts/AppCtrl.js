@@ -3,7 +3,7 @@
 /** @ngInject */
 function AppController( $log/*, ImagePreloadFactory, HomeService, $scope*/ )
 {
-	$log.debug('AppController: Init');
+	$log.debug('AppController::Init');
 	/*
     var loader = ImagePreloadFactory.createInstance();
     loader.addImages([

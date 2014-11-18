@@ -1,9 +1,10 @@
-<nav class="{{component.type}}" ng-controller="npMenuController as npMenu" id="{{npMenu.id}}">
+<nav class="{{component.type}}" ng-class="menuStatus" ng-controller="npMenuController as npMenu" id="{{npMenu.id}}">
 
 	<div class="debug">
 		<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
 	</div>
 
+	<a class="hamburger fa fa-bars" ng-click="menuStatus=(menuStatus==='show')?'':'show'"></a>
 	<ul>
 		<li ng-repeat="child in npMenu.items">
 			<np-menu menuitem="child"></np-menu>

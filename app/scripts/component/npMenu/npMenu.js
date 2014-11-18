@@ -17,7 +17,7 @@ function npMenuDirective(
 		this.restrict = 'EA';
 		this.scope = { 'menuitem': '=' };
 		this.template =
-			'<a ng-href="{{menuitem.link}}" id="menu{{menuitem.id}}">{{ menuitem.text }}</a>'+
+			'<a ng-href="{{menuitem.link}}" id="menu{{menuitem.id}}" ng-class="(menuitem.current===true) ? \'selected\' : \'\'">{{ menuitem.text }}</a>'+
 			'<ul>' + 
 				'<li ng-repeat="child in menuitem.children">' + 
 					'<np-menu menuitem="child"></np-menu>' +
@@ -55,7 +55,7 @@ angular
 			$log.debug( 'npX::data', cmpData );
 
 			this.id = cmpData.id;
-			this.items = ($scope.component.data||{}).items;
+			this.items = (cmpData||{}).items;
 
 			if ( angular.isArray( this.items ) )
 			{

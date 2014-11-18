@@ -94,11 +94,20 @@ function ComponentDirective(
 							}
 							// replace invalid id characters (according to HTML4 spec)
 							attrId = attrId.replace(/[^\w\-.:]/g,'_');
-
-							// TODO: VALIDATE
-							$element.attr('id', attrId );
+							//$element.attr( 'id', attrId );
+							if ( ! cmp.data.id )
+							{
+								cmp.data.id = attrId;
+							}
 
 							// TODO: pass all "data-*" attributes into element
+							for ( var dIdx in cmp.data )
+							{
+								if ( angular.isString(dIdx) && dIdx.indexOf('data-') === 0 )
+								{
+									$element.attr( dIdx, cmp.data[dIdx] );
+								}
+							}
 						}
 						if ( !!cmp.components && cmp.components.length > 0 )
 						{

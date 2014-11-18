@@ -1,11 +1,12 @@
 // bower:scss
 // endbower
+@import "compass-mixins/lib/compass/css3/border-radius";
 
 .browsehappy {
-  margin: 0.2em 0;
-  background: #ccc;
-  color: #000;
-  padding: 0.2em 0;
+	margin: 0.2em 0;
+	background: #ccc;
+	color: #000;
+	padding: 0.2em 0;
 }
 
 .debug,
@@ -31,19 +32,80 @@
 	}
 }
 
+.npPage {
+	text-align: center;
+}
+
+.npMenu {
+	background: mix(black, white, 90%);
+	background: rgba(black, 0.9);
+	position: absolute;
+	top: 0;
+	left: -50%;
+	width: 50%;
+	-webkit-transition: 0.5s ease all;
+	transition: 0.5s ease all;
+	z-index: 100;
+	@include border-right-radius(20px);
+
+	ul {
+		list-style: none outside none;
+		padding: 0;
+		li {
+			margin: 0.2em 0 0.2em 1em;
+		}
+		ul {
+			font-size: 0.95em;
+		}
+	}
+
+	.hamburger {
+		color: black;
+		cursor: pointer;
+		position: absolute;
+		top: 0.5em;
+		right: -1em;
+		-webkit-transition: 0.5s ease all;
+		transition: 0.5s ease all;
+		&:hover {
+			text-decoration: none;
+		}
+	}
+
+	a {
+		color: white;
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
+		&.selected:hover {
+			text-decoration: none;
+		}
+	}
+
+	.selected {
+		cursor: default;
+		text-decoration: none;
+	}
+
+	&.show {
+		left: 0;
+
+		.hamburger {
+			right: 1em;
+			color: white;
+		}
+	}
+}
+
 .npVideo {
 	video {
 		height: auto;
 	}
 }
 
-nav.npMenu {
-	position: absolute;
-	top: 0;
-	right: 0;
-}
-
-.np-Column {
+.npColumn {
 	&:after {
 		content: "."; 
 		visibility: hidden; 
@@ -54,13 +116,104 @@ nav.npMenu {
 
 	.column {
 		float: left;
+		text-align: center;
+
+		&.col-last {
+			&:after {
+				content: "."; 
+				visibility: hidden; 
+				display: inline-block; 
+				height: 0; 
+				clear: both;
+				width: 100%;
+			}
+		}
+		&.col-1 {
+			width: 100%;
+		}
+		&.col-2 {
+			width: 50%;
+		}
+		&.col-3 {
+			width: 33.333333333%;
+		}
+		&.col-4 {
+			width: 25%;
+		}
+		&.col-5 {
+			width: 20%;
+		}
+		&.col-6 {
+			width: 16.666666666%;
+		}
+		&.col-7 {
+			width: 14.285714285%;
+		}
+
+	}
+}
+
+.npButton {
+	text-align: center;
+	padding: 0.3em;
+	margin: 0.3em;
+	border: none;
+	@include border-radius(6px);
+	-webkit-box-shadow: 0px 0px 5px 0px rgba(50, 50, 50, 0.75);
+	-moz-box-shadow:    0px 0px 5px 0px rgba(50, 50, 50, 0.75);
+	box-shadow:         0px 0px 5px 0px rgba(50, 50, 50, 0.75);
+}
+
+@media screen and (max-width: 320px) {
+	.container {
+		max-width: 305px;
+	}
+
+}
+
+@media screen and (max-width: 767px) {
+	.container {
+		max-width: 420px;
+	}
+
+	.npVideo {
+		width: 80%;
+	}
+
+	.npColumn {
+		.column {
+			float: none;
+
+			&.col-1 {
+				width: 100%;
+			}
+			&.col-2 {
+				width: 100%;
+			}
+			&.col-3 {
+				width: 100%;
+			}
+			&.col-4 {
+				width: 100%;
+			}
+			&.col-5 {
+				width: 100%;
+			}
+			&.col-6 {
+				width: 100%;
+			}
+			&.col-7 {
+				width: 100%;
+			}
+
+		}
 	}
 }
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
-  .container {
-    max-width: 730px;
-  }
+	.container {
+		max-width: 730px;
+	}
 }
 

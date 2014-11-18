@@ -17,6 +17,16 @@ angular
 			$log.debug( 'npColumn::data', cmpData );
 
 			this.id = cmpData.id;
+
+			var childCount = $scope.component.components.length;
+			var columns = +cmpData.cols;
+			if ( !columns ) {
+				columns = childCount;
+			}
+			this.lastRowIndex = columns * Math.floor(childCount / columns);
+			this.lastRowColumns = (childCount % columns) || 0;
+			this.columns = columns;
+			this.columnWidth = 100 / columns;
 		}
 	)
 
