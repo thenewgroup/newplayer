@@ -11,7 +11,7 @@ angular
 
 	/** @ngInject */
 	.controller( 'npPageController',
-		function( $log, $scope, $rootScope, $state, ManifestService, ConfigService )
+		function( $log, $scope, $rootScope, $state, ManifestService )
 		{
 			var cmpData = $scope.component.data;
 			$log.debug( 'npPage::data', cmpData, $scope.contentTitle );
@@ -42,58 +42,6 @@ angular
 				);
 				*/
 			}
-
-			// have pages been indexed?
-			$log.debug( 'inside content scope', $scope.currentContent );
-			if ( ! $scope.currentContent.pages )
-			{
-				// index pages
-				var pages = ManifestService.getAll( 'npPage', parentIdx );
-				var nestedPages = [];
-				for (var pageIdx in pages)
-				{
-					var page = pages[pageIdx];
-					$log.debug( 'npPage::index:', page );
-					if ( !!page.data && page.data.inMenu )
-					{
-						var aPage =
-							{
-								id : page.data.id,
-								link : '#/' + ConfigService.getManifestId() + '/' + page.data.id,
-								text : page.data.menuTitle || page.data.title,
-								children : []
-							};
-						if ( pageId === aPage.id )
-						{
-							$log.debug( 'npPage::index:current:', page );
-							aPage.current = true;
-						}
-
-						var parentId = page.data.parentId;
-						$log.debug( 'npPage::index:parent?', parentId );
-						if ( ! parentId )
-						{
-							$log.debug( 'npPage::index:top level:', aPage );
-							nestedPages.push( aPage );
-						} else {
-							$log.debug( 'npPage::index:nest:', parentId, aPage );
-							for ( var parentPage in nestedPages )
-							{
-								$log.debug( 'npPage::index:nest:isEqual?', parentId, nestedPages[parentPage].id );
-								if ( nestedPages[parentPage].id === parentId )
-								{
-									nestedPages[parentPage].children.push( aPage );
-								}
-							}
-						}
-					}
-				}
-				$log.debug( 'npPage::index results:', nestedPages );
-				$scope.currentContent.pages = nestedPages;
-			} else {
-				// TBD - edit pages $scope.currentContent.pages array to reset current page
-			}
-
 
 			// check if current route is for this page
 			$log.debug( 'npPage::on current page?', ManifestService.getPageId(), cmpData.id );
