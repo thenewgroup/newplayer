@@ -10,8 +10,6 @@ angular
 		]
 	);
 
-console.log('main::module created', angular.module('newplayer') );
-
 angular
 	.module('newplayer')
 	/** @ngInject */
@@ -34,12 +32,9 @@ angular
 	.run(
 		function($rootScope, $state, $stateParams)
 		{
-			console.log('main::run');
 			$rootScope.$state = $state;
 			$rootScope.$stateParams = $stateParams;
 			//FastClick.attach(document.body);
-			console.log('main::running');
 		}
 	);
 
-console.log('main::module running');
