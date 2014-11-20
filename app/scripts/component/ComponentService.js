@@ -29,8 +29,6 @@ function ComponentService( $log, ManifestService, $http, $ocLazyLoad /*, $timeou
 			// TBD validate incoming data
 			var cmpType = componentObj.type || 'empty';
 			var cmpData = componentObj.data;
-			// add base dependency
-			addCmpDependencies( cmpType, cmpType + '.js' );
 
 			// parse component "data" required during component load
 			if ( !!cmpType && !!cmpData )
@@ -43,6 +41,9 @@ function ComponentService( $log, ManifestService, $http, $ocLazyLoad /*, $timeou
 					addCmpDependencies( cmpType, cmpDependencies );
 				}
 			}
+
+			// add base dependency
+			addCmpDependencies( cmpType, cmpType + '.js' );
 		};
 
 		var cleanURL = function( cmpType, cmpURL )
@@ -166,23 +167,24 @@ function ComponentService( $log, ManifestService, $http, $ocLazyLoad /*, $timeou
 				$ocLazyLoad.load(
 					{
 						name: cmpType,
+						serie: (getCmpDependencies().length>1?true:false),
 						files: getCmpDependencies()
 					}
 				)
 				.then
 				(
-					function()
+					function(resp)
 					{
 						// success
 						self.onLoad( componentObj );
 					}
 				)
-				.catch
+				['catch']
 				(
-					function(err)
+					function(resp)
 					{
 						// error
-						$log.debug( 'ComponentService::load err:', err );
+						$log.debug( 'ComponentService::load err:', resp );
 						self.onLoad( componentObj );
 					}
 				);
