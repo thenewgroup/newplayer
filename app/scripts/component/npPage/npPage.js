@@ -11,10 +11,10 @@ angular
 
 	/** @ngInject */
 	.controller( 'npPageController',
-		function( $log, $scope, $state, ManifestService, ConfigService )
+		function( $log, $scope, $rootScope, $state, ManifestService, ConfigService )
 		{
 			var cmpData = $scope.component.data;
-			$log.debug( 'npPage::data', cmpData );
+			$log.debug( 'npPage::data', cmpData, $scope.contentTitle );
 
 			this.id = cmpData.id;
 			this.title = cmpData.title;
@@ -90,6 +90,8 @@ angular
 				}
 				$log.debug( 'npPage::index results:', nestedPages );
 				$scope.currentContent.pages = nestedPages;
+			} else {
+				// TBD - edit pages $scope.currentContent.pages array to reset current page
 			}
 
 
@@ -100,6 +102,13 @@ angular
 				$scope.currentPage = true;
 				$scope.npPage = $scope;
 
+				// set page title
+				if ( $rootScope.PageTitle )
+				{
+					$rootScope.PageTitle += ': ' + cmpData.title;
+				} else {
+					$rootScope.PageTitle = cmpData.title;
+				}
 			} else {
 				$scope.currentPage = false;
 			}

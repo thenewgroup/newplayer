@@ -11,12 +11,13 @@ angular
 
 	/** @ngInject */
 	.controller( 'npContentController',
-		function( $log, $scope, $state, ManifestService )
+		function( $log, $scope, $rootScope, $state, ManifestService )
 		{
 			var cmpData = $scope.component.data;
 			$log.debug( 'npContent::data', cmpData );
 
 			this.id = cmpData.id;
+			this.contentTitle = cmpData.title;
 
 			var manifestLang = ManifestService.getLang();
 
@@ -43,6 +44,9 @@ angular
 				$log.debug( 'npContent::lang match', cmpLang, manifestLang );
 				$scope.currentLang = true;
 				$scope.currentContent = $scope;
+
+				// set page title
+				$rootScope.PageTitle = cmpData.title;
 			} else {
 				$log.debug( 'npContent::wrong lang', cmpLang, manifestLang );
 				$scope.currentLang = false;
