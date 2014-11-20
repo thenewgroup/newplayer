@@ -7,10 +7,10 @@
 	<a class="hamburger fa fa-bars" ng-click="menuStatus=(menuStatus==='show')?'':'show'"></a>
 	<ul>
 		<li ng-repeat="child in npMenu.items">
-			<np-menu menuitem="child"></np-menu>
+			<span np-menu menuitem="child"></span>
 		</li>
 	</ul>
 
-	<np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></np-component>
+	<div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
 
 </nav>

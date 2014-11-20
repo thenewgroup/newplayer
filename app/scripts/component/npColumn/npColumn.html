@@ -4,12 +4,15 @@
 		<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
 	</div>
 
-	<np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}" data-width="{{npColumn.columnWidth}}%"
-		ng-class="
-			[
-				($index+1 > npColumn.lastRowIndex)?'col-{{npColumn.lastRowColumns}}':'col-{{npColumn.columns}}',
-				(($index+1) % npColumn.columns === 0)?'col-last':''
-			]
-		" class="column"></np-component>
+	<div
+		np-component
+		ng-if="subCmp"
+		ng-repeat="component in components"
+		idx="{{component.idx}}" data-width="{{npColumn.columnWidth}}%"
+		ng-class="[
+				( $index+1 > npColumn.lastRowIndex ) ? 'col-{{npColumn.lastRowColumns}}' : 'col-{{npColumn.columns}}',
+				( ($index+1) % npColumn.columns === 0 ) ? 'col-last' : ''
+			]"
+		class="column"></div>
 
 </div>

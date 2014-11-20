@@ -4,6 +4,6 @@
 		<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
 	</div>
 
-	<np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></np-component>
+	<div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
 
 </header>

@@ -6,6 +6,6 @@
 
 	<span ng-bind-html="npButton.content"></span>
 
-	<np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></np-component>
+	<div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
 
 </button>

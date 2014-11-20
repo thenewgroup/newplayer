@@ -11,7 +11,7 @@ function npMenuDirective(
 	$log, $compile/*, $stateParams, $state, $timeout*/
 )
 {
-	$log.debug('\nComponentDirective::Init\n');
+	$log.debug('\nnpMenuDirective::Init\n');
 	var Directive = function()
 	{
 		this.restrict = 'EA';
@@ -20,7 +20,7 @@ function npMenuDirective(
 			'<a ng-href="{{menuitem.link}}" id="menu{{menuitem.id}}" ng-class="(menuitem.current===true) ? \'selected\' : \'\'">{{ menuitem.text }}</a>'+
 			'<ul>' + 
 				'<li ng-repeat="child in menuitem.children">' + 
-					'<np-menu menuitem="child"></np-menu>' +
+					'<span np-menu menuitem="child"></span>' +
 				'</li>' +
 			'</ul>';
 		this.compile = function (tElement, tAttrs, transclude)
@@ -52,7 +52,7 @@ angular
 		function( $log, $scope, $sce )
 		{
 			var cmpData = $scope.component.data;
-			$log.debug( 'npX::data', cmpData );
+			$log.debug( 'npMenu::data', cmpData );
 
 			this.id = cmpData.id;
 			this.items = (cmpData||{}).items;

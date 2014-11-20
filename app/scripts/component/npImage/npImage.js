@@ -20,7 +20,7 @@ angular
 			this.alt = cmpData.alt;
 			// TODO - use sce for URL whitelist?
 			this.src = cmpData.src;
-			$log.debug( 'npImage::src', $scope.src );
+			$log.debug( 'npImage::src', this.src );
 		}
 	)
 
