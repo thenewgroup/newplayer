@@ -130,7 +130,7 @@
 								],
 								"poster": "",
 								"baseURL": "assets/en/vid/welcome",
-								"types": [ "mp4", "ogg" ]
+								"types": [ "mp4", "ogv" ]
 							},
 							"components": [ ]
 						},

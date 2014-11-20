@@ -16,6 +16,7 @@ function npMediaElementDirective( $log )
 		this.link = function( scope, element, attrs, controller ) {
 			attrs.$observe('src', function() {
 				$log.debug('mediaelementDirective::element', element);
+				jQuery(element).prepend( scope.sources );
 				jQuery(element).mediaelementplayer();
 			});
 		};
@@ -34,24 +35,28 @@ angular
 			$log.debug( 'npVideo::data', cmpData, $element );
 
 			this.id = cmpData.id;
-			this.poster = cmpData.poster;
+			this.baseURL = cmpData.baseURL;
+
+			if ( cmpData.poster )
+			{
+				$element.attr('poster', cmpData.poster);
+			}
 
 			// video source elements need to be static BEFORE mediaElement is initiated
 			// binding the attributes to the model was not working
 			// alternatively, fire the mediaelement after the source attributes are bound?
-			this.baseURL = cmpData.baseURL;
 			var types = cmpData.types;
 			if ( angular.isArray( types ) && types.length > 0 )
 			{
 				$log.debug( 'npVideo::data:types', types );
-				for ( var typeIdx = types.length-1; typeIdx >= 0; typeIdx-- )
+				var sources = '';
+				for ( var typeIdx in types )
 				{
 					var type = types[typeIdx];
 					$log.debug( 'npVideo::data:types:type', typeIdx, type );
-					$element.find('video').prepend(
-						'<source type="video/' + type + '" src="' + this.baseURL + '.' + type + '" />'
-					);
+					sources += '<source type="video/' + type + '" src="' + this.baseURL + '.' + type + '" />'
 				}
+				$scope.sources = sources;
 			}
 		}
 	)
