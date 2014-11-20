@@ -14,9 +14,10 @@ function npMediaElementDirective( $log )
 	{
 		this.restrict = 'A';
 		this.link = function( scope, element, attrs, controller ) {
+			jQuery(element).attr( 'poster', scope.poster );
+			jQuery(element).prepend( scope.sources );
 			attrs.$observe('src', function() {
 				$log.debug('mediaelementDirective::element', element);
-				jQuery(element).prepend( scope.sources );
 				jQuery(element).mediaelementplayer();
 			});
 		};
@@ -39,7 +40,7 @@ angular
 
 			if ( cmpData.poster )
 			{
-				$element.attr('poster', cmpData.poster);
+				$scope.poster = cmpData.poster;
 			}
 
 			// video source elements need to be static BEFORE mediaElement is initiated
