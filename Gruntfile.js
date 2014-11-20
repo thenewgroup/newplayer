@@ -361,6 +361,13 @@ module.exports = function (grunt) {
           cwd: '.',
           src: 'bower_components/Font-Awesome/fonts/*',
           dest: '<%= config.dist %>/fonts/'
+        }, {  // NP - KJP - copy mediaelement player
+          expand: true,
+          dot: true,
+          flatten: true,
+          cwd: '.',
+          src: 'bower_components/mediaelement/build/*',
+          dest: '<%= config.dist %>/scripts/component/npVideo/mediaelement/'
         }, {  // NP - KJP - copy all component templates
           expand: true,
           dot: true,
