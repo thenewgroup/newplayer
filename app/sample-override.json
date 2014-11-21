@@ -1,40 +1,19 @@
-[
-	{
-		"title":"Alabama Credit Union",
-		"Standard Logo":"",
-		"Highlight Color":"{\"data-highlight-color\":\"#004EA8\"}",
-		"Client Logo":"{\"src\":\"http://dev.standard.tngdev.com/sites/default/files/alabama_cu_3.jpg\",\"alt\":\"Alabama\"}",
-		"field_welcome_message":"{\"content\":\"Congratulations! We are pleased to offer a retirement savings plan to eligible employees. Start planning by choosing how much you want to save or by learning more about your plan. If you need assistance, please call The Standard at 800.858.5420.\"}",
-		"field_automatic_rebalancer":"delete",
-		"field_roth_contributions":"delete",
-		"field_guided_planner":"",
-		"field_403_b_":"delete",
-		"field_rollovers":"",
-		"field_rollovers_by_employees_who":"delete",
-		"field_mainspring_managed":"delete",
-		"field_entry_dates":"{\"content\":\"An employee is eligible to participate in the plan on the first entry date after satisfying the following: 18 months of service. 40 hours of service during the 12-month period beginning on your date of hire or any plan year beginning after your date of hire. You must be age 18 or older. Entry dates are: Monthly.\"}",
-		"field_other":"",
-		"field_automatic_enrollment":"{\"config\":{\"sources\":[{\"src\":\"assets/en/vid/_3.4.mp4\",\"type\":\"video/mp4\"}]}}",
-		"field_automatic_contribution_amo":"{\"content\":\"Your default contribution: 3.2% of your compensation.\"}",
-		"field_deferral_may_change":"",
-		"field_details_of_plan":"{\"content\":\"Test\"}",
-		"field_safe_harbor_matching_or_no":"{\"content\":\"Employer contributions, Your employer will match your contributions up to 3 percent of your pay with $1 for each dollar you contribute. In addition, they will match your contribution of more than 3 percent and up to 5 percent of your pay with $.50 for each dollar you contribute. You may contribute additional amounts, but they will not be matched.\"}",
-		"field_non_elective_contribution":"{\"content\":\"Your employer will contribute 5.5% of pay to all eligible participants.\"}",
-		"field_statutory_match":"1",
-		"field_custom_match_message":"{\"content\":\"custom match text here\"}",
-		"field_non_safe_harbor_match":"1",
-		"field_discretionary_match":"1",
-		"field_matching_formula":"1",
-		"field_custom_match_message_add":"{\"content\":\"Another custom match text message\"}",
-		"field_profit_sharing_contributio":"{\"content\":\"Your employer may also make a profit sharing contribution. See your Summary Plan Description for more details.\"}",
-		"krazy": {
-			"bar": "baz",
-			"nested":[{
-				"prop1":"test",
-				"obj1":{
-					"prop2": "foo"
-				}
-			}]
-		}
+[{
+	"Logo": {
+		"alt": "Example Logo",
+		"data-extra": "more data"
+	},
+	"Slogan":"{\"content\":\"New Player - presentation\"}",
+	"welcome_caption": {
+		"content": "Here is a video!"
+	},
+	"deepCopy": {
+		"bar": "baz",
+		"nested":[{
+			"prop1":"test",
+			"obj1":{
+				"prop2": "foo"
+			}
+		}]
 	}
-]
+}]
