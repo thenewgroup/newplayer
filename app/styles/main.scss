@@ -106,7 +106,48 @@
 	}
 }
 
+.npHTML {
+	font-size: 16px;
+	line-height: 20px;
+
+	.collapsor {
+		cursor: pointer;
+		text-align: left;
+
+		&:before {
+			content: "\00f054"; 
+			float: left;
+			font-family: 'FontAwesome';
+			-webkit-transition: 0.5s ease all;
+			transition: 0.5s ease all;
+			-webkit-transform: rotate(90deg);
+			transform: rotate(90deg);
+			margin: 0 0.5em 0 0;
+		}
+		&.collapsed:before {
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+	}
+	.collapsee {
+		-webkit-transition: 0.5s ease all;
+		transition: 0.5s ease all;
+		height: auto;
+		overflow: hidden;
+		position: relative;
+		top: 0;
+		&.collapsed {
+			-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+			-moz-opacity: 0;
+			opacity: 0;
+		}
+	}
+}
+
 .npColumn {
+	line-height: 0; 
+	font-size: 0;
+
 	&:after {
 		content: "."; 
 		visibility: hidden; 
@@ -117,7 +158,8 @@
 
 	.column {
 		float: left;
-		text-align: center;
+		line-height: 0; 
+		font-size: 0;
 
 		&.col-last {
 			&:after {
@@ -155,14 +197,16 @@
 }
 
 .npButton {
-	text-align: center;
-	padding: 0.3em;
-	margin: 0.3em;
 	border: none;
 	@include border-radius(6px);
 	-webkit-box-shadow: 0px 0px 5px 0px rgba(50, 50, 50, 0.75);
 	-moz-box-shadow:    0px 0px 5px 0px rgba(50, 50, 50, 0.75);
 	box-shadow:         0px 0px 5px 0px rgba(50, 50, 50, 0.75);
+	font-size: 14px;
+	line-height: 17px;
+	margin: 0.3em;
+	padding: 0.3em;
+	text-align: center;
 }
 
 @media screen and (max-width: 320px) {
@@ -178,7 +222,21 @@
 	}
 
 	.npVideo {
-		width: 80%;
+		video {
+			width: 100%;
+		}
+		.mejs-mediaelement {
+			position: relative;
+		}
+		.mejs-video {
+			width: 100% !important;
+			height: auto !important;
+		}
+		.mejs-overlay,
+		.mejs-poster {
+			height: auto !important;
+			width: auto !important;
+		}
 	}
 
 	.npColumn {
