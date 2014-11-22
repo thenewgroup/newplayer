@@ -2,7 +2,7 @@
 	"type": "npFeature",
 	"data": {
 		"id": "samplePresentation",
-		"req": ["sample.css"],
+		"req": ["../../../sample.css"],
 		"version": "0.0.1",
 		"timestamp": "1970-01-01_00:00:00"
 	},
@@ -108,8 +108,8 @@
 									"mediaelement/mediaelement-and-player.min.js",
 									"mediaelement/mediaelementplayer.css"
 								],
-								"poster": "/sites/default/files/retirement_1.1.jpg",
-								"baseURL": "//archive.org/download/Windows7WildlifeSampleVideo/Wildlife_512kb.mp4",
+								"poster": "//ia700505.us.archive.org/3/items/Windows7WildlifeSampleVideo/Windows7WildlifeSampleVideo.thumbs/Wildlife_000001.jpg",
+								"baseURL": "//archive.org/download/Windows7WildlifeSampleVideo/Wildlife_512kb",
 								"types": [ "mp4" ]
 							},
 							"components": [ ]
