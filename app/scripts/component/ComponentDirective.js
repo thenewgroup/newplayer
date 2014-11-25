@@ -99,6 +99,14 @@ function ComponentDirective(
 							{
 								cmp.data.id = attrId;
 							}
+							$element.attr( 'id', 'np_'+attrId );
+
+							var attrClass = cmp.data.class;
+							if ( angular.isString( attrClass ) )
+							{
+								attrClass = attrClass.replace(/[^\w\-.:]/g,'_');
+								$element.addClass( attrClass );
+							}
 
 							// TODO: pass all "data-*" attributes into element
 							for ( var dIdx in cmp.data )
