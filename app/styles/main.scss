@@ -109,38 +109,25 @@
 .npHTML {
 	font-size: 16px;
 	line-height: 20px;
+}
 
-	.collapsor {
-		cursor: pointer;
-		text-align: left;
+.np-expand-toggle {
+	cursor: pointer;
+	text-align: left;
 
-		&:before {
-			content: "\00f054"; 
-			float: left;
-			font-family: 'FontAwesome';
-			-webkit-transition: 0.5s ease all;
-			transition: 0.5s ease all;
-			-webkit-transform: rotate(90deg);
-			transform: rotate(90deg);
-			margin: 0 0.5em 0 0;
-		}
-		&.collapsed:before {
-			-webkit-transform: rotate(0deg);
-			transform: rotate(0deg);
-		}
-	}
-	.collapsee {
+	&:before {
+		content: "\00f054"; 
+		float: left;
+		font-family: 'FontAwesome';
 		-webkit-transition: 0.5s ease all;
 		transition: 0.5s ease all;
-		height: auto;
-		overflow: hidden;
-		position: relative;
-		top: 0;
-		&.collapsed {
-			-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-			-moz-opacity: 0;
-			opacity: 0;
-		}
+		-webkit-transform: rotate(90deg);
+		transform: rotate(90deg);
+		margin: 0 0.5em 0 0;
+	}
+	&.collapsed:before {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
 	}
 }
 
