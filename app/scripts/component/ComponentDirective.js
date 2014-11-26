@@ -101,7 +101,7 @@ function ComponentDirective(
 							}
 							$element.attr( 'id', 'np_'+attrId );
 
-							var attrClass = cmp.data.class;
+							var attrClass = cmp.data['class'];
 							if ( angular.isString( attrClass ) )
 							{
 								attrClass = attrClass.replace(/[^\w\-.:]/g,'_');

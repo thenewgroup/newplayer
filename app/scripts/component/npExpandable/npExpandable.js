@@ -23,17 +23,24 @@ function npExpandToggleDirective(
 				function()
 				{
 					var target = element.next()[0];
-					var content = target.children[0];
-					if(!attrs.expanded)
+					var content = target.children;
+					for ( child in content )
 					{
-						element.removeClass('collapsed');
-						content.style.border = '1px solid rgba(0,0,0,0)';
-						var y = content.clientHeight;
-						content.style.border = 0;
-						target.style.height = y + 'px';
-					} else {
-						element.addClass('collapsed');
-						target.style.height = '0px';
+						var aChild = content[child];
+						if ( (' ' + aChild.className + ' ').replace(/[\n\t]/g, ' ').indexOf(' expandable_content ') > -1 )
+						{
+							if(!attrs.expanded)
+							{
+								element.removeClass('collapsed');
+								aChild.style.border = '1px solid black';
+								var y = aChild.clientHeight;
+								aChild.style.border = 0;
+								target.style.height = y + 'px';
+							} else {
+								element.addClass('collapsed');
+								target.style.height = '0px';
+							}
+						}
 					}
 					attrs.expanded = !attrs.expanded;
 				}
