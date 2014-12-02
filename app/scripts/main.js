@@ -21,7 +21,7 @@ angular
 	/** @ngInject */
 	.factory('ComponentService' , ComponentService)
   /** @ngInject */
-	.factory('PipwerksService' , PipwerksService)
+	.factory('ScormService' , ScormService)
 	/** @ngInject */
 	.controller('AppController' , AppController)
 	/** @ngInject */

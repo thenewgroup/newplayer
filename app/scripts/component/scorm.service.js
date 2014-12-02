@@ -28,53 +28,9 @@
  =============================================================== */
 
 /** @ngInject */
-function PipwerksService ( $log ) {
+function ScormService ( $log ) {
 
-  var scorm = pipwerks.SCORM.initialize ();
-  var student = {};
-  student.name = scorm.get ( "cmi.core.student_name" );
-  student.language = scorm.get ( "cmi.core.student_language" ); // TODO: set this to the correct key
-
-  return {
-    pipwerks: pipwerks,
-    scorm: scorm,
-    student: student,
-    isLessonComplete: function () {
-      if ( !scorm ) {
-        $log.error ( 'LMS is not connected' );
-        return false;
-      }
-
-      var completionstatus = scorm.get ( "cmi.core.lesson_status" );
-
-      return (completionstatus === "completed" || completionstatus === "passed");
-    },
-    setLessonComplete: function ( isComplete ) {
-      if ( !scorm ) {
-        $log.error ( 'LMS is not connected' );
-        return false;
-      }
-
-      var lessonStatus = isComplete ? "completed" : "";
-
-      if ( !scorm.set ( "cmi.core.lesson_status", lessonStatus ) ) {
-        $log.error ( 'Could not set lesson status to: "' + lessonStatus + '"' );
-        return false;
-      }
-
-      return true;
-    },
-    getProgress: function() {
-      return false; // TODO: return saved data
-    },
-    setProgress: function(dataToSave) {
-      return false; // TODO: save passed data
-    }
-  };
-
-
-
-  var pipwerks = {};                                  //pipwerks 'namespace' helps ensure no conflicts with possible other "SCORM" variables
+  var pipwerks = {};
   pipwerks.UTILS = {};                                //For holding UTILS functions
   pipwerks.debug = {isActive: true};                //Enable (true) or disable (false) for debug mode
 
@@ -883,4 +839,81 @@ function PipwerksService ( $log ) {
         return false;
     }
   };
+
+  var LMS_NOT_CONNECTED = 'LMS_NOT_CONNECTED';
+  var isScormAvailable = false;
+  var student = {};
+  var scorm = pipwerks.SCORM.initialize ();
+
+  if ( scorm ) {
+    isScormAvailable = true;
+    student.language = scorm.get ( "cmi.core.user_language_preference" );
+    student.name = scorm.get ( "cmi.core.student_name" );
+  }
+
+  return {
+
+    //----- 'Constants'
+    LMS_NOT_CONNECTED: LMS_NOT_CONNECTED,
+
+    //----- Vars
+    isScormAvailable: isScormAvailable,
+    get: scorm.get,
+    set: scorm.set,
+    save: scorm.save,
+    student: student,
+
+    //----- Functions
+    init: function() {
+      scorm = pipwerks.SCORM.initialize ();
+
+      if ( scorm ) {
+        isScormAvailable = true;
+        student.language = scorm.get ( "cmi.core.user_language_preference" );
+        student.name = scorm.get ( "cmi.core.student_name" );
+      } else {
+        isScormAvailable = false;
+        student.language = null;
+        student.name = null;
+      }
+    },
+    isLessonComplete: function () {
+      if ( isScormAvailable ) {
+        throw LMS_NOT_CONNECTED;
+      }
+
+      var completionstatus = scorm.get ( "cmi.core.lesson_status" );
+
+      return (completionstatus === "completed" || completionstatus === "passed");
+    },
+    setLessonComplete: function ( isComplete ) {
+      if ( isScormAvailable ) {
+        throw LMS_NOT_CONNECTED;
+      }
+
+      var lessonStatus = isComplete ? "completed" : "";
+
+      if ( !scorm.set ( "cmi.core.lesson_status", lessonStatus ) ) {
+        $log.error ( 'Could not set lesson status to: "' + lessonStatus + '"' );
+        return false;
+      }
+
+      return true;
+    },
+    getProgress: function () {
+      if ( isScormAvailable ) {
+        throw LMS_NOT_CONNECTED;
+      }
+
+      return false; // TODO: return saved data
+    },
+    setProgress: function ( dataToSave ) {
+      if ( isScormAvailable ) {
+        throw LMS_NOT_CONNECTED;
+      }
+
+      return false; // TODO: save passed data
+    }
+  };
+
 }
