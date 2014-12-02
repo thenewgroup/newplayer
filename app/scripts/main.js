@@ -20,6 +20,8 @@ angular
 	.factory('ManifestService' , ManifestService)
 	/** @ngInject */
 	.factory('ComponentService' , ComponentService)
+  /** @ngInject */
+	.factory('PipwerksService' , PipwerksService)
 	/** @ngInject */
 	.controller('AppController' , AppController)
 	/** @ngInject */
