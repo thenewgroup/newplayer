@@ -30,6 +30,50 @@
 /** @ngInject */
 function PipwerksService ( $log ) {
 
+  var scorm = pipwerks.SCORM.initialize ();
+  var student = {};
+  student.name = scorm.get ( "cmi.core.student_name" );
+  student.language = scorm.get ( "cmi.core.student_language" ); // TODO: set this to the correct key
+
+  return {
+    pipwerks: pipwerks,
+    scorm: scorm,
+    student: student,
+    isLessonComplete: function () {
+      if ( !scorm ) {
+        $log.error ( 'LMS is not connected' );
+        return false;
+      }
+
+      var completionstatus = scorm.get ( "cmi.core.lesson_status" );
+
+      return (completionstatus === "completed" || completionstatus === "passed");
+    },
+    setLessonComplete: function ( isComplete ) {
+      if ( !scorm ) {
+        $log.error ( 'LMS is not connected' );
+        return false;
+      }
+
+      var lessonStatus = isComplete ? "completed" : "";
+
+      if ( !scorm.set ( "cmi.core.lesson_status", lessonStatus ) ) {
+        $log.error ( 'Could not set lesson status to: "' + lessonStatus + '"' );
+        return false;
+      }
+
+      return true;
+    },
+    getProgress: function() {
+      return false; // TODO: return saved data
+    },
+    setProgress: function(dataToSave) {
+      return false; // TODO: save passed data
+    }
+  };
+
+
+
   var pipwerks = {};                                  //pipwerks 'namespace' helps ensure no conflicts with possible other "SCORM" variables
   pipwerks.UTILS = {};                                //For holding UTILS functions
   pipwerks.debug = {isActive: true};                //Enable (true) or disable (false) for debug mode
@@ -837,40 +881,6 @@ function PipwerksService ( $log ) {
         return null;
       default:
         return false;
-    }
-  };
-
-  var scorm = pipwerks.SCORM.initialize ();
-  var studentName = scorm.get ( "cmi.core.student_name" );
-
-  return {
-    pipwerks: pipwerks,
-    scorm: scorm,
-    studentName: studentName,
-    isLessonComplete: function () {
-      if ( !scorm ) {
-        $log.error ( 'LMS is not connected' );
-        return false;
-      }
-
-      var completionstatus = scorm.get ( "cmi.core.lesson_status" );
-
-      return (completionstatus === "completed" || completionstatus === "passed");
-    },
-    setLessonComplete: function ( isComplete ) {
-      if ( !scorm ) {
-        $log.error ( 'LMS is not connected' );
-        return false;
-      }
-
-      var lessonStatus = isComplete ? "completed" : "";
-
-      if ( !scorm.set ( "cmi.core.lesson_status", lessonStatus ) ) {
-        $log.error ( 'Could not set lesson status to: "' + lessonStatus + '"' );
-        return false;
-      }
-
-      return true;
     }
   };
 }
