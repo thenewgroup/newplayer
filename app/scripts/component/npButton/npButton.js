@@ -51,7 +51,7 @@ angular
 				} else {
 					document.location = this.link;
 				}
-			}
+			};
 		}
 	)
 
