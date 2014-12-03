@@ -1,10 +1,9 @@
 'use strict';
 
 /** @ngInject */
-function StoreDriverService ( $log ) {
+function StoreDriverService ( $log, ConfigService ) {
 
-  // TODO: this should discern the driver from config.json (however that's loaded) and then should
-  // instantiate that driver and be able to return the instance to whomever asks.
+
 
   //var STOREDRIVER_INVALID = "STOREDRIVER_INVALID";
   //

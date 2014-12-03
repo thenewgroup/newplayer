@@ -1,6 +1,7 @@
 [{
 	"comment": "Sample NewPlayer configuration file!",
 	"manifestURL": "./{manifestId}.json",
+	"storeDriver": "scorm",
 	"overrideManifest":
 	{
 		"GTMComponent": {
