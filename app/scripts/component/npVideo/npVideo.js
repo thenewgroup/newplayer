@@ -55,7 +55,7 @@ angular
 				{
 					var type = types[typeIdx];
 					$log.debug( 'npVideo::data:types:type', typeIdx, type );
-					sources += '<source type="video/' + type + '" src="' + this.baseURL + '.' + type + '" />'
+					sources += '<source type="video/' + type + '" src="' + this.baseURL + '.' + type + '" />';
 				}
 				$scope.sources = sources;
 			}
