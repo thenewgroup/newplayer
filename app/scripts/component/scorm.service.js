@@ -894,7 +894,7 @@ function ScormService ( $log ) {
       var lessonStatus = isComplete ? "completed" : "";
 
       if ( !scorm.set ( "cmi.core.lesson_status", lessonStatus ) ) {
-        $log.error ( 'Could not set lesson status to: "' + lessonStatus + '"' );
+        $log.error ( 'Could not set lesson status', lessonStatus);
         return false;
       }
 
@@ -905,14 +905,17 @@ function ScormService ( $log ) {
         throw LMS_NOT_CONNECTED;
       }
 
-      return false; // TODO: return saved data
+      return scorm.get("cmi.suspend_data");
     },
-    setProgress: function ( dataToSave ) {
+    setProgress: function ( suspendData ) {
       if ( isScormAvailable ) {
         throw LMS_NOT_CONNECTED;
       }
 
-      return false; // TODO: save passed data
+      if ( !scorm.set ( "cmi.suspend_data", suspendData ) ) {
+        $log.error ( 'Could not set suspendData', suspendData );
+        return false;
+      }
     }
   };
 
