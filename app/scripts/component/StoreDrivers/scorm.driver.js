@@ -28,7 +28,7 @@
  =============================================================== */
 
 /** @ngInject */
-function ScormService ( $log ) {
+function ScormDriver ( $log ) {
 
   var pipwerks = {};
   pipwerks.UTILS = {};                                //For holding UTILS functions
@@ -840,7 +840,7 @@ function ScormService ( $log ) {
     }
   };
 
-  var LMS_NOT_CONNECTED = 'LMS_NOT_CONNECTED';
+  var SCORM_NOT_CONNECTED = 'SCORM_NOT_CONNECTED';
   var isScormAvailable = false;
   var student = {};
   var scorm = pipwerks.SCORM.initialize ();
@@ -854,10 +854,11 @@ function ScormService ( $log ) {
   return {
 
     //----- 'Constants'
-    LMS_NOT_CONNECTED: LMS_NOT_CONNECTED,
+    name: 'ScormDriver',
+    SCORM_NOT_CONNECTED: SCORM_NOT_CONNECTED,
 
     //----- Vars
-    isScormAvailable: isScormAvailable,
+    isAvailable: isAvailable,
     get: scorm.get,
     set: scorm.set,
     save: scorm.save,
@@ -879,7 +880,7 @@ function ScormService ( $log ) {
     },
     isLessonComplete: function () {
       if ( isScormAvailable ) {
-        throw LMS_NOT_CONNECTED;
+        throw SCORM_NOT_CONNECTED;
       }
 
       var completionstatus = scorm.get ( "cmi.core.lesson_status" );
@@ -888,7 +889,7 @@ function ScormService ( $log ) {
     },
     setLessonComplete: function ( isComplete ) {
       if ( isScormAvailable ) {
-        throw LMS_NOT_CONNECTED;
+        throw SCORM_NOT_CONNECTED;
       }
 
       var lessonStatus = isComplete ? "completed" : "";
@@ -902,14 +903,14 @@ function ScormService ( $log ) {
     },
     getProgress: function () {
       if ( isScormAvailable ) {
-        throw LMS_NOT_CONNECTED;
+        throw SCORM_NOT_CONNECTED;
       }
 
       return scorm.get("cmi.suspend_data");
     },
     setProgress: function ( suspendData ) {
       if ( isScormAvailable ) {
-        throw LMS_NOT_CONNECTED;
+        throw SCORM_NOT_CONNECTED;
       }
 
       if ( !scorm.set ( "cmi.suspend_data", suspendData ) ) {

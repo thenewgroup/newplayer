@@ -21,7 +21,7 @@ angular
 	/** @ngInject */
 	.factory('ComponentService' , ComponentService)
   /** @ngInject */
-	.factory('ScormService' , ScormService)
+	.factory('StoreDriver' , StoreDriverService)
 	/** @ngInject */
 	.controller('AppController' , AppController)
 	/** @ngInject */
