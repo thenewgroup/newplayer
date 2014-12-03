@@ -62,7 +62,7 @@ angular
 				for ( var itemIdx in this.items )
 				{
 					var item = this.items[ itemIdx ];
-					if ( item === "pages" )
+					if ( item === 'pages' )
 					{
 
 						// have pages been indexed?

@@ -24,7 +24,7 @@ function npExpandToggleDirective(
 				{
 					var target = element.next()[0];
 					var content = target.children;
-					for ( child in content )
+					for ( var child in content )
 					{
 						var aChild = content[child];
 						if ( (' ' + aChild.className + ' ').replace(/[\n\t]/g, ' ').indexOf(' expandable_content ') > -1 )
