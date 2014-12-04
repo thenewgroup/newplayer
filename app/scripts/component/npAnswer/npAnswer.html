@@ -1,0 +1,14 @@
+<div class="{{component.type}}" ng-controller="npAnswerController as npAnswer" id="{{npAnswer.id}}">
+
+	<div class="debug">
+		<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
+	</div>
+
+	<div ng-if="npAnswer.radio">
+		<input type="radio" class="npAnswer-radio" name="radio" ng-model="npQuestion.answer" value="{{component.idx}}" id="{{npAnswer.id}}_input" />
+		<label class="npAnswer-label" for="{{npAnswer.id}}_input" ng-bind-html="npAnswer.label"></div>
+	</div>
+
+	<div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+
+</div>

@@ -180,10 +180,15 @@
 			width: 14.285714285%;
 		}
 
+		* {
+			font-size: 16px;
+			line-height: 20px;
+		}
 	}
 }
 
 .npButton {
+	background-color: #7f7f7f;
 	border: none;
 	@include border-radius(6px);
 	-webkit-box-shadow: 0px 0px 5px 0px rgba(50, 50, 50, 0.75);
