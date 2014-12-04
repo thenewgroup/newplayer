@@ -1,14 +1,22 @@
-<div class="{{component.type}}" ng-controller="npAnswerController as npAnswer" id="{{npAnswer.id}}">
+<div class="debug">
+	<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
+</div>
 
-	<div class="debug">
-		<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
-	</div>
+<div ng-if="npQuestion.type === 'radio'" class="{{component.type}}" ng-controller="npAnswerController as npAnswer" id="{{npAnswer.id}}">
 
-	<div ng-if="npAnswer.radio">
-		<input type="radio" class="npAnswer-radio" name="radio" ng-model="npQuestion.answer" value="{{component.idx}}" id="{{npAnswer.id}}_input" />
-		<label class="npAnswer-label" for="{{npAnswer.id}}_input" ng-bind-html="npAnswer.label"></div>
-	</div>
+	<input type="radio" class="npAnswer-radio" name="radio" ng-model="npQuestion.answer" value="{{component.idx}}" id="{{npAnswer.id}}_input" />
+	<label class="npAnswer-label" for="{{npAnswer.id}}_input" ng-bind-html="npAnswer.label"></div>
 
 	<div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
 
 </div>
+
+<div ng-if="npQuestion.type === 'checkbox'" class="{{component.type}}" ng-controller="npAnswerController as npAnswer" id="{{npAnswer.id}}">
+
+	<input type="checkbox" class="npAnswer-checkbox" name="checkbox{{npAnswer.id}}" ng-model="npQuestion.answer[component.idx]" value="{{component.idx}}" id="{{npAnswer.id}}_input" />
+	<label class="npAnswer-label" for="{{npAnswer.id}}_input" ng-bind-html="npAnswer.label"></div>
+
+	<div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+
+</div>
+

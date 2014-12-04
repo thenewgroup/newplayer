@@ -237,7 +237,7 @@
 							"data": {
 								"required": true,
 								"forced": true,
-								"type": "radio",
+								"type": "checkbox",
 								"difficulty": 1,
 								"content": "What number am I thinking of?",
 								"feedback": {

@@ -18,15 +18,51 @@ angular
 
 			this.id = cmpData.id;
 			this.content = $sce.trustAsHtml( cmpData.content );
-			$scope.questionType = cmpData.type;
+			this.type = cmpData.type;
 
 			this.evaluate = function() {
+				$log.debug('npQuestion::evaluate:', this.answer);
+				var correct = true;
+
+				switch (this.type) {
+					case 'radio':
+						var answer = ManifestService.getComponent( this.answer );
+						if ( !answer.data.correct )
+						{
+							correct = false;
+						}
+						break;
+					case 'checkbox':
+						var answers = ManifestService.getAll( 'npAnswer', $scope.cmpIdx );
+						var idx;
+						for ( idx in answers )
+						{
+							if ( answers[idx].data.correct )
+							{
+								// confirm all correct answers were checked
+								if ( ! this.answer[ answers[idx].idx ] )
+								{
+									correct = false;
+								}
+							} else {
+								// confirm no incorrect answers were checked
+								if ( this.answer[ answers[idx].idx ] )
+								{
+									correct = false;
+								}
+							}
+						}
+						break;
+					case 'text':
+						break;
+				}
+				$log.debug('npQuestion::evaluate:pass', correct );
+
 				var feedback = cmpData.feedback;
 				// set by ng-model of npAnswer's input's
-				var answer = ManifestService.getComponent( this.answer );
 				if ( feedback.immediate )
 				{
-					if ( answer.data.correct )
+					if ( correct )
 					{
 						this.feedback = feedback.correct;
 					} else {

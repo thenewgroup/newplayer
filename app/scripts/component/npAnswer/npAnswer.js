@@ -18,12 +18,6 @@ angular
 
 			this.id = cmpData.id;
 			this.label = $sce.trustAsHtml( cmpData.label );
-
-			if ( $scope.questionType === 'radio' )
-			{
-				this.radio = true;
-				$log.debug( 'npAnswer::radio', this.radio );
-			}
 		}
 	)
 
