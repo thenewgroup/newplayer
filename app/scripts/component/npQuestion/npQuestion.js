@@ -19,8 +19,21 @@ angular
 			this.id = cmpData.id;
 			this.content = $sce.trustAsHtml( cmpData.content );
 			this.type = cmpData.type;
+			this.feedback = '';
 
-			this.evaluate = function() {
+			var feedback = cmpData.feedback;
+
+			this.changed = function()
+			{
+				$log.debug( 'npQuestion::answer changed' );
+				if ( feedback.immediate )
+				{
+					this.feedback = '';
+				}
+			};
+
+			this.evaluate = function()
+			{
 				$log.debug('npQuestion::evaluate:', this.answer);
 				var correct = true;
 
@@ -58,7 +71,6 @@ angular
 				}
 				$log.debug('npQuestion::evaluate:pass', correct );
 
-				var feedback = cmpData.feedback;
 				// set by ng-model of npAnswer's input's
 				if ( feedback.immediate )
 				{
