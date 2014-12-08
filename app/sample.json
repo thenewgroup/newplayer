@@ -188,7 +188,7 @@
 								{
 									"type": "npButton",
 									"data": {
-										"link": "Page2",
+										"link": "QuizIntro",
 										"content": "<em>Button One</em>"
 									},
 									"components": [ ]
@@ -196,7 +196,7 @@
 								{
 									"type": "npButton",
 									"data": {
-										"link": "Page3",
+										"link": "Question1",
 										"content": "<strong>Button 2</strong>"
 									},
 									"components": [ ]
@@ -204,7 +204,7 @@
 								{
 									"type": "npButton",
 									"data": {
-										"link": "Page4",
+										"link": "Question2",
 										"content": "Button C"
 									},
 									"components": [ ]
@@ -224,14 +224,49 @@
 				{
 					"type": "npPage",
 					"data": {
-						"id": "Page2",
+						"id": "QuizIntro",
 						"parentId": "",
-						"title": "Page Two",
+						"title": "Quiz",
 						"inMenu": true,
 						"required": false
 					},
 					"components":
 					[
+						{
+							"type": "npHTML",
+							"data": {
+								"content": "<h4>Quiz time!!!</h4>"
+							},
+							"components": [ ]
+						},
+						{
+							"type": "npButton",
+							"data": {
+								"link": "Question1",
+								"content": "Get Started!"
+							},
+							"components": [ ]
+						}
+					]
+				},
+				{
+					"type": "npPage",
+					"data": {
+						"id": "Question1",
+						"parentId": "QuizIntro",
+						"title": "Question 1",
+						"inMenu": true,
+						"required": false
+					},
+					"components":
+					[
+						{
+							"type": "npHTML",
+							"data": {
+								"content": "<h4>Question A</h4>"
+							},
+							"components": [ ]
+						},
 						{
 							"type": "npQuestion",
 							"data": {
@@ -290,9 +325,9 @@
 				{
 					"type": "npPage",
 					"data": {
-						"id": "Page3",
-						"parentId": "Page2",
-						"title": "Page Three",
+						"id": "Question2",
+						"parentId": "QuizIntro",
+						"title": "Question II",
 						"inMenu": true,
 						"required": false
 					},
@@ -301,29 +336,35 @@
 						{
 							"type": "npHTML",
 							"data": {
-								"content": "<h4>placeholder</h4>"
+								"content": "<h4>Question II</h4>"
 							},
 							"components": [ ]
-						}
-					]
-				},
-				{
-					"type": "npPage",
-					"data": {
-						"id": "Page4",
-						"parentId": "Page2",
-						"title": "Page Four",
-						"inMenu": true,
-						"required": false
-					},
-					"components":
-					[
+						},
 						{
-							"type": "npHTML",
+							"type": "npQuestion",
 							"data": {
-								"content": "<h4>placeholder</h4>"
+								"required": true,
+								"forced": true,
+								"type": "text",
+								"difficulty": 1,
+								"content": "What is the greatest thing ever!?",
+								"feedback": {
+									"immediate": true,
+									"correct": "Of course it is!",
+									"incorrect": "Hmmm... yeeeaaa... no!"
+								}
 							},
-							"components": [ ]
+							"components": [
+								{
+									"type": "npAnswer",
+									"data": {
+										"label": "Answer:",
+										"correct": "/ice\\s?cream/i"
+									},
+									"components": [
+									]
+								}
+							]
 						}
 					]
 				},
