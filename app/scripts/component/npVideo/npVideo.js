@@ -15,6 +15,7 @@ function npMediaElementDirective( $log )
 		this.restrict = 'A';
 		this.link = function( scope, element, attrs, controller ) {
 			jQuery(element).attr( 'poster', scope.poster );
+			jQuery(element).attr( 'src', scope.mp4 );
 			jQuery(element).prepend( scope.sources );
 			attrs.$observe('src', function() {
 				$log.debug('mediaelementDirective::element', element);
@@ -56,6 +57,7 @@ angular
 					var type = types[typeIdx];
 					$log.debug( 'npVideo::data:types:type', typeIdx, type );
 					sources += '<source type="video/' + type + '" src="' + this.baseURL + '.' + type + '" />';
+					$scope[type] = this.baseURL + '.' + type;
 				}
 				$scope.sources = sources;
 			}
