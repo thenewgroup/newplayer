@@ -118,7 +118,8 @@ function ManifestService(
 		{
 			if ( angular.isArray( idx ) )
 			{
-				return idx;
+				// return a clone of the array (not the original)
+				return idx.slice(0);
 			}
 			if ( typeof( idx ) === 'string' )
 			{
@@ -280,11 +281,19 @@ function ManifestService(
 			return cmp;
 		};
 
+		/*
+		 * Searches for the first occurance of the specified component
+		 * @param {string} cmpType Component type to search for
+		 * @param {(string|int[])=} context Context in which to do the search
+		 * @returns {Component}
+		 */
 		this.getFirst = function( cmpType, context )
 		{
 			if ( !context )
 			{
 				context = [0];
+			} else {
+				context = deserializeIdx( context );
 			}
 
 			$log.debug( 'ManifestService::getFirst', cmpType, context );
@@ -292,16 +301,33 @@ function ManifestService(
 			while ( !!cmp && cmp.type !== cmpType )
 			{
 				cmp = getNextComponent();
+
+				// don't search out of context - exclude siblings & parents
+				if ( !!getComponentIdx() &&
+				     getComponentIdx().length < context.length &&
+				     getComponentIdx()[ context.length-1 ] === context[ context.length-1 ] )
+				{
+					return null;
+				}
 			}
 
 			return cmp;
 		};
 
+		/*
+		 * Searches for all occurances of the specified component
+		 * @param {string} cmpType Component type to search for
+		 * @param {(string|int[])=} context Context in which to do the search
+		 * @returns {Component[]}
+		 */
 		this.getAll = function( cmpType, context )
 		{
+			$log.debug( 'ManifestService::getAll:initialContext', context );
 			if ( !context )
 			{
 				context = [0];
+			} else {
+				context = deserializeIdx( context );
 			}
 			var cmps = [];
 
@@ -316,6 +342,15 @@ function ManifestService(
 					$log.debug( 'ManifestService::getAll:match!', cmps );
 				}
 				cmp = getNextComponent();
+
+				$log.debug( 'ManifestService::getAll:in context?', context, getComponentIdx() );
+				// don't search out of context - exclude siblings & parents
+				if ( !!getComponentIdx() &&
+				     getComponentIdx().length < context.length &&
+				     getComponentIdx()[ context.length-1 ] === context[ context.length-1 ] )
+				{
+					return cmps;
+				}
 			}
 
 			return cmps;
