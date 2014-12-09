@@ -1,0 +1,15 @@
+<form class="{{component.type}}" ng-controller="npQuestionController as npQuestion" id="{{npQuestion.id}}" ng-submit="npQuestion.evaluate()">
+
+	<div class="debug">
+		<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
+	</div>
+
+	<div class="npQuestion-content" ng-bind-html="npQuestion.content"></div>
+
+	<div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+
+	<input type="submit" />
+
+	<div class="npQuestion-feedback" ng-if="npQuestion.feedback" ng-bind-html="npQuestion.feedback"></div>
+
+</form>
