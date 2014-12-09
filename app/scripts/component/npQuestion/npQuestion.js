@@ -39,27 +39,27 @@ angular
 
 				switch (this.type) {
 					case 'radio':
-						var answer = ManifestService.getComponent( this.answer );
-						if ( !answer.data.correct )
+						var radAnswer = ManifestService.getComponent( this.answer );
+						if ( !radAnswer.data.correct )
 						{
 							correct = false;
 						}
 						break;
 					case 'checkbox':
-						var answers = ManifestService.getAll( 'npAnswer', $scope.cmpIdx );
+						var chkAnswers = ManifestService.getAll( 'npAnswer', $scope.cmpIdx );
 						var idx;
-						for ( idx in answers )
+						for ( idx in chkAnswers )
 						{
-							if ( answers[idx].data.correct )
+							if ( chkAnswers[idx].data.correct )
 							{
 								// confirm all correct answers were checked
-								if ( ! this.answer[ answers[idx].idx ] )
+								if ( ! this.answer[ chkAnswers[idx].idx ] )
 								{
 									correct = false;
 								}
 							} else {
 								// confirm no incorrect answers were checked
-								if ( this.answer[ answers[idx].idx ] )
+								if ( this.answer[ chkAnswers[idx].idx ] )
 								{
 									correct = false;
 								}
@@ -67,6 +67,26 @@ angular
 						}
 						break;
 					case 'text':
+						var txtAnswer = ManifestService.getFirst( 'npAnswer', $scope.cmpIdx );
+						var key = txtAnswer.data.correct;
+						var regExp,pat,mod='i';
+						if ( angular.isString( key ) )
+						{
+							if ( key.indexOf('/') === 0 )
+							{
+								pat = key.substring( 1, key.lastIndexOf('/') );
+								mod = key.substring( key.lastIndexOf('/')+1 );
+							}
+						} else
+						if ( angular.isArray( key ) )
+						{
+							pat = '^(' + key.join('|') + ')$';
+						}
+						regExp = new RegExp( pat, mod );
+						if ( ! regExp.test( this.answer ) )
+						{
+							correct = false;
+						}
 						break;
 				}
 				$log.debug('npQuestion::evaluate:pass', correct );
