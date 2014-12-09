@@ -80,12 +80,12 @@ function ScormDriver ( $log ) {
     var API = null,
       findAttempts = 0,
       findAttemptLimit = 500,
-      traceMsgPrefix = "SCORM.API.find",
+      traceMsgPrefix = 'SCORM.API.find',
       scorm = pipwerks.SCORM;
 
     while ( (!win.API && !win.API_1484_11) &&
     (win.parent) &&
-    (win.parent != win) &&
+    (win.parent !== win) &&
     (findAttempts <= findAttemptLimit) ) {
 
       findAttempts++;
@@ -98,7 +98,7 @@ function ScormDriver ( $log ) {
 
       switch ( scorm.version ) {
 
-        case "2004" :
+        case '2004' :
 
           if ( win.API_1484_11 ) {
 
@@ -106,13 +106,13 @@ function ScormDriver ( $log ) {
 
           } else {
 
-            $log.debug ( traceMsgPrefix + ": SCORM version 2004 was specified by user, but API_1484_11 cannot be found." );
+            $log.debug ( traceMsgPrefix + ': SCORM version 2004 was specified by user, but API_1484_11 cannot be found.' );
 
           }
 
           break;
 
-        case "1.2" :
+        case '1.2' :
 
           if ( win.API ) {
 
@@ -120,7 +120,7 @@ function ScormDriver ( $log ) {
 
           } else {
 
-            $log.debug ( traceMsgPrefix + ": SCORM version 1.2 was specified by user, but API cannot be found." );
+            $log.debug ( traceMsgPrefix + ': SCORM version 1.2 was specified by user, but API cannot be found.' );
 
           }
 
@@ -132,12 +132,12 @@ function ScormDriver ( $log ) {
 
       if ( win.API_1484_11 ) {            //SCORM 2004-specific API.
 
-        scorm.version = "2004";      //Set version
+        scorm.version = '2004';      //Set version
         API = win.API_1484_11;
 
       } else if ( win.API ) {              //SCORM 1.2-specific API
 
-        scorm.version = "1.2";       //Set version
+        scorm.version = '1.2';       //Set version
         API = win.API;
 
       }
@@ -146,12 +146,12 @@ function ScormDriver ( $log ) {
 
     if ( API ) {
 
-      $log.debug ( traceMsgPrefix + ": API found. Version: " + scorm.version );
-      $log.debug ( "API: " + API );
+      $log.debug ( traceMsgPrefix + ': API found. Version: ' + scorm.version );
+      $log.debug ( 'API: ' + API );
 
     } else {
 
-      $log.debug ( traceMsgPrefix + ": Error finding API. \nFind attempts: " + findAttempts + ". \nFind attempt limit: " + findAttemptLimit );
+      $log.debug ( traceMsgPrefix + ': Error finding API. \nFind attempts: ' + findAttempts + '. \nFind attempt limit: ' + findAttemptLimit );
 
     }
 
@@ -176,7 +176,7 @@ function ScormDriver ( $log ) {
       scorm = pipwerks.SCORM,
       find = scorm.API.find;
 
-    if ( win.parent && win.parent != win ) {
+    if ( win.parent && win.parent !== win ) {
       API = find ( win.parent );
     }
 
@@ -193,7 +193,7 @@ function ScormDriver ( $log ) {
     if ( API ) {
       scorm.API.isFound = true;
     } else {
-      $log.debug ( "API.get failed: Can't find the API!" );
+      $log.debug ( 'API.get failed: Can\'t find the API!' );
     }
 
     return API;
@@ -241,9 +241,9 @@ function ScormDriver ( $log ) {
       completionStatus = scorm.data.completionStatus,
       makeBoolean = pipwerks.UTILS.StringToBoolean,
       debug = scorm.debug,
-      traceMsgPrefix = "SCORM.connection.initialize ";
+      traceMsgPrefix = 'SCORM.connection.initialize ';
 
-    $log.debug ( "connection.initialize called." );
+    $log.debug ( 'connection.initialize called.' );
 
     if ( !scorm.connection.isActive ) {
 
@@ -253,11 +253,11 @@ function ScormDriver ( $log ) {
       if ( API ) {
 
         switch ( scorm.version ) {
-          case "1.2" :
-            success = makeBoolean ( API.LMSInitialize ( "" ) );
+          case '1.2' :
+            success = makeBoolean ( API.LMSInitialize ( '' ) );
             break;
-          case "2004":
-            success = makeBoolean ( API.Initialize ( "" ) );
+          case '2004':
+            success = makeBoolean ( API.Initialize ( '' ) );
             break;
         }
 
@@ -273,28 +273,28 @@ function ScormDriver ( $log ) {
             if ( scorm.handleCompletionStatus ) {
 
               //Automatically set new launches to incomplete
-              completionStatus = scorm.status ( "get" );
+              completionStatus = scorm.status ( 'get' );
 
               if ( completionStatus ) {
 
                 switch ( completionStatus ) {
 
                   //Both SCORM 1.2 and 2004
-                  case "not attempted":
-                    scorm.status ( "set", "incomplete" );
+                  case 'not attempted':
+                    scorm.status ( 'set', 'incomplete' );
                     break;
 
                   //SCORM 2004 only
-                  case "unknown" :
-                    scorm.status ( "set", "incomplete" );
+                  case 'unknown' :
+                    scorm.status ( 'set', 'incomplete' );
                     break;
 
                   //Additional options, presented here in case you'd like to use them
-                  //case "completed"  : break;
-                  //case "incomplete" : break;
-                  //case "passed"     : break;    //SCORM 1.2 only
-                  //case "failed"     : break;    //SCORM 1.2 only
-                  //case "browsed"    : break;    //SCORM 1.2 only
+                  //case 'completed'  : break;
+                  //case 'incomplete' : break;
+                  //case 'passed'     : break;    //SCORM 1.2 only
+                  //case 'failed'     : break;    //SCORM 1.2 only
+                  //case 'browsed'    : break;    //SCORM 1.2 only
 
                 }
 
@@ -305,7 +305,7 @@ function ScormDriver ( $log ) {
           } else {
 
             success = false;
-            $log.debug ( traceMsgPrefix + "failed. \nError code: " + errorCode + " \nError info: " + debug.getInfo ( errorCode ) );
+            $log.debug ( traceMsgPrefix + 'failed. \nError code: ' + errorCode + ' \nError info: ' + debug.getInfo ( errorCode ) );
 
           }
 
@@ -315,24 +315,24 @@ function ScormDriver ( $log ) {
 
           if ( errorCode !== null && errorCode !== 0 ) {
 
-            $log.debug ( traceMsgPrefix + "failed. \nError code: " + errorCode + " \nError info: " + debug.getInfo ( errorCode ) );
+            $log.debug ( traceMsgPrefix + 'failed. \nError code: ' + errorCode + ' \nError info: ' + debug.getInfo ( errorCode ) );
 
           } else {
 
-            $log.debug ( traceMsgPrefix + "failed: No response from server." );
+            $log.debug ( traceMsgPrefix + 'failed: No response from server.' );
 
           }
         }
 
       } else {
 
-        $log.debug ( traceMsgPrefix + "failed: API is null." );
+        $log.debug ( traceMsgPrefix + 'failed: API is null.' );
 
       }
 
     } else {
 
-      $log.debug ( traceMsgPrefix + "aborted: Connection already active." );
+      $log.debug ( traceMsgPrefix + 'aborted: Connection already active.' );
 
     }
 
@@ -356,7 +356,7 @@ function ScormDriver ( $log ) {
       completionStatus = scorm.data.completionStatus,
       makeBoolean = pipwerks.UTILS.StringToBoolean,
       debug = scorm.debug,
-      traceMsgPrefix = "SCORM.connection.terminate ";
+      traceMsgPrefix = 'SCORM.connection.terminate ';
 
     if ( scorm.connection.isActive ) {
 
@@ -367,25 +367,25 @@ function ScormDriver ( $log ) {
 
         if ( scorm.handleExitMode && !exitStatus ) {
 
-          if ( completionStatus !== "completed" && completionStatus !== "passed" ) {
+          if ( completionStatus !== 'completed' && completionStatus !== 'passed' ) {
 
             switch ( scorm.version ) {
-              case "1.2" :
-                success = scorm.set ( "cmi.core.exit", "suspend" );
+              case '1.2' :
+                success = scorm.set ( 'cmi.core.exit', 'suspend' );
                 break;
-              case "2004":
-                success = scorm.set ( "cmi.exit", "suspend" );
+              case '2004':
+                success = scorm.set ( 'cmi.exit', 'suspend' );
                 break;
             }
 
           } else {
 
             switch ( scorm.version ) {
-              case "1.2" :
-                success = scorm.set ( "cmi.core.exit", "logout" );
+              case '1.2' :
+                success = scorm.set ( 'cmi.core.exit', 'logout' );
                 break;
-              case "2004":
-                success = scorm.set ( "cmi.exit", "normal" );
+              case '2004':
+                success = scorm.set ( 'cmi.exit', 'normal' );
                 break;
             }
 
@@ -399,11 +399,11 @@ function ScormDriver ( $log ) {
         if ( success ) {
 
           switch ( scorm.version ) {
-            case "1.2" :
-              success = makeBoolean ( API.LMSFinish ( "" ) );
+            case '1.2' :
+              success = makeBoolean ( API.LMSFinish ( '' ) );
               break;
-            case "2004":
-              success = makeBoolean ( API.Terminate ( "" ) );
+            case '2004':
+              success = makeBoolean ( API.Terminate ( '' ) );
               break;
           }
 
@@ -414,7 +414,7 @@ function ScormDriver ( $log ) {
           } else {
 
             errorCode = debug.getCode ();
-            $log.debug ( traceMsgPrefix + "failed. \nError code: " + errorCode + " \nError info: " + debug.getInfo ( errorCode ) );
+            $log.debug ( traceMsgPrefix + 'failed. \nError code: ' + errorCode + ' \nError info: ' + debug.getInfo ( errorCode ) );
 
           }
 
@@ -422,13 +422,13 @@ function ScormDriver ( $log ) {
 
       } else {
 
-        $log.debug ( traceMsgPrefix + "failed: API is null." );
+        $log.debug ( traceMsgPrefix + 'failed: API is null.' );
 
       }
 
     } else {
 
-      $log.debug ( traceMsgPrefix + "aborted: Connection already terminated." );
+      $log.debug ( traceMsgPrefix + 'aborted: Connection already terminated.' );
 
     }
 
@@ -453,7 +453,7 @@ function ScormDriver ( $log ) {
     var value = null,
       scorm = pipwerks.SCORM,
       debug = scorm.debug,
-      traceMsgPrefix = "SCORM.data.get(" + parameter + ") ";
+      traceMsgPrefix = 'SCORM.data.get(' + parameter + ') ';
 
     if ( scorm.connection.isActive ) {
 
@@ -463,10 +463,10 @@ function ScormDriver ( $log ) {
       if ( API ) {
 
         switch ( scorm.version ) {
-          case "1.2" :
+          case '1.2' :
             value = API.LMSGetValue ( parameter );
             break;
-          case "2004":
+          case '2004':
             value = API.GetValue ( parameter );
             break;
         }
@@ -475,20 +475,20 @@ function ScormDriver ( $log ) {
 
         //GetValue returns an empty string on errors
         //If value is an empty string, check errorCode to make sure there are no errors
-        if ( value !== "" || errorCode === 0 ) {
+        if ( value !== '' || errorCode === 0 ) {
 
           //GetValue is successful.
           //If parameter is lesson_status/completion_status or exit status, let's
           //grab the value and cache it so we can check it during connection.terminate()
           switch ( parameter ) {
 
-            case "cmi.core.lesson_status":
-            case "cmi.completion_status" :
+            case 'cmi.core.lesson_status':
+            case 'cmi.completion_status' :
               scorm.data.completionStatus = value;
               break;
 
-            case "cmi.core.exit":
-            case "cmi.exit"     :
+            case 'cmi.core.exit':
+            case 'cmi.exit'     :
               scorm.data.exitStatus = value;
               break;
 
@@ -496,23 +496,23 @@ function ScormDriver ( $log ) {
 
         } else {
 
-          $log.debug ( traceMsgPrefix + "failed. \nError code: " + errorCode + "\nError info: " + debug.getInfo ( errorCode ) );
+          $log.debug ( traceMsgPrefix + 'failed. \nError code: ' + errorCode + '\nError info: ' + debug.getInfo ( errorCode ) );
 
         }
 
       } else {
 
-        $log.debug ( traceMsgPrefix + "failed: API is null." );
+        $log.debug ( traceMsgPrefix + 'failed: API is null.' );
 
       }
 
     } else {
 
-      $log.debug ( traceMsgPrefix + "failed: API connection is inactive." );
+      $log.debug ( traceMsgPrefix + 'failed: API connection is inactive.' );
 
     }
 
-    $log.debug ( traceMsgPrefix + " value: " + value );
+    $log.debug ( traceMsgPrefix + ' value: ' + value );
 
     return String ( value );
 
@@ -536,7 +536,7 @@ function ScormDriver ( $log ) {
       scorm = pipwerks.SCORM,
       makeBoolean = pipwerks.UTILS.StringToBoolean,
       debug = scorm.debug,
-      traceMsgPrefix = "SCORM.data.set(" + parameter + ") ";
+      traceMsgPrefix = 'SCORM.data.set(' + parameter + ') ';
 
     if ( scorm.connection.isActive ) {
 
@@ -546,17 +546,17 @@ function ScormDriver ( $log ) {
       if ( API ) {
 
         switch ( scorm.version ) {
-          case "1.2" :
+          case '1.2' :
             success = makeBoolean ( API.LMSSetValue ( parameter, value ) );
             break;
-          case "2004":
+          case '2004':
             success = makeBoolean ( API.SetValue ( parameter, value ) );
             break;
         }
 
         if ( success ) {
 
-          if ( parameter === "cmi.core.lesson_status" || parameter === "cmi.completion_status" ) {
+          if ( parameter === 'cmi.core.lesson_status' || parameter === 'cmi.completion_status' ) {
 
             scorm.data.completionStatus = value;
 
@@ -564,19 +564,19 @@ function ScormDriver ( $log ) {
 
         } else {
 
-          $log.debug ( traceMsgPrefix + "failed. \nError code: " + errorCode + ". \nError info: " + debug.getInfo ( errorCode ) );
+          $log.debug ( traceMsgPrefix + 'failed. \nError code: ' + errorCode + '. \nError info: ' + debug.getInfo ( errorCode ) );
 
         }
 
       } else {
 
-        $log.debug ( traceMsgPrefix + "failed: API is null." );
+        $log.debug ( traceMsgPrefix + 'failed: API is null.' );
 
       }
 
     } else {
 
-      $log.debug ( traceMsgPrefix + "failed: API connection is inactive." );
+      $log.debug ( traceMsgPrefix + 'failed: API connection is inactive.' );
 
     }
 
@@ -597,7 +597,7 @@ function ScormDriver ( $log ) {
     var success = false,
       scorm = pipwerks.SCORM,
       makeBoolean = pipwerks.UTILS.StringToBoolean,
-      traceMsgPrefix = "SCORM.data.save failed";
+      traceMsgPrefix = 'SCORM.data.save failed';
 
     if ( scorm.connection.isActive ) {
 
@@ -606,23 +606,23 @@ function ScormDriver ( $log ) {
       if ( API ) {
 
         switch ( scorm.version ) {
-          case "1.2" :
-            success = makeBoolean ( API.LMSCommit ( "" ) );
+          case '1.2' :
+            success = makeBoolean ( API.LMSCommit ( '' ) );
             break;
-          case "2004":
-            success = makeBoolean ( API.Commit ( "" ) );
+          case '2004':
+            success = makeBoolean ( API.Commit ( '' ) );
             break;
         }
 
       } else {
 
-        $log.debug ( traceMsgPrefix + ": API is null." );
+        $log.debug ( traceMsgPrefix + ': API is null.' );
 
       }
 
     } else {
 
-      $log.debug ( traceMsgPrefix + ": API connection is inactive." );
+      $log.debug ( traceMsgPrefix + ': API connection is inactive.' );
 
     }
 
@@ -634,27 +634,27 @@ function ScormDriver ( $log ) {
 
     var success = false,
       scorm = pipwerks.SCORM,
-      traceMsgPrefix = "SCORM.getStatus failed",
-      cmi = "";
+      traceMsgPrefix = 'SCORM.getStatus failed',
+      cmi = '';
 
     if ( action !== null ) {
 
       switch ( scorm.version ) {
-        case "1.2" :
-          cmi = "cmi.core.lesson_status";
+        case '1.2' :
+          cmi = 'cmi.core.lesson_status';
           break;
-        case "2004":
-          cmi = "cmi.completion_status";
+        case '2004':
+          cmi = 'cmi.completion_status';
           break;
       }
 
       switch ( action ) {
 
-        case "get":
+        case 'get':
           success = scorm.data.get ( cmi );
           break;
 
-        case "set":
+        case 'set':
           if ( status !== null ) {
 
             success = scorm.data.set ( cmi, status );
@@ -662,7 +662,7 @@ function ScormDriver ( $log ) {
           } else {
 
             success = false;
-            $log.debug ( traceMsgPrefix + ": status was not specified." );
+            $log.debug ( traceMsgPrefix + ': status was not specified.' );
 
           }
 
@@ -670,13 +670,13 @@ function ScormDriver ( $log ) {
 
         default      :
           success = false;
-          $log.debug ( traceMsgPrefix + ": no valid action was specified." );
+          $log.debug ( traceMsgPrefix + ': no valid action was specified.' );
 
       }
 
     } else {
 
-      $log.debug ( traceMsgPrefix + ": action was not specified." );
+      $log.debug ( traceMsgPrefix + ': action was not specified.' );
 
     }
 
@@ -705,17 +705,17 @@ function ScormDriver ( $log ) {
     if ( API ) {
 
       switch ( scorm.version ) {
-        case "1.2" :
+        case '1.2' :
           code = parseInt ( API.LMSGetLastError (), 10 );
           break;
-        case "2004":
+        case '2004':
           code = parseInt ( API.GetLastError (), 10 );
           break;
       }
 
     } else {
 
-      $log.debug ( "SCORM.debug.getCode failed: API is null." );
+      $log.debug ( 'SCORM.debug.getCode failed: API is null.' );
 
     }
 
@@ -725,8 +725,8 @@ function ScormDriver ( $log ) {
 
   /* -------------------------------------------------------------------------
    pipwerks.SCORM.debug.getInfo()
-   "Used by a SCO to request the textual description for the error code
-   specified by the value of [errorCode]."
+   'Used by a SCO to request the textual description for the error code
+   specified by the value of [errorCode].'
 
    Parameters: errorCode (integer).
    Returns:    String.
@@ -736,22 +736,22 @@ function ScormDriver ( $log ) {
 
     var scorm = pipwerks.SCORM,
       API = scorm.API.getHandle (),
-      result = "";
+      result = '';
 
     if ( API ) {
 
       switch ( scorm.version ) {
-        case "1.2" :
+        case '1.2' :
           result = API.LMSGetErrorString ( errorCode.toString () );
           break;
-        case "2004":
+        case '2004':
           result = API.GetErrorString ( errorCode.toString () );
           break;
       }
 
     } else {
 
-      $log.debug ( "SCORM.debug.getInfo failed: API is null." );
+      $log.debug ( 'SCORM.debug.getInfo failed: API is null.' );
 
     }
 
@@ -761,8 +761,8 @@ function ScormDriver ( $log ) {
 
   /* -------------------------------------------------------------------------
    pipwerks.SCORM.debug.getDiagnosticInfo
-   "Exists for LMS specific use. It allows the LMS to define additional
-   diagnostic information through the API Instance."
+   'Exists for LMS specific use. It allows the LMS to define additional
+   diagnostic information through the API Instance.'
 
    Parameters: errorCode (integer).
    Returns:    String (Additional diagnostic information about the given error code).
@@ -772,22 +772,22 @@ function ScormDriver ( $log ) {
 
     var scorm = pipwerks.SCORM,
       API = scorm.API.getHandle (),
-      result = "";
+      result = '';
 
     if ( API ) {
 
       switch ( scorm.version ) {
-        case "1.2" :
+        case '1.2' :
           result = API.LMSGetDiagnostic ( errorCode );
           break;
-        case "2004":
+        case '2004':
           result = API.GetDiagnostic ( errorCode );
           break;
       }
 
     } else {
 
-      $log.debug ( "SCORM.debug.getDiagnosticInfo failed: API is null." );
+      $log.debug ( 'SCORM.debug.getDiagnosticInfo failed: API is null.' );
 
     }
 
@@ -815,7 +815,7 @@ function ScormDriver ( $log ) {
    pipwerks.UTILS.StringToBoolean()
    Converts 'boolean strings' into actual valid booleans.
 
-   (Most values returned from the API are the strings "true" and "false".)
+   (Most values returned from the API are the strings 'true' and 'false'.)
 
    Parameters: String
    Returns:    Boolean
@@ -824,16 +824,16 @@ function ScormDriver ( $log ) {
   pipwerks.UTILS.StringToBoolean = function ( value ) {
     var t = typeof value;
     switch ( t ) {
-      //typeof new String("true") === "object", so handle objects as string via fall-through.
+      //typeof new String('true') === 'object', so handle objects as string via fall-through.
       //See https://github.com/pipwerks/scorm-api-wrapper/issues/3
-      case "object":
-      case "string":
+      case 'object':
+      case 'string':
         return (/(true|1)/i).test ( value );
-      case "number":
+      case 'number':
         return !!value;
-      case "boolean":
+      case 'boolean':
         return value;
-      case "undefined":
+      case 'undefined':
         return null;
       default:
         return false;
@@ -841,14 +841,14 @@ function ScormDriver ( $log ) {
   };
 
   var SCORM_NOT_CONNECTED = 'SCORM_NOT_CONNECTED';
-  var isScormAvailable = false;
+  var isAvailable = false;
   var student = {};
   var scorm = pipwerks.SCORM.initialize ();
 
   if ( scorm ) {
-    isScormAvailable = true;
-    student.language = scorm.get ( "cmi.core.user_language_preference" );
-    student.name = scorm.get ( "cmi.core.student_name" );
+    isAvailable = true;
+    student.language = scorm.get ( 'cmi.core.user_language_preference' );
+    student.name = scorm.get ( 'cmi.core.student_name' );
   }
 
   return {
@@ -869,32 +869,32 @@ function ScormDriver ( $log ) {
       scorm = pipwerks.SCORM.initialize ();
 
       if ( scorm ) {
-        isScormAvailable = true;
-        student.language = scorm.get ( "cmi.core.user_language_preference" );
-        student.name = scorm.get ( "cmi.core.student_name" );
+        isAvailable = true;
+        student.language = scorm.get ( 'cmi.core.user_language_preference' );
+        student.name = scorm.get ( 'cmi.core.student_name' );
       } else {
-        isScormAvailable = false;
+        isAvailable = false;
         student.language = null;
         student.name = null;
       }
     },
     isLessonComplete: function () {
-      if ( isScormAvailable ) {
+      if ( isAvailable ) {
         throw SCORM_NOT_CONNECTED;
       }
 
-      var completionstatus = scorm.get ( "cmi.core.lesson_status" );
+      var completionstatus = scorm.get ( 'cmi.core.lesson_status' );
 
-      return (completionstatus === "completed" || completionstatus === "passed");
+      return (completionstatus === 'completed' || completionstatus === 'passed');
     },
     setLessonComplete: function ( isComplete ) {
-      if ( isScormAvailable ) {
+      if ( isAvailable ) {
         throw SCORM_NOT_CONNECTED;
       }
 
-      var lessonStatus = isComplete ? "completed" : "";
+      var lessonStatus = isComplete ? 'completed' : '';
 
-      if ( !scorm.set ( "cmi.core.lesson_status", lessonStatus ) ) {
+      if ( !scorm.set ( 'cmi.core.lesson_status', lessonStatus ) ) {
         $log.error ( 'Could not set lesson status', lessonStatus);
         return false;
       }
@@ -902,18 +902,18 @@ function ScormDriver ( $log ) {
       return true;
     },
     getProgress: function () {
-      if ( isScormAvailable ) {
+      if ( isAvailable ) {
         throw SCORM_NOT_CONNECTED;
       }
 
-      return scorm.get("cmi.suspend_data");
+      return scorm.get('cmi.suspend_data');
     },
     setProgress: function ( suspendData ) {
-      if ( isScormAvailable ) {
+      if ( isAvailable ) {
         throw SCORM_NOT_CONNECTED;
       }
 
-      if ( !scorm.set ( "cmi.suspend_data", suspendData ) ) {
+      if ( !scorm.set ( 'cmi.suspend_data', suspendData ) ) {
         $log.error ( 'Could not set suspendData', suspendData );
         return false;
       }

@@ -23,35 +23,35 @@ function Router($logProvider, $stateProvider, $urlRouterProvider, $uiViewScrollP
 						{
 							ConfigService.setManifestId( $stateParams.manifestId );
 							var configData = ConfigService.getConfigData( 'config.json' );
-							$log.debug( 'Router::manifest:configData:getting config.json for manifestId:', $stateParams.manifestId );
+							$log.info( 'Router::manifest:configData:getting config.json for manifestId:', $stateParams.manifestId );
 							return configData;
 						},
 					'manifestData':
 						function(APIService, ConfigService, configData, $stateParams, $log)
 						{
-							$log.debug( 'Router::manifest:manifestData:got config data:', configData );
+							$log.info( 'Router::manifest:manifestData:got config data:', configData );
 							var manifestURL = ConfigService.getManifestURL();
 							var manifestData = APIService.getData( manifestURL );
-							$log.debug( 'Router::manifest:manifestData:getting manifest data from:', manifestURL );
+							$log.info( 'Router::manifest:manifestData:getting manifest data from:', manifestURL );
 							return manifestData;
 						},
 					'overrideData':
 						function(ConfigService, configData, $log)
 						{
-							$log.debug( 'Router::manifest:overrideData:got config data:', configData );
+							$log.info( 'Router::manifest:overrideData:got config data:', configData );
 							var overrideData = null;
 							var overrideURL = ConfigService.getOverrideURL();
 							if ( !!overrideURL )
 							{
 								overrideData = ConfigService.getOverrideData( overrideURL );
-								$log.debug( 'Router::manifest:overrideData:getting override data from:', overrideURL );
+								$log.info( 'Router::manifest:overrideData:getting override data from:', overrideURL );
 							}
 							return overrideData;
 						},
 					'manifestService':
 						function(ManifestService, manifestData, overrideData, $log)
 						{
-							$log.debug( 'Router::manifest:manifestService:initializing manifest data:', manifestData, ', with override data:', overrideData );
+							$log.info( 'Router::manifest:manifestService:initializing manifest data:', manifestData, ', with override data:', overrideData );
 							ManifestService.initialize( manifestData, overrideData );
 						}
 				},
@@ -73,7 +73,7 @@ function Router($logProvider, $stateProvider, $urlRouterProvider, $uiViewScrollP
 					'lang':
 						function($stateParams, $log)
 						{
-							$log.debug( 'Router::manifest.lang:', $stateParams.lang );
+							$log.info( 'Router::manifest.lang:', $stateParams.lang );
 							return $stateParams.lang;
 						}
 				},
@@ -95,7 +95,7 @@ function Router($logProvider, $stateProvider, $urlRouterProvider, $uiViewScrollP
 					'pageId':
 						function($stateParams, $log)
 						{
-							$log.debug( 'Router::manifest.lang.page:', $stateParams.pageId );
+							$log.info( 'Router::manifest.lang.page:', $stateParams.pageId );
 							return $stateParams.pageId;
 						}
 				},
@@ -116,7 +116,7 @@ function Router($logProvider, $stateProvider, $urlRouterProvider, $uiViewScrollP
 					'pageId':
 						function($stateParams, $log)
 						{
-							$log.debug( 'Router: manifest.page: pageId:', $stateParams.pageId );
+							$log.info( 'Router: manifest.page: pageId:', $stateParams.pageId );
 							return $stateParams.pageId;
 						}
 				},
@@ -149,33 +149,33 @@ function Router($logProvider, $stateProvider, $urlRouterProvider, $uiViewScrollP
 				'manifestData':
 					function( ManifestService, $state, $stateParams, lang, pageId, $log )
 					{
-						$log.debug( 'Router: manifestId:', $stateParams.manifestId );
+						$log.info( 'Router: manifestId:', $stateParams.manifestId );
 						var mData = ManifestService.loadData( $stateParams.manifestId );
-						$log.debug( 'Router: manifestData:', mData );
+						$log.info( 'Router: manifestData:', mData );
 						return mData;
 					},
 				'manifestPage':
 					function( ManifestService, $state, $stateParams, lang, pageId, $log )
 					{
-						$log.debug( 'Router: manifestId:', $stateParams.manifestId );
+						$log.info( 'Router: manifestId:', $stateParams.manifestId );
 						var reload = false;
 						if (!lang)
 						{
 							reload = true;
 							lang = ManifestService.getLang();
-							$log.debug( 'Router: getLang:', lang, ManifestService.getLang() );
+							$log.info( 'Router: getLang:', lang, ManifestService.getLang() );
 						} else {
 							ManifestService.setLang( lang );
-							$log.debug( 'Router: setLang:', lang, ManifestService.getLang() );
+							$log.info( 'Router: setLang:', lang, ManifestService.getLang() );
 						}
 						if (!pageId)
 						{
 							reload = true;
 							pageId = ManifestService.getPageId();
-							$log.debug( 'Router: getPageId:', pageId, ManifestService.getPageId() );
+							$log.info( 'Router: getPageId:', pageId, ManifestService.getPageId() );
 						} else {
 							ManifestService.setPageId( pageId );
-							$log.debug( 'Router: pageId:', pageId, ManifestService.getPageId() );
+							$log.info( 'Router: pageId:', pageId, ManifestService.getPageId() );
 						}
 						if ( reload )
 						{

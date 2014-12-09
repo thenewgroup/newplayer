@@ -20,8 +20,8 @@ angular
 	.factory('ManifestService' , ManifestService)
 	/** @ngInject */
 	.factory('ComponentService' , ComponentService)
-  /** @ngInject */
-	.factory('StoreDriver' , StoreDriverService)
+  	/** @ngInject */
+	.factory('StoreDriverService' , StoreDriverService)
 	/** @ngInject */
 	.controller('AppController' , AppController)
 	/** @ngInject */

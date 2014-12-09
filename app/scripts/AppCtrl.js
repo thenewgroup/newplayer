@@ -1,9 +1,15 @@
 'use strict';
 
 /** @ngInject */
-function AppController( $log/*, ImagePreloadFactory, HomeService, $scope*/ )
+function AppController( $log, StoreDriverService/*, ImagePreloadFactory, HomeService, $scope*/ )
 {
-	$log.debug('AppController::Init');
+	$log.info('AppController::Init');
+
+        var storeDriver = StoreDriverService.getDriver();
+        $log.info('storeDriver retrieved', storeDriver);
+
+
+
 	/*
     var loader = ImagePreloadFactory.createInstance();
     loader.addImages([

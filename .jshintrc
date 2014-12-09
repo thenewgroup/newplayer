@@ -26,6 +26,8 @@
 		"ManifestService",
 		"ComponentService",
 		"ComponentDirective",
-		"Router"
+		"Router",
+		"StoreDriverService",
+		"ScormDriver"
 	]
 }
