@@ -305,7 +305,7 @@ function ManifestService(
 				// don't search out of context - exclude siblings & parents
 				if ( !!getComponentIdx() &&
 				     ( getComponentIdx().length < context.length ||
-				       getComponentIdx()[ context.length-1 ] != context[ context.length-1 ] ) )
+				       getComponentIdx()[ context.length-1 ] !== context[ context.length-1 ] ) )
 				{
 					return null;
 				}
@@ -347,7 +347,7 @@ function ManifestService(
 				// don't search out of context - exclude siblings & parents
 				if ( !!getComponentIdx() &&
 				     ( getComponentIdx().length < context.length ||
-				       getComponentIdx()[ context.length-1 ] != context[ context.length-1 ] ) )
+				       getComponentIdx()[ context.length-1 ] !== context[ context.length-1 ] ) )
 				{
 					return cmps;
 				}
