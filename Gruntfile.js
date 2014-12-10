@@ -342,7 +342,7 @@ module.exports = function (grunt) {
           src: [
             '*.{ico,png,txt}',
             'images/{,*/}*.webp',
-            '{,*/}*.html',
+            '{,*/}*.{html,xml}', // NP - MW - copy xml files, i.e. imsmanifest.xml
             'styles/fonts/{,*/}*.*',
             'assets/**',     // NP - KJP - copy all project-specific assets
             '*.json', // pick up root level json config files
