@@ -348,9 +348,11 @@ module.exports = function (grunt) {
             '*.json', // pick up root level json config files
             '*.css' // pick up sample.css and other root level css
           ]
-        }, {
+          // NP - MW - we don't want .htaccess for this build
+/*        }, {
           src: 'node_modules/apache-server-configs/dist/.htaccess',
           dest: '<%= config.dist %>/.htaccess'
+          */
 /*
         }, {
           expand: true,
