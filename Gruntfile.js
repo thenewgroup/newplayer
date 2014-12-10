@@ -139,7 +139,7 @@ module.exports = function (grunt) {
         jshintrc: '.jshintrc',
         reporter: require('jshint-stylish')
       },
-      all: userJS 
+      all: userJS
     },
 
     // Mocha testing framework configuration options
@@ -344,7 +344,9 @@ module.exports = function (grunt) {
             'images/{,*/}*.webp',
             '{,*/}*.html',
             'styles/fonts/{,*/}*.*',
-            'assets/**'     // NP - KJP - copy all project-specific assets
+            'assets/**',     // NP - KJP - copy all project-specific assets
+            '*.json', // pick up root level json config files
+            '*.css' // pick up sample.css and other root level css
           ]
         }, {
           src: 'node_modules/apache-server-configs/dist/.htaccess',
