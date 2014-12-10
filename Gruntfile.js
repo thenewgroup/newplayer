@@ -379,7 +379,7 @@ module.exports = function (grunt) {
           expand: true,
           dot: true,
           cwd: '<%= config.app %>/scripts/component/',
-          src: '{,*/}*.{js,html,css}',
+          src: '{,**/}*.{js,html,css}', // NP - MW
           dest: '<%= config.dist %>/scripts/component/'
         }, {  // NP - KJP - copy manifest templates
           expand: true,
