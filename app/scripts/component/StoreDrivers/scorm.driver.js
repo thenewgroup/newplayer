@@ -856,6 +856,74 @@ function ScormDriver ( $log ) {
     student.language = scorm.get ( 'cmi.core.user_language_preference' );
     student.name = scorm.get ( 'cmi.core.student_name' );
   }
+  
+  /**
+   * Returns whether the lesson is complete per cmi.core.lesson_status.
+   *
+   * @return bool 
+   */
+  function isLessonComplete() {
+      if ( !isAvailable ) {
+        throw constants.SCORM_NOT_CONNECTED;
+      }
+
+      var completionstatus = scorm.get ( 'cmi.core.lesson_status' );
+
+      return (completionstatus === 'completed' || completionstatus === 'passed');
+    }
+  
+  /**
+   * Sets the lesson completion status  per cmi.core.lesson_status.
+   *
+   * @param bool isComplete Whether the lesson is or is not complete
+   * @return bool Whether the status was able to be set.
+   */
+  function setLessonComplete( isComplete ) {
+      if ( !isAvailable ) {
+        throw constants.SCORM_NOT_CONNECTED;
+      }
+
+      var lessonStatus = isComplete ? 'completed' : '';
+
+      if ( scorm.set ( 'cmi.core.lesson_status', lessonStatus ) ) {
+        return true;
+      }
+
+      $log.error ( 'Could not set lesson status', lessonStatus);
+      return false;
+    }
+  
+  /**
+   * Returns the student's progress data.
+   *
+   * @return string? JSON progress data
+   */
+  function getProgress() {
+      if ( !isAvailable ) {
+        throw constants.SCORM_NOT_CONNECTED;
+      }
+
+      return scorm.get('cmi.suspend_data');
+    }
+
+  /**
+   * Stores the student's progress data
+   *
+   * @param suspendData string? the data to be stored
+   * @return bool Whether the state was able to be set.
+   */
+  function setProgress( suspendData ) {
+      if ( !isAvailable ) {
+        throw constants.SCORM_NOT_CONNECTED;
+      }
+
+      if ( scorm.set ( 'cmi.suspend_data', suspendData ) ) {
+        return true;
+      }
+
+      $log.error ( 'Could not set suspendData', suspendData );
+      return false;
+    }
 
   return {
 
@@ -869,48 +937,10 @@ function ScormDriver ( $log ) {
     student: student,
 
     //----- Functions
-    isLessonComplete: function () {
-      if ( !isAvailable ) {
-        throw constants.SCORM_NOT_CONNECTED;
-      }
-
-      var completionstatus = scorm.get ( 'cmi.core.lesson_status' );
-
-      return (completionstatus === 'completed' || completionstatus === 'passed');
-    },
-    setLessonComplete: function ( isComplete ) {
-      if ( !isAvailable ) {
-        throw constants.SCORM_NOT_CONNECTED;
-      }
-
-      var lessonStatus = isComplete ? 'completed' : '';
-
-      if ( scorm.set ( 'cmi.core.lesson_status', lessonStatus ) ) {
-        return true;
-      }
-
-      $log.error ( 'Could not set lesson status', lessonStatus);
-      return false;
-    },
-    getProgress: function () {
-      if ( !isAvailable ) {
-        throw constants.SCORM_NOT_CONNECTED;
-      }
-
-      return scorm.get('cmi.suspend_data');
-    },
-    setProgress: function ( suspendData ) {
-      if ( !isAvailable ) {
-        throw constants.SCORM_NOT_CONNECTED;
-      }
-
-      if ( scorm.set ( 'cmi.suspend_data', suspendData ) ) {
-        return true;
-      }
-
-      $log.error ( 'Could not set suspendData', suspendData );
-      return false;
-    }
+    isLessonComplete: isLessonComplete,
+    setLessonComplete: setLessonComplete,
+    getProgress: getProgress,
+    setProgress: setProgress 
   };
 
 }

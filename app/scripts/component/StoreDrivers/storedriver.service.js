@@ -5,12 +5,16 @@ function StoreDriverService ( $log, $q, ConfigService ) {
 
    $log.info('StoreDriverService::Init');
 
-
   var constants = {
       STOREDRIVER_INVALID: 'STOREDRIVER_INVALID'
     };
 
-
+  /**
+   * Gets a storage driver for student data.
+   *
+   * @param string storeDriver Currently only 'scorm' is supported.
+   * @return mixed StoreDriver instance or constant string
+   */
   function getDriver(storeDriver) {
     switch(storeDriver) {
       case 'scorm': return new ScormDriver($log);
@@ -23,19 +27,6 @@ function StoreDriverService ( $log, $q, ConfigService ) {
     getDriver: getDriver,
     constants: constants  
   };
-
-  // This is a good idea, maybe just not how Angular does things? --dw
-  //
-  //function addDriver(driverNamed, driverClass) {
-  //
-  //  var existingKeys = Object.keys(drivers);
-  //
-  //  if( existingKeys.indexOf(driverNamed) !== -1 ) {
-  //    $log.warn('StoreDriverService: replacing existing driver', driverNamed, driverClass);
-  //  }
-  //
-  //  drivers[driverNamed] = driverClass;
-  //}
 
   return service;
 }
