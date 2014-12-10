@@ -5,8 +5,21 @@ function AppController( $log, StoreDriverService/*, ImagePreloadFactory, HomeSer
 {
 	$log.info('AppController::Init');
 
-        var storeDriver = StoreDriverService.getDriver();
-        $log.info('storeDriver retrieved', storeDriver);
+        var storeDriver = StoreDriverService.getDriver('scorm');
+
+        if( storeDriver.isAvailable ) {
+          $log.info('student name', storeDriver.student.name);
+          $log.info('student language', storeDriver.student.language);
+        } else {
+          $log.error('storeDriver indicates a required resource is not available');
+        }
+
+
+        try { storeDriver.isLessonComplete(); } catch (e) { $log.error(e); }
+        try { storeDriver.setLessonComplete(true); } catch (e) { $log.error(e); }
+        try { storeDriver.getProgress(); } catch (e) { $log.error(e); }
+        try { storeDriver.setProgress({a:'b', c:'d'}); } catch (e) { $log.error(e); }
+
 
 
 

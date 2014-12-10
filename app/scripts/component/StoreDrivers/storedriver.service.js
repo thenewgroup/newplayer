@@ -1,33 +1,27 @@
 'use strict';
 
 /** @ngInject */
-function StoreDriverService ( $log, ConfigService ) {
+function StoreDriverService ( $log, $q, ConfigService ) {
 
-  var STOREDRIVER_INVALID = 'STOREDRIVER_INVALID';
-
-  function getDriver() {
-      var config = ConfigService.getConfig();
-
-      $log.info('config: ', config);
-
-      
-  
-//    switch(driverNamed) {
-//      case 'scorm': return new ScormDriver($log); break;
-//  
-//      default:
-//        $log.error("No store driver responding to ", driverNamed);
-//            throw STOREDRIVER_INVALID;
-//    }
-//
+   $log.info('StoreDriverService::Init');
 
 
-      return 'the driver'; 
+  var constants = {
+      STOREDRIVER_INVALID: 'STOREDRIVER_INVALID'
+    };
+
+
+  function getDriver(storeDriver) {
+    switch(storeDriver) {
+      case 'scorm': return new ScormDriver($log);
+    }
+    $log.error('No store driver responding to ', storeDriver);
+    return constants.STOREDRIVER_INVALID;
   }
 
   var service = {
     getDriver: getDriver,
-    STOREDRIVER_INVALID: STOREDRIVER_INVALID
+    constants: constants  
   };
 
   // This is a good idea, maybe just not how Angular does things? --dw
@@ -37,7 +31,7 @@ function StoreDriverService ( $log, ConfigService ) {
   //  var existingKeys = Object.keys(drivers);
   //
   //  if( existingKeys.indexOf(driverNamed) !== -1 ) {
-  //    $log.warn("StoreDriverService: replacing existing driver", driverNamed, driverClass);
+  //    $log.warn('StoreDriverService: replacing existing driver', driverNamed, driverClass);
   //  }
   //
   //  drivers[driverNamed] = driverClass;

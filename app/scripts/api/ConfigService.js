@@ -5,8 +5,6 @@ function ConfigService( $log, APIService, ManifestService/*, $timeout, $q, $stat
 {
 	$log.debug('configService::Init');
 
-	var configPromise, overridePromise; // Holds a promise when there's one needed
-
 	var Service = function()
 	{
 		var self = this;
@@ -74,22 +72,17 @@ function ConfigService( $log, APIService, ManifestService/*, $timeout, $q, $stat
 		}
 		this.getConfig = function( )
 		{
-			if( configPromise ) {
-				return configPromise;
-			}
-			
 			return self.configData;
 		};
 		this.getConfigData = function( url )
 		{
 			$log.debug( 'ConfigService::getConfigData:', url );
-			configPromise = self.getData( url );
+			var configPromise = self.getData( url );
 			configPromise.then(
 				function( configData ) {
 					$log.debug( 'ConfigService::config data from server ', configData );
 					setConfig( configData[0] );
 					initialize( configData[0] );
-					configPromise = false;
 				}
 			);
 			return configPromise;
@@ -102,21 +95,16 @@ function ConfigService( $log, APIService, ManifestService/*, $timeout, $q, $stat
 		}
 		this.getOverride = function( )
 		{
-			if( overridePromise ) {
-				return overridePromise;
-			}
-
 			return self.overrideData;
 		};
 		this.getOverrideData = function( url )
 		{
 			$log.debug( 'ConfigService::getOverrideData:', url );
-			overridePromise = self.getData( url );
+			var overridePromise = self.getData( url );
 			overridePromise.then(
 				function( overrideData ) {
 					angular.extend( (self.getOverride()||{}), overrideData[0] );
 					$log.debug( 'ConfigService::getOverrideData: merged:', self.getOverride() );
-					overridePromise = false;
 				}
 			);
 			return overridePromise;

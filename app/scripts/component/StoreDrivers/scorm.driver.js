@@ -30,6 +30,9 @@
 /** @ngInject */
 function ScormDriver ( $log ) {
 
+  $log.info('ScormDriver::Init');
+
+
   var pipwerks = {};
   pipwerks.UTILS = {};                                //For holding UTILS functions
   pipwerks.debug = {isActive: true};                //Enable (true) or disable (false) for debug mode
@@ -840,10 +843,13 @@ function ScormDriver ( $log ) {
     }
   };
 
-  var SCORM_NOT_CONNECTED = 'SCORM_NOT_CONNECTED';
   var isAvailable = false;
   var student = {};
-  var scorm = pipwerks.SCORM.initialize ();
+  var scorm = pipwerks.SCORM.init();
+  var constants = {
+      name: 'ScormDriver',
+      SCORM_NOT_CONNECTED: 'SCORM_NOT_CONNECTED'
+    };
 
   if ( scorm ) {
     isAvailable = true;
@@ -854,9 +860,7 @@ function ScormDriver ( $log ) {
   return {
 
     //----- 'Constants'
-    name: 'ScormDriver',
-    SCORM_NOT_CONNECTED: SCORM_NOT_CONNECTED,
-
+    constants: constants,
     //----- Vars
     isAvailable: isAvailable,
     get: scorm.get,
@@ -865,22 +869,9 @@ function ScormDriver ( $log ) {
     student: student,
 
     //----- Functions
-    init: function() {
-      scorm = pipwerks.SCORM.initialize ();
-
-      if ( scorm ) {
-        isAvailable = true;
-        student.language = scorm.get ( 'cmi.core.user_language_preference' );
-        student.name = scorm.get ( 'cmi.core.student_name' );
-      } else {
-        isAvailable = false;
-        student.language = null;
-        student.name = null;
-      }
-    },
     isLessonComplete: function () {
-      if ( isAvailable ) {
-        throw SCORM_NOT_CONNECTED;
+      if ( !isAvailable ) {
+        throw constants.SCORM_NOT_CONNECTED;
       }
 
       var completionstatus = scorm.get ( 'cmi.core.lesson_status' );
@@ -888,35 +879,37 @@ function ScormDriver ( $log ) {
       return (completionstatus === 'completed' || completionstatus === 'passed');
     },
     setLessonComplete: function ( isComplete ) {
-      if ( isAvailable ) {
-        throw SCORM_NOT_CONNECTED;
+      if ( !isAvailable ) {
+        throw constants.SCORM_NOT_CONNECTED;
       }
 
       var lessonStatus = isComplete ? 'completed' : '';
 
-      if ( !scorm.set ( 'cmi.core.lesson_status', lessonStatus ) ) {
-        $log.error ( 'Could not set lesson status', lessonStatus);
-        return false;
+      if ( scorm.set ( 'cmi.core.lesson_status', lessonStatus ) ) {
+        return true;
       }
 
-      return true;
+      $log.error ( 'Could not set lesson status', lessonStatus);
+      return false;
     },
     getProgress: function () {
-      if ( isAvailable ) {
-        throw SCORM_NOT_CONNECTED;
+      if ( !isAvailable ) {
+        throw constants.SCORM_NOT_CONNECTED;
       }
 
       return scorm.get('cmi.suspend_data');
     },
     setProgress: function ( suspendData ) {
-      if ( isAvailable ) {
-        throw SCORM_NOT_CONNECTED;
+      if ( !isAvailable ) {
+        throw constants.SCORM_NOT_CONNECTED;
       }
 
-      if ( !scorm.set ( 'cmi.suspend_data', suspendData ) ) {
-        $log.error ( 'Could not set suspendData', suspendData );
-        return false;
+      if ( scorm.set ( 'cmi.suspend_data', suspendData ) ) {
+        return true;
       }
+
+      $log.error ( 'Could not set suspendData', suspendData );
+      return false;
     }
   };
 
