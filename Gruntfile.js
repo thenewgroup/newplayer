@@ -345,8 +345,8 @@ module.exports = function (grunt) {
             '{,*/}*.{html,xml}', // NP - MW - copy xml files, i.e. imsmanifest.xml
             'styles/fonts/{,*/}*.*',
             'assets/**',     // NP - KJP - copy all project-specific assets
-            '*.json', // pick up root level json config files
-            '*.css' // pick up sample.css and other root level css
+            '*.json', // NP - MW - copy root level json config files
+            '*.css' // NP - MW - copy sample.css and other root level css
           ]
           // NP - MW - we don't want .htaccess for this build
 /*        }, {
