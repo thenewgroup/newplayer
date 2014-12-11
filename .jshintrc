@@ -22,6 +22,7 @@
 		"angular",
 		"AppController",
 		"APIService",
+		"AssessmentService",
 		"ConfigService",
 		"ManifestService",
 		"ComponentService",

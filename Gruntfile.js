@@ -139,7 +139,7 @@ module.exports = function (grunt) {
         jshintrc: '.jshintrc',
         reporter: require('jshint-stylish')
       },
-      all: userJS 
+      all: userJS
     },
 
     // Mocha testing framework configuration options
@@ -342,13 +342,17 @@ module.exports = function (grunt) {
           src: [
             '*.{ico,png,txt}',
             'images/{,*/}*.webp',
-            '{,*/}*.html',
+            '{,*/}*.{html,xml}', // NP - MW - copy xml files, i.e. imsmanifest.xml
             'styles/fonts/{,*/}*.*',
-            'assets/**'     // NP - KJP - copy all project-specific assets
+            'assets/**',     // NP - KJP - copy all project-specific assets
+            '*.json', // NP - MW - copy root level json config files
+            '*.css' // NP - MW - copy sample.css and other root level css
           ]
-        }, {
+          // NP - MW - we don't want .htaccess for this build
+/*        }, {
           src: 'node_modules/apache-server-configs/dist/.htaccess',
           dest: '<%= config.dist %>/.htaccess'
+          */
 /*
         }, {
           expand: true,
@@ -375,7 +379,7 @@ module.exports = function (grunt) {
           expand: true,
           dot: true,
           cwd: '<%= config.app %>/scripts/component/',
-          src: '{,*/}*.{js,html,css}',
+          src: '{,**/}*.{js,html,css}', // NP - MW
           dest: '<%= config.dist %>/scripts/component/'
         }, {  // NP - KJP - copy manifest templates
           expand: true,
@@ -480,7 +484,7 @@ module.exports = function (grunt) {
     'uglify',
     'copy:dist',
     'modernizr',
-    'rev',
+    //'rev'//,
     'usemin',
     'htmlmin'
   ]);

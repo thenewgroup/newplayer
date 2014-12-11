@@ -21,6 +21,8 @@ angular
 	/** @ngInject */
 	.factory('ComponentService' , ComponentService)
 	/** @ngInject */
+	.factory('AssessmentService' , AssessmentService)
+	/** @ngInject */
 	.controller('AppController' , AppController)
 	/** @ngInject */
 	.directive('npComponent' , ComponentDirective)
