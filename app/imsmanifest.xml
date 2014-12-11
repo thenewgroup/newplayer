@@ -24,11 +24,6 @@
   <resources>
     <resource identifier="SCO_Resource_01" type="webcontent" adlcp:scormtype="sco" href="index.html">
       <file href="index.html"/>
-      <file href="favicon.ico"/>
-      <file href="config.json"/>
-      <file href="sample.css"/>
-      <file href="sample.json"/>
-      <file href="sample-override.json"/>
     </resource>
   </resources>
 
