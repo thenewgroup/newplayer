@@ -133,7 +133,8 @@
 								{
 									"type": "npHTML",
 									"data": {
-										"content": "<h4>Widget</h4>"
+										"content": "<h4>Widget</h4>",
+										"plugin": "np-expandable"
 									},
 									"components": [
 										{

@@ -16,7 +16,6 @@ angular
 			var cmpData = $scope.component.data;
 			$log.debug( 'npHTML::data', cmpData );
 
-			this.id = cmpData.id;
 			this.content = $sce.trustAsHtml( cmpData.content );
 			$log.debug( 'npHTML::content', $scope.content );
 		}
