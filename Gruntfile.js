@@ -375,6 +375,12 @@ module.exports = function (grunt) {
           cwd: '.',
           src: 'bower_components/mediaelement/build/*',
           dest: '<%= config.dist %>/scripts/component/npVideo/mediaelement/'
+        }, {  // NP - KJP - copy all plugins
+          expand: true,
+          dot: true,
+          cwd: '<%= config.app %>/scripts/plugin/',
+          src: '{,**/}*.{js,html,css}', // NP - MW
+          dest: '<%= config.dist %>/scripts/plugin/'
         }, {  // NP - KJP - copy all component templates
           expand: true,
           dot: true,
