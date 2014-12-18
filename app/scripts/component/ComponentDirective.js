@@ -135,9 +135,9 @@ function ComponentDirective(
 								tmpTemplate.innerHTML = data.data;
 
 								var ngWrapperEl, ngMainEl, ngSubEl;
-								ngWrapperEl = angular.element( tmpTemplate.getElementsByClassName( 'np-cmp-wrapper' )[0] );
-								ngMainEl    = angular.element( tmpTemplate.getElementsByClassName( 'np-cmp-main'    )[0] );
-								ngSubEl     = angular.element( tmpTemplate.getElementsByClassName( 'np-cmp-sub'     )[0] );
+								ngWrapperEl = angular.element( tmpTemplate.querySelectorAll( '.np-cmp-wrapper' ) );
+								ngMainEl    = angular.element( tmpTemplate.querySelectorAll( '.np-cmp-main'    ) );
+								ngSubEl     = angular.element( tmpTemplate.querySelectorAll( '.np-cmp-sub'     ) );
 								if ( ngWrapperEl.length )
 								{
 									ngWrapperEl.attr( 'id', attrId );

@@ -31,20 +31,23 @@ function npExpandableDirective( $log, $interval )
 						'click',
 						function()
 						{
-							expandeeChild = angular.element( $scope.expandee.children()[0] );
-$log.debug('expandableDirective::click:', expandeeChild);
-							if ($attributes['data-expandable-state'] === 'collapsed')
+							if ( $scope.expandee.length === 1 )
 							{
-								$attributes['data-expandable-state'] = 'expanded';
-								$element.addClass('np-expandable-expanded').removeClass('np-expandable-collapsed');
-								expandeeChild.css( 'border', '1px solid black' );
-								var expandeeChildHeight = expandeeChild[0].clientHeight;
-								expandeeChild.css( 'border', 'none' );
-								$scope.expandee.css( 'height', expandeeChildHeight + 'px' );
-							} else {
-								$attributes['data-expandable-state'] = 'collapsed';
-								$element.addClass('np-expandable-collapsed').removeClass('np-expandable-expanded');
-								$scope.expandee.css( 'height', '0px' );
+								expandeeChild = angular.element( $scope.expandee.children()[0] );
+
+								if ($attributes['data-expandable-state'] === 'collapsed')
+								{
+									$attributes['data-expandable-state'] = 'expanded';
+									$element.addClass('np-expandable-expanded').removeClass('np-expandable-collapsed');
+									expandeeChild.css( 'border', '1px solid black' );
+									var expandeeChildHeight = expandeeChild[0].clientHeight;
+									expandeeChild.css( 'border', 'none' );
+									$scope.expandee.css( 'height', expandeeChildHeight + 'px' );
+								} else {
+									$attributes['data-expandable-state'] = 'collapsed';
+									$element.addClass('np-expandable-collapsed').removeClass('np-expandable-expanded');
+									$scope.expandee.css( 'height', '0px' );
+								}
 							}
 						}
 					);
