@@ -1,10 +1,10 @@
-<section class="{{component.type}}" ng-controller="npHTMLController as npHTML" id="{{npHTML.id}}">
+<section class="{{component.type}} np-cmp-wrapper" ng-controller="npHTMLController as npHTML">
 
 	<div class="debug">
 		<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
 	</div>
 
-	<div ng-bind-html="npHTML.content"></div>
+	<div ng-bind-html="npHTML.content" class="np-cmp-main"></div>
 
 	<div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
 
