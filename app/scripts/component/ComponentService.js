@@ -11,11 +11,13 @@ function ComponentService( $log, ManifestService, $http, $ocLazyLoad /*, $timeou
 
 		// const
 		var COMPONENT_ROOT = 'scripts/component/';
+		var PLUGIN_ROOT = 'scripts/plugin/';
 		var DEFAULT_TEMPLATE = 'scripts/component/blank.html';
 
 		// must be used during initial load
 		// can't be relied upon after prmoise resolves
 		var cmpDependencies = [];
+		var cmpPlugins = [];
 
 
 		var initCmp = function( componentObj )
@@ -24,6 +26,7 @@ function ComponentService( $log, ManifestService, $http, $ocLazyLoad /*, $timeou
 
 			// reset specific-component values
 			setCmpDependencies( [] );
+			setCmpPlugins( [] );
 
 			// parse component "type"
 			// TBD validate incoming data
@@ -39,6 +42,13 @@ function ComponentService( $log, ManifestService, $http, $ocLazyLoad /*, $timeou
 				{
 					// TBD validate incoming data
 					addCmpDependencies( cmpType, cmpDependencies );
+				}
+
+				var cmpPlugins = cmpData.plugin;
+				if ( !!cmpPlugins )
+				{
+					// TBD validate incoming data
+					addCmpPlugins( cmpPlugins );
 				}
 			}
 
@@ -92,6 +102,29 @@ function ComponentService( $log, ManifestService, $http, $ocLazyLoad /*, $timeou
 			}
 		};
 
+		var getCmpPlugins = function()
+		{
+			return cmpPlugins;
+		};
+		var setCmpPlugins = function ( cmpPlgns )
+		{
+			cmpPlugins = cmpPlgns;
+		};
+		var addCmpPlugins = function( cmpPlgns )
+		{
+			$log.debug( 'ComponentService::addCmpPlugins:', cmpPlgns );
+			if ( typeof( cmpPlgns ) === 'string' )
+			{
+				cmpPlugins.push( PLUGIN_ROOT + cmpPlgns + '.js' );
+			} else {
+				for ( var i in cmpPlgns )
+				{
+					var cmpDep = cmpPlgns[i];
+					cmpPlugins.push( PLUGIN_ROOT + cmpPlgns + '.js' );
+				}
+			}
+		};
+
 		var getTemplateURL = function( componentObj )
 		{
 			var template = DEFAULT_TEMPLATE;
@@ -123,47 +156,10 @@ function ComponentService( $log, ManifestService, $http, $ocLazyLoad /*, $timeou
 			return DEFAULT_TEMPLATE;
 		};
 
-		this.getTemplate = function( componentObj )
+		var loadDependencies = function( componentObj )
 		{
-			var templateURL = getTemplateURL( componentObj );
-
-			$log.debug('ComponentService::getTemlpate: cmp,templateURL:', componentObj, templateURL );
-			if ( !!templateURL )
-			{
-				var tmplPromise =
-					$http.get( templateURL , {cache:true} )
-						.then(
-							function( data )
-							{
-								//$log.debug('ComponentService::getTemplate: success!', data);
-								return data;
-							},
-							function()
-							{
-								$log.debug('ComponentService::getTemplate: load failed!');
-								templateURL = self.getDefaultTemplate();
-								$http.get( templateURL, {cache:true} )
-									.then(
-										function( data )
-										{
-											return data;
-										}
-									);
-							}
-						);
-				return tmplPromise;
-			}
-		};
-
-		this.load = function( componentObj )
-		{
-			$log.debug( '\nComponentService::load:', componentObj.type );
-
-			initCmp( componentObj );
-
 			var cmpType = componentObj.type || 'empty';
-			$log.debug( 'ComponentService::loading:', cmpType, getCmpDependencies() );
-			var aPromise =
+			var depPromise =
 				$ocLazyLoad.load(
 					{
 						name: cmpType,
@@ -188,7 +184,86 @@ function ComponentService( $log, ManifestService, $http, $ocLazyLoad /*, $timeou
 						self.onLoad( componentObj );
 					}
 				);
-			return aPromise;
+			return depPromise;
+		};
+
+		var loadPlugins = function()
+		{
+			var plugPromise =
+				$ocLazyLoad.load(
+					{
+						name: 'newplayer',
+						files: getCmpPlugins()
+					}
+				)
+				.then ( function(resp) { } )
+				['catch']
+				(
+					function(resp)
+					{
+						// error
+						$log.debug( 'ComponentService::load plugin err:', resp );
+					}
+				);
+			return plugPromise;
+		};
+
+		this.getTemplate = function( componentObj )
+		{
+			var templateURL = getTemplateURL( componentObj );
+
+			$log.debug('ComponentService::getTemlpate: cmp,templateURL:', componentObj, templateURL );
+			if ( !!templateURL )
+			{
+				var tmplPromise =
+					$http.get( templateURL , {cache:true} )
+						.then(
+							function( data )
+							{
+								//$log.debug('ComponentService::getTemplate: success!', data);
+								return data;
+							},
+							function()
+							{
+								$log.debug('ComponentService::getTemplate: load failed!');
+								templateURL = getDefaultTemplate();
+								$http.get( templateURL, {cache:true} )
+									.then(
+										function( data )
+										{
+											return data;
+										}
+									);
+							}
+						);
+				return tmplPromise;
+			}
+		};
+
+		this.load = function( componentObj )
+		{
+			$log.debug( '\nComponentService::load:', componentObj.type );
+
+			initCmp( componentObj );
+
+			$log.debug( 'ComponentService::loading:', componentObj.type, getCmpDependencies() );
+			var depPromise, plugPromise;
+			if ( getCmpPlugins().length > 0 )
+			{
+				$log.debug( 'ComponentService::loading:plugins', getCmpPlugins() );
+
+				plugPromise = loadPlugins();
+				plugPromise.then(
+					function(resp)
+					{
+						depPromise = loadDependencies( componentObj );
+					}
+				);
+				return plugPromise;
+			} else {
+				depPromise = loadDependencies( componentObj );
+				return depPromise;
+			}
 		};
 
 		// loaded component can decorate componentService to change loading behavior!?

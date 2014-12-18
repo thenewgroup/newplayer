@@ -35,9 +35,9 @@ function ComponentDirective(
 		};
 
 
-		function templateLoaded( data, $scope, $element )
+		function compileTemplate( html, $scope, $element )
 		{
-			var compiled = $compile(data.data);
+			var compiled = $compile(html);
 			compiled($scope, function(clone){
 				$element.append(clone);
 			});
@@ -78,6 +78,7 @@ function ComponentDirective(
 						$scope.cmpIdx = cmpIdx.toString();
 
 						$element.attr('data-cmpType', cmp.type );
+						$element.addClass('np-cmp-sub');
 
 						if ( !!cmp.data )
 						{
@@ -105,16 +106,13 @@ function ComponentDirective(
 							if ( angular.isString( attrClass ) )
 							{
 								attrClass = attrClass.replace(/[^\w\-.:]/g,'_');
-								$element.addClass( attrClass );
+								$element.addClass( 'np_'+attrClass );
 							}
 
-							// TODO: pass all "data-*" attributes into element
-							for ( var dIdx in cmp.data )
+							var attrPlugin = cmp.data.plugin;
+							if ( angular.isString( attrPlugin ) )
 							{
-								if ( angular.isString(dIdx) && dIdx.indexOf('data-') === 0 )
-								{
-									$element.attr( dIdx, cmp.data[dIdx] );
-								}
+								attrPlugin = attrPlugin.replace(/[^\w\-.:]/g,'_');
 							}
 						}
 						if ( !!cmp.components && cmp.components.length > 0 )
@@ -131,7 +129,46 @@ function ComponentDirective(
 							function( data )
 							{
 								$log.debug('ComponentDirective::parseComponent: template', data);
-								templateLoaded( data, $scope, $element );
+
+								// modify template before compiling!?
+								var tmpTemplate = document.createElement('div');
+								tmpTemplate.innerHTML = data.data;
+
+								var ngWrapperEl, ngMainEl, ngSubEl;
+								ngWrapperEl = angular.element( tmpTemplate.querySelectorAll( '.np-cmp-wrapper' ) );
+								ngMainEl    = angular.element( tmpTemplate.querySelectorAll( '.np-cmp-main'    ) );
+								ngSubEl     = angular.element( tmpTemplate.querySelectorAll( '.np-cmp-sub'     ) );
+								if ( ngWrapperEl.length )
+								{
+									ngWrapperEl.attr( 'id', attrId );
+									ngWrapperEl.addClass( attrPlugin );
+
+									// pass all "data-*" attributes into element
+									angular.forEach( cmp.data, function( val, key ) {
+										if ( angular.isString(key) && key.indexOf('data-') === 0 )
+										{
+											ngWrapperEl.attr( key, val );
+										}
+									} );
+								}
+								if ( ngMainEl.length )
+								{
+									if ( !ngWrapperEl.length ) {
+										ngMainEl.attr( 'id', attrId );
+										ngMainEl.addClass( attrPlugin );
+
+										// pass all "data-*" attributes into element
+										angular.forEach( cmp.data, function( val, key ) {
+											if ( angular.isString(key) && key.indexOf('data-') === 0 )
+											{
+												ngMainEl.attr( key, val );
+											}
+										} );
+									}
+									ngMainEl.addClass( attrClass );
+								}
+
+								compileTemplate( tmpTemplate.innerHTML, $scope, $element );
 							}
 						);
 
