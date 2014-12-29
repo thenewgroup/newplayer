@@ -15,6 +15,7 @@ Responsive learning content player by www.thenewgroup.com
 
 ### First run
 From repository root folder:
+
 1. bower install
 1. npm install
 1. grunt serve
