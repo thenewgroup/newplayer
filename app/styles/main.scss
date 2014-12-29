@@ -111,23 +111,28 @@
 	line-height: 20px;
 }
 
-.np-expand-toggle {
-	cursor: pointer;
-	text-align: left;
+.np-expandable {
+	&.np-cmp-main,
+	>.np-cmp-main {
+		cursor: pointer;
+		text-align: left;
 
-	&:before {
-		content: "\00f054"; 
-		float: left;
-		font-family: 'FontAwesome';
-		-webkit-transition: 0.5s ease all;
-		transition: 0.5s ease all;
-		-webkit-transform: rotate(90deg);
-		transform: rotate(90deg);
-		margin: 0 0.5em 0 0;
+		&:before {
+			content: "\00f054"; 
+			float: left;
+			font-family: 'FontAwesome';
+			-webkit-transition: 0.5s ease all;
+			transition: 0.5s ease all;
+			-webkit-transform: rotate(90deg);
+			transform: rotate(90deg);
+			margin: 0 0.5em 0 0;
+		}
 	}
-	&.collapsed:before {
-		-webkit-transform: rotate(0deg);
-		transform: rotate(0deg);
+	&.np-expandable-collapsed {
+		.np-cmp-main:before {
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
 	}
 }
 
@@ -180,10 +185,15 @@
 			width: 14.285714285%;
 		}
 
+		* {
+			font-size: 16px;
+			line-height: 20px;
+		}
 	}
 }
 
 .npButton {
+	background-color: #7f7f7f;
 	border: none;
 	@include border-radius(6px);
 	-webkit-box-shadow: 0px 0px 5px 0px rgba(50, 50, 50, 0.75);
