@@ -18,17 +18,17 @@ Subsequent calls to components that have already been loaded are pulled from ang
 
 The following is a work-in-progress list of maintained components with brief descriptions:
 
-- [npFeature](component/npFeature/) - wrapper for the entire manifest
-- [npContent](component/npContent/) - wrapper for language-specific components
-- [npPage](component/npPage/) - wrapper for components that are segmented into a single "page" of the presentation
-- [npHeader](component/npHeader/) - wrapper for components that would make up header content
-- [npFooter](component/npFooter/) - wrapper for components that would make up footer content
-- [npMenu](component/npMenu/) - renders a menu list of links (by default, derrived from the npPage components in the manifest)
-- [npColumn](component/npColumn/) - renders sub-components  into columns
-- [npHTML](component/npHTML/) - renders arbitrary HTML content
-- [npImage](component/npImage/) - renders an image
-- [npVideo](component/npVideo/) - renders video content
-- [npQuestion](component/npQuestion/) - renders a form with npAnswer sub-components
-- [npAnswer](component/npAnswer/) - renders an input field
-- [npButton](component/npButton/) - renders a button
+- [npFeature](npFeature/) - wrapper for the entire manifest
+- [npContent](npContent/) - wrapper for language-specific components
+- [npPage](npPage/) - wrapper for components that are segmented into a single "page" of the presentation
+- [npHeader](npHeader/) - wrapper for components that would make up header content
+- [npFooter](npFooter/) - wrapper for components that would make up footer content
+- [npMenu](npMenu/) - renders a menu list of links (by default, derrived from the npPage components in the manifest)
+- [npColumn](npColumn/) - renders sub-components  into columns
+- [npHTML](npHTML/) - renders arbitrary HTML content
+- [npImage](npImage/) - renders an image
+- [npVideo](npVideo/) - renders video content
+- [npQuestion](npQuestion/) - renders a form with npAnswer sub-components
+- [npAnswer](npAnswer/) - renders an input field
+- [npButton](npButton/) - renders a button
 
