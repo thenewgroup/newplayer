@@ -13,10 +13,8 @@ angular
 	.controller( 'npFooterController',
 		function( $log, $scope/*, $sce*/ )
 		{
-			var cmpData = $scope.component.data;
+			var cmpData = $scope.component.data || {};
 			$log.debug( 'npFooter::data', cmpData );
-
-			this.id = cmpData.id;
 		}
 	)
 
