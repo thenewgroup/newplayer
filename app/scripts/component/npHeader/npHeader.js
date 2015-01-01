@@ -13,10 +13,8 @@ angular
 	.controller( 'npHeaderController',
 		function( $log, $scope, $sce )
 		{
-			var cmpData = $scope.component.data;
+			var cmpData = $scope.component.data || {};
 			$log.debug( 'npHeader::data', cmpData );
-
-			this.id = cmpData.id;
 		}
 	)
 

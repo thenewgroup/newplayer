@@ -132,20 +132,20 @@ function ComponentService( $log, ManifestService, $http, $ocLazyLoad /*, $timeou
 			if ( !!componentObj )
 			{
 				var cmpType = componentObj.type;
-				if ( !!cmpType )
+				if ( angular.isString( cmpType ) )
 				{
+					var cmpTemplate = cmpType + '.html';
 					var cmpData = componentObj.data;
-					if ( !!cmpData )
+					if (
+						angular.isObject( cmpData ) &&
+						angular.isString( cmpData.template ) )
 					{
-						// "data"."template" - string URL to template
-						var cmpTemplate = cmpData.template || cmpType + '.html';
-						if ( !!cmpTemplate && typeof(cmpTemplate) === 'string' )
-						{
-							// TBD validate incoming data
-							$log.debug( 'ComponentService::load: parseTemplate', componentObj, cmpTemplate );
-							template = cleanURL( cmpType, cmpTemplate );
-						}
+						// "data"."template" - override template with URL
+						cmpTemplate = cmpData.template;
 					}
+					// TBD validate incoming data
+					$log.debug( 'ComponentService::load: parseTemplate', componentObj, cmpTemplate );
+					template = cleanURL( cmpType, cmpTemplate );
 				}
 			}
 			return template;

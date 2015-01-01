@@ -13,13 +13,12 @@ angular
 	.controller( 'npButtonController',
 		function( $log, $scope, $sce, $location, $element, ConfigService )
 		{
-			var cmpData = $scope.component.data;
+			var cmpData = $scope.component.data || {};
 			$log.debug( 'npButton::data', cmpData );
 
-			this.id = cmpData.id;
 			this.content = '';
 			var btnContent = cmpData.content;
-			if ( !!btnContent && typeof( btnContent ) === 'string' )
+			if ( angular.isString( btnContent ) )
 			{
 				this.content = $sce.trustAsHtml( btnContent );
 				//$element.append( btnContent );
@@ -28,7 +27,7 @@ angular
 			this.link = '';
 			this.linkInternal = true;
 			var btnLink = cmpData.link;
-			if ( !!btnLink && typeof( btnLink ) === 'string' )
+			if ( angular.isString( btnLink ) )
 			{
 				if ( btnLink.indexOf( '/' ) === 0 || /^https?:\/\//.test( btnLink ) )
 				{

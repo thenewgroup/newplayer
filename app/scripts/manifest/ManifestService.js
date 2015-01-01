@@ -181,6 +181,11 @@ function ManifestService(
 				var newData = getOverrides()[ builderId ];
 				if ( !!builderId && !!newData )
 				{
+					// TBD - improve data sanitization
+					if ( angular.isString( newData ) )
+					{
+						newData = newData.replace(/\n/g,' ');
+					}
 					// found override for this component!
 					$log.debug('ManifestService::initializeComponent: override builderId:', builderId, newData );
 					if ( typeof( newData ) === 'string' )

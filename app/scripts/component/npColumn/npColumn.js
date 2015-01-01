@@ -13,10 +13,8 @@ angular
 	.controller( 'npColumnController',
 		function( $log, $scope, $sce )
 		{
-			var cmpData = $scope.component.data;
+			var cmpData = $scope.component.data || {};
 			$log.debug( 'npColumn::data', cmpData );
-
-			this.id = cmpData.id;
 
 			var childCount = $scope.component.components.length;
 			var columns = +cmpData.cols;
