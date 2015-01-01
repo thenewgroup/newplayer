@@ -51,10 +51,9 @@ angular
 	.controller( 'npMenuController',
 		function( $log, $scope, ManifestService, ConfigService, $sce )
 		{
-			var cmpData = $scope.component.data;
+			var cmpData = $scope.component.data || {};
 			$log.debug( 'npMenu::data', cmpData );
 
-			this.id = cmpData.id;
 			this.items = (cmpData||{}).items;
 			if ( !angular.isArray( this.items ) )
 			{

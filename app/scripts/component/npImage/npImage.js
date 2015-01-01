@@ -13,10 +13,9 @@ angular
 	.controller( 'npImageController',
 		function( $log, $scope, $sce )
 		{
-			var cmpData = $scope.component.data;
+			var cmpData = $scope.component.data || {};
 			$log.debug( 'npImage::data', cmpData );
 
-			this.id = cmpData.id;
 			this.alt = cmpData.alt;
 			// TODO - use sce for URL whitelist?
 			this.src = cmpData.src;

@@ -13,10 +13,8 @@ angular
 	.controller( 'npFeatureController',
 		function( $log, $scope/*, $state, ManifestService*/ )
 		{
-			var cmpData = $scope.component.data;
+			var cmpData = $scope.component.data || {};
 			$log.debug( 'npFeature::data', cmpData );
-
-			this.id = cmpData.id;
 		}
 	)
 

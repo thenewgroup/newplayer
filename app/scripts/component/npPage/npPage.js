@@ -13,10 +13,9 @@ angular
 	.controller( 'npPageController',
 		function( $log, $scope, $rootScope, $state, ManifestService )
 		{
-			var cmpData = $scope.component.data;
+			var cmpData = $scope.component.data || {};
 			$log.debug( 'npPage::data', cmpData, $scope.contentTitle );
 
-			this.id = cmpData.id;
 			this.title = cmpData.title;
 
 			var parentIdx = $scope.component.idx.slice(0);

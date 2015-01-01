@@ -1,11 +1,11 @@
-<nav class="{{component.type}}" ng-class="menuStatus" ng-controller="npMenuController as npMenu" id="{{npMenu.id}}">
+<nav class="np-cmp-wrapper {{component.type}}" ng-class="menuStatus" ng-controller="npMenuController as npMenu">
 
 	<div class="debug">
 		<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
 	</div>
 
 	<a class="hamburger fa fa-bars" ng-click="menuStatus=(menuStatus==='show')?'':'show'"></a>
-	<ul>
+	<ul class="np-cmp-main">
 		<li ng-repeat="child in npMenu.items">
 			<span np-menu menuitem="child"></span>
 		</li>
