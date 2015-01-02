@@ -101,8 +101,13 @@
 }
 
 .npVideo {
+	width: 80%;
+	max-width: 640px;
+	margin: 0 auto;
+
 	video {
-		height: auto;
+		height: 100%;
+		width: 100%;
 	}
 }
 
@@ -216,24 +221,6 @@
 @media screen and (max-width: 767px) {
 	.container {
 		max-width: 420px;
-	}
-
-	.npVideo {
-		video {
-			width: 100%;
-		}
-		.mejs-mediaelement {
-			position: relative;
-		}
-		.mejs-video {
-			width: 100% !important;
-			height: auto !important;
-		}
-		.mejs-overlay,
-		.mejs-poster {
-			height: auto !important;
-			width: auto !important;
-		}
 	}
 
 	.npColumn {
