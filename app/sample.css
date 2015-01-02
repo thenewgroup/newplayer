@@ -66,8 +66,8 @@ body {
 
 .npVideo,
 .sixteeen-nine {
-	width: 640px;
-	height: 360px;
+	width: 80%;
+	max-width: 640px;
 	margin: 0 auto;
 }
 
