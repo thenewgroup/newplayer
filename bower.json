@@ -9,7 +9,8 @@
     "angular-sanitize": "~1.2.27",
     "oclazyload": ">=0.5.1",
     "angular-touch": "~1.2.26",
-    "normalize.css": "~3.0.2"
+    "normalize.css": "~3.0.2",
+    "bootstrap": "~3.3.1"
   },
   "resolutions": {
     "angular": "~1.2.27"

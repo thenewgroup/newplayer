@@ -193,7 +193,8 @@
 }
 
 .npButton {
-	background-color: #7f7f7f;
+	/*background-color: #7f7f7f;*/
+	background-color: #999;
 	border: none;
 	@include border-radius(6px);
 	-webkit-box-shadow: 0px 0px 5px 0px rgba(50, 50, 50, 0.75);
@@ -226,6 +227,23 @@
 			position: relative;
 		}
 		.mejs-video {
+			width: 100% !important;
+			height: auto !important;
+		}
+		.mejs-overlay,
+		.mejs-poster {
+			height: auto !important;
+			width: auto !important;
+		}
+	}
+	.npVideo {
+		audio {
+			width: 100%;
+		}
+		.mejs-mediaelement {
+			position: relative;
+		}
+		.mejs-audio {
 			width: 100% !important;
 			height: auto !important;
 		}
