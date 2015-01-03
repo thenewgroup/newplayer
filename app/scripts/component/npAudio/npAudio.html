@@ -1,29 +1,28 @@
 <div class="{{component.type}}" ng-controller="npAudioController as npAudio" id="{{npAudio.id}}">
 
-	<div class="debug">
-		<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
-	</div>
+    <div class="debug">
+        <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
+    </div>
+    <!--
+    <videogular vg-theme="npAudio.config.theme.url">
+            <vg-video vg-src="npAudio.config.sources" vg-native-controls="true"></vg-video>
+    </videogular>
+    -->
+    <audio
+        width="500"
+        preload="auto"
+        mediaelement>
+        <!--
+                        <source type="video/{{npAudio.types[0]}}" src="{{npAudio.baseURL}}.{{npAudio.types[0]}}" />
+                        <source ng-repeat="type in npAudio.types" type="video/{{type}}" src="{{npAudio.baseURL}}.{{type}}" />
+        -->
+        <object width="320" height="240" type="application/x-shockwave-flash" data="scripts/component/npAudio/mediaelement/flashmediaelement.swf">
+            <param name="movie" value="scripts/component/npAudio/mediaelement/flashmediaelement.swf" />
+            <param name="flashvars" value="controls=true&file={{npAudio.baseURL}}.mp3" />
+            <!-- Image as a last resort -->
+            <!--<img src="myvideo.jpg" width="320" height="240" title="No video playback capabilities" />-->
+        </object>
+    </audio>
 
-	<!--
-	<videogular vg-theme="npAudio.config.theme.url">
-		<vg-video vg-src="npAudio.config.sources" vg-native-controls="true"></vg-video>
-	</videogular>
-	-->
-	<audio
-		width="500"
-		preload="auto"
-		mediaelement>
-<!--
-		<source type="video/{{npAudio.types[0]}}" src="{{npAudio.baseURL}}.{{npAudio.types[0]}}" />
-		<source ng-repeat="type in npAudio.types" type="video/{{type}}" src="{{npAudio.baseURL}}.{{type}}" />
--->
-		<object width="320" height="240" type="application/x-shockwave-flash" data="scripts/component/npAudio/mediaelement/flashmediaelement.swf">
-			<param name="movie" value="scripts/component/npAudio/mediaelement/flashmediaelement.swf" />
-			<param name="flashvars" value="controls=true&file={{npAudio.baseURL}}.mp3" />
-			<!-- Image as a last resort -->
-			<!--<img src="myvideo.jpg" width="320" height="240" title="No video playback capabilities" />-->
-		</object>
-	</audio>
-
-	<div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+    <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
 </div>
