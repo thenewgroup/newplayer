@@ -13,7 +13,7 @@ angular
 	.controller( 'npAnswerController',
 		function( $log, $scope, $sce )
 		{
-			var cmpData = $scope.component.data;
+			var cmpData = $scope.component.data || {};
 			$log.debug( 'npAnswer::data', cmpData );
 
 			this.id = cmpData.id;

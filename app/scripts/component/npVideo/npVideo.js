@@ -33,10 +33,9 @@ angular
 	.controller( 'npVideoController',
 		function( $log, $scope, $sce, $element )
 		{
-			var cmpData = $scope.component.data;
+			var cmpData = $scope.component.data || {};
 			$log.debug( 'npVideo::data', cmpData, $element );
 
-			this.id = cmpData.id;
 			this.baseURL = cmpData.baseURL;
 
 			if ( cmpData.poster )
