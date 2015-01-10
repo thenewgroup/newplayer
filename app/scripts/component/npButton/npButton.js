@@ -25,12 +25,25 @@ angular
 			}
 
 			this.link = '';
+			this.target = cmpData.target;
 			this.linkInternal = true;
 			var btnLink = cmpData.link;
 			if ( angular.isString( btnLink ) )
 			{
-				if ( btnLink.indexOf( '/' ) === 0 || /^https?:\/\//.test( btnLink ) )
+				if ( btnLink.indexOf( '/' ) === 0 )
 				{
+					if ( ! this.target )
+					{
+						this.target = '_top';
+					}
+					this.linkInternal = false;
+				} else
+				if ( /^([a-zA-Z]{1,10}:)?\/\//.test( btnLink ) )
+				{
+					if ( ! this.target )
+					{
+						this.target = '_blank';
+					}
 					this.linkInternal = false;
 				} else {
 					if ( btnLink.indexOf( '#' ) === 0 )
@@ -48,7 +61,7 @@ angular
 				{
 					$location.url( this.link );
 				} else {
-					document.location = this.link;
+					window.open( this.link, this.target );
 				}
 			};
 		}
