@@ -222,31 +222,31 @@
 	}
 
 	.npColumn {
-		.column {
-			float: none;
-
-			&.col-1 {
+		.row {
+			&.col-1 .column {
 				width: 100%;
 			}
-			&.col-2 {
+			&.col-2 .column {
 				width: 100%;
 			}
-			&.col-3 {
+			&.col-3 .column {
 				width: 100%;
 			}
-			&.col-4 {
+			&.col-4 .column {
 				width: 100%;
 			}
-			&.col-5 {
+			&.col-5 .column {
 				width: 100%;
 			}
-			&.col-6 {
+			&.col-6 .column {
 				width: 100%;
 			}
-			&.col-7 {
+			&.col-7 .column {
 				width: 100%;
 			}
-
+			.column {
+				float: none;
+			}
 		}
 	}
 }

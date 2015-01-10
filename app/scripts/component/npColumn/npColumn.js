@@ -36,7 +36,7 @@ angular
 
 			this.lastRow = Math.ceil(childCount / columns);
 			this.lastRowIndex = columns * Math.floor(childCount / columns);
-			this.lastRowColumns = (childCount % columns) || 0;
+			this.lastRowColumns = (childCount % columns === 0) ? columns : (childCount % columns);
 			this.columns = columns;
 			this.columnWidth = 100 / columns;
 		}
