@@ -4,21 +4,16 @@
 		<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
 	</div>
 
-	<!--
-	<videogular vg-theme="npVideo.config.theme.url">
-		<vg-video vg-src="npVideo.config.sources" vg-native-controls="true"></vg-video>
-	</videogular>
-	-->
 	<video
-		class="np-cmp-main"
-		height="100%" width="100%"
-		preload="auto"
+		height="{{npVideo.height}}"
+		width="{{npVideo.width}}"
+		preload="{{npVideo.preload}}"
 		mediaelement>
 <!--
 		<source type="video/{{npVideo.types[0]}}" src="{{npVideo.baseURL}}.{{npVideo.types[0]}}" />
 		<source ng-repeat="type in npVideo.types" type="video/{{type}}" src="{{npVideo.baseURL}}.{{type}}" />
 -->
-		<object width="320" height="240" type="application/x-shockwave-flash" data="scripts/component/npVideo/mediaelement/flashmediaelement.swf">
+		<object width="{{npVideo.width}}" height="{{npVideo.height}}" type="application/x-shockwave-flash" data="scripts/component/npVideo/mediaelement/flashmediaelement.swf">
 			<param name="movie" value="scripts/component/npVideo/mediaelement/flashmediaelement.swf" />
 			<param name="flashvars" value="controls=true&file={{npVideo.baseURL}}.mp4" />
 			<!-- Image as a last resort -->

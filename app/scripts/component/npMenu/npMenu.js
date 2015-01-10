@@ -17,7 +17,7 @@ function npMenuDirective(
 		this.restrict = 'EA';
 		this.scope = { 'menuitem': '=' };
 		this.template =
-			'<a ng-href="{{menuitem.link}}" id="menu{{menuitem.id}}" ng-class="(menuitem.current===true) ? \'selected\' : \'\'">{{ menuitem.text }}</a>'+
+			'<a ng-href="{{menuitem.link}}" target="{{menuitem.target}}" id="menu{{menuitem.id}}" ng-class="(menuitem.current===true) ? \'selected\' : \'\'">{{ menuitem.text }}</a>'+
 			'<ul>' + 
 				'<li ng-repeat="child in menuitem.children">' + 
 					'<span np-menu menuitem="child"></span>' +

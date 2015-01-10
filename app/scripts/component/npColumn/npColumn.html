@@ -5,14 +5,20 @@
 	</div>
 
 	<div
-		np-component
 		ng-if="subCmp"
-		ng-repeat="component in components"
-		idx="{{component.idx}}" data-width="{{npColumn.columnWidth}}%"
+		ng-repeat="row in rows"
 		ng-class="[
-				( $index+1 > npColumn.lastRowIndex ) ? 'col-{{npColumn.lastRowColumns}}' : 'col-{{npColumn.columns}}',
-				( ($index+1) % npColumn.columns === 0 ) ? 'col-last' : ''
+				( $index+1 === npColumn.lastRow ) ? 'col-{{npColumn.lastRowColumns}}' : 'col-{{npColumn.columns}}'
 			]"
-		class="column"></div>
+		class="row">
+		<!--index:{{$index}}, lastRow:{{npColumn.lastRow}}, lastRowColumns:{{npColumn.lastRowColumns}}-->
+		<div
+			ng-repeat="component in row"
+			np-component
+			idx="{{component.idx}}" data-width="{{npColumn.columnWidth}}%"
+		 	ng-class="[ ( ($index+1) % npColumn.columns === 0 ) ? 'col-last' : '' ]"
+			class="column">
+		</div>
+	</div>
 
 </div>
