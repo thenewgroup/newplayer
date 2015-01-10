@@ -105,6 +105,9 @@
 	max-width: 640px;
 	margin: 0 auto;
 
+	* {
+		outline: 0;
+	}
 	video {
 		height: 100%;
 		width: 100%;
