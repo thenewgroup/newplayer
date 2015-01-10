@@ -13,6 +13,16 @@ angular
 	.controller( 'npColumnController',
 		function( $log, $scope, $sce )
 		{
+			var chunk = function( arr, size )
+			{
+				var newArr = [];
+				for (var i=0; i<arr.length; i+=size) {
+					newArr.push(arr.slice(i, i+size));
+				}
+				return newArr;
+			};
+
+
 			var cmpData = $scope.component.data || {};
 			$log.debug( 'npColumn::data', cmpData );
 
@@ -21,6 +31,10 @@ angular
 			if ( !columns ) {
 				columns = childCount;
 			}
+
+			$scope.rows = chunk( $scope.component.components, columns );
+
+			this.lastRow = Math.ceil(childCount / columns);
 			this.lastRowIndex = columns * Math.floor(childCount / columns);
 			this.lastRowColumns = (childCount % columns) || 0;
 			this.columns = columns;

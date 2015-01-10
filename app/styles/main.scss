@@ -145,57 +145,52 @@
 }
 
 .npColumn {
-	line-height: 0; 
-	font-size: 0;
 
-	&:after {
-		content: "."; 
-		visibility: hidden; 
-		display: block; 
-		height: 0; 
-		clear: both;
-	}
-
-	.column {
-		float: left;
-		line-height: 0; 
-		font-size: 0;
-
-		&.col-last {
-			&:after {
-				content: "."; 
-				visibility: hidden; 
-				display: inline-block; 
-				height: 0; 
-				clear: both;
-				width: 100%;
-			}
+	.row {
+		&:after {
+			content: "."; 
+			visibility: hidden; 
+			display: block; 
+			height: 0; 
+			clear: both;
 		}
-		&.col-1 {
+
+		&.col-1 .column {
 			width: 100%;
 		}
-		&.col-2 {
+		&.col-2 .column {
 			width: 50%;
 		}
-		&.col-3 {
+		&.col-3 .column {
 			width: 33.333333333%;
 		}
-		&.col-4 {
+		&.col-4 .column {
 			width: 25%;
 		}
-		&.col-5 {
+		&.col-5 .column {
 			width: 20%;
 		}
-		&.col-6 {
+		&.col-6 .column {
 			width: 16.666666666%;
 		}
-		&.col-7 {
+		&.col-7 .column {
 			width: 14.285714285%;
 		}
 
-		* {
-			font-size: 16px;
-			line-height: 20px;
+		.column {
+			float: left;
+
+			&.col-last {
+				&:after {
+					clear: both;
+					content: "."; 
+					visibility: hidden; 
+					display: block; 
+					height: 0; 
+					width: 100%;
+				}
+			}
+
 		}
 	}
 }
