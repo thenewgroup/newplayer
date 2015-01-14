@@ -22,7 +22,9 @@ function npMediaElementDirective( $log )
 			jQuery(element).prepend( scope.sources );
 			attrs.$observe('src', function() {
 				$log.debug('mediaelementDirective::element', element);
-				jQuery(element).mediaelementplayer();
+				jQuery(element).mediaelementplayer({
+					features: ['playpause','progress','current','duration','tracks','volume']
+				});
 			});
 		};
 	};
@@ -36,9 +38,10 @@ angular
 	.controller( 'npVideoController',
 		function( $log, $scope, $sce, $element )
 		{
-			var cmpData = $scope.component.data || {};
+			var cmpData = $scope.component.data;
 			$log.debug( 'npVideo::data', cmpData, $element );
 
+			this.id = cmpData.id;
 			this.baseURL = cmpData.baseURL;
 
 			$scope.poster  = this.poster  = cmpData.poster;
