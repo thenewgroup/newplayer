@@ -134,13 +134,15 @@
 									"type": "npHTML",
 									"data": {
 										"content": "<h4>Widget</h4>",
-										"plugin": "np-expandable"
+										"data-ng:click": "isCollapsed = !isCollapsed",
+										"xplugin": "np-expandable"
 									},
 									"components": [
 										{
 											"type": "npHTML",
 											"data": {
 												"id": "",
+												"data-collapse": "isCollapsed",
 												"content": "<p>Widget details</p>"
 											},
 											"components": [ ]

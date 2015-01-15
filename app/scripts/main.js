@@ -5,6 +5,7 @@ angular
 		'newplayer',
 		[
 			'ui.router',
+			'ui.bootstrap',
 			'oc.lazyLoad',
 			'ngSanitize'
 		]

@@ -9,13 +9,14 @@
     "angular-sanitize": "~1.2.27",
     "oclazyload": ">=0.5.1",
     "angular-touch": "~1.2.26",
-    "normalize.css": "~3.0.2"
+    "angular-bootstrap": "~0.12.0"
   },
   "resolutions": {
     "angular": "~1.2.27"
   },
   "devDependencies": {
-    "compass-mixins": "~1.0.2",
-    "mediaelement": "~2.16.2"
+    "mediaelement": "~2.16.2",
+    "bootstrap": "~3.3.1",
+    "bootstrap-sass": "~3.3.1"
   }
 }
