@@ -1,13 +1,13 @@
 cd $WORKSPACE
-echo -e "\n\nnpm install -g bower"
+echo "\n\nnpm install -g bower"
 sudo npm install -g bower
-echo -e "\n\nnpm install -g grunt-cli"
+echo "\n\nnpm install -g grunt-cli"
 sudo npm install -g grunt-cli
-echo -e "\n\nbower install"
+echo "\n\nbower install"
 sudo bower install
-echo -e "\n\nnpm install"
+echo "\n\nnpm install"
 sudo npm install
-echo -e "\n\nbundle install"
+echo "\n\nbundle install"
 bundle install
 echo "\n\ngrunt build"
 grunt build
