@@ -9,5 +9,5 @@ echo -e "\n\nnpm install"
 sudo npm install
 echo -e "\n\nbundle install"
 bundle install
-echo -e "\n\ngrunt build"
+echo "\n\ngrunt build"
 grunt build
