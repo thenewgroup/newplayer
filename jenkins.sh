@@ -1,12 +1,12 @@
 cd $WORKSPACE
 echo -e "\n\nnpm install -g bower"
-npm install -g bower
+sudo npm install -g bower
 echo -e "\n\nnpm install -g grunt-cli"
-npm install -g grunt-cli
+sudo npm install -g grunt-cli
 echo -e "\n\nbower install"
-bower install
+sudo bower install
 echo -e "\n\nnpm install"
-npm install
+sudo npm install
 echo -e "\n\nbundle install"
 bundle install
 echo -e "\n\ngrunt build"
