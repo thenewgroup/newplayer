@@ -1,0 +1,24 @@
+<div class="np-cmp-wrapper {{component.type}}" ng-controller="npColumnController as npColumn">
+    <div class="debug">
+        <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
+    </div>
+    <div
+        ng-if="subCmp"
+        ng-repeat="row in rows"
+        ng-class="
+                            [
+                                    ($index + 1 === npColumn.lastRow) ? 'col-{{npColumn.lastRowColumns}}' : 'col-{{npColumn.columns}}'
+                                                                        ]"
+        class="row">
+        <!--index:{{$index}}, lastRow:{{npColumn.lastRow}}, lastRowColumns:{{npColumn.lastRowColumns}}-->
+        <div
+            ng-repeat="component in row"
+            np-component
+            idx="{{component.idx}}" data-width="{{npColumn.columnWidth}}%"
+            ng-class="[ ( ($index+1) % npColumn.columns === 0 ) ? 'col-last' : '',
+				( $parent.$parent.$index+1 === npColumn.lastRow ) ? 'col-sm-{{npColumn.columnSpanLast}}' : 'col-sm-{{npColumn.columnSpan}}'
+                                                                            ]"
+            class="column">
+        </div>
+    </div>
+</div>
