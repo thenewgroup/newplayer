@@ -3,8 +3,8 @@
 angular
 	.module(
 		'npButton',
-		[ ]
-	);
+		[]
+		);
 
 angular
 	.module('npButton')
@@ -69,7 +69,7 @@ angular
 
 	/** @ngInject */
 	.run(
-		function( $log, $rootScope )
+		function ($log, $rootScope)
 		{
 			$log.debug('npButton::component loaded!');
 		}
