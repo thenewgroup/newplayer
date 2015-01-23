@@ -60,12 +60,21 @@ $font-family-serif:       Georgia, "Times New Roman", Times, serif !default;*/
     font-weight: normal;
     font-style: normal;
 }
-
+@font-face {
+    font-family: 'loraregular';
+    src: url('lora-regular-webfont.eot');
+    src: url('lora-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('lora-regular-webfont.woff2') format('woff2'),
+         url('lora-regular-webfont.woff') format('woff'),
+         url('lora-regular-webfont.ttf') format('truetype'),
+         url('lora-regular-webfont.svg#loraregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
 //## Font, line-height, and color for body text, headings, and more.
 $font-family-sans-serif_head:  "ubunturegular";
 $font-family-sans-serif:  "ubunturegular";
-
-$font-family-serif:       Georgia, "Times New Roman", Times, serif !default;
+$font-family-serif:       "loraregular";
 //** Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
 $font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace !default;
 $font-family-base:        $font-family-sans-serif !default;
