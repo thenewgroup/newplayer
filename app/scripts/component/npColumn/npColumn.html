@@ -5,9 +5,10 @@
     <div
         ng-if="subCmp"
         ng-repeat="row in rows"
-        ng-class="[
+        ng-class="
+                            [
                                     ($index + 1 === npColumn.lastRow) ? 'col-{{npColumn.lastRowColumns}}' : 'col-{{npColumn.columns}}'
-                                                                ]"
+                                                                        ]"
         class="row">
         <!--index:{{$index}}, lastRow:{{npColumn.lastRow}}, lastRowColumns:{{npColumn.lastRowColumns}}-->
         <div
@@ -16,7 +17,7 @@
             idx="{{component.idx}}" data-width="{{npColumn.columnWidth}}%"
             ng-class="[ ( ($index+1) % npColumn.columns === 0 ) ? 'col-last' : '',
 				( $parent.$parent.$index+1 === npColumn.lastRow ) ? 'col-sm-{{npColumn.columnSpanLast}}' : 'col - sm-{{npColumn.columnSpan}}'
-                      ]"
+                                                                            ]"
             class="column">
         </div>
     </div>
