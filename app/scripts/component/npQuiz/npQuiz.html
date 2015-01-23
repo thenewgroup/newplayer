@@ -1,0 +1,14 @@
+<form class="np-cmp-wrapper {{component.type}}" ng-controller="npQuizController as npQuiz" ng-submit="npQuiz.evaluate()">
+
+	<div class="debug">
+		<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
+	</div>
+
+	<div class="npQuiz-content h4" ng-bind-html="npQuiz.content"></div>
+
+	<div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+
+	<div class="npQuiz-feedback" ng-if="npQuiz.feedback" ng-bind-html="npQuiz.feedback"></div>
+
+</form>
+
