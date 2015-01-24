@@ -407,7 +407,7 @@
                                 "type": "npColumn",
                                 "data": {
                                     "id": "colsBtnSection",
-                                    "cols": 2,
+                                    "cols": 12,
                                     "class": "row"
                                 },
                                 "components":
@@ -427,6 +427,132 @@
                                                     "link": "Question1",
                                                     "type": "btn-primary",
                                                     "content": "<strong>Button 2</strong>"
+                                                },
+                                                "components": []
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "Question2",
+                                                    "type": "btn-primary",
+                                                    "content": "Button C"
+                                                },
+                                                "components": []
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "Question2",
+                                                    "type": "btn-primary",
+                                                    "content": "Button C"
+                                                },
+                                                "components": []
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "Question2",
+                                                    "type": "btn-primary",
+                                                    "content": "Button C"
+                                                },
+                                                "components": []
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "Question2",
+                                                    "type": "btn-primary",
+                                                    "content": "Button C"
+                                                },
+                                                "components": []
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "Question2",
+                                                    "type": "btn-primary",
+                                                    "content": "Button C"
+                                                },
+                                                "components": []
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "Question2",
+                                                    "type": "btn-primary",
+                                                    "content": "Button C"
+                                                },
+                                                "components": []
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "Question2",
+                                                    "type": "btn-primary",
+                                                    "content": "Button C"
+                                                },
+                                                "components": []
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "Question2",
+                                                    "type": "btn-primary",
+                                                    "content": "Button C"
+                                                },
+                                                "components": []
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "Question2",
+                                                    "type": "btn-primary",
+                                                    "content": "Button C"
+                                                },
+                                                "components": []
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "Question2",
+                                                    "type": "btn-primary",
+                                                    "content": "Button C"
+                                                },
+                                                "components": []
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "Question2",
+                                                    "type": "btn-primary",
+                                                    "content": "Button C"
+                                                },
+                                                "components": []
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "Question2",
+                                                    "type": "btn-primary",
+                                                    "content": "Button C"
+                                                },
+                                                "components": []
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "Question2",
+                                                    "type": "btn-primary",
+                                                    "content": "Button C"
+                                                },
+                                                "components": []
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "Question2",
+                                                    "type": "btn-primary",
+                                                    "content": "Button C"
                                                 },
                                                 "components": []
                                             },
