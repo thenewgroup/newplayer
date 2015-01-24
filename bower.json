@@ -1,0 +1,22 @@
+{
+  "name": "newplayer",
+  "private": true,
+  "dependencies": {
+    "modernizr": "~2.8.2",
+    "angular": "~1.2.27",
+    "ui-router": "~0.2.11",
+    "Font-Awesome": "~4.2.0",
+    "angular-sanitize": "~1.2.27",
+    "oclazyload": ">=0.5.1",
+    "angular-touch": "~1.2.26",
+    "angular-bootstrap": "~0.12.0"
+  },
+  "resolutions": {
+    "angular": "~1.2.27"
+  },
+  "devDependencies": {
+    "mediaelement": "~2.16.2",
+    "bootstrap": "~3.3.1",
+    "bootstrap-sass": "~3.3.1"
+  }
+}
