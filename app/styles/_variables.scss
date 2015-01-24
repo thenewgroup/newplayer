@@ -12,18 +12,18 @@ $bootstrap-sass-asset-helper: (twbs-font-path("") != unquote('twbs-font-path("")
 //
 //## Gray and brand colors for use across Bootstrap.
 
-$gray-base:              #000 !default;
+$gray-base:              #000000 !default;
 $gray-darker:            lighten($gray-base, 13.5%) !default; // #222
 $gray-dark:              lighten($gray-base, 20%) !default;   // #333
 $gray:                   lighten($gray-base, 33.5%) !default; // #555
 $gray-light:             lighten($gray-base, 46.7%) !default; // #777
 $gray-lighter:           lighten($gray-base, 93.5%) !default; // #eee
 
-$brand-primary:         #468bca !default;
-$brand-success:         #5cb85c !default;
-$brand-info:            #5bc0de !default;
-$brand-warning:         #f0ad4e !default;
-$brand-danger:          #d9534f !default;
+$brand-primary:         #1E1E20 !default;
+$brand-success:         #2A2C2B !default;
+$brand-info:            #D9CB9E !default;
+$brand-warning:         #374140 !default;
+$brand-danger:          #DC3522 !default;
 
 
 //== Scaffolding
@@ -31,12 +31,12 @@ $brand-danger:          #d9534f !default;
 //## Settings for some of the most global styles.
 
 //** Background color for `<body>`.
-$body-bg:               #999999 !default;
+$body-bg:               $gray-darker !default;
 //** Global text color on `<body>`.
-$text-color:            $gray-dark !default;
+$text-color:            $gray-light !default;
 
 //** Global textual link color.
-$link-color:            $brand-primary !default;
+$link-color:            $brand-info !default;
 //** Link hover color set via `darken()` function.
 $link-hover-color:      darken($link-color, 15%) !default;
 //** Link hover decoration.
@@ -454,7 +454,7 @@ $navbar-default-toggle-border-color:       #ddd !default;
 // Inverted navbar
 // Reset inverted navbar basics
 $navbar-inverse-color:                      lighten($gray-light, 15%) !default;
-$navbar-inverse-bg:                         #222 !default;
+$navbar-inverse-bg:                         $brand-primary !default;
 $navbar-inverse-border:                     darken($navbar-inverse-bg, 10%) !default;
 
 // Inverted navbar links
