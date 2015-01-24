@@ -1,9 +1,10 @@
-<header class="np-cmp-wrapper {{component.type}}" ng-controller="npHeaderController as npHeader">
+<header class="np-cmp-wrapper {{component.type}} navbar navbar-default navbar-fixed-top navbar-inverse" ng-controller="npHeaderController as npHeader">
 
+    <div class="container">
 	<div class="debug">
 		<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
 	</div>
-
 	<div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+    </div>
 
 </header>
