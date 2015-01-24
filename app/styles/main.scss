@@ -11,6 +11,8 @@
 
 
 /*////////////////////////////////////////////////////////////////////////////////*/
+/*content offset for fixed nav*/
+body { padding-top: 70px; }
 /*button widths*/
 .col-sm-4 .btn{
     width:91%;
@@ -21,14 +23,13 @@
 .col-sm-12 .btn{
     width:97%;
 }
-
 /*////////////////////////////////////////////////////////////////////////////////*/
 .browsehappy {
-        display: none;
-        background: #ccc;
-        color: #000;
-        margin: 0.2em 0;
-        padding: 0.2em 0;
+    display: none;
+    background: #ccc;
+    color: #000;
+    margin: 0.2em 0;
+    padding: 0.2em 0;
 }
 
 
