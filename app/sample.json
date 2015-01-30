@@ -24,7 +24,8 @@
                                 "pages"
                             ]
                         },
-                        "components": []
+                        "components": [
+                        ]
                     },
                     {
                         "type": "npHeader",
@@ -32,6 +33,15 @@
                             "id": "globalHeader"
                         },
                         "components": [
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "slogan",
+                                    "builderId": "Slogan",
+                                    "content": "Slogan goes here"
+                                },
+                                "components": []
+                            },
                             {
                                 "type": "npColumn",
                                 "data": {
@@ -53,40 +63,74 @@
                                                     "class": "",
                                                     "link": "Welcome"
                                                 },
-                                                "components":
-                                                        [
-                                                            {
-                                                                "type": "npImage",
-                                                                "data": {
-                                                                    "id": "logoImage",
-                                                                    "builderId": "Logo",
-                                                                    "src": "//upload.wikimedia.org/wikipedia/commons/a/a2/Example_logo.jpg",
-                                                                    "alt": "logo"
-                                                                },
-                                                                "components": []
-                                                            }
-                                                        ]
+                                                "components": [
+                                                    {
+                                                        "type": "npImage",
+                                                        "data": {
+                                                            "id": "logoImage",
+                                                            "builderId": "Logo",
+                                                            "src": "//upload.wikimedia.org/wikipedia/commons/a/a2/Example_logo.jpg",
+                                                            "alt": "logo"
+                                                        },
+                                                        "components": []
+                                                    }
+                                                ]
                                             }
                                         ]
                                     },
                                     {
                                         "type": "npHTML",
                                         "data": {
-                                            "id": "slogan",
-                                            "builderId": "Slogan",
-                                            "content": "Slogan goes here"
+                                            "id": "menuBarTitle",
+                                            "content": "<h2 class=\"menuBarTitle\">Sample Presentation</h2>"
                                         },
                                         "components": []
                                     }
                                 ]
                             },
                             {
-                                "type": "npHTML",
+                                "type": "npColumn",
                                 "data": {
-                                    "id": "menuBarTitle",
-                                    "content": "<h2 class=\"menuBarTitle\">Sample Presentation</h2>"
+                                    "id": "headerCols",
+                                    "cols": "4"
                                 },
                                 "components": [
+                                    {
+                                        "type": "npButton",
+                                        "data": {
+                                            "link": "QuizIntro",
+                                            "type": "btn-primary",
+                                            "content": "<em>Button One</em>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npButton",
+                                        "data": {
+                                            "link": "Question1",
+                                            "type": "btn-primary",
+                                            "content": "<strong>Button two</strong>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npButton",
+                                        "data": {
+                                            "link": "Question2",
+                                            "type": "btn-primary",
+                                            "content": "Button three"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npButton",
+                                        "data": {
+                                            "link": "Question2",
+                                            "type": "btn-primary",
+                                            "content": "Button four"
+                                        },
+                                        "components": []
+                                    }
                                 ]
                             }
                         ]
@@ -99,6 +143,15 @@
                             "title": "Welcome",
                             "inMenu": true,
                             "required": false
+                        },
+                        "components": []
+                    },
+                    {
+                        "type": "npColumn",
+                        "data": {
+                            "id": "planDetailsCols",
+                            "class": "col-md-12",
+                            "cols": "2"
                         },
                         "components": [
                             {
@@ -188,7 +241,7 @@
                                             {
                                                 "type": "npAnswer",
                                                 "data": {
-                                                    "label": "8",
+                                                    "label": "800000000",
                                                     "correct": false
                                                 },
                                                 "components": [
@@ -222,6 +275,31 @@
                                                 ]
                                             }
                                         ]
+                                    },
+                                    {
+                                        "type": "npQuestion",
+                                        "data": {
+                                            "required": true,
+                                            "forced": true,
+                                            "type": "text",
+                                            "difficulty": 1,
+                                            "content": "What is the greatest thing ever!?",
+                                            "feedback": {
+                                                "immediate": true,
+                                                "correct": "Of course it is!",
+                                                "incorrect": "Hmmm... yeeeaaa... no!"
+                                            }
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npAnswer",
+                                                "data": {
+                                                    "label": "Answer:",
+                                                    "correct": "/ice\\s?cream/i"
+                                                },
+                                                "components": []
+                                            }
+                                        ]
                                     }
                                 ]
                             },
@@ -232,47 +310,83 @@
                                     "content": "<h4>Sample Audio Player</h4>"
                                 },
                                 "components": [
+                                    {
+                                        "type": "npAudio",
+                                        "data": {
+                                            "id": "audioMain",
+                                            "content": "<h4>Sample Audio Player!!!</h4>",
+                                            "req": [
+                                                "mediaelement/jquery-1.11.1.min.js",
+                                                "mediaelement/mediaelement-and-player.min.js",
+                                                "mediaelement/mediaelementplayer.css"
+                                            ],
+                                            "_comment": "removeing poster",
+                                            "poster": "",
+                                            "baseURL": "/assets/audio/01CircadianCyclemix0",
+                                            "types": ["mp3"]
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npImage",
+                                        "data": {
+                                            "id": "imgWidget",
+                                            "src": "/assets/images/saturn1.jpg",
+                                            "alt": "widget"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npImage",
+                                        "data": {
+                                            "id": "imgWidget",
+                                            "src": "/assets/images/saturn2.jpg",
+                                            "alt": "widget"
+                                        },
+                                        "components": []
+                                    }
                                 ]
-                            },
+                            }
+                        ]
+                    },
+                    {
+                        "type": "npImage",
+                        "data": {
+                            "id": "imgWidget",
+                            "src": "/assets/images/OrionsHeart.jpg",
+                            "alt": "widget"
+                        },
+                        "components": []
+                    },
+                    {
+                        "type": "npColumn",
+                        "data": {
+                            "id": "headerCols",
+                            "cols": "2"
+                        },
+                        "components": [
                             {
-                                "type": "npAudio",
-                                "data": {
-                                    "id": "audioMain",
-                                    "content": "<h4>Sample Audio Player!!!</h4>",
-                                    "req": [
-                                        "mediaelement/jquery-1.11.1.min.js",
-                                        "mediaelement/mediaelement-and-player.min.js",
-                                        "mediaelement/mediaelementplayer.css"
-                                    ],
-                                    "_comment": "removeing poster",
-                                    "poster": "",
-                                    "baseURL": "01CircadianCyclemix0",
-                                    "types": ["mp3"]
-                                },
-                                "components": []
-                            }, {
                                 "type": "npHTML",
                                 "data": {
                                     "id": "menuBarTitle",
                                     "content": "<h4>Sample Video Player (remote)</h4>"
                                 },
                                 "components": [
-                                ]
-                            },
-                            {
-                                "type": "npVideo",
-                                "data": {
-                                    "id": "vidMain",
-                                    "req": [
-                                        "mediaelement/jquery-1.11.1.min.js",
-                                        "mediaelement/mediaelement-and-player.min.js",
-                                        "mediaelement/mediaelementplayer.css"
-                                    ],
-                                    "poster": "//ia700505.us.archive.org/3/items/Windows7WildlifeSampleVideo/Windows7WildlifeSampleVideo.thumbs/Wildlife_000001.jpg",
-                                    "baseURL": "//archive.org/download/Windows7WildlifeSampleVideo/Wildlife_512kb",
-                                    "types": ["mp4"]
-                                },
-                                "components": []
+                                    {
+                                        "type": "npVideo",
+                                        "data": {
+                                            "id": "vidMain",
+                                            "req": [
+                                                "mediaelement/jquery-1.11.1.min.js",
+                                                "mediaelement/mediaelement-and-player.min.js",
+                                                "mediaelement/mediaelementplayer.css"
+                                            ],
+                                            "poster": "//ia700505.us.archive.org/3/items/Windows7WildlifeSampleVideo/Windows7WildlifeSampleVideo.thumbs/Wildlife_000001.jpg",
+                                            "baseURL": "//archive.org/download/Windows7WildlifeSampleVideo/Wildlife_512kb",
+                                            "types": ["mp4"]
+                                        },
+                                        "components": []
+                                    }]
                             },
                             {
                                 "type": "npHTML",
@@ -281,32 +395,32 @@
                                     "content": "<h4>Sample Audio Player (local)</h4>"
                                 },
                                 "components": [
+                                    {
+                                        "type": "npVideo",
+                                        "data": {
+                                            "class": "vidAlt",
+                                            "req": [
+                                                "mediaelement/jquery-1.11.1.min.js",
+                                                "mediaelement/mediaelement-and-player.min.js",
+                                                "mediaelement/mediaelementplayer.css"
+                                            ],
+                                            "poster": "//ia700505.us.archive.org/3/items/Windows7WildlifeSampleVideo/Windows7WildlifeSampleVideo.thumbs/Wildlife_000001.jpg",
+                                            "baseURL": "./Wildlife_512kb",
+                                            "types": ["mp4"]
+                                        },
+                                        "components": []
+                                    }
                                 ]
-                            },
-                            {
-                                "type": "npVideo",
-                                "data": {
-                                    "class": "vidAlt",
-                                    "req": [
-                                        "mediaelement/jquery-1.11.1.min.js",
-                                        "mediaelement/mediaelement-and-player.min.js",
-                                        "mediaelement/mediaelementplayer.css"
-                                    ],
-                                    "poster": "//ia700505.us.archive.org/3/items/Windows7WildlifeSampleVideo/Windows7WildlifeSampleVideo.thumbs/Wildlife_000001.jpg",
-                                    "baseURL": "./Wildlife_512kb",
-                                    "types": ["mp4"]
-                                },
-                                "components": []
-                            },
-                            {
-                                "type": "npHTML",
-                                "data": {
-                                    "id": "menuBarTitle",
-                                    "content": "<h4>Sample Audio Player (local, two codecs; wemb, mp4)</h4>"
-                                },
-                                "components": [
-                                ]
-                            },
+                            }
+                        ]
+                    },
+                    {
+                        "type": "npHTML",
+                        "data": {
+                            "id": "menuBarTitle",
+                            "content": "<h4>Sample Audio Player (local, two codecs; wemb, mp4)</h4>"
+                        },
+                        "components": [
                             {
                                 "type": "npVideo",
                                 "data": {
@@ -321,297 +435,312 @@
                                     "types": ["webm", "mp4"]
                                 },
                                 "components": []
-                            },
+                            }
+                        ]
+                    },
+                    {
+                        "type": "npVideo",
+                        "data": {
+                            "class": "vidAlt",
+                            "req": [
+                                "mediaelement/jquery-1.11.1.min.js",
+                                "mediaelement/mediaelement-and-player.min.js",
+                                "mediaelement/mediaelementplayer.css"
+                            ],
+                            "poster": "//ia700505.us.archive.org/3/items/Windows7WildlifeSampleVideo/Windows7WildlifeSampleVideo.thumbs/Wildlife_000001.jpg",
+                            "baseURL": "./output",
+                            "types": ["webm", "mp4"]
+                        },
+                        "components": []
+                    },
+                    {
+                        "type": "npHTML",
+                        "data": {
+                            "id": "captionMain",
+                            "builderId": "welcome_caption",
+                            "content": "Caption"
+                        },
+                        "components": []
+                    },
+                    {
+                        "type": "npColumn",
+                        "data": {
+                            "id": "planDetailsCols",
+                            "class": "col-md-12",
+                            "cols": "2"
+                        },
+                        "components": [
                             {
                                 "type": "npHTML",
                                 "data": {
-                                    "id": "captionMain",
-                                    "builderId": "welcome_caption",
-                                    "content": "Caption"
-                                },
-                                "components": []
-                            },
-                            {
-                                "type": "npColumn",
-                                "data": {
-                                    "id": "planDetailsCols",
-                                    "class": "col-md-12",
-                                    "cols": "2"
+                                    "content": "<h4>Collapse Widget</h4>",
+                                    "class": "collapse-toggle ",
+                                    "data-ng:click": "isCollapsed = !isCollapsed",
+                                    "xplugin": "np-expandable"
                                 },
                                 "components": [
                                     {
                                         "type": "npHTML",
                                         "data": {
-                                            "content": "<h4>Collapse Widget</h4>",
-                                            "class": "collapse-toggle ",
-                                            "data-ng:click": "isCollapsed = !isCollapsed",
-                                            "xplugin": "np-expandable"
+                                            "id": "",
+                                            "class": "collapse-element",
+                                            "data-collapse": "!isCollapsed",
+                                            "content": "<p>Widget details</p>"
                                         },
                                         "components": [
                                             {
-                                                "type": "npHTML",
+                                                "type": "npImage",
                                                 "data": {
-                                                    "id": "",
-                                                    "class": "collapse-element",
-                                                    "data-collapse": "!isCollapsed",
-                                                    "content": "<p>Widget details</p>"
+                                                    "id": "imgWidget",
+                                                    "src": "/assets/images/staturn1.jpg",
+                                                    "alt": "widget"
                                                 },
                                                 "components": [
-                                                    {
-                                                        "type": "npImage",
-                                                        "data": {
-                                                            "id": "imgWidget",
-                                                            "src": "//icons.iconarchive.com/icons/hopstarter/puck/256/Yahoo-Widgets-icon.png",
-                                                            "alt": "widget"
-                                                        },
-                                                        "components": [
-                                                        ]
-                                                    }
                                                 ]
                                             }
                                         ]
-                                    },
-                                    {
-                                        "type": "npImage",
-                                        "data": {
-                                            "id": "imgWidget",
-                                            "src": "//icons.iconarchive.com/icons/hopstarter/puck/256/Yahoo-Widgets-icon.png",
-                                            "alt": "widget"
-                                        },
-                                        "components": []
-                                    },
-                                    {
-                                        "type": "npHTML",
-                                        "data": {
-                                            "content": "<h4>Another product</h4><p>Lorum ipsum!</p>"
-                                        },
-                                        "components": []
-                                    },
-                                    {
-                                        "type": "npHTML",
-                                        "data": {
-                                            "content": "Dolor amet"
-                                        },
-                                        "components": []
                                     }
                                 ]
                             },
                             {
-                                "type": "npHTML",
+                                "type": "npImage",
                                 "data": {
-                                    "content": "<hr/>"
+                                    "id": "imgWidget",
+                                    "src": "//icons.iconarchive.com/icons/hopstarter/puck/256/Yahoo-Widgets-icon.png",
+                                    "alt": "widget"
                                 },
                                 "components": []
                             },
                             {
-                                "type": "npColumn",
+                                "type": "npHTML",
                                 "data": {
-                                    "id": "colsBtnSection",
-                                    "cols": 12,
-                                    "class": "row"
+                                    "content": "<h4>Another product</h4><p>Lorum ipsum!</p>"
                                 },
-                                "components":
-                                        [
-                                            {
-                                                "type": "npButton",
-                                                "data": {
-                                                    "link": "QuizIntro",
-                                                    "type": "btn-primary",
-                                                    "content": "<em>Button One</em>"
-                                                },
-                                                "components": []
-                                            },
-                                            {
-                                                "type": "npButton",
-                                                "data": {
-                                                    "link": "Question1",
-                                                    "type": "btn-primary",
-                                                    "content": "<strong>Button 2</strong>"
-                                                },
-                                                "components": []
-                                            },
-                                            {
-                                                "type": "npButton",
-                                                "data": {
-                                                    "link": "Question2",
-                                                    "type": "btn-primary",
-                                                    "content": "Button C"
-                                                },
-                                                "components": []
-                                            },
-                                            {
-                                                "type": "npButton",
-                                                "data": {
-                                                    "link": "Question2",
-                                                    "type": "btn-primary",
-                                                    "content": "Button C"
-                                                },
-                                                "components": []
-                                            },
-                                            {
-                                                "type": "npButton",
-                                                "data": {
-                                                    "link": "Question2",
-                                                    "type": "btn-primary",
-                                                    "content": "Button C"
-                                                },
-                                                "components": []
-                                            },
-                                            {
-                                                "type": "npButton",
-                                                "data": {
-                                                    "link": "Question2",
-                                                    "type": "btn-primary",
-                                                    "content": "Button C"
-                                                },
-                                                "components": []
-                                            },
-                                            {
-                                                "type": "npButton",
-                                                "data": {
-                                                    "link": "Question2",
-                                                    "type": "btn-primary",
-                                                    "content": "Button C"
-                                                },
-                                                "components": []
-                                            },
-                                            {
-                                                "type": "npButton",
-                                                "data": {
-                                                    "link": "Question2",
-                                                    "type": "btn-primary",
-                                                    "content": "Button C"
-                                                },
-                                                "components": []
-                                            },
-                                            {
-                                                "type": "npButton",
-                                                "data": {
-                                                    "link": "Question2",
-                                                    "type": "btn-primary",
-                                                    "content": "Button C"
-                                                },
-                                                "components": []
-                                            },
-                                            {
-                                                "type": "npButton",
-                                                "data": {
-                                                    "link": "Question2",
-                                                    "type": "btn-primary",
-                                                    "content": "Button C"
-                                                },
-                                                "components": []
-                                            },
-                                            {
-                                                "type": "npButton",
-                                                "data": {
-                                                    "link": "Question2",
-                                                    "type": "btn-primary",
-                                                    "content": "Button C"
-                                                },
-                                                "components": []
-                                            },
-                                            {
-                                                "type": "npButton",
-                                                "data": {
-                                                    "link": "Question2",
-                                                    "type": "btn-primary",
-                                                    "content": "Button C"
-                                                },
-                                                "components": []
-                                            },
-                                            {
-                                                "type": "npButton",
-                                                "data": {
-                                                    "link": "Question2",
-                                                    "type": "btn-primary",
-                                                    "content": "Button C"
-                                                },
-                                                "components": []
-                                            },
-                                            {
-                                                "type": "npButton",
-                                                "data": {
-                                                    "link": "Question2",
-                                                    "type": "btn-primary",
-                                                    "content": "Button C"
-                                                },
-                                                "components": []
-                                            },
-                                            {
-                                                "type": "npButton",
-                                                "data": {
-                                                    "link": "Question2",
-                                                    "type": "btn-primary",
-                                                    "content": "Button C"
-                                                },
-                                                "components": []
-                                            },
-                                            {
-                                                "type": "npButton",
-                                                "data": {
-                                                    "link": "Question2",
-                                                    "type": "btn-primary",
-                                                    "content": "Button C"
-                                                },
-                                                "components": []
-                                            },
-                                            {
-                                                "type": "npButton",
-                                                "data": {
-                                                    "link": "Question2",
-                                                    "type": "btn-primary",
-                                                    "content": "Button C"
-                                                },
-                                                "components": []
-                                            },
-                                            {
-                                                "type": "npButton",
-                                                "data": {
-                                                    "link": "Question2",
-                                                    "type": "btn-primary",
-                                                    "content": "Button C"
-                                                },
-                                                "components": []
-                                            },
-                                            {
-                                                "type": "npButton",
-                                                "data": {
-                                                    "link": "Question2",
-                                                    "type": "btn-primary",
-                                                    "content": "Button C"
-                                                },
-                                                "components": []
-                                            },
-                                            {
-                                                "type": "npButton",
-                                                "data": {
-                                                    "link": "Question2",
-                                                    "type": "btn-primary",
-                                                    "content": "Button C"
-                                                },
-                                                "components": []
-                                            },
-                                            {
-                                                "type": "npButton",
-                                                "data": {
-                                                    "link": "Question2",
-                                                    "type": "btn-primary",
-                                                    "content": "Button C"
-                                                },
-                                                "components": []
-                                            }
-                                        ]
+                                "components": []
                             },
                             {
                                 "type": "npHTML",
                                 "data": {
-                                    "id": "disclaimer",
-                                    "content": "<h4>Disclaimer</h4><small>This is just a sample presentation.</small>"
+                                    "content": "Dolor amet"
                                 },
                                 "components": []
                             }
                         ]
+                    },
+                    {
+                        "type": "npHTML",
+                        "data": {
+                            "content": "<hr/>"
+                        },
+                        "components": []
+                    },
+                    {
+                        "type": "npColumn",
+                        "data": {
+                            "id": "colsBtnSection",
+                            "cols": 2,
+                            "class": "row"
+                        },
+                        "components":
+                                [
+                                    {
+                                        "type": "npButton",
+                                        "data": {
+                                            "link": "QuizIntro",
+                                            "type": "btn-primary",
+                                            "content": "<em>Button One</em>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npButton",
+                                        "data": {
+                                            "link": "Question1",
+                                            "type": "btn-primary",
+                                            "content": "<strong>Button 2</strong>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npButton",
+                                        "data": {
+                                            "link": "Question2",
+                                            "type": "btn-primary",
+                                            "content": "Button C"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npButton",
+                                        "data": {
+                                            "link": "Question2",
+                                            "type": "btn-primary",
+                                            "content": "Button C"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npButton",
+                                        "data": {
+                                            "link": "Question2",
+                                            "type": "btn-primary",
+                                            "content": "Button C"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npButton",
+                                        "data": {
+                                            "link": "Question2",
+                                            "type": "btn-primary",
+                                            "content": "Button C"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npButton",
+                                        "data": {
+                                            "link": "Question2",
+                                            "type": "btn-primary",
+                                            "content": "Button C"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npButton",
+                                        "data": {
+                                            "link": "Question2",
+                                            "type": "btn-primary",
+                                            "content": "Button C"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npButton",
+                                        "data": {
+                                            "link": "Question2",
+                                            "type": "btn-primary",
+                                            "content": "Button C"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npButton",
+                                        "data": {
+                                            "link": "Question2",
+                                            "type": "btn-primary",
+                                            "content": "Button C"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npButton",
+                                        "data": {
+                                            "link": "Question2",
+                                            "type": "btn-primary",
+                                            "content": "Button C"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npButton",
+                                        "data": {
+                                            "link": "Question2",
+                                            "type": "btn-primary",
+                                            "content": "Button C"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npButton",
+                                        "data": {
+                                            "link": "Question2",
+                                            "type": "btn-primary",
+                                            "content": "Button C"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npButton",
+                                        "data": {
+                                            "link": "Question2",
+                                            "type": "btn-primary",
+                                            "content": "Button C"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npButton",
+                                        "data": {
+                                            "link": "Question2",
+                                            "type": "btn-primary",
+                                            "content": "Button C"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npButton",
+                                        "data": {
+                                            "link": "Question2",
+                                            "type": "btn-primary",
+                                            "content": "Button C"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npButton",
+                                        "data": {
+                                            "link": "Question2",
+                                            "type": "btn-primary",
+                                            "content": "Button C"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npButton",
+                                        "data": {
+                                            "link": "Question2",
+                                            "type": "btn-primary",
+                                            "content": "Button C"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npButton",
+                                        "data": {
+                                            "link": "Question2",
+                                            "type": "btn-primary",
+                                            "content": "Button C"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npButton",
+                                        "data": {
+                                            "link": "Question2",
+                                            "type": "btn-primary",
+                                            "content": "Button C"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npButton",
+                                        "data": {
+                                            "link": "Question2",
+                                            "type": "btn-primary",
+                                            "content": "Button C"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                    },
+                    {
+                        "type": "npHTML",
+                        "data": {
+                            "id": "disclaimer",
+                            "content": "<h4>Disclaimer</h4><small>This is just a sample presentation.</small>"
+                        },
+                        "components": []
                     },
                     {
                         "type": "npPage",
