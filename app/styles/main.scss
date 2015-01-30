@@ -12,9 +12,26 @@
 
 /*////////////////////////////////////////////////////////////////////////////////*/
 /*content offset for fixed nav*/
-body { padding-top: 70px; }
+body { 
+    padding-top: 180px; 
+}
+body { 
+    padding-bottom: 80px; 
+}
+/*button vertical spacing*/
+.btn { 
+    margin-top: 5px; 
+    margin-bottom: 10px;
+}
 /*button widths*/
-.col-sm-4 .btn{
+.btn{
+    min-width: 50%;
+    width:100%;
+}
+.np-cmp-wrapper {
+    margin-top: 5px; 
+}
+/*.col-sm-4 .btn{
     width:91%;
 }
 .col-sm-6 .btn{
@@ -22,7 +39,7 @@ body { padding-top: 70px; }
 }
 .col-sm-12 .btn{
     width:97%;
-}
+}*/
 /*////////////////////////////////////////////////////////////////////////////////*/
 .browsehappy {
     display: none;
@@ -56,9 +73,9 @@ body { padding-top: 70px; }
     }
 }
 
-.npPage {
+/*.npPage {
     text-align: center;
-}
+}*/
 
 .npMenu {
     background: mix(black, white, 90%);
@@ -123,7 +140,7 @@ body { padding-top: 70px; }
     }
 }
 
-.npVideo {
+/*.npVideo {
     width: 80%;
     max-width: 640px;
     margin: 0 auto;
@@ -135,12 +152,12 @@ body { padding-top: 70px; }
         height: 100%;
         width: 100%;
     }
-}
+}*/
 
-.npHTML {
+/*.npHTML {
     font-size: 16px;
     line-height: 20px;
-}
+}*/
 
 /*.np-expandable {
         &.np-cmp-main,
