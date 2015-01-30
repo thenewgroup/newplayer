@@ -3,11 +3,11 @@
 </div>
 
 <img
-    class="{{component.type}} np-cmp-main"
+    class="{{component.type}} np-cmp-main img-responsive"
     ng-controller="npImageController
                 as npImage"
     ng-src="{{npImage.src}}"
-    alt="{{npImage.alt}}" />
+    alt="{{npImage.alt}}" 
+    />
 
 <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
-
