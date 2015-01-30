@@ -273,6 +273,81 @@
 							"data": {
 								"required": true,
 								"forced": true,
+								"type": "radio",
+								"difficulty": 1,
+								"content": "What color am I thinking of?",
+								"feedback": {
+									"immediate": true,
+									"correct": "Hey, that's my favorite color!",
+									"incorrect": "No! ... is that even a color!?"
+								}
+							},
+							"components": [
+								{
+									"type": "npAnswer",
+									"data": {
+										"label": "27",
+										"correct": false,
+										"feedback": "No, 27 is wrong!?"
+									},
+									"components": [
+									]
+								},
+								{
+									"type": "npAnswer",
+									"data": {
+										"label": "chartruse",
+										"correct": false
+									},
+									"components": [
+									]
+								},
+								{
+									"type": "npAnswer",
+									"data": {
+										"label": "pink",
+										"correct": true
+									},
+									"components": [
+									]
+								},
+								{
+									"type": "npAnswer",
+									"data": {
+										"label": "<strong>Cheese!</strong>",
+										"correct": true,
+										"feedback": "AWESOMEEE!?"
+									},
+									"components": [
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"type": "npPage",
+					"data": {
+						"id": "Question1.5",
+						"parentId": "QuizIntro",
+						"title": "Question 1.5",
+						"inMenu": true,
+						"required": false
+					},
+					"components":
+					[
+						{
+							"type": "npHTML",
+							"data": {
+								"content": "<h4>Question A</h4>"
+							},
+							"components": [ ]
+						},
+						{
+							"type": "npQuestion",
+							"data": {
+								"required": true,
+								"forced": true,
 								"type": "checkbox",
 								"difficulty": 1,
 								"content": "What number am I thinking of?",
@@ -360,7 +435,11 @@
 									"type": "npAnswer",
 									"data": {
 										"label": "Answer:",
-										"correct": "/ice\\s?cream/i"
+										"correct": "/ice\\s?cream/i",
+										"feedback": {
+											"correct": "WooHoo!",
+											"incorrect": "Meh!"
+										}
 									},
 									"components": [
 									]

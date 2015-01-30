@@ -43,10 +43,10 @@ angular
 					{
 						case 'radio':
 							var radAnswer = ManifestService.getComponent( this.answer );
-							if ( !radAnswer.data.correct )
-							{
-								correct = false;
+							if ( angular.isString( radAnswer.data.feedback ) ) {
+								this.feedback = radAnswer.data.feedback;
 							}
+							correct = radAnswer.data.correct;
 							break;
 						case 'checkbox':
 							var chkAnswers = ManifestService.getAll( 'npAnswer', $scope.cmpIdx );
@@ -88,7 +88,14 @@ angular
 							regExp = new RegExp( pat, mod );
 							if ( ! regExp.test( this.answer ) )
 							{
+								if ( angular.isObject( txtAnswer.data.feedback ) && angular.isString( txtAnswer.data.feedback.incorrect ) ) {
+									this.feedback = txtAnswer.data.feedback.incorrect;
+								}
 								correct = false;
+							} else {
+								if ( angular.isObject( txtAnswer.data.feedback ) && angular.isString( txtAnswer.data.feedback.correct ) ) {
+									this.feedback = txtAnswer.data.feedback.correct;
+								}
 							}
 							break;
 					}
@@ -98,7 +105,7 @@ angular
 				$log.debug('npQuestion::evaluate:isCorrect', correct );
 
 				// set by ng-model of npAnswer's input's
-				if ( feedback.immediate )
+				if ( feedback.immediate && this.feedback === '' )
 				{
 					if ( correct )
 					{
