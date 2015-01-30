@@ -31,7 +31,10 @@ $brand-danger:          #DC3522 !default;
 //## Settings for some of the most global styles.
 
 //** Background color for `<body>`.
+
 $body-bg:               $gray-darker !default;
+//$body-bg:               $brand-success !default;
+
 //** Global text color on `<body>`.
 $text-color:            $gray-light !default;
 
@@ -136,9 +139,9 @@ $padding-xs-horizontal:     5px !default;
 $line-height-large:         1.33 !default;
 $line-height-small:         1.5 !default;
 
-$border-radius-base:        4px !default;
-$border-radius-large:       16px !default;
-$border-radius-small:       3px !default;
+$border-radius-base:        0px !default;
+$border-radius-large:       0px !default;
+$border-radius-small:       0px !default;
 
 //** Global color for active items (e.g., navs or dropdowns).
 $component-active-color:    #fff !default;
@@ -184,7 +187,7 @@ $btn-default-bg:                 #fff !default;
 $btn-default-border:             #ccc !default;
 
 $btn-primary-color:              #fff !default;
-$btn-primary-bg:                 $brand-primary !default;
+$btn-primary-bg:                 darken($brand-primary, 5%) !default;
 $btn-primary-border:             darken($btn-primary-bg, 5%) !default;
 
 $btn-success-color:              #fff !default;
