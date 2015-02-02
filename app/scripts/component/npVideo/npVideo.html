@@ -1,20 +1,26 @@
-<div class="{{component.type}}" ng-controller="npVideoController as npVideo" id="{{npVideo.id}}">
+<div class="{{component.type}} " ng-controller="npVideoController as npVideo" id="{{npVideo.id}}">
 
 	<div class="debug">
 		<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
 	</div>
-
+    
 	<video
-		height="{{npVideo.height}}"
-		width="{{npVideo.width}}"
+            style="width:100%;height:100%;"
+		height="100%"
+		width="100%"
 		preload="{{npVideo.preload}}"
 		mediaelement>
+<!--		height="{{npVideo.height}}"
+		width="{{npVideo.width}}"
+		preload="{{npVideo.preload}}"
+		mediaelement>-->
 <!--
 		<source type="video/{{npVideo.types[0]}}" src="{{npVideo.baseURL}}.{{npVideo.types[0]}}" />
 		<source ng-repeat="type in npVideo.types" type="video/{{type}}" src="{{npVideo.baseURL}}.{{type}}" />
 -->
-		<object width="{{npVideo.width}}" height="{{npVideo.height}}" type="application/x-shockwave-flash" data="scripts/component/npVideo/mediaelement/flashmediaelement.swf">
-			<param name="movie" value="scripts/component/npVideo/mediaelement/flashmediaelement.swf" />
+		<object width="100%" height="100%" type="application/x-shockwave-flash" data="scripts/component/npVideo/mediaelement/flashmediaelement.swf">
+		<!--<object width="{{npVideo.width}}" height="{{npVideo.height}}" type="application/x-shockwave-flash" data="scripts/component/npVideo/mediaelement/flashmediaelement.swf">-->
+                        <param name="movie" value="scripts/component/npVideo/mediaelement/flashmediaelement.swf" />
 			<param name="flashvars" value="controls=true&file={{npVideo.baseURL}}.mp4" />
 			<param name="allowfullscreen" value="false" />
 			<!-- Image as a last resort -->
