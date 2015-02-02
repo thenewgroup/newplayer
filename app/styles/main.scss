@@ -12,17 +12,128 @@
 
 /*////////////////////////////////////////////////////////////////////////////////*/
 /*content offset for fixed nav*/
-body { padding-top: 70px; }
+/*body { 
+    padding-top: 180px; 
+}
+body { 
+    padding-bottom: 80px; 
+}*/
+
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*Button overrides*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*button vertical spacing*/
 /*button widths*/
-.col-sm-4 .btn{
-    width:91%;
+.btn { 
+    margin-top: 5px; 
+    margin-bottom: 10px;
+    min-width: 20%;
+    width:100%;
 }
-.col-sm-6 .btn{
-    width:94%;
+.icon {
+    background-image: url(../assets/svgs/heart-icon.svg);
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-size: 25%;
+    background-origin: content-box ;
+    padding-left: 16px; /* Or size of icon + spacing */
 }
-.col-sm-12 .btn{
-    width:97%;
+.btn-favorite { 
+    margin-top: 5px; 
+    margin-bottom: 10px;
+
 }
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player padding wrapper classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*When setting this class for New Player use: 'outside-padding'*/
+.np_outside-padding{
+    padding-top: 35px;
+    padding-left: 90px;
+    padding-right: 90px;
+    padding-bottom: 35px;
+}
+/*When setting this class for New Player use: 'inside-padding'*/
+.np_inside-padding{
+    padding-left: 45px;
+    padding-right: 45px;
+    padding-bottom: 35px;
+}
+/*When setting this class for New Player use: 'button-padding'*/
+.np_button-padding{
+    padding-top: 30px;
+    padding-left: 15%;
+    padding-right: 15%;
+    padding-bottom: 35px;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*responsive padding overrides*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.container{
+
+}
+
+@media (max-width: 978px) {
+    .np_outside-padding{
+        padding: 10px;
+    }
+    .np_inside-padding{
+        padding: 10px;
+    }
+    .np_button-padding{
+        padding: 10px;
+    }
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*Sans font overrides*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.sans-head{
+    font-family: $font-family-sans-serif_head !important;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: solid 1px;
+    border-bottom-color: $brand-lightgrey;
+    padding-top: 40px;
+    padding-bottom: 3px;
+    display: inline-block;
+}
+.np_inside-padding .sans-head{
+    border-bottom-color: $brand-primary-light;
+}
+.sans-head-sub{
+    font-family: $font-family-sans-serif_head !important;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding-bottom: 3px;
+}
+.sans-normal{
+    font-family: $font-family-sans-serif;
+    text-transform: none;
+    letter-spacing: 2px;
+    line-height: 130%;
+}
+.sans-small{
+    font-family: $font-family-sans-serif;
+    text-transform: none;
+    letter-spacing: 2px;
+    line-height: 130%;
+    font-size: $font-size-small;
+    p{
+        padding-bottom: 10px;
+    }
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player background color wrapper classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*When setting this class for New Player use: 'background-brand-primary-light'*/
+.np_background-brand-primary-light{
+    background-color: $brand-primary-light;
+}
+/*When setting this class for New Player use: 'background-brand-offwhite' */
+.np_background-brand-offwhite{
+    background-color: $brand-offwhite;
+}
+
 /*////////////////////////////////////////////////////////////////////////////////*/
 .browsehappy {
     display: none;
@@ -38,11 +149,11 @@ body { padding-top: 70px; }
     display: none;
 }
 
-.container {
+/*.container {
     margin: 0 auto;
-}
+}*/
 
-#manifestWrapper {
+/*#manifestWrapper {
     &.debug {
         display: block;
         .debug {
@@ -54,13 +165,13 @@ body { padding-top: 70px; }
             border: 1px dashed red;
         }
     }
-}
+}*/
 
-.npPage {
+/*.npPage {
     text-align: center;
-}
+}*/
 
-.npMenu {
+/*.npMenu {
     background: mix(black, white, 90%);
     background: rgba(black, 0.9);
     position: absolute;
@@ -121,9 +232,9 @@ body { padding-top: 70px; }
             color: white;
         }
     }
-}
+}*/
 
-.npVideo {
+/*.npVideo {
     width: 80%;
     max-width: 640px;
     margin: 0 auto;
@@ -135,12 +246,12 @@ body { padding-top: 70px; }
         height: 100%;
         width: 100%;
     }
-}
+}*/
 
-.npHTML {
+/*.npHTML {
     font-size: 16px;
     line-height: 20px;
-}
+}*/
 
 /*.np-expandable {
         &.np-cmp-main,
