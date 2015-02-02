@@ -30,6 +30,15 @@
                             {
                                 "type": "npHTML",
                                 "data": {
+                                    "id": "slogan",
+                                    "builderId": "Slogan",
+                                    "content": "Slogan goes here"
+                                },
+                                "components": []
+                            },
+                            {
+                                "type": "npHTML",
+                                "data": {
                                     "id": "",
                                     "class": "h1",
                                     "content": "Advanced Night Repair"
@@ -114,7 +123,7 @@
                                 ]
                             },
                             {
-                                "type": "npHTML",
+                                "type": "npImage",
                                 "data": {
                                     "id": "",
                                     "class": "h3 sans-head ",
@@ -161,7 +170,7 @@
                                 "components": []
                             },
                             {
-                                "type": "npColumn",
+                                "type": "npHTML",
                                 "data": {
                                     "id": "",
                                     "cols": 2,
