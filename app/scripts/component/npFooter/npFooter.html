@@ -1,9 +1,10 @@
-<footer class="np-cmp-wrapper {{component.type}} navbar navbar-inverse panel-heading" ng-controller="npFooterController as npFooter">
+<footer class="np-cmp-wrapper {{component.type}} navbar navbar-inverse navbar-fixed-bottom" ng-controller="npFooterController as npFooter">
 
-	<div class="debug">
-		<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
-	</div>
+    <div class="container">
+        <div class="debug">
+            <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
+        </div>
 
-	<div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
-
+        <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+    </div>
 </footer>
