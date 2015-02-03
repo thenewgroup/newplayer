@@ -1,0 +1,11 @@
+
+
+/*$top-image: margin-left:-100px;*/
+.topImage{
+    margin-left:-75px;
+}
+@media (max-width: 978px) {
+    .topImage{
+        margin-left:-10px;
+    }
+}
