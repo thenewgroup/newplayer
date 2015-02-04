@@ -329,35 +329,15 @@
                                             "link": "QuizIntro",
                                             "type": "",
                                             "class": "btn btn-primary btn-sm",
-                                            "content": "Button One"
+                                            "content": "<span class='glyphicon glyphicon-heart-empty' aria-hidden='true'></span>  Favorite this"
                                         },
                                         "components": []
                                     },
                                     {
                                         "type": "npButton",
                                         "data": {
-                                            "link": "QuizIntro",
-                                            "type": "",
-                                            "class": "btn btn-primary btn-sm icon",
-                                            "content": "Button One"
-                                        },
-                                        "components": [
-                                            {
-                                                "type": "npHTML",
-                                                "data": {
-                                                    "id": "",
-                                                    "class": "icon",
-                                                    "content": "<span></span>"
-                                                },
-                                                "components": []
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "type": "npButton",
-                                        "data": {
                                             "link": "Question1",
-                                            "type": "btn btn-default btn-sm",
+                                            "type": "btn btn-info btn-sm",
                                             "content": "<strong>Button 2</strong>"
                                         },
                                         "components": []
