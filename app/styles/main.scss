@@ -23,6 +23,12 @@ strong, b{
 }
 
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*Angular UI classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.nav, .pagination, .carousel, .panel-title a { 
+    cursor: pointer; 
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*Button overrides*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*button vertical spacing*/
@@ -64,8 +70,8 @@ strong, b{
 }
 /*When setting this class for New Player use: 'inside-padding'*/
 .np_inside-padding{
-    padding-left: 45px;
-    padding-right: 45px;
+    padding-left: 5%;
+    padding-right: 5%;
     padding-bottom: 35px;
 }
 /*When setting this class for New Player use: 'button-padding'*/
@@ -82,7 +88,7 @@ strong, b{
 }
 @media (max-width: 978px) {
     .np_outside-padding{
-        padding: 10px;
+        padding: 0px;
     }
     .np_inside-padding{
         padding: 10px;
@@ -100,9 +106,24 @@ strong, b{
     letter-spacing: 2px;
     border-bottom: solid 1px;
     border-bottom-color: $brand-lightgrey;
+    /*cursor: none;*/
     padding-top: 40px;
     padding-bottom: 3px;
     display: inline-block;
+}
+@media (max-width: 978px) {
+    .sans-head{
+        background-color: $brand-offwhite;
+        cursor: pointer;
+        width: 100%;
+        border-bottom: none;
+        padding-top: 5%;
+        padding-bottom: 5%;
+        &:hover,
+            &:focus {
+            background-color: darken($brand-offwhite, 5%);
+        }
+    }
 }
 .np_inside-padding .sans-head{
     border-bottom-color: $brand-primary-light;
@@ -140,6 +161,15 @@ strong, b{
 .np_background-brand-offwhite{
     background-color: $brand-offwhite;
 }
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/* text treatment classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*Q and A text outdent*/
+.q-and-a-outdent{
+    text-indent:-28px;
+    margin-left:28px
+}
+
 
 /*////////////////////////////////////////////////////////////////////////////////*/
 .browsehappy {
