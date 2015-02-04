@@ -110,6 +110,7 @@ function ComponentDirective(
                                             for (var ii in classArraySpace) {
                                                 $element.addClass('np_' + classArraySpace[ii]);
                                             }
+
                                         }
 
                                         var attrPlugin = cmp.data.plugin;

@@ -1,7 +1,9 @@
-[{
+[
+    {
         "type": "npFeature",
         "data": {
-            "id": "samplePresentation",
+            "id": "advancedNightRepair",
+            "class": "productTemplate ",
             "req": [],
             "version": "0.0.1",
             "timestamp": "1970-01-01_00:00:00"
@@ -11,26 +13,18 @@
                 "type": "npContent",
                 "data": {
                     "id": "content_en-US",
+                    "class": "",
                     "language": "en-US",
-                    "title": "Sample Manifest",
-                    "description": "Sample presentation"
+                    "title": "Advanced Night Repair",
+                    "description": "product template - Advanced Night Repair"
                 },
                 "components": [
                     {
-                        "type": "npMenu",
+                        "type": "npHTML",
                         "data": {
-                            "id": "globalMenu",
-                            "items": [
-                                "pages"
-                            ]
-                        },
-                        "components": [
-                        ]
-                    },
-                    {
-                        "type": "npHeader",
-                        "data": {
-                            "id": "globalHeader"
+                            "id": "",
+                            "class": "background-brand-primary-light outside-padding",
+                            "content": ""
                         },
                         "components": [
                             {
@@ -43,46 +37,288 @@
                                 "components": []
                             },
                             {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "",
+                                    "class": "h1",
+                                    "content": "Advanced Night Repair"
+                                },
+                                "components": []
+                            },
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "",
+                                    "class": "h2",
+                                    "content": "Synchronized Recovery Complex II"
+                                },
+                                "components": []
+                            },
+                            {
                                 "type": "npColumn",
                                 "data": {
-                                    "id": "headerCols",
+                                    "id": "",
+                                    "class": "",
                                     "cols": "2"
                                 },
                                 "components": [
                                     {
+                                        "type": "npImage",
+                                        "data": {
+                                            "id": "",
+                                            "class": "topImage img-responsive",
+                                            "src": "/assets/images/Product-Image.jpg",
+                                            "alt": "widget"
+                                        },
+                                        "components": []
+                                    },
+                                    {
                                         "type": "npHTML",
                                         "data": {
-                                            "id": "logo",
+                                            "id": "",
+                                            "class": "background-brand-offwhite inside-padding",
                                             "content": ""
                                         },
                                         "components": [
                                             {
-                                                "type": "npButton",
+                                                "type": "npHTML",
                                                 "data": {
-                                                    "id": "btnHomeLogo",
-                                                    "class": "",
-                                                    "link": "Welcome"
+                                                    "id": "",
+                                                    "class": "h3 sans-head",
+                                                    "content": "Why there’s only 1"
                                                 },
                                                 "components": [
                                                     {
-                                                        "type": "npImage",
+                                                        "type": "npHTML",
                                                         "data": {
-                                                            "id": "logoImage",
-                                                            "builderId": "Logo",
-                                                            "src": "//upload.wikimedia.org/wikipedia/commons/a/a2/Example_logo.jpg",
-                                                            "alt": "logo"
+                                                            "id": "",
+                                                            "class": "h4 sans-normal",
+                                                            "content": "<p>Our #1 lines and wrinkles serum—supercharged to help correct, prevent and repair the look of lines and wrinkles with exceptional speed. With CPR-75 Technology, proven to double skin’s own natural collagen production in just one week.*</p><p><small>*In vitro testing of CPR-75 Technology.</small></p>"
                                                         },
                                                         "components": []
                                                     }
                                                 ]
                                             }
                                         ]
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "",
+                                    "class": "h3 sans-head ",
+                                    "content": "DEMONSTRATION"
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "h4 sans-normal",
+                                            "content": "Apply a small amount to the back of your customer’s hand and gently massage into skin. Ask customer to raise both hands (fingers pointing upward) to compare the difference. "
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npImage",
+                                "data": {
+                                    "id": "",
+                                    "class": "h3 sans-head ",
+                                    "content": "BENEFITS"
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "h4 sans-normal",
+                                            "content": "<p><ol><li>Instantly—lines and wrinkles look plumped and smoothed.</li><li>In just one week—skin doubles its own natural collagen production.*</li><li>In just 4 weeks—96% of women showed a significant reduction in the look of lines & wrinkles.**</li></ol></p><p><small>*In vitro testing of CPR-75 Technology.</small></p><p><small>**In 4 week clinical testing of Perfectionist [CP+R].</small></p>"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "",
+                                    "class": "h3 sans-head ",
+                                    "content": "If she asks, share"
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "h4 sans-normal",
+                                            "content": "<p>Flexible Elastomer Technology works as a virtual ‘liquid bandage’ to instantly fill in and immobilize the look of wrinkles. Light Diffusion Optics blur the look of lines and wrinkles.</p><p>Exclusive Wrinkle Lift Restructuring Peptides™ —a unique peptide blend helps skin stimulate new collagen and elastin production.</p><p><strong>Together these powerful technologies:</strong></p><p>Strengthen skin’s natural support structure giving skin a firmer more defined look with fewer visible lines.</p><p><small>*In vitro testing of CPR-75 Technology.</small></p>"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "",
+                                    "class": "h3 sans-head ",
+                                    "content": "Perfect partners"
+                                },
+                                "components": []
+                            },
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "",
+                                    "cols": 2,
+                                    "class": "row"
+                                },
+                                "components":
+                                        [
+                                            {
+                                                "type": "npHTML",
+                                                "data": {
+                                                    "id": "",
+                                                    "class": "row ",
+                                                    "content": ""
+                                                },
+                                                "components": [
+                                                    {
+                                                        "type": "npImage",
+                                                        "data": {
+                                                            "id": "",
+                                                            "class": " col-sm-4",
+                                                            "src": "/assets/images/Product-Image.jpg",
+                                                            "alt": "widget"
+                                                        },
+                                                        "components": [
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "npHTML",
+                                                        "data": {
+                                                            "id": "",
+                                                            "class": " col-sm-8 sans-small",
+                                                            "content": "<p>Advanced Time Zone Age Reversing Line/Wrinkle Collection</p>"
+                                                        },
+                                                        "components": []
+                                                    },
+                                                    {
+                                                        "type": "npHTML",
+                                                        "data": {
+                                                            "id": "",
+                                                            "class": " col-sm-8 sans-small",
+                                                            "content": "<p><i>4 days ago</i></p>"
+                                                        },
+                                                        "components": []
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "type": "npHTML",
+                                                "data": {
+                                                    "id": "",
+                                                    "class": "row ",
+                                                    "content": ""
+                                                },
+                                                "components": [
+                                                    {
+                                                        "type": "npImage",
+                                                        "data": {
+                                                            "id": "",
+                                                            "class": " col-sm-4",
+                                                            "src": "/assets/images/Product-Image.jpg",
+                                                            "alt": "widget"
+                                                        },
+                                                        "components": [
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "npHTML",
+                                                        "data": {
+                                                            "id": "",
+                                                            "class": "col-sm-8 sans-small",
+                                                            "content": "<p>Resilience Lift Firming/Sculpting Collection</p>"
+                                                        },
+                                                        "components": []
+                                                    },
+                                                    {
+                                                        "type": "npHTML",
+                                                        "data": {
+                                                            "id": "",
+                                                            "class": "col-sm-8 sans-small",
+                                                            "content": "<p><i>3 months ago</i></p>"
+                                                        },
+                                                        "components": []
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                            },
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "",
+                                    "class": "row",
+                                    "content": ""
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "h4 sans-normal",
+                                            "content": "<p><strong>Need a phrase to help you link? Try one of these:</strong></p><p>Because you told me you're concerned with ___, I want to also show you ___.</p><p>Because you love ___, I also want to show you ___.</p>"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "",
+                                    "class": "h3 sans-head ",
+                                    "content": "STORY"
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "h4 sans-normal",
+                                            "content": "<p>Our Scientists have long understood the importance of cellular energy and the critical role it plays in maintaining healthy, young looking skin. </p><p>Research shows that as we age, skin loses energy on every level—compromising its natural power to respond to the aging process. The result is that all critical age fighting mechanisms are slowed—collagen, elastin, laminins and other support proteins.  </p><p>To optimize skin’s natural line fighting ability, this overall energy  or “rhythm” must be promoted.</p><p>CPR-75 Technology delivers a surge of energy to help restore skin’s critical energy rhythm and gives it the power it needs to boost skin’s natural line-fighting power in just one week.*</p><p><small>*In vitro testing of CPR-75 Technology.</small></p>"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "",
+                                    "class": "h3 sans-head ",
+                                    "content": "CUSTOMER QUESTIONS"
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "h4 sans-normal",
+                                            "content": "<p><strong>Q: “How do I use it?”</strong></p><p>A:  Apply AM and PM on clean skin before appropriate Estée Lauder moisturizer.</p>"
+                                        },
+                                        "components": []
                                     },
                                     {
                                         "type": "npHTML",
                                         "data": {
-                                            "id": "menuBarTitle",
-                                            "content": "<h2 class=\"menuBarTitle\">Sample Presentation</h2>"
+                                            "id": "",
+                                            "class": "h4 sans-normal",
+                                            "content": "<p><strong>Q: “When do I use it?”</strong></p><p>A:  Apply AM and PM on clean skin before appropriate Estée Lauder moisturizer. Estée Lauder moisturizer.</p>"
                                         },
                                         "components": []
                                     }
@@ -91,821 +327,172 @@
                             {
                                 "type": "npColumn",
                                 "data": {
-                                    "id": "headerCols",
-                                    "cols": "4"
+                                    "id": "",
+                                    "cols": 2,
+                                    "class": "row button-padding"
                                 },
                                 "components": [
                                     {
                                         "type": "npButton",
                                         "data": {
                                             "link": "QuizIntro",
-                                            "type": "btn-primary",
-                                            "content": "<em>Button One</em>"
+                                            "type": "",
+                                            "class": "btn btn-primary btn-sm",
+                                            "content": "Button One"
                                         },
                                         "components": []
+                                    },
+                                    {
+                                        "type": "npButton",
+                                        "data": {
+                                            "link": "QuizIntro",
+                                            "type": "",
+                                            "class": "btn btn-primary btn-sm icon",
+                                            "content": "Button One"
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npHTML",
+                                                "data": {
+                                                    "id": "",
+                                                    "class": "icon",
+                                                    "content": "<span></span>"
+                                                },
+                                                "components": []
+                                            }
+                                        ]
                                     },
                                     {
                                         "type": "npButton",
                                         "data": {
                                             "link": "Question1",
-                                            "type": "btn-primary",
-                                            "content": "<strong>Button two</strong>"
-                                        },
-                                        "components": []
-                                    },
-                                    {
-                                        "type": "npButton",
-                                        "data": {
-                                            "link": "Question2",
-                                            "type": "btn-primary",
-                                            "content": "Button three"
-                                        },
-                                        "components": []
-                                    },
-                                    {
-                                        "type": "npButton",
-                                        "data": {
-                                            "link": "Question2",
-                                            "type": "btn-primary",
-                                            "content": "Button four"
+                                            "type": "btn btn-default btn-sm",
+                                            "content": "<strong>Button 2</strong>"
                                         },
                                         "components": []
                                     }
                                 ]
                             }
                         ]
-                    },
-                    {
-                        "type": "npPage",
-                        "data": {
-                            "id": "Welcome",
-                            "parentId": "",
-                            "title": "Welcome",
-                            "inMenu": true,
-                            "required": false
-                        },
-                        "components": []
-                    },
+                    }
+                ]
+            },
+            {
+                "type": "npHTML",
+                "data": {
+                    "id": "",
+                    "class": "outside-padding",
+                    "content": ""
+                },
+                "components": [
                     {
                         "type": "npColumn",
                         "data": {
-                            "id": "planDetailsCols",
-                            "class": "col-md-12",
-                            "cols": "2"
-                        },
-                        "components": [
-                            {
-                                "type": "npQuiz",
-                                "data": {
-                                    "required": true,
-                                    "forced": true,
-                                    "type": "radio",
-                                    "difficulty": 1,
-                                    "content": " This is the 'What number am I thinking of?' quiz!",
-                                    "feedback": {
-                                        "immediate": true,
-                                        "correct": "Hey, that's right!",
-                                        "incorrect": "No! ... What are you thinking!?"
-                                    }
-                                },
-                                "components": [
-                                    {
-                                        "type": "npQuestion",
-                                        "data": {
-                                            "class": "row",
-                                            "required": true,
-                                            "forced": true,
-                                            "type": "radio",
-                                            "difficulty": 1,
-                                            "content": "What number am I thinking of?",
-                                            "feedback": {
-                                                "immediate": true,
-                                                "correct": "Hey, that's right!",
-                                                "incorrect": "No! ... What are you thinking!?"
-                                            }
-                                        },
-                                        "components": [
-                                            {
-                                                "type": "npAnswer",
-                                                "data": {
-                                                    "label": "8",
-                                                    "correct": false
-                                                },
-                                                "components": [
-                                                ]
-                                            },
-                                            {
-                                                "type": "npAnswer",
-                                                "data": {
-                                                    "label": "7,433.6",
-                                                    "correct": false
-                                                },
-                                                "components": [
-                                                ]
-                                            },
-                                            {
-                                                "type": "npAnswer",
-                                                "data": {
-                                                    "label": "<img src=\"http://i.istockimg.com/file_thumbview_approve/33898764/2/stock-photo-33898764-isolated-chicken-with-egg.jpg\" height=\"50\" />",
-                                                    "correct": true
-                                                },
-                                                "components": [
-                                                ]
-                                            },
-                                            {
-                                                "type": "npAnswer",
-                                                "data": {
-                                                    "label": "<strong>Bologna!</strong>",
-                                                    "correct": true
-                                                },
-                                                "components": [
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "type": "npQuestion",
-                                        "data": {
-                                            "required": true,
-                                            "forced": true,
-                                            "type": "checkbox",
-                                            "difficulty": 1,
-                                            "content": "What number am I thinking of?",
-                                            "feedback": {
-                                                "immediate": true,
-                                                "correct": "Hey, that's right!",
-                                                "incorrect": "No! ... What are you thinking!?"
-                                            }
-                                        },
-                                        "components": [
-                                            {
-                                                "type": "npAnswer",
-                                                "data": {
-                                                    "label": "800000000",
-                                                    "correct": false
-                                                },
-                                                "components": [
-                                                ]
-                                            },
-                                            {
-                                                "type": "npAnswer",
-                                                "data": {
-                                                    "label": "7,433.6",
-                                                    "correct": false
-                                                },
-                                                "components": [
-                                                ]
-                                            },
-                                            {
-                                                "type": "npAnswer",
-                                                "data": {
-                                                    "label": "<img src=\"http://i.istockimg.com/file_thumbview_approve/33898764/2/stock-photo-33898764-isolated-chicken-with-egg.jpg\" height=\"50\" />",
-                                                    "correct": true
-                                                },
-                                                "components": [
-                                                ]
-                                            },
-                                            {
-                                                "type": "npAnswer",
-                                                "data": {
-                                                    "label": "<strong>Bologna!</strong>",
-                                                    "correct": true
-                                                },
-                                                "components": [
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "type": "npQuestion",
-                                        "data": {
-                                            "required": true,
-                                            "forced": true,
-                                            "type": "text",
-                                            "difficulty": 1,
-                                            "content": "What is the greatest thing ever!?",
-                                            "feedback": {
-                                                "immediate": true,
-                                                "correct": "Of course it is!",
-                                                "incorrect": "Hmmm... yeeeaaa... no!"
-                                            }
-                                        },
-                                        "components": [
-                                            {
-                                                "type": "npAnswer",
-                                                "data": {
-                                                    "label": "Answer:",
-                                                    "correct": "/ice\\s?cream/i"
-                                                },
-                                                "components": []
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "npHTML",
-                                "data": {
-                                    "id": "menuBarTitle",
-                                    "content": "<h4>Sample Audio Player</h4>"
-                                },
-                                "components": [
-                                    {
-                                        "type": "npAudio",
-                                        "data": {
-                                            "id": "audioMain",
-                                            "content": "<h4>Sample Audio Player!!!</h4>",
-                                            "req": [
-                                                "mediaelement/jquery-1.11.1.min.js",
-                                                "mediaelement/mediaelement-and-player.min.js",
-                                                "mediaelement/mediaelementplayer.css"
-                                            ],
-                                            "_comment": "removeing poster",
-                                            "poster": "",
-                                            "baseURL": "/assets/audio/01CircadianCyclemix0",
-                                            "types": ["mp3"]
-                                        },
-                                        "components": []
-                                    },
-                                    {
-                                        "type": "npImage",
-                                        "data": {
-                                            "id": "imgWidget",
-                                            "src": "/assets/images/saturn1.jpg",
-                                            "alt": "widget"
-                                        },
-                                        "components": []
-                                    },
-                                    {
-                                        "type": "npImage",
-                                        "data": {
-                                            "id": "imgWidget",
-                                            "src": "/assets/images/saturn2.jpg",
-                                            "alt": "widget"
-                                        },
-                                        "components": []
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "type": "npImage",
-                        "data": {
-                            "id": "imgWidget",
-                            "src": "/assets/images/OrionsHeart.jpg",
-                            "alt": "widget"
-                        },
-                        "components": []
-                    },
-                    {
-                        "type": "npColumn",
-                        "data": {
-                            "id": "headerCols",
-                            "cols": "2"
+                            "id": "",
+                            "cols": 2,
+                            "class": "row"
                         },
                         "components": [
                             {
                                 "type": "npHTML",
                                 "data": {
-                                    "id": "menuBarTitle",
-                                    "content": "<h4>Sample Video Player (remote)</h4>"
-                                },
-                                "components": [
-                                    {
-                                        "type": "npVideo",
-                                        "data": {
-                                            "id": "vidMain",
-                                            "req": [
-                                                "mediaelement/jquery-1.11.1.min.js",
-                                                "mediaelement/mediaelement-and-player.min.js",
-                                                "mediaelement/mediaelementplayer.css"
-                                            ],
-                                            "poster": "//ia700505.us.archive.org/3/items/Windows7WildlifeSampleVideo/Windows7WildlifeSampleVideo.thumbs/Wildlife_000001.jpg",
-                                            "baseURL": "//archive.org/download/Windows7WildlifeSampleVideo/Wildlife_512kb",
-                                            "types": ["mp4"]
-                                        },
-                                        "components": []
-                                    }]
-                            },
-                            {
-                                "type": "npHTML",
-                                "data": {
-                                    "id": "menuBarTitle",
-                                    "content": "<h4>Sample Audio Player (local)</h4>"
-                                },
-                                "components": [
-                                    {
-                                        "type": "npVideo",
-                                        "data": {
-                                            "class": "vidAlt",
-                                            "req": [
-                                                "mediaelement/jquery-1.11.1.min.js",
-                                                "mediaelement/mediaelement-and-player.min.js",
-                                                "mediaelement/mediaelementplayer.css"
-                                            ],
-                                            "poster": "//ia700505.us.archive.org/3/items/Windows7WildlifeSampleVideo/Windows7WildlifeSampleVideo.thumbs/Wildlife_000001.jpg",
-                                            "baseURL": "./Wildlife_512kb",
-                                            "types": ["mp4"]
-                                        },
-                                        "components": []
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "type": "npHTML",
-                        "data": {
-                            "id": "menuBarTitle",
-                            "content": "<h4>Sample Audio Player (local, two codecs; wemb, mp4)</h4>"
-                        },
-                        "components": [
-                            {
-                                "type": "npVideo",
-                                "data": {
-                                    "class": "vidAlt",
-                                    "req": [
-                                        "mediaelement/jquery-1.11.1.min.js",
-                                        "mediaelement/mediaelement-and-player.min.js",
-                                        "mediaelement/mediaelementplayer.css"
-                                    ],
-                                    "poster": "//ia700505.us.archive.org/3/items/Windows7WildlifeSampleVideo/Windows7WildlifeSampleVideo.thumbs/Wildlife_000001.jpg",
-                                    "baseURL": "./output",
-                                    "types": ["webm", "mp4"]
-                                },
-                                "components": []
-                            }
-                        ]
-                    },
-                    {
-                        "type": "npVideo",
-                        "data": {
-                            "class": "vidAlt",
-                            "req": [
-                                "mediaelement/jquery-1.11.1.min.js",
-                                "mediaelement/mediaelement-and-player.min.js",
-                                "mediaelement/mediaelementplayer.css"
-                            ],
-                            "poster": "//ia700505.us.archive.org/3/items/Windows7WildlifeSampleVideo/Windows7WildlifeSampleVideo.thumbs/Wildlife_000001.jpg",
-                            "baseURL": "./output",
-                            "types": ["webm", "mp4"]
-                        },
-                        "components": []
-                    },
-                    {
-                        "type": "npHTML",
-                        "data": {
-                            "id": "captionMain",
-                            "builderId": "welcome_caption",
-                            "content": "Caption"
-                        },
-                        "components": []
-                    },
-                    {
-                        "type": "npColumn",
-                        "data": {
-                            "id": "planDetailsCols",
-                            "class": "col-md-12",
-                            "cols": "2"
-                        },
-                        "components": [
-                            {
-                                "type": "npHTML",
-                                "data": {
-                                    "content": "<h4>Collapse Widget</h4>",
-                                    "class": "collapse-toggle ",
-                                    "data-ng:click": "isCollapsed = !isCollapsed",
-                                    "xplugin": "np-expandable"
+                                    "id": "",
+                                    "class": "row ",
+                                    "content": ""
                                 },
                                 "components": [
                                     {
                                         "type": "npHTML",
                                         "data": {
                                             "id": "",
-                                            "class": "collapse-element",
-                                            "data-collapse": "!isCollapsed",
-                                            "content": "<p>Widget details</p>"
+                                            "class": "h5 sans-head-sub col-sm-12",
+                                            "content": "Perfect partners"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npImage",
+                                        "data": {
+                                            "id": "",
+                                            "class": " col-sm-4 img-responsive",
+                                            "src": "/assets/images/Product-Image.jpg",
+                                            "alt": "widget"
                                         },
                                         "components": [
-                                            {
-                                                "type": "npImage",
-                                                "data": {
-                                                    "id": "imgWidget",
-                                                    "src": "/assets/images/staturn1.jpg",
-                                                    "alt": "widget"
-                                                },
-                                                "components": [
-                                                ]
-                                            }
                                         ]
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": " col-sm-8 sans-small",
+                                            "content": "<p>Flexible Elastomer Technology works as a virtual ‘liquid bandage’ to instion</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": " col-sm-8 sans-small",
+                                            "content": "<p><i>1 year ago</i></p>"
+                                        },
+                                        "components": []
                                     }
                                 ]
                             },
                             {
-                                "type": "npImage",
-                                "data": {
-                                    "id": "imgWidget",
-                                    "src": "//icons.iconarchive.com/icons/hopstarter/puck/256/Yahoo-Widgets-icon.png",
-                                    "alt": "widget"
-                                },
-                                "components": []
-                            },
-                            {
                                 "type": "npHTML",
                                 "data": {
-                                    "content": "<h4>Another product</h4><p>Lorum ipsum!</p>"
+                                    "id": "",
+                                    "class": "row ",
+                                    "content": ""
                                 },
-                                "components": []
-                            },
-                            {
-                                "type": "npHTML",
-                                "data": {
-                                    "content": "Dolor amet"
-                                },
-                                "components": []
-                            }
-                        ]
-                    },
-                    {
-                        "type": "npHTML",
-                        "data": {
-                            "content": "<hr/>"
-                        },
-                        "components": []
-                    },
-                    {
-                        "type": "npColumn",
-                        "data": {
-                            "id": "colsBtnSection",
-                            "cols": 2,
-                            "class": "row"
-                        },
-                        "components":
-                                [
-                                    {
-                                        "type": "npButton",
-                                        "data": {
-                                            "link": "QuizIntro",
-                                            "type": "btn-primary",
-                                            "content": "<em>Button One</em>"
-                                        },
-                                        "components": []
-                                    },
-                                    {
-                                        "type": "npButton",
-                                        "data": {
-                                            "link": "Question1",
-                                            "type": "btn-primary",
-                                            "content": "<strong>Button 2</strong>"
-                                        },
-                                        "components": []
-                                    },
-                                    {
-                                        "type": "npButton",
-                                        "data": {
-                                            "link": "Question2",
-                                            "type": "btn-primary",
-                                            "content": "Button C"
-                                        },
-                                        "components": []
-                                    },
-                                    {
-                                        "type": "npButton",
-                                        "data": {
-                                            "link": "Question2",
-                                            "type": "btn-primary",
-                                            "content": "Button C"
-                                        },
-                                        "components": []
-                                    },
-                                    {
-                                        "type": "npButton",
-                                        "data": {
-                                            "link": "Question2",
-                                            "type": "btn-primary",
-                                            "content": "Button C"
-                                        },
-                                        "components": []
-                                    },
-                                    {
-                                        "type": "npButton",
-                                        "data": {
-                                            "link": "Question2",
-                                            "type": "btn-primary",
-                                            "content": "Button C"
-                                        },
-                                        "components": []
-                                    },
-                                    {
-                                        "type": "npButton",
-                                        "data": {
-                                            "link": "Question2",
-                                            "type": "btn-primary",
-                                            "content": "Button C"
-                                        },
-                                        "components": []
-                                    },
-                                    {
-                                        "type": "npButton",
-                                        "data": {
-                                            "link": "Question2",
-                                            "type": "btn-primary",
-                                            "content": "Button C"
-                                        },
-                                        "components": []
-                                    },
-                                    {
-                                        "type": "npButton",
-                                        "data": {
-                                            "link": "Question2",
-                                            "type": "btn-primary",
-                                            "content": "Button C"
-                                        },
-                                        "components": []
-                                    },
-                                    {
-                                        "type": "npButton",
-                                        "data": {
-                                            "link": "Question2",
-                                            "type": "btn-primary",
-                                            "content": "Button C"
-                                        },
-                                        "components": []
-                                    },
-                                    {
-                                        "type": "npButton",
-                                        "data": {
-                                            "link": "Question2",
-                                            "type": "btn-primary",
-                                            "content": "Button C"
-                                        },
-                                        "components": []
-                                    },
-                                    {
-                                        "type": "npButton",
-                                        "data": {
-                                            "link": "Question2",
-                                            "type": "btn-primary",
-                                            "content": "Button C"
-                                        },
-                                        "components": []
-                                    },
-                                    {
-                                        "type": "npButton",
-                                        "data": {
-                                            "link": "Question2",
-                                            "type": "btn-primary",
-                                            "content": "Button C"
-                                        },
-                                        "components": []
-                                    },
-                                    {
-                                        "type": "npButton",
-                                        "data": {
-                                            "link": "Question2",
-                                            "type": "btn-primary",
-                                            "content": "Button C"
-                                        },
-                                        "components": []
-                                    },
-                                    {
-                                        "type": "npButton",
-                                        "data": {
-                                            "link": "Question2",
-                                            "type": "btn-primary",
-                                            "content": "Button C"
-                                        },
-                                        "components": []
-                                    },
-                                    {
-                                        "type": "npButton",
-                                        "data": {
-                                            "link": "Question2",
-                                            "type": "btn-primary",
-                                            "content": "Button C"
-                                        },
-                                        "components": []
-                                    },
-                                    {
-                                        "type": "npButton",
-                                        "data": {
-                                            "link": "Question2",
-                                            "type": "btn-primary",
-                                            "content": "Button C"
-                                        },
-                                        "components": []
-                                    },
-                                    {
-                                        "type": "npButton",
-                                        "data": {
-                                            "link": "Question2",
-                                            "type": "btn-primary",
-                                            "content": "Button C"
-                                        },
-                                        "components": []
-                                    },
-                                    {
-                                        "type": "npButton",
-                                        "data": {
-                                            "link": "Question2",
-                                            "type": "btn-primary",
-                                            "content": "Button C"
-                                        },
-                                        "components": []
-                                    },
-                                    {
-                                        "type": "npButton",
-                                        "data": {
-                                            "link": "Question2",
-                                            "type": "btn-primary",
-                                            "content": "Button C"
-                                        },
-                                        "components": []
-                                    },
-                                    {
-                                        "type": "npButton",
-                                        "data": {
-                                            "link": "Question2",
-                                            "type": "btn-primary",
-                                            "content": "Button C"
-                                        },
-                                        "components": []
-                                    }
-                                ]
-                    },
-                    {
-                        "type": "npHTML",
-                        "data": {
-                            "id": "disclaimer",
-                            "content": "<h4>Disclaimer</h4><small>This is just a sample presentation.</small>"
-                        },
-                        "components": []
-                    },
-                    {
-                        "type": "npPage",
-                        "data": {
-                            "id": "QuizIntro",
-                            "parentId": "",
-                            "title": "Quiz",
-                            "inMenu": true,
-                            "required": false
-                        },
-                        "components":
-                                [
+                                "components": [
                                     {
                                         "type": "npHTML",
                                         "data": {
-                                            "content": "<h4>Quiz time!!!</h4>"
+                                            "id": "",
+                                            "class": "h5 sans-head-sub col-sm-12",
+                                            "content": "Perfect partners"
                                         },
                                         "components": []
                                     },
                                     {
-                                        "type": "npButton",
+                                        "type": "npImage",
                                         "data": {
-                                            "link": "Question1",
-                                            "content": "Get Started!"
-                                        },
-                                        "components": []
-                                    }
-                                ]
-                    },
-                    {
-                        "type": "npPage",
-                        "data": {
-                            "id": "Question1",
-                            "parentId": "QuizIntro",
-                            "title": "Question 1",
-                            "inMenu": true,
-                            "required": false
-                        },
-                        "components":
-                                [
-                                    {
-                                        "type": "npHTML",
-                                        "data": {
-                                            "content": "<h4>Question A</h4>"
-                                        },
-                                        "components": []
-                                    },
-                                    {
-                                        "type": "npQuestion",
-                                        "data": {
-                                            "required": true,
-                                            "forced": true,
-                                            "type": "checkbox",
-                                            "difficulty": 1,
-                                            "content": "What number am I thinking of?",
-                                            "feedback": {
-                                                "immediate": true,
-                                                "correct": "Hey, that's right!",
-                                                "incorrect": "No! ... What are you thinking!?"
-                                            }
+                                            "id": "",
+                                            "class": " col-sm-4 img-responsive",
+                                            "src": "/assets/images/Product-Image.jpg",
+                                            "alt": "widget"
                                         },
                                         "components": [
-                                            {
-                                                "type": "npAnswer",
-                                                "data": {
-                                                    "label": "8",
-                                                    "correct": false
-                                                },
-                                                "components": [
-                                                ]
-                                            },
-                                            {
-                                                "type": "npAnswer",
-                                                "data": {
-                                                    "label": "7,433.6",
-                                                    "correct": false
-                                                },
-                                                "components": [
-                                                ]
-                                            },
-                                            {
-                                                "type": "npAnswer",
-                                                "data": {
-                                                    "label": "<img src=\"http://i.istockimg.com/file_thumbview_approve/33898764/2/stock-photo-33898764-isolated-chicken-with-egg.jpg\" height=\"50\" />",
-                                                    "correct": true
-                                                },
-                                                "components": [
-                                                ]
-                                            },
-                                            {
-                                                "type": "npAnswer",
-                                                "data": {
-                                                    "label": "<strong>Bologna!</strong>",
-                                                    "correct": true
-                                                },
-                                                "components": [
-                                                ]
-                                            }
                                         ]
-                                    }
-                                ]
-                    },
-                    {
-                        "type": "npPage",
-                        "data": {
-                            "id": "Question2",
-                            "parentId": "QuizIntro",
-                            "title": "Question II",
-                            "inMenu": true,
-                            "required": false
-                        },
-                        "components":
-                                [
+                                    },
                                     {
                                         "type": "npHTML",
                                         "data": {
-                                            "content": "<h4>Question II</h4>"
+                                            "id": "",
+                                            "class": " col-sm-8 sans-small",
+                                            "content": "<p>Flexible Elastomer Technology works as a virtual ‘liquid bandage’ to instion</p>"
                                         },
                                         "components": []
                                     },
                                     {
-                                        "type": "npQuestion",
+                                        "type": "npHTML",
                                         "data": {
-                                            "required": true,
-                                            "forced": true,
-                                            "type": "text",
-                                            "difficulty": 1,
-                                            "content": "What is the greatest thing ever!?",
-                                            "feedback": {
-                                                "immediate": true,
-                                                "correct": "Of course it is!",
-                                                "incorrect": "Hmmm... yeeeaaa... no!"
-                                            }
+                                            "id": "",
+                                            "class": " col-sm-8 sans-small",
+                                            "content": "<p><i>1 year ago</i></p>"
                                         },
-                                        "components": [
-                                            {
-                                                "type": "npAnswer",
-                                                "data": {
-                                                    "label": "Answer:",
-                                                    "correct": "/ice\\s?cream/i"
-                                                },
-                                                "components": [
-                                                ]
-                                            }
-                                        ]
+                                        "components": []
                                     }
                                 ]
-                    },
-                    {
-                        "type": "npFooter",
-                        "data": {
-                            "id": "globalFooter"
-                        },
-                        "components": [
-                            {
-                                "type": "npHTML",
-                                "data": {
-                                    "id": "globalFooter",
-                                    "content": "GLOBAL FOOTER"
-                                },
-                                "components": []
                             }
                         ]
                     }
                 ]
             }
         ]
-    }]
+    }
+]
