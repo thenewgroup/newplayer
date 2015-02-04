@@ -22,7 +22,6 @@
 // Components
 @import "../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/component-animations";
 @import "../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/dropdowns";
-@import "_collapse";
 @import "../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/button-groups";
 @import "../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/input-groups";
 @import "../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/navs";
@@ -45,6 +44,7 @@
 
 //Custom Classes
 @import "_products.scss";
+@import "_collapse.scss";
 
 // Components w/ JavaScript
 @import "../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/modals";
