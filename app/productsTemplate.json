@@ -98,7 +98,9 @@
                                 "type": "npHTML",
                                 "data": {
                                     "id": "",
-                                    "class": "h3 sans-head ",
+                                    "class": "h3 sans-head collapse-toggle",
+                                    "data-ng:click": "isCollapsed = !isCollapsed",
+                                    "xplugin": "np-expandable",
                                     "content": "DEMONSTRATION"
                                 },
                                 "components": [
@@ -106,7 +108,8 @@
                                         "type": "npHTML",
                                         "data": {
                                             "id": "",
-                                            "class": "h4 sans-normal",
+                                            "class": "h4 sans-normal collapse-element",
+                                            "data-collapse": "isCollapsed",
                                             "content": "Apply a small amount to the back of your customer’s hand and gently massage into skin. Ask customer to raise both hands (fingers pointing upward) to compare the difference. "
                                         },
                                         "components": []
@@ -299,7 +302,7 @@
                                         "type": "npHTML",
                                         "data": {
                                             "id": "",
-                                            "class": "h4 sans-normal",
+                                            "class": "h4 sans-normal q-and-a-outdent",
                                             "content": "<p><strong>Q: “How do I use it?”</strong></p><p>A:  Apply AM and PM on clean skin before appropriate Estée Lauder moisturizer.</p>"
                                         },
                                         "components": []
@@ -308,7 +311,7 @@
                                         "type": "npHTML",
                                         "data": {
                                             "id": "",
-                                            "class": "h4 sans-normal",
+                                            "class": "h4 sans-normal q-and-a-outdent",
                                             "content": "<p><strong>Q: “When do I use it?”</strong></p><p>A:  Apply AM and PM on clean skin before appropriate Estée Lauder moisturizer. Estée Lauder moisturizer.</p>"
                                         },
                                         "components": []
@@ -338,7 +341,7 @@
                                         "data": {
                                             "link": "Question1",
                                             "type": "btn btn-info btn-sm",
-                                            "content": "<strong>Button 2</strong>"
+                                            "content": "GET THE FULL FACT SHEET"
                                         },
                                         "components": []
                                     }
