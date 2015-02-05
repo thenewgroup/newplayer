@@ -86,15 +86,15 @@ strong, b{
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 .container{
 }
-@media (max-width: 978px) {
+@media (max-width: 967px) {
     .np_outside-padding{
         padding: 0px;
     }
     .np_inside-padding{
-        padding: 10px;
+        padding: 5%;
     }
     .np_button-padding{
-        padding: 10px;
+        padding: 5%;
     }
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -106,22 +106,32 @@ strong, b{
     letter-spacing: 2px;
     border-bottom: solid 1px;
     border-bottom-color: $brand-lightgrey;
-    /*cursor: none;*/
     padding-top: 40px;
     padding-bottom: 3px;
     display: inline-block;
 }
-@media (max-width: 978px) {
-    .sans-head{
+
+@media (max-width: 967px) {
+    .collapse-toggle{
         background-color: $brand-offwhite;
         cursor: pointer;
         width: 100%;
         border-bottom: none;
-        padding-top: 5%;
-        padding-bottom: 5%;
+        padding-top: 7%;
+        padding-bottom: 7%;
         &:hover,
             &:focus {
-            background-color: darken($brand-offwhite, 5%);
+            /*background-color: darken($brand-offwhite, 5%);*/
+        }
+        &:before {
+            content: "\f067"; 
+            float: right;
+            font-family: 'FontAwesome';
+            color: $brand-primary;
+/*            -webkit-transition: opacity 1s ease-in-out;
+            -moz-transition: opacity 1s ease-in-out;
+            -o-transition: opacity 1s ease-in-out;*/
+            transition: opacity 1s ease-in-out;
         }
     }
 }
