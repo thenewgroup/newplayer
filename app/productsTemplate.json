@@ -99,8 +99,12 @@
                                 "data": {
                                     "id": "",
                                     "class": "h3 sans-head collapse-toggle",
-                                    "data-ng:click": "isCollapsed = !isCollapsed",
                                     "xplugin": "np-expandable",
+                                    "data-ng:click": "isCollapsed = !isCollapsed; testTest()",
+                                    "_comment data-ng:controller":"CollapseDemoCtrl",
+                                    "_comment data-ng:click": "startAnimation()",
+                                    "data-collapse": "",
+                                    "plugin": "np-collapse",
                                     "content": "DEMONSTRATION"
                                 },
                                 "components": [
@@ -109,6 +113,8 @@
                                         "data": {
                                             "id": "",
                                             "class": "h4 sans-normal collapse-element",
+                                            "xplugin": "",
+                                            "data-ng:click": "",
                                             "data-collapse": "isCollapsed",
                                             "content": "Apply a small amount to the back of your customer’s hand and gently massage into skin. Ask customer to raise both hands (fingers pointing upward) to compare the difference. "
                                         },
@@ -120,7 +126,10 @@
                                 "type": "npHTML",
                                 "data": {
                                     "id": "",
-                                    "class": "h3 sans-head ",
+                                    "class": "h3 sans-head collapse-toggle",
+                                    "xplugin": "np-expandable",
+                                    "data-ng:click": "isCollapsed = !isCollapsed",
+                                    "data-collapse": "",
                                     "content": "BENEFITS"
                                 },
                                 "components": [
@@ -128,7 +137,10 @@
                                         "type": "npHTML",
                                         "data": {
                                             "id": "",
-                                            "class": "h4 sans-normal",
+                                            "class": "h4 sans-normal collapse-element",
+                                            "xplugin": "",
+                                            "data-ng:click": "",
+                                            "data-collapse": "isCollapsed",
                                             "content": "<p><ol><li>Instantly—lines and wrinkles look plumped and smoothed.</li><li>In just one week—skin doubles its own natural collagen production.*</li><li>In just 4 weeks—96% of women showed a significant reduction in the look of lines & wrinkles.**</li></ol></p><p><small>*In vitro testing of CPR-75 Technology.</small></p><p><small>**In 4 week clinical testing of Perfectionist [CP+R].</small></p>"
                                         },
                                         "components": []
@@ -139,7 +151,10 @@
                                 "type": "npHTML",
                                 "data": {
                                     "id": "",
-                                    "class": "h3 sans-head ",
+                                    "class": "h3 sans-head  collapse-toggle",
+                                    "xplugin": "np-expandable",
+                                    "data-ng:click": "isCollapsed = !isCollapsed",
+                                    "data-collapse": "",
                                     "content": "If she asks, share"
                                 },
                                 "components": [
@@ -147,7 +162,10 @@
                                         "type": "npHTML",
                                         "data": {
                                             "id": "",
-                                            "class": "h4 sans-normal",
+                                            "class": "h4 sans-normal collapse-element",
+                                            "xplugin": "",
+                                            "data-ng:click": "",
+                                            "data-collapse": "isCollapsed",
                                             "content": "<p>Flexible Elastomer Technology works as a virtual ‘liquid bandage’ to instantly fill in and immobilize the look of wrinkles. Light Diffusion Optics blur the look of lines and wrinkles.</p><p>Exclusive Wrinkle Lift Restructuring Peptides™ —a unique peptide blend helps skin stimulate new collagen and elastin production.</p><p><strong>Together these powerful technologies:</strong></p><p>Strengthen skin’s natural support structure giving skin a firmer more defined look with fewer visible lines.</p><p><small>*In vitro testing of CPR-75 Technology.</small></p>"
                                         },
                                         "components": []
@@ -158,7 +176,10 @@
                                 "type": "npHTML",
                                 "data": {
                                     "id": "",
-                                    "class": "h3 sans-head ",
+                                    "class": "h3 sans-head  collapse-toggle",
+                                    "xplugin": "np-expandable",
+                                    "data-ng:click": "isCollapsed = !isCollapsed",
+                                    "data-collapse": "",
                                     "content": "Perfect partners"
                                 },
                                 "components": []
@@ -275,7 +296,10 @@
                                 "type": "npHTML",
                                 "data": {
                                     "id": "",
-                                    "class": "h3 sans-head ",
+                                    "class": "h3 sans-head  collapse-toggle",
+                                    "xplugin": "np-expandable",
+                                    "data-ng:click": "isCollapsed = !isCollapsed",
+                                    "data-collapse": "",
                                     "content": "STORY"
                                 },
                                 "components": [
@@ -283,7 +307,10 @@
                                         "type": "npHTML",
                                         "data": {
                                             "id": "",
-                                            "class": "h4 sans-normal",
+                                            "class": "h4 sans-normal collapse-element",
+                                            "xplugin": "",
+                                            "data-ng:click": "",
+                                            "data-collapse": "isCollapsed",
                                             "content": "<p>Our Scientists have long understood the importance of cellular energy and the critical role it plays in maintaining healthy, young looking skin. </p><p>Research shows that as we age, skin loses energy on every level—compromising its natural power to respond to the aging process. The result is that all critical age fighting mechanisms are slowed—collagen, elastin, laminins and other support proteins.  </p><p>To optimize skin’s natural line fighting ability, this overall energy  or “rhythm” must be promoted.</p><p>CPR-75 Technology delivers a surge of energy to help restore skin’s critical energy rhythm and gives it the power it needs to boost skin’s natural line-fighting power in just one week.*</p><p><small>*In vitro testing of CPR-75 Technology.</small></p>"
                                         },
                                         "components": []
@@ -294,7 +321,10 @@
                                 "type": "npHTML",
                                 "data": {
                                     "id": "",
-                                    "class": "h3 sans-head ",
+                                    "class": "h3 sans-head collapse-toggle",
+                                    "xplugin": "np-expandable",
+                                    "data-ng:click": "isCollapsed = !isCollapsed",
+                                    "data-collapse": "",
                                     "content": "CUSTOMER QUESTIONS"
                                 },
                                 "components": [
@@ -302,17 +332,11 @@
                                         "type": "npHTML",
                                         "data": {
                                             "id": "",
-                                            "class": "h4 sans-normal q-and-a-outdent",
-                                            "content": "<p><strong>Q: “How do I use it?”</strong></p><p>A:  Apply AM and PM on clean skin before appropriate Estée Lauder moisturizer.</p>"
-                                        },
-                                        "components": []
-                                    },
-                                    {
-                                        "type": "npHTML",
-                                        "data": {
-                                            "id": "",
-                                            "class": "h4 sans-normal q-and-a-outdent",
-                                            "content": "<p><strong>Q: “When do I use it?”</strong></p><p>A:  Apply AM and PM on clean skin before appropriate Estée Lauder moisturizer. Estée Lauder moisturizer.</p>"
+                                            "class": "h4 sans-normal q-and-a-outdent collapse-element",
+                                            "xplugin": "",
+                                            "data-ng:click": "",
+                                            "data-collapse": "isCollapsed",
+                                            "content": "<p><strong>Q: “How do I use it?”</strong></p><p>A:  Apply AM and PM on clean skin before appropriate Estée Lauder moisturizer.</p><p><strong>Q: “When do I use it?”</strong></p><p>A:  Apply AM and PM on clean skin before appropriate Estée Lauder moisturizer. Estée Lauder moisturizer.</p>"
                                         },
                                         "components": []
                                     }
