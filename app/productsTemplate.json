@@ -101,8 +101,6 @@
                                     "class": "h3 sans-head collapse-toggle",
                                     "xplugin": "np-expandable",
                                     "data-ng:click": "isCollapsed = !isCollapsed; testTest()",
-                                    "_comment data-ng:controller":"CollapseDemoCtrl",
-                                    "_comment data-ng:click": "startAnimation()",
                                     "data-collapse": "",
                                     "plugin": "np-collapse",
                                     "content": "DEMONSTRATION"
