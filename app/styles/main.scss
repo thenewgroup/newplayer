@@ -18,6 +18,32 @@
 body { 
     padding-bottom: 80px; 
 }*/
+#background-gradient { 
+    position: absolute;
+    background: rgba(169,3,41,1);
+    background-size: cover;
+    background-attachment: scroll;
+    content: "";
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: -2;
+}
+#background-image { 
+    position: absolute;
+    background: url(../assets/images/IMG_1466_w1920.jpg) no-repeat center center fixed;
+    background-size: cover;
+    background-attachment: scroll;
+    /*|fixed|local*/
+    content: "";
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: -1;
+}
+
 strong, b{
     font-family: $font-family-sans-serif_head;
 }
@@ -85,6 +111,17 @@ strong, b{
 /*responsive padding overrides*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 .container{
+    /*background-color: #000000;*/
+    /*position: absolute;*/
+/*    background: url(./assets/images/OrionsHeart.jpg) no-repeat center center fixed;
+    background-color: #000000;
+    background-size: cover;
+    content: "";
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;*/
+    /*z-index: -2;*/
 }
 @media (max-width: 967px) {
     .np_outside-padding{
@@ -128,9 +165,9 @@ strong, b{
             float: right;
             font-family: 'FontAwesome';
             color: $brand-primary;
-/*            -webkit-transition: opacity 1s ease-in-out;
-            -moz-transition: opacity 1s ease-in-out;
-            -o-transition: opacity 1s ease-in-out;*/
+            /*            -webkit-transition: opacity 1s ease-in-out;
+                        -moz-transition: opacity 1s ease-in-out;
+                        -o-transition: opacity 1s ease-in-out;*/
             transition: opacity 1s ease-in-out;
         }
     }
@@ -195,6 +232,26 @@ strong, b{
 .hide {
     display: none;
 }
+
+/*#background-image { 
+    position: absolute;
+    background: url(../../images/IMG_1423.JPG) no-repeat center center fixed;
+    background: url(../../images/IMG_1448.JPG) no-repeat center center fixed;
+    background: url(../../images/IMG_1466_w1920.jpg) no-repeat center center fixed;
+    background: url(../../images/IMG_1469.JPG) no-repeat center center fixed;
+    background: url(../../images/IMG_1658.JPG) no-repeat center center fixed;
+    background: url(../../images/IMG_1969.JPG) no-repeat center center fixed;
+    background: url(../../images/raven.png) no-repeat center center fixed;
+    background-size: cover;
+    content: "";
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: -2;
+}*/
+
+
 
 /*.container {
     margin: 0 auto;
