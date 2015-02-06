@@ -113,7 +113,6 @@ $font-family-serif:       Georgia, "Times New Roman", Times, serif !default;*/
     font-weight: normal;
     font-style: normal;
 }
-
 @font-face {
     font-family: 'akzidenz-grotesk_bqregular';
     src: url('./fonts/AGrotesk/akzidenzgrotesk-regular-webfont.eot');
@@ -125,7 +124,6 @@ $font-family-serif:       Georgia, "Times New Roman", Times, serif !default;*/
     font-weight: normal;
     font-style: normal;
 }
-
 @font-face {
     font-family: 'akzidenz-grotesk_bqbold';
     src: url('./fonts/AGroteskBold/akzidenzgrotesk-bold-webfont.eot');
@@ -137,19 +135,6 @@ $font-family-serif:       Georgia, "Times New Roman", Times, serif !default;*/
     font-weight: normal;
     font-style: normal;
 }
-
-@font-face {
-    font-family: 'elx-icons';
-    src: url('./fonts/elx_icons/elx-icons.eot');
-    src: url('./fonts/elx_icons/elx-icons.eot?#iefix') format('embedded-opentype'),
-         url('./fonts/elx_icons/elx-icons.woff2') format('woff2'),
-         url('./fonts/elx_icons/elx-icons.woff') format('woff'),
-         url('./fonts/elx_icons/elx-icons.ttf') format('truetype'),
-         url('./fonts/elx_icons/elx-icons.svg#elx-icons') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-
 
 //## Font, line-height, and color for body text, headings, and more.
 $font-family-sans-serif_head:  "akzidenz-grotesk_bqbold";
@@ -184,7 +169,6 @@ $line-height-base:        1.428571429 !default; // 20/14
 $line-height-computed:    floor(($font-size-base * $line-height-base)) !default; // ~20px
 
 //::::By default, this inherits from the `<body>`.
-
 $headings-font-family:    $font-family-serif !default;
 //$headings-font-family:    inherit !default;
 $headings-font-weight:    100 !default;
@@ -201,6 +185,18 @@ $headings-color:          inherit !default;
 // [converter] Asset helpers such as Sprockets and Node.js Mincer do not resolve relative paths
 /*$icon-font-path: if($bootstrap-sass-asset-helper, "bootstrap/", "../fonts/bootstrap/") !default;*/
 $icon-font-path: if($bootstrap-sass-asset-helper, "bootstrap/", "./fonts/bootstrap/") !default;
+
+@font-face {
+    font-family: 'elx-icons';
+    src: url('./fonts/elx_icons/elx-icons.eot');
+    src: url('./fonts/elx_icons/elx-icons.eot?#iefix') format('embedded-opentype'),
+         url('./fonts/elx_icons/elx-icons.woff2') format('woff2'),
+         url('./fonts/elx_icons/elx-icons.woff') format('woff'),
+         url('./fonts/elx_icons/elx-icons.ttf') format('truetype'),
+         url('./fonts/elx_icons/elx-icons.svg#elx-icons') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
 
 //::::File name for all font files.
 $icon-font-name:          "glyphicons-halflings-regular" !default;
