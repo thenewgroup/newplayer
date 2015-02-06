@@ -136,8 +136,20 @@ $font-family-serif:       Georgia, "Times New Roman", Times, serif !default;*/
          url('./fonts/AGroteskBold/akzidenzgrotesk-bold-webfont.svg#akzidenz-grotesk_bqbold') format('svg');
     font-weight: normal;
     font-style: normal;
-
 }
+
+@font-face {
+    font-family: 'elx-icons';
+    src: url('./fonts/elx_icons/elx-icons.eot');
+    src: url('./fonts/elx_icons/elx-icons.eot?#iefix') format('embedded-opentype'),
+         url('./fonts/elx_icons/elx-icons.woff2') format('woff2'),
+         url('./fonts/elx_icons/elx-icons.woff') format('woff'),
+         url('./fonts/elx_icons/elx-icons.ttf') format('truetype'),
+         url('./fonts/elx_icons/elx-icons.svg#elx-icons') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
 
 //## Font, line-height, and color for body text, headings, and more.
 $font-family-sans-serif_head:  "akzidenz-grotesk_bqbold";
