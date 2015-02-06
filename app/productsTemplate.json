@@ -180,113 +180,127 @@
                                     "data-collapse": "",
                                     "content": "Perfect partners"
                                 },
-                                "components": []
-                            },
-                            {
-                                "type": "npColumn",
-                                "data": {
-                                    "id": "",
-                                    "cols": 2,
-                                    "class": "row"
-                                },
-                                "components":
-                                        [
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "collapse-element",
+                                            "xplugin": "",
+                                            "data-ng:click": "",
+                                            "data-collapse": "isCollapsed",
+                                            "content": ""
+                                        },
+                                        "components": [
                                             {
-                                                "type": "npHTML",
+                                                "type": "npColumn",
                                                 "data": {
                                                     "id": "",
-                                                    "class": "row ",
-                                                    "content": ""
+                                                    "cols": 2,
+                                                    "class": "row"
                                                 },
-                                                "components": [
-                                                    {
-                                                        "type": "npImage",
-                                                        "data": {
-                                                            "id": "",
-                                                            "class": " col-sm-4",
-                                                            "src": "/assets/images/Product-Image.jpg",
-                                                            "alt": "widget"
-                                                        },
-                                                        "components": [
+                                                "components":
+                                                        [
+                                                            {
+                                                                "type": "npHTML",
+                                                                "data": {
+                                                                    "id": "",
+                                                                    "class": "row ",
+                                                                    "content": ""
+                                                                },
+                                                                "components": [
+                                                                    {
+                                                                        "type": "npImage",
+                                                                        "data": {
+                                                                            "id": "",
+                                                                            "class": " col-sm-4",
+                                                                            "src": "/assets/images/Product-Image.jpg",
+                                                                            "alt": "widget"
+                                                                        },
+                                                                        "components": [
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "type": "npHTML",
+                                                                        "data": {
+                                                                            "id": "",
+                                                                            "class": " col-sm-8 sans-small",
+                                                                            "content": "<p>Advanced Time Zone Age Reversing Line/Wrinkle Collection</p>"
+                                                                        },
+                                                                        "components": []
+                                                                    },
+                                                                    {
+                                                                        "type": "npHTML",
+                                                                        "data": {
+                                                                            "id": "",
+                                                                            "class": " col-sm-8 sans-small",
+                                                                            "content": "<p><i>4 days ago</i></p>"
+                                                                        },
+                                                                        "components": []
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "type": "npHTML",
+                                                                "data": {
+                                                                    "id": "",
+                                                                    "class": "row ",
+                                                                    "content": ""
+                                                                },
+                                                                "components": [
+                                                                    {
+                                                                        "type": "npImage",
+                                                                        "data": {
+                                                                            "id": "",
+                                                                            "class": " col-sm-4",
+                                                                            "src": "/assets/images/Product-Image.jpg",
+                                                                            "alt": "widget"
+                                                                        },
+                                                                        "components": [
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "type": "npHTML",
+                                                                        "data": {
+                                                                            "id": "",
+                                                                            "class": "col-sm-8 sans-small",
+                                                                            "content": "<p>Resilience Lift Firming/Sculpting Collection</p>"
+                                                                        },
+                                                                        "components": []
+                                                                    },
+                                                                    {
+                                                                        "type": "npHTML",
+                                                                        "data": {
+                                                                            "id": "",
+                                                                            "class": "col-sm-8 sans-small",
+                                                                            "content": "<p><i>3 months ago</i></p>"
+                                                                        },
+                                                                        "components": []
+                                                                    }
+                                                                ]
+                                                            }
                                                         ]
-                                                    },
-                                                    {
-                                                        "type": "npHTML",
-                                                        "data": {
-                                                            "id": "",
-                                                            "class": " col-sm-8 sans-small",
-                                                            "content": "<p>Advanced Time Zone Age Reversing Line/Wrinkle Collection</p>"
-                                                        },
-                                                        "components": []
-                                                    },
-                                                    {
-                                                        "type": "npHTML",
-                                                        "data": {
-                                                            "id": "",
-                                                            "class": " col-sm-8 sans-small",
-                                                            "content": "<p><i>4 days ago</i></p>"
-                                                        },
-                                                        "components": []
-                                                    }
-                                                ]
                                             },
                                             {
                                                 "type": "npHTML",
                                                 "data": {
                                                     "id": "",
-                                                    "class": "row ",
+                                                    "class": "row",
                                                     "content": ""
                                                 },
                                                 "components": [
                                                     {
-                                                        "type": "npImage",
-                                                        "data": {
-                                                            "id": "",
-                                                            "class": " col-sm-4",
-                                                            "src": "/assets/images/Product-Image.jpg",
-                                                            "alt": "widget"
-                                                        },
-                                                        "components": [
-                                                        ]
-                                                    },
-                                                    {
                                                         "type": "npHTML",
                                                         "data": {
                                                             "id": "",
-                                                            "class": "col-sm-8 sans-small",
-                                                            "content": "<p>Resilience Lift Firming/Sculpting Collection</p>"
-                                                        },
-                                                        "components": []
-                                                    },
-                                                    {
-                                                        "type": "npHTML",
-                                                        "data": {
-                                                            "id": "",
-                                                            "class": "col-sm-8 sans-small",
-                                                            "content": "<p><i>3 months ago</i></p>"
+                                                            "class": "h4 sans-normal",
+                                                            "content": "<p><strong>Need a phrase to help you link? Try one of these:</strong></p><p>Because you told me you're concerned with ___, I want to also show you ___.</p><p>Because you love ___, I also want to show you ___.</p>"
                                                         },
                                                         "components": []
                                                     }
                                                 ]
                                             }
                                         ]
-                            },
-                            {
-                                "type": "npHTML",
-                                "data": {
-                                    "id": "",
-                                    "class": "row",
-                                    "content": ""
-                                },
-                                "components": [
-                                    {
-                                        "type": "npHTML",
-                                        "data": {
-                                            "id": "",
-                                            "class": "h4 sans-normal",
-                                            "content": "<p><strong>Need a phrase to help you link? Try one of these:</strong></p><p>Because you told me you're concerned with ___, I want to also show you ___.</p><p>Because you love ___, I also want to show you ___.</p>"
-                                        },
-                                        "components": []
                                     }
                                 ]
                             },
@@ -354,7 +368,7 @@
                                             "link": "QuizIntro",
                                             "type": "",
                                             "class": "btn btn-primary btn-sm",
-                                            "content": "<span class='glyphicon glyphicon-heart-empty' aria-hidden='true'></span>  Favorite this"
+                                            "content": "<span class='elx-heart'></span>  Favorite this"
                                         },
                                         "components": []
                                     },
