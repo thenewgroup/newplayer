@@ -2,7 +2,7 @@
     {
         "type": "npFeature",
         "data": {
-            "id": "advancedNightRepair",
+            "id": "products",
             "class": "productTemplate ",
             "req": [],
             "version": "0.0.1",
@@ -19,6 +19,15 @@
                     "description": "product template - Advanced Night Repair"
                 },
                 "components": [
+                    {
+                        "type": "npHTML",
+                        "data": {
+                            "id": "products-background",
+                            "class": "",
+                            "content": ""
+                        },
+                        "components": []
+                    },
                     {
                         "type": "npHTML",
                         "data": {
@@ -100,8 +109,9 @@
                                     "id": "",
                                     "class": "h3 sans-head collapse-toggle",
                                     "xplugin": "np-expandable",
-                                    "data-ng:click": "isCollapsed = !isCollapsed; testTest()",
+                                    "data-ng:click": "isCollapsed = !isCollapsed",
                                     "data-collapse": "",
+                                    "data-ng": "responsiveSetState",
                                     "plugin": "np-collapse",
                                     "content": "DEMONSTRATION"
                                 },
@@ -111,7 +121,7 @@
                                         "data": {
                                             "id": "",
                                             "class": "h4 sans-normal collapse-element",
-                                            "xplugin": "",
+                                            "xplugin": "npExpandable",
                                             "data-ng:click": "",
                                             "data-collapse": "isCollapsed",
                                             "content": "Apply a small amount to the back of your customer’s hand and gently massage into skin. Ask customer to raise both hands (fingers pointing upward) to compare the difference. "
