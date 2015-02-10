@@ -28,6 +28,14 @@
                         ]
                     },
                     {
+                        "type": "npHTML",
+                        "data": {
+                            "id": "background-image",
+                            "content": ""
+                        },
+                        "components": []
+                    },
+                    {
                         "type": "npHeader",
                         "data": {
                             "id": "globalHeader"
@@ -125,6 +133,7 @@
                                     {
                                         "type": "npButton",
                                         "data": {
+                                            "class": "$re-nu-sans-serif",
                                             "link": "Question2",
                                             "type": "btn-primary",
                                             "content": "Button four"
@@ -246,6 +255,10 @@
                                             "label": "800000000",
                                             "correct": false
                                         },
+                                        "feedback": {
+                                            "correct": "correct",
+                                            "incorrect": "No! ... incorrect!?"
+                                        },
                                         "components": [
                                         ]
                                     },
@@ -253,7 +266,9 @@
                                         "type": "npAnswer",
                                         "data": {
                                             "label": "7,433.6",
-                                            "correct": false
+                                            "correct": false,
+                                            "correct": "Hey, that's right!",
+                                            "incorrect": "No! ... What are you thinking!?"
                                         },
                                         "components": [
                                         ]
@@ -262,7 +277,9 @@
                                         "type": "npAnswer",
                                         "data": {
                                             "label": "<img src=\"http://i.istockimg.com/file_thumbview_approve/33898764/2/stock-photo-33898764-isolated-chicken-with-egg.jpg\" height=\"50\" />",
-                                            "correct": true
+                                            "correct": true,
+                                            "correct": "Hey, that's right!",
+                                            "incorrect": "No! ... What are you thinking!?"
                                         },
                                         "components": [
                                         ]
@@ -322,8 +339,6 @@
                                         "mediaelement/mediaelement-and-player.min.js",
                                         "mediaelement/mediaelementplayer.css"
                                     ],
-                                    "_comment": "removeing poster",
-                                    "poster": "",
                                     "baseURL": "/assets/audio/01CircadianCyclemix0",
                                     "types": ["mp3"]
                                 },
@@ -338,28 +353,28 @@
                                 },
                                 "components": []
                             },
-                    {
-                        "type": "npImage",
-                        "data": {
-                            "id": "imgWidget",
-                            "src": "/assets/images/saturn2.jpg",
-                            "alt": "widget"
-                        },
-                        "components": []
-                    }
+                            {
+                                "type": "npImage",
+                                "data": {
+                                    "id": "imgWidget",
+                                    "src": "/assets/images/saturn2.jpg",
+                                    "alt": "widget"
+                                },
+                                "components": []
+                            }
                         ]
                     }
                 ]
             },
-                    {
-                        "type": "npImage",
-                        "data": {
-                            "id": "imgWidget",
-                            "src": "/assets/images/OrionsHeart.jpg",
-                            "alt": "widget"
-                        },
-                        "components": []
-                    },
+            {
+                "type": "npImage",
+                "data": {
+                    "id": "imgWidget",
+                    "src": "/assets/images/OrionsHeart.jpg",
+                    "alt": "widget"
+                },
+                "components": []
+            },
             {
                 "type": "npColumn",
                 "data": {
@@ -389,30 +404,6 @@
                                 },
                                 "components": []
                             }]
-                    },
-                    {
-                        "type": "npHTML",
-                        "data": {
-                            "id": "menuBarTitle",
-                            "content": "<h4>Sample Audio Player (local)</h4>"
-                        },
-                        "components": [
-                            {
-                                "type": "npVideo",
-                                "data": {
-                                    "class": "vidAlt",
-                                    "req": [
-                                        "mediaelement/jquery-1.11.1.min.js",
-                                        "mediaelement/mediaelement-and-player.min.js",
-                                        "mediaelement/mediaelementplayer.css"
-                                    ],
-                                    "poster": "//ia700505.us.archive.org/3/items/Windows7WildlifeSampleVideo/Windows7WildlifeSampleVideo.thumbs/Wildlife_000001.jpg",
-                                    "baseURL": "./Wildlife_512kb",
-                                    "types": ["mp4"]
-                                },
-                                "components": []
-                            }
-                        ]
                     }
                 ]
             },
@@ -421,37 +412,6 @@
                 "data": {
                     "id": "menuBarTitle",
                     "content": "<h4>Sample Audio Player (local, two codecs; wemb, mp4)</h4>"
-                },
-                "components": [
-            {
-                "type": "npVideo",
-                "data": {
-                    "class": "vidAlt",
-                    "req": [
-                        "mediaelement/jquery-1.11.1.min.js",
-                        "mediaelement/mediaelement-and-player.min.js",
-                        "mediaelement/mediaelementplayer.css"
-                    ],
-                    "poster": "//ia700505.us.archive.org/3/items/Windows7WildlifeSampleVideo/Windows7WildlifeSampleVideo.thumbs/Wildlife_000001.jpg",
-                    "baseURL": "./output",
-                    "types": ["webm", "mp4"]
-                },
-                "components": []
-            }
-                ]
-            },
-            {
-                "type": "npVideo",
-                "data": {
-                    "class": "vidAlt",
-                    "req": [
-                        "mediaelement/jquery-1.11.1.min.js",
-                        "mediaelement/mediaelement-and-player.min.js",
-                        "mediaelement/mediaelementplayer.css"
-                    ],
-                    "poster": "//ia700505.us.archive.org/3/items/Windows7WildlifeSampleVideo/Windows7WildlifeSampleVideo.thumbs/Wildlife_000001.jpg",
-                    "baseURL": "./output",
-                    "types": ["webm", "mp4"]
                 },
                 "components": []
             },
