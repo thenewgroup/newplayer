@@ -1,0 +1,146 @@
+.npHotspot{
+    /*max-width: 575px;*/
+    top: 0;
+    left: 0;
+}
+.hotspotImage{
+    position: relative;
+    max-width: 575px;
+}
+.hotspotButton{
+    position: absolute;
+    max-width:90px;
+    height: auto;
+    margin: 0;
+
+margin-top: -.75rem;
+margin-left: -3.25rem;
+/*        margin-top: -5px;
+        margin-left: -30px;*/
+/*        margin-top: -10px;
+        margin-left: -35px;*/
+    padding: 0;
+    cursor: pointer;
+}
+.hotspotButtonImage{
+    margin: 0;
+    padding: 0;
+}
+
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*Hotspot button left position classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.posA{
+    left: 0%;
+}
+.posB{
+    left: 6.25%;
+}
+.posC{
+    left: 12.50%;
+}
+.posD{
+    left: 18.75%;
+}
+.posE{
+    left: 25%;
+}
+.posF{
+    left: 31.25%;
+}
+.posG{
+    left: 37.5%;
+}
+.posH{
+    left: 43.75%;
+}
+.posI{
+    left: 50%;
+}
+.posJ{
+    left: 56.25%;
+}
+.posK{
+    left: 62.5%;
+}
+.posL{
+    left: 68.75%;
+}
+.posM{
+    left: 75%;
+}
+.posN{
+    left: 81.25%;
+}
+.posO{
+    left: 87.5%;
+}
+.posP{
+    left: 93.75%;
+}
+.posQ{
+    left: 100%;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*Hotspot button top position classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.pos1{
+    top: 0%;
+}
+.pos2{
+    top: 5.26%;
+}
+.pos3{
+    top: 10.52%;
+}
+.pos4{
+    top: 15.78%;
+}
+.pos5{
+    top: 21.05%;
+}
+.pos6{
+    top: 26.31%;
+}
+.pos7{
+    top: 31.57%;
+}
+.pos8{
+    top: 36.84%;
+}
+.pos9{
+    top: 42.10%;
+}
+.pos10{
+    top: 47.36%;
+}
+.pos11{
+    top: 52.63%;
+}
+.pos12{
+    top: 57.89%;
+}
+.pos13{
+    top: 63.15%;
+}
+.pos14{
+    top: 68.42%;
+}
+.pos15{
+    top: 73.68%;
+}
+.pos16{
+    top: 78.94%;
+}
+.pos17{
+    top: 84.21%;
+}
+.pos18{
+    top: 89.47%;
+}
+.pos19{
+    top: 94.73%;
+}
+.po20{
+    top: 100%;
+}
