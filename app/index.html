@@ -10,7 +10,7 @@
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
   <!-- build:css(.) styles/vendor.css -->
   <!-- bower:css -->
-  <link rel="stylesheet" href="bower_components/Font-Awesome/css/font-awesome.css"/>
+  <link rel="stylesheet" href="bower_components/Font-Awesome/css/font-awesome.css" />
   <!-- endbower -->
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
   <!-- endbuild -->
@@ -46,15 +46,12 @@
   your browser</a> to improve your experience.</p>
 <![endif]-->
 
-<div class="container">
-  <div class="main" ng-class="{'cover':coverSupported}">
-    <div ui-view="init" autoscroll='true'>
-      <div class="preloader">
-        <i class="fa fa-refresh fa-spin"></i>
-      </div>
-    </div>
-  </div>
-</div>
+		<div class="container">
+			<div class="main" ng-class="{'cover':coverSupported}">
+				<newplayer np-id="sample" np-url="/sample.json"></newplayer>
+				</div>
+			</div>
+		</div>
 
 <!-- build:js(.) scripts/vendor.js -->
 <!-- bower:js -->
@@ -68,17 +65,16 @@
 <!-- endbuild -->
 
 <!-- build:js({app,.tmp}) scripts/main.js -->
-<script src="scripts/manifest/ManifestCtrl.js"></script>
-<script src="scripts/component/ComponentDirective.js"></script>
 <script src="scripts/component/Assessment/assessment.service.js"></script>
-<script src="scripts/Router.js"></script>
-<script src="scripts/AppCtrl.js"></script>
 <script src="scripts/main.js"></script>
+<!--<script src="scripts/Router.js"></script>-->
+<script src="scripts/AppCtrl.js"></script>
 <script src="scripts/api/APIService.js"></script>
 <script src="scripts/api/ConfigService.js"></script>
-<script src="scripts/manifest/ManifestService.js"></script>
+<script src="scripts/component/ComponentDirective.js"></script>
 <script src="scripts/component/ComponentService.js"></script>
+<script src="scripts/manifest/ManifestCtrl.js"></script>
+<script src="scripts/manifest/ManifestService.js"></script>
 <!-- endbuild -->
-
 </body>
 </html>

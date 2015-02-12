@@ -44,22 +44,24 @@
       function initialize(npConfig) {
         $log.debug('ConfigService::initialize:config:', npConfig, self.getManifestId());
 
-        var manifestURL = npConfig.manifestURL;
-        if (!!manifestURL) {
-          setManifestURL(manifestURL.replace('{manifestId}', self.getManifestId()));
+        if (!!npConfig.manifestId) {
+          self.setManifestId(npConfig.manifestId);
         } else {
-          setManifestURL('sample.json');
+          throw new Error('manifestId cannot be empty');
+        }
+        if (!!npConfig.manifestURL) {
+          setManifestURL(npConfig.manifestURL);
+        } else {
+          throw new Error('manifestURL cannot be empty');
         }
 
-        var overrideURL = npConfig.overrideURL;
-        if (!!overrideURL) {
-          setOverrideURL(overrideURL.replace('{manifestId}', self.getManifestId()));
-        } else {
-          setOverrideURL('sample-override.json');
+        if( !!npConfig.overrideURL ) {
+          setOverrideURL(npConfig.overrideURL);
         }
 
-        $log.debug('ConfigService::initialize: config override data:', npConfig.overrideManifest);
-        setOverride(npConfig.overrideManifest);
+        if( !!npConfig.overrideManifest ) {
+          setOverride(npConfig.overrideManifest);
+        }
       }
 
       function setConfig(data) {

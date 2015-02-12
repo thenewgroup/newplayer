@@ -100,6 +100,7 @@
             }
           }
         }
+
         setComponentIdx(idx);
         if (!idx) {
           return null;
