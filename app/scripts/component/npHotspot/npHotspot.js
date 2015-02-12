@@ -12,7 +12,6 @@ function npMediaElementDirective($log) {
     var Directive = function () {
         this.restrict = 'A';
         this.link = function (scope, element, attrs, controller) {
-//            jQuery(element).attr('img', scope.image);
         };
     };
     return new Directive();
@@ -20,33 +19,32 @@ function npMediaElementDirective($log) {
 
 angular
         .module('npHotspot')
-        /** @ngInject */
-        .controller('npHotspotController', function ($log, $scope, $sce, $element) {
-            var cmpData = $scope.component.data;
-            $log.debug('npHotspot::data', cmpData, $element);
-//            console.log('npHotspot::data', cmpData, $element);
+        .controller('npHotspotController',
+                function ($log, $scope, $sce, $element) {
+                    var cmpData = $scope.component.data;
+                    var buttonData = $scope.feedback || {};
+                    $log.debug('npHotspot::data', cmpData, buttonData);
 
-            this.id = cmpData.id;
-            this.baseURL = cmpData.baseURL;
-            this.src = cmpData.image;
-//            var content = ManifestService.getComponent( this.content );
+                    var hotspotButtons = '';
+                    this.hotspotButtons = cmpData.hotspotButtons;
 
-            $scope.content = this.content = cmpData.content;
-            console.log('hotspot button content: ' + $scope.content);
+                    this.id = cmpData.id;
+                    this.baseURL = cmpData.baseURL;
+                    this.src = cmpData.image;
 
-            $scope.image = this.image = cmpData.image;
-            console.log('hotspot image reference: ' + $scope.image);
+                    $scope.feedback = this.feedback = cmpData.feedback;
+                    $scope.image = this.image = cmpData.image;
 
-        }
+                    this.update = function (button) {
+                        var idx = this.hotspotButtons.indexOf(button);
+                        this.feedback = button.feedback;
+                    };
+                }
         )
-
         .directive('mediaelement', npMediaElementDirective)
-
         /** @ngInject */
         .run(
                 function ($log, $rootScope) {
                     $log.debug('npHotspot::component loaded!');
-                    console.log('npHotspot::component loaded!');
                 }
         );
-

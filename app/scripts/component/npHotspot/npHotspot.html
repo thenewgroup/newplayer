@@ -6,14 +6,17 @@
                     <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
                 </div>
                 <img class="{{component.type}} np-cmp-main img-responsive" ng-controller="npHotspotController as npHotspot" ng-src="{{npHotspot.src}}" alt="{{npHotspot.alt}}" />
-                <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+                <div ng-repeat="hotspotButton in npHotspot.hotspotButtons">
+                    <div class="{{hotspotButton.class}} hotspotButton" ng-click="npHotspot.update(hotspotButton)">
+                        <img class="hotspotButtonImage" ng-src="{{hotspotButton.image}}" alt="{{npHotspot.alt}}" />
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-sm-5">
-            <div class="hotspotContent">
-                
-            </div>
-            <span ng-bind-html="npHotspotButton.content"></span>
+            <div class="hotspotContent"></div>
+            <div class="npHotspot-feedback" ng-bind-html="npHotspot.feedback"></div>
         </div>
     </div>
+    <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
 </div>
