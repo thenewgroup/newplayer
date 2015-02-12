@@ -8,7 +8,7 @@
     position: absolute;
     background-color: #000000;
     background-size: cover;
-    background-attachment: local ; /*|fixed|local*/
+    background-attachment: local;
     content: "";
     width:100%;
     height:2600px;
@@ -20,11 +20,7 @@
 }
 #np_reNutriv #renutriv-background-image { 
     position: absolute;
-    /*background-image: url(../assets/images/ESTL-005_ReNutriv_bg_img.jpg);*/
-    /*background-repeat:  no-repeat;*/
     width: 50%;
-    /*height: auto;*/
-    /*background-attachment: scroll;*/
     right: 0;
     top: 0;
     z-index: -1;
@@ -63,8 +59,29 @@
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player padding wrapper classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-#np_reNutriv .hotspotContent{
+#np_reNutriv .npHotspot-feedback{
     background-color: #000000;
+    opacity: .9;
+    padding: 10px;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player padding wrapper classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+#np_reNutriv .hotspotButton{
+    margin: 0; 
+    margin-top: -.75rem;
+    margin-left: -3.25rem;
+}
+#np_reNutriv .hotspotImage{
+    
+}
+#np_reNutriv .hotspotButtonImage{
+    
+}
+#np_reNutriv .npHotspot-feedback{
+    border-style: solid;
+    border-color: #css-gradients2;
+    margin-top: 10%;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player padding wrapper classes*/
