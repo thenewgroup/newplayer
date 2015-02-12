@@ -31,7 +31,7 @@ function ManifestController(
 		var config = ConfigService.getConfig();
 		if ( $state.is( 'manifest' ) )
 		{
-			
+
 			if ( !!config && !!config.Content && typeof( config.Content.lang ) === 'string' )
 			{
 				lang = config.Content.lang;

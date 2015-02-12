@@ -1,46 +1,48 @@
-'use strict';
+(function() {
+  'use strict';
 
-/** @ngInject */
-function APIService( $log, $http/*, $timeout, $q, $state, $rootScope*/ )
-{
-	$log.debug( '\nApiService: Init\n' );
+  angular
+    .module('newplayer')
+    .factory('APIService', APIService);
 
-	var Service = function()
-	{
-		var self = this;
+  /** @ngInject */
+  function APIService($log, $http/*, $timeout, $q, $state, $rootScope*/) {
+    $log.debug('\nApiService: Init\n');
 
-		this.getData = function( url )
-		{
-			$log.debug( 'APIService::getData: URL:', url );
-			var aPromise =
-				$http.get(
-					url,
-					{
-						cache: true
-					}
-				)
-				.then(
-					function(data)
-					{
-						$log.debug( 'APIService::Received data from server ', data );
-						return data.data;
-					}
-				);
-			return aPromise;
-		};
+    var Service = function () {
+      var self = this;
 
-/*,
-		sendData:function(data){
-			$log.debug('APIService::Sending data to '+baseUrl+'/npAPI/',data);
-			return $http({
-				method: 'POST',
-				url: baseUrl+'/npAPI/',
-				data: data
-			});
-		}
-*/
-	};
-	return new Service();
+      this.getData = function (url) {
+        $log.debug('APIService::getData: URL:', url);
+        var aPromise =
+          $http.get(
+            url,
+            {
+              cache: true
+            }
+          )
+            .then(
+            function (data) {
+              $log.debug('APIService::Received data from server ', data);
+              return data.data;
+            }
+          );
+        return aPromise;
+      };
 
-}
+      /*,
+       sendData:function(data){
+       $log.debug('APIService::Sending data to '+baseUrl+'/npAPI/',data);
+       return $http({
+       method: 'POST',
+       url: baseUrl+'/npAPI/',
+       data: data
+       });
+       }
+       */
+    };
+    return new Service();
 
+  }
+
+})();

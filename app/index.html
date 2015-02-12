@@ -1,74 +1,84 @@
 <!doctype html>
 <html class="no-js" ng-app="newplayer" ng-controller="AppController">
-	<head>
-		<meta charset="utf-8">
-		<title>{{PageTitle}}</title>
-		<meta name="description" content="">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<link rel="shortcut icon" href="/favicon.ico">
-		<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-		<!-- build:css(.) styles/vendor.css -->
-		<!-- bower:css -->
-		<link rel="stylesheet" href="bower_components/Font-Awesome/css/font-awesome.css" />
-		<!-- endbower -->
-		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-		<!-- endbuild -->
-		<!-- build:css(.tmp) styles/main.css -->
-		<link rel="stylesheet" href="styles/main.css">
-		<!-- endbuild -->
-		<!-- build:js scripts/vendor/modernizr.js -->
-		<script src="bower_components/modernizr/modernizr.js"></script>
-		<!-- endbuild -->
+<head>
+  <meta charset="utf-8">
+  <title>{{PageTitle}}</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  <!-- build:css(.) styles/vendor.css -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/Font-Awesome/css/font-awesome.css"/>
+  <!-- endbower -->
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
+  <!-- endbuild -->
+  <!-- build:css(.tmp) styles/main.css -->
+  <link rel="stylesheet" href="styles/main.css">
+  <!-- endbuild -->
+  <!-- build:js scripts/vendor/modernizr.js -->
+  <script src="bower_components/modernizr/modernizr.js"></script>
+  <!-- endbuild -->
 
-	</head>
-	<body>
+</head>
+<body>
 <!-- Google Tag Manager -->
-<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-54LSVR"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-54LSVR');</script>
+<noscript>
+  <iframe src="//www.googletagmanager.com/ns.html?id=GTM-54LSVR"
+          height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+<script>(function (w, d, s, l, i) {
+  w[l] = w[l] || [];
+  w[l].push({
+    'gtm.start': new Date().getTime(), event: 'gtm.js'
+  });
+  var f = d.getElementsByTagName(s)[0],
+    j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+  j.async = true;
+  j.src =
+    '//www.googletagmanager.com/gtm.js?id=' + i + dl;
+  f.parentNode.insertBefore(j, f);
+})(window, document, 'script', 'dataLayer', 'GTM-54LSVR');</script>
 <!-- End Google Tag Manager -->
-		<!--[if lt IE 10]>
-			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-		<![endif]-->
+<!--[if lt IE 10]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+  your browser</a> to improve your experience.</p>
+<![endif]-->
 
-		<div class="container">
-			<div class="main" ng-class="{'cover':coverSupported}">
-				<div ui-view="init" autoscroll='true'>
-					<div class="preloader">
-						<i class="fa fa-refresh fa-spin"></i>
-					</div>
-				</div>
-			</div>
-		</div>
+<div class="container">
+  <div class="main" ng-class="{'cover':coverSupported}">
+    <div ui-view="init" autoscroll='true'>
+      <div class="preloader">
+        <i class="fa fa-refresh fa-spin"></i>
+      </div>
+    </div>
+  </div>
+</div>
 
-		<!-- build:js(.) scripts/vendor.js -->
-		<!-- bower:js -->
-		<script src="bower_components/angular/angular.js"></script>
-		<script src="bower_components/oclazyload/dist/ocLazyLoad.min.js"></script>
-		<script src="bower_components/ui-router/release/angular-ui-router.js"></script>
-		<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-		<script src="bower_components/angular-touch/angular-touch.js"></script>
-		<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-		<!-- endbower -->
-		<!-- endbuild -->
+<!-- build:js(.) scripts/vendor.js -->
+<!-- bower:js -->
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/oclazyload/dist/ocLazyLoad.min.js"></script>
+<script src="bower_components/ui-router/release/angular-ui-router.js"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="bower_components/angular-touch/angular-touch.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
 
-		<!-- build:js({app,.tmp}) scripts/main.js -->
-		<script src="scripts/api/APIService.js"></script>
-		<script src="scripts/api/ConfigService.js"></script>
-		<script src="scripts/manifest/ManifestService.js"></script>
-		<script src="scripts/manifest/ManifestCtrl.js"></script>
-		<script src="scripts/component/Assessment/assessment.service.js"></script>
-		<script src="scripts/component/ComponentService.js"></script>
-		<script src="scripts/component/ComponentDirective.js"></script>
-		<script src="scripts/Router.js"></script>
-		<script src="scripts/AppCtrl.js"></script>
-		<script src="scripts/main.js"></script>
-		<!-- endbuild -->
+<!-- build:js({app,.tmp}) scripts/main.js -->
+<script src="scripts/manifest/ManifestCtrl.js"></script>
+<script src="scripts/component/ComponentDirective.js"></script>
+<script src="scripts/component/Assessment/assessment.service.js"></script>
+<script src="scripts/Router.js"></script>
+<script src="scripts/AppCtrl.js"></script>
+<script src="scripts/main.js"></script>
+<script src="scripts/api/APIService.js"></script>
+<script src="scripts/api/ConfigService.js"></script>
+<script src="scripts/manifest/ManifestService.js"></script>
+<script src="scripts/component/ComponentService.js"></script>
+<!-- endbuild -->
 
-	</body>
+</body>
 </html>

@@ -1,121 +1,114 @@
-'use strict';
+(function() {
+  'use strict';
 
-/** @ngInject */
-function ConfigService( $log, APIService, ManifestService/*, $timeout, $q, $state, $rootScope*/ )
-{
-	$log.debug('configService::Init');
+  angular
+    .module('newplayer')
+    .factory('ConfigService', ConfigService);
 
-	var Service = function()
-	{
-		var self = this;
-		var configData = null;
-		var manifestId = null;
-		var manifestURL = null;
-		var overrideURL = null;
-		var overrideData = null;
+  /** @ngInject */
+  function ConfigService($log, APIService, ManifestService/*, $timeout, $q, $state, $rootScope*/) {
+    $log.debug('configService::Init');
 
-		this.setManifestId = function( id )
-		{
-			$log.debug( 'ConfigService::setManifestId', id );
-			self.manifestId = id;
-		};
-		this.getManifestId = function()
-		{
-			return self.manifestId;
-		};
+    var Service = function () {
+      var self = this;
+      var configData = null;
+      var manifestId = null;
+      var manifestURL = null;
+      var overrideURL = null;
+      var overrideData = null;
 
-		function setManifestURL( url )
-		{
-			self.manifestURL = url;
-		}
-		this.getManifestURL = function()
-		{
-			return self.manifestURL;
-		};
+      this.setManifestId = function (id) {
+        $log.debug('ConfigService::setManifestId', id);
+        self.manifestId = id;
+      };
+      this.getManifestId = function () {
+        return self.manifestId;
+      };
 
-		function setOverrideURL( url )
-		{
-			self.overrideURL = url;
-		}
-		this.getOverrideURL = function()
-		{
-			return self.overrideURL;
-		};
+      function setManifestURL(url) {
+        self.manifestURL = url;
+      }
 
-		function initialize( npConfig )
-		{
-			$log.debug( 'ConfigService::initialize:config:', npConfig, self.getManifestId() );
+      this.getManifestURL = function () {
+        return self.manifestURL;
+      };
 
-			var manifestURL = npConfig.manifestURL;
-			if ( !!manifestURL )
-			{
-				setManifestURL( manifestURL.replace( '{manifestId}', self.getManifestId() ) );
-			} else {
-				setManifestURL( 'sample.json' );
-			}
+      function setOverrideURL(url) {
+        self.overrideURL = url;
+      }
 
-			var overrideURL = npConfig.overrideURL;
-			if ( !!overrideURL )
-			{
-				setOverrideURL( overrideURL.replace( '{manifestId}', self.getManifestId() ) );
-			} else {
-				setOverrideURL( 'sample-override.json' );
-			}
+      this.getOverrideURL = function () {
+        return self.overrideURL;
+      };
 
-			$log.debug( 'ConfigService::initialize: config override data:', npConfig.overrideManifest );
-			setOverride( npConfig.overrideManifest );
-		}
+      function initialize(npConfig) {
+        $log.debug('ConfigService::initialize:config:', npConfig, self.getManifestId());
 
-		function setConfig( data )
-		{
-			self.configData = data;
-		}
-		this.getConfig = function( )
-		{
-			return self.configData;
-		};
-		this.getConfigData = function( url )
-		{
-			$log.debug( 'ConfigService::getConfigData:', url );
-			var configPromise = self.getData( url );
-			configPromise.then(
-				function( configData ) {
-					$log.debug( 'ConfigService::config data from server ', configData );
-					setConfig( configData[0] );
-					initialize( configData[0] );
-				}
-			);
-			return configPromise;
-		};
+        var manifestURL = npConfig.manifestURL;
+        if (!!manifestURL) {
+          setManifestURL(manifestURL.replace('{manifestId}', self.getManifestId()));
+        } else {
+          setManifestURL('sample.json');
+        }
 
-		function setOverride( data )
-		{
-			$log.debug( 'ConfigService::setOverrideData:', data );
-			self.overrideData = data;
-		}
-		this.getOverride = function( )
-		{
-			return self.overrideData;
-		};
-		this.getOverrideData = function( url )
-		{
-			$log.debug( 'ConfigService::getOverrideData:', url );
-			var overridePromise = self.getData( url );
-			overridePromise.then(
-				function( overrideData ) {
-					angular.extend( (self.getOverride()||{}), overrideData[0] );
-					$log.debug( 'ConfigService::getOverrideData: merged:', self.getOverride() );
-				}
-			);
-			return overridePromise;
-		};
+        var overrideURL = npConfig.overrideURL;
+        if (!!overrideURL) {
+          setOverrideURL(overrideURL.replace('{manifestId}', self.getManifestId()));
+        } else {
+          setOverrideURL('sample-override.json');
+        }
 
-	};
+        $log.debug('ConfigService::initialize: config override data:', npConfig.overrideManifest);
+        setOverride(npConfig.overrideManifest);
+      }
 
-	var configService = new Service();
-	angular.extend( configService, APIService );
+      function setConfig(data) {
+        self.configData = data;
+      }
 
-	$log.debug( 'ConfigService::', configService );
-	return configService;
+      this.getConfig = function () {
+        return self.configData;
+      };
+      this.getConfigData = function (url) {
+        $log.debug('ConfigService::getConfigData:', url);
+        var configPromise = self.getData(url);
+        configPromise.then(
+          function (configData) {
+            $log.debug('ConfigService::config data from server ', configData);
+            setConfig(configData[0]);
+            initialize(configData[0]);
+          }
+        );
+        return configPromise;
+      };
 
-}
+      function setOverride(data) {
+        $log.debug('ConfigService::setOverrideData:', data);
+        self.overrideData = data;
+      }
+
+      this.getOverride = function () {
+        return self.overrideData;
+      };
+      this.getOverrideData = function (url) {
+        $log.debug('ConfigService::getOverrideData:', url);
+        var overridePromise = self.getData(url);
+        overridePromise.then(
+          function (overrideData) {
+            angular.extend((self.getOverride() || {}), overrideData[0]);
+            $log.debug('ConfigService::getOverrideData: merged:', self.getOverride());
+          }
+        );
+        return overridePromise;
+      };
+
+    };
+
+    var configService = new Service();
+    angular.extend(configService, APIService);
+
+    $log.debug('ConfigService::', configService);
+    return configService;
+
+  }
+})();

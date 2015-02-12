@@ -10,14 +10,10 @@ angular
     'ngSanitize'
   ]
 )
+
+
 /** @ngInject */
-  .factory('APIService', APIService)
-/** @ngInject */
-  .factory('ConfigService', ConfigService)
-/** @ngInject */
-  .factory('ManifestService', ManifestService)
-/** @ngInject */
-  .factory('ComponentService', ComponentService)
+
 /** @ngInject */
   .factory('AssessmentService', AssessmentService)
 /** @ngInject */
