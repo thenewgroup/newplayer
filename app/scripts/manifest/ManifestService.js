@@ -342,7 +342,9 @@
         $log.debug('ManifestService::initialize:', data, overrides);
 
         setData(data);
-        setOverrides(overrides[0]);
+        if( !! overrides ) {
+          setOverrides(overrides[0]);
+        }
         manifestInitialized = false;
 
         // index all components

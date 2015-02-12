@@ -26,6 +26,7 @@
       };
 
       function setManifestURL(url) {
+        $log.debug('ConfigService::setManifestURL', url);
         self.manifestURL = url;
       }
 
@@ -82,6 +83,12 @@
           }
         );
         return configPromise;
+      };
+
+      this.setConfigData = function (configData) {
+          $log.debug('ConfigService::config data from server ', configData);
+          setConfig(configData);
+          initialize(configData);
       };
 
       function setOverride(data) {
