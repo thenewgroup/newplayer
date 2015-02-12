@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('newplayer')
+    .module('newplayer.service')
     .factory('ConfigService', ConfigService);
 
   /** @ngInject */

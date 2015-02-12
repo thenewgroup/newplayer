@@ -1,19 +1,24 @@
-'use strict';
+(function() {
+  'use strict';
 
-angular
-  .module(
-  'newplayer',
-  [
-    'ui.router',
-    'ui.bootstrap',
-    'oc.lazyLoad',
-    'ngSanitize'
-  ]
-)
+  'use strict';
 
-/** @ngInject */
-  .factory('AssessmentService', AssessmentService);
+  angular
+    .module(
+    'newplayer',
+    [
+      'ui.router',
+      'ui.bootstrap',
+      'oc.lazyLoad',
+      'ngSanitize',
+      'newplayer.service',
+    ]
+  )
 
+  /** @ngInject */
+    .factory('AssessmentService', AssessmentService);
+
+})();
 ///** @ngInject */
 //  .config(Router)
 //

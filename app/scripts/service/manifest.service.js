@@ -2,10 +2,8 @@
   'use strict';
 
   angular
-    .module('newplayer')
+    .module('newplayer.service')
     .factory('ManifestService', ManifestService);
-
-  'use strict';
 
   /*
    * console:
@@ -153,14 +151,19 @@
        * Initializes the component for the manifest
        */
       function initializeComponent(cmp) {
+        var builderId, newData, localOverrides;
         if (!cmp) {
           return;
         }
 
         if (!manifestInitialized) {
           // first pass, check overrides and modify this component
-          var builderId = (cmp.data || {}).builderId;
-          var newData = getOverrides()[builderId];
+          builderId = (cmp.data || {}).builderId;
+          localOverrides = getOverrides();
+          if( !!localOverrides ) {
+            newData = localOverrides[builderId];
+          }
+
           if (!!builderId && !!newData) {
             // TBD - improve data sanitization
             if (angular.isString(newData)) {
