@@ -60,8 +60,8 @@
 /*New Player padding wrapper classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*When setting this ID for New Player use: content-background */
-#np_reNutriv .np_content-background{
-    background-color:rgba(255,255,255,75);
+#np_reNutriv .content-background{
+    background-color:hsla(0,100%,0%,0.5);
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player padding wrapper classes*/
@@ -72,22 +72,13 @@
     margin-left: -3.25rem;
 }
 #np_reNutriv .hotspotImage{
-    
+    margin-bottom: 10%;
 }
 #np_reNutriv .hotspotButtonImage{
     
 }
 #np_reNutriv .npHotspot-feedback{
-    border-width: 3px;
-    border-style: solid;
     padding: 10px;
-    border-color: #caa04e;
-/* IE9 SVG, needs conditional override of 'filter' to 'none' */
-border-color: -webkit-gradient(left bottom, rgba(202,161,78,1) 0%, rgba(248,228,171,1) 32%, rgba(202,161,78,1) 66%, rgba(243,220,127,1) 100%);
-/*-webkit-border-image: -webkit-gradient(linear, left top, left bottom, from(#00abeb), to(#fff), color-stop(0.5, #fff), color-stop(0.5, #66cc00)) 21 30 30 21 repeat repeat;*/
-
-
-    margin-top: 10%;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player padding wrapper classes*/
