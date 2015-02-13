@@ -51,7 +51,8 @@ $brand-danger:          #DC3522 !default;
 
 /*::::Gradiant::::*/
 /*Gradiant points*/
-/*$brand-gradiant:         gradient-horizontal-four-colors(#ffffff; #f9f9f9; 33%; #bbb, 66%, #e7eaef);*/
+$brand-gradiant:        gold-linear-gradient(45deg, #caa04e 0%,#f8e4ab 33%,#caa04e 66%,#f3db7f 100%); 
+$gold-gradiant:        gold-linear-gradient(45deg, #caa04e 0%,#f8e4ab 33%,#caa04e 66%,#f3db7f 100%); 
 
 /*@mixin gradient-horizontal-four-colors($start-color: #00b3ee, $mid-color: #7a43b6, $color-stop: 33%, $mid-color-2: #abcdef, $color-stop-2: 66%, $end-color: #c3325f) {
     background-image: -webkit-linear-gradient(left, $start-color, $mid-color $color-stop, $mid-color-2 $color-stop-2, $end-color);
