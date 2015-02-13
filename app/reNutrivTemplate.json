@@ -22,7 +22,7 @@
                     {
                         "type": "npHTML",
                         "data": {
-                            "id": "renutriv-background",
+                            "id": "newplayer-background",
                             "class": "",
                             "content": ""
                         },
@@ -79,6 +79,7 @@
                                 "type": "npHotspot",
                                 "data": {
                                     "id": "",
+                                    "class": "test-strip",
                                     "req": [
                                         "mediaelement/jquery-1.11.1.min.js",
                                         "mediaelement/GreenSock/TweenMax.js",
