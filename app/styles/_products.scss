@@ -5,15 +5,15 @@
 /*page type background classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
-/*When setting this ID for New Player Re Nutriv use: 'products'*/
-#np_products #np_products-background{
+/*When setting this ID for New Player use: 'newplayer-background'*/
+#np_products #np_newplayer-background{
     position: absolute;
     background-color: $brand-offwhite;
     background-size: cover;
-    background-attachment: local ; /*|fixed|local*/
+    position:fixed;
     content: "";
     width:100%;
-    height:100vh;
+    height:auto;
     bottom: 0;
     left: 0;
     right: 0;
@@ -35,7 +35,7 @@
 /*Sans font overrides*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 #np_products .sans-head{
-    font-family: $font-family-sans-serif_head !important;
+    font-family: $font-family-sans-serif_head;
     text-transform: uppercase;
     border-bottom: solid 1px;
     border-bottom-color: $brand-lightgrey;
@@ -74,6 +74,16 @@
 }
 @media (max-width: $screen-sm) {
     #np_products .topImage{
-        margin-left:-10px;
+        margin-left:0;
+    }
+    #np_products .sans-head{
+        font-family: $font-family-sans-serif_head;
+        text-transform: uppercase;
+        border-bottom: none;
+        letter-spacing: 2px;
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
+        margin-top: 0;
+        display: inline-block;
     }
 }
