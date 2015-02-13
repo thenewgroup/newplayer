@@ -1,8 +1,6 @@
 (function() {
   'use strict';
 
-  'use strict';
-
   angular
     .module(
     'newplayer',
@@ -16,11 +14,13 @@
   )
 
   /** @ngInject */
-    .factory('AssessmentService', AssessmentService);
+    .factory('AssessmentService', AssessmentService)
 
+    .config( /** @ngInject */ function ($logProvider) {
+      $logProvider.debugEnabled(false);
+    });
 })();
-///** @ngInject */
-//  .config(Router)
+
 //
 ///** @ngInject */
 //  .run(
