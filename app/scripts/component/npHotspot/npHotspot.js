@@ -3,7 +3,6 @@
 angular
         .module(
                 'npHotspot', []
-                /*, [ 'com.2fdevs.videogular' ] */
                 );
 
 /** @ngInject */
@@ -26,7 +25,7 @@ angular
                     $log.debug('npHotspot::data', cmpData, buttonData);
 
                     var hotspotButtons = '';
-                    this.hotspotButtons = cmpData.hotspotButtons;
+                    this.hotspotButtons = cmpData.hotspotButtons; 
 
                     this.id = cmpData.id;
                     this.baseURL = cmpData.baseURL;
