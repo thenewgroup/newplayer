@@ -9,7 +9,7 @@
 
   /** @ngInject */
   function ComponentDirective($log, ManifestService, ComponentService, $compile/*, $stateParams, $state, $timeout*/) {
-    $log.info('\nnpComponent::Init\n');
+    $log.debug('\nnpComponent::Init\n');
 
     var Directive = function () {
       var vm = this;
@@ -18,7 +18,7 @@
       /** @ngInject */
       this.controller =
         function ($scope, $element, $attrs) {
-           $log.info('DEBUG: npComponent::controller', $element, $attrs );
+           $log.debug('npComponent::controller', $element, $attrs );
           /*
            var $attributes = $element[0].attributes;
            */
@@ -28,7 +28,7 @@
       this.compile = function (tElement, tAttrs, transclude) {
         /** @ngInject */
         return function ($scope, $element, $attributes) {
-          $log.info('DEBUG: npComponent::compile!');
+          $log.debug('npComponent::compile!');
 
           parseComponent($scope, $element, $attributes);
         };
@@ -58,14 +58,14 @@
         var cmp = ManifestService.getComponent($attributes.idx);
         var cmpIdx = cmp.idx || [0];
 
-        $log.info('DEBUG: npComponent::parseComponent', cmp, cmpIdx, $attributes);
+        $log.debug('npComponent::parseComponent', cmp, cmpIdx, $attributes);
         if (!!cmp) {
           ComponentService.load(
             cmp
           )
             .then(
             function () {
-              $log.info('DEBUG: npComponent::parseComponent then', cmp, cmpIdx);
+              $log.debug('npComponent::parseComponent then', cmp, cmpIdx);
               // reset scope!!!
               $scope.subCmp = false;
               $scope.component = cmp;
@@ -106,7 +106,7 @@
                 }
               }
               if (!!cmp.components && cmp.components.length > 0) {
-                $log.info('DEBUG: npComponent::parseComponent - HAS SUBS:', cmp);
+                $log.debug('npComponent::parseComponent - HAS SUBS:', cmp);
                 $scope.subCmp = true;
                 $scope.components = cmp.components;
               }
@@ -116,7 +116,7 @@
               )
                 .then(
                 function (data) {
-                  $log.info('DEBUG: npComponent::parseComponent: template', data);
+                  $log.debug('npComponent::parseComponent: template', data);
 
                   // modify template before compiling!?
                   var tmpTemplate = document.createElement('div');

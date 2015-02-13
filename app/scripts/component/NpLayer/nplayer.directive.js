@@ -40,11 +40,15 @@
   }
 
   /** @ngInject */
-  function NpLayerController($scope, $element, $attrs, $log, $compile,
+  function NpLayerController($scope, $rootScope, $element, $attrs, $log, $compile,
                              APIService, ComponentService, ConfigService, ManifestService) {
     var vm = this;
     vm.manifestData = null;
     vm.overrideData = null;
+
+    $rootScope.$on('npLangChanged', npLangChanged);
+    $rootScope.$on('npPageChanged', npPageChanged);
+    //.on('npManifestChanged', npManifestChanged)
 
     ConfigService.setConfigData(vm);
     var manifestURL = ConfigService.getManifestURL();
@@ -52,6 +56,11 @@
       vm.manifestData = md;
 
       var overrideURL = ConfigService.getOverrideURL();
+
+      if( !!vm.language ) {
+        ManifestService.setLang(lang);
+      }
+
       if (!!overrideURL) {
         $log.info('NpLayer: getting override data from:', overrideURL);
         ConfigService.getOverrideData(overrideURL).then(function (od) {
@@ -64,6 +73,25 @@
         renderComponent(vm, $scope, $element, $attrs, $compile);
       }
     });
+
+    //function npManifestChanged(event, toManifest, toPage) {
+    //
+    //}
+    function npLangChanged(event, toLang) {
+      $log.info('npLangChanged', event, toLang);
+      if( !!toLang ) {
+        ManifestService.setLang(toLang);
+        parseComponent($scope, $element, $attrs, $compile);
+      }
+    }
+    function npPageChanged(event, toPage) {
+      $log.info('npPageChanged', event, toPage);
+      if( !!toPage ) {
+        ManifestService.setPageId(toPage);
+        $element.empty();
+        parseComponent($scope, $element, $attrs, $compile);
+      }
+    }
 
     $log.info('NpLayer ConfigService:', ConfigService);
 

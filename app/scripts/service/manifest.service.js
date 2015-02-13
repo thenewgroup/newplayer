@@ -335,6 +335,7 @@
         return this.pageId;
       };
       this.setPageId = function (pageId) {
+        $log.info('ManifestService, setPageId', pageId);
         // reset component index for reparsing new page
         setComponentIdx(null);
 
@@ -342,9 +343,11 @@
       };
 
       this.initialize = function (data, overrides) {
-        $log.debug('ManifestService::initialize:', data, overrides);
+        $log.info('ManifestService::initialize:', data, overrides);
 
-        setData(data);
+        if( !!data ) {
+          setData(data);
+        }
         if( !! overrides ) {
           setOverrides(overrides[0]);
         }
