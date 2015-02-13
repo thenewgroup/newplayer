@@ -3,7 +3,7 @@
   'use strict';
   angular
     .module('newplayer')
-    .factory('npComponent', ComponentDirective);
+    .directive('npComponent', ComponentDirective);
 
   'use strict';
 
