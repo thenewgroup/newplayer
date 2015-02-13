@@ -9,7 +9,8 @@
     "angular-sanitize": "~1.2.27",
     "oclazyload": ">=0.5.1",
     "angular-touch": "~1.2.26",
-    "angular-bootstrap": "~0.12.0"
+    "angular-bootstrap": "~0.12.0",
+    "lodash": "~3.1.0"
   },
   "resolutions": {
     "angular": "~1.2.27"

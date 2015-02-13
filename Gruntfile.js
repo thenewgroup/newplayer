@@ -25,8 +25,8 @@ module.exports = function (grunt) {
   var userJS = [
         'Gruntfile.js',
         '<%= config.app %>/scripts/{,**/}*.js',
-        '!<%= config.app %>/scripts/**/mediaelement/*',
-        '!<%= config.app %>/scripts/vendor/**',
+        '!<%= config.app %>/scripts/**/mediaelement/**/*',
+        '!<%= config.app %>/scripts/vendor/**/*',
         'test/spec/{,*/}*.js'
       ];
 

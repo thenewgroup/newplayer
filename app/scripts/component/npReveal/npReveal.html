@@ -1,0 +1,9 @@
+<div class="np-cmp-wrapper {{ component.type }}" ngController="npRevealController as npReveal">
+  <div class="debug">
+    <h3>{{ component.type }} -- <small>{{ component.idx }}</small></h3>
+  </div>
+
+  <h1>{{ component.data.name }}</h1>
+  <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+
+</div>
