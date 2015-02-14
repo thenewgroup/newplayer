@@ -13,7 +13,7 @@ angular
   .controller('npButtonController',
   function ($log, $scope, $sce, $location, $element, ConfigService, ManifestService) {
     var cmpData = $scope.component.data || {};
-    $log.info('npButton::data', cmpData);
+    $log.debug('npButton::data', cmpData);
 
     this.content = '';
     var btnContent = cmpData.content;

@@ -1,26 +1,30 @@
 <div class="{{component.type}}" ng-controller="npVideoController as npVideo" id="{{npVideo.id}}">
 
-	<div class="debug">
-		<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
-	</div>
+  <div class="debug">
+    <h3>{{component.type}} --
+      <small>{{component.idx}}</small>
+    </h3>
+  </div>
 
-	<video
-		height="{{npVideo.height}}"
-		width="{{npVideo.width}}"
-		preload="{{npVideo.preload}}"
-		mediaelement>
-<!--
-		<source type="video/{{npVideo.types[0]}}" src="{{npVideo.baseURL}}.{{npVideo.types[0]}}" />
-		<source ng-repeat="type in npVideo.types" type="video/{{type}}" src="{{npVideo.baseURL}}.{{type}}" />
--->
-		<object width="{{npVideo.width}}" height="{{npVideo.height}}" type="application/x-shockwave-flash" data="scripts/component/npVideo/mediaelement/flashmediaelement.swf">
-			<param name="movie" value="scripts/component/npVideo/mediaelement/flashmediaelement.swf" />
-			<param name="flashvars" value="controls=true&file={{npVideo.baseURL}}.mp4" />
-			<param name="allowfullscreen" value="false" />
-			<!-- Image as a last resort -->
-			<!--<img src="myvideo.jpg" width="320" height="240" title="No video playback capabilities" />-->
-		</object>
-	</video>
+  <video
+    height="{{npVideo.height}}"
+    width="{{npVideo.width}}"
+    poster="{{npVideo.poster}}"
+    preload="{{npVideo.preload}}"
+    ng-src="{{npVideo.src}}"
+    mediaelement>
 
-	<div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+    {{ sources }}
+
+    <object width="{{npVideo.width}}" height="{{npVideo.height}}" type="application/x-shockwave-flash"
+            data="scripts/component/npVideo/mediaelement/flashmediaelement.swf">
+      <param name="movie" value="scripts/component/npVideo/mediaelement/flashmediaelement.swf"/>
+      <param name="flashvars" value="controls=true&file={{npVideo.baseURL}}.mp4"/>
+      <param name="allowfullscreen" value="false"/>
+      <!-- Image as a last resort -->
+      <!--<img src="myvideo.jpg" width="320" height="240" title="No video playback capabilities" />-->
+    </object>
+  </video>
+
+  <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
 </div>
