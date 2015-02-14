@@ -7,7 +7,7 @@ angular
 );
 
 /** @ngInject */
-function npMenuDirective($log, $compile, ManifestService/*, $stateParams, $state, $timeout*/) {
+function npMenuDirective($log, $compile, ManifestService/*, $timeout*/) {
   $log.debug('\nnpMenuDirective::Init\n');
   var Directive = function () {
     this.restrict = 'EA';

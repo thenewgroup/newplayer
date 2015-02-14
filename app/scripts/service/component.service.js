@@ -6,7 +6,7 @@
     .factory('ComponentService', ComponentService);
 
   /** @ngInject */
-  function ComponentService($log, ManifestService, $http, $ocLazyLoad /*, $timeout, $http, $q, $state, $rootScope*/) {
+  function ComponentService($log, ManifestService, $http, $ocLazyLoad /*, $timeout, $http, $q, $rootScope*/) {
     $log.debug('\nComponentService::Init\n');
 
     var Service = function () {

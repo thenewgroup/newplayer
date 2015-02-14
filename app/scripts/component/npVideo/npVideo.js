@@ -13,9 +13,8 @@ function npMediaElementDirective($log) {
     this.restrict = 'EA';
     this.replace = true;
     this.link = function (scope, element, attrs, controller) {
-      $log.info('scope sources:', scope.sources);
       attrs.$observe('src', function () {
-        $log.debug('mediaelementDirective::element', element);
+        $log.info('mediaelementDirective::element', element);
         jQuery(element).mediaelementplayer({
           features: ['playpause', 'progress', 'current', 'duration', 'tracks', 'volume']
         });
@@ -31,16 +30,17 @@ angular
 /** @ngInject */
   .controller('npVideoController',
   function ($log, $scope, $sce, $element) {
+
     var cmpData = $scope.component.data;
     $log.debug('npVideo::data', cmpData, $element);
 
     this.id = cmpData.id;
-    this.baseURL = cmpData.baseURL;
-
+    $scope.baseURL = this.baseURL = cmpData.baseURL;
     $scope.poster = this.poster = cmpData.poster;
     $scope.height = this.height = cmpData.height || 360;
     $scope.width = this.width = cmpData.width || 640;
     $scope.preload = this.preload = cmpData.preload || 'none';
+
 
     // video source elements need to be static BEFORE mediaElement is initiated
     // binding the attributes to the model was not working
@@ -48,12 +48,17 @@ angular
     var types = cmpData.types;
     if (angular.isArray(types) && types.length > 0) {
       $log.debug('npVideo::data:types', types);
-      var sources = '';
+      var sources = [];
       for (var typeIdx in types) {
         var type = types[typeIdx];
-        $log.debug('npVideo::data:types:type', typeIdx, type);
-        sources += '<source type="video/' + type + '" src="' + this.baseURL + '.' + type + '" />';
-        $scope[type] = this.baseURL + '.' + type;
+        sources.push({
+          type: type,
+          mime: 'video/' + type,
+          src: $sce.trustAsResourceUrl(this.baseURL + '.' + type)
+        });
+    //    $log.debug('npVideo::data:types:type', typeIdx, type);
+    //    sources += '<source type="video/' + type + '" src="' + this.baseURL + '.' + type + '" />';
+    //    $scope[type] = this.baseURL + '.' + type;
       }
       $scope.sources = sources;
     }

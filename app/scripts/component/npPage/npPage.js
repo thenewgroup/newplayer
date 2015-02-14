@@ -11,7 +11,7 @@ angular
 
 /** @ngInject */
   .controller('npPageController',
-  function ($log, $scope, $rootScope, $state, ManifestService) {
+  function ($log, $scope, $rootScope, ManifestService) {
     var cmpData = $scope.component.data || {};
     $log.debug('npPage::data', cmpData, $scope.contentTitle);
 

@@ -6,7 +6,7 @@
     .directive('npLayer', NpLayer);
 
   /** @ngInject */
-  function NpLayer($log/*, $stateParams, $state, $timeout*/) {
+  function NpLayer($log/*,  $timeout*/) {
     $log.debug('NpLayer::Init\n');
 
     var directive = {

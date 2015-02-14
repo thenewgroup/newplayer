@@ -11,7 +11,7 @@
    */
 
   /** @ngInject */
-  function ManifestService($log, $rootScope /*, $timeout, $http, $q, $state, */) {
+  function ManifestService($log, $rootScope /*, $timeout, $http, $q */) {
     $log.debug('\nManifestService::Init\n');
 
     var Service = function () {

@@ -8,7 +8,7 @@
   'use strict';
 
   /** @ngInject */
-  function ComponentDirective($log, ManifestService, ComponentService, $compile/*, $stateParams, $state, $timeout*/) {
+  function ComponentDirective($log, ManifestService, ComponentService, $compile/*, $timeout*/) {
     $log.debug('\nnpComponent::Init\n');
 
     var Directive = function () {

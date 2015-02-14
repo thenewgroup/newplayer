@@ -6,7 +6,7 @@
     .factory('APIService', APIService);
 
   /** @ngInject */
-  function APIService($log, $http/*, $timeout, $q, $state, $rootScope*/) {
+  function APIService($log, $http/*, $timeout, $q, $rootScope*/) {
     $log.debug('\nApiService: Init\n');
 
     var Service = function () {

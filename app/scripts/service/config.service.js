@@ -6,7 +6,7 @@
     .factory('ConfigService', ConfigService);
 
   /** @ngInject */
-  function ConfigService($log, APIService, ManifestService/*, $timeout, $q, $state, $rootScope*/) {
+  function ConfigService($log, APIService, ManifestService/*, $timeout, $q, $rootScope*/) {
     $log.debug('configService::Init');
 
     var Service = function () {

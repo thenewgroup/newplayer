@@ -14,7 +14,7 @@
     ng-src="{{npVideo.src}}"
     mediaelement>
 
-    {{ sources }}
+    <source ng-repeat="source in sources" type="{{source.type}}" ng-src="{{source.src}}" />
 
     <object width="{{npVideo.width}}" height="{{npVideo.height}}" type="application/x-shockwave-flash"
             data="scripts/component/npVideo/mediaelement/flashmediaelement.swf">
