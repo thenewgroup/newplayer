@@ -46,8 +46,8 @@
     vm.manifestData = null;
     vm.overrideData = null;
 
-    $rootScope.$on('npLangChanged', npLangChanged);
-    $rootScope.$on('npPageChanged', npPageChanged);
+    // $rootScope.$on('npLangChanged', npLangChanged);
+    // $rootScope.$on('npPageWantsChange', npPageChanged);
     //.on('npManifestChanged', npManifestChanged)
 
     ConfigService.setConfigData(vm);
@@ -84,12 +84,12 @@
         parseComponent($scope, $element, $attrs, $compile);
       }
     }
-    function npPageChanged(event, toPage) {
-      $log.info('npPageChanged', event, toPage);
+    function npPageWantsChange(event, toPage) {
+      $log.info('npPageWantsChange', event, toPage);
       if( !!toPage ) {
         ManifestService.setPageId(toPage);
-        $element.empty();
-        parseComponent($scope, $element, $attrs, $compile);
+        //$element.empty();
+        //parseComponent($scope, $element, $attrs, $compile);
       }
     }
 

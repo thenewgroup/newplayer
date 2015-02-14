@@ -3,7 +3,7 @@
 angular
   .module(
   'npButton',
-  ['newplayer.service']
+  []
 );
 
 angular
@@ -11,9 +11,9 @@ angular
 
 /** @ngInject */
   .controller('npButtonController',
-  function ($log, $scope, $sce, $location, $element, ConfigService, npState) {
+  function ($log, $scope, $sce, $location, $element, ConfigService, ManifestService) {
     var cmpData = $scope.component.data || {};
-    $log.debug('npButton::data', cmpData);
+    $log.info('npButton::data', cmpData);
 
     this.content = '';
     var btnContent = cmpData.content;
@@ -50,7 +50,7 @@ angular
     this.go = function () {
       if (this.linkInternal) {
         //$location.url(this.link);
-        npState.showPageId(cmpData.id);
+        ManifestService.setPageId(cmpData.link);
       } else {
         window.open(this.link, this.target);
       }

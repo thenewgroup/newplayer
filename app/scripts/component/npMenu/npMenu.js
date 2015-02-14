@@ -7,7 +7,7 @@ angular
 );
 
 /** @ngInject */
-function npMenuDirective($log, $compile/*, $stateParams, $state, $timeout*/) {
+function npMenuDirective($log, $compile, ManifestService/*, $stateParams, $state, $timeout*/) {
   $log.debug('\nnpMenuDirective::Init\n');
   var Directive = function () {
     this.restrict = 'EA';
@@ -42,11 +42,11 @@ function npMenuDirective($log, $compile/*, $stateParams, $state, $timeout*/) {
   return new Directive();
 
   /** @ngInject */
-  function npMenuDirectiveController($log, $compile, npState) {
+  function npMenuDirectiveController($log, $compile, ManifestService) {
     var vm = this;
-    vm.changePageId = function(toPageId) {
-      $log.info('changePageId', toPageId);
-      npState.showPageId(toPageId);
+    vm.changePageId = function(toPage) {
+      $log.info('changePageId', toPage);
+      ManifestService.setPageId(toPage);
     }
   };
 }

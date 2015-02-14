@@ -11,7 +11,7 @@
    */
 
   /** @ngInject */
-  function ManifestService($log, APIService/*, $timeout, $http, $q, $state, $rootScope,*/) {
+  function ManifestService($log, $rootScope /*, $timeout, $http, $q, $state, */) {
     $log.debug('\nManifestService::Init\n');
 
     var Service = function () {
@@ -340,6 +340,7 @@
         setComponentIdx(null);
 
         this.pageId = pageId;
+        $rootScope.$broadcast('npPageIdChanged', pageId);
       };
 
       this.initialize = function (data, overrides) {
