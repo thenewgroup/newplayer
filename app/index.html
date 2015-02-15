@@ -10,6 +10,8 @@
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
   <!-- build:css(.) styles/vendor.css -->
   <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/mediaelement/build/mediaelementplayer.css" />
+  <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker-bs3.css" />
   <!-- endbower -->
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
   <!-- endbuild -->
@@ -54,11 +56,20 @@
 
 <!-- build:js(.) scripts/vendor.js -->
 <!-- bower:js -->
+<script src="bower_components/jquery/jquery.js"></script>
 <script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-common/modules/mediaelement/mediaelement.js"></script>
 <script src="bower_components/oclazyload/dist/ocLazyLoad.min.js"></script>
 <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
 <script src="bower_components/angular-touch/angular-touch.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="bower_components/angular-mocks/angular-mocks.js"></script>
+<script src="bower_components/lodash/dist/lodash.compat.js"></script>
+<script src="bower_components/jquery-ui/ui/jquery-ui.js"></script>
+<script src="bower_components/jquery-form/jquery.form.js"></script>
+<script src="bower_components/moment/moment.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
@@ -69,6 +80,8 @@
 <script src="scripts/service/config.service.js"></script>
 <script src="scripts/service/manifest.service.js"></script>
 <script src="scripts/service/component.service.js"></script>
+
+<script src="scripts/component/component.module.js"></script>
 
 <script src="scripts/component/Assessment/assessment.service.js"></script>
 <script src="scripts/main.js"></script>

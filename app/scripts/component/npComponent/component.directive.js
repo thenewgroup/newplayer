@@ -5,8 +5,6 @@
     .module('newplayer')
     .directive('npComponent', ComponentDirective);
 
-  'use strict';
-
   /** @ngInject */
   function ComponentDirective($log, ManifestService, ComponentService, $compile/*, $timeout*/) {
     $log.debug('\nnpComponent::Init\n');

@@ -1,4 +1,4 @@
-<div class="{{component.type}}" ng-controller="npVideoController as npVideo" id="{{npVideo.id}}">
+<np-video component="component" class="{{component.type}}" id="{{component.data.id}}">
 
   <div class="debug">
     <h3>{{component.type}} --
@@ -7,24 +7,24 @@
   </div>
 
   <video
-    height="{{npVideo.height}}"
-    width="{{npVideo.width}}"
-    poster="{{npVideo.poster}}"
-    preload="{{npVideo.preload}}"
-    ng-src="{{npVideo.src}}"
-    mediaelement>
+    height="{{component.data.height}}"
+    width="{{component.data.width}}"
+    poster="{{component.data.poster}}"
+    preload="{{component.data.preload}}"
+    ng-src="{{component.data.src}}"
+    controls="controls"
+    mediaelelement>
 
-    <source ng-repeat="source in sources" type="{{source.type}}" ng-src="{{source.src}}" />
 
-    <object width="{{npVideo.width}}" height="{{npVideo.height}}" type="application/x-shockwave-flash"
+    <source ng-repeat="source in npVideo.sources" type="video/{{source.type}}" ng-src="{{source.src}}" />
+
+    <object width="{{component.data.width}}" height="{{component.data.height}}" type="application/x-shockwave-flash"
             data="scripts/component/npVideo/mediaelement/flashmediaelement.swf">
       <param name="movie" value="scripts/component/npVideo/mediaelement/flashmediaelement.swf"/>
-      <param name="flashvars" value="controls=true&file={{npVideo.baseURL}}.mp4"/>
+      <param name="flashvars" value="controls=true&file={{component.data.baseURL}}.mp4"/>
       <param name="allowfullscreen" value="false"/>
-      <!-- Image as a last resort -->
-      <!--<img src="myvideo.jpg" width="320" height="240" title="No video playback capabilities" />-->
     </object>
   </video>
 
   <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
-</div>
+</np-video>
