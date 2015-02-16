@@ -14,6 +14,14 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
+.elx-surveys-convo:before {
+	content: "\e616";
+}
+
+.elx-news-starburst:before {
+	content: "\e617";
+}
+
 .elx-carat-down:before {
 	content: "\e600";
 }
