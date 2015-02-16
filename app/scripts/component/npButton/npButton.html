@@ -1,11 +1,11 @@
-<button class="{{component.type}} np-cmp-main" ng-controller="npButtonController as npButton" ng-click="npButton.go()">
+<button class="{{component.type}} {{npButton.type}} np-cmp-main btn"  ng-controller="npButtonController as npButton" ng-click="npButton.go()">
 
-	<div class="debug">
-		<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
-	</div>
+    <div class="debug">
+        <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
+    </div>
 
-	<span ng-bind-html="npButton.content"></span>
+    <span ng-bind-html="npButton.content"></span>
 
-	<div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+    <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
 
 </button>
