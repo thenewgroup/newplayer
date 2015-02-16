@@ -126,7 +126,7 @@
 		text-align: left;
 
 		&:before {
-			content: "\00f054"; 
+			content: "\00f054";
 			float: left;
 			font-family: 'FontAwesome';
 			-webkit-transition: 0.5s ease all;
@@ -148,10 +148,10 @@
 
 	.row {
 		&:after {
-			content: "."; 
-			visibility: hidden; 
-			display: block; 
-			height: 0; 
+			content: ".";
+			visibility: hidden;
+			display: block;
+			height: 0;
 			clear: both;
 		}
 
@@ -183,10 +183,10 @@
 			&.col-last {
 				&:after {
 					clear: both;
-					content: "."; 
-					visibility: hidden; 
-					display: block; 
-					height: 0; 
+					content: ".";
+					visibility: hidden;
+					display: block;
+					height: 0;
 					width: 100%;
 				}
 			}
