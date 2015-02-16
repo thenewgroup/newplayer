@@ -8,7 +8,7 @@
 
   /** @ngInject */
   function NpVideoDirective($log) {
-    $log.info('DEBUG | \npVideo::Init\n');
+    $log.debug('\npVideo::Init\n');
     return {
       restrict: 'EA',
       controller: NpVideoController,
