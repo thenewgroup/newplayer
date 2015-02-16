@@ -18,7 +18,7 @@
       var DEFAULT_TEMPLATE = 'scripts/component/blank.html';
 
       // must be used during initial load
-      // can't be relied upon after prmoise resolves
+      // can't be relied upon after promise resolves
       var cmpDependencies = [];
       var cmpPlugins = [];
 
