@@ -3,40 +3,21 @@
 /*@import "bootstrap-sass/assets/stylesheets/_bootstrap";*/
 /*@import "../bower_components/bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";*/
 @import "_bootstrap.scss";
-/*@import "_variables";*/
 /*@import "/Users/xian/Documents/NewPlayer/newplayer/bower_components/bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";*/
-/*@import "_collapse";*/
-/*@import "_theme";*/
+
 
 /*////////////////////////////////////////////////////////////////////////////////*/
-/*content offset for fixed nav*/
-/*body { 
-    padding-top: 180px; 
-}
-body { 
-    padding-bottom: 80px; 
-}*/
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/*background support classes*/
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/*#background-gradient { 
-    position: absolute;
-    background: rgba(169,3,41,1);
-    background-size: cover;
-    background-attachment: scroll;
-    content: "";
-    bottom: 0;
-    left: 0;
-    right: 0;
-    top: 0;
-    z-index: -2;
-}*/
 
-
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*support classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 strong, b{
     font-family: $font-family-sans-serif_head;
 }
-
+svg {
+    width: 100%;
+    height:100%;
+}
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*Angular UI classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
