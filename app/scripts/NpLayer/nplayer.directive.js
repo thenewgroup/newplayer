@@ -12,11 +12,7 @@
     var directive = {
       restrict: 'E',
       scope: {
-        manifestId: '@npId',
-        manifestURL: '@npUrl',
-        overrideURL: '@npOverrideUrl',
-        overrideData: '@npOverrideData',
-        language: '@npLang'
+        config: '=npConfig'
       },
       //compile: function (tElement, tAttrs, transclude, ConfigService)
       //{
@@ -50,7 +46,7 @@
     // $rootScope.$on('npPageWantsChange', npPageChanged);
     //.on('npManifestChanged', npManifestChanged)
 
-    ConfigService.setConfigData(vm);
+    ConfigService.setConfigData(vm.config);
     loadManifests();
 
     //function npManifestChanged(event, toManifest, toPage) {
