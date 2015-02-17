@@ -25,17 +25,8 @@ angular
     $log.info('npHTML::content', $scope.content, this.content, cmpData.link);
 
     this.handleLink = function() {
-      //$event.stopPropagation();
-      $log.info('npHTML:handleLink');
-
-      if( cmpData.link.match(/\.json$/) ) {
         $log.info('npHTML:handleLink | link is a manifest');
         $rootScope.$broadcast('npReplaceManifest', cmpData.link);
-
-      } else {
-        $log.info('npHTML:handleLink | sending user to a location');
-        $window.location = cmpData.link;
-      }
     }
   }
 )
