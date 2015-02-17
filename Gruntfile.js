@@ -64,6 +64,12 @@ module.exports = function (grunt) {
         files: ['<%= config.app %>/styles/{,**/}*.css'],
         tasks: ['newer:copy:styles', 'autoprefixer']
       },
+      config: {
+        files: ['<%= config.app %>/{,**/}*.json'],
+        options: {
+          livereload: true
+        }
+      },
       livereload: {
         options: {
           livereload: '<%= connect.options.livereload %>'
@@ -225,7 +231,8 @@ module.exports = function (grunt) {
     // additional tasks can operate on them
     useminPrepare: {
       options: {
-        dest: '<%= config.dist %>'
+        dest: '<%= config.dist %>',
+        flow: { steps: { js: ['concat'], css: ['concat'] }, post: {} }
       },
       html: '<%= config.app %>/index.html'
     },
@@ -237,7 +244,9 @@ module.exports = function (grunt) {
           '<%= config.dist %>',
           '<%= config.dist %>/images',
           '<%= config.dist %>/styles'
-        ]
+        ],
+        flow: { steps: { js: ['concat'], css: ['concat'
+        ] }, post: {} }
       },
       html: ['<%= config.dist %>/{,*/}*.html'],
       css: ['<%= config.dist %>/styles/{,*/}*.css']
@@ -285,6 +294,14 @@ module.exports = function (grunt) {
           src: '{,*/}*.html',
           dest: '<%= config.dist %>'
         }]
+      }
+    },
+
+    ngtemplates:  {
+      newplayer:        {
+        cwd: 'app/',
+        src: 'scripts/**/*.html',
+        dest: 'app/scripts/templates.js'
       }
     },
 
@@ -368,32 +385,14 @@ module.exports = function (grunt) {
           cwd: '.',
           src: 'bower_components/Font-Awesome/fonts/*',
           dest: '<%= config.dist %>/fonts/'
-        }, {  // NP - KJP - copy mediaelement player
-          expand: true,
-          dot: true,
-          flatten: true,
-          cwd: '.',
-          src: 'bower_components/mediaelement/build/*',
-          dest: '<%= config.dist %>/scripts/component/npVideo/mediaelement/'
-        }, {  // NP - KJP - copy all plugins
-          expand: true,
-          dot: true,
-          cwd: '<%= config.app %>/scripts/plugin/',
-          src: '{,**/}*.{js,html,css}', // NP - MW
-          dest: '<%= config.dist %>/scripts/plugin/'
-        }, {  // NP - KJP - copy all component templates
-          expand: true,
-          dot: true,
-          cwd: '<%= config.app %>/scripts/component/',
-          src: '{,**/}*.{js,html,css}', // NP - MW
-          dest: '<%= config.dist %>/scripts/component/'
-        }, {  // NP - KJP - copy manifest templates
-          expand: true,
-          dot: true,
-          cwd: '<%= config.app %>/scripts/manifest/',
-          src: '{,*/}*.html',
-          dest: '<%= config.dist %>/scripts/manifest/'
-        }]
+        } //, {
+        //  expand: true,
+        //  dot: true,
+        //  cwd: '.tmp/',
+        //  src: '.newplayer.templates.js',
+        //  dest: '<%= config.dist %>/scripts/'
+        //},
+        ]
       },
       styles: {
         expand: true,
@@ -433,7 +432,7 @@ module.exports = function (grunt) {
       dist: [
         'sass',
         'copy:styles',
-        'imagemin',
+//        'imagemin',
         'svgmin'
       ]
     }
@@ -451,6 +450,7 @@ module.exports = function (grunt) {
     grunt.task.run([
       'clean:server',
       'wiredep',
+      'ngtemplates',
       'concurrent:server',
       'autoprefixer',
       'connect:livereload',
@@ -484,10 +484,11 @@ module.exports = function (grunt) {
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
+    'ngtemplates',
     'concat',
     'ngAnnotate',
-    'cssmin',
-    'uglify',
+    //'cssmin',
+    //'uglify',
     'copy:dist',
     'modernizr',
     //'rev'//,

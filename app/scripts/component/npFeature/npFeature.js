@@ -1,28 +1,22 @@
-'use strict';
+(function () {
 
-angular
-	.module(
-		'npFeature',
-		[ ]
-	);
+  'use strict';
+  angular
+    .module('newplayer.component')
 
-angular
-	.module('npFeature')
+  /** @ngInject */
+    .controller('npFeatureController',
+    function ($log, $scope/*, ManifestService*/) {
+      var cmpData = $scope.component.data || {};
+      $log.debug('npFeature::data', cmpData);
+    }
+  )
 
-	/** @ngInject */
-	.controller( 'npFeatureController',
-		function( $log, $scope/*, $state, ManifestService*/ )
-		{
-			var cmpData = $scope.component.data || {};
-			$log.debug( 'npFeature::data', cmpData );
-		}
-	)
-
-	/** @ngInject */
-	.run(
-		function( $log, $rootScope )
-		{
-			$log.debug('npFeature::component loaded!');
-		}
-	);
+  /** @ngInject */
+    .run(
+    function ($log, $rootScope) {
+      $log.debug('npFeature::component loaded!');
+    }
+  );
+})();
 
