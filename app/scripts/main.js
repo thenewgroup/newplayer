@@ -16,6 +16,6 @@
     .factory('AssessmentService', AssessmentService)
 
     .config( /** @ngInject */ function ($logProvider) {
-      $logProvider.debugEnabled(true);
+      $logProvider.debugEnabled(false);
     });
 })();
