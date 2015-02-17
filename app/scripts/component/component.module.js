@@ -1,4 +1,4 @@
 (function () {
   'use strict';
-  angular.module('npVideo', []);
+  angular.module('newplayer.component', ['newplayer.service']);
 })();

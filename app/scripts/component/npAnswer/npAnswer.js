@@ -1,31 +1,24 @@
-'use strict';
+(function () {
 
-angular
-    .module(
-        'npAnswer',
-        []
-        );
+  'use strict';
+  angular
+    .module('newplayer.component')
 
-angular
-    .module('npAnswer')
-
-    /** @ngInject */
+  /** @ngInject */
     .controller('npAnswerController',
-        function ($log, $scope, $sce)
-        {
-            var cmpData = $scope.component.data || {};
-            $log.debug('npAnswer::data', cmpData);
+    function ($log, $scope, $sce) {
+      var cmpData = $scope.component.data || {};
+      $log.debug('npAnswer::data', cmpData);
 
-            this.id = cmpData.id;
-            this.label = $sce.trustAsHtml(cmpData.label);
-        }
-    )
+      this.id = cmpData.id;
+      this.label = $sce.trustAsHtml(cmpData.label);
+    }
+  )
 
-    /** @ngInject */
+  /** @ngInject */
     .run(
-        function ($log, $rootScope)
-        {
-            $log.debug('npAnswer::component loaded!');
-        }
-    );
-
+    function ($log, $rootScope) {
+      $log.debug('npAnswer::component loaded!');
+    }
+  );
+})();

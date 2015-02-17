@@ -6,9 +6,9 @@
     'newplayer',
     [
       'ui.bootstrap',
-      'oc.lazyLoad',
       'ngSanitize',
       'newplayer.service',
+      'newplayer.component'
     ]
   )
 
@@ -16,6 +16,6 @@
     .factory('AssessmentService', AssessmentService)
 
     .config( /** @ngInject */ function ($logProvider) {
-      $logProvider.debugEnabled(false);
+      $logProvider.debugEnabled(true);
     });
 })();

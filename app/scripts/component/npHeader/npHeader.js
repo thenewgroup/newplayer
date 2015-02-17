@@ -1,28 +1,22 @@
-'use strict';
+(function () {
 
-angular
-	.module(
-		'npHeader',
-		[ ]
-	);
+  'use strict';
+  angular
+    .module('newplayer.component')
 
-angular
-	.module('npHeader')
 
-	/** @ngInject */
-	.controller( 'npHeaderController',
-		function( $log, $scope, $sce )
-		{
-			var cmpData = $scope.component.data || {};
-			$log.debug( 'npHeader::data', cmpData );
-		}
-	)
+  /** @ngInject */
+    .controller('npHeaderController',
+    function ($log, $scope, $sce) {
+      var cmpData = $scope.component.data || {};
+      $log.debug('npHeader::data', cmpData);
+    }
+  )
 
-	/** @ngInject */
-	.run(
-		function( $log, $rootScope )
-		{
-			$log.debug('npHeader::component loaded!');
-		}
-	);
-
+  /** @ngInject */
+    .run(
+    function ($log, $rootScope) {
+      $log.debug('npHeader::component loaded!');
+    }
+  );
+})();

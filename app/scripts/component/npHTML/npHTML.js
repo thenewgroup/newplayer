@@ -1,31 +1,25 @@
-'use strict';
+(function () {
 
-angular
-	.module(
-		'npHTML',
-		[ ]
-	);
+  'use strict';
+  angular
+    .module('newplayer.component')
 
-angular
-	.module('npHTML')
+  /** @ngInject */
+    .controller('npHTMLController',
+    function ($log, $scope, $sce) {
+      var cmpData = $scope.component.data;
+      $log.debug('npHTML::data', cmpData);
 
-	/** @ngInject */
-	.controller( 'npHTMLController',
-		function( $log, $scope, $sce )
-		{
-			var cmpData = $scope.component.data;
-			$log.debug( 'npHTML::data', cmpData );
+      this.content = $sce.trustAsHtml(cmpData.content);
+      $log.debug('npHTML::content', $scope.content);
+    }
+  )
 
-			this.content = $sce.trustAsHtml( cmpData.content );
-			$log.debug( 'npHTML::content', $scope.content );
-		}
-	)
+  /** @ngInject */
+    .run(
+    function ($log, $rootScope) {
+      $log.debug('npHTML::component loaded!');
+    }
+  );
 
-	/** @ngInject */
-	.run(
-		function( $log, $rootScope )
-		{
-			$log.debug('npHTML::component loaded!');
-		}
-	);
-
+})();

@@ -1,6 +1,6 @@
 {
   "name": "newplayer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "ignore": [
     "app",
     "bower_components",
