@@ -51,28 +51,8 @@
     //.on('npManifestChanged', npManifestChanged)
 
     ConfigService.setConfigData(vm);
-    var manifestURL = ConfigService.getManifestURL();
-    APIService.getData(manifestURL).then(function (md) {
-      vm.manifestData = md;
+    loadManifests();
 
-      var overrideURL = ConfigService.getOverrideURL();
-
-      if( !!vm.language ) {
-        ManifestService.setLang(lang);
-      }
-
-      if (!!overrideURL) {
-        $log.info('NpLayer: getting override data from:', overrideURL);
-        ConfigService.getOverrideData(overrideURL).then(function (od) {
-          vm.overrideData = od;
-          renderComponent(vm, $scope, $element, $attrs, $compile);
-        });
-
-      } else {
-        $log.info('NpLayer: init manifest', vm.manifestData);
-        renderComponent(vm, $scope, $element, $attrs, $compile);
-      }
-    });
 
     //function npManifestChanged(event, toManifest, toPage) {
     //
@@ -93,13 +73,46 @@
       }
     }
 
-    $log.info('NpLayer ConfigService:', ConfigService);
+    //$log.info('NpLayer ConfigService:', ConfigService);
 
     /*
      * ---------------- supporting functions INSIDE function to keep scope
      */
 
+    function loadManifests() {
+      var manifestURL = ConfigService.getManifestURL();
+      APIService.getData(manifestURL).then(function (md) {
+        vm.manifestData = md;
+
+        var overrideURL = ConfigService.getOverrideURL();
+
+        if( !!vm.language ) {
+          ManifestService.setLang(lang);
+        }
+
+        if (!!overrideURL) {
+          $log.info('NpLayer: getting override data from:', overrideURL);
+          ConfigService.getOverrideData(overrideURL).then(function (od) {
+            vm.overrideData = od;
+            renderComponent(vm, $scope, $element, $attrs, $compile);
+          });
+
+        } else {
+          $log.info('NpLayer: init manifest', vm.manifestData);
+          renderComponent(vm, $scope, $element, $attrs, $compile);
+        }
+      });
+    }
+
+    $rootScope.$on('npReplaceManifest', function(obj, newManifest) {
+      $log.info('NpLayer:changeManifestTo | ', newManifest);
+      ConfigService.setManifestURL(newManifest);
+      loadManifests();
+    });
+
+
     function renderComponent(vm, $scope, $element, $attrs, $compile) {
+      $element.empty();
       ManifestService.initialize(vm.manifestData, vm.overrideData);
       parseComponent($scope, $element, $attrs, $compile);
     }

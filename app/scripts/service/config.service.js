@@ -29,6 +29,7 @@
         $log.debug('ConfigService::setManifestURL', url);
         self.manifestURL = url;
       }
+      this.setManifestURL = setManifestURL;
 
       this.getManifestURL = function () {
         return self.manifestURL;

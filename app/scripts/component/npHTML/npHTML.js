@@ -1,38 +1,49 @@
 'use strict';
 
 angular
-	.module(
-		'npHTML',
-		[ ]
-	);
+  .module(
+  'npHTML',
+  []
+);
 
 angular
-	.module('npHTML')
+  .module('npHTML')
 
-	/** @ngInject */
-	.controller( 'npHTMLController',
-		function( $log, $scope, $sce )
-		{
-			var cmpData = $scope.component.data,
+/** @ngInject */
+  .controller('npHTMLController',
+  function ($log, $scope, $rootScope, $window, $sce, ManifestService) {
+    var vm = this,
+        cmpData = $scope.component.data,
         content = null;
-			$log.debug( 'npHTML::data', cmpData );
+    $log.debug('npHTML::data', cmpData);
 
-      // TODO: fix me! We need to make an internal link instead of an external href
-      if (cmpData.link) {
-        content = '<a href="" ng-click="vm.update(' + cmpData.link + ')">' + angular.element(cmpData.content).text() + '</a>';
+    if (cmpData.link) {
+      this.link = cmpData.link;
+    }
+
+    this.content = cmpData.content;
+    $log.info('npHTML::content', $scope.content, this.content, cmpData.link);
+
+    this.handleLink = function() {
+      //$event.stopPropagation();
+      $log.info('npHTML:handleLink');
+
+      if( cmpData.link.match(/\.json$/) ) {
+        $log.info('npHTML:handleLink | link is a manifest');
+        $rootScope.$broadcast('npReplaceManifest', cmpData.link);
+
       } else {
-        content = cmpData.content;
+        $log.info('npHTML:handleLink | sending user to a location');
+        $window.location = cmpData.link;
       }
-			this.content = $sce.trustAsHtml( cmpData.content );
-			$log.debug( 'npHTML::content', $scope.content, this.content, cmpData.link );
-		}
-	)
+    }
+  }
+)
 
-	/** @ngInject */
-	.run(
-		function( $log, $rootScope )
-		{
-			$log.debug('npHTML::component loaded!');
-		}
-	);
+/** @ngInject */
+  .run(
+  function ($log, $rootScope) {
+    $log.debug('npHTML::component loaded!');
+  }
+);
 
