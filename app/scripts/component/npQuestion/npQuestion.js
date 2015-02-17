@@ -1,11 +1,12 @@
 (function () {
 
   'use strict';
+
   angular
     .module('newplayer.component')
   /** @ngInject */
     .controller('npQuestionController',
-    function ($log, $scope, ManifestService, $sce) {
+    function ($log, $scope, ManifestService, npAssessment, $sce) {
       var cmpData = $scope.component.data;
       $log.debug('npQuestion::data', cmpData);
 
@@ -15,6 +16,8 @@
       this.feedback = '';
 
       var feedback = cmpData.feedback;
+
+      npAssessment.addQuestion(cmpData.id, cmpData.required);
 
       this.changed = function () {
         $log.debug('npQuestion::answer changed');

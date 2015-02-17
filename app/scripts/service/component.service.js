@@ -100,7 +100,7 @@
       };
       var addCmpPlugins = function (cmpPlgns) {
         $log.info('ComponentService::addCmpPlugins:', cmpPlgns);
-        if (typeof\( cmpPlgns ) === 'string') {
+        if (typeof( cmpPlgns ) === 'string') {
           cmpPlugins.push(PLUGIN_ROOT + cmpPlgns + '.js');
         } else {
           for (var i in cmpPlgns) {
