@@ -123,11 +123,7 @@
 
       $log.debug('NpLayer::parseComponent', cmp, cmpIdx, $attributes);
       if (!!cmp) {
-        ComponentService.load(
-          cmp
-        )
-          .then(
-          function () {
+
             $log.debug('NpLayer::parseComponent then', cmp, cmpIdx);
             // reset scope!!!
             $scope.subCmp = false;
@@ -222,8 +218,8 @@
               }
             );
 
-          }
-        );
+        //  }
+        //);
       }
     }
   }

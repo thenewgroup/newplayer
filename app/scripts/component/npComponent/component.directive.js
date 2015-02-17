@@ -2,7 +2,7 @@
 
   'use strict';
   angular
-    .module('newplayer')
+    .module('newplayer.component')
     .directive('npComponent', ComponentDirective);
 
   /** @ngInject */
@@ -16,7 +16,7 @@
       /** @ngInject */
       this.controller =
         function ($scope, $element, $attrs) {
-           $log.debug('npComponent::controller', $element, $attrs );
+          $log.debug('npComponent::controller', $element, $attrs);
           /*
            var $attributes = $element[0].attributes;
            */
@@ -58,11 +58,11 @@
 
         $log.debug('npComponent::parseComponent', cmp, cmpIdx, $attributes);
         if (!!cmp) {
-          ComponentService.load(
-            cmp
-          )
-            .then(
-            function () {
+          //ComponentService.load(
+          //  cmp
+          //)
+          //  .then(
+          //  function () {
               $log.debug('npComponent::parseComponent then', cmp, cmpIdx);
               // reset scope!!!
               $scope.subCmp = false;
@@ -154,8 +154,8 @@
                 }
               );
 
-            }
-          );
+          //  }
+          //);
         }
       }
     };
