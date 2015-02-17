@@ -6,7 +6,7 @@
     .factory('ComponentService', ComponentService);
 
   /** @ngInject */
-  function ComponentService($log, ManifestService, $http/*, $timeout, $http, $q, $rootScope*/) {
+  function ComponentService($log, $templateCache, $http/*, $timeout, $http, $q, $rootScope*/) {
     $log.debug('\nComponentService::Init\n');
 
     var Service = function () {
@@ -187,27 +187,11 @@
       this.getTemplate = function (componentObj) {
         var templateURL = getTemplateURL(componentObj);
 
-        $log.debug('ComponentService::getTemlpate: cmp,templateURL:', componentObj, templateURL);
+        $log.info('ComponentService::getTemplate: cmp,templateURL:', componentObj, templateURL);
         if (!!templateURL) {
-          var tmplPromise =
-            $http.get(templateURL, {cache: true})
-              .then(
-              function (data) {
-                //$log.debug('ComponentService::getTemplate: success!', data);
-                return data;
-              },
-              function () {
-                $log.debug('ComponentService::getTemplate: load failed!');
-                templateURL = getDefaultTemplate();
-                $http.get(templateURL, {cache: true})
-                  .then(
-                  function (data) {
-                    return data;
-                  }
-                );
-              }
-            );
-          return tmplPromise;
+          var templateData = $templateCache.get(templateURL);
+          $log.info('templateCache', templateData);
+          return templateData;
         }
       };
       //
