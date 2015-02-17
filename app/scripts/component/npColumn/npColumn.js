@@ -38,6 +38,8 @@ angular
 			this.lastRowIndex = columns * Math.floor(childCount / columns);
 			this.lastRowColumns = (childCount % columns === 0) ? columns : (childCount % columns);
 			this.columns = columns;
+                        this.columnSpan = Math.floor(12/columns);
+                        this.columnSpanLast = Math.floor(12/this.lastRowColumns);
 			this.columnWidth = 100 / columns;
 		}
 	)
