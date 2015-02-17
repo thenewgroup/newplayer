@@ -301,7 +301,7 @@ module.exports = function (grunt) {
       newplayer:        {
         cwd: 'app/',
         src: 'scripts/**/*.html',
-        dest: 'dist/scripts/newplayer.templates.js'
+        dest: 'app/scripts/templates.js'
       }
     },
 
@@ -482,9 +482,9 @@ module.exports = function (grunt) {
     'clean:dist',
     'wiredep',
     'useminPrepare',
-    'ngtemplates',
     'concurrent:dist',
     'autoprefixer',
+    'ngtemplates',
     'concat',
     'ngAnnotate',
     //'cssmin',
