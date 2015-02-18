@@ -25,6 +25,7 @@ module.exports = function (grunt) {
   var userJS = [
         'Gruntfile.js',
         '<%= config.app %>/scripts/{,**/}*.js',
+        '!<%= config.app %>/scripts/templates.js',
         '!<%= config.app %>/scripts/**/mediaelement/*',
         '!<%= config.app %>/scripts/vendor/**',
         'test/spec/{,*/}*.js'
@@ -45,6 +46,13 @@ module.exports = function (grunt) {
       js: {
         files: userJS,
         tasks: ['jshint'],
+        options: {
+          livereload: true
+        }
+      },
+      ngtemplates: {
+        files: '<%= config.app %>/scripts/{,**/}*.html',
+        tasks: ['ngtemplates'],
         options: {
           livereload: true
         }
@@ -75,7 +83,7 @@ module.exports = function (grunt) {
           livereload: '<%= connect.options.livereload %>'
         },
         files: [
-          '<%= config.app %>/{,**/}*.html',
+          '<%= config.app %>/index.html',
           '.tmp/styles/{,**/}*.css',
           '<%= config.app %>/images/{,**/}*'
         ]
