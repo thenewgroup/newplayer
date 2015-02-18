@@ -35,22 +35,12 @@ angular.module('DarggableAngular', []).
                             }
                         },
                         onDrag: function () {
-                            zOriginal = findHighestZIndex(element);
-//                            TweenMax.set(this, {zIndex:'zOriginal + 100'});
-                            console.log('zOriginal in: ', zOriginal, 'this', this, 'scope.zIndex', scope.zIndex);
-//                            scope.rotation = this.rotation;
-                            scope.zIndex = this.zIndex;
                             scope.$apply(function () {
-//                                scope.onDrag({rotation: scope.rotation});
-                                scope.onDrag({zIndex: scope.zIndex});
-                                TweenMax.set(this, {zIndex: 10000});
+                                scope.onDrag(scope.draggableButton);
                             });
-
                         },
                         onDragEnd: function () {
-//                            scope.rotation = this.rotation;
                             scope.$apply(function () {
-//                                scope.onDragEnd({rotation: scope.rotation});
                                 scope.onDragEnd({});
                             });
                         }
