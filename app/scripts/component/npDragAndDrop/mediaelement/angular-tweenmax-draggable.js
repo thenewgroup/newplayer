@@ -36,12 +36,12 @@ angular.module('DarggableAngular', []).
                         },
                         onDrag: function () {
                             scope.$apply(function () {
-                                scope.onDrag(scope.draggableButton);
+                                scope.onDrag();
                             });
                         },
                         onDragEnd: function () {
                             scope.$apply(function () {
-                                scope.onDragEnd({});
+                                scope.onDragEnd();
                             });
                         }
                     });
