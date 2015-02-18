@@ -31,9 +31,7 @@
           switch (this.type) {
             case 'radio':
               var radAnswer = ManifestService.getComponent(this.answer);
-              if (!radAnswer.data.correct) {
-                correct = false;
-              }
+              correct = !!radAnswer.data.correct;
               break;
             case 'checkbox':
               var chkAnswers = ManifestService.getAll('npAnswer', $scope.cmpIdx);

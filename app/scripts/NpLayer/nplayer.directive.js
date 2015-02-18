@@ -82,8 +82,8 @@
 
         var overrideURL = ConfigService.getOverrideURL();
 
-        if( !!vm.language ) {
-          ManifestService.setLang(lang);
+        if( !!vm.config.lang ) {
+          ManifestService.setLang(vm.config.lang);
         }
 
         if (!!overrideURL) {
@@ -114,7 +114,8 @@
     }
 
     function parseComponent($scope, $element, $attributes, $compile) {
-      var cmp = ManifestService.getComponent($attributes.idx);
+      var attrId, attrPlugin, attrClass,
+        cmp = ManifestService.getComponent($attributes.idx);
       var cmpIdx = cmp.idx || [0];
 
       $log.debug('NpLayer::parseComponent', cmp, cmpIdx, $attributes);
@@ -133,7 +134,7 @@
 
         if (!!cmp.data) {
           // set known data values
-          var attrId = cmp.data.id;
+          attrId = cmp.data.id;
           if (!attrId) {
             attrId = cmp.type + ':' + cmpIdx.toString();
           }
@@ -149,13 +150,13 @@
           }
           $element.attr('id', 'np_' + attrId);
 
-          var attrClass = cmp.data['class'];
+          attrClass = cmp.data['class'];
           if (angular.isString(attrClass)) {
             attrClass = attrClass.replace(/[^\w\-.:]/g, '_');
             $element.addClass('np_' + attrClass);
           }
 
-          var attrPlugin = cmp.data.plugin;
+          attrPlugin = cmp.data.plugin;
           if (angular.isString(attrPlugin)) {
             attrPlugin = attrPlugin.replace(/[^\w\-.:]/g, '_');
           }
@@ -166,7 +167,7 @@
           $scope.components = cmp.components;
         }
 
-        var templateData = ComponentService.getTemplate(cmp)
+        var templateData = ComponentService.getTemplate(cmp);
         $log.debug('npComponent::parseComponent: template', templateData);
 
         // modify template before compiling!?

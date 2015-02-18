@@ -64,9 +64,10 @@
             }
             $log.debug('npPage::index results:', nestedPages);
             $scope.currentContent.pages = nestedPages;
-          } else {
-            // TBD - edit pages $scope.currentContent.pages array to reset current page
           }
+          //else {
+          //  // TBD - edit pages $scope.currentContent.pages array to reset current page
+          //}
 
 
           $log.debug('npMenu::pages', $scope.pages);
@@ -123,15 +124,15 @@
       };
     };
     return new Directive();
-
-    /** @ngInject */
-    function npMenuDirectiveController($log, $compile, ManifestService) {
-      var vm = this;
-      vm.changePageId = function (toPage) {
-        $log.info('changePageId', toPage);
-        ManifestService.setPageId(toPage);
-      }
-    };
   }
 
+  /** @ngInject */
+  function npMenuDirectiveController($log, ManifestService) {
+
+    var vm = this; // jshint ignore:line
+    vm.changePageId = function (toPage) {
+      $log.info('changePageId', toPage);
+      ManifestService.setPageId(toPage);
+    };
+  }
 })();

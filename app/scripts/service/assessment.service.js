@@ -3,7 +3,7 @@
 
   angular
     .module('newplayer.service')
-    .service('npAssessment', NpAssessment)
+    .service('npAssessment', NpAssessment);
 
   /** @ngInject */
   function NpAssessment($log, $rootScope, ConfigService) {
@@ -32,7 +32,9 @@
      * @param ??
      */
     function setRequirements(requiredPages, requiredQuestions, minimumPassing) {
-      $log.info('Assessment:setRequirements | reqPages, reqQuestions, minPassing', requiredPages, requiredQuestions, minimumPassing);
+      $log.info('Assessment:setRequirements | reqPages, reqQuestions, minPassing',
+                requiredPages, requiredQuestions, minimumPassing);
+
       pages.required = requiredPages;
       questions.required = requiredQuestions;
       minPassing = minimumPassing;

@@ -60,11 +60,7 @@
         if (!!cmpURL && typeof( cmpURL ) === 'string') {
           if (cmpURL.indexOf(COMPONENT_ROOT) === -1) {
             // dependency doesn't already have root
-            if (cmpURL.substr(0, 1) === '/') {
-              // component is not relative to component directory
-              // for now assume they know where they're pointing
-              //return cmpURL;
-            } else {
+            if (cmpURL.substr(0, 1) !== '/') {
               // add root
               cmpURL = COMPONENT_ROOT + cmpType + '/' + cmpURL;
             }
@@ -187,10 +183,8 @@
       this.getTemplate = function (componentObj) {
         var templateURL = getTemplateURL(componentObj);
 
-        $log.info('ComponentService::getTemplate: cmp,templateURL:', componentObj, templateURL);
         if (!!templateURL) {
           var templateData = $templateCache.get(templateURL);
-          $log.info('templateCache', templateData);
           return templateData;
         }
       };

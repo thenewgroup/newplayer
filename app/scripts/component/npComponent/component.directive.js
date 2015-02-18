@@ -53,8 +53,9 @@
        * parses a component pulled in from the manifest service
        */
       function parseComponent($scope, $element, $attributes) {
-        var cmp = ManifestService.getComponent($attributes.idx);
-        var cmpIdx = cmp.idx || [0];
+        var attrId, attrPlugin, attrClass,
+            cmp = ManifestService.getComponent($attributes.idx),
+            cmpIdx = cmp.idx || [0];
 
         $log.debug('npComponent::parseComponent', cmp, cmpIdx, $attributes);
         if (!!cmp) {
@@ -76,7 +77,7 @@
 
           if (!!cmp.data) {
             // set known data values
-            var attrId = cmp.data.id;
+            attrId = cmp.data.id;
             if (!attrId) {
               attrId = cmp.type + ':' + cmpIdx.toString();
             }
@@ -92,13 +93,13 @@
             }
             $element.attr('id', 'np_' + attrId);
 
-            var attrClass = cmp.data['class'];
+            attrClass = cmp.data['class'];
             if (angular.isString(attrClass)) {
               attrClass = attrClass.replace(/[^\w\-.:]/g, '_');
               $element.addClass('np_' + attrClass);
             }
 
-            var attrPlugin = cmp.data.plugin;
+            attrPlugin = cmp.data.plugin;
             if (angular.isString(attrPlugin)) {
               attrPlugin = attrPlugin.replace(/[^\w\-.:]/g, '_');
             }
@@ -109,7 +110,7 @@
             $scope.components = cmp.components;
           }
 
-          var templateData = ComponentService.getTemplate(cmp)
+          var templateData = ComponentService.getTemplate(cmp);
           $log.debug('npComponent::parseComponent: template', templateData);
 
           // modify template before compiling!?
