@@ -129,7 +129,9 @@
 /*New Player Drag and Drop classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 #np_reNutriv .draggableButton{
-    /*position: absolute;*/
+    position: draggableContainer;
+}
+#np_reNutriv .draggableButton{
     position: relative;
     /*max-width:90px;*/
     /*height: auto;*/
@@ -137,42 +139,30 @@
     margin: 0;
     padding: 0;
     cursor: pointer;
-    /*z-index: 100;*/
 }
 #np_reNutriv .hit-area{
-    /*position: relative;*/
+    position: relative;
     width: 100%;
     height: 100%;
     background-color: #333333;
     margin: 0;
     padding: 0;
-    z-index: -100 !important;
 }
 #np_reNutriv .box {
-    /*position:absolute;*/
-/*    width: 100%;
-    height: auto;
-    text-align: center;*/
-/*    line-height: 80px;
-    font-size: 20px;*/
-/*    color: white;
-    border-radius:10px;
-    border: 2px solid black;*/
 }
 #np_reNutriv .dragover {
-    z-index: 10000;
 }
 #np_reNutriv .boxElements {
-    /*position:absolute;*/
     width: 100%;
     height: auto;
     text-align: center;
-/*    line-height: 80px;
-    font-size: 20px;*/
     color: white;
     border-radius:10px;
     border: 2px solid black;
 }
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/* */
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
 /*When setting this class for New Player use: 'outside-padding'*/
 /*.np_outside-padding{
