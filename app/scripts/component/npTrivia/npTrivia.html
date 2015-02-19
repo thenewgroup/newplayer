@@ -1,0 +1,13 @@
+<form class="np-cmp-wrapper {{component.type}}" ng-controller="npTriviaController as npTrivia" ng-submit="npTrivia.evaluate()">
+
+	<div class="debug">
+		<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
+	</div>
+
+	{{npTrivia.content}}
+	<div class="npTrivia-content h4" ng-bind-html="npTrivia.content"></div>
+
+	<div np-component ng-if="subCmp" ng-repeat="component in npTrivia.seenComponents" idx="{{component.idx}}"></div>
+
+	<div class="npTrivia-feedback" ng-if="npTrivia.feedback" ng-bind-html="npTrivia.feedback"></div>
+</form>
