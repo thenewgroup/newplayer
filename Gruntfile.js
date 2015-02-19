@@ -25,6 +25,7 @@ module.exports = function (grunt) {
   var userJS = [
         'Gruntfile.js',
         '<%= config.app %>/scripts/{,**/}*.js',
+        '!<%= config.app %>/scripts/templates.js',
         '!<%= config.app %>/scripts/**/mediaelement/*',
         '!<%= config.app %>/scripts/vendor/**',
         'test/spec/{,*/}*.js'
@@ -45,6 +46,13 @@ module.exports = function (grunt) {
       js: {
         files: userJS,
         tasks: ['jshint'],
+        options: {
+          livereload: true
+        }
+      },
+      ngtemplates: {
+        files: '<%= config.app %>/scripts/{,**/}*.html',
+        tasks: ['ngtemplates'],
         options: {
           livereload: true
         }
@@ -75,7 +83,7 @@ module.exports = function (grunt) {
           livereload: '<%= connect.options.livereload %>'
         },
         files: [
-          '<%= config.app %>/{,**/}*.html',
+          '<%= config.app %>/index.html',
           '.tmp/styles/{,**/}*.css',
           '<%= config.app %>/images/{,**/}*'
         ]
@@ -231,7 +239,8 @@ module.exports = function (grunt) {
     // additional tasks can operate on them
     useminPrepare: {
       options: {
-        dest: '<%= config.dist %>'
+        dest: '<%= config.dist %>',
+        flow: { steps: { js: ['concat'], css: ['concat'] }, post: {} }
       },
       html: '<%= config.app %>/index.html'
     },
@@ -243,7 +252,9 @@ module.exports = function (grunt) {
           '<%= config.dist %>',
           '<%= config.dist %>/images',
           '<%= config.dist %>/styles'
-        ]
+        ],
+        flow: { steps: { js: ['concat'], css: ['concat'
+        ] }, post: {} }
       },
       html: ['<%= config.dist %>/{,*/}*.html'],
       css: ['<%= config.dist %>/styles/{,*/}*.css']
@@ -291,6 +302,14 @@ module.exports = function (grunt) {
           src: '{,*/}*.html',
           dest: '<%= config.dist %>'
         }]
+      }
+    },
+
+    ngtemplates:  {
+      newplayer:        {
+        cwd: 'app/',
+        src: 'scripts/**/*.html',
+        dest: 'app/scripts/templates.js'
       }
     },
 
@@ -374,32 +393,14 @@ module.exports = function (grunt) {
           cwd: '.',
           src: 'bower_components/Font-Awesome/fonts/*',
           dest: '<%= config.dist %>/fonts/'
-        }, {  // NP - KJP - copy mediaelement player
-          expand: true,
-          dot: true,
-          flatten: true,
-          cwd: '.',
-          src: 'bower_components/mediaelement/build/*',
-          dest: '<%= config.dist %>/scripts/component/npVideo/mediaelement/'
-        }, {  // NP - KJP - copy all plugins
-          expand: true,
-          dot: true,
-          cwd: '<%= config.app %>/scripts/plugin/',
-          src: '{,**/}*.{js,html,css}', // NP - MW
-          dest: '<%= config.dist %>/scripts/plugin/'
-        }, {  // NP - KJP - copy all component templates
-          expand: true,
-          dot: true,
-          cwd: '<%= config.app %>/scripts/component/',
-          src: '{,**/}*.{js,html,css}', // NP - MW
-          dest: '<%= config.dist %>/scripts/component/'
-        }, {  // NP - KJP - copy manifest templates
-          expand: true,
-          dot: true,
-          cwd: '<%= config.app %>/scripts/manifest/',
-          src: '{,*/}*.html',
-          dest: '<%= config.dist %>/scripts/manifest/'
-        }]
+        } //, {
+        //  expand: true,
+        //  dot: true,
+        //  cwd: '.tmp/',
+        //  src: '.newplayer.templates.js',
+        //  dest: '<%= config.dist %>/scripts/'
+        //},
+        ]
       },
       styles: {
         expand: true,
@@ -457,6 +458,7 @@ module.exports = function (grunt) {
     grunt.task.run([
       'clean:server',
       'wiredep',
+      'ngtemplates',
       'concurrent:server',
       'autoprefixer',
       'connect:livereload',
@@ -490,10 +492,11 @@ module.exports = function (grunt) {
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
+    'ngtemplates',
     'concat',
     'ngAnnotate',
-    'cssmin',
-    'uglify',
+    //'cssmin',
+    //'uglify',
     'copy:dist',
     'modernizr',
     //'rev'//,

@@ -1,32 +1,30 @@
-<div class="{{component.type}} " ng-controller="npVideoController as npVideo" id="{{npVideo.id}}">
+<np-video component="component" class="{{component.type}}" id="{{component.data.id}}">
 
-	<div class="debug">
-		<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
-	</div>
-    
-	<video
-            style="width:100%;height:100%;"
-		height="100%"
-		width="100%"
-		preload="{{npVideo.preload}}"
-		mediaelement>
-<!--		height="{{npVideo.height}}"
-		width="{{npVideo.width}}"
-		preload="{{npVideo.preload}}"
-		mediaelement>-->
-<!--
-		<source type="video/{{npVideo.types[0]}}" src="{{npVideo.baseURL}}.{{npVideo.types[0]}}" />
-		<source ng-repeat="type in npVideo.types" type="video/{{type}}" src="{{npVideo.baseURL}}.{{type}}" />
--->
-		<object width="100%" height="100%" type="application/x-shockwave-flash" data="scripts/component/npVideo/mediaelement/flashmediaelement.swf">
-		<!--<object width="{{npVideo.width}}" height="{{npVideo.height}}" type="application/x-shockwave-flash" data="scripts/component/npVideo/mediaelement/flashmediaelement.swf">-->
-                        <param name="movie" value="scripts/component/npVideo/mediaelement/flashmediaelement.swf" />
-			<param name="flashvars" value="controls=true&file={{npVideo.baseURL}}.mp4" />
-			<param name="allowfullscreen" value="false" />
-			<!-- Image as a last resort -->
-			<!--<img src="myvideo.jpg" width="320" height="240" title="No video playback capabilities" />-->
-		</object>
-	</video>
+  <div class="debug">
+    <h3>{{component.type}} --
+      <small>{{component.idx}}</small>
+    </h3>
+  </div>
 
-	<div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
-</div>
+  <video
+    height="{{component.data.height}}"
+    width="{{component.data.width}}"
+    poster="{{component.data.poster}}"
+    preload="{{component.data.preload}}"
+    ng-src="{{component.data.src}}"
+    controls="controls"
+    mediaelelement>
+
+
+    <source ng-repeat="source in npVideo.sources" type="video/{{source.type}}" ng-src="{{source.src}}" />
+
+    <object width="{{component.data.width}}" height="{{component.data.height}}" type="application/x-shockwave-flash"
+            data="scripts/component/npVideo/mediaelement/flashmediaelement.swf">
+      <param name="movie" value="scripts/component/npVideo/mediaelement/flashmediaelement.swf"/>
+      <param name="flashvars" value="controls=true&file={{component.data.baseURL}}.mp4"/>
+      <param name="allowfullscreen" value="false"/>
+    </object>
+  </video>
+
+  <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+</np-video>
