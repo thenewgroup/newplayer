@@ -1,38 +1,33 @@
-.npHotspot{
+/*.npHotspot{
     top: 0;
     left: 0;
-}
-.hotspotImage{
+}*/
+/*.hotspotImage{
     position: relative;
     max-width: 575px;
-}
-.hotspotButton{
+}*/
+/*.hotspotButton{
     position: absolute;
     max-width:90px;
     height: auto;
     margin: 0;
     padding: 0;
     cursor: pointer;
-}
-.hotspotButtonImage{
+}*/
+/*.hotspotButtonImage{
     margin: 0;
     padding: 0;
-}
-.content-background{
+}*/
+/*.content-background{
     position: relative;
     width: 100%;
     height:100%;
-}
-.npHotspot-feedback{
+}*/
+/*.npHotspot-feedback{
     position: absolute;
-    top: 0;
-    left:0;
     width: 100%;
     height:100%;
-}
-svg {
-    position:relative; top:0; bottom:0; left:0; right:0 
-}
+}*/
 
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*Hotspot button left position classes*/

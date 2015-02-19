@@ -1,6 +1,6 @@
 <div class="{{component.type}} npHotspot" ng-controller="npHotspotController as npHotspot" id="{{npHotspot.id}}">
     <div class="row">
-        <div class="col-sm-7 ">
+        <div class="col-md-7 ">
             <div class="hotspotImage">
                 <div class="debug">
                     <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
@@ -8,15 +8,16 @@
                 <img class="{{component.type}} np-cmp-main img-responsive" ng-controller="npHotspotController as npHotspot" ng-src="{{npHotspot.src}}" alt="{{npHotspot.alt}}" />
                 <div ng-repeat="hotspotButton in npHotspot.hotspotButtons">
                     <div class="{{hotspotButton.class}} hotspotButton" ng-click="npHotspot.update(hotspotButton)">
-                        <img class="hotspotButtonImage" ng-src="{{hotspotButton.image}}" alt="{{npHotspot.alt}}" />
-                    </div>
+                        <!--<img class="hotspotButtonImage" ng-src="{{hotspotButton.image}}" alt="{{npHotspot.alt}}" />-->
+                        <div class="hotspotButtonImage" ></div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-5">
+    </div>
+    <div class="col-md-5">
+        <div class="content-area">
             <div class="content-background">
-                <svg version="1.0" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100%"
-                     height="100%" viewBox="0 0 368 222" xml:space="preserve">
+                <svg version="1.0" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 368 222" xml:space="preserve" preserveAspectRatio="none">
                     <style type="text/css">
                         <![CDATA[
                         .st0{fill:url(#SVGID_1_);}
@@ -34,9 +35,11 @@
                         <path class="st0" d="M369.5,223.5h-371v-225h371V223.5z M1.5,220.5h365V1.5H1.5V220.5z"/>
                     </g>
                 </svg>
-                <div class="npHotspot-feedback" ng-bind-html="npHotspot.feedback"></div>
             </div>
+            <div class="npHotspot-feedback" ng-bind-html="npHotspot.feedback"></div>
         </div>
     </div>
-    <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+</div>
+</div>
+<div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
 </div>
