@@ -55,20 +55,19 @@ angular.module('DarggableAngular', []).
 //                                        $(droppables[i]).addClass("highlight");
                                         console.log('inside :: e: ', e, ' droppables[i]: ', droppables[i]);
 //                                        transform: translate(1000px, 100px);
-                                        TweenMax.to(Draggable, 1, {
-                                            x: 10, 
-                                            y: 10, 
-                                            top: 0, 
-                                            left: 0,
-                                            ease: Power4.easeOut
-                                        });
+//                                        TweenMax.to(Draggable, 1, {
+//                                            x: 10, 
+//                                            y: 10, 
+//                                            top: 0, 
+//                                            left: 0,
+//                                            ease: Power4.easeOut
+//                                        });
                                     } else {
+                                        console.log('outside :: e: ', e, ' droppables[i]: ', droppables[i]);
 //                                        $(droppables[i]).removeClass("highlight");
-                                        TweenMax.to(e.target, 1, {
-                                            x: 10, 
-                                            y: 10, 
-                                            top: 0, 
-                                            left: 0,
+                                        TweenMax.to(this, 1, {
+                                            x: "100px", 
+                                            y: '100px', 
                                             ease: Power4.easeOut
                                         });
 //                                        TweenMax.to(Draggable, 1, {
