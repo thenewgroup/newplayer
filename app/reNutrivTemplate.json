@@ -78,8 +78,7 @@
                                     "class": "test-strip",
                                     "req": [
                                         "mediaelement/jquery-1.11.1.min.js",
-                                        "mediaelement/GreenSock/TweenMax.js",
-                                        "mediaelement/GreenSock/utils/Draggable.js",
+                                        "mediaelement/GreenSock/TweenMax.min.js",
                                         "mediaelement/hotspot.css"
                                     ],
                                     "hotspotButtons": [

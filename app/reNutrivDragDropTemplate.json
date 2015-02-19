@@ -77,14 +77,12 @@
                                     "id": "container",
                                     "class": "test-strip",
                                     "req": [
-                                        "mediaelement/GreenSock/TweenMax.js",
-                                        "mediaelement/GreenSock/utils/Draggable.js",
+                                        "mediaelement/GreenSock/TweenMax.min.js",
+                                        "mediaelement/GreenSock/utils/Draggable.min.js",
                                         "mediaelement/angular-tweenmax-draggable.js"
                                     ],
                                     "draggableButtons": [
                                         {
-                                            "id": "box1",
-                                            "class": "box",
                                             "feedback": "<p>this is the feedback 1!</p><p>Fusce convallis, mauris imperdiet gravida bibendum, nisl turpis suscipit mauris, sed placerat ipsum urna sed risus. In convallis tellus a mauris. Curabitur non elit ut libero tristique sodales. Mauris a lacus. Donec mattis semper leo. In hac habitasse platea dictumst. Vivamus facilisis diam at odio. Mauris dictum, nisi eget consequat elementum, lacus ligula molestie metus, non feugiat orci magna ac sem. Donec turpis. Donec vitae metus. Morbi tristique neque eu mauris. Quisque gravida ipsum non sapien. </p>",
                                             "content": "<p>this is the content1!</p>",
                                             "image": "/assets/images/hotspot.png",
@@ -92,8 +90,6 @@
                                             "matchingImage": "/assets/images/hotspot.png"
                                         },
                                         {
-                                            "id": "box2",
-                                            "class": "box",
                                             "feedback": "<p>this is the feedback two/too!</p>",
                                             "content": "<p>this is the content2!</p>",
                                             "image": "/assets/images/hotspot.png",
@@ -101,8 +97,6 @@
                                             "matchingImage": "/assets/images/hotspot.png"
                                         },
                                         {
-                                            "id": "box3",
-                                            "class": "box",
                                             "feedback": "<p>this is the feedback3!</p>",
                                             "content": "<p>this is the content3!</p>",
                                             "image": "/assets/images/hotspot.png",
@@ -110,8 +104,6 @@
                                             "matchingImage": "/assets/images/hotspot.png"
                                         },
                                         {
-                                            "id": "box4",
-                                            "class": "box",
                                             "feedback": "<p>this is the feedback4!</p>",
                                             "content": "<p>this is the content4!</p>",
                                             "image": "/assets/images/hotspot.png",
