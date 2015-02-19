@@ -5,8 +5,8 @@
                 <div class="debug">
                     <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
                 </div>
-                <div drag-button ng-repeat="draggableButton in npDragAndDrop.draggableButtons">
-                    <div id="{{draggableButton.id}}" class="{{draggableButton.class}} draggableButton box boxElements">
+                <div drag-button ng-repeat="draggableButton in npDragAndDrop.draggableButtons" id={{'id'+$index}} class="draggableButton box boxElements">
+                    <div id="{{draggableButton.id}}" class="{{draggableButton.class}}">
                         <img class="draggableButtonImage" ng-src="{{draggableButton.image}}" alt="{{draggableButton.alt}}" />
                         <div class="draggableButtonContent" ng-bind-html="draggableButton.content" ></div>
                     </div>
