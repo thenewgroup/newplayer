@@ -32,6 +32,65 @@
     background-color: $brand-offwhite;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player padding wrapper classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*When setting this class for New Player use: 'outside-padding'*/
+#np_products .np_outside-padding{
+    padding-top: 35px;
+    padding-left: 90px;
+    padding-right: 90px;
+    padding-bottom: 35px;
+}
+/*When setting this class for New Player use: 'inside-padding'*/
+#np_products .np_inside-padding{
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 35px;
+}
+/*When setting this class for New Player use: 'button-padding'*/
+#np_products .np_button-padding{
+    padding-top: 30px;
+    padding-left: 15%;
+    padding-right: 15%;
+    padding-bottom: 35px;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*responsive padding overrides*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.container{
+    /*background-color: #000000;*/
+    /*position: absolute;*/
+    /*    background: url(./assets/images/OrionsHeart.jpg) no-repeat center center fixed;
+        background-color: #000000;
+        background-size: cover;
+        content: "";
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: 0;*/
+    /*z-index: -2;*/
+}
+@media (max-width: $screen-sm) {
+    #np_products .np_outside-padding{
+        padding: 0px;
+    }
+    #np_products .np_inside-padding{
+        padding: 5%;
+    }
+    #np_products .np_button-padding{
+        padding: 5%;
+    }
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/* text treatment classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*Q and A text outdent*/
+#np_products .q-and-a-outdent{
+    text-indent:-28px;
+    margin-left:28px
+}
+
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*Sans font overrides*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 #np_products .sans-head{
@@ -46,6 +105,28 @@
 }
 #np_products .np_inside-padding .sans-head{
     border-bottom-color: $brand-primary-light;
+}
+#np_products .sans-head-sub{
+    font-family: $font-family-sans-serif_head;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding-bottom: 3px;
+}
+#np_products .sans-normal{
+    font-family: $font-family-sans-serif;
+    text-transform: none;
+    letter-spacing: 2px;
+    line-height: 130%;
+}
+#np_products .sans-small{
+    font-family: $font-family-sans-serif;
+    text-transform: none;
+    letter-spacing: 2px;
+    line-height: 130%;
+    font-size: $font-size-small;
+    p{
+        padding-bottom: 10px;
+    }
 }
 /*#background-image { 
     position: absolute;
@@ -85,5 +166,32 @@
         padding-bottom: 1.5rem;
         margin-top: 0;
         display: inline-block;
+    }
+}
+
+@media (max-width: $screen-sm) {
+    .collapse-toggle{
+        background-color: $brand-offwhite;
+        cursor: pointer;
+        width: 100%;
+        border-bottom: none;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        padding-right: 7px;
+        padding-left: 7px;
+        &:hover,
+            &:focus {
+            /*background-color: darken($brand-offwhite, 5%);*/
+        }
+        &:before {
+            font-family: 'elx-icons';
+            content: "\e613";
+            float: right;
+            color: $brand-primary;
+            /*            -webkit-transition: opacity 1s ease-in-out;
+                        -moz-transition: opacity 1s ease-in-out;
+                        -o-transition: opacity 1s ease-in-out;*/
+            transition: opacity 1s ease-in-out;
+        }
     }
 }
