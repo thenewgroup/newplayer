@@ -4,10 +4,39 @@
 		<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
 	</div>
 
-	{{npTrivia.content}}
 	<div class="npTrivia-content h4" ng-bind-html="npTrivia.content"></div>
-
-	<div np-component ng-if="subCmp" ng-repeat="component in npTrivia.seenComponents" idx="{{component.idx}}"></div>
-
+	<np-price-is-right-spinner spinTime="2000">
+		<div>0</div>
+	    <div>100</div>
+	    <div>200</div>
+	    <div>300</div>
+	    <div>400</div>
+	    <div>500</div>
+	    <div>600</div>
+	    <div>700</div>
+	    <div>800</div>
+	    <div>900</div>
+	    <div>1000</div>
+	    <div>100</div>
+	    <div>200</div>
+	    <div>300</div>
+	    <div>400</div>
+	    <div data-pick="true">500</div>
+	    <div>600</div>
+	    <div>700</div>
+	    <div>800</div>
+	    <div>900</div>
+	    <div>1000</div>
+	    <div>100</div>
+	    <div>200</div>
+	    <div>300</div>
+	    <div>400</div>
+	    <div>500</div>
+	    <div>600</div>
+	    <div>700</div>
+	    <div>800</div>
+	    <div>900</div>
+	</np-price-is-right-spinner>
+	<div class="col-md-9" np-component ng-if="subCmp" ng-repeat="component in npTrivia.seenComponents" idx="{{component.idx}}"></div>
 	<div class="npTrivia-feedback" ng-if="npTrivia.feedback" ng-bind-html="npTrivia.feedback"></div>
 </form>

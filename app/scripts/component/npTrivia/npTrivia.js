@@ -6,7 +6,6 @@
   /** @ngInject */
     .controller('npTriviaController',
     function ($log, $scope, ManifestService, $sce) {
-      debugger;
       var cmpData = $scope.component.data;
       $log.debug('npQuiz::data', cmpData);
 
