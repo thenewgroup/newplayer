@@ -6,36 +6,14 @@
   <h1>{{ component.data.name }}</h1>
   <h2>slider</h2>
 
-
-  <div class="royalSlider rsDefault" royalslider>
-    <!-- HTML content slide -->
-    <p>Content goes here</p>
-
-    <!-- image and content -->
-    <div>
-      <img class="rsImg" src="image.jpg" data-rsVideo="https://vimeo.com/44878206" />
-      <p>Some content after...</p>
-    </div>
-
-    <!-- HTML content -->
-    <div>
-      Put any HTML content here
-    </div>
-
-    <!-- HTML content (100% with and height) -->
-    <div class="">
-      Put any HTML content here
+  <div class="np-reveal-slider rsDefault" royalslider>
+    <div ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}">
+      <div class="slide-wrapper reveal-slide rsContent">
+        <div class="rsTmb" np-component idx="{{ component.components[0].idx }}"></div>
+        <div class="rsContent" np-component idx="{{ component.components[1].idx }}"></div>
+      </div>
     </div>
   </div>
-
-  <!--<div class="np-reveal-slider">-->
-    <!--<div ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}" class="rsDefault" royalslider>-->
-      <!--<div class="slide-wrapper reveal-slide rsContent">-->
-        <!--<div class="rsTmb" np-component idx="{{ component.components[0].idx }}"></div>-->
-        <!--<div class="_rsContent" np-component idx="{{ component.components[1].idx }}"></div>-->
-      <!--</div>-->
-    <!--</div>-->
-  <!--</div>-->
 
   <div ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}">
     <p>data: {{ component.data | json }}</p>
