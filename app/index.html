@@ -50,7 +50,7 @@
 
 		<div class="container">
 			<div class="main" ng-class="{'cover':coverSupported}">
-				<np-layer np-id="sample" np-url="/productsTemplate.json" np-override-url="/sample-override.json"></np-layer>
+				<np-layer np-id="sample" np-url="/revealTemplate.json" np-override-url="/sample-override.json"></np-layer>
 				</div>
 			</div>
 		</div>
@@ -63,7 +63,7 @@
 <script src="bower_components/angular-touch/angular-touch.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="bower_components/angular-mocks/angular-mocks.js"></script>
-<script src="bower_components/lodash/dist/lodash.compat.js"></script>
+<script src="bower_components/lodash/lodash.js"></script>
 <script src="bower_components/jquery-ui/ui/jquery-ui.js"></script>
 <script src="bower_components/jquery-form/jquery.form.js"></script>
 <script src="bower_components/moment/moment.js"></script>
@@ -71,6 +71,8 @@
 <script src="bower_components/mediaelement/build/mediaelement-and-player.js"></script>
 <script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
 <!-- endbower -->
+<script src="scripts/vendor/royalslider/jquery.royalslider.min.js"></script>
+<script src="scripts/vendor/royalslider/angular.royalslider.js"></script>
 <!-- endbuild -->
 
 <!-- build:js({app,.tmp}) scripts/newplayer.js -->
@@ -95,7 +97,6 @@
 <script src="scripts/component/npFooter/npFooter.js"></script>
 <script src="scripts/component/npHeader/npHeader.js"></script>
 <script src="scripts/component/npHotspot/npHotspot.js"></script>
-<script src="scripts/component/npHotspotButton/npHotspotButton.js"></script>
 <script src="scripts/component/npHTML/npHTML.js"></script>
 <script src="scripts/component/npImage/npImage.js"></script>
 <script src="scripts/component/npMenu/npMenu.js"></script>
@@ -103,6 +104,8 @@
 <script src="scripts/component/npQuestion/npQuestion.js"></script>
 <script src="scripts/component/npQuiz/npQuiz.js"></script>
 <script src="scripts/component/npVideo/npVideo.js"></script>
+<script src="scripts/component/npReveal/npReveal.js"></script>
+<script src="scripts/component/npRevealItem/npRevealItem.js"></script>
 <!-- /components -->
 
 <script src="scripts/main.js"></script>

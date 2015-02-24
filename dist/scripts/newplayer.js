@@ -1458,75 +1458,6 @@ function AssessmentService ( $log ) {
   'use strict';
   angular
     .module('newplayer.component')
-  /** @ngInject */
-    .controller('npHotspotButtonController',
-    function ($log, $scope, $sce, $location, $element, ConfigService) {
-      var cmpData = $scope.component.data || {};
-      $log.debug('npHotspotButton::data', cmpData);
-      console.log('npHotspotButton::data', cmpData);
-      //////////////////////////////
-      this.src = cmpData.image;
-      $scope.image = this.image = cmpData.image;
-      console.log('button image ref: ' + $scope.image);
-      ////////////////////////////
-
-      this.content = '';
-      var btnContent = cmpData.content;
-      console.log('button content: ' + btnContent);
-      if (angular.isString(btnContent)) {
-        this.content = $sce.trustAsHtml(btnContent);
-        //$element.append( btnContent );
-      }
-
-      this.link = '';
-      this.type = cmpData.type;
-      this.target = cmpData.target;
-      this.linkInternal = true;
-      var btnLink = cmpData.link;
-      if (angular.isString(btnLink)) {
-        if (btnLink.indexOf('/') === 0) {
-          if (!this.target) {
-            this.target = '_top';
-          }
-          this.linkInternal = false;
-        } else if (/^([a-zA-Z]{1,10}:)?\/\//.test(btnLink)) {
-          if (!this.target) {
-            this.target = '_blank';
-          }
-          this.linkInternal = false;
-        } else {
-          if (btnLink.indexOf('#') === 0) {
-            btnLink = btnLink.substr(1);
-          } else {
-            btnLink = '/' + ConfigService.getManifestId() + '/' + btnLink;
-          }
-        }
-        $log.debug('npHotspotButton::link', btnLink);
-        this.link = $sce.trustAsResourceUrl(btnLink);
-      }
-      this.go = function () {
-        if (this.linkInternal) {
-          $location.url(this.link);
-        } else {
-          window.open(this.link, this.target);
-        }
-      };
-    }
-  )
-
-  /** @ngInject */
-    .run(
-    function ($log, $rootScope) {
-      $log.debug('npHotspotButton::component loaded!');
-    }
-  );
-})();
-
-(function () {
-
-  'use strict';
-  angular
-    .module('newplayer.component')
 
   /** @ngInject */
     .controller('npHTMLController',
@@ -2030,6 +1961,76 @@ function AssessmentService ( $log ) {
   }
 
 })();
+
+/* jshint -W003, -W040 */
+
+(function () {
+  'use strict';
+
+  angular
+    .module('npReveal', [])
+    .run(onRun);
+
+  /**
+   * @ngInject
+   */
+  function onRun($log) {
+    $log.debug('npReveal::component loaded!');
+  }
+
+  angular.module('npReveal')
+    .controller('npRevealController', npRevealController);
+
+  /**
+   * @ngInject
+   */
+  function npRevealController($log, $scope, $sce, ManifestService) {
+    var vm = this,
+      cmpData = $scope.component.data;
+    $log.debug('npReveal::data', cmpData);
+
+    vm.id = cmpData.id;
+    vm.content = $sce.trustAsHtml(cmpData.content);
+    vm.type = cmpData.type;
+    vm.name = cmpData.name;
+  }
+})();
+
+
+
+
+/* jshint -W003, -W040 */
+
+(function () {
+  'use strict';
+
+  angular
+    .module('npRevealItem', [])
+    .run(onRun);
+
+  /**
+   * @ngInject
+   */
+  function onRun($log) {
+    $log.debug('npRevealItem::component loaded!');
+  }
+
+  angular.module('npRevealItem')
+    .controller('npRevealItemController', npRevealItemController);
+
+  /**
+   * @ngInject
+   */
+  function npRevealItemController($log, $scope, $sce, ManifestService) {
+    var vm = this,
+      cmpData = $scope.component.data;
+    $log.debug('npRevealItem::data', cmpData);
+
+  }
+})();
+
+
+
 
 (function() {
   'use strict';
@@ -2869,6 +2870,38 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
   );
 
 
+  $templateCache.put('scripts/component/npDragAndDrop/npDragAndDrop.html',
+    "<div class=\"{{component.type}} npDragAndDrop\" ng-controller=\"npDragAndDropController as npDragAndDrop\" id=\"{{npDragAndDrop.id}}\">\n" +
+    "    <div id=\"draggableContainer\">\n" +
+    "        <div class=\"row\">\n" +
+    "            <div class=\"col-sm-6 \">\n" +
+    "                <div class=\"debug\">\n" +
+    "                    <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
+    "                </div>\n" +
+    "                <div drag-button ng-repeat=\"draggableButton in npDragAndDrop.draggableButtons\" id={{'id'+$index}} class=\"draggableButton box boxElements\">\n" +
+    "                    <div id=\"{{draggableButton.id}}\" class=\"{{draggableButton.class}}\">\n" +
+    "                        <img class=\"draggableButtonImage\" ng-src=\"{{draggableButton.image}}\" alt=\"{{draggableButton.alt}}\" />\n" +
+    "                        <div class=\"draggableButtonContent\" ng-bind-html=\"draggableButton.content\" ></div>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"col-sm-6 \">\n" +
+    "                <div class=\"hitArea\">\n" +
+    "                    <div ng-repeat=\"draggableButton in npDragAndDrop.draggableButtons\">\n" +
+    "                        <div id=\"{{hitArea.id}}\" class=\"{{hitArea.class}} hit-area boxElements\" >\n" +
+    "                            <img class=\"hitAreaImage\" ng-src=\"{{draggableButton.matchingImage}}\" alt=\"{{hitArea.alt}}\" />\n" +
+    "                            <div class=\"hitAreaContent\" ng-bind-html=\"draggableButton.matchingContent\" ></div>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div> \n" +
+    "        </div>\n" +
+    "   </div>\n" +
+    "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "</div>"
+  );
+
+
   $templateCache.put('scripts/component/npFeature/npFeature.html',
     "<div class=\"np-cmp-wrapper {{component.type}}\" ng-controller=\"npFeatureController as npFeature\">\n" +
     "\n" +
@@ -2899,16 +2932,18 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
   $templateCache.put('scripts/component/npHTML/npHTML.html',
     "<section class=\"{{component.type}} np-cmp-wrapper\" ng-controller=\"npHTMLController as npHTML\">\n" +
     "\n" +
-    "\t<div class=\"debug\">\n" +
-    "\t\t<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
-    "\t</div>\n" +
+    "  <div class=\"debug\">\n" +
+    "    <h3>{{component.type}} --\n" +
+    "      <small>{{component.idx}}</small>\n" +
+    "    </h3>\n" +
+    "  </div>\n" +
     "\n" +
-    "\t<div class=\"np-cmp-main\" ng-if=\"!!npHTML.link\">\n" +
+    "  <div class=\"np-cmp-main\" ng-if=\"!!npHTML.link\">\n" +
     "    <a ng-click=\"npHTML.handleLink(); $event.stopPropagation();\" ng-bind-html=\"npHTML.content\"></a>\n" +
     "  </div>\n" +
-    "\t<div ng-bind-html=\"npHTML.content\" class=\"np-cmp-main\" ng-if=\"!npHTML.link\"></div>\n" +
+    "  <div ng-bind-html=\"npHTML.content\" class=\"np-cmp-main\" ng-if=\"!npHTML.link\"></div>\n" +
     "\n" +
-    "\t<div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "  <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
     "\n" +
     "</section>\n"
   );
@@ -2975,23 +3010,6 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "</div>\n" +
     "</div>\n" +
     "<div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
-    "</div>"
-  );
-
-
-  $templateCache.put('scripts/component/npHotspotButton/npHotspotButton.html',
-    "<div class=\"{{component.type}} {{npHotspotButton.type}} np-cmp-main hotspotButton\"  ng-controller=\"npHotspotButtonController as npHotspotButton\" ng-click=\"npHotspotButton.go()\">\n" +
-    "\n" +
-    "    <span class=\"debug\">\n" +
-    "        {{component.type}} -- <small>{{component.idx}}</small>\n" +
-    "    </span>\n" +
-    "\n" +
-    "    <img class=\"{{component.type}} np-cmp-main hotspotButtonImage\" ng-controller=\"npHotspotButtonController as npHotspotButton\" ng-src=\"{{npHotspotButton.src}}\" alt=\"{{npHotspotButton.alt}}\" />\n" +
-    "\n" +
-    "    <!--<span ng-bind-html=\"npHotspotButton.content\"></span>-->\n" +
-    "\n" +
-    "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
-    "\n" +
     "</div>"
   );
 
@@ -3075,20 +3093,61 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('scripts/component/npQuiz/npQuiz.html',
-    "<form class=\"np-cmp-wrapper {{component.type}}\" ng-controller=\"npQuizController as npQuiz\" ng-submit=\"npQuiz.evaluate()\">\n" +
+    "<form class=\"np-cmp-wrapper {{component.type}}\" ng-controller=\"npQuizController as npQuiz\"\n" +
+    "      ng-submit=\"npQuiz.evaluate()\">\n" +
     "\n" +
-    "\t<div class=\"debug\">\n" +
-    "\t\t<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
-    "\t</div>\n" +
+    "  <div class=\"debug\">\n" +
+    "    <h3>{{component.type}} --\n" +
+    "      <small>{{component.idx}}</small>\n" +
+    "    </h3>\n" +
+    "  </div>\n" +
     "\n" +
-    "\t<div class=\"npQuiz-content h4\" ng-bind-html=\"npQuiz.content\"></div>\n" +
+    "  <div class=\"npQuiz-content h4\" ng-bind-html=\"npQuiz.content\"></div>\n" +
+    "  <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
     "\n" +
-    "\t<div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
-    "\n" +
-    "\t<div class=\"npQuiz-feedback\" ng-if=\"npQuiz.feedback\" ng-bind-html=\"npQuiz.feedback\"></div>\n" +
-    "\n" +
+    "  <div class=\"npQuiz-feedback\" ng-if=\"npQuiz.feedback\" ng-bind-html=\"npQuiz.feedback\"></div>\n" +
     "</form>\n" +
     "\n"
+  );
+
+
+  $templateCache.put('scripts/component/npReveal/npReveal.html',
+    "<div class=\"np-cmp-wrapper {{ component.type }}\" ngController=\"npRevealController as npReveal\">\n" +
+    "  <div class=\"debug\">\n" +
+    "    <h3>{{ component.type }} -- <small>{{ component.idx }}</small></h3>\n" +
+    "  </div>\n" +
+    "\n" +
+    "  <h1>{{ component.data.name }}</h1>\n" +
+    "  <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "\n" +
+    "</div>\n"
+  );
+
+
+  $templateCache.put('scripts/component/npRevealItem/npRevealItem.html',
+    "<div class=\"np-cmp-wrapper {{ component.type }}\" ngController=\"npRevealItemController as npRevealItem\">\n" +
+    "  <div class=\"debug\">\n" +
+    "    <h3>{{ component.type }} -- <small>{{ component.idx }}</small></h3>\n" +
+    "  </div>\n" +
+    "  <p>component.data: {{ component.data | json }}</p>\n" +
+    "  <h3>{{ component.type }} -- <small>{{ component.idx }}</small></h3>\n" +
+    "\n" +
+    "  <p>content: {{ content }}</p>\n" +
+    "  <p>id: {{ component.data.id }}</p>\n" +
+    "  <p>caption: {{ component.data.caption }}</p>\n" +
+    "\n" +
+    "  <div class=\"reveal-item-media\">\n" +
+    "    <div class=\"reveal-item-image\" ng-if=\"component.data.kind=='image'\">\n" +
+    "      <p>image</p>\n" +
+    "    </div>\n" +
+    "    <div class=\"reveal-item-video\" ng-if=\"component.data.kind=='video'\">\n" +
+    "      <p>video</p>\n" +
+    "    </div>\n" +
+    "  </div>\n" +
+    "\n" +
+    "  <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "\n" +
+    "</div>\n"
   );
 
 

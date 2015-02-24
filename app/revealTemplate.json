@@ -55,11 +55,7 @@
                           "type": "npVideo",
                           "data": {
                             "id": "reveal-1-vid",
-                            "req": [
-                              "mediaelement/jquery-1.11.1.min.js",
-                              "mediaelement/mediaelement-and-player.min.js",
-                              "mediaelement/mediaelementplayer.css"
-                            ],
+                            "req": [],
                             "poster": "//ia700505.us.archive.org/3/items/Windows7WildlifeSampleVideo/Windows7WildlifeSampleVideo.thumbs/Wildlife_000001.jpg",
                             "baseURL": "//archive.org/download/Windows7WildlifeSampleVideo/Wildlife_512kb",
                             "types": ["mp4"]
@@ -78,7 +74,7 @@
                         {
                           "type": "npImage",
                           "data": {
-                            "id": "reveal-2-img",
+                            "id": "reveal-2-thumb",
                             "src": "//icons.iconarchive.com/icons/hopstarter/puck/256/Yahoo-Widgets-icon.png",
                             "alt": "thumb"
                           }
@@ -86,8 +82,8 @@
                         {
                           "type": "npImage",
                           "data": {
-                            "id": "reveal-2-thumb",
-                            "src": "//icons.iconarchive.com/icons/hopstarter/puck/256/Yahoo-Widgets-icon-thumb.png",
+                            "id": "reveal-2-image",
+                            "src": "/assets/images/Product-Image.jpg",
                             "alt": "choice"
                           },
                           "components": []

@@ -28,6 +28,7 @@ module.exports = function (grunt) {
         '!<%= config.app %>/scripts/templates.js',
         '!<%= config.app %>/scripts/**/mediaelement/*',
         '!<%= config.app %>/scripts/vendor/**',
+        '<%= config.app %>/scripts/vendor/**/*.directive.js',
         'test/spec/{,*/}*.js'
       ];
 
@@ -69,7 +70,7 @@ module.exports = function (grunt) {
         tasks: ['sass:server', 'autoprefixer']
       },
       styles: {
-        files: ['<%= config.app %>/styles/{,**/}*.css'],
+        files: ['<%= config.app %>/styles/{,**/}*.css', '<%= config.app %>/vendor/{,**/}*.css'],
         tasks: ['newer:copy:styles', 'autoprefixer']
       },
       config: {
@@ -443,6 +444,21 @@ module.exports = function (grunt) {
 //        'imagemin',
         'svgmin'
       ]
+    },
+    'curl-dir': {
+      // royal slider CodeCanyon license agreement prevents bower distribution
+      // http://help.dimsemenov.com/discussions/suggestions/4170-add-it-to-bower
+      // license needed
+      'royalslider': {
+        src: [
+          //may want to specify a specific version here
+          'http://dimsemenov.com/plugins/royal-slider/royalslider/jquery.royalslider.min.js',
+          'http://dimsemenov.com/plugins/royal-slider/royalslider/skins/default-inverted/rs-default-inverted.css',
+          'http://dimsemenov.com/plugins/royal-slider/royalslider/skins/default/rs-default.css',
+          'http://dimsemenov.com/plugins/royal-slider/royalslider/royalslider.css'
+        ],
+        dest: 'app/scripts/vendor/royalslider'
+      }
     }
   });
 
