@@ -29,7 +29,8 @@
       var opts = {
         keyboardNavEnabled: true,
         autoScaleSlider: true,
-        autoHeight: true
+        autoHeight: true,
+        controlNavigation: 'thumbnails'
       };
       $timeout(function () {
         scope.$apply($(element).royalSlider(opts));
