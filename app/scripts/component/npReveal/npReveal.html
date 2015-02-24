@@ -15,16 +15,4 @@
     </div>
   </div>
 
-  <div ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}">
-    <p>data: {{ component.data | json }}</p>
-    <p>sub component thumb: {{ component.components[0] | json }}</p>
-    <div np-component idx="{{ component.components[0].idx }}"></div>
-  </div>
-
-  <div ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}">
-    <p>data: {{ component.data | json }}</p>
-    <p>sub component media: {{ component.components[1] | json }}</p>
-    <div np-component idx="{{ component.components[1].idx }}"></div>
-  </div>
-
 </div>
