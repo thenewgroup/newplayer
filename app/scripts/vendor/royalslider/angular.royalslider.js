@@ -29,7 +29,6 @@
       var opts = {
         keyboardNavEnabled: true,
         autoScaleSlider: true,
-        autoHeight: true,
         controlNavigation: 'thumbnails',
         transitionType: 'fade'
       };
