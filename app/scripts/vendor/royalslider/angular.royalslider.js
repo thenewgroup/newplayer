@@ -31,11 +31,9 @@
         autoScaleSlider: true,
         autoHeight: true
       };
-      //$timeout(function () {
-      //  scope.$apply($(element).royalSlider(opts));
-      //});
-      //$(element).royalSlider(opts);
-      //scope.$apply();
+      $timeout(function () {
+        scope.$apply($(element).royalSlider(opts));
+      });
     }
 
     /**
