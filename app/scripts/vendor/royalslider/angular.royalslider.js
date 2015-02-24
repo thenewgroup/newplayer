@@ -30,7 +30,8 @@
         keyboardNavEnabled: true,
         autoScaleSlider: true,
         autoHeight: true,
-        controlNavigation: 'thumbnails'
+        controlNavigation: 'thumbnails',
+        transitionType: 'fade'
       };
       $timeout(function () {
         scope.$apply($(element).royalSlider(opts));
