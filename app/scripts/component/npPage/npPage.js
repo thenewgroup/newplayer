@@ -1,64 +1,74 @@
-'use strict';
+(function () {
 
-angular
-  .module(
-  'npPage',
-  []
-);
+  'use strict';
+  angular
+    .module('newplayer.component')
+  /** @ngInject */
+    .controller('npPageController',
+    function ($log, $scope, $rootScope, ManifestService, npAssessment) {
+      var i, subquestions, question,
+        parentIdx = $scope.component.idx.slice(0),
+        pageId = ManifestService.getPageId(),
+        cmpData = $scope.component.data || {};
+      $log.info('npPage | data, contentTitle', cmpData, $scope.contentTitle);
 
-angular
-  .module('npPage')
+      this.title = cmpData.title;
+      parentIdx.pop();
 
-/** @ngInject */
-  .controller('npPageController',
-  function ($log, $scope, $rootScope, ManifestService) {
-    var cmpData = $scope.component.data || {};
-    $log.debug('npPage::data', cmpData, $scope.contentTitle);
+      if (!pageId) {
+        var firstPageCmp = ManifestService.getFirst('npPage', parentIdx);
+        pageId = firstPageCmp.data.id;
+        ManifestService.setPageId(pageId);
+        $log.debug('npPage::set page', pageId);
+      }
 
-    this.title = cmpData.title;
+      npAssessment.addPage(cmpData.id, cmpData.required);
 
-    var parentIdx = $scope.component.idx.slice(0);
-    parentIdx.pop();
+      // find all subquestions of this page, do this here because if we're here
+      // the manifest is loaded; npQuestions don't instantiate until the question is
+      // viewed and we will need these straightaway
 
-    var pageId = ManifestService.getPageId();
-    if (!pageId) {
-      var firstPageCmp = ManifestService.getFirst('npPage', parentIdx);
-      pageId = firstPageCmp.data.id;
-      ManifestService.setPageId(pageId);
-      $log.debug('npPage::set page', pageId);
-    }
+      subquestions = ManifestService.getAll('npQuestion', $scope.component.idx);
+      for (i = 0; i < subquestions.length; i++) {
+        question = subquestions[i];
+        $log.info('npPage:question | ', question);
 
-    npPageIdChanged(null, pageId);
+        npAssessment.addQuestion(question.id, question.required);
+      }
 
-    $rootScope.$on('npPageIdChanged', npPageIdChanged);
+      npPageIdChanged(null, pageId);
 
-    function npPageIdChanged(event, newPageId) {
+      $rootScope.$on('npPageIdChanged', npPageIdChanged);
 
-      pageId = newPageId;
+      function npPageIdChanged(event, newPageId) {
 
-      // check if current route is for this page
-      $log.debug('npPage::on current page?', pageId, cmpData.id);
-      if (cmpData.id === pageId) {
-        $scope.currentPage = true;
-        $scope.npPage = $scope;
+        pageId = newPageId;
 
-        // set page title
-        if ($rootScope.PageTitle) {
-          $rootScope.PageTitle += ': ' + cmpData.title;
+        // check if current route is for this page
+        $log.debug('npPage::on current page?', pageId, cmpData.id);
+        if (cmpData.id === pageId) {
+          $scope.currentPage = true;
+          $scope.npPage = $scope;
+
+          // set page title
+          if ($rootScope.PageTitle) {
+            $rootScope.PageTitle += ': ' + cmpData.title;
+          } else {
+            $rootScope.PageTitle = cmpData.title;
+          }
+          npAssessment.pageViewed(cmpData.id);
+
         } else {
-          $rootScope.PageTitle = cmpData.title;
+          $scope.currentPage = false;
         }
-      } else {
-        $scope.currentPage = false;
       }
     }
-  }
-)
+  )
 
-/** @ngInject */
-  .run(
-  function ($log, $rootScope) {
-    $log.debug('npPage::component loaded!');
-  }
-);
-
+  /** @ngInject */
+    .run(
+    function ($log, $rootScope) {
+      $log.debug('npPage::component loaded!');
+    }
+  );
+})();

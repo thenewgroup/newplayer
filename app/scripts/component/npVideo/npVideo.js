@@ -1,12 +1,14 @@
 (function () {
   'use strict';
 
-  console.info('DEBUG | npVideo IIFT');
-
+  angular
+    .module('newplayer.component')
+  /** @ngInject */
+    .directive('npVideo', NpVideoDirective);
 
   /** @ngInject */
   function NpVideoDirective($log) {
-    $log.info('DEBUG | \npVideo::Init\n');
+    $log.debug('\npVideo::Init\n');
     return {
       restrict: 'EA',
       controller: NpVideoController,
@@ -37,9 +39,4 @@
     }
   }
 
-
-  angular
-    .module('npVideo')
-    /** @ngInject */
-    .directive('npVideo', NpVideoDirective);
 })();

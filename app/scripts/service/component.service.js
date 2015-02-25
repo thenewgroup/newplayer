@@ -6,7 +6,7 @@
     .factory('ComponentService', ComponentService);
 
   /** @ngInject */
-  function ComponentService($log, ManifestService, $http, $ocLazyLoad /*, $timeout, $http, $q, $rootScope*/) {
+  function ComponentService($log, $templateCache, $http/*, $timeout, $http, $q, $rootScope*/) {
     $log.debug('\nComponentService::Init\n');
 
     var Service = function () {
@@ -18,7 +18,7 @@
       var DEFAULT_TEMPLATE = 'scripts/component/blank.html';
 
       // must be used during initial load
-      // can't be relied upon after prmoise resolves
+      // can't be relied upon after promise resolves
       var cmpDependencies = [];
       var cmpPlugins = [];
 
@@ -60,11 +60,7 @@
         if (!!cmpURL && typeof( cmpURL ) === 'string') {
           if (cmpURL.indexOf(COMPONENT_ROOT) === -1) {
             // dependency doesn't already have root
-            if (cmpURL.substr(0, 1) === '/') {
-              // component is not relative to component directory
-              // for now assume they know where they're pointing
-              //return cmpURL;
-            } else {
+            if (cmpURL.substr(0, 1) !== '/') {
               // add root
               cmpURL = COMPONENT_ROOT + cmpType + '/' + cmpURL;
             }
@@ -81,7 +77,7 @@
         cmpDependencies = cmpDeps;
       };
       var addCmpDependencies = function (cmpType, cmpDeps) {
-        $log.debug('ComponentService::addCmpDependencies:', cmpType, cmpDeps);
+        $log.info('ComponentService::addCmpDependencies:', cmpType, cmpDeps);
         if (typeof( cmpDeps ) === 'string') {
           cmpDependencies.push(cleanURL(cmpType, cmpDeps));
         } else {
@@ -99,7 +95,7 @@
         cmpPlugins = cmpPlgns;
       };
       var addCmpPlugins = function (cmpPlgns) {
-        $log.debug('ComponentService::addCmpPlugins:', cmpPlgns);
+        $log.info('ComponentService::addCmpPlugins:', cmpPlgns);
         if (typeof( cmpPlgns ) === 'string') {
           cmpPlugins.push(PLUGIN_ROOT + cmpPlgns + '.js');
         } else {
@@ -136,108 +132,90 @@
         return DEFAULT_TEMPLATE;
       };
 
-      var loadDependencies = function (componentObj) {
-        var cmpType = componentObj.type || 'empty';
-        var depPromise =
-          $ocLazyLoad.load(
-            {
-              name: cmpType,
-              serie: (getCmpDependencies().length > 1 ? true : false),
-              files: getCmpDependencies()
-            }
-          )
-            .then
-          (
-            function (resp) {
-              // success
-              self.onLoad(componentObj);
-            }
-          )
-            ['catch']
-          (
-            function (resp) {
-              // error
-              $log.debug('ComponentService::load err:', resp);
-              self.onLoad(componentObj);
-            }
-          );
-        return depPromise;
-      };
-
-      var loadPlugins = function () {
-        var plugPromise =
-          $ocLazyLoad.load(
-            {
-              name: 'newplayer',
-              files: getCmpPlugins()
-            }
-          )
-            .then(function (resp) {
-          })
-            ['catch']
-          (
-            function (resp) {
-              // error
-              $log.debug('ComponentService::load plugin err:', resp);
-            }
-          );
-        return plugPromise;
-      };
-
+      //var loadDependencies = function (componentObj) {
+      //  var cmpType = componentObj.type || 'empty';
+      //  var depPromise =
+      //    $ocLazyLoad.load(
+      //      {
+      //        name: cmpType,
+      //        serie: (getCmpDependencies().length > 1 ? true : false),
+      //        files: getCmpDependencies()
+      //      }
+      //    )
+      //      .then
+      //    (
+      //      function (resp) {
+      //        // success
+      //        self.onLoad(componentObj);
+      //      }
+      //    )
+      //      ['catch']
+      //    (
+      //      function (resp) {
+      //        // error
+      //        $log.debug('ComponentService::load err:', resp);
+      //        self.onLoad(componentObj);
+      //      }
+      //    );
+      //  return depPromise;
+      //};
+      //
+      //var loadPlugins = function () {
+      //  var plugPromise =
+      //    $ocLazyLoad.load(
+      //      {
+      //        name: 'newplayer',
+      //        files: getCmpPlugins()
+      //      }
+      //    )
+      //      .then(function (resp) {
+      //    })
+      //      ['catch']
+      //    (
+      //      function (resp) {
+      //        // error
+      //        $log.debug('ComponentService::load plugin err:', resp);
+      //      }
+      //    );
+      //  return plugPromise;
+      //};
+      //
       this.getTemplate = function (componentObj) {
         var templateURL = getTemplateURL(componentObj);
 
-        $log.debug('ComponentService::getTemlpate: cmp,templateURL:', componentObj, templateURL);
         if (!!templateURL) {
-          var tmplPromise =
-            $http.get(templateURL, {cache: true})
-              .then(
-              function (data) {
-                //$log.debug('ComponentService::getTemplate: success!', data);
-                return data;
-              },
-              function () {
-                $log.debug('ComponentService::getTemplate: load failed!');
-                templateURL = getDefaultTemplate();
-                $http.get(templateURL, {cache: true})
-                  .then(
-                  function (data) {
-                    return data;
-                  }
-                );
-              }
-            );
-          return tmplPromise;
+          var templateData = $templateCache.get(templateURL);
+          return templateData;
         }
       };
-
-      this.load = function (componentObj) {
-        $log.debug('\nComponentService::load:', componentObj.type);
-
-        initCmp(componentObj);
-
-        $log.debug('ComponentService::loading:', componentObj.type, getCmpDependencies());
-        var depPromise, plugPromise;
-        if (getCmpPlugins().length > 0) {
-          $log.debug('ComponentService::loading:plugins', getCmpPlugins());
-
-          plugPromise = loadPlugins();
-          plugPromise.then(
-            function (resp) {
-              depPromise = loadDependencies(componentObj);
-            }
-          );
-          return plugPromise;
-        } else {
-          depPromise = loadDependencies(componentObj);
-          return depPromise;
-        }
-      };
-
-      // loaded component can decorate componentService to change loading behavior!?
-      this.onLoad = function (componentObj) {
-        $log.debug('ComponentService::loaded', componentObj, '\n');
-      };
+      //
+      //this.load = function (componentObj) {
+      //  $log.debug('\nComponentService::load:', componentObj.type);
+      //
+      //  initCmp(componentObj);
+      //
+      //  $log.debug('ComponentService::loading:', componentObj.type, getCmpDependencies());
+      //  var depPromise, plugPromise;
+      //  if (getCmpPlugins().length > 0) {
+      //    $log.debug('ComponentService::loading:plugins', getCmpPlugins());
+      //
+      //    plugPromise = loadPlugins();
+      //    plugPromise.then(
+      //      function (resp) {
+      //        depPromise = loadDependencies(componentObj);
+      //      }
+      //    );
+      //    return plugPromise;
+      //  } else {
+      //    depPromise = loadDependencies(componentObj);
+      //    return depPromise;
+      //  }
+      //};
+      //
+      //// loaded component can decorate componentService to change loading behavior!?
+      //this.onLoad = function (componentObj) {
+      //  $log.debug('ComponentService::loaded', componentObj, '\n');
+      //};
 
     };
     return new Service();

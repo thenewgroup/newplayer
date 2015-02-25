@@ -1,31 +1,34 @@
-'use strict';
+(function () {
 
-angular
-	.module(
-		'npHTML',
-		[ ]
-	);
+  'use strict';
+  angular
+    .module('newplayer.component')
 
-angular
-	.module('npHTML')
+  /** @ngInject */
+    .controller('npHTMLController',
+    function ($log, $scope, $rootScope) {
+      var vm = this,
+        cmpData = $scope.component.data,
+        content = null;
+      //$log.debug('npHTML::data', cmpData);
 
-	/** @ngInject */
-	.controller( 'npHTMLController',
-		function( $log, $scope, $sce )
-		{
-			var cmpData = $scope.component.data;
-			$log.debug( 'npHTML::data', cmpData );
+      if (cmpData.link) {
+        this.link = cmpData.link;
+      }
 
-			this.content = $sce.trustAsHtml( cmpData.content );
-			$log.debug( 'npHTML::content', $scope.content );
-		}
-	)
+      this.content = cmpData.content;
 
-	/** @ngInject */
-	.run(
-		function( $log, $rootScope )
-		{
-			$log.debug('npHTML::component loaded!');
-		}
-	);
+      this.handleLink = function() {
+        $rootScope.$broadcast('npReplaceManifest', cmpData.link);
+      };
+    }
+  );
+  //
+  ///** @ngInject */
+  //  .run(
+  //  function ($log, $rootScope) {
+  //    $log.debug('npHTML::component loaded!');
+  //  }
+  //);
 
+})();

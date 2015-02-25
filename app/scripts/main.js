@@ -6,9 +6,9 @@
     'newplayer',
     [
       'ui.bootstrap',
-      'oc.lazyLoad',
       'ngSanitize',
       'newplayer.service',
+      'newplayer.component'
     ]
   )
     .config( /** @ngInject */ function ($logProvider) {

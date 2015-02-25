@@ -2,7 +2,7 @@
 
   'use strict';
   angular
-    .module('newplayer')
+    .module('newplayer.component')
     .directive('npComponent', ComponentDirective);
 
   /** @ngInject */
@@ -16,7 +16,7 @@
       /** @ngInject */
       this.controller =
         function ($scope, $element, $attrs) {
-           $log.debug('npComponent::controller', $element, $attrs );
+          $log.debug('npComponent::controller', $element, $attrs);
           /*
            var $attributes = $element[0].attributes;
            */
@@ -53,109 +53,103 @@
        * parses a component pulled in from the manifest service
        */
       function parseComponent($scope, $element, $attributes) {
-        var cmp = ManifestService.getComponent($attributes.idx);
-        var cmpIdx = cmp.idx || [0];
+        var attrId, attrPlugin, attrClass,
+            cmp = ManifestService.getComponent($attributes.idx),
+            cmpIdx = cmp.idx || [0];
 
         $log.debug('npComponent::parseComponent', cmp, cmpIdx, $attributes);
         if (!!cmp) {
-          ComponentService.load(
-            cmp
-          )
-            .then(
-            function () {
-              $log.debug('npComponent::parseComponent then', cmp, cmpIdx);
-              // reset scope!!!
-              $scope.subCmp = false;
-              $scope.component = cmp;
-              $scope.components = null;
+          //ComponentService.load(
+          //  cmp
+          //)
+          //  .then(
+          //  function () {
+          $log.debug('npComponent::parseComponent then', cmp, cmpIdx);
+          // reset scope!!!
+          $scope.subCmp = false;
+          $scope.component = cmp;
+          $scope.components = null;
 
-              $scope.cmpIdx = cmpIdx.toString();
+          $scope.cmpIdx = cmpIdx.toString();
 
-              $element.attr('data-cmpType', cmp.type);
-              $element.addClass('np-cmp-sub');
+          $element.attr('data-cmpType', cmp.type);
+          $element.addClass('np-cmp-sub');
 
-              if (!!cmp.data) {
-                // set known data values
-                var attrId = cmp.data.id;
-                if (!attrId) {
-                  attrId = cmp.type + ':' + cmpIdx.toString();
-                }
-                // id must start with letter (according to HTML4 spec)
-                if (/^[^a-zA-Z]/.test(attrId)) {
-                  attrId = 'np' + attrId;
-                }
-                // replace invalid id characters (according to HTML4 spec)
-                attrId = attrId.replace(/[^\w\-.:]/g, '_');
-                //$element.attr( 'id', attrId );
-                if (!cmp.data.id) {
-                  cmp.data.id = attrId;
-                }
-                $element.attr('id', 'np_' + attrId);
-
-                var attrClass = cmp.data['class'];
-                if (angular.isString(attrClass)) {
-                  attrClass = attrClass.replace(/[^\w\-.:]/g, '_');
-                  $element.addClass('np_' + attrClass);
-                }
-
-                var attrPlugin = cmp.data.plugin;
-                if (angular.isString(attrPlugin)) {
-                  attrPlugin = attrPlugin.replace(/[^\w\-.:]/g, '_');
-                }
-              }
-              if (!!cmp.components && cmp.components.length > 0) {
-                $log.debug('npComponent::parseComponent - HAS SUBS:', cmp);
-                $scope.subCmp = true;
-                $scope.components = cmp.components;
-              }
-
-              ComponentService.getTemplate(
-                cmp
-              )
-                .then(
-                function (data) {
-                  $log.debug('npComponent::parseComponent: template', data);
-
-                  // modify template before compiling!?
-                  var tmpTemplate = document.createElement('div');
-                  tmpTemplate.innerHTML = data.data;
-
-                  var ngWrapperEl, ngMainEl, ngSubEl;
-                  ngWrapperEl = angular.element(tmpTemplate.querySelectorAll('.np-cmp-wrapper'));
-                  ngMainEl = angular.element(tmpTemplate.querySelectorAll('.np-cmp-main'));
-                  ngSubEl = angular.element(tmpTemplate.querySelectorAll('.np-cmp-sub'));
-                  if (ngWrapperEl.length) {
-                    ngWrapperEl.attr('id', attrId);
-                    ngWrapperEl.addClass(attrPlugin);
-
-                    // pass all "data-*" attributes into element
-                    angular.forEach(cmp.data, function (val, key) {
-                      if (angular.isString(key) && key.indexOf('data-') === 0) {
-                        ngWrapperEl.attr(key, val);
-                      }
-                    });
-                  }
-                  if (ngMainEl.length) {
-                    if (!ngWrapperEl.length) {
-                      ngMainEl.attr('id', attrId);
-                      ngMainEl.addClass(attrPlugin);
-
-                      // pass all "data-*" attributes into element
-                      angular.forEach(cmp.data, function (val, key) {
-                        if (angular.isString(key) && key.indexOf('data-') === 0) {
-                          ngMainEl.attr(key, val);
-                        }
-                      });
-                    }
-                    ngMainEl.addClass(attrClass);
-                  }
-
-                  compileTemplate(tmpTemplate.innerHTML, $scope, $element);
-                }
-              );
-
+          if (!!cmp.data) {
+            // set known data values
+            attrId = cmp.data.id;
+            if (!attrId) {
+              attrId = cmp.type + ':' + cmpIdx.toString();
             }
-          );
+            // id must start with letter (according to HTML4 spec)
+            if (/^[^a-zA-Z]/.test(attrId)) {
+              attrId = 'np' + attrId;
+            }
+            // replace invalid id characters (according to HTML4 spec)
+            attrId = attrId.replace(/[^\w\-.:]/g, '_');
+            //$element.attr( 'id', attrId );
+            if (!cmp.data.id) {
+              cmp.data.id = attrId;
+            }
+            $element.attr('id', 'np_' + attrId);
+
+            attrClass = cmp.data['class'];
+            if (angular.isString(attrClass)) {
+              attrClass = attrClass.replace(/[^\w\-.:]/g, '_');
+              $element.addClass('np_' + attrClass);
+            }
+
+            attrPlugin = cmp.data.plugin;
+            if (angular.isString(attrPlugin)) {
+              attrPlugin = attrPlugin.replace(/[^\w\-.:]/g, '_');
+            }
+          }
+          if (!!cmp.components && cmp.components.length > 0) {
+            $log.debug('npComponent::parseComponent - HAS SUBS:', cmp);
+            $scope.subCmp = true;
+            $scope.components = cmp.components;
+          }
+
+          var templateData = ComponentService.getTemplate(cmp);
+          $log.debug('npComponent::parseComponent: template', templateData);
+
+          // modify template before compiling!?
+          var tmpTemplate = document.createElement('div');
+          tmpTemplate.innerHTML = templateData;
+
+          var ngWrapperEl, ngMainEl, ngSubEl;
+          ngWrapperEl = angular.element(tmpTemplate.querySelectorAll('.np-cmp-wrapper'));
+          ngMainEl = angular.element(tmpTemplate.querySelectorAll('.np-cmp-main'));
+          ngSubEl = angular.element(tmpTemplate.querySelectorAll('.np-cmp-sub'));
+          if (ngWrapperEl.length) {
+            ngWrapperEl.attr('id', attrId);
+            ngWrapperEl.addClass(attrPlugin);
+
+            // pass all "data-*" attributes into element
+            angular.forEach(cmp.data, function (val, key) {
+              if (angular.isString(key) && key.indexOf('data-') === 0) {
+                ngWrapperEl.attr(key, val);
+              }
+            });
+          }
+          if (ngMainEl.length) {
+            if (!ngWrapperEl.length) {
+              ngMainEl.attr('id', attrId);
+              ngMainEl.addClass(attrPlugin);
+
+              // pass all "data-*" attributes into element
+              angular.forEach(cmp.data, function (val, key) {
+                if (angular.isString(key) && key.indexOf('data-') === 0) {
+                  ngMainEl.attr(key, val);
+                }
+              });
+            }
+            ngMainEl.addClass(attrClass);
+          }
+
+          compileTemplate(tmpTemplate.innerHTML, $scope, $element);
+          //  }
+          //);
         }
       }
     };

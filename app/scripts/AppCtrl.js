@@ -6,8 +6,25 @@
     .controller('AppController', AppController);
 
   /** @ngInject */
-  function AppController($log, AssessmentService/*, ImagePreloadFactory, HomeService, $scope*/) {
+  function AppController($log, $scope /*, ImagePreloadFactory, HomeService, $scope*/) {
     $log.debug('AppController::Init');
+
+
+    $scope.seePlayerConfigInAppCtrlJS = {
+      manifestId: 'sample',
+      manifestURL: '/sample.json',
+      overrideURL : '/sample-override.json',
+      overrideData: {},
+      language: 'en-us',
+      assessment: {
+        minPassing: 0.75
+      }
+    };
+
+
+
+
+    // np-id="sample" np-url="/sample.json" np-override-url="/sample-override.json
 
     //AssessmentService.setRequirements(10,5,0.8);
     //

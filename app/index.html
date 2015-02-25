@@ -14,8 +14,9 @@
   <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker-bs3.css" />
   <!-- endbower -->
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
+  <link rel="stylesheet" href="bower_components/Font-Awesome/css/font-awesome.css"/>
   <!-- endbuild -->
-  <!-- build:css(.tmp) styles/main.css -->
+  <!-- build:css(.tmp) styles/newplayer.css -->
   <link rel="stylesheet" href="styles/main.css">
   <!-- endbuild -->
   <!-- build:js scripts/vendor/modernizr.js -->
@@ -47,19 +48,17 @@
   your browser</a> to improve your experience.</p>
 <![endif]-->
 
-		<div class="container">
-			<div class="main" ng-class="{'cover':coverSupported}">
-				<np-layer np-id="sample" np-url="/sample.json" np-override-url="/sample-override.json"></np-layer>
-				</div>
-			</div>
-		</div>
+<div class="container">
+  <div class="main" ng-class="{'cover':coverSupported}">
+    <np-layer np-config="seePlayerConfigInAppCtrlJS"></np-layer>
+  </div>
+</div>
+</div>
 
-<!-- build:js(.) scripts/vendor.js -->
+<!-- build:js(.) scripts/bower.js -->
 <!-- bower:js -->
 <script src="bower_components/jquery/jquery.js"></script>
 <script src="bower_components/angular/angular.js"></script>
-<script src="bower_components/angular-common/modules/mediaelement/mediaelement.js"></script>
-<script src="bower_components/oclazyload/dist/ocLazyLoad.min.js"></script>
 <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
 <script src="bower_components/angular-touch/angular-touch.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
@@ -69,25 +68,50 @@
 <script src="bower_components/jquery-form/jquery.form.js"></script>
 <script src="bower_components/moment/moment.js"></script>
 <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="bower_components/mediaelement/build/mediaelement-and-player.js"></script>
 <script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
 <!-- endbower -->
+
+<!-- build:js(.) scripts/vendor.js -->
+<script src="vendor/GreenSock/TweenMax.js"></script>
+<script src="vendor/GreenSock/utils/Draggable.js"></script>
 <!-- endbuild -->
 
 <!-- build:js({app,.tmp}) scripts/newplayer.js -->
 
 <script src="scripts/service/service.module.js"></script>
 <script src="scripts/service/api.service.js"></script>
+<script src="scripts/service/assessment.service.js"></script>
+<script src="scripts/service/component.service.js"></script>
 <script src="scripts/service/config.service.js"></script>
 <script src="scripts/service/manifest.service.js"></script>
-<script src="scripts/service/component.service.js"></script>
 
+<!-- components -->
 <script src="scripts/component/component.module.js"></script>
+<script src="scripts/component/npAnswer/npAnswer.js"></script>
+<script src="scripts/component/npAudio/npAudio.js"></script>
+<script src="scripts/component/npButton/npButton.js"></script>
+<script src="scripts/component/npColumn/npColumn.js"></script>
+<script src="scripts/component/npComponent/component.directive.js"></script>
+<script src="scripts/component/npContent/npContent.js"></script>
+<script src="scripts/component/npFeature/npFeature.js"></script>
+<script src="scripts/component/npFooter/npFooter.js"></script>
+<script src="scripts/component/npHeader/npHeader.js"></script>
+<script src="scripts/component/npHotspot/npHotspot.js"></script>
+<script src="scripts/component/npHotspotButton/npHotspotButton.js"></script>
+<script src="scripts/component/npHTML/npHTML.js"></script>
+<script src="scripts/component/npImage/npImage.js"></script>
+<script src="scripts/component/npMenu/npMenu.js"></script>
+<script src="scripts/component/npPage/npPage.js"></script>
+<script src="scripts/component/npQuestion/npQuestion.js"></script>
+<script src="scripts/component/npQuiz/npQuiz.js"></script>
+<script src="scripts/component/npVideo/npVideo.js"></script>
+<!-- /components -->
 
-<script src="scripts/service/assessment.service.js"></script>
 <script src="scripts/main.js"></script>
 <script src="scripts/AppCtrl.js"></script>
-<script src="scripts/component/NpLayer/nplayer.directive.js"></script>
-<script src="scripts/component/npComponent/component.directive.js"></script>
+<script src="scripts/NpLayer/nplayer.directive.js"></script>
+<script src="scripts/templates.js"></script>
 
 <!-- endbuild -->
 </body>
