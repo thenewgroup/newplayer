@@ -1,5 +1,4 @@
 (function () {
-
   'use strict';
   angular
     .module('newplayer.component')
@@ -9,21 +8,18 @@
       var buttonData = $scope.feedback || {};
       var contentAreaHeight;
       $log.debug('npHotspot::data', cmpData, buttonData);
-
       var hotspotButtons = '';
       this.hotspotButtons = cmpData.hotspotButtons;
-
       this.id = cmpData.id;
       this.baseURL = cmpData.baseURL;
       this.src = cmpData.image;
-
+        //////////////////////
       $scope.feedback = this.feedback = cmpData.feedback;
       $scope.image = this.image = cmpData.image;
-
+        //////////////////////
       this.update = function (button) {
         this.feedback = button.feedback;
         var idx = this.hotspotButtons.indexOf(button);
-
         //////////////////////
         $scope.$watch('npHotspot.feedback', function (newValue, oldValue) {
           $('.npHotspot-feedback p').each(function (index, totalArea) {
@@ -54,7 +50,6 @@
       $log.debug('npHotspot::component loaded!');
     }
   );
-
   /** @ngInject */
   function npMediaElementDirective($log) {
     $log.debug('\nnpHotspot mediaelementDirective::Init\n');
@@ -65,6 +60,4 @@
     };
     return new Directive();
   }
-
-
 })();

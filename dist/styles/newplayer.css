@@ -1,5 +1,6 @@
-/*@import "bootstrap-sass/assets/stylesheets/_bootstrap";*/
-/*@import "../bower_components/bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*main bootstrap override classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*@import "../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/variables";*/
 /*::::Primary::::*/
 /*Primary Blue*/
@@ -5086,6 +5087,62 @@ button.close {
   background-color: #e6e9ee; }
 
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player padding wrapper classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*When setting this class for New Player use: 'outside-padding'*/
+#np_products .np_outside-padding {
+  padding-top: 35px;
+  padding-left: 90px;
+  padding-right: 90px;
+  padding-bottom: 35px; }
+
+/*When setting this class for New Player use: 'inside-padding'*/
+#np_products .np_inside-padding {
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-bottom: 35px; }
+
+/*When setting this class for New Player use: 'button-padding'*/
+#np_products .np_button-padding {
+  padding-top: 30px;
+  padding-left: 15%;
+  padding-right: 15%;
+  padding-bottom: 35px; }
+
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*responsive padding overrides*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.container {
+  /*background-color: #000000;*/
+  /*position: absolute;*/
+  /*    background: url(./assets/images/OrionsHeart.jpg) no-repeat center center fixed;
+      background-color: #000000;
+      background-size: cover;
+      content: "";
+      bottom: 0;
+      left: 0;
+      right: 0;
+      top: 0;*/
+  /*z-index: -2;*/ }
+
+@media (max-width: 768px) {
+  #np_products .np_outside-padding {
+    padding: 0px; }
+
+  #np_products .np_inside-padding {
+    padding: 5%; }
+
+  #np_products .np_button-padding {
+    padding: 5%; } }
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/* text treatment classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*Q and A text outdent*/
+#np_products .q-and-a-outdent {
+  text-indent: -28px;
+  margin-left: 28px; }
+
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*Sans font overrides*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 #np_products .sans-head {
@@ -5100,6 +5157,27 @@ button.close {
 
 #np_products .np_inside-padding .sans-head {
   border-bottom-color: white; }
+
+#np_products .sans-head-sub {
+  font-family: "akzidenz-grotesk_bqbold";
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding-bottom: 3px; }
+
+#np_products .sans-normal {
+  font-family: "akzidenz-grotesk_bqregular";
+  text-transform: none;
+  letter-spacing: 2px;
+  line-height: 130%; }
+
+#np_products .sans-small {
+  font-family: "akzidenz-grotesk_bqregular";
+  text-transform: none;
+  letter-spacing: 2px;
+  line-height: 130%;
+  font-size: 16px; }
+  #np_products .sans-small p {
+    padding-bottom: 10px; }
 
 /*#background-image { 
     position: absolute;
@@ -5138,6 +5216,28 @@ button.close {
     padding-bottom: 1.5rem;
     margin-top: 0;
     display: inline-block; } }
+@media (max-width: 768px) {
+  .collapse-toggle {
+    background-color: #e6e9ee;
+    cursor: pointer;
+    width: 100%;
+    border-bottom: none;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-right: 7px;
+    padding-left: 7px; }
+    .collapse-toggle:hover, .collapse-toggle:focus {
+      /*background-color: darken($brand-offwhite, 5%);*/ }
+    .collapse-toggle:before {
+      font-family: 'elx-icons';
+      content: "\e613";
+      float: right;
+      color: #040a2b;
+      /*            -webkit-transition: opacity 1s ease-in-out;
+                  -moz-transition: opacity 1s ease-in-out;
+                  -o-transition: opacity 1s ease-in-out;*/
+      -webkit-transition: opacity 1s ease-in-out;
+              transition: opacity 1s ease-in-out; } }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player page type wrapper classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -5261,6 +5361,123 @@ button.close {
   padding-bottom: 50px;
   padding-left: 30px;
   padding-right: 20px; }
+
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*Hotspot button left position classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+#np_reNutriv .posA {
+  left: 0%; }
+
+#np_reNutriv .posB {
+  left: 6.25%; }
+
+#np_reNutriv .posC {
+  left: 12.50%; }
+
+#np_reNutriv .posD {
+  left: 18.75%; }
+
+#np_reNutriv .posE {
+  left: 25%; }
+
+#np_reNutriv .posF {
+  left: 31.25%; }
+
+#np_reNutriv .posG {
+  left: 37.5%; }
+
+#np_reNutriv .posH {
+  left: 43.75%; }
+
+#np_reNutriv .posI {
+  left: 50%; }
+
+#np_reNutriv .posJ {
+  left: 56.25%; }
+
+#np_reNutriv .posK {
+  left: 62.5%; }
+
+#np_reNutriv .posL {
+  left: 68.75%; }
+
+#np_reNutriv .posM {
+  left: 75%; }
+
+#np_reNutriv .posN {
+  left: 81.25%; }
+
+#np_reNutriv .posO {
+  left: 87.5%; }
+
+#np_reNutriv .posP {
+  left: 93.75%; }
+
+#np_reNutriv .posQ {
+  left: 100%; }
+
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*Hotspot button top position classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+#np_reNutriv .pos1 {
+  top: 0%; }
+
+#np_reNutriv .pos2 {
+  top: 5.26%; }
+
+#np_reNutriv .pos3 {
+  top: 10.52%; }
+
+#np_reNutriv .pos4 {
+  top: 15.78%; }
+
+#np_reNutriv .pos5 {
+  top: 21.05%; }
+
+#np_reNutriv .pos6 {
+  top: 26.31%; }
+
+#np_reNutriv .pos7 {
+  top: 31.57%; }
+
+#np_reNutriv .pos8 {
+  top: 36.84%; }
+
+#np_reNutriv .pos9 {
+  top: 42.10%; }
+
+#np_reNutriv .pos10 {
+  top: 47.36%; }
+
+#np_reNutriv .pos11 {
+  top: 52.63%; }
+
+#np_reNutriv .pos12 {
+  top: 57.89%; }
+
+#np_reNutriv .pos13 {
+  top: 63.15%; }
+
+#np_reNutriv .pos14 {
+  top: 68.42%; }
+
+#np_reNutriv .pos15 {
+  top: 73.68%; }
+
+#np_reNutriv .pos16 {
+  top: 78.94%; }
+
+#np_reNutriv .pos17 {
+  top: 84.21%; }
+
+#np_reNutriv .pos18 {
+  top: 89.47%; }
+
+#np_reNutriv .pos19 {
+  top: 94.73%; }
+
+.po20 {
+  top: 100%; }
 
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Drag and Drop classes*/
@@ -6247,8 +6464,6 @@ button.close {
 @media print {
   .hidden-print {
     display: none !important; } }
-/*@import "/Users/xian/Documents/NewPlayer/newplayer/bower_components/bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";*/
-/*////////////////////////////////////////////////////////////////////////////////*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*support classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -6268,8 +6483,6 @@ svg {
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*Button overrides*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/*button vertical spacing*/
-/*button widths*/
 .btn {
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -6298,50 +6511,52 @@ svg {
 /*New Player padding wrapper classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*When setting this class for New Player use: 'outside-padding'*/
-.np_outside-padding {
-  padding-top: 35px;
-  padding-left: 90px;
-  padding-right: 90px;
-  padding-bottom: 35px; }
-
+/*.np_outside-padding{
+    padding-top: 35px;
+    padding-left: 90px;
+    padding-right: 90px;
+    padding-bottom: 35px;
+}*/
 /*When setting this class for New Player use: 'inside-padding'*/
-.np_inside-padding {
-  padding-left: 5%;
-  padding-right: 5%;
-  padding-bottom: 35px; }
-
+/*.np_inside-padding{
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 35px;
+}*/
 /*When setting this class for New Player use: 'button-padding'*/
-.np_button-padding {
-  padding-top: 30px;
-  padding-left: 15%;
-  padding-right: 15%;
-  padding-bottom: 35px; }
-
+/*.np_button-padding{
+    padding-top: 30px;
+    padding-left: 15%;
+    padding-right: 15%;
+    padding-bottom: 35px;
+}*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*responsive padding overrides*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-.container {
-  /*background-color: #000000;*/
-  /*position: absolute;*/
-  /*    background: url(./assets/images/OrionsHeart.jpg) no-repeat center center fixed;
-      background-color: #000000;
-      background-size: cover;
-      content: "";
-      bottom: 0;
-      left: 0;
-      right: 0;
-      top: 0;*/
-  /*z-index: -2;*/ }
-
-@media (max-width: 768px) {
-  .np_outside-padding {
-    padding: 0px; }
-
-  .np_inside-padding {
-    padding: 5%; }
-
-  .np_button-padding {
-    padding: 5%; } }
+/*.container{*/
+/*background-color: #000000;*/
+/*position: absolute;*/
+/*    background: url(./assets/images/OrionsHeart.jpg) no-repeat center center fixed;
+    background-color: #000000;
+    background-size: cover;
+    content: "";
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;*/
+/*z-index: -2;*/
+/*}*/
+/*@media (max-width: $screen-sm) {
+    .np_outside-padding{
+        padding: 0px;
+    }
+    .np_inside-padding{
+        padding: 5%;
+    }
+    .np_button-padding{
+        padding: 5%;
+    }
+}*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*Sans font overrides*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -6355,52 +6570,58 @@ svg {
     padding-bottom: 3px;
     display: inline-block;
 }*/
-@media (max-width: 768px) {
-  .collapse-toggle {
-    background-color: #e6e9ee;
-    cursor: pointer;
-    width: 100%;
-    border-bottom: none;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    padding-right: 7px;
-    padding-left: 7px; }
-    .collapse-toggle:hover, .collapse-toggle:focus {
-      /*background-color: darken($brand-offwhite, 5%);*/ }
-    .collapse-toggle:before {
-      font-family: 'elx-icons';
-      content: "\e613";
-      float: right;
-      color: #040a2b;
-      /*            -webkit-transition: opacity 1s ease-in-out;
-                  -moz-transition: opacity 1s ease-in-out;
-                  -o-transition: opacity 1s ease-in-out;*/
-      -webkit-transition: opacity 1s ease-in-out;
-              transition: opacity 1s ease-in-out; } }
-.np_inside-padding .sans-head {
-  border-bottom-color: white; }
-
-.sans-head-sub {
-  font-family: "akzidenz-grotesk_bqbold";
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  padding-bottom: 3px; }
-
-.sans-normal {
-  font-family: "akzidenz-grotesk_bqregular";
-  text-transform: none;
-  letter-spacing: 2px;
-  line-height: 130%; }
-
-.sans-small {
-  font-family: "akzidenz-grotesk_bqregular";
-  text-transform: none;
-  letter-spacing: 2px;
-  line-height: 130%;
-  font-size: 16px; }
-  .sans-small p {
-    padding-bottom: 10px; }
-
+/*
+@media (max-width: $screen-sm) {
+    .collapse-toggle{
+        background-color: $brand-offwhite;
+        cursor: pointer;
+        width: 100%;
+        border-bottom: none;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        padding-right: 7px;
+        padding-left: 7px;
+        &:hover,
+            &:focus {
+            background-color: darken($brand-offwhite, 5%);
+        }
+        &:before {
+            font-family: 'elx-icons';
+            content: "\e613";
+            float: right;
+            color: $brand-primary;
+                        -webkit-transition: opacity 1s ease-in-out;
+                        -moz-transition: opacity 1s ease-in-out;
+                        -o-transition: opacity 1s ease-in-out;
+            transition: opacity 1s ease-in-out;
+        }
+    }
+}*/
+/*.np_inside-padding .sans-head{
+    border-bottom-color: $brand-primary-light;
+}
+.sans-head-sub{
+    font-family: $font-family-sans-serif_head;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding-bottom: 3px;
+}
+.sans-normal{
+    font-family: $font-family-sans-serif;
+    text-transform: none;
+    letter-spacing: 2px;
+    line-height: 130%;
+}
+.sans-small{
+    font-family: $font-family-sans-serif;
+    text-transform: none;
+    letter-spacing: 2px;
+    line-height: 130%;
+    font-size: $font-size-small;
+    p{
+        padding-bottom: 10px;
+    }
+}*/
 /*@media (max-width: $screen-sm) {
     .sans-normal{
         padding-right: 7px;
@@ -6426,10 +6647,10 @@ svg {
 /* text treatment classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*Q and A text outdent*/
-.q-and-a-outdent {
-  text-indent: -28px;
-  margin-left: 28px; }
-
+/*.q-and-a-outdent{
+    text-indent:-28px;
+    margin-left:28px
+}*/
 /*////////////////////////////////////////////////////////////////////////////////*/
 .browsehappy {
   display: none;

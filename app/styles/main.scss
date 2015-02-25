@@ -1,13 +1,7 @@
-// bower:scss
-// endbower
-/*@import "bootstrap-sass/assets/stylesheets/_bootstrap";*/
-/*@import "../bower_components/bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*main bootstrap override classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 @import "_bootstrap.scss";
-/*@import "/Users/xian/Documents/NewPlayer/newplayer/bower_components/bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";*/
-
-
-/*////////////////////////////////////////////////////////////////////////////////*/
-
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*support classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -27,8 +21,6 @@ svg {
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*Button overrides*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/*button vertical spacing*/
-/*button widths*/
 .btn {     
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -58,29 +50,29 @@ svg {
 /*New Player padding wrapper classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*When setting this class for New Player use: 'outside-padding'*/
-.np_outside-padding{
+/*.np_outside-padding{
     padding-top: 35px;
     padding-left: 90px;
     padding-right: 90px;
     padding-bottom: 35px;
-}
+}*/
 /*When setting this class for New Player use: 'inside-padding'*/
-.np_inside-padding{
+/*.np_inside-padding{
     padding-left: 5%;
     padding-right: 5%;
     padding-bottom: 35px;
-}
+}*/
 /*When setting this class for New Player use: 'button-padding'*/
-.np_button-padding{
+/*.np_button-padding{
     padding-top: 30px;
     padding-left: 15%;
     padding-right: 15%;
     padding-bottom: 35px;
-}
+}*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*responsive padding overrides*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-.container{
+/*.container{*/
     /*background-color: #000000;*/
     /*position: absolute;*/
     /*    background: url(./assets/images/OrionsHeart.jpg) no-repeat center center fixed;
@@ -92,8 +84,8 @@ svg {
         right: 0;
         top: 0;*/
     /*z-index: -2;*/
-}
-@media (max-width: $screen-sm) {
+/*}*/
+/*@media (max-width: $screen-sm) {
     .np_outside-padding{
         padding: 0px;
     }
@@ -103,7 +95,7 @@ svg {
     .np_button-padding{
         padding: 5%;
     }
-}
+}*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*Sans font overrides*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -117,7 +109,7 @@ svg {
     padding-bottom: 3px;
     display: inline-block;
 }*/
-
+/*
 @media (max-width: $screen-sm) {
     .collapse-toggle{
         background-color: $brand-offwhite;
@@ -130,21 +122,21 @@ svg {
         padding-left: 7px;
         &:hover,
             &:focus {
-            /*background-color: darken($brand-offwhite, 5%);*/
+            background-color: darken($brand-offwhite, 5%);
         }
         &:before {
             font-family: 'elx-icons';
             content: "\e613";
             float: right;
             color: $brand-primary;
-            /*            -webkit-transition: opacity 1s ease-in-out;
+                        -webkit-transition: opacity 1s ease-in-out;
                         -moz-transition: opacity 1s ease-in-out;
-                        -o-transition: opacity 1s ease-in-out;*/
+                        -o-transition: opacity 1s ease-in-out;
             transition: opacity 1s ease-in-out;
         }
     }
-}
-.np_inside-padding .sans-head{
+}*/
+/*.np_inside-padding .sans-head{
     border-bottom-color: $brand-primary-light;
 }
 .sans-head-sub{
@@ -168,7 +160,7 @@ svg {
     p{
         padding-bottom: 10px;
     }
-}
+}*/
 /*@media (max-width: $screen-sm) {
     .sans-normal{
         padding-right: 7px;
@@ -194,10 +186,10 @@ svg {
 /* text treatment classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*Q and A text outdent*/
-.q-and-a-outdent{
+/*.q-and-a-outdent{
     text-indent:-28px;
     margin-left:28px
-}
+}*/
 
 
 /*////////////////////////////////////////////////////////////////////////////////*/
