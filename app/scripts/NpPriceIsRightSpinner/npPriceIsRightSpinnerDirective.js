@@ -20,7 +20,8 @@
       controller: npPriceIsRightSpinnerController,
       controllerAs: 'vm',
       transclude: true,
-      template: '<div class="col-md-3"><div class="wheels"><div class="wheel" ng-transclude></div></div></div>'
+      replace: true,
+      template: '<div class="wheels"><div class="wheel" ng-transclude></div></div>'
     };
 
     return directive;
@@ -58,11 +59,11 @@
 		  /******** End Configuration **************/
 
 		  if (shuffle_spaces) {
-		  	var spaces = element.find('.wheels .wheel div').detach();
-		  	element.find('.wheels .wheel').append(_.shuffle(spaces));
+		  	var spaces = element.find('.wheel div').detach();
+		  	element.find('.wheel').append(_.shuffle(spaces));
 		  }
 		  // setup
-			element.find('.wheels .wheel > div').each(function (index, elem) {
+			element.find('.wheel > div').each(function (index, elem) {
 				var deg = index * 12;
 				$(this).css('transform', 'perspective(500px) rotate3d(1, 0, 0, ' + deg + 'deg) translate3d(0, 0, 150px)');
 			});

@@ -4,12 +4,12 @@
   box-sizing: border-box;
   position: absolute;
   left: 50%;
-  top: 350px;
+  top: 300px;
   display: inline-block;
   padding: 0;
   text-align: center;
   width: 30%;
-  height: 500px;
+  height: 300px;
   -moz-user-select: -moz-none;
   -ms-user-select: none;
   -webkit-user-select: none;
@@ -39,8 +39,8 @@
   box-sizing: border-box;
   position: absolute;
   display: inline-block;
-  width: 100%;
-  height: 40px;
+  width: 45%;
+  // height: 40px;
   line-height: 3.5rem;
   text-align: center;
   z-index: 0;

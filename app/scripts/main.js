@@ -14,6 +14,7 @@
 
   /** @ngInject */
     .factory('AssessmentService', AssessmentService)
+    .factory('TriviaService', TriviaService)
 
     .config( /** @ngInject */ function ($logProvider) {
       $logProvider.debugEnabled(false);

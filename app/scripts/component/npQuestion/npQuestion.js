@@ -5,7 +5,7 @@
     .module('newplayer.component')
   /** @ngInject */
     .controller('npQuestionController',
-    function ($log, $scope, ManifestService, $sce) {
+    function ($log, $scope, $rootScope, ManifestService, $sce) {
       var cmpData = $scope.component.data;
       $log.debug('npQuestion::data', cmpData);
 
@@ -87,8 +87,10 @@
         if (feedback.immediate && this.feedback === '') {
           if (correct) {
             this.feedback = feedback.correct;
+            $rootScope.$emit('question.answered', true);
           } else {
             this.feedback = feedback.incorrect;
+            $rootScope.$emit('question.answered', false);
           }
         }
       };
