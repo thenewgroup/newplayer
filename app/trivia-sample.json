@@ -25,7 +25,7 @@
                     {
                         "type": "npPage",
                         "data": {
-                            "id": "Welcome",
+                            "id": "Page1",
                             "parentId": "",
                             "title": "Welcome",
                             "inMenu": true,
@@ -92,7 +92,7 @@
                     {
                         "type": "npPage",
                         "data": {
-                            "id": "Question2",
+                            "id": "Page2",
                             "parentId": "question1",
                             "title": "Question 1",
                             "inMenu": true,
@@ -167,7 +167,7 @@
                     {
                         "type": "npPage",
                         "data": {
-                            "id": "Question3",
+                            "id": "Page3",
                             "parentId": "QuizIntro",
                             "title": "Question 1",
                             "inMenu": true,

@@ -10,7 +10,7 @@
 	
 	<div class="row">
 		<div class="col-md-3">
-			<np-price-is-right-spinner spinTime="2000" class="col-xs-6">
+			<np-price-is-right-spinner spinTime="2000" class="col-xs-6" ng-hide="!npTrivia.pageId">
 				<div>0</div>
 			    <div>100</div>
 			    <div>200</div>
@@ -44,7 +44,8 @@
 			</np-price-is-right-spinner>
 		</div>
 
-		<div class="col-md-9 np_row" np-component ng-if="subCmp" ng-repeat="component in npTrivia.seenComponents" idx="{{component.idx}}"></div>
+		<div class="col-md-9 np_row" np-component ng-if="subCmp" ng-repeat="component in npTrivia.seenComponents" idx="{{component.idx}}" ng-hide="npTrivia.pageId !== component.data.id"></div>
+
 		<div class="npTrivia-feedback" ng-if="npTrivia.feedback" ng-bind-html="npTrivia.feedback"></div>
 	</div>
 </form>

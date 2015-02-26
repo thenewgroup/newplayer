@@ -6,7 +6,7 @@
     .directive('npPriceIsRightSpinner', npPriceIsRightSpinner);
 
   /** @ngInject */
-  function npPriceIsRightSpinner($log,  $timeout) {
+  function npPriceIsRightSpinner($log,  $timeout, $rootScope) {
     $log.debug('npPriceIsRightSpinner::Init\n');
 
     var directive = {
@@ -150,6 +150,8 @@
 		  $timeout(function () {
 			  spin();
 		  }, delay_time);
+
+		  $rootScope.$on('spin-to-win', spin);
     }
   }
 

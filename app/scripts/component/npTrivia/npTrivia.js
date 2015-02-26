@@ -5,32 +5,42 @@
     .module('newplayer.component')
   /** @ngInject */
     .controller('npTriviaController',
-    function ($log, $scope, $rootScope, ManifestService, $sce, TriviaService) {
+    function ($log, $scope, $rootScope, $timeout, ManifestService, $sce) {
+      var vm = this;
       var cmpData = $scope.component.data;
+      var pagesLen = $scope.components.length;
       $log.debug('npQuiz::data', cmpData);
 
-      this.id = cmpData.id;
-      this.content = $sce.trustAsHtml(cmpData.content);
-      this.type = cmpData.type;
-      this.currentPage = 0;
-      this.feedback = '';
-      this.assment = AssessmentService();
-
-      var pages = $scope.components.length;
-      this.assment.setRequirements(pages, pages, null);
-
-      var feedback = cmpData.feedback;
-      this.seenComponents = _.shuffle($scope.components);
-      TriviaService.hidePages();
-      var vm = this;
+      vm.id = cmpData.id;
+      vm.content = $sce.trustAsHtml(cmpData.content);
+      vm.type = cmpData.type;
+      vm.currentPage = 0;
+      vm.feedback = '';
+      vm.assment = AssessmentService();
+      vm.assment.setRequirements(pagesLen, pagesLen, null);
+      vm.seenComponents = _.shuffle($scope.components);
+      vm.pageId = vm.seenComponents[0].data.id;
+      
+      // go to the first page, since pages were shuffled
+      $timeout(function () {
+    	  ManifestService.setPageId(vm.pageId)
+      });
 
       $rootScope.$on('question.answered', function (evt, correct) {
       	if (correct) {
-      		// TODO - get this to go to the next page corrently
     			vm.assment.pageViewed();
       		vm.currentPage = vm.assment.getPageStats().viewed.total;
-      		var page = vm.seenComponents[vm.currentPage].data.id;
-		      $rootScope.$broadcast('npPageIdChanged', page);
+		      vm.pageId = vm.seenComponents[vm.currentPage] ? 
+		      	vm.seenComponents[vm.currentPage].data.id : '';
+	    	  ManifestService.setPageId(vm.pageId);
+					$rootScope.$emit('spin-to-win');
+
+	    	  // end of the trivia questions
+	    	  // TODO - add this message the template and set the two values 
+	    	  // here in the controller
+	    	  if (!vm.pageId) {
+	    	  	vm.feedback = 'Good job, you scored 5,000 points out of 7,500 possible.';
+	    	  }
       	}
       });
     }
@@ -38,7 +48,7 @@
 
   /** @ngInject */
     .run(
-    function ($log, $rootScope, AssessmentService) {
+    function ($log, $rootScope) {
       $log.debug('npQuiz::component loaded!');
     }
   );

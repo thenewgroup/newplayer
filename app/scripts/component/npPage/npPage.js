@@ -10,7 +10,6 @@
       $log.debug('npPage::data', cmpData, $scope.contentTitle);
 
       this.title = cmpData.title;
-
       var parentIdx = $scope.component.idx.slice(0);
       parentIdx.pop();
 
