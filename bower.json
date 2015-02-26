@@ -1,6 +1,6 @@
 {
   "name": "newplayer",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "main": "dist/scripts/newplayer.js",
   "ignore": [
     "bower_components",
