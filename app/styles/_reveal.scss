@@ -1,0 +1,9 @@
+/* put reveal thumbnails on top
+ TODO: make responsive */
+.npReveal .rsNav {
+  position: absolute;
+}
+
+.rsDefault .rsThumbs {
+  background-color: transparent;
+}
