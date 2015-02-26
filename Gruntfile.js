@@ -455,7 +455,8 @@ module.exports = function (grunt) {
           'http://dimsemenov.com/plugins/royal-slider/royalslider/jquery.royalslider.min.js',
           'http://dimsemenov.com/plugins/royal-slider/royalslider/skins/default-inverted/rs-default-inverted.css',
           'http://dimsemenov.com/plugins/royal-slider/royalslider/skins/default/rs-default.css',
-          'http://dimsemenov.com/plugins/royal-slider/royalslider/royalslider.css'
+          'http://dimsemenov.com/plugins/royal-slider/royalslider/royalslider.css',
+          'http://dimsemenov.com/plugins/royal-slider/royalslider/skins/default/rs-default.png'
         ],
         dest: 'app/scripts/vendor/royalslider'
       }
