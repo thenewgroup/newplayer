@@ -1,0 +1,18 @@
+<div class="np-cmp-wrapper {{ component.type }}" ngController="npRevealController as npReveal">
+  <div class="debug">
+    <h3>{{ component.type }} -- <small>{{ component.idx }}</small></h3>
+  </div>
+
+  <h1>{{ component.data.name }}</h1>
+  <h2>slider</h2>
+
+  <div class="np-reveal-slider rsDefault" royalslider>
+    <div ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}">
+      <div class="slide-wrapper reveal-slide rsContent">
+        <div class="rsTmb" np-component idx="{{ component.components[0].idx }}"></div>
+        <div class="rsContent" np-component idx="{{ component.components[1].idx }}"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
