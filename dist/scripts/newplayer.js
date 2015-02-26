@@ -1968,7 +1968,8 @@ function AssessmentService ( $log ) {
       'ui.bootstrap',
       'ngSanitize',
       'newplayer.service',
-      'newplayer.component'
+      'newplayer.component',
+      'angular-royalslider'
     ]
   )
 
@@ -3034,6 +3035,55 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "  <div class=\"npQuiz-feedback\" ng-if=\"npQuiz.feedback\" ng-bind-html=\"npQuiz.feedback\"></div>\n" +
     "</form>\n" +
     "\n"
+  );
+
+
+  $templateCache.put('scripts/component/npReveal/npReveal.html',
+    "<div class=\"np-cmp-wrapper {{ component.type }}\" ngController=\"npRevealController as npReveal\">\n" +
+    "  <div class=\"debug\">\n" +
+    "    <h3>{{ component.type }} -- <small>{{ component.idx }}</small></h3>\n" +
+    "  </div>\n" +
+    "\n" +
+    "  <h1>{{ component.data.name }}</h1>\n" +
+    "  <h2>slider</h2>\n" +
+    "\n" +
+    "  <div class=\"np-reveal-slider rsDefault\" royalslider>\n" +
+    "    <div ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\">\n" +
+    "      <div class=\"slide-wrapper reveal-slide rsContent\">\n" +
+    "        <div class=\"rsTmb\" np-component idx=\"{{ component.components[0].idx }}\"></div>\n" +
+    "        <div class=\"rsContent\" np-component idx=\"{{ component.components[1].idx }}\"></div>\n" +
+    "      </div>\n" +
+    "    </div>\n" +
+    "  </div>\n" +
+    "\n" +
+    "</div>\n"
+  );
+
+
+  $templateCache.put('scripts/component/npRevealItem/npRevealItem.html',
+    "<div class=\"np-cmp-wrapper {{ component.type }}\" ngController=\"npRevealItemController as npRevealItem\">\n" +
+    "  <div class=\"debug\">\n" +
+    "    <h3>{{ component.type }} -- <small>{{ component.idx }}</small></h3>\n" +
+    "  </div>\n" +
+    "  <p>component.data: {{ component.data | json }}</p>\n" +
+    "  <h3>{{ component.type }} -- <small>{{ component.idx }}</small></h3>\n" +
+    "\n" +
+    "  <p>content: {{ content }}</p>\n" +
+    "  <p>id: {{ component.data.id }}</p>\n" +
+    "  <p>caption: {{ component.data.caption }}</p>\n" +
+    "\n" +
+    "  <div class=\"reveal-item-media\">\n" +
+    "    <div class=\"reveal-item-image\" ng-if=\"component.data.kind=='image'\">\n" +
+    "      <p>image</p>\n" +
+    "    </div>\n" +
+    "    <div class=\"reveal-item-video\" ng-if=\"component.data.kind=='video'\">\n" +
+    "      <p>video</p>\n" +
+    "    </div>\n" +
+    "  </div>\n" +
+    "\n" +
+    "  <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "\n" +
+    "</div>\n"
   );
 
 
