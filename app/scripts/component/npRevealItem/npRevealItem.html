@@ -1,0 +1,23 @@
+<div class="np-cmp-wrapper {{ component.type }}" ngController="npRevealItemController as npRevealItem">
+  <div class="debug">
+    <h3>{{ component.type }} -- <small>{{ component.idx }}</small></h3>
+  </div>
+  <p>component.data: {{ component.data | json }}</p>
+  <h3>{{ component.type }} -- <small>{{ component.idx }}</small></h3>
+
+  <p>content: {{ content }}</p>
+  <p>id: {{ component.data.id }}</p>
+  <p>caption: {{ component.data.caption }}</p>
+
+  <div class="reveal-item-media">
+    <div class="reveal-item-image" ng-if="component.data.kind=='image'">
+      <p>image</p>
+    </div>
+    <div class="reveal-item-video" ng-if="component.data.kind=='video'">
+      <p>video</p>
+    </div>
+  </div>
+
+  <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+
+</div>

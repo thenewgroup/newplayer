@@ -8,7 +8,8 @@
       'ui.bootstrap',
       'ngSanitize',
       'newplayer.service',
-      'newplayer.component'
+      'newplayer.component',
+      'angular-royalslider'
     ]
   )
 

@@ -1111,160 +1111,164 @@ function AssessmentService ( $log ) {
 
 (function () {
 
-  'use strict';
-  angular
-    .module('newplayer.component')
-    .directive('npComponent', ComponentDirective);
+    'use strict';
+    angular
+            .module('newplayer.component')
+            .directive('npComponent', ComponentDirective);
 
-  /** @ngInject */
-  function ComponentDirective($log, ManifestService, ComponentService, $compile/*, $timeout*/) {
-    $log.debug('\nnpComponent::Init\n');
+    /** @ngInject */
+    function ComponentDirective($log, ManifestService, ComponentService, $compile/*, $timeout*/) {
+        $log.debug('\nnpComponent::Init\n');
 
-    var Directive = function () {
-      var vm = this;
-      this.restrict = 'EA';
-      this.scope = true;
-      /** @ngInject */
-      this.controller =
-        function ($scope, $element, $attrs) {
-          $log.debug('npComponent::controller', $element, $attrs);
-          /*
-           var $attributes = $element[0].attributes;
-           */
-          //parseComponent( $scope, $element, $attrs );
-        };
-      this.controllerAs = 'vm';
-      this.compile = function (tElement, tAttrs, transclude) {
-        /** @ngInject */
-        return function ($scope, $element, $attributes) {
-          $log.debug('npComponent::compile!');
+        var Directive = function () {
+            var vm = this;
+            this.restrict = 'EA';
+            this.scope = true;
+            /** @ngInject */
+            this.controller =
+                    function ($scope, $element, $attrs) {
+                        $log.debug('npComponent::controller', $element, $attrs);
+                        /*
+                         var $attributes = $element[0].attributes;
+                         */
+                        //parseComponent( $scope, $element, $attrs );
+                    };
+            this.controllerAs = 'vm';
+            this.compile = function (tElement, tAttrs, transclude) {
+                /** @ngInject */
+                return function ($scope, $element, $attributes) {
+                    $log.debug('npComponent::compile!');
 
-          parseComponent($scope, $element, $attributes);
-        };
-      };
+                    parseComponent($scope, $element, $attributes);
+                };
+            };
 
 
-      function compileTemplate(html, $scope, $element) {
-        var compiled = $compile(html);
-        compiled($scope, function (clone) {
-          $element.append(clone);
-        });
-        /*
-         // if moving back up to parent
-         if ( !!cmp.components && cmp.components.length > 0 )
-         {} else {
-         compiled = $compile( '<np-component>appended to ' + cmp.type + '</np-component>' );
-         linked = compiled($scope);
-         $element.append( linked );
-         }
-         */
-      }
-
-      /*
-       * parses a component pulled in from the manifest service
-       */
-      function parseComponent($scope, $element, $attributes) {
-        var cmp = ManifestService.getComponent($attributes.idx);
-        var cmpIdx = cmp.idx || [0];
-
-        $log.debug('npComponent::parseComponent', cmp, cmpIdx, $attributes);
-        if (!!cmp) {
-          //ComponentService.load(
-          //  cmp
-          //)
-          //  .then(
-          //  function () {
-          $log.debug('npComponent::parseComponent then', cmp, cmpIdx);
-          // reset scope!!!
-          $scope.subCmp = false;
-          $scope.component = cmp;
-          $scope.components = null;
-
-          $scope.cmpIdx = cmpIdx.toString();
-
-          $element.attr('data-cmpType', cmp.type);
-          $element.addClass('np-cmp-sub');
-
-          if (!!cmp.data) {
-            // set known data values
-            var attrId = cmp.data.id;
-            if (!attrId) {
-              attrId = cmp.type + ':' + cmpIdx.toString();
-            }
-            // id must start with letter (according to HTML4 spec)
-            if (/^[^a-zA-Z]/.test(attrId)) {
-              attrId = 'np' + attrId;
-            }
-            // replace invalid id characters (according to HTML4 spec)
-            attrId = attrId.replace(/[^\w\-.:]/g, '_');
-            //$element.attr( 'id', attrId );
-            if (!cmp.data.id) {
-              cmp.data.id = attrId;
-            }
-            $element.attr('id', 'np_' + attrId);
-
-            var attrClass = cmp.data['class'];
-            if (angular.isString(attrClass)) {
-              attrClass = attrClass.replace(/[^\w\- .:]/g, '_');
-              $element.addClass('np_' + attrClass);
+            function compileTemplate(html, $scope, $element) {
+                var compiled = $compile(html);
+                compiled($scope, function (clone) {
+                    $element.append(clone);
+                });
+                /*
+                 // if moving back up to parent
+                 if ( !!cmp.components && cmp.components.length > 0 )
+                 {} else {
+                 compiled = $compile( '<np-component>appended to ' + cmp.type + '</np-component>' );
+                 linked = compiled($scope);
+                 $element.append( linked );
+                 }
+                 */
             }
 
-            var attrPlugin = cmp.data.plugin;
-            if (angular.isString(attrPlugin)) {
-              attrPlugin = attrPlugin.replace(/[^\w\-.:]/g, '_');
-            }
-          }
-          if (!!cmp.components && cmp.components.length > 0) {
-            $log.debug('npComponent::parseComponent - HAS SUBS:', cmp);
-            $scope.subCmp = true;
-            $scope.components = cmp.components;
-          }
+            /*
+             * parses a component pulled in from the manifest service
+             */
+            function parseComponent($scope, $element, $attributes) {
+                var cmp = ManifestService.getComponent($attributes.idx);
+                var cmpIdx = cmp.idx || [0];
 
-          var templateData = ComponentService.getTemplate(cmp)
-          $log.debug('npComponent::parseComponent: template', templateData);
+                $log.debug('npComponent::parseComponent', cmp, cmpIdx, $attributes);
+                if (!!cmp) {
+                    //ComponentService.load(
+                    //  cmp
+                    //)
+                    //  .then(
+                    //  function () {
+                    $log.debug('npComponent::parseComponent then', cmp, cmpIdx);
+                    // reset scope!!!
+                    $scope.subCmp = false;
+                    $scope.component = cmp;
+                    $scope.components = null;
 
-          // modify template before compiling!?
-          var tmpTemplate = document.createElement('div');
-          tmpTemplate.innerHTML = templateData;
+                    $scope.cmpIdx = cmpIdx.toString();
 
-          var ngWrapperEl, ngMainEl, ngSubEl;
-          ngWrapperEl = angular.element(tmpTemplate.querySelectorAll('.np-cmp-wrapper'));
-          ngMainEl = angular.element(tmpTemplate.querySelectorAll('.np-cmp-main'));
-          ngSubEl = angular.element(tmpTemplate.querySelectorAll('.np-cmp-sub'));
-          if (ngWrapperEl.length) {
-            ngWrapperEl.attr('id', attrId);
-            ngWrapperEl.addClass(attrPlugin);
+                    $element.attr('data-cmpType', cmp.type);
+                    $element.addClass('np-cmp-sub');
 
-            // pass all "data-*" attributes into element
-            angular.forEach(cmp.data, function (val, key) {
-              if (angular.isString(key) && key.indexOf('data-') === 0) {
-                ngWrapperEl.attr(key, val);
-              }
-            });
-          }
-          if (ngMainEl.length) {
-            if (!ngWrapperEl.length) {
-              ngMainEl.attr('id', attrId);
-              ngMainEl.addClass(attrPlugin);
+                    if (!!cmp.data) {
+                        // set known data values
+                        var attrId = cmp.data.id;
+                        if (!attrId) {
+                            attrId = cmp.type + ':' + cmpIdx.toString();
+                        }
+                        // id must start with letter (according to HTML4 spec)
+                        if (/^[^a-zA-Z]/.test(attrId)) {
+                            attrId = 'np' + attrId;
+                        }
+                        // replace invalid id characters (according to HTML4 spec)
+                        attrId = attrId.replace(/[^\w\-.:]/g, '_');
+                        //$element.attr( 'id', attrId );
+                        if (!cmp.data.id) {
+                            cmp.data.id = attrId;
+                        }
+                        $element.attr('id', 'np_' + attrId);
 
-              // pass all "data-*" attributes into element
-              angular.forEach(cmp.data, function (val, key) {
-                if (angular.isString(key) && key.indexOf('data-') === 0) {
-                  ngMainEl.attr(key, val);
+                        var attrClass = cmp.data['class'];
+                        if (angular.isString(attrClass)) {
+                            attrClass = attrClass.replace(/[^\w\- .:]/g, '_');
+//                            $element.addClass('np_' + attrClass);
+                            var classArraySpace = attrClass.split(' ');
+                            for (var ii in classArraySpace) {
+                                $element.addClass('np_' + classArraySpace[ii]);
+                            }
+                        }
+
+                        var attrPlugin = cmp.data.plugin;
+                        if (angular.isString(attrPlugin)) {
+                            attrPlugin = attrPlugin.replace(/[^\w\-.:]/g, '_');
+                        }
+                    }
+                    if (!!cmp.components && cmp.components.length > 0) {
+                        $log.debug('npComponent::parseComponent - HAS SUBS:', cmp);
+                        $scope.subCmp = true;
+                        $scope.components = cmp.components;
+                    }
+
+                    var templateData = ComponentService.getTemplate(cmp)
+                    $log.debug('npComponent::parseComponent: template', templateData);
+
+                    // modify template before compiling!?
+                    var tmpTemplate = document.createElement('div');
+                    tmpTemplate.innerHTML = templateData;
+
+                    var ngWrapperEl, ngMainEl, ngSubEl;
+                    ngWrapperEl = angular.element(tmpTemplate.querySelectorAll('.np-cmp-wrapper'));
+                    ngMainEl = angular.element(tmpTemplate.querySelectorAll('.np-cmp-main'));
+                    ngSubEl = angular.element(tmpTemplate.querySelectorAll('.np-cmp-sub'));
+                    if (ngWrapperEl.length) {
+                        ngWrapperEl.attr('id', attrId);
+                        ngWrapperEl.addClass(attrPlugin);
+
+                        // pass all "data-*" attributes into element
+                        angular.forEach(cmp.data, function (val, key) {
+                            if (angular.isString(key) && key.indexOf('data-') === 0) {
+                                ngWrapperEl.attr(key, val);
+                            }
+                        });
+                    }
+                    if (ngMainEl.length) {
+                        if (!ngWrapperEl.length) {
+                            ngMainEl.attr('id', attrId);
+                            ngMainEl.addClass(attrPlugin);
+
+                            // pass all "data-*" attributes into element
+                            angular.forEach(cmp.data, function (val, key) {
+                                if (angular.isString(key) && key.indexOf('data-') === 0) {
+                                    ngMainEl.attr(key, val);
+                                }
+                            });
+                        }
+                        ngMainEl.addClass(attrClass);
+                    }
+
+                    compileTemplate(tmpTemplate.innerHTML, $scope, $element);
+                    //  }
+                    //);
                 }
-              });
             }
-            ngMainEl.addClass(attrClass);
-          }
-
-          compileTemplate(tmpTemplate.innerHTML, $scope, $element);
-          //  }
-          //);
-        }
-      }
-    };
-    return new Directive();
-  }
+        };
+        return new Directive();
+    }
 })();
 
 (function () {
@@ -1383,7 +1387,6 @@ function AssessmentService ( $log ) {
 })();
 
 (function () {
-
   'use strict';
   angular
     .module('newplayer.component')
@@ -1393,21 +1396,18 @@ function AssessmentService ( $log ) {
       var buttonData = $scope.feedback || {};
       var contentAreaHeight;
       $log.debug('npHotspot::data', cmpData, buttonData);
-
       var hotspotButtons = '';
       this.hotspotButtons = cmpData.hotspotButtons;
-
       this.id = cmpData.id;
       this.baseURL = cmpData.baseURL;
       this.src = cmpData.image;
-
+        //////////////////////
       $scope.feedback = this.feedback = cmpData.feedback;
       $scope.image = this.image = cmpData.image;
-
+        //////////////////////
       this.update = function (button) {
         this.feedback = button.feedback;
         var idx = this.hotspotButtons.indexOf(button);
-
         //////////////////////
         $scope.$watch('npHotspot.feedback', function (newValue, oldValue) {
           $('.npHotspot-feedback p').each(function (index, totalArea) {
@@ -1438,7 +1438,6 @@ function AssessmentService ( $log ) {
       $log.debug('npHotspot::component loaded!');
     }
   );
-
   /** @ngInject */
   function npMediaElementDirective($log) {
     $log.debug('\nnpHotspot mediaelementDirective::Init\n');
@@ -1449,10 +1448,7 @@ function AssessmentService ( $log ) {
     };
     return new Directive();
   }
-
-
 })();
-
 (function () {
 
   'use strict';
@@ -1972,7 +1968,8 @@ function AssessmentService ( $log ) {
       'ui.bootstrap',
       'ngSanitize',
       'newplayer.service',
-      'newplayer.component'
+      'newplayer.component',
+      'angular-royalslider'
     ]
   )
 
@@ -2580,7 +2577,7 @@ function AssessmentService ( $log ) {
 
           var attrClass = cmp.data['class'];
           if (angular.isString(attrClass)) {
-            attrClass = attrClass.replace(/[^\w\- .:]/g, '_');
+            attrClass = attrClass.replace(/[^\w\-.:]/g, '_');
             $element.addClass('np_' + attrClass);
           }
 
@@ -3038,6 +3035,55 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "  <div class=\"npQuiz-feedback\" ng-if=\"npQuiz.feedback\" ng-bind-html=\"npQuiz.feedback\"></div>\n" +
     "</form>\n" +
     "\n"
+  );
+
+
+  $templateCache.put('scripts/component/npReveal/npReveal.html',
+    "<div class=\"np-cmp-wrapper {{ component.type }}\" ngController=\"npRevealController as npReveal\">\n" +
+    "  <div class=\"debug\">\n" +
+    "    <h3>{{ component.type }} -- <small>{{ component.idx }}</small></h3>\n" +
+    "  </div>\n" +
+    "\n" +
+    "  <h1>{{ component.data.name }}</h1>\n" +
+    "  <h2>slider</h2>\n" +
+    "\n" +
+    "  <div class=\"np-reveal-slider rsDefault\" royalslider>\n" +
+    "    <div ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\">\n" +
+    "      <div class=\"slide-wrapper reveal-slide rsContent\">\n" +
+    "        <div class=\"rsTmb\" np-component idx=\"{{ component.components[0].idx }}\"></div>\n" +
+    "        <div class=\"rsContent\" np-component idx=\"{{ component.components[1].idx }}\"></div>\n" +
+    "      </div>\n" +
+    "    </div>\n" +
+    "  </div>\n" +
+    "\n" +
+    "</div>\n"
+  );
+
+
+  $templateCache.put('scripts/component/npRevealItem/npRevealItem.html',
+    "<div class=\"np-cmp-wrapper {{ component.type }}\" ngController=\"npRevealItemController as npRevealItem\">\n" +
+    "  <div class=\"debug\">\n" +
+    "    <h3>{{ component.type }} -- <small>{{ component.idx }}</small></h3>\n" +
+    "  </div>\n" +
+    "  <p>component.data: {{ component.data | json }}</p>\n" +
+    "  <h3>{{ component.type }} -- <small>{{ component.idx }}</small></h3>\n" +
+    "\n" +
+    "  <p>content: {{ content }}</p>\n" +
+    "  <p>id: {{ component.data.id }}</p>\n" +
+    "  <p>caption: {{ component.data.caption }}</p>\n" +
+    "\n" +
+    "  <div class=\"reveal-item-media\">\n" +
+    "    <div class=\"reveal-item-image\" ng-if=\"component.data.kind=='image'\">\n" +
+    "      <p>image</p>\n" +
+    "    </div>\n" +
+    "    <div class=\"reveal-item-video\" ng-if=\"component.data.kind=='video'\">\n" +
+    "      <p>video</p>\n" +
+    "    </div>\n" +
+    "  </div>\n" +
+    "\n" +
+    "  <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "\n" +
+    "</div>\n"
   );
 
 
