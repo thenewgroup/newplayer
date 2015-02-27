@@ -107,7 +107,7 @@
                                         "required": true,
                                         "forced": true,
                                         "type": "checkbox",
-                                        "difficulty": 1,
+                                        "difficulty": 2,
                                         "content": "What number am I thinking of? QUESTION 2",
                                         "feedback": {
                                             "immediate": true,
@@ -182,7 +182,7 @@
                                         "required": true,
                                         "forced": true,
                                         "type": "text",
-                                        "difficulty": 1,
+                                        "difficulty": 3,
                                         "content": "What is the greatest thing ever!? QUESTION 3",
                                         "feedback": {
                                             "immediate": true,

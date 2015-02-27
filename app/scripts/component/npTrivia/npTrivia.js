@@ -20,7 +20,8 @@
       vm.assment.setRequirements(pagesLen, pagesLen, null);
       vm.seenComponents = _.shuffle($scope.components);
       vm.pageId = vm.seenComponents[0].data.id;
-      
+      vm.difficulty = vm.seenComponents[0].components[0].data.difficulty || 0;
+     
       // go to the first page, since pages were shuffled
       $timeout(function () {
     	  ManifestService.setPageId(vm.pageId)
