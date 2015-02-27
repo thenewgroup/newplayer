@@ -126,44 +126,124 @@
     padding-right: 20px;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/*New Player Drag and Drop classes*/
+/*New Player Drag and Drop match classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-#np_reNutriv .draggableButton{
-    position: draggableContainer;
+#np_reNutriv .column-no-wrap {
+    float: none;
+}
+#np_reNutriv .boxElements {
+    position:relative;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    text-align: left;
+    color: white;
+    margin-bottom: 2.5%;
+    box-shadow: inset 0px 0px 40px 5px rgba(0,0,0,0.75);
+}
+#np_reNutriv .boxElements svg{
+    /*fill:#313131;*/
+}
+#np_reNutriv .completeCheck {
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    text-align: left;
+    color: white;
+    margin-bottom: 2.5%;
+}
+#np_reNutriv foreignobject{
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+}
+#np_reNutriv .button-completion-content{
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    padding: 5%;
+}
+#np_reNutriv .positive-feedback-content{
+    position: absolute;
+    top: 35%;
+    left: 50%;
+}
+#np_reNutriv .positive-feedback-image{
+    position: absolute;
+    margin: auto;
+    top: 0; 
+    left: 40%;
+    bottom: 0;
+    background-image: url("/assets/svgs/feedback-correct-icon-ReNutriv.svg");
+    background-repeat: no-repeat;
+    width:40px; 
+    height:40px; 
+    border: 0;
+    background-size: 100%; /* To fill the dimensions of container (button), or */
+    background-size: 40px auto; /* to specify dimensions explicitly */
+}
+#np_reNutriv .button-content{
+    position: relative;
+    padding: 5%;
+}
+#np_reNutriv rect{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+}
+#np_reNutriv .button-content p{
+    padding: 0;
+    margin: 0;
 }
 #np_reNutriv .draggableButton{
-    position: relative;
-    /*max-width:90px;*/
-    /*height: auto;*/
-    background-color: #333333;
-    margin: 0;
-    padding: 0;
     cursor: pointer;
+}
+#np_reNutriv .draggableButtonsvg{
+    fill:#000000;
 }
 #np_reNutriv .hit-area{
     position: relative;
     width: 100%;
     height: 100%;
-    background-color: #333333;
+}
+#np_reNutriv .hit-area svg{
+    fill:#313131;
+}
+#np_reNutriv .hit-area rect{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
     margin: 0;
     padding: 0;
-}
-#np_reNutriv .box {
+    opacity: .90;
 }
 #np_reNutriv .dragover {
-}
-#np_reNutriv .boxElements {
-    width: 100%;
-    height: auto;
-    text-align: center;
-    color: white;
-    border-radius:10px;
-    border: 2px solid black;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /* */
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-
 /*When setting this class for New Player use: 'outside-padding'*/
 /*.np_outside-padding{
     padding-top: 35px;
