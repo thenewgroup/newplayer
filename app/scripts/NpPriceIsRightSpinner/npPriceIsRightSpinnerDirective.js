@@ -43,9 +43,13 @@
 		  }
 
 		  function spin() {
-				// TweenMax.set(element.find('.wheel'), {transformStyle:'preserve-3d'});
 			  var $choice = element.find('.wheel div[data-pick="true"]').remove();
 			 	element.find('.wheel').append($choice);
+
+			 	// no spin for you!
+		  	if (!Modernizr.csstransforms3d) {
+		  		return;
+		  	}
 				_.each(element.find('.wheel div'), function(elem, index) {
 					TweenMax.to(elem, 1, {
 						rotationX:(36 * index), 
