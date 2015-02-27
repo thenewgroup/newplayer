@@ -75,44 +75,41 @@
                                 "type": "npDragAndDrop",
                                 "data": {
                                     "id": "container",
-                                    "class": "test-strip",
+                                    "positiveFeedback": "<p>That's it!</p>",
+                                    "negativeFeedback": "<p>ehh?!?!</p>",
+                                    "image": "",
                                     "req": [
                                         "mediaelement/GreenSock/TweenMax.min.js",
                                         "mediaelement/GreenSock/utils/Draggable.min.js",
-                                        "mediaelement/angular-tweenmax-draggable.js"
+                                        "mediaelement/angular-tweenmax-draggable.js",
+                                        "mediaelement/jquery-1.11.1.min.js"
                                     ],
                                     "draggableButtons": [
                                         {
-                                            "feedback": "<p>this is the feedback 1!</p><p>Fusce convallis, mauris imperdiet gravida bibendum, nisl turpis suscipit mauris, sed placerat ipsum urna sed risus. In convallis tellus a mauris. Curabitur non elit ut libero tristique sodales. Mauris a lacus. Donec mattis semper leo. In hac habitasse platea dictumst. Vivamus facilisis diam at odio. Mauris dictum, nisi eget consequat elementum, lacus ligula molestie metus, non feugiat orci magna ac sem. Donec turpis. Donec vitae metus. Morbi tristique neque eu mauris. Quisque gravida ipsum non sapien. </p>",
-                                            "content": "<p>this is the content1!</p>",
+                                            "content": "<p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
                                             "image": "/assets/images/hotspot.png",
-                                            "matchingContent": "<p>this is the matching content1!</p>",
+                                            "matchingContent": "<p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
                                             "matchingImage": "/assets/images/hotspot.png"
                                         },
                                         {
-                                            "feedback": "<p>this is the feedback two/too!</p>",
                                             "content": "<p>this is the content2!</p>",
                                             "image": "/assets/images/hotspot.png",
                                             "matchingContent": "<p>this is the matching content2!</p>",
                                             "matchingImage": "/assets/images/hotspot.png"
                                         },
                                         {
-                                            "feedback": "<p>this is the feedback3!</p>",
                                             "content": "<p>this is the content3!</p>",
                                             "image": "/assets/images/hotspot.png",
                                             "matchingContent": "<p>this is the matching content3!</p>",
                                             "matchingImage": "/assets/images/hotspot.png"
                                         },
                                         {
-                                            "feedback": "<p>this is the feedback4!</p>",
                                             "content": "<p>this is the content4!</p>",
                                             "image": "/assets/images/hotspot.png",
                                             "matchingContent": "<p>this is the matching content4!</p>",
                                             "matchingImage": "/assets/images/hotspot.png"
                                         }
-                                    ],
-                                    "feedback": "<p>this is the placeholder content</p>",
-                                    "image": ""
+                                    ]
                                 },
                                 "components": []
                             }
