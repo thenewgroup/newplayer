@@ -1,7 +1,7 @@
 //
 ///*jshint bitwise: false*/
 //
-//angular.module('DarggableAngular', []).
+//angular.module('DraggableAngular', []).
 //        directive("dragButton", function () {
 //            return {
 //                restrict: "A",
