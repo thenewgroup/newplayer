@@ -21,7 +21,6 @@
       var overrides;
 
       var componentIdx;
-
       // if these are not defined by the route
       // the manifest components will teach this service
       // what the values should be
