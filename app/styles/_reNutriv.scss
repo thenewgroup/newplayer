@@ -126,6 +126,39 @@
     padding-right: 20px;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player Drag and Drop Prioritize classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+#np_reNutriv .button-prioritize-content{
+    position: relative;
+    display:block;
+}
+#np_reNutriv .hit-area-prioritize-content{
+    position: absolute;
+    float: right;
+    right: 43%;
+    top: 43%;
+}
+#np_reNutriv .hit-area-number{
+    font-size: 8em;
+    color: #000000;
+    opacity: .15;
+    text-align: center;
+    padding-left: 20px;
+}
+#np_reNutriv .button-completion-prioritize-content{
+    position: absolute;
+    float: right;
+    right: 50%;
+    top: 36%;
+}
+#np_reNutriv .centered-prioritize-content{
+    width: 100%;
+    height: 100%;
+    float: right;
+    right: -50%;
+    position: relative;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Drag and Drop match classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 #np_reNutriv .column-no-wrap {
@@ -141,8 +174,8 @@
     right:0;
     text-align: left;
     color: white;
-    margin-bottom: 2.5%;
-    box-shadow: inset 0px 0px 40px 5px rgba(0,0,0,0.75);
+    margin-bottom: 1.5%;
+    /*box-shadow: inset 0px 0px 40px 5px rgba(0,0,0,0.75);*/
 }
 #np_reNutriv .boxElements svg{
     /*fill:#313131;*/
@@ -170,24 +203,26 @@
 }
 #np_reNutriv .button-completion-content{
     position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    margin: auto;
-    padding: 5%;
+    float: right;
+    right: 50%;
+    top: 43%;
+}
+#np_reNutriv .centered-content{
+    width: 100%;
+    height: 100%;
+    float: right;
+    right: -50%;
+    position: relative;
+}
+.positive-feedback-image, .positive-feedback-content{
+    float: left;
+    line-height: 1em;
+    padding-left: 5%;
 }
 #np_reNutriv .positive-feedback-content{
-    position: absolute;
-    top: 35%;
-    left: 50%;
+    width: auto;
 }
 #np_reNutriv .positive-feedback-image{
-    position: absolute;
-    margin: auto;
-    top: 0; 
-    left: 40%;
-    bottom: 0;
     background-image: url("/assets/svgs/feedback-correct-icon-ReNutriv.svg");
     background-repeat: no-repeat;
     width:40px; 
@@ -225,7 +260,7 @@
     height: 100%;
 }
 #np_reNutriv .hit-area svg{
-    fill:#313131;
+    fill: #313131;
 }
 #np_reNutriv .hit-area rect{
     position: relative;
@@ -238,8 +273,6 @@
     margin: 0;
     padding: 0;
     opacity: .90;
-}
-#np_reNutriv .dragover {
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /* Hotspot Grid */
