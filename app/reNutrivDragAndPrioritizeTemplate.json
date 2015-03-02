@@ -67,44 +67,45 @@
                                 "data": {
                                     "id": "",
                                     "class": "h6 instructional",
-                                    "content": "<p>(Instructional copy) Select each image to learn more about Ultimate Diamond.</p>"
+                                    "content": "<p>(Instructional copy) Drag each to it's matching match about etc. somthing Ultimate Diamond.</p>"
                                 },
                                 "components": []
                             },
                             {
-                                "type": "npHotspot",
+                                "type": "npDragAndDropPrioritize",
                                 "data": {
-                                    "id": "",
-                                    "class": "test-strip",
+                                    "id": "container",
+                                    "positiveFeedback": "<p>That's it!</p>",
+                                    "negativeFeedback": "<p>ehh?!?!</p>",
+                                    "image": "",
                                     "req": [
-                                        "mediaelement/jquery-1.11.1.min.js",
-                                        "mediaelement/GreenSock/TweenMax.min.js",
-                                        "mediaelement/hotspot.css"
                                     ],
-                                    "hotspotButtons": [
+                                    "draggableButtons": [
                                         {
-                                            "class": "posA pos1",
-                                            "feedback": "<p>this is the content!</p><p>Fusce convallis, mauris imperdiet gravida bibendum, nisl turpis suscipit mauris, sed placerat ipsum urna sed risus. In convallis tellus a mauris. Curabitur non elit ut libero tristique sodales. Mauris a lacus. Donec mattis semper leo. In hac habitasse platea dictumst. Vivamus facilisis diam at odio. Mauris dictum, nisi eget consequat elementum, lacus ligula molestie metus, non feugiat orci magna ac sem. Donec turpis. Donec vitae metus. Morbi tristique neque eu mauris. Quisque gravida ipsum non sapien. </p>",
-                                            "image": ""
+                                            "content": "<p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
+                                            "image": "/assets/images/hotspot.png",
+                                            "matchingContent": "<p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
+                                            "matchingImage": "/assets/images/hotspot.png"
                                         },
                                         {
-                                            "class": "posD pos2",
-                                            "feedback": "<p>this is the content two/too!</p>",
-                                            "image": ""
+                                            "content": "<p>this is the content2!</p>",
+                                            "image": "/assets/images/hotspot.png",
+                                            "matchingContent": "<p>this is the matching content2!</p>",
+                                            "matchingImage": "/assets/images/hotspot.png"
                                         },
                                         {
-                                            "class": "posP pos19",
-                                            "feedback": "<p>this is the content3!</p>",
-                                            "image": ""
+                                            "content": "<p>this is the content3!</p>",
+                                            "image": "/assets/images/hotspot.png",
+                                            "matchingContent": "<p>this is the matching content3!</p>",
+                                            "matchingImage": "/assets/images/hotspot.png"
                                         },
                                         {
-                                            "class": "pos1 posB",
-                                            "feedback": "<p>this is the content4!</p>",
-                                            "image": ""
+                                            "content": "<p>this is the content4!</p>",
+                                            "image": "/assets/images/hotspot.png",
+                                            "matchingContent": "<p>this is the matching content4!</p>",
+                                            "matchingImage": "/assets/images/hotspot.png"
                                         }
-                                    ],
-                                    "feedback": "<p>this is the placeholder content</p>",
-                                    "image": "/assets/images/hotspotTest.jpg"
+                                    ]
                                 },
                                 "components": []
                             }

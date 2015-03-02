@@ -67,52 +67,41 @@
                                 "data": {
                                     "id": "",
                                     "class": "h6 instructional",
-                                    "content": "<p>(Instructional copy) Drag each to it's matching match about etc. somthing Ultimate Diamond.</p>"
+                                    "content": "<p>(Instructional copy) Select each image to learn more about Ultimate Diamond.</p>"
                                 },
                                 "components": []
                             },
                             {
-                                "type": "npDragAndDrop",
+                                "type": "npHotspot",
                                 "data": {
-                                    "id": "container",
+                                    "id": "",
                                     "class": "test-strip",
                                     "req": [
-                                        "mediaelement/GreenSock/TweenMax.min.js",
-                                        "mediaelement/GreenSock/utils/Draggable.min.js",
-                                        "mediaelement/angular-tweenmax-draggable.js"
                                     ],
-                                    "draggableButtons": [
+                                    "hotspotButtons": [
                                         {
-                                            "feedback": "<p>this is the feedback 1!</p><p>Fusce convallis, mauris imperdiet gravida bibendum, nisl turpis suscipit mauris, sed placerat ipsum urna sed risus. In convallis tellus a mauris. Curabitur non elit ut libero tristique sodales. Mauris a lacus. Donec mattis semper leo. In hac habitasse platea dictumst. Vivamus facilisis diam at odio. Mauris dictum, nisi eget consequat elementum, lacus ligula molestie metus, non feugiat orci magna ac sem. Donec turpis. Donec vitae metus. Morbi tristique neque eu mauris. Quisque gravida ipsum non sapien. </p>",
-                                            "content": "<p>this is the content1!</p>",
-                                            "image": "/assets/images/hotspot.png",
-                                            "matchingContent": "<p>this is the matching content1!</p>",
-                                            "matchingImage": "/assets/images/hotspot.png"
+                                            "class": "posA pos1",
+                                            "feedback": "<p>this is the content!</p><p>Fusce convallis, mauris imperdiet gravida bibendum, nisl turpis suscipit mauris, sed placerat ipsum urna sed risus. In convallis tellus a mauris. Curabitur non elit ut libero tristique sodales. Mauris a lacus. Donec mattis semper leo. In hac habitasse platea dictumst. Vivamus facilisis diam at odio. Mauris dictum, nisi eget consequat elementum, lacus ligula molestie metus, non feugiat orci magna ac sem. Donec turpis. Donec vitae metus. Morbi tristique neque eu mauris. Quisque gravida ipsum non sapien. </p>",
+                                            "image": ""
                                         },
                                         {
-                                            "feedback": "<p>this is the feedback two/too!</p>",
-                                            "content": "<p>this is the content2!</p>",
-                                            "image": "/assets/images/hotspot.png",
-                                            "matchingContent": "<p>this is the matching content2!</p>",
-                                            "matchingImage": "/assets/images/hotspot.png"
+                                            "class": "posD pos2",
+                                            "feedback": "<p>this is the content two/too!</p>",
+                                            "image": ""
                                         },
                                         {
-                                            "feedback": "<p>this is the feedback3!</p>",
-                                            "content": "<p>this is the content3!</p>",
-                                            "image": "/assets/images/hotspot.png",
-                                            "matchingContent": "<p>this is the matching content3!</p>",
-                                            "matchingImage": "/assets/images/hotspot.png"
+                                            "class": "posP pos19",
+                                            "feedback": "<p>this is the content3!</p>",
+                                            "image": ""
                                         },
                                         {
-                                            "feedback": "<p>this is the feedback4!</p>",
-                                            "content": "<p>this is the content4!</p>",
-                                            "image": "/assets/images/hotspot.png",
-                                            "matchingContent": "<p>this is the matching content4!</p>",
-                                            "matchingImage": "/assets/images/hotspot.png"
+                                            "class": "pos1 posB",
+                                            "feedback": "<p>this is the content4!</p>",
+                                            "image": ""
                                         }
                                     ],
                                     "feedback": "<p>this is the placeholder content</p>",
-                                    "image": ""
+                                    "image": "/assets/images/hotspotTest.jpg"
                                 },
                                 "components": []
                             }
