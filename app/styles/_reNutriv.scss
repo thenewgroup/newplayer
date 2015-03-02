@@ -175,7 +175,18 @@
     text-align: left;
     color: white;
     margin-bottom: 1.5%;
-    /*box-shadow: inset 0px 0px 40px 5px rgba(0,0,0,0.75);*/
+}
+#np_reNutriv .hit-area-background {
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    z-index: -1;
+    background-color: #313131;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
 }
 #np_reNutriv .boxElements svg{
     /*fill:#313131;*/
@@ -252,7 +263,7 @@
     cursor: pointer;
 }
 #np_reNutriv .draggableButtonsvg{
-    fill:#000000;
+    /*fill:#000000;*/
 }
 #np_reNutriv .hit-area{
     position: relative;
@@ -260,7 +271,7 @@
     height: 100%;
 }
 #np_reNutriv .hit-area svg{
-    fill: #313131;
+    /*fill: #313131;*/
 }
 #np_reNutriv .hit-area rect{
     position: relative;

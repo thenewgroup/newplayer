@@ -47,45 +47,14 @@
                                     <stop  offset="0.5063" style="stop-color:#D7B26A"/>
                                     <stop  offset="0.5581" style="stop-color:#CAA04E"/>
                                     <stop  offset="1" style="stop-color:#F3DB7F"/>
-                                    <defs>
-                                        <filter id="inset-shadow" >
-                                            <!-- dial up the opacity on the shape fill to "1" to select the full shape-->
-                                            <feComponentTransfer in="SourceAlpha" result="inset-selection">
-                                                <feFuncA type="discrete" tableValues="0 1 1 1 1 1"/>
-                                            </feComponentTransfer>
-                                            <!-- dial down the opacity on the shape fill to "0" to get rid of it -->
-                                            <feComponentTransfer in="SourceGraphic" result="original-no-fill">
-                                                <feFuncA type="discrete" tableValues="0 0 1"/>
-                                            </feComponentTransfer>
-                                            <!-- since you can't use the built in SourceAlpha generate your own -->
-                                            <feColorMatrix type="matrix" in="original-no-fill" result="new-source-alpha" values="
-                                                           0 0 0 0 0
-                                                           0 0 0 0 0
-                                                           0 0 0 0 0
-                                                           0 0 0 1 0"
-                                                           />            
-                                            <feGaussianBlur in="new-source-alpha" result="blur" stdDeviation="5" />
-                                            <feGaussianBlur in="new-source-alpha" result="blur2" stdDeviation="10" />
-                                            <feGaussianBlur in="new-source-alpha" result="blur3" stdDeviation="15" />
-                                            <feMerge result="blur">
-                                                <feMergeNode in="blur" mode="normal"/>
-                                                <feMergeNode in="blur2" mode="normal"/>
-                                                <feMergeNode in="blur3" mode="normal"/>
-                                            </feMerge>
-                                            <!-- select the portion of the blur that overlaps with your shape -->
-                                            <feComposite operator="in" in="inset-selection" in2="blur" result="inset-blur"/>
-                                            <!-- composite the blur on top of the original with the fill removed -->
-                                            <feComposite operator="over" in="original-no-fill" in2="inset-blur"/>            
-                                        </filter>
-                                    </defs>
                             </g>
                             <g id="complete-background-Layer_2">
-                                <rect stroke="url(#SVGID_1_)" stroke-width="3" vector-effect="non-scaling-stroke" filter="url(#inset-shadow)"  x="0" y="0" width="100%" height="100%"/>
+                                <rect stroke="url(#SVGID_1_)" stroke-width="3" vector-effect="non-scaling-stroke" fill="none" x="0" y="0" width="100%" height="100%"/>
                             </g>
                             <g id="complete-background-Layer_4">
                                 <foreignObject  x="0" y="0" width="100%" height="100%" >
-                                    <div class="button-prioritize-content"><!--
-                                        --><div class="hit-area-prioritize-content hit-area-number">{{$index + 1}}</div>
+                                    <div class="button-prioritize-content">
+                                        <div class="hit-area-prioritize-content hit-area-number">{{$index + 1}}</div>
                                     </div>
                                     <div class="button-completion-prioritize-content">
                                         <div class="centered-prioritize-content" >
@@ -96,6 +65,7 @@
                                 </foreignObject>
                             </g>
                         </svg>
+                        <div class="hit-area-background"></div>
                     </div>
                 </div>
             </div> 

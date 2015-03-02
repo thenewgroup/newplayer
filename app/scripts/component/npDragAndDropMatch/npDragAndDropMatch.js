@@ -39,7 +39,7 @@
 //GSAP draggable Angular directive
 //////////////////////////////////////////////////////////////////////////////////////
             .directive("dragButton", function () {
-            'use strict';
+//            'use strict';
             return {
                 restrict: "A",
                 scope: {
