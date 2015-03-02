@@ -1,0 +1,41 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg"> 
+    <filter id="inset-shadow" >
+        <feComponentTransfer in="SourceAlpha" result="inset-selection">
+            <feFuncA type="discrete" tableValues="0 1 1 1 1 1"/>
+        </feComponentTransfer>
+        <feComponentTransfer in="SourceGraphic" result="original-no-fill">
+            <feFuncA type="discrete" tableValues="0 0 1"/>
+        </feComponentTransfer>
+        <feColorMatrix type="matrix" in="original-no-fill" result="new-source-alpha" values="
+                                                           0 0 0 0 0
+                                                           0 0 0 0 0
+                                                           0 0 0 0 0
+                                                           0 0 0 1 0"
+        />            
+        <feGaussianBlur in="new-source-alpha" result="blur" stdDeviation="5" />
+        <feGaussianBlur in="new-source-alpha" result="blur2" stdDeviation="10" />
+        <feGaussianBlur in="new-source-alpha" result="blur3" stdDeviation="15" />
+        <feMerge result="blur">
+            <feMergeNode in="blur" mode="normal"/>
+            <feMergeNode in="blur2" mode="normal"/>
+            <feMergeNode in="blur3" mode="normal"/>
+        </feMerge>
+        <feComposite operator="in" in="inset-selection" in2="blur" result="inset-blur"/>
+        <feComposite operator="over" in="original-no-fill" in2="inset-blur"/>            
+    </filter>
+
+<!--  <filter id="inset-shadow" x="-50%" y="-50%" width="200%" height="200%">
+    <feComponentTransfer in=SourceAlpha>
+      <feFuncA type="table" tableValues="1 0" />
+    </feComponentTransfer>
+    <feGaussianBlur stdDeviation="3"/>
+    <feOffset dx="5" dy="5" result="offsetblur"/>
+    <feFlood flood-color="rgb(20, 0, 0)" result="color"/>
+    <feComposite in2="offsetblur" operator="in"/>
+    <feComposite in2="SourceAlpha" operator="in" />
+    <feMerge>
+      <feMergeNode in="SourceGraphic" />
+      <feMergeNode />
+    </feMerge>
+  </filter> -->
+</svg>
