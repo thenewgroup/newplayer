@@ -31,7 +31,6 @@
         delay_time = attrs.delaytime || 1000,
         shuffle_spaces = attrs.shufflespaces || true;
       var $wheel = element.find('.wheel');
-      TweenMax.set($wheel, {transformStyle:'preserve-3d', alpha:0});
 
       function shuffle() {
         element.find('.wheel div[data-pick="true"]').removeAttr('data-pick');
@@ -50,9 +49,16 @@
 
         // using clipping now
         //// no spin for you!
-        //if (!Modernizr.csstransforms3d) {
-        //  return;
-        //}
+        if (!Modernizr.csstransforms3d) {
+	        element.find('.wheel div').css({
+  	      	'position': 'relative',
+    	    	'margin-bottom': '10px'
+      	  });
+        	element.find('.wheel').animate({ "top": "-=590px" }, "slow" );
+         	return;
+        }
+
+	      TweenMax.set($wheel, {transformStyle:'preserve-3d', alpha:0});
 
         _.each(element.find('.wheel div'), function (elem, index) {
           TweenMax.to(elem, 0, {
