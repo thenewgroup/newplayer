@@ -5540,24 +5540,26 @@ button.close {
   top: 100px;
   text-align: center;
   width: 60%;
-  height: 400px; }
-
-.wheels .wheel {
-  position: relative;
-  height: 300px; }
-
-.wheels .wheel > div {
-  position: absolute;
-  width: 45%;
-  height: 50px;
-  line-height: 3.5em;
-  text-align: center;
-  z-index: 999;
-  background: #fff;
-  border: solid 1px #333;
-  outline: 1px solid transparent;
-  -webkit-backface-visibility: hidden;
-  -ms-backface-visibility: hidden; }
+  height: 400px;
+  /* clip the container for those not supporting csstransforms3d */ }
+  .no-csstransforms3d .wheels {
+    overflow: hidden;
+    height: 50px; }
+  .wheels .wheel {
+    position: relative;
+    height: 300px; }
+    .wheels .wheel > div {
+      position: absolute;
+      width: 45%;
+      height: 50px;
+      line-height: 3.5em;
+      text-align: center;
+      z-index: 999;
+      background: #fff;
+      border: solid 1px #333;
+      outline: 1px solid transparent;
+      -webkit-backface-visibility: hidden;
+      -ms-backface-visibility: hidden; }
 
 .modal-open {
   overflow: hidden; }
