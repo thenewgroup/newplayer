@@ -1737,7 +1737,6 @@ function AssessmentService ( $log ) {
       $log.debug('npPage::data', cmpData, $scope.contentTitle);
 
       this.title = cmpData.title;
-
       var parentIdx = $scope.component.idx.slice(0);
       parentIdx.pop();
 
@@ -1791,7 +1790,7 @@ function AssessmentService ( $log ) {
     .module('newplayer.component')
   /** @ngInject */
     .controller('npQuestionController',
-    function ($log, $scope, ManifestService, $sce) {
+    function ($log, $scope, $rootScope, ManifestService, $sce) {
       var cmpData = $scope.component.data;
       $log.debug('npQuestion::data', cmpData);
 
@@ -1799,6 +1798,7 @@ function AssessmentService ( $log ) {
       this.content = $sce.trustAsHtml(cmpData.content);
       this.type = cmpData.type;
       this.feedback = '';
+      this.canContinue = false;
 
       var feedback = cmpData.feedback;
 
@@ -1810,9 +1810,8 @@ function AssessmentService ( $log ) {
       };
 
       this.evaluate = function () {
-        $log.debug('npQuestion::evaluate:', this.answer);
         var correct = true;
-
+        $log.debug('npQuestion::evaluate:', this.answer);
         if (!!this.answer) {
           switch (this.type) {
             case 'radio':
@@ -1873,9 +1872,18 @@ function AssessmentService ( $log ) {
         if (feedback.immediate && this.feedback === '') {
           if (correct) {
             this.feedback = feedback.correct;
+            this.canContinue = true;
           } else {
             this.feedback = feedback.incorrect;
+            this.canContinue = false;
           }
+        }
+      };
+
+      this.nextPage = function (evt) {
+        evt.preventDefault();
+        if (this.canContinue) {
+          $rootScope.$emit('question.answered', true);
         }
       };
     }
@@ -1888,8 +1896,6 @@ function AssessmentService ( $log ) {
     }
   );
 })();
-
-
 (function () {
 
   'use strict';
@@ -1988,6 +1994,63 @@ function AssessmentService ( $log ) {
 
 })();
 
+(function () {
+
+  'use strict';
+  angular
+    .module('newplayer.component')
+  /** @ngInject */
+    .controller('npTriviaController',
+    function ($log, $scope, $rootScope, $timeout, ManifestService, $sce) {
+      var vm = this;
+      var cmpData = $scope.component.data;
+      var pagesLen = $scope.components.length;
+      $log.debug('npQuiz::data', cmpData);
+
+      vm.id = cmpData.id;
+      vm.content = $sce.trustAsHtml(cmpData.content);
+      vm.type = cmpData.type;
+      vm.currentPage = 0;
+      vm.feedback = '';
+      vm.assment = AssessmentService();
+      vm.assment.setRequirements(pagesLen, pagesLen, null);
+      vm.seenComponents = _.shuffle($scope.components);
+      vm.pageId = vm.seenComponents[0].data.id;
+      vm.difficulty = vm.seenComponents[0].components[0].data.difficulty || 0;
+     
+      // go to the first page, since pages were shuffled
+      $timeout(function () {
+    	  ManifestService.setPageId(vm.pageId)
+      });
+
+      $rootScope.$on('question.answered', function (evt, correct) {
+      	if (correct) {
+    			vm.assment.pageViewed();
+      		vm.currentPage = vm.assment.getPageStats().viewed.total;
+		      vm.pageId = vm.seenComponents[vm.currentPage] ? 
+		      	vm.seenComponents[vm.currentPage].data.id : '';
+	    	  ManifestService.setPageId(vm.pageId);
+					$rootScope.$emit('spin-to-win');
+
+	    	  // end of the trivia questions
+	    	  // TODO - add this message the template and set the two values 
+	    	  // here in the controller
+	    	  if (!vm.pageId) {
+	    	  	vm.feedback = 'Good job, you scored 5,000 points out of 7,500 possible.';
+	    	  }
+      	}
+      });
+    }
+  )
+
+  /** @ngInject */
+    .run(
+    function ($log, $rootScope) {
+      $log.debug('npQuiz::component loaded!');
+    }
+  );
+
+})();
 (function () {
   'use strict';
 
@@ -2714,6 +2777,91 @@ function AssessmentService ( $log ) {
 
 })();
 
+(function () {
+
+  'use strict';
+  angular
+    .module('newplayer')
+    .directive('npPriceIsRightSpinner', npPriceIsRightSpinner);
+
+  /** @ngInject */
+  function npPriceIsRightSpinner($log,  $timeout, $rootScope) {
+    $log.debug('npPriceIsRightSpinner::Init\n');
+
+    var directive = {
+      restrict: 'E',
+      scope: {
+        spinTime: '@',
+        delayTime: '@',
+        shuffleSpaces: '@'
+      },
+      link: link,
+      controller: npPriceIsRightSpinnerController,
+      controllerAs: 'vm',
+      transclude: true,
+      replace: true,
+      template: '<div class="wheels"><div class="wheel" ng-transclude></div></div>'
+    };
+
+    return directive;
+    
+    function link(scope, element, attrs) {
+		  var spin_time = attrs.spintime || 2000,
+		    delay_time = attrs.delaytime || 1000,
+		    shuffle_spaces = attrs.shufflespaces || true;
+
+		  function shuffle() {
+				element.find('.wheel div[data-pick="true"]').removeAttr('data-pick');
+				var difficulty = element.data('difficulty');
+				element.find('.wheel div:eq(' + difficulty + ')').attr('data-pick', 'true');
+
+			  if (shuffle_spaces) {
+					var spaces = element.find('.wheel div').detach();
+					element.find('.wheel').append(_.shuffle(spaces));
+			  }
+		  }
+
+		  function spin() {
+			  var $choice = element.find('.wheel div[data-pick="true"]').remove();
+			 	element.find('.wheel').append($choice);
+
+			 	// no spin for you!
+		  	if (!Modernizr.csstransforms3d) {
+		  		return;
+		  	}
+				_.each(element.find('.wheel div'), function(elem, index) {
+					TweenMax.to(elem, 1, {
+						rotationX:(36 * index), 
+						transformOrigin:'20 20 -100px'
+					});
+				});
+		  }
+
+		  $timeout(function () {
+				shuffle();
+				spin();
+		  }, delay_time);
+
+		  function spinAgain() {
+		  	shuffle();
+		  	spin();
+		  }
+
+		  $rootScope.$on('spin-to-win', spinAgain);
+    }
+  }
+
+  /** @ngInject */
+  function npPriceIsRightSpinnerController($scope, $rootScope) {
+    var vm = this;
+
+    init();
+
+    function init() {
+    	//
+    }
+  }
+})();
 angular.module('newplayer').run(['$templateCache', function($templateCache) {
   'use strict';
 
@@ -2899,16 +3047,18 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
   $templateCache.put('scripts/component/npHTML/npHTML.html',
     "<section class=\"{{component.type}} np-cmp-wrapper\" ng-controller=\"npHTMLController as npHTML\">\n" +
     "\n" +
-    "\t<div class=\"debug\">\n" +
-    "\t\t<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
-    "\t</div>\n" +
+    "  <div class=\"debug\">\n" +
+    "    <h3>{{component.type}} --\n" +
+    "      <small>{{component.idx}}</small>\n" +
+    "    </h3>\n" +
+    "  </div>\n" +
     "\n" +
-    "\t<div class=\"np-cmp-main\" ng-if=\"!!npHTML.link\">\n" +
+    "  <div class=\"np-cmp-main\" ng-if=\"!!npHTML.link\">\n" +
     "    <a ng-click=\"npHTML.handleLink(); $event.stopPropagation();\" ng-bind-html=\"npHTML.content\"></a>\n" +
     "  </div>\n" +
-    "\t<div ng-bind-html=\"npHTML.content\" class=\"np-cmp-main\" ng-if=\"!npHTML.link\"></div>\n" +
+    "  <div ng-bind-html=\"npHTML.content\" class=\"np-cmp-main\" ng-if=\"!npHTML.link\"></div>\n" +
     "\n" +
-    "\t<div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "  <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
     "\n" +
     "</section>\n"
   );
@@ -3059,11 +3209,14 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "        <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
     "    </div>\n" +
     "\n" +
+    "    <h5 class=\"dark text-uppercase\">question:</h5>\n" +
     "    <div class=\"npQuestion-content\" ng-bind-html=\"npQuestion.content\"></div>\n" +
     "\n" +
+    "\t<h5 class=\"dark text-uppercase\">answers:</h5>\n" +
     "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
-    "    \n" +
-    "  <button type=\"submit\" class=\"btn btn-primary\">Submit</button>\n" +
+    "\n" +
+    "    <button type=\"submit\" class=\"col-xs-3 btn-primary\">Submit</button> &nbsp;\n" +
+    "    <button id=\"next_button\" class=\"btn-default\" ng-click=\"npQuestion.nextPage($event)\">Next</button>\n" +
     "<!--    <div class=\"btn btn-default\">\n" +
     "        <input type=\"submit\" />\n" +
     "    </div>-->\n" +
@@ -3075,20 +3228,57 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('scripts/component/npQuiz/npQuiz.html',
-    "<form class=\"np-cmp-wrapper {{component.type}}\" ng-controller=\"npQuizController as npQuiz\" ng-submit=\"npQuiz.evaluate()\">\n" +
+    "<form class=\"np-cmp-wrapper {{component.type}}\" ng-controller=\"npQuizController as npQuiz\"\n" +
+    "      ng-submit=\"npQuiz.evaluate()\">\n" +
+    "\n" +
+    "  <div class=\"debug\">\n" +
+    "    <h3>{{component.type}} --\n" +
+    "      <small>{{component.idx}}</small>\n" +
+    "    </h3>\n" +
+    "  </div>\n" +
+    "\n" +
+    "  <div class=\"npQuiz-content h4\" ng-bind-html=\"npQuiz.content\"></div>\n" +
+    "  <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "\n" +
+    "  <div class=\"npQuiz-feedback\" ng-if=\"npQuiz.feedback\" ng-bind-html=\"npQuiz.feedback\"></div>\n" +
+    "</form>\n" +
+    "\n"
+  );
+
+
+  $templateCache.put('scripts/component/npTrivia/npTrivia.html',
+    "<form class=\"np-cmp-wrapper {{component.type}}\" ng-controller=\"npTriviaController as npTrivia\" ng-submit=\"npTrivia.evaluate()\">\n" +
     "\n" +
     "\t<div class=\"debug\">\n" +
     "\t\t<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
     "\t</div>\n" +
     "\n" +
-    "\t<div class=\"npQuiz-content h4\" ng-bind-html=\"npQuiz.content\"></div>\n" +
+    "\t<div class=\"row\">\n" +
+    "\t\t<div class=\"npTrivia-content h4 col-xs-12\" ng-bind-html=\"npTrivia.content\"></div>\n" +
+    "\t</div>\n" +
+    "\t\n" +
+    "\t<div class=\"row\">\n" +
+    "\t\t<div class=\"col-md-3\">\n" +
+    "\t\t\t<np-price-is-right-spinner spinTime=\"2000\" class=\"col-xs-6\" ng-hide=\"!npTrivia.pageId\" data-difficulty=\"{{npTrivia.difficulty}}\">\n" +
+    "\t\t\t\t<div>0</div>\n" +
+    "\t\t\t    <div>100</div>\n" +
+    "\t\t\t    <div>200</div>\n" +
+    "\t\t\t    <div>300</div>\n" +
+    "\t\t\t    <div>400</div>\n" +
+    "\t\t\t    <div>500</div>\n" +
+    "\t\t\t    <div>600</div>\n" +
+    "\t\t\t    <div>700</div>\n" +
+    "\t\t\t    <div>800</div>\n" +
+    "\t\t\t    <div>900</div>\n" +
+    "\t\t\t    <div>1000</div>\n" +
+    "\t\t\t</np-price-is-right-spinner>\n" +
+    "\t\t</div>\n" +
     "\n" +
-    "\t<div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "\t\t<div class=\"col-md-9 np_row\" np-component ng-if=\"subCmp\" ng-repeat=\"component in npTrivia.seenComponents\" idx=\"{{component.idx}}\" ng-hide=\"npTrivia.pageId !== component.data.id\"></div>\n" +
     "\n" +
-    "\t<div class=\"npQuiz-feedback\" ng-if=\"npQuiz.feedback\" ng-bind-html=\"npQuiz.feedback\"></div>\n" +
-    "\n" +
-    "</form>\n" +
-    "\n"
+    "\t\t<div class=\"npTrivia-feedback\" ng-if=\"npTrivia.feedback\" ng-bind-html=\"npTrivia.feedback\"></div>\n" +
+    "\t</div>\n" +
+    "</form>"
   );
 
 
