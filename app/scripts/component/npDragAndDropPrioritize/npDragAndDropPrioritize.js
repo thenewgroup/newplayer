@@ -52,7 +52,6 @@
                     var draggables = document.getElementsByClassName('draggableButton');
                     var currentTarget;
                     var currentElement;
-                    console.log(':::::::::::DraggableAngular:::::::::::::');
                     //////////////////////////////////////////////////////////////////////////////////////
                     //set states
                     //////////////////////////////////////////////////////////////////////////////////////
