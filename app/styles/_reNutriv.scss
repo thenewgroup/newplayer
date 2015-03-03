@@ -126,6 +126,28 @@
     padding-right: 20px;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player List classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+#np_reNutriv .list-item{
+    
+}
+#np_reNutriv .column-1{
+    margin-bottom: 1.5%;
+}
+#np_reNutriv .list-object video{
+    width: 100%;
+    height: auto;
+}
+#np_reNutriv .media-body{
+/*    width: 100%;
+    height: auto;*/
+    padding: 5%;
+    background-color: #000000;
+    opacity: 0.75;
+    filter: url(styles/inset-shadow.svg#inset-shadow); 
+}
+
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Drag and Drop Prioritize classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 #np_reNutriv .button-prioritize-content{
@@ -139,7 +161,7 @@
     top: 43%;
 }
 #np_reNutriv .hit-area-number{
-    font-size: 8em;
+    font-size: 7em;
     color: #000000;
     opacity: .15;
     text-align: center;
