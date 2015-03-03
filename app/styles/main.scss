@@ -26,10 +26,21 @@ img.blur {
 /*    -webkit-filter: blur(3px); 
     filter: blur(3px); */
 }
-.vcenter {
+/*.vcenter {
     display: inline-block;
     vertical-align: middle;
     float: none;
+}*/
+.vertical-align {
+  display: flex;
+  flex-direction: row;
+}
+.vertical-align > [class^="col-"],
+.vertical-align > [class*=" col-"] {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Optional, to align inner items 
+                              horizontally inside the column */
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*Angular UI classes*/
