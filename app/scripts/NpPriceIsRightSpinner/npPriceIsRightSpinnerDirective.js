@@ -50,11 +50,12 @@
         // using clipping now
         //// no spin for you!
         if (!Modernizr.csstransforms3d) {
+	        element.find('.wheel').append(element.find('.wheel div').clone());
 	        element.find('.wheel div').css({
   	      	'position': 'relative',
     	    	'margin-bottom': '10px'
       	  });
-        	element.find('.wheel').animate({ "top": "-=590px" }, "slow" );
+        	element.find('.wheel').animate({ "top": "-=1250px" }, 5000 );
          	return;
         }
 

@@ -11,6 +11,7 @@
   /* clip the container for those not supporting csstransforms3d */
   .no-csstransforms3d & {
     overflow: hidden;
+    height: 60px;
   }
 
   .wheel {
