@@ -12,6 +12,7 @@ Responsive learning content player by [The New Group](http://www.thenewgroup.com
 - grunt (npm install -g grunt-cli)
 
 #### First run
+
 From repository root folder:
 
 1. bower install

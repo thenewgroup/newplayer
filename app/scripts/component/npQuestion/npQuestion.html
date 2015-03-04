@@ -4,11 +4,14 @@
         <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
     </div>
 
+    <h5 class="dark text-uppercase">question:</h5>
     <div class="npQuestion-content" ng-bind-html="npQuestion.content"></div>
 
+	<h5 class="dark text-uppercase">answers:</h5>
     <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
-    
-  <button type="submit" class="btn btn-primary">Submit</button>
+
+    <button type="submit" class="col-xs-3 btn-primary">Submit</button> &nbsp;
+    <button id="next_button" class="btn-default" ng-click="npQuestion.nextPage($event)">Next</button>
 <!--    <div class="btn btn-default">
         <input type="submit" />
     </div>-->
