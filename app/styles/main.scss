@@ -12,6 +12,36 @@ svg {
     width: 100%;
     height:100%;
 }
+img.blur {
+    width:367; 
+    height:459px; 
+    filter: url(blur.svg#blur); 
+    -webkit-filter: blur(3px); 
+    filter: blur(3px); 
+}
+.inset-shadow {
+/*    width:367; 
+    height:459px; */
+    filter: url(styles/inset-shadow.svg#inset-shadow); 
+/*    -webkit-filter: blur(3px); 
+    filter: blur(3px); */
+}
+/*.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}*/
+.vertical-align {
+  display: flex;
+  flex-direction: row;
+}
+.vertical-align > [class^="col-"],
+.vertical-align > [class*=" col-"] {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Optional, to align inner items 
+                              horizontally inside the column */
+}
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*Angular UI classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -50,42 +80,42 @@ svg {
 /*New Player padding wrapper classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*When setting this class for New Player use: 'outside-padding'*/
-/*.np_outside-padding{
+.np_outside-padding{
     padding-top: 35px;
     padding-left: 90px;
     padding-right: 90px;
     padding-bottom: 35px;
-}*/
+}
 /*When setting this class for New Player use: 'inside-padding'*/
-/*.np_inside-padding{
+.np_inside-padding{
     padding-left: 5%;
     padding-right: 5%;
     padding-bottom: 35px;
-}*/
+}
 /*When setting this class for New Player use: 'button-padding'*/
-/*.np_button-padding{
+.np_button-padding{
     padding-top: 30px;
     padding-left: 15%;
     padding-right: 15%;
     padding-bottom: 35px;
-}*/
+}
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*responsive padding overrides*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*.container{*/
-    /*background-color: #000000;*/
-    /*position: absolute;*/
-    /*    background: url(./assets/images/OrionsHeart.jpg) no-repeat center center fixed;
-        background-color: #000000;
-        background-size: cover;
-        content: "";
-        bottom: 0;
-        left: 0;
-        right: 0;
-        top: 0;*/
-    /*z-index: -2;*/
+/*background-color: #000000;*/
+/*position: absolute;*/
+/*    background: url(./assets/images/OrionsHeart.jpg) no-repeat center center fixed;
+    background-color: #000000;
+    background-size: cover;
+    content: "";
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;*/
+/*z-index: -2;*/
 /*}*/
-/*@media (max-width: $screen-sm) {
+@media (max-width: $screen-sm) {
     .np_outside-padding{
         padding: 0px;
     }
@@ -95,11 +125,11 @@ svg {
     .np_button-padding{
         padding: 5%;
     }
-}*/
+}
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*Sans font overrides*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/*.sans-head{
+.sans-head{
     font-family: $font-family-sans-serif_head !important;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -108,8 +138,8 @@ svg {
     padding-top: 40px;
     padding-bottom: 3px;
     display: inline-block;
-}*/
-/*
+}
+
 @media (max-width: $screen-sm) {
     .collapse-toggle{
         background-color: $brand-offwhite;
@@ -129,13 +159,13 @@ svg {
             content: "\e613";
             float: right;
             color: $brand-primary;
-                        -webkit-transition: opacity 1s ease-in-out;
-                        -moz-transition: opacity 1s ease-in-out;
-                        -o-transition: opacity 1s ease-in-out;
+            -webkit-transition: opacity 1s ease-in-out;
+            -moz-transition: opacity 1s ease-in-out;
+            -o-transition: opacity 1s ease-in-out;
             transition: opacity 1s ease-in-out;
         }
     }
-}*/
+}
 /*.np_inside-padding .sans-head{
     border-bottom-color: $brand-primary-light;
 }
@@ -161,7 +191,7 @@ svg {
         padding-bottom: 10px;
     }
 }*/
-/*@media (max-width: $screen-sm) {
+@media (max-width: $screen-sm) {
     .sans-normal{
         padding-right: 7px;
         padding-left: 7px;
@@ -170,7 +200,7 @@ svg {
         padding-right: 7px;
         padding-left: 7px;
     }
-}*/
+}
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player background color wrapper classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -186,11 +216,10 @@ svg {
 /* text treatment classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*Q and A text outdent*/
-/*.q-and-a-outdent{
+.q-and-a-outdent{
     text-indent:-28px;
     margin-left:28px
-}*/
-
+}
 
 /*////////////////////////////////////////////////////////////////////////////////*/
 .browsehappy {
