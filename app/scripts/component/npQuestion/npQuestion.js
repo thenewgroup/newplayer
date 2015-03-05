@@ -5,7 +5,7 @@
     .module('newplayer.component')
   /** @ngInject */
     .controller('npQuestionController',
-    function ($log, $scope, ManifestService, $sce) {
+    function ($log, $scope, $rootScope, ManifestService, $sce) {
       var cmpData = $scope.component.data;
       $log.debug('npQuestion::data', cmpData);
 
@@ -13,6 +13,7 @@
       this.content = $sce.trustAsHtml(cmpData.content);
       this.type = cmpData.type;
       this.feedback = '';
+      this.canContinue = false;
 
       var feedback = cmpData.feedback;
 
@@ -24,9 +25,8 @@
       };
 
       this.evaluate = function () {
-        $log.debug('npQuestion::evaluate:', this.answer);
         var correct = true;
-
+        $log.debug('npQuestion::evaluate:', this.answer);
         if (!!this.answer) {
           switch (this.type) {
             case 'radio':
@@ -87,9 +87,18 @@
         if (feedback.immediate && this.feedback === '') {
           if (correct) {
             this.feedback = feedback.correct;
+            this.canContinue = true;
           } else {
             this.feedback = feedback.incorrect;
+            this.canContinue = false;
           }
+        }
+      };
+
+      this.nextPage = function (evt) {
+        evt.preventDefault();
+        if (this.canContinue) {
+          $rootScope.$emit('question.answered', true);
         }
       };
     }
@@ -102,4 +111,3 @@
     }
   );
 })();
-

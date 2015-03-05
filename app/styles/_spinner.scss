@@ -1,0 +1,37 @@
+// FROM - http://codepen.io/Aldlevine/pen/yGLqd
+
+.wheels {
+  position: relative;
+  top: 100px;
+  text-align: center;
+  width: 60%;
+  height: 400px;
+  // overflow: hidden;
+
+  /* clip the container for those not supporting csstransforms3d */
+  .no-csstransforms3d & {
+    overflow: hidden;
+    height: 60px;
+  }
+
+  .wheel {
+    position: relative;
+    // width: 100%;
+    height: 300px;
+
+    > div {
+      position: absolute;
+      width: 45%;
+      height: 50px;
+      line-height: 3.5em;
+      text-align: center;
+      z-index: 999;
+      background: #fff;
+      border: solid 1px #333;
+      outline: 1px solid transparent;
+
+      -webkit-backface-visibility:hidden;
+      -ms-backface-visibility: hidden;
+    }
+  }
+}
