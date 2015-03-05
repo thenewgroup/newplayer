@@ -126,61 +126,6 @@
     padding-right: 20px;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/*New Player List classes*/
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-#np_reNutriv .list-item{
-    
-}
-#np_reNutriv .column-1{
-    margin-bottom: 1.5%;
-}
-#np_reNutriv .list-object video{
-    width: 100%;
-    height: auto;
-}
-#np_reNutriv .media-body{
-/*    width: 100%;
-    height: auto;*/
-    padding: 5%;
-    background-color: #000000;
-    opacity: 0.75;
-    filter: url(styles/inset-shadow.svg#inset-shadow); 
-}
-
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/*New Player Drag and Drop Prioritize classes*/
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-#np_reNutriv .button-prioritize-content{
-    position: relative;
-    display:block;
-}
-#np_reNutriv .hit-area-prioritize-content{
-    position: absolute;
-    float: right;
-    right: 43%;
-    top: 43%;
-}
-#np_reNutriv .hit-area-number{
-    font-size: 7em;
-    color: #000000;
-    opacity: .15;
-    text-align: center;
-    padding-left: 20px;
-}
-#np_reNutriv .button-completion-prioritize-content{
-    position: absolute;
-    float: right;
-    right: 50%;
-    top: 36%;
-}
-#np_reNutriv .centered-prioritize-content{
-    width: 100%;
-    height: 100%;
-    float: right;
-    right: -50%;
-    position: relative;
-}
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Drag and Drop match classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 #np_reNutriv .column-no-wrap {
@@ -196,19 +141,8 @@
     right:0;
     text-align: left;
     color: white;
-    margin-bottom: 1.5%;
-}
-#np_reNutriv .hit-area-background {
-    position:absolute;
-    width:100%;
-    height:100%;
-    top:0;
-    left:0;
-    bottom:0;
-    right:0;
-    z-index: -1;
-    background-color: #313131;
-    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
+    margin-bottom: 2.5%;
+    box-shadow: inset 0px 0px 40px 5px rgba(0,0,0,0.75);
 }
 #np_reNutriv .boxElements svg{
     /*fill:#313131;*/
@@ -236,26 +170,24 @@
 }
 #np_reNutriv .button-completion-content{
     position: absolute;
-    float: right;
-    right: 50%;
-    top: 43%;
-}
-#np_reNutriv .centered-content{
-    width: 100%;
-    height: 100%;
-    float: right;
-    right: -50%;
-    position: relative;
-}
-.positive-feedback-image, .positive-feedback-content{
-    float: left;
-    line-height: 1em;
-    padding-left: 5%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    padding: 5%;
 }
 #np_reNutriv .positive-feedback-content{
-    width: auto;
+    position: absolute;
+    top: 35%;
+    left: 50%;
 }
 #np_reNutriv .positive-feedback-image{
+    position: absolute;
+    margin: auto;
+    top: 0; 
+    left: 40%;
+    bottom: 0;
     background-image: url("/assets/svgs/feedback-correct-icon-ReNutriv.svg");
     background-repeat: no-repeat;
     width:40px; 
@@ -285,7 +217,7 @@
     cursor: pointer;
 }
 #np_reNutriv .draggableButtonsvg{
-    /*fill:#000000;*/
+    fill:#000000;
 }
 #np_reNutriv .hit-area{
     position: relative;
@@ -293,7 +225,7 @@
     height: 100%;
 }
 #np_reNutriv .hit-area svg{
-    /*fill: #313131;*/
+    fill:#313131;
 }
 #np_reNutriv .hit-area rect{
     position: relative;
@@ -307,123 +239,40 @@
     padding: 0;
     opacity: .90;
 }
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/* Hotspot Grid */
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/*Hotspot button left position classes*/
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-.posA{
-    left: 0%;
-}
 .posB{
     left: 6.25%;
-}
-.posC{
-    left: 12.50%;
-}
-.posD{
-    left: 18.75%;
-}
-.posE{
-    left: 25%;
-}
-.posF{
-    left: 31.25%;
-}
-.posG{
-    left: 37.5%;
-}
-.posH{
-    left: 43.75%;
-}
-.posI{
-    left: 50%;
-}
-.posJ{
-    left: 56.25%;
-}
-.posK{
-    left: 62.5%;
-}
-.posL{
-    left: 68.75%;
-}
-.posM{
-    left: 75%;
-}
-.posN{
-    left: 81.25%;
-}
-.posO{
-    left: 87.5%;
-}
-.posP{
-    left: 93.75%;
-}
-.posQ{
-    left: 100%;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*Hotspot button top position classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-.pos1{
-    top: 0%;
+/*When setting this class for New Player use: 'outside-padding'*/
+/*.np_outside-padding{
+    padding-top: 35px;
+    padding-left: 90px;
+    padding-right: 90px;
+    padding-bottom: 35px;
+}*/
+/*When setting this class for New Player use: 'inside-padding'*/
+/*.np_inside-padding{
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 35px;
+}*/
+/*When setting this class for New Player use: 'button-padding'*/
+/*.np_button-padding{
+    padding-top: 30px;
+    padding-left: 15%;
+    padding-right: 15%;
+    padding-bottom: 35px;
+}*/
+/*$top-image: margin-left:-100px;*/
+/*.topImage{
+    margin-left:-75px;
 }
-.pos2{
-    top: 5.26%;
-}
-.pos3{
-    top: 10.52%;
-}
-.pos4{
-    top: 15.78%;
-}
-.pos5{
-    top: 21.05%;
-}
-.pos6{
-    top: 26.31%;
-}
-.pos7{
-    top: 31.57%;
-}
-.pos8{
-    top: 36.84%;
-}
-.pos9{
-    top: 42.10%;
-}
-.pos10{
-    top: 47.36%;
-}
-.pos11{
-    top: 52.63%;
-}
-.pos12{
-    top: 57.89%;
-}
-.pos13{
-    top: 63.15%;
-}
-.pos14{
-    top: 68.42%;
-}
-.pos15{
-    top: 73.68%;
-}
-.pos16{
-    top: 78.94%;
-}
-.pos17{
-    top: 84.21%;
-}
-.pos18{
-    top: 89.47%;
-}
-.pos19{
-    top: 94.73%;
-}
-.pos20{
-    top: 100%;
-}
+@media (max-width: $screen-sm) {
+    .topImage{
+        margin-left:-10px;
+    }
+}*/
+
+

@@ -1,0 +1,104 @@
+<div class="{{component.type}} npDragAndDrop" ng-controller="npDragAndDropController as npDragAndDrop" id="{{npDragAndDrop.id}}">
+    <div id="draggableContainer">
+        <div class="row">
+            <div class="debug">
+                <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
+            </div>
+            <div id="draggableButtons" class="col-xs-6">
+                <div drag-button ng-repeat="draggableButton in npDragAndDrop.draggableButtons" data-reference="{{$index}}"  id="id{{$index}}" ng-click="npDragAndDrop.update(draggableButton)" class="draggableButton box boxElements">
+                    <svg class="completeCheck" version="1.2" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" preserveAspectRatio="none">
+                        <style type="text/css">
+                            <![CDATA[
+                            .st0{fill:url(#SVGID_1_);}
+                            .st1{display:inline;}
+                            .st2{display:none;}
+                            ]]>
+                        </style>
+                        <!--<g id="Layer_2">-->
+                        <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="400" y2="200">
+                            <stop  offset="0" style="stop-color:#CAA04C"/>
+                            <stop  offset="0.3497" style="stop-color:#F8E4AA"/>
+                            <stop  offset="0.638" style="stop-color:#CAA04D"/>
+                            <stop  offset="0.9816" style="stop-color:#F3DB7E"/>
+                        </linearGradient>
+                        <rect fill="" stroke="url(#SVGID_1_)" stroke-width="3" vector-effect="non-scaling-stroke"  x="0" y="0" width="100%" height="100%"/>
+                        <!--                        </g>
+                                                <g id="Layer_3">-->
+                        <foreignObject x="5%" y="0" width="100%" height="100%">
+                            <div class="{{draggableButton.class}} button-content">
+                                <img class="draggableButtonImage" ng-src="{{draggableButton.image}}" alt="{{draggableButton.alt}}" />
+                                <div class="draggableButtonContent" ng-bind-html="draggableButton.content" ></div>
+                            </div>
+                        </foreignObject>
+                        <!--</g>-->
+                    </svg>
+                </div>
+            </div>
+            <!--<div class="col-two">-->
+            <div class="col-xs-6">
+                <div id="hitAreaWrapper">                    
+                    <div ng-repeat="draggableButton in npDragAndDrop.draggableButtons" class="{{hitArea.class}} hit-area boxElements">
+                        <svg class="complete-background" version="1.2" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" preserveAspectRatio="none">
+                            <g class="complete-background-Layer_1">
+                                <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="486.5701" y1="836.5667" x2="474.7614" y2="851.428" gradientTransform="matrix(0.9984 5.588965e-02 -5.588965e-02 0.9984 48.0441 -25.572)">
+                                    <stop  offset="0.1882" style="stop-color:#CAA04E"/>
+                                    <stop  offset="0.3683" style="stop-color:#FFEBC3"/>
+                                    <stop  offset="0.3952" style="stop-color:#F7DFB1"/>
+                                    <stop  offset="0.5063" style="stop-color:#D7B26A"/>
+                                    <stop  offset="0.5581" style="stop-color:#CAA04E"/>
+                                    <stop  offset="1" style="stop-color:#F3DB7F"/>
+                                    <defs>
+                                        <filter id="inset-shadow" >
+                                            <!-- dial up the opacity on the shape fill to "1" to select the full shape-->
+                                            <feComponentTransfer in="SourceAlpha" result="inset-selection">
+                                                <feFuncA type="discrete" tableValues="0 1 1 1 1 1"/>
+                                            </feComponentTransfer>
+                                            <!-- dial down the opacity on the shape fill to "0" to get rid of it -->
+                                            <feComponentTransfer in="SourceGraphic" result="original-no-fill">
+                                                <feFuncA type="discrete" tableValues="0 0 1"/>
+                                            </feComponentTransfer>
+                                            <!-- since you can't use the built in SourceAlpha generate your own -->
+                                            <feColorMatrix type="matrix" in="original-no-fill" result="new-source-alpha" values="
+                                                           0 0 0 0 0
+                                                           0 0 0 0 0
+                                                           0 0 0 0 0
+                                                           0 0 0 1 0"
+                                                           />            
+                                            <feGaussianBlur in="new-source-alpha" result="blur" stdDeviation="5" />
+                                            <feGaussianBlur in="new-source-alpha" result="blur2" stdDeviation="10" />
+                                            <feGaussianBlur in="new-source-alpha" result="blur3" stdDeviation="15" />
+                                            <feMerge result="blur">
+                                                <feMergeNode in="blur" mode="normal"/>
+                                                <feMergeNode in="blur2" mode="normal"/>
+                                                <feMergeNode in="blur3" mode="normal"/>
+                                            </feMerge>
+                                            <!-- select the portion of the blur that overlaps with your shape -->
+                                            <feComposite operator="in" in="inset-selection" in2="blur" result="inset-blur"/>
+                                            <!-- composite the blur on top of the original with the fill removed -->
+                                            <feComposite operator="over" in="original-no-fill" in2="inset-blur"/>            
+                                        </filter>
+                                    </defs>
+                            </g>
+                            <g id="complete-background-Layer_2">
+                                <rect stroke="url(#SVGID_1_)" stroke-width="3" vector-effect="non-scaling-stroke" filter="url(#inset-shadow)"  x="0" y="0" width="100%" height="100%"/>
+                            </g>
+                            <g id="complete-background-Layer_4">
+                                <foreignObject  x="0" y="0" width="100%" height="100%" >
+                                    <div class="button-content">
+                                        <img class="hitAreaImage" ng-src="{{draggableButton.matchingImage}}" alt="{{hitArea.alt}}" />
+                                        <div class="hitAreaContent" ng-bind-html="draggableButton.matchingContent" ></div>
+                                    </div>
+                                    <div class="button-completion-content">
+                                        <div class="positive-feedback-image "></div>
+                                        <div class="positive-feedback-content h4" ng-bind-html="positiveFeedback"></div>
+                                    </div>
+                                </foreignObject>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+    <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+</div>

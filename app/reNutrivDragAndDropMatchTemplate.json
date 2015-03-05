@@ -81,6 +81,7 @@
                                     "req": [
                                         "mediaelement/GreenSock/TweenMax.min.js",
                                         "mediaelement/GreenSock/utils/Draggable.min.js",
+                                        "mediaelement/angular-tweenmax-draggable.js",
                                         "mediaelement/jquery-1.11.1.min.js"
                                     ],
                                     "draggableButtons": [
