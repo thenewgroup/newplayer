@@ -1,13 +1,7 @@
-// bower:scss
-// endbower
-/*@import "bootstrap-sass/assets/stylesheets/_bootstrap";*/
-/*@import "../bower_components/bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*main bootstrap override classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 @import "_bootstrap.scss";
-/*@import "/Users/xian/Documents/NewPlayer/newplayer/bower_components/bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";*/
-
-
-/*////////////////////////////////////////////////////////////////////////////////*/
-
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*support classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -18,6 +12,36 @@ svg {
     width: 100%;
     height:100%;
 }
+img.blur {
+    width:367; 
+    height:459px; 
+    filter: url(blur.svg#blur); 
+    -webkit-filter: blur(3px); 
+    filter: blur(3px); 
+}
+.inset-shadow {
+/*    width:367; 
+    height:459px; */
+    filter: url(styles/inset-shadow.svg#inset-shadow); 
+/*    -webkit-filter: blur(3px); 
+    filter: blur(3px); */
+}
+/*.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}*/
+.vertical-align {
+  display: flex;
+  flex-direction: row;
+}
+.vertical-align > [class^="col-"],
+.vertical-align > [class*=" col-"] {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Optional, to align inner items 
+                              horizontally inside the column */
+}
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*Angular UI classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -27,8 +51,6 @@ svg {
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*Button overrides*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/*button vertical spacing*/
-/*button widths*/
 .btn {     
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -80,19 +102,19 @@ svg {
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*responsive padding overrides*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-.container{
-    /*background-color: #000000;*/
-    /*position: absolute;*/
-    /*    background: url(./assets/images/OrionsHeart.jpg) no-repeat center center fixed;
-        background-color: #000000;
-        background-size: cover;
-        content: "";
-        bottom: 0;
-        left: 0;
-        right: 0;
-        top: 0;*/
-    /*z-index: -2;*/
-}
+/*.container{*/
+/*background-color: #000000;*/
+/*position: absolute;*/
+/*    background: url(./assets/images/OrionsHeart.jpg) no-repeat center center fixed;
+    background-color: #000000;
+    background-size: cover;
+    content: "";
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;*/
+/*z-index: -2;*/
+/*}*/
 @media (max-width: $screen-sm) {
     .np_outside-padding{
         padding: 0px;
@@ -107,7 +129,7 @@ svg {
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*Sans font overrides*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/*.sans-head{
+.sans-head{
     font-family: $font-family-sans-serif_head !important;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -116,7 +138,7 @@ svg {
     padding-top: 40px;
     padding-bottom: 3px;
     display: inline-block;
-}*/
+}
 
 @media (max-width: $screen-sm) {
     .collapse-toggle{
@@ -130,21 +152,21 @@ svg {
         padding-left: 7px;
         &:hover,
             &:focus {
-            /*background-color: darken($brand-offwhite, 5%);*/
+            background-color: darken($brand-offwhite, 5%);
         }
         &:before {
             font-family: 'elx-icons';
             content: "\e613";
             float: right;
             color: $brand-primary;
-            /*            -webkit-transition: opacity 1s ease-in-out;
-                        -moz-transition: opacity 1s ease-in-out;
-                        -o-transition: opacity 1s ease-in-out;*/
+            -webkit-transition: opacity 1s ease-in-out;
+            -moz-transition: opacity 1s ease-in-out;
+            -o-transition: opacity 1s ease-in-out;
             transition: opacity 1s ease-in-out;
         }
     }
 }
-.np_inside-padding .sans-head{
+/*.np_inside-padding .sans-head{
     border-bottom-color: $brand-primary-light;
 }
 .sans-head-sub{
@@ -168,8 +190,8 @@ svg {
     p{
         padding-bottom: 10px;
     }
-}
-/*@media (max-width: $screen-sm) {
+}*/
+@media (max-width: $screen-sm) {
     .sans-normal{
         padding-right: 7px;
         padding-left: 7px;
@@ -178,7 +200,7 @@ svg {
         padding-right: 7px;
         padding-left: 7px;
     }
-}*/
+}
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player background color wrapper classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -198,7 +220,6 @@ svg {
     text-indent:-28px;
     margin-left:28px
 }
-
 
 /*////////////////////////////////////////////////////////////////////////////////*/
 .browsehappy {
