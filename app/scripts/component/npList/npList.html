@@ -1,0 +1,21 @@
+
+<div class="{{component.type}} np-cmp-wrapper" ng-controller="npListController as npList">
+    <div class="debug">
+        <h3>{{component.type}} --
+            <small>{{component.idx}}</small>
+        </h3>
+    </div>
+    <div class="row media list-row">
+        <div class="column-1 col-md-4">
+            <div class="media-left media-middle">
+                <div np-component class="media-object list-object" ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+            </div>
+        </div>
+        <div class="column-2 col-md-8">
+            <div class="media-body">
+                <h4 ng-bind-html="npList.heading" class="media-heading"></h4>
+                <div ng-bind-html="npList.content" class="np-cmp-main" ng-if="!npList.link"></div>
+            </div>
+        </div>
+    </div>
+</div>

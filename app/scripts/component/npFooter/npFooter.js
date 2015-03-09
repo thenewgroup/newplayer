@@ -1,28 +1,21 @@
-'use strict';
+(function () {
 
-angular
-	.module(
-		'npFooter',
-		[ ]
-	);
+  'use strict';
+  angular
+    .module('newplayer.component')
 
-angular
-	.module('npFooter')
+  /** @ngInject */
+    .controller('npFooterController',
+    function ($log, $scope/*, $sce*/) {
+      var cmpData = $scope.component.data || {};
+      $log.debug('npFooter::data', cmpData);
+    }
+  )
 
-	/** @ngInject */
-	.controller( 'npFooterController',
-		function( $log, $scope/*, $sce*/ )
-		{
-			var cmpData = $scope.component.data || {};
-			$log.debug( 'npFooter::data', cmpData );
-		}
-	)
-
-	/** @ngInject */
-	.run(
-		function( $log, $rootScope )
-		{
-			$log.debug('npFooter::component loaded!');
-		}
-	);
-
+  /** @ngInject */
+    .run(
+    function ($log, $rootScope) {
+      $log.debug('npFooter::component loaded!');
+    }
+  );
+})();

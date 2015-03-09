@@ -1,0 +1,289 @@
+//
+// Collapse menus
+// --------------------------------------------------
+
+
+// Collapse arrow/caret
+.caret {
+    display: inline-block;
+    /*width: 100;*/
+    /*height: 0;*/
+    margin-left: 2px;
+    vertical-align: middle;
+    border-top:   $caret-width-base solid;
+    border-right: $caret-width-base solid transparent;
+    border-left:  $caret-width-base solid transparent;
+}
+
+// The collapse wrapper (div)
+.collapse {
+    position: relative;
+}
+
+// Prevent the focus on the collapse toggle when closing collapses
+.collapse-toggle {
+/*    padding-top: 2px;
+    padding-bottom: 2px;
+    margin-bottom: 0;*/
+/*    &:before {
+        content: "\f067"; 
+        float: right;
+        font-family: 'FontAwesome';
+        color: $brand-primary;
+        -webkit-transition: opacity 1s ease-in-out;
+        -moz-transition: opacity 1s ease-in-out;
+        -o-transition: opacity 1s ease-in-out;
+        transition: opacity 1s ease-in-out;
+    }*/
+}
+
+/*.collapse-toggle {
+    &:hover,
+        &:focus {
+        background-color: darken($brand-offwhite, 5%);
+    }
+}*/
+
+.collapse-icon{
+    color: $brand-primary;
+    position: relative;
+    right: 4px;
+}
+
+/*.np-expandable {
+        &.np-cmp-main,
+        >.np-cmp-main {
+                cursor: pointer;
+                text-align: left;
+
+                &:before {
+                        content: "\00f054"; 
+                        float: left;
+                        font-family: 'FontAwesome';
+                        -webkit-transition: 0.5s ease all;
+                        transition: 0.5s ease all;
+                        -webkit-transform: rotate(90deg);
+                        transform: rotate(90deg);
+                        margin: 0 0.5em 0 0;
+                }
+                .np-cmp-main:before {
+                        -webkit-transform: rotate(0deg);
+                        transform: rotate(0deg);
+        }
+        &.np-expandable-collapsed {
+                .np-cmp-main:before {
+                        -webkit-transform: rotate(0deg);
+                        transform: rotate(0deg);
+                }
+        }
+}*/
+
+
+
+
+/*.wrapper:hover .fa-stack{
+    color: red;
+    transition: 0.9s;
+    transform: rotateY(180deg);
+}
+.wrapper{
+    display: inline-block;
+    width: 200px;
+    border: 1px solid red;
+    overflow: hidden;
+    text-align: center;
+}*/
+
+.collapse-element {
+    /*background-color: $gray;*/
+}
+.collapse-toggle:focus {
+    outline: 0;
+}
+
+// The collapse menu (ul)
+/*.collapse-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: $zindex-collapse;
+    display: none; // none by default, but block on "open" of the menu
+    float: left;
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 2px 0 0; // override default ul
+    list-style: none;
+    font-size: $font-size-base;
+    text-align: left; // Ensures proper alignment if parent has it changed (e.g., modal footer)
+    background-color: $collapse-bg;
+    border: 1px solid $collapse-fallback-border; // IE8 fallback
+    border: 1px solid $collapse-border;
+    border-radius: $border-radius-base;
+    @include box-shadow(0 6px 12px rgba(0,0,0,.175));
+    background-clip: padding-box;
+
+    // Aligns the collapse menu to right
+    //
+    // Deprecated as of 3.1.0 in favor of `.collapse-menu-[dir]`
+    &.pull-right {
+        right: 0;
+        left: auto;
+    }
+
+    // Dividers (basically an hr) within the collapse
+    .divider {
+        @include nav-divider($collapse-divider-bg);
+    }
+
+    // Links within the collapse menu
+    > li > a {
+        display: block;
+        padding: 3px 20px;
+        clear: both;
+        font-weight: normal;
+        line-height: $line-height-base;
+        color: $collapse-link-color;
+        white-space: nowrap; // prevent links from randomly breaking onto new lines
+    }
+}*/
+
+// Hover/Focus state
+/*.collapse-menu > li > a {
+    &:hover,
+        &:focus {
+        text-decoration: none;
+        color: $collapse-link-hover-color;
+        background-color: $collapse-link-hover-bg;
+    }
+}
+
+// Active state
+.collapse-menu > .active > a {
+    &,
+    &:hover,
+        &:focus {
+        color: $collapse-link-active-color;
+        text-decoration: none;
+        outline: 0;
+        background-color: $collapse-link-active-bg;
+    }
+}*/
+
+// Disabled state
+//
+// Gray out text and ensure the hover/focus state remains gray
+
+/*.collapse-menu > .disabled > a {
+    &,
+    &:hover,
+        &:focus {
+        color: $collapse-link-disabled-color;
+    }
+
+    // Nuke hover/focus effects
+    &:hover,
+        &:focus {
+        text-decoration: none;
+        background-color: transparent;
+        background-image: none; // Remove CSS gradient
+        @include reset-filter;
+        cursor: $cursor-disabled;
+    }
+}*/
+
+// Open state for the collapse
+/*.open {
+    // Show the menu
+    > .collapse-menu {
+        display: block;
+    }
+
+    // Remove the outline when :focus is triggered
+    > a {
+        outline: 0;
+    }
+}*/
+
+// Menu positioning
+//
+// Add extra class to `.collapse-menu` to flip the alignment of the collapse
+// menu with the parent.
+/*.collapse-menu-right {
+    left: auto; // Reset the default from `.collapse-menu`
+    right: 0;
+}*/
+// With v3, we enabled auto-flipping if you have a collapse within a right
+// aligned nav component. To enable the undoing of that, we provide an override
+// to restore the default collapse menu alignment.
+//
+// This is only for left-aligning a collapse menu within a `.navbar-right` or
+// `.pull-right` nav component.
+/*.collapse-menu-left {
+    left: 0;
+    right: auto;
+}*/
+
+// Collapse section headers
+/*.collapse-header {
+    display: block;
+    padding: 3px 20px;
+    font-size: $font-size-small;
+    line-height: $line-height-base;
+    color: $collapse-header-color;
+    white-space: nowrap; // as with > li > a
+}*/
+
+// Backdrop to catch body clicks on mobile, etc.
+/*.collapse-backdrop {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;*/
+/*  top: 0;
+  z-index: ($zindex-collapse - 10);*/
+/*}*/
+
+// Right aligned collapses
+/*.pull-right > .collapse-menu {
+    right: 0;
+    left: auto;
+}*/
+
+// Allow for collapses to go bottom up (aka, dropup-menu)
+//
+// Just add .dropup after the standard .collapse class and you're set, bro.
+// TODO: abstract this so that the navbar fixed styles are not placed here?
+
+/*.dropup,
+.navbar-fixed-bottom .collapse {
+    // Reverse the caret
+    .caret {
+        border-top: 0;
+        border-bottom: $caret-width-base solid;
+        content: "";
+    }
+    // Different positioning for bottom up menu
+    .collapse-menu {
+        top: auto;
+        bottom: 100%;
+        margin-bottom: 1px;
+    }
+}*/
+
+
+// Component alignment
+//
+// Reiterate per navbar.less and the modified component alignment there.
+
+/*@media (min-width: $grid-float-breakpoint) {
+    .navbar-right {
+        .collapse-menu {
+            right: 0; left: auto;
+        }
+        // Necessary for overrides of the default right aligned menu.
+        // Will remove come v4 in all likelihood.
+        .collapse-menu-left {
+            left: 0; right: auto;
+        }
+    }
+}*/
