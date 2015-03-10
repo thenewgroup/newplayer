@@ -5,7 +5,7 @@
     .module('newplayer.component')
   /** @ngInject */
     .controller('npMatchController',
-    function ($log, $scope, $rootScope, ManifestService, $sce) {
+    function ($log, $scope, $rootScope, ManifestService, $sce, sliders) {
       var cmpData = $scope.component.data;
       $log.debug('npQuestion::data', cmpData);
 
@@ -27,68 +27,26 @@
       this.evaluate = function () {
         var correct = true;
         $log.debug('npQuestion::evaluate:', this.answer);
-        if (!!this.answer) {
-          switch (this.type) {
-            case 'radio':
-              var radAnswer = ManifestService.getComponent(this.answer);
-              if (angular.isString(radAnswer.data.feedback)) {
-                this.feedback = radAnswer.data.feedback;
-              }
-              correct = radAnswer.data.correct;
-              break;
-            case 'checkbox':
-              var chkAnswers = ManifestService.getAll('npAnswer', $scope.cmpIdx);
-              var idx;
-              for (idx in chkAnswers) {
-                if (chkAnswers[idx].data.correct) {
-                  // confirm all correct answers were checked
-                  if (!this.answer[chkAnswers[idx].idx]) {
-                    correct = false;
-                  }
-                } else {
-                  // confirm no incorrect answers were checked
-                  if (this.answer[chkAnswers[idx].idx]) {
-                    correct = false;
-                  }
-                }
-              }
-              break;
-            case 'text':
-              var txtAnswer = ManifestService.getFirst('npAnswer', $scope.cmpIdx);
-              var key = txtAnswer.data.correct;
-              var regExp, pat, mod = 'i';
-              if (angular.isString(key)) {
-                if (key.indexOf('/') === 0) {
-                  pat = key.substring(1, key.lastIndexOf('/'));
-                  mod = key.substring(key.lastIndexOf('/') + 1);
-                }
-              } else if (angular.isArray(key)) {
-                pat = '^(' + key.join('|') + ')$';
-              }
-              regExp = new RegExp(pat, mod);
-              if (!regExp.test(this.answer)) {
-                if (angular.isObject(txtAnswer.data.feedback) && angular.isString(txtAnswer.data.feedback.incorrect)) {
-                  this.feedback = txtAnswer.data.feedback.incorrect;
-                }
-                correct = false;
-              } else {
-                if (angular.isObject(txtAnswer.data.feedback) && angular.isString(txtAnswer.data.feedback.correct)) {
-                  this.feedback = txtAnswer.data.feedback.correct;
-                }
-              }
-              break;
+        _.each(sliders, function (slide) {
+          var s = slide.currSlide.holder;
+          var cmp = ManifestService.getComponent(s.children().attr('idx'));
+          var cmpData  = cmp.data;
+          if (cmpData.correct) {
+            return;
+          } else {
+           correct = false;
           }
-        } else {
-          correct = false;
-        }
+        });
         $log.debug('npQuestion::evaluate:isCorrect', correct);
 
         // set by ng-model of npAnswer's input's
-        if (feedback.immediate && this.feedback === '') {
+        if (feedback.immediate) {
           if (correct) {
+            $rootScope.$emit('slider-disable-wrong');
             this.feedback = feedback.correct;
             this.canContinue = true;
           } else {
+            $rootScope.$emit('slider-enable-all');
             this.feedback = feedback.incorrect;
             this.canContinue = false;
           }
@@ -96,10 +54,10 @@
       };
 
       this.nextPage = function (evt) {
-        evt.preventDefault();
-        if (this.canContinue) {
-          $rootScope.$emit('question.answered', true);
+        if (correct) {
+          // TODO - go to next page if there is one
         }
+        evt.preventDefault();
       };
     }
   )
