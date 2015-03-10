@@ -8,66 +8,122 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <link rel="shortcut icon" href="/favicon.ico">
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        <!-- build:css(.) styles/vendor.css -->
+        <!-- build:css({app,.}) styles/vendor.css -->
         <!-- bower:css -->
-        <link rel="stylesheet" href="bower_components/Font-Awesome/css/font-awesome.css" />
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="bower_components/mediaelement/build/mediaelementplayer.css" />
+        <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker-bs3.css" />
         <!-- endbower -->
+        <link rel="stylesheet" href="bower_components/Font-Awesome/css/font-awesome.css" />
+        <link rel="stylesheet" href="scripts/vendor/royalslider/royalslider.css" />
+        <link rel="stylesheet" href="scripts/vendor/royalslider/rs-default.css" />
         <!-- endbuild -->
-        <!-- build:css(.tmp) styles/main.css -->
+        <!-- build:css(.tmp) styles/newplayer.css -->
         <link rel="stylesheet" href="styles/main.css">
         <!-- endbuild -->
         <!-- build:js scripts/vendor/modernizr.js -->
         <script src="bower_components/modernizr/modernizr.js"></script>
+        <script src="bower_components/gsap/src/minified/utils/Draggable.min.js" type="text/javascript"></script>
         <!-- endbuild -->
 
     </head>
     <body>
         <!-- Google Tag Manager -->
-<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-54LSVR"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-54LSVR');</script>
+        <noscript>
+        <iframe src="//www.googletagmanager.com/ns.html?id=GTM-54LSVR"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+        </noscript>
+        <script>
+            (function (w, d, s, l, i) {
+                        w[l] = w[l] || [];
+                        w[l].push({
+                            'gtm.start': new Date().getTime(), event: 'gtm.js'
+                        });
+                        var f = d.getElementsByTagName(s)[0],
+                        j = d.createElement(s), dl = l !== 'dataLayer' ? '&l=' + l : '';
+                        j.async = true;
+                        j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl;
+                        f.parentNode.insertBefore(j, f);
+                    })
+                    (window, document, 'script', 'dataLayer', 'GTM-54LSVR');
+        </script>
         <!-- End Google Tag Manager -->
         <!--[if lt IE 10]>
-                <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+          your browser</a> to improve your experience.</p>
         <![endif]-->
 
         <div class="container">
             <div class="main" ng-class="{'cover':coverSupported}">
-                <div ui-view="init" autoscroll="true">
-                    <div class="preloader">
-                        <i class="fa fa-refresh fa-spin"></i>
-                    </div>
-                </div>
+                <!--<np-layer np-id="sample" np-url="/sample.json" np-override-url=""></np-layer>-->
+                <!--<np-layer np-id="sample" np-url="/reNutrivTemplate.json" np-override-url=""></np-layer>-->
+                <!--<np-layer np-id="sample" np-url="revealTemplate.json" np-override-url=""></np-layer>-->
+<!--                <np-layer np-id="sample" np-url="/productsTemplate.json" np-override-url=""></np-layer>-->
+                <!--<np-layer np-id="sample" np-url="/reNutrivHotspotTemplate.json" np-override-url=""></np-layer>-->
+                <!--<np-layer np-id="sample" np-url="/reNutrivDragAndDropMatchTemplate.json" np-override-url=""></np-layer>-->
+                <!--<np-layer np-id="sample" np-url="/reNutrivDragAndPrioritizeTemplate.json" np-override-url=""></np-layer>-->
+                <!--<np-layer np-id="sample" np-url="/reNutrivListTemplate.json" np-override-url=""></np-layer>-->
+                <np-layer np-id="sample" np-url="/reNutrivRevealTemplate.json" np-override-url=""></np-layer>
+                <!--<np-layer np-id="sample" np-url="/revealTemplate.json" np-override-url=""></np-layer>-->
             </div>
         </div>
-
-        <!-- build:js(.) scripts/vendor.js -->
+        <!-- build:js({app,.}) scripts/vendor.js -->
         <!-- bower:js -->
+        <script src="bower_components/jquery/jquery.js"></script>
         <script src="bower_components/angular/angular.js"></script>
-        <script src="bower_components/ui-router/release/angular-ui-router.js"></script>
         <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-        <script src="bower_components/oclazyload/dist/ocLazyLoad.min.js"></script>
         <script src="bower_components/angular-touch/angular-touch.js"></script>
         <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+        <script src="bower_components/angular-mocks/angular-mocks.js"></script>
+        <script src="bower_components/lodash/dist/lodash.compat.js"></script>
+        <script src="bower_components/jquery-ui/ui/jquery-ui.js"></script>
+        <script src="bower_components/jquery-form/jquery.form.js"></script>
+        <script src="bower_components/moment/moment.js"></script>
+        <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="bower_components/mediaelement/build/mediaelement-and-player.js"></script>
+        <script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+        <script src="bower_components/gsap/src/uncompressed/TweenMax.js"></script>
         <!-- endbower -->
+        <script src="bower_components/gsap/src/minified/utils/Draggable.min.js"></script>
+        <script src="scripts/vendor/royalslider/jquery.royalslider.min.js"></script>
+        <script src="scripts/vendor/royalslider/angular.royalslider.js"></script>
         <!-- endbuild -->
 
-        <!-- build:js({app,.tmp}) scripts/main.js -->
-        <script src="scripts/api/APIService.js"></script>
-        <script src="scripts/api/ConfigService.js"></script>
-        <script src="scripts/manifest/ManifestService.js"></script>
-        <script src="scripts/manifest/ManifestCtrl.js"></script>
+        <!-- build:js({app,.tmp}) scripts/newplayer.js -->
+        <script src="scripts/service/service.module.js"></script>
+        <script src="scripts/service/api.service.js"></script>
+        <script src="scripts/service/config.service.js"></script>
+        <script src="scripts/service/manifest.service.js"></script>
+        <script src="scripts/service/component.service.js"></script>
+        <!-- components -->
+        <script src="scripts/component/component.module.js"></script>
         <script src="scripts/component/Assessment/assessment.service.js"></script>
-        <script src="scripts/component/ComponentService.js"></script>
-        <script src="scripts/component/ComponentDirective.js"></script>
-        <script src="scripts/Router.js"></script>
-        <script src="scripts/AppCtrl.js"></script>
+        <script src="scripts/component/npComponent/component.directive.js"></script>
+        <script src="scripts/component/npAnswer/npAnswer.js"></script>
+        <script src="scripts/component/npAudio/npAudio.js"></script>
+        <script src="scripts/component/npButton/npButton.js"></script>
+        <script src="scripts/component/npColumn/npColumn.js"></script>
+        <script src="scripts/component/npContent/npContent.js"></script>
+        <script src="scripts/component/npFeature/npFeature.js"></script>
+        <script src="scripts/component/npFooter/npFooter.js"></script>
+        <script src="scripts/component/npHeader/npHeader.js"></script>
+        <script src="scripts/component/npHotspot/npHotspot.js"></script>
+        <script src="scripts/component/npDragAndDropMatch/npDragAndDropMatch.js"></script>
+        <script src="scripts/component/npDragAndDropPrioritize/npDragAndDropPrioritize.js"></script>
+        <script src="scripts/component/npList/npList.js"></script>
+        <script src="scripts/component/npHTML/npHTML.js"></script>
+        <script src="scripts/component/npImage/npImage.js"></script>
+        <script src="scripts/component/npMenu/npMenu.js"></script>
+        <script src="scripts/component/npPage/npPage.js"></script>
+        <script src="scripts/component/npQuestion/npQuestion.js"></script>
+        <script src="scripts/component/npQuiz/npQuiz.js"></script>
+        <script src="scripts/component/npVideo/npVideo.js"></script>
+        <script src="scripts/component/npReveal/npReveal.js"></script>
+        <!-- /components -->
         <script src="scripts/main.js"></script>
+        <script src="scripts/AppCtrl.js"></script>
+        <script src="scripts/NpLayer/nplayer.directive.js"></script>
+        <script src="scripts/templates.js"></script>
         <!-- endbuild -->
-
     </body>
 </html>
