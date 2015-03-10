@@ -11,11 +11,10 @@
     <div np-component ng-repeat="component in components" idx="{{component.idx}}"></div>
 
     <button type="submit" class="col-xs-3 btn-primary">Submit</button> &nbsp;
-    <button id="next_button" class="btn-default" ng-click="npMatch.nextPage($event)">Next</button>
+    <!-- <button id="next_button" class="btn-default" ng-click="npMatch.nextPage($event)">Next</button> -->
 <!--    <div class="btn btn-default">
         <input type="submit" />
     </div>-->
 
     <div class="npMatch-feedback" ng-if="npMatch.feedback" ng-bind-html="npMatch.feedback"></div>
-
 </form>
