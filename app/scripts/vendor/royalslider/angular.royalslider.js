@@ -63,21 +63,17 @@
         $(element).data('royalSlider').ev.on('rsSlideClick', function(event, originalEvent) {
           // TODO - I think they want something to happen here...
           return;
-        })
-        .on('rsAfterSlideChange', function(event) {
-          // triggers after slide change
-          $rootScope.$emit('slider-enable-all');
         });
 
         // each slider is responsible for graying out their own slides
         $rootScope.$on('slider-disable-wrong', function () {
-          $(element).find('.rsSlide').css('opacity', '0.5');
           var $correct = $(element).data('royalSlider').currSlide.holder;
-          $correct.css('opacity', '');
+          $correct.css('opacity', '0.5');
+          $correct.data('correct', 'true');
         });
 
         $rootScope.$on('slider-enable-all', function () {
-          $(element).find('.rsSlide').css('opacity', '');
+          $(element).find('.rsSlide').css('opacity', '').data('correct', 'false');
         });
 
         var slider = $(element).data('royalSlider');
