@@ -77,6 +77,7 @@
       this.nextPage = function (evt) {
         // TODO - have a better way to go to the next page in the manifest service
         // si: I'd like to see a next page and previous page methods
+        ManifestService.goToNextPage();
         evt.preventDefault();
       };
     }

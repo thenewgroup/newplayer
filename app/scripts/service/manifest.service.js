@@ -342,6 +342,27 @@
         $rootScope.$broadcast('npPageIdChanged', pageId);
       };
 
+      this.goToNextPage = function () {
+        var thisPage = this.getPageId();
+        var nextPage, i;
+        if (!thisPage) {
+          return;
+        }
+
+        var parent = this.getComponent(this.getPageId());
+        for (i = 0; i < parent.components.length; i++) {
+          var component = parent.components[i];
+          if (component.type === 'npPage') {
+            if (component.data.id === thisPage) {
+              continue;
+            }
+            nextPage = component.data.id;
+            break;
+          }
+        }
+        this.setPageId(nextPage);
+      };
+
       this.initialize = function (data, overrides) {
         $log.debug('ManifestService::initialize:', data, overrides);
 
