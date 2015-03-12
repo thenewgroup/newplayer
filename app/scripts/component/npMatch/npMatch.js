@@ -34,7 +34,6 @@
           var s = slide.currSlide.holder;
           var cmp = ManifestService.getComponent(s.children().attr('idx'));
           var cmpData  = cmp.data;
-          console.log(cmpData.correct);
           if (!answer) {
             answer = cmpData.correct;
             return;

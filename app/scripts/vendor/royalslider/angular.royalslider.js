@@ -58,7 +58,6 @@
       }
 
       $timeout(function () {
-        var checkPng = 'https://cdn2.iconfinder.com/data/icons/flaticons-solid/16/checkmark-2-512.png';
         scope.$apply($(element).royalSlider(opts));
         $(element).data('royalSlider').ev.on('rsSlideClick', function(event, originalEvent) {
           // TODO - I think they want something to happen here...
