@@ -81694,8 +81694,8 @@ $.extend(mejs.MepDefaults,
 }));
 
 /*!
- * VERSION: 1.15.1
- * DATE: 2015-01-20
+ * VERSION: 1.16.0
+ * DATE: 2015-03-01
  * UPDATES AND DOCS AT: http://greensock.com
  * 
  * Includes all of the following: TweenLite, TweenMax, TimelineLite, TimelineMax, EasePack, CSSPlugin, RoundPropsPlugin, BezierPlugin, AttrPlugin, DirectionalRotationPlugin
@@ -81736,7 +81736,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			p = TweenMax.prototype = TweenLite.to({}, 0.1, {}),
 			_blankArray = [];
 
-		TweenMax.version = "1.15.1";
+		TweenMax.version = "1.16.0";
 		p.constructor = TweenMax;
 		p.kill()._gc = false;
 		TweenMax.killTweensOf = TweenMax.killDelayedCallsTo = TweenLite.killTweensOf;
@@ -81845,7 +81845,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			} else if (time < 0.0000001) { //to work around occasional floating point math artifacts, round super small values to 0.
 				this._totalTime = this._time = this._cycle = 0;
 				this.ratio = this._ease._calcEnd ? this._ease.getRatio(0) : 0;
-				if (prevTotalTime !== 0 || (duration === 0 && prevRawPrevTime > 0 && prevRawPrevTime !== _tinyNum)) {
+				if (prevTotalTime !== 0 || (duration === 0 && prevRawPrevTime > 0)) {
 					callback = "onReverseComplete";
 					isComplete = this._reversed;
 				}
@@ -82339,9 +82339,24 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			},
 			_pauseCallback = _internals.pauseCallback = function(tween, callback, params, scope) {
 				var tl = tween._timeline,
-					time = tl._totalTime;
-				if ((callback || !this._forcingPlayhead) && tl._rawPrevTime !== tween._startTime) { //if the user calls a method that moves the playhead (like progress() or time()), it should honor that and skip any pauses (although if there's a callback positioned at that pause, it must jump there and make the call to ensure the time is EXACTLY what it is supposed to be, and then proceed to where the playhead is being forced). Otherwise, imagine placing a pause in the middle of a timeline and then doing timeline.progress(0.9) - it would get stuck where the pause is.
-					tl.pause(tween._startTime);
+					time = tl._totalTime,
+					startTime = tween._startTime,
+					next = tween.ratio ? _tinyNum : 0,
+					prev = tween.ratio ? 0 : _tinyNum,
+					sibling;
+				if (callback || !this._forcingPlayhead) { //if the user calls a method that moves the playhead (like progress() or time()), it should honor that and skip any pauses (although if there's a callback positioned at that pause, it must jump there and make the call to ensure the time is EXACTLY what it is supposed to be, and then proceed to where the playhead is being forced). Otherwise, imagine placing a pause in the middle of a timeline and then doing timeline.progress(0.9) - it would get stuck where the pause is.
+					tl.pause(startTime);
+					//now find sibling tweens that are EXACTLY at the same spot on the timeline and adjust the _rawPrevTime so that they fire (or don't fire) correctly on the next render. This is primarily to accommodate zero-duration tweens/callbacks that are positioned right on top of a pause. For example, tl.to(...).call(...).addPause(...).call(...) - notice that there's a call() on each side of the pause, so when it's running forward it should call the first one and then pause, and then when resumed, call the other. Zero-duration tweens use _rawPrevTime to sense momentum figure out if events were suppressed when arriving directly on top of that time.
+					sibling = tween._prev;
+					while (sibling && sibling._startTime === startTime) {
+						sibling._rawPrevTime = prev;
+						sibling = sibling._prev;
+					}
+					sibling = tween._next;
+					while (sibling && sibling._startTime === startTime) {
+						sibling._rawPrevTime = next;
+						sibling = sibling._next;
+					}
 					if (callback) {
 						callback.apply(scope || tl, params || _blankArray);
 					}
@@ -82359,7 +82374,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			},
 			p = TimelineLite.prototype = new SimpleTimeline();
 
-		TimelineLite.version = "1.15.1";
+		TimelineLite.version = "1.16.0";
 		p.constructor = TimelineLite;
 		p.kill()._gc = p._forcingPlayhead = false;
 
@@ -82670,13 +82685,24 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				}
 				if (time < 0) {
 					this._active = false;
-					if (this._rawPrevTime >= 0 && this._first) { //when going back beyond the start, force a render so that zero-duration tweens that sit at the very beginning render their start values properly. Otherwise, if the parent timeline's playhead lands exactly at this timeline's startTime, and then moves backwards, the zero-duration tweens at the beginning would still be at their end state.
+					if (this._timeline.autoRemoveChildren && this._reversed) { //ensures proper GC if a timeline is resumed after it's finished reversing.
+						internalForce = isComplete = true;
+						callback = "onReverseComplete";
+					} else if (this._rawPrevTime >= 0 && this._first) { //when going back beyond the start, force a render so that zero-duration tweens that sit at the very beginning render their start values properly. Otherwise, if the parent timeline's playhead lands exactly at this timeline's startTime, and then moves backwards, the zero-duration tweens at the beginning would still be at their end state.
 						internalForce = true;
 					}
 					this._rawPrevTime = time;
 				} else {
 					this._rawPrevTime = (this._duration || !suppressEvents || time || this._rawPrevTime === time) ? time : _tinyNum; //when the playhead arrives at EXACTLY time 0 (right on top) of a zero-duration timeline or tween, we need to discern if events are suppressed so that when the playhead moves again (next time), it'll trigger the callback. If events are NOT suppressed, obviously the callback would be triggered in this render. Basically, the callback should fire either when the playhead ARRIVES or LEAVES this exact spot, not both. Imagine doing a timeline.seek(0) and there's a callback that sits at 0. Since events are suppressed on that seek() by default, nothing will fire, but when the playhead moves off of that position, the callback should fire. This behavior is what people intuitively expect. We set the _rawPrevTime to be a precise tiny number to indicate this scenario rather than using another property/variable which would increase memory usage. This technique is less readable, but more efficient.
-
+					if (time === 0 && isComplete) { //if there's a zero-duration tween at the very beginning of a timeline and the playhead lands EXACTLY at time 0, that tween will correctly render its end values, but we need to keep the timeline alive for one more render so that the beginning values render properly as the parent's playhead keeps moving beyond the begining. Imagine obj.x starts at 0 and then we do tl.set(obj, {x:100}).to(obj, 1, {x:200}) and then later we tl.reverse()...the goal is to have obj.x revert to 0. If the playhead happens to land on exactly 0, without this chunk of code, it'd complete the timeline and remove it from the rendering queue (not good).
+						tween = this._first;
+						while (tween && tween._startTime === 0) {
+							if (!tween._duration) {
+								isComplete = false;
+							}
+							tween = tween._next;
+						}
+					}
 					time = 0; //to avoid occasional floating point rounding errors (could cause problems especially with zero-duration tweens at the very beginning of the timeline)
 					if (!this._initted) {
 						internalForce = true;
@@ -82959,6 +82985,20 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			return this;
 		};
 
+		p.paused = function(value) {
+			if (!value) { //if there's a pause directly at the spot from where we're unpausing, skip it.
+				var tween = this._first,
+					time = this._time;
+				while (tween) {
+					if (tween._startTime === time && tween.data === "isPause") {
+						tween._rawPrevTime = time; //remember, _rawPrevTime is how zero-duration tweens/callbacks sense directionality and determine whether or not to fire. If _rawPrevTime is the same as _startTime on the next render, it won't fire.
+					}
+					tween = tween._next;
+				}
+			}
+			return Animation.prototype.paused.apply(this, arguments);
+		};
+
 		p.usesFrames = function() {
 			var tl = this._timeline;
 			while (tl._timeline) {
@@ -83012,7 +83052,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 
 		p.constructor = TimelineMax;
 		p.kill()._gc = false;
-		TimelineMax.version = "1.15.1";
+		TimelineMax.version = "1.16.0";
 
 		p.invalidate = function() {
 			this._yoyo = (this.vars.yoyo === true);
@@ -83127,12 +83167,24 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				}
 				if (time < 0) {
 					this._active = false;
-					if (prevRawPrevTime >= 0 && this._first) { //when going back beyond the start, force a render so that zero-duration tweens that sit at the very beginning render their start values properly. Otherwise, if the parent timeline's playhead lands exactly at this timeline's startTime, and then moves backwards, the zero-duration tweens at the beginning would still be at their end state.
+					if (this._timeline.autoRemoveChildren && this._reversed) {
+						internalForce = isComplete = true;
+						callback = "onReverseComplete";
+					} else if (prevRawPrevTime >= 0 && this._first) { //when going back beyond the start, force a render so that zero-duration tweens that sit at the very beginning render their start values properly. Otherwise, if the parent timeline's playhead lands exactly at this timeline's startTime, and then moves backwards, the zero-duration tweens at the beginning would still be at their end state.
 						internalForce = true;
 					}
 					this._rawPrevTime = time;
 				} else {
 					this._rawPrevTime = (dur || !suppressEvents || time || this._rawPrevTime === time) ? time : _tinyNum; //when the playhead arrives at EXACTLY time 0 (right on top) of a zero-duration timeline or tween, we need to discern if events are suppressed so that when the playhead moves again (next time), it'll trigger the callback. If events are NOT suppressed, obviously the callback would be triggered in this render. Basically, the callback should fire either when the playhead ARRIVES or LEAVES this exact spot, not both. Imagine doing a timeline.seek(0) and there's a callback that sits at 0. Since events are suppressed on that seek() by default, nothing will fire, but when the playhead moves off of that position, the callback should fire. This behavior is what people intuitively expect. We set the _rawPrevTime to be a precise tiny number to indicate this scenario rather than using another property/variable which would increase memory usage. This technique is less readable, but more efficient.
+					if (time === 0 && isComplete) { //if there's a zero-duration tween at the very beginning of a timeline and the playhead lands EXACTLY at time 0, that tween will correctly render its end values, but we need to keep the timeline alive for one more render so that the beginning values render properly as the parent's playhead keeps moving beyond the begining. Imagine obj.x starts at 0 and then we do tl.set(obj, {x:100}).to(obj, 1, {x:200}) and then later we tl.reverse()...the goal is to have obj.x revert to 0. If the playhead happens to land on exactly 0, without this chunk of code, it'd complete the timeline and remove it from the rendering queue (not good).
+						tween = this._first;
+						while (tween && tween._startTime === 0) {
+							if (!tween._duration) {
+								isComplete = false;
+							}
+							tween = tween._next;
+						}
+					}
 					time = 0; //to avoid occasional floating point rounding errors (could cause problems especially with zero-duration tweens at the very beginning of the timeline)
 					if (!this._initted) {
 						internalForce = true;
@@ -84051,7 +84103,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			p = CSSPlugin.prototype = new TweenPlugin("css");
 
 		p.constructor = CSSPlugin;
-		CSSPlugin.version = "1.15.1";
+		CSSPlugin.version = "1.16.0";
 		CSSPlugin.API = 2;
 		CSSPlugin.defaultTransformPerspective = 0;
 		CSSPlugin.defaultSkewType = "compensated";
@@ -84228,11 +84280,20 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			// @private returns at object containing ALL of the style properties in camelCase and their associated values.
 			_getAllStyles = function(t, cs) {
 				var s = {},
-					i, tr;
+					i, tr, p;
 				if ((cs = cs || _getComputedStyle(t, null))) {
-					for (i in cs) {
-						if (i.indexOf("Transform") === -1 || _transformProp === i) { //Some webkit browsers duplicate transform values, one non-prefixed and one prefixed ("transform" and "WebkitTransform"), so we must weed out the extra one here.
-							s[i] = cs[i];
+					if ((i = cs.length)) {
+						while (--i > -1) {
+							p = cs[i];
+							if (p.indexOf("-transform") === -1 || _transformPropCSS === p) { //Some webkit browsers duplicate transform values, one non-prefixed and one prefixed ("transform" and "WebkitTransform"), so we must weed out the extra one here.
+								s[p.replace(_camelExp, _camelFunc)] = cs.getPropertyValue(p);
+							}
+						}
+					} else { //some browsers behave differently - cs.length is always 0, so we must do a for...in loop.
+						for (i in cs) {
+							if (i.indexOf("Transform") === -1 || _transformProp === i) { //Some webkit browsers duplicate transform values, one non-prefixed and one prefixed ("transform" and "WebkitTransform"), so we must weed out the extra one here.
+								s[i] = cs[i];
+							}
 						}
 					}
 				} else if ((cs = t.currentStyle || t.style)) {
@@ -84998,8 +85059,11 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 						bi = b.indexOf(kwd);
 						ei = e.indexOf(kwd);
 						if (bi !== ei) {
-							e = (ei === -1) ? ea : ba;
-							e[i] += " " + kwd;
+							if (ei === -1) { //if the keyword isn't in the end value, remove it from the beginning one.
+								ba[i] = ba[i].split(kwd).join("");
+							} else if (bi === -1) { //if the keyword isn't in the beginning, add it.
+								ba[i] += " " + kwd;
+							}
 						}
 					}
 				}
@@ -85066,8 +85130,8 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 
 
 
-
 		//transform-related methods and properties
+		CSSPlugin.useSVGTransformAttr = _isSafari; //Safari has some rendering bugs when applying CSS transforms to SVG elements, so default to using the "transform" attribute instead.
 		var _transformProps = ("scaleX,scaleY,scaleZ,x,y,z,skewX,skewY,rotation,rotationX,rotationY,perspective,xPercent,yPercent").split(","),
 			_transformProp = _checkPropPrefix("transform"), //the Javascript (camelCase) transform property, like msTransform, WebkitTransform, MozTransform, or OTransform.
 			_transformPropCSS = _prefixCSS + "transform",
@@ -85091,7 +85155,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				container.appendChild(element);
 				return element;
 			},
-			_docElement = document.documentElement,
+			_docElement = _doc.documentElement,
 			_forceSVGTransformAttr = (function() {
 				//IE and Android stock don't support CSS transforms on SVG elements, so we must write them to the "transform" attribute. We populate this variable in the _parseTransform() method, and only if/when we come across an SVG element
 				var force = _ieVers || (/Android/i.test(_agent) && !window.chrome),
@@ -85107,11 +85171,17 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				}
 				return force;
 			})(),
-			_parseSVGOrigin = function(e, origin, decoratee) {
-				var bbox = e.getBBox();
-				origin = _parsePosition(origin).split(" ");
-				decoratee.xOrigin = (origin[0].indexOf("%") !== -1 ? parseFloat(origin[0]) / 100 * bbox.width : parseFloat(origin[0])) + bbox.x;
-				decoratee.yOrigin = (origin[1].indexOf("%") !== -1 ? parseFloat(origin[1]) / 100 * bbox.height : parseFloat(origin[1])) + bbox.y;
+			_parseSVGOrigin = function(e, local, decoratee, absolute) {
+				var bbox, v;
+				if (!absolute || !(v = absolute.split(" ")).length) {
+					bbox = e.getBBox();
+					local = _parsePosition(local).split(" ");
+					v = [(local[0].indexOf("%") !== -1 ? parseFloat(local[0]) / 100 * bbox.width : parseFloat(local[0])) + bbox.x,
+						 (local[1].indexOf("%") !== -1 ? parseFloat(local[1]) / 100 * bbox.height : parseFloat(local[1])) + bbox.y];
+				}
+				decoratee.xOrigin = parseFloat(v[0]);
+				decoratee.yOrigin = parseFloat(v[1]);
+				e.setAttribute("data-svg-origin", v.join(" "));
 			},
 
 			/**
@@ -85143,10 +85213,14 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				isDefault = (!s || s === "none" || s === "matrix(1, 0, 0, 1, 0, 0)");
 				tm.svg = !!(_SVGElement && typeof(t.getBBox) === "function" && t.getCTM && (!t.parentNode || (t.parentNode.getBBox && t.parentNode.getCTM))); //don't just rely on "instanceof _SVGElement" because if the SVG is embedded via an object tag, it won't work (SVGElement is mapped to a different object)
 				if (tm.svg) {
-					_parseSVGOrigin(t, _getStyle(t, _transformOriginProp, _cs, false, "50% 50%") + "", tm);
+					if (isDefault && (t.style[_transformProp] + "").indexOf("matrix") !== -1) { //some browsers (like Chrome 40) don't correctly report transforms that are applied inline on an SVG element (they don't get included in the computed style), so we double-check here and accept matrix values
+						s = t.style[_transformProp];
+						isDefault = false;
+					}
+					_parseSVGOrigin(t, _getStyle(t, _transformOriginProp, _cs, false, "50% 50%") + "", tm, t.getAttribute("data-svg-origin"));
 					_useSVGTransformAttr = CSSPlugin.useSVGTransformAttr || _forceSVGTransformAttr;
 					m = t.getAttribute("transform");
-					if (isDefault && m && m.indexOf("matrix") !== -1) { //just in case there's a "transfom" value specified as an attribute instead of CSS style. Only accept a matrix, though.
+					if (isDefault && m && m.indexOf("matrix") !== -1) { //just in case there's a "transform" value specified as an attribute instead of CSS style. Only accept a matrix, though.
 						s = m;
 						isDefault = 0;
 					}
@@ -85234,6 +85308,10 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 						tm.x = a14;
 						tm.y = a24;
 						tm.z = a34;
+						if (tm.svg) {
+							tm.x -= tm.xOrigin - (tm.xOrigin * a11 - tm.yOrigin * a12);
+							tm.y -= tm.yOrigin - (tm.yOrigin * a21 - tm.xOrigin * a22);
+						}
 
 					} else if ((!_supports3D || parse || !m.length || tm.x !== m[4] || tm.y !== m[5] || (!tm.rotationX && !tm.rotationY)) && !(tm.x !== undefined && _getStyle(t, "display", cs) === "none")) { //sometimes a 6-element matrix is returned even when we performed 3D transforms, like if rotationX and rotationY are 180. In cases like this, we still need to honor the 3D transforms. If we just rely on the 2D info, it could affect how the data is interpreted, like scaleY might get set to -1 or rotation could get offset by 180 degrees. For example, do a TweenLite.to(element, 1, {css:{rotationX:180, rotationY:180}}) and then later, TweenLite.to(element, 1, {css:{rotationX:0}}) and without this conditional logic in place, it'd jump to a state of being unrotated when the 2nd tween starts. Then again, we need to honor the fact that the user COULD alter the transforms outside of CSSPlugin, like by manually applying new css, so we try to sense that by looking at x and y because if those changed, we know the changes were made outside CSSPlugin and we force a reinterpretation of the matrix values. Also, in Webkit browsers, if the element's "display" is "none", its calculated style value will always return empty, so if we've already recorded the values in the _gsTransform object, we'll just rely on those.
 						var k = (m.length >= 6),
@@ -85266,6 +85344,10 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 							tm.perspective = defaultTransformPerspective;
 							tm.scaleZ = 1;
 						}
+						if (tm.svg) {
+							tm.x -= tm.xOrigin - (tm.xOrigin * a - tm.yOrigin * b);
+							tm.y -= tm.yOrigin - (tm.yOrigin * d - tm.xOrigin * c);
+						}
 					}
 					tm.zOrigin = zOrigin;
 					//some browsers have a hard time with very small values like 2.4492935982947064e-16 (notice the "e-" towards the end) and would render the object slightly off. So we round to 0 in these cases. The conditional logic here is faster than calling Math.abs(). Also, browsers tend to render a SLIGHTLY rotated object in a fuzzy way, so we need to snap to exactly 0 when appropriate.
@@ -85278,6 +85360,13 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				//DEBUG: _log("parsed rotation of " + t.getAttribute("id")+": "+(tm.rotationX)+", "+(tm.rotationY)+", "+(tm.rotation)+", scale: "+tm.scaleX+", "+tm.scaleY+", "+tm.scaleZ+", position: "+tm.x+", "+tm.y+", "+tm.z+", perspective: "+tm.perspective);
 				if (rec) {
 					t._gsTransform = tm; //record to the object's _gsTransform which we use so that tweens can control individual properties independently (we need all the properties to accurately recompose the matrix in the setRatio() method)
+					if (tm.svg) { //if we're supposed to apply transforms to the SVG element's "transform" attribute, make sure there aren't any CSS transforms applied or they'll override the attribute ones. Also clear the transform attribute if we're using CSS, just to be clean.
+						if (_useSVGTransformAttr && t.style[_transformProp]) {
+							_removeProp(t.style, _transformProp);
+						} else if (!_useSVGTransformAttr && t.getAttribute("transform")) {
+							t.removeAttribute("transform");
+						}
+					}
 				}
 				return tm;
 			},
@@ -85382,7 +85471,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					perspective = t.perspective,
 					a11, a12, a13, a21, a22, a23, a31, a32, a33, a41, a42, a43,
 					zOrigin, min, cos, sin, t1, t2, transform, comma, zero;
-				if (v === 1 || v === 0 || !t.force3D) if (t.force3D !== true) if (!t.rotationY && !t.rotationX && sz === 1 && !perspective && !z) { //on the final render (which could be 0 for a from tween), if there are no 3D aspects, render in 2D to free up memory and improve performance especially on mobile devices
+				if (v === 1 || v === 0 || !t.force3D) if (t.force3D !== true) if (!t.rotationY && !t.rotationX && sz === 1 && !perspective && !z && (this.tween._totalTime === this.tween._totalDuration || !this.tween._totalTime)) { //on the final render (which could be 0 for a from tween), if there are no 3D aspects, render in 2D to free up memory and improve performance especially on mobile devices. Check the tween's totalTime/totalDuration too in order to make sure it doesn't happen between repeats if it's a repeating tween.
 					_set2DTransformRatio.call(this, v);
 					return;
 				}
@@ -85538,7 +85627,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					style = targ.style,
 					x = t.x,
 					y = t.y,
-					ang, skew, rnd, sx, sy, a, b, c, d, matrix, min;
+					ang, skew, rnd, sx, sy, a, b, c, d, matrix, min, t1;
 				if ((t.rotationX || t.rotationY || t.z || t.force3D === true || (t.force3D === "auto" && v !== 1 && v !== 0)) && !(t.svg && _useSVGTransformAttr) && _supports3D) { //if a 3D tween begins while a 2D one is running, we need to kick the rendering over to the 3D method. For example, imagine a yoyo-ing, infinitely repeating scale tween running, and then the object gets rotated in 3D space with a different tween.
 					this.setRatio = _set3DTransformRatio;
 					_set3DTransformRatio.call(this, v);
@@ -85548,12 +85637,18 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				sy = t.scaleY;
 				if (t.rotation || t.skewX || t.svg) {
 					ang = t.rotation * _DEG2RAD;
-					skew = ang - t.skewX * _DEG2RAD;
+					skew = t.skewX * _DEG2RAD;
 					rnd = 100000;
 					a = Math.cos(ang) * sx;
 					b = Math.sin(ang) * sx;
-					c = Math.sin(skew) * -sy;
-					d = Math.cos(skew) * sy;
+					c = Math.sin(ang - skew) * -sy;
+					d = Math.cos(ang - skew) * sy;
+					if (skew && t.skewType === "simple") { //by default, we compensate skewing on the other axis to make it look more natural, but you can set the skewType to "simple" to use the uncompensated skewing that CSS does
+						t1 = Math.tan(skew);
+						t1 = Math.sqrt(1 + t1 * t1);
+						c *= t1;
+						d *= t1;
+					}
 					if (t.svg) {
 						x += t.xOrigin - (t.xOrigin * a + t.yOrigin * c);
 						y += t.yOrigin - (t.xOrigin * b + t.yOrigin * d);
@@ -85581,7 +85676,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 		p.x = p.y = p.z = p.skewX = p.skewY = p.rotation = p.rotationX = p.rotationY = p.zOrigin = p.xPercent = p.yPercent = 0;
 		p.scaleX = p.scaleY = p.scaleZ = 1;
 
-		_registerComplexSpecialProp("transform,scale,scaleX,scaleY,scaleZ,x,y,z,rotation,rotationX,rotationY,rotationZ,skewX,skewY,shortRotation,shortRotationX,shortRotationY,shortRotationZ,transformOrigin,transformPerspective,directionalRotation,parseTransform,force3D,skewType,xPercent,yPercent", {parser:function(t, e, p, cssp, pt, plugin, vars) {
+		_registerComplexSpecialProp("transform,scale,scaleX,scaleY,scaleZ,x,y,z,rotation,rotationX,rotationY,rotationZ,skewX,skewY,shortRotation,shortRotationX,shortRotationY,shortRotationZ,transformOrigin,svgOrigin,transformPerspective,directionalRotation,parseTransform,force3D,skewType,xPercent,yPercent", {parser:function(t, e, p, cssp, pt, plugin, vars) {
 			if (cssp._lastParsedTransform === vars) { return pt; } //only need to parse the transform once, and only if the browser supports it.
 			cssp._lastParsedTransform = vars;
 			var m1 = cssp._transform = _getTransform(t, _cs, true, vars.parseTransform),
@@ -85670,15 +85765,15 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			}
 
 			orig = v.transformOrigin;
-			if (orig && m1.svg) {
-				_parseSVGOrigin(t, _parsePosition(orig), m2);
+			if (m1.svg && (orig || v.svgOrigin)) {
+				_parseSVGOrigin(t, _parsePosition(orig), m2, v.svgOrigin);
 				pt = new CSSPropTween(m1, "xOrigin", m1.xOrigin, m2.xOrigin - m1.xOrigin, pt, -1, "transformOrigin");
 				pt.b = m1.xOrigin;
 				pt.e = pt.xs0 = m2.xOrigin;
 				pt = new CSSPropTween(m1, "yOrigin", m1.yOrigin, m2.yOrigin - m1.yOrigin, pt, -1, "transformOrigin");
 				pt.b = m1.yOrigin;
 				pt.e = pt.xs0 = m2.yOrigin;
-				orig = "0px 0px"; //certain browsers (like firefox) completely botch transform-origin, so we must remove it to prevent it from contaminating transforms. We manage it ourselves with xOrigin and yOrigin
+				orig = _useSVGTransformAttr ? null : "0px 0px"; //certain browsers (like firefox) completely botch transform-origin, so we must remove it to prevent it from contaminating transforms. We manage it ourselves with xOrigin and yOrigin
 			}
 			if (orig || (_supports3D && has3D && m1.zOrigin)) { //if anything 3D is happening and there's a transformOrigin with a z component that's non-zero, we must ensure that the transformOrigin's z-component is set to 0 so that we can manually do those calculations to get around Safari bugs. Even if the user didn't specifically define a "transformOrigin" in this particular tween (maybe they did it via css directly).
 				if (_transformProp) {
@@ -85896,8 +85991,8 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 		var _removeProp = function(s, p) {
 				if (p) {
 					if (s.removeProperty) {
-						if (p.substr(0,2) === "ms") { //Microsoft browsers don't conform to the standard of capping the first prefix character, so we adjust so that when we prefix the caps with a dash, it's correct (otherwise it'd be "ms-transform" instead of "-ms-transform" for IE9, for example)
-							p = "M" + p.substr(1);
+						if (p.substr(0,2) === "ms" || p.substr(0,6) === "webkit") { //Microsoft and some Webkit browsers don't conform to the standard of capitalizing the first prefix character, so we adjust so that when we prefix the caps with a dash, it's correct (otherwise it'd be "ms-transform" instead of "-ms-transform" for IE9, for example)
+							p = "-" + p;
 						}
 						s.removeProperty(p.replace(_capsExp, "-$1").toLowerCase());
 					} else { //note: old versions of IE use "removeAttribute()" instead of "removeProperty()"
@@ -86085,6 +86180,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				this._linkCSSP(tpt, null, pt2);
 				tpt.setRatio = (threeD && _supports3D) ? _set3DTransformRatio : _transformProp ? _set2DTransformRatio : _setIETransformRatio;
 				tpt.data = this._transform || _getTransform(target, _cs, true);
+				tpt.tween = tween;
 				_overwriteProps.pop(); //we don't want to force the overwrite of all "transform" tweens of the target - we only care about individual transform properties like scaleX, rotation, etc. The CSSPropTween constructor automatically adds the property to _overwriteProps which is why we need to pop() here.
 			}
 
@@ -86420,12 +86516,12 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				e = [],
 				targets = [],
 				_reservedProps = TweenLite._internals.reservedProps,
-				i, difs, p;
+				i, difs, p, from;
 			target = tween._targets || tween.target;
 			_getChildStyles(target, b, targets);
-			tween.render(duration, true);
+			tween.render(duration, true, true);
 			_getChildStyles(target, e);
-			tween.render(0, true);
+			tween.render(0, true, true);
 			tween._enabled(true);
 			i = targets.length;
 			while (--i > -1) {
@@ -86437,7 +86533,11 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 							difs[p] = vars[p];
 						}
 					}
-					results.push( TweenLite.to(targets[i], duration, difs) );
+					from = {};
+					for (p in difs) {
+						from[p] = b[i][p];
+					}
+					results.push(TweenLite.fromTo(targets[i], duration, from, difs));
 				}
 			}
 			return results;
@@ -86930,9 +87030,10 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 		//Elastic
 		_createElastic = function(n, f, def) {
 			var C = _class("easing." + n, function(amplitude, period) {
-					this._p1 = amplitude || 1;
-					this._p2 = period || def;
+					this._p1 = (amplitude >= 1) ? amplitude : 1; //note: if amplitude is < 1, we simply adjust the period for a more natural feel. Otherwise the math doesn't work right and the curve starts at 1.
+					this._p2 = (period || def) / (amplitude < 1 ? amplitude : 1);
 					this._p3 = this._p2 / _2PI * (Math.asin(1 / this._p1) || 0);
+					this._p2 = _2PI / this._p2; //precalculate to optimize
 				}, true),
 				p = C.prototype = new Ease();
 			p.constructor = C;
@@ -86944,13 +87045,13 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 		};
 		_wrap("Elastic",
 			_createElastic("ElasticOut", function(p) {
-				return this._p1 * Math.pow(2, -10 * p) * Math.sin( (p - this._p3) * _2PI / this._p2 ) + 1;
+				return this._p1 * Math.pow(2, -10 * p) * Math.sin( (p - this._p3) * this._p2 ) + 1;
 			}, 0.3),
 			_createElastic("ElasticIn", function(p) {
-				return -(this._p1 * Math.pow(2, 10 * (p -= 1)) * Math.sin( (p - this._p3) * _2PI / this._p2 ));
+				return -(this._p1 * Math.pow(2, 10 * (p -= 1)) * Math.sin( (p - this._p3) * this._p2 ));
 			}, 0.3),
 			_createElastic("ElasticInOut", function(p) {
-				return ((p *= 2) < 1) ? -0.5 * (this._p1 * Math.pow(2, 10 * (p -= 1)) * Math.sin( (p - this._p3) * _2PI / this._p2)) : this._p1 * Math.pow(2, -10 *(p -= 1)) * Math.sin( (p - this._p3) * _2PI / this._p2 ) *0.5 + 1;
+				return ((p *= 2) < 1) ? -0.5 * (this._p1 * Math.pow(2, 10 * (p -= 1)) * Math.sin( (p - this._p3) * this._p2)) : this._p1 * Math.pow(2, -10 *(p -= 1)) * Math.sin( (p - this._p3) * this._p2 ) * 0.5 + 1;
 			}, 0.45)
 		);
 
@@ -87702,13 +87803,14 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 			if (!arguments.length) {
 				return this._paused;
 			}
-			if (value != this._paused) if (this._timeline) {
+			var tl = this._timeline,
+				raw, elapsed;
+			if (value != this._paused) if (tl) {
 				if (!_tickerActive && !value) {
 					_ticker.wake();
 				}
-				var tl = this._timeline,
-					raw = tl.rawTime(),
-					elapsed = raw - this._pauseTime;
+				raw = tl.rawTime();
+				elapsed = raw - this._pauseTime;
 				if (!value && tl.smoothChildTiming) {
 					this._startTime += elapsed;
 					this._uncache(false);
@@ -87919,11 +88021,11 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		p._firstPT = p._targets = p._overwrittenProps = p._startAt = null;
 		p._notifyPluginsOfEnabled = p._lazy = false;
 
-		TweenLite.version = "1.15.1";
+		TweenLite.version = "1.16.0";
 		TweenLite.defaultEase = p._ease = new Ease(null, null, 1, 1);
 		TweenLite.defaultOverwrite = "auto";
 		TweenLite.ticker = _ticker;
-		TweenLite.autoSleep = true;
+		TweenLite.autoSleep = 120;
 		TweenLite.lagSmoothing = function(threshold, adjustedLag) {
 			_ticker.lagSmoothing(threshold, adjustedLag);
 		};
@@ -87947,6 +88049,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 			_overwriteLookup = {none:0, all:1, auto:2, concurrent:3, allOnStart:4, preexisting:5, "true":1, "false":0},
 			_rootFramesTimeline = Animation._rootFramesTimeline = new SimpleTimeline(),
 			_rootTimeline = Animation._rootTimeline = new SimpleTimeline(),
+			_nextGCFrame = 30,
 			_lazyRender = _internals.lazyRender = function() {
 				var i = _lazyTweens.length,
 					tween;
@@ -87976,7 +88079,8 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 				if (_lazyTweens.length) {
 					_lazyRender();
 				}
-				if (!(_ticker.frame % 120)) { //dump garbage every 120 frames...
+				if (_ticker.frame >= _nextGCFrame) { //dump garbage every 120 frames or whatever the user sets TweenLite.autoSleep to
+					_nextGCFrame = _ticker.frame + (parseInt(TweenLite.autoSleep, 10) || 120);
 					for (p in _tweenLookup) {
 						a = _tweenLookup[p].tweens;
 						i = a.length;
@@ -88298,7 +88402,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 			} else if (time < 0.0000001) { //to work around occasional floating point math artifacts, round super small values to 0.
 				this._totalTime = this._time = 0;
 				this.ratio = this._ease._calcEnd ? this._ease.getRatio(0) : 0;
-				if (prevTime !== 0 || (duration === 0 && prevRawPrevTime > 0 && prevRawPrevTime !== _tinyNum)) {
+				if (prevTime !== 0 || (duration === 0 && prevRawPrevTime > 0)) {
 					callback = "onReverseComplete";
 					isComplete = this._reversed;
 				}
@@ -88796,8 +88900,8 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 
 })((typeof(module) !== "undefined" && module.exports && typeof(global) !== "undefined") ? global : this || window, "TweenMax");
 /*!
- * VERSION: 0.11.0
- * DATE: 2015-01-20
+ * VERSION: 0.12.0
+ * DATE: 2015-03-01
  * UPDATES AND DOCS AT: http://greensock.com
  *
  * Requires TweenLite and CSSPlugin version 1.11.0 or later (TweenMax contains both TweenLite and CSSPlugin). ThrowPropsPlugin is required for momentum-based continuation of movement after the mouse/touch is released (ThrowPropsPlugin is a membership benefit of Club GreenSock - http://www.greensock.com/club/).
@@ -88808,7 +88912,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
  * 
  * @author: Jack Doyle, jack@greensock.com
  */
-var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof global?global:this||window;(_gsScope._gsQueue||(_gsScope._gsQueue=[])).push(function(){"use strict";_gsScope._gsDefine("utils.Draggable",["events.EventDispatcher","TweenLite"],function(t,e){var i,s,r,n,a,o={css:{}},h={css:{}},l={css:{}},u={css:{}},_=_gsScope._gsDefine.globals,c={},f=document,p=f.documentElement||{},d=[],m=function(){return!1},g=180/Math.PI,v=999999999999999,y=Date.now||function(){return(new Date).getTime()},T=!f.addEventListener&&f.all,w=[],x={},b=0,P=/^(?:a|input|textarea|button|select)$/i,S=0,C=0,k=function(t){if("string"==typeof t&&(t=e.selector(t)),!t||t.nodeType)return[t];var i,s=[],r=t.length;for(i=0;i!==r;s.push(t[i++]));return s},R=function(){for(var t=w.length;--t>-1;)w[t]()},A=function(t){w.push(t),1===w.length&&e.ticker.addEventListener("tick",R,this,!1,1)},D=function(t){for(var i=w.length;--i>-1;)w[i]===t&&w.splice(i,1);e.to(O,0,{overwrite:"all",delay:15,onComplete:O})},O=function(){w.length||e.ticker.removeEventListener("tick",R)},M=function(t,e){var i;for(i in e)void 0===t[i]&&(t[i]=e[i]);return t},L=function(){return null!=window.pageYOffset?window.pageYOffset:null!=f.scrollTop?f.scrollTop:p.scrollTop||f.body.scrollTop||0},E=function(){return null!=window.pageXOffset?window.pageXOffset:null!=f.scrollLeft?f.scrollLeft:p.scrollLeft||f.body.scrollLeft||0},N=function(t,e){return t=t||window.event,c.pageX=t.clientX+f.body.scrollLeft+p.scrollLeft,c.pageY=t.clientY+f.body.scrollTop+p.scrollTop,e&&(t.returnValue=!1),c},I=function(t){return t?("string"==typeof t&&(t=e.selector(t)),t.length&&t!==window&&t[0]&&t[0].style&&!t.nodeType&&(t=t[0]),t===window||t.nodeType&&t.style?t:null):t},z=function(t,e){var s,r,n,a=t.style;if(void 0===a[e]){for(n=["O","Moz","ms","Ms","Webkit"],r=5,s=e.charAt(0).toUpperCase()+e.substr(1);--r>-1&&void 0===a[n[r]+s];);if(0>r)return"";i=3===r?"ms":n[r],e=i+s}return e},F=function(t,e,i){var s=t.style;s&&(void 0===s[e]&&(e=z(t,e)),null==i?s.removeProperty?s.removeProperty(e.replace(/([A-Z])/g,"-$1").toLowerCase()):s.removeAttribute(e):void 0!==s[e]&&(s[e]=i))},X=f.defaultView?f.defaultView.getComputedStyle:m,Y=/(?:Left|Right|Width)/i,U=/(?:\d|\-|\+|=|#|\.)*/g,B=function(t,e,i,s,r){if("px"===s||!s)return i;if("auto"===s||!i)return 0;var n,a=Y.test(e),o=t,h=H.style,l=0>i;return l&&(i=-i),"%"===s&&-1!==e.indexOf("border")?n=i/100*(a?t.clientWidth:t.clientHeight):(h.cssText="border:0 solid red;position:"+W(t,"position",!0)+";line-height:0;","%"!==s&&o.appendChild?h[a?"borderLeftWidth":"borderTopWidth"]=i+s:(o=t.parentNode||f.body,h[a?"width":"height"]=i+s),o.appendChild(H),n=parseFloat(H[a?"offsetWidth":"offsetHeight"]),o.removeChild(H),0!==n||r||(n=B(t,e,i,s,!0))),l?-n:n},j=function(t,e){if("absolute"!==W(t,"position",!0))return 0;var i="left"===e?"Left":"Top",s=W(t,"margin"+i,!0);return t["offset"+i]-(B(t,e,parseFloat(s),s.replace(U,""))||0)},W=function(t,e,i){var s,r=(t._gsTransform||{})[e];return r||0===r?r:(t.style[e]?r=t.style[e]:(s=X(t))?(r=s.getPropertyValue(e.replace(/([A-Z])/g,"-$1").toLowerCase()),r=r||s.length?r:s[e]):t.currentStyle&&(r=t.currentStyle[e]),"auto"!==r||"top"!==e&&"left"!==e||(r=j(t,e)),i?r:parseFloat(r)||0)},q=function(t,e,i){var s=t.vars,r=s[i],n=t._listeners[e];"function"==typeof r&&r.apply(s[i+"Scope"]||t,s[i+"Params"]||[t.pointerEvent]),n&&t.dispatchEvent(e)},V=function(t,e){var i,s,r,n=I(t);return n?oe(n,e):void 0!==t.left?(r=ie(e),{left:t.left-r.x,top:t.top-r.y,width:t.width,height:t.height}):(s=t.min||t.minX||t.minRotation||0,i=t.min||t.minY||0,{left:s,top:i,width:(t.max||t.maxX||t.maxRotation||0)-s,height:(t.max||t.maxY||0)-i})},H=f.createElement("div"),G=""!==z(H,"perspective"),Q=z(H,"transformOrigin").replace(/^ms/g,"Ms").replace(/([A-Z])/g,"-$1").toLowerCase(),Z=z(H,"transform"),$=Z.replace(/^ms/g,"Ms").replace(/([A-Z])/g,"-$1").toLowerCase(),K={},J={},te=function(){if(!T){var t="http://www.w3.org/2000/svg",e=f.createElementNS(t,"svg"),i=f.createElementNS(t,"rect");return i.setAttributeNS(null,"width","10"),i.setAttributeNS(null,"height","10"),e.appendChild(i),e}}(),ee=function(t){if(!t.getBoundingClientRect||!t.parentNode)return{offsetTop:0,offsetLeft:0,offsetParent:p};for(var e,i,s,r=t,n=t.style.cssText;!r.offsetParent&&r.parentNode;)r=r.parentNode;return t.parentNode.insertBefore(te,t),t.parentNode.removeChild(t),te.style.cssText=n,te.style[Z]="none",te.setAttribute("class",t.getAttribute("class")),e=te.getBoundingClientRect(),s=r.offsetParent,s?(s===f.body&&p&&(s=p),i=s.getBoundingClientRect()):i={top:-L(),left:-E()},te.parentNode.insertBefore(t,te),t.parentNode.removeChild(te),{offsetLeft:e.left-i.left,offsetTop:e.top-i.top,offsetParent:r.offsetParent||p}},ie=function(t,e){if(e=e||{},!t||t===p||!t.parentNode)return{x:0,y:0};var i=X(t),s=Q&&i?i.getPropertyValue(Q):"50% 50%",r=s.split(" "),n=-1!==s.indexOf("left")?"0%":-1!==s.indexOf("right")?"100%":r[0],a=-1!==s.indexOf("top")?"0%":-1!==s.indexOf("bottom")?"100%":r[1];return("center"===a||null==a)&&(a="50%"),("center"===n||isNaN(parseFloat(n)))&&(n="50%"),e.x=-1!==n.indexOf("%")?t.offsetWidth*parseFloat(n)/100:parseFloat(n),e.y=-1!==a.indexOf("%")?t.offsetHeight*parseFloat(a)/100:parseFloat(a),e},se=function(t,e,i){var s,r,a,o,h,l;return t!==window&&t&&t.parentNode?(s=X(t),r=s?s.getPropertyValue($):t.currentStyle?t.currentStyle[Z]:"1,0,0,1,0,0",r=(r+"").match(/(?:\-|\b)[\d\-\.e]+\b/g)||[1,0,0,1,0,0],r.length>6&&(r=[r[0],r[1],r[4],r[5],r[12],r[13]]),e&&(a=t.parentNode,l=void 0===t.offsetLeft&&"svg"===t.nodeName.toLowerCase()?ee(t):t,o=l.offsetParent,h=a===p||a===f.body,void 0===n&&f.body&&Z&&(n=function(){var t,e,i=f.createElement("div"),s=f.createElement("div");return s.style.position="absolute",f.body.appendChild(i),i.appendChild(s),t=s.offsetParent,i.style[Z]="rotate(1deg)",e=s.offsetParent===t,f.body.removeChild(i),e}()),r[4]=Number(r[4])+e.x+(l.offsetLeft||0)-i.x-(h?0:a.scrollLeft)+(o?parseInt(W(o,"borderLeftWidth"),10)||0:0),r[5]=Number(r[5])+e.y+(l.offsetTop||0)-i.y-(h?0:a.scrollTop)+(o?parseInt(W(o,"borderTopWidth"),10)||0:0),!a||a.offsetParent!==o||n&&"100100"!==se(a).join("")||(r[4]-=a.offsetLeft||0,r[5]-=a.offsetTop||0),a&&"fixed"===W(t,"position",!0)&&(r[4]+=E(),r[5]+=L())),r):[1,0,0,1,0,0]},re=function(t,e){if(!t||t===window||!t.parentNode)return[1,0,0,1,0,0];for(var i,s,r,n,a,o,h,l,u=ie(t,K),_=ie(t.parentNode,J),c=se(t,u,_);(t=t.parentNode)&&t.parentNode&&t!==p;)u=_,_=ie(t.parentNode,u===K?J:K),h=se(t,u,_),i=c[0],s=c[1],r=c[2],n=c[3],a=c[4],o=c[5],c[0]=i*h[0]+s*h[2],c[1]=i*h[1]+s*h[3],c[2]=r*h[0]+n*h[2],c[3]=r*h[1]+n*h[3],c[4]=a*h[0]+o*h[2]+h[4],c[5]=a*h[1]+o*h[3]+h[5];return e&&(i=c[0],s=c[1],r=c[2],n=c[3],a=c[4],o=c[5],l=i*n-s*r,c[0]=n/l,c[1]=-s/l,c[2]=-r/l,c[3]=i/l,c[4]=(r*o-n*a)/l,c[5]=-(i*o-s*a)/l),c},ne=function(t,e,i){var s=re(t),r=e.x,n=e.y;return i=i===!0?e:i||{},i.x=r*s[0]+n*s[2]+s[4],i.y=r*s[1]+n*s[3]+s[5],i},ae=function(t,e,i){var s=t.x*e[0]+t.y*e[2]+e[4],r=t.x*e[1]+t.y*e[3]+e[5];return t.x=s*i[0]+r*i[2]+i[4],t.y=s*i[1]+r*i[3]+i[5],t},oe=function(t,e){var i,s,r,n,a,o,h,l,u,_,c;return t===window?(n=L(),s=E(),r=s+(p.clientWidth||t.innerWidth||f.body.clientWidth||0),a=n+((t.innerHeight||0)-20<p.clientHeight?p.clientHeight:t.innerHeight||f.body.clientHeight||0)):(i=ie(t),s=-i.x,r=s+t.offsetWidth,n=-i.y,a=n+t.offsetHeight),t===e?{left:s,top:n,width:r-s,height:a-n}:(o=re(t),h=re(e,!0),l=ae({x:s,y:n},o,h),u=ae({x:r,y:n},o,h),_=ae({x:r,y:a},o,h),c=ae({x:s,y:a},o,h),s=Math.min(l.x,u.x,_.x,c.x),n=Math.min(l.y,u.y,_.y,c.y),{left:s,top:n,width:Math.max(l.x,u.x,_.x,c.x)-s,height:Math.max(l.y,u.y,_.y,c.y)-n})},he=function(t){return t.length&&t[0]&&(t[0].nodeType&&t[0].style&&!t.nodeType||t[0].length&&t[0][0])?!0:!1},le=function(t){var e,i,s,r=[],n=t.length;for(e=0;n>e;e++)if(i=t[e],he(i))for(s=i.length,s=0;i.length>s;s++)r.push(i[s]);else r.push(i);return r},ue="ontouchstart"in p&&"orientation"in window,_e=function(t){for(var e=t.split(","),i=(void 0!==H.onpointerdown?"pointerdown,pointermove,pointerup,pointercancel":void 0!==H.onmspointerdown?"MSPointerDown,MSPointerMove,MSPointerUp,MSPointerCancel":t).split(","),s={},r=8;--r>-1;)s[e[r]]=i[r],s[i[r]]=e[r];return s}("touchstart,touchmove,touchend,touchcancel"),ce=function(t,e,i){t.addEventListener?t.addEventListener(_e[e]||e,i,!1):t.attachEvent&&t.attachEvent("on"+e,i)},fe=function(t,e,i){t.removeEventListener?t.removeEventListener(_e[e]||e,i):t.detachEvent&&t.detachEvent("on"+e,i)},pe=function(t){s=t.touches&&t.touches.length>S,fe(t.target,"touchend",pe)},de=function(t){s=t.touches&&t.touches.length>S,ce(t.target,"touchend",pe)},me=function(t,e,i,s,r,n){var a,o,h,l={};if(e)if(1!==r&&e instanceof Array)for(l.end=a=[],h=e.length,o=0;h>o;o++)a[o]=e[o]*r;else l.end="function"==typeof e?function(i){return e.call(t,i)*r}:e;return(i||0===i)&&(l.max=i),(s||0===s)&&(l.min=s),n&&(l.velocity=0),l},ge=function(t){var e;return t&&t.getAttribute&&"BODY"!==t.nodeName?"true"===(e=t.getAttribute("data-clickable"))||"false"!==e&&(t.onclick||P.test(t.nodeName+""))?!0:ge(t.parentNode):!1},ve=function(){var t,e=f.createElement("div"),i=f.createElement("div"),s=i.style,r=f.body||H;return s.display="inline-block",s.position="relative",e.style.cssText=i.innerHTML="width:90px; height:40px; padding:10px; overflow:auto; visibility: hidden",e.appendChild(i),r.appendChild(e),a=i.offsetHeight+18>e.scrollHeight,s.width="100%",Z||(s.paddingRight="500px",t=e.scrollLeft=e.scrollWidth-e.clientWidth,s.left="-90px",t=t!==e.scrollLeft),r.removeChild(e),t}(),ye=function(t,i){t=I(t),i=i||{};var s,r,n,o,h,l,u=f.createElement("div"),_=u.style,c=t.firstChild,p=0,d=0,m=t.scrollTop,g=t.scrollLeft,v=t.scrollWidth,y=t.scrollHeight,w=0,x=0,b=0;G&&i.force3D!==!1?(h="translate3d(",l="px,0px)"):Z&&(h="translate(",l="px)"),this.scrollTop=function(t,e){return arguments.length?(this.top(-t,e),void 0):-this.top()},this.scrollLeft=function(t,e){return arguments.length?(this.left(-t,e),void 0):-this.left()},this.left=function(s,r){if(!arguments.length)return-(t.scrollLeft+d);var n=t.scrollLeft-g,a=d;return(n>2||-2>n)&&!r?(g=t.scrollLeft,e.killTweensOf(this,!0,{left:1,scrollLeft:1}),this.left(-g),i.onKill&&i.onKill(),void 0):(s=-s,0>s?(d=0|s-.5,s=0):s>x?(d=0|s-x,s=x):d=0,(d||a)&&(h?this._suspendTransforms||(_[Z]=h+-d+"px,"+-p+l):_.left=-d+"px",ve&&d+w>=0&&(_.paddingRight=d+w+"px")),t.scrollLeft=0|s,g=t.scrollLeft,void 0)},this.top=function(s,r){if(!arguments.length)return-(t.scrollTop+p);var n=t.scrollTop-m,a=p;return(n>2||-2>n)&&!r?(m=t.scrollTop,e.killTweensOf(this,!0,{top:1,scrollTop:1}),this.top(-m),i.onKill&&i.onKill(),void 0):(s=-s,0>s?(p=0|s-.5,s=0):s>b?(p=0|s-b,s=b):p=0,(p||a)&&(h?this._suspendTransforms||(_[Z]=h+-d+"px,"+-p+l):_.top=-p+"px"),t.scrollTop=0|s,m=t.scrollTop,void 0)},this.maxScrollTop=function(){return b},this.maxScrollLeft=function(){return x},this.disable=function(){for(c=u.firstChild;c;)o=c.nextSibling,t.appendChild(c),c=o;t===u.parentNode&&t.removeChild(u)},this.enable=function(){if(c=t.firstChild,c!==u){for(;c;)o=c.nextSibling,u.appendChild(c),c=o;t.appendChild(u),this.calibrate()}},this.calibrate=function(e){var i,o,h=t.clientWidth===s;m=t.scrollTop,g=t.scrollLeft,(!h||t.clientHeight!==r||u.offsetHeight!==n||v!==t.scrollWidth||y!==t.scrollHeight||e)&&((p||d)&&(i=this.left(),o=this.top(),this.left(-t.scrollLeft),this.top(-t.scrollTop)),(!h||e)&&(_.display="block",_.width="auto",_.paddingRight="0px",w=Math.max(0,t.scrollWidth-t.clientWidth),w&&(w+=W(t,"paddingLeft")+(a?W(t,"paddingRight"):0))),_.display="inline-block",_.position="relative",_.overflow="visible",_.width="100%",_.paddingRight=w+"px",a&&(_.paddingBottom=W(t,"paddingBottom",!0)),T&&(_.zoom="1"),s=t.clientWidth,r=t.clientHeight,v=t.scrollWidth,y=t.scrollHeight,x=t.scrollWidth-s,b=t.scrollHeight-r,n=u.offsetHeight,(i||o)&&(this.left(i),this.top(o)))},this.content=u,this.element=t,this._suspendTransforms=!1,this.enable()},Te=function(i,n){t.call(this,i),i=I(i),r||(r=_.com.greensock.plugins.ThrowPropsPlugin),this.vars=n=n||{},this.target=i,this.x=this.y=this.rotation=0,this.dragResistance=parseFloat(n.dragResistance)||0,this.edgeResistance=isNaN(n.edgeResistance)?1:parseFloat(n.edgeResistance)||0,this.lockAxis=n.lockAxis;var a,c,p,w,P,R,O,L,E,z,X,Y,U,B,j,H,G,Q,Z,$,K,J,te,ee,ie,se,ae=(n.type||(T?"top,left":"x,y")).toLowerCase(),oe=-1!==ae.indexOf("x")||-1!==ae.indexOf("y"),he=-1!==ae.indexOf("rotation"),le=oe?"x":"left",pe=oe?"y":"top",ve=-1!==ae.indexOf("x")||-1!==ae.indexOf("left")||"scroll"===ae,we=-1!==ae.indexOf("y")||-1!==ae.indexOf("top")||"scroll"===ae,xe=n.minimumMovement||2,be=this,Pe=k(n.trigger||n.handle||i),Se={},Ce=0,ke=function(t){if(Q){var s=be.x,r=be.y,n=1e-6;n>s&&s>-n&&(s=0),n>r&&r>-n&&(r=0),he?(B.rotation=be.rotation=be.x,e.set(i,U)):c?(we&&c.top(r),ve&&c.left(s)):oe?(we&&(B.y=r),ve&&(B.x=s),e.set(i,U)):(we&&(i.style.top=r+"px"),ve&&(i.style.left=s+"px")),L&&!t&&q(be,"drag","onDrag")}Q=!1},Re=function(t,s){var r;oe?(i._gsTransform||e.set(i,{x:"+=0"}),be.y=i._gsTransform.y,be.x=i._gsTransform.x):he?(i._gsTransform||e.set(i,{x:"+=0"}),be.x=be.rotation=i._gsTransform.rotation):c?(be.y=c.top(),be.x=c.left()):(be.y=parseInt(i.style.top,10)||0,be.x=parseInt(i.style.left,10)||0),!$&&!K||s||($&&(r=$(be.x),r!==be.x&&(be.x=r,he&&(be.rotation=r),Q=!0)),K&&(r=K(be.y),r!==be.y&&(be.y=r,Q=!0)),Q&&ke(!0)),n.onThrowUpdate&&!t&&n.onThrowUpdate.apply(n.onThrowUpdateScope||be,n.onThrowUpdateParams||d)},Ae=function(){var t,e,s,r;O=!1,c?(c.calibrate(),be.minX=z=-c.maxScrollLeft(),be.minY=Y=-c.maxScrollTop(),be.maxX=E=be.maxY=X=0,O=!0):n.bounds&&(t=V(n.bounds,i.parentNode),he?(be.minX=z=t.left,be.maxX=E=t.left+t.width,be.minY=Y=be.maxY=X=0):void 0!==n.bounds.maxX||void 0!==n.bounds.maxY?(t=n.bounds,be.minX=z=t.minX,be.minY=Y=t.minY,be.maxX=E=t.maxX,be.maxY=X=t.maxY):(e=V(i,i.parentNode),be.minX=z=W(i,le)+t.left-e.left,be.minY=Y=W(i,pe)+t.top-e.top,be.maxX=E=z+(t.width-e.width),be.maxY=X=Y+(t.height-e.height)),z>E&&(be.minX=E,be.maxX=E=z,z=be.minX),Y>X&&(be.minY=X,be.maxY=X=Y,Y=be.minY),he&&(be.minRotation=z,be.maxRotation=E),O=!0),n.liveSnap&&(s=n.liveSnap===!0?n.snap||{}:n.liveSnap,r=s instanceof Array||"function"==typeof s,he?($=Ee(r?s:s.rotation,z,E,1),K=null):(ve&&($=Ee(r?s:s.x||s.left||s.scrollLeft,z,E,c?-1:1)),we&&(K=Ee(r?s:s.y||s.top||s.scrollTop,Y,X,c?-1:1))))},De=function(t,e){var s,a,o;t&&r?(t===!0&&(s=n.snap||{},a=s instanceof Array||"function"==typeof s,t={resistance:(n.throwResistance||n.resistance||1e3)/(he?10:1)},he?t.rotation=me(be,a?s:s.rotation,E,z,1,e):(ve&&(t[le]=me(be,a?s:s.x||s.left||s.scrollLeft,E,z,c?-1:1,e||be.lockAxis&&"x"===ee)),we&&(t[pe]=me(be,a?s:s.y||s.top||s.scrollTop,X,Y,c?-1:1,e||be.lockAxis&&"y"===ee)))),be.tween=o=r.to(c||i,{throwProps:t,ease:n.ease||_.Power3.easeOut,onComplete:n.onThrowComplete,onCompleteParams:n.onThrowCompleteParams,onCompleteScope:n.onThrowCompleteScope||be,onUpdate:n.fastMode?n.onThrowUpdate:Re,onUpdateParams:n.fastMode?n.onThrowUpdateParams:null,onUpdateScope:n.onThrowUpdateScope||be},isNaN(n.maxDuration)?2:n.maxDuration,isNaN(n.minDuration)?.5:n.minDuration,isNaN(n.overshootTolerance)?1-be.edgeResistance+.2:n.overshootTolerance),n.fastMode||(c&&(c._suspendTransforms=!0),o.render(o.duration(),!0,!0),Re(!0,!0),be.endX=be.x,be.endY=be.y,he&&(be.endRotation=be.x),o.play(0),Re(!0,!0),c&&(c._suspendTransforms=!1))):O&&be.applyBounds()},Oe=function(){ie=re(i.parentNode,!0),ie[1]||ie[2]||1!=ie[0]||1!=ie[3]||0!=ie[4]||0!=ie[5]||(ie=null)},Me=function(){var t=1-be.edgeResistance;Oe(),c?(Ae(),R=c.top(),P=c.left()):(Le()?(Re(!0,!0),Ae()):be.applyBounds(),he?(G=ne(i,{x:0,y:0}),Re(!0,!0),P=be.x,R=be.y=Math.atan2(G.y-w,p-G.x)*g):(R=W(i,pe),P=W(i,le))),O&&t&&(P>E?P=E+(P-E)/t:z>P&&(P=z-(z-P)/t),he||(R>X?R=X+(R-X)/t:Y>R&&(R=Y-(Y-R)/t)))},Le=function(){return be.tween&&be.tween.isActive()},Ee=function(t,e,i,s){return"function"==typeof t?function(r){var n=be.isPressed?1-be.edgeResistance:1;return t.call(be,r>i?i+(r-i)*n:e>r?e+(r-e)*n:r)*s}:t instanceof Array?function(s){for(var r,n,a=t.length,o=0,h=v;--a>-1;)r=t[a],n=r-s,0>n&&(n=-n),h>n&&r>=e&&i>=r&&(o=a,h=n);return t[o]}:isNaN(t)?function(t){return t}:function(){return t*s}},Ne=function(t){var s,r;if(a&&!be.isPressed&&t){if(se=Le(),be.pointerEvent=t,_e[t.type]?(te=-1!==t.type.indexOf("touch")?t.currentTarget:f,ce(te,"touchend",ze),ce(te,"touchmove",Ie),ce(te,"touchcancel",ze),ce(f,"touchstart",de)):(te=null,ce(f,"mousemove",Ie)),ce(f,"mouseup",ze),J=ge(t.target)&&!n.dragClickables)return ce(t.target,"change",ze),void 0;if(T?t=N(t,!0):!c||t.touches&&t.touches.length>S+1||(t.preventDefault(),t.preventManipulation&&t.preventManipulation()),t.changedTouches?(t=j=t.changedTouches[0],H=t.identifier):t.pointerId?H=t.pointerId:j=null,S++,A(ke),w=be.pointerY=t.pageY,p=be.pointerX=t.pageX,Me(),ie&&(s=p*ie[0]+w*ie[2]+ie[4],w=p*ie[1]+w*ie[3]+ie[5],p=s),be.tween&&be.tween.kill(),e.killTweensOf(c||i,!0,Se),c&&e.killTweensOf(i,!0,{scrollTo:1}),be.tween=ee=null,(n.zIndexBoost||!he&&!c&&n.zIndexBoost!==!1)&&(i.style.zIndex=Te.zIndex++),be.isPressed=!0,L=!(!n.onDrag&&!be._listeners.drag),!he)for(r=Pe.length;--r>-1;)F(Pe[r],"cursor",n.cursor||"move");q(be,"press","onPress")}},Ie=function(t){if(a&&!s&&be.isPressed){T?t=N(t,!0):(t.preventDefault(),t.preventManipulation&&t.preventManipulation()),be.pointerEvent=t;var e,i,r,n,o,h,l,u,_,c=t.changedTouches,f=1-be.dragResistance,d=1-be.edgeResistance;if(c){if(t=c[0],t!==j&&t.identifier!==H){for(o=c.length;--o>-1&&(t=c[o]).identifier!==H;);if(0>o)return}}else if(t.pointerId&&H&&t.pointerId!==H)return;l=be.pointerX=t.pageX,u=be.pointerY=t.pageY,he?(n=Math.atan2(G.y-t.pageY,t.pageX-G.x)*g,h=be.y-n,be.y=n,h>180?R-=360:-180>h&&(R+=360),r=P+(R-n)*f):(ie&&(_=l*ie[0]+u*ie[2]+ie[4],u=l*ie[1]+u*ie[3]+ie[5],l=_),i=u-w,e=l-p,xe>i&&i>-xe&&(i=0),xe>e&&e>-xe&&(e=0),be.lockAxis&&(e||i)&&("y"===ee||!ee&&Math.abs(e)>Math.abs(i)&&ve?(i=0,ee="y"):we&&(e=0,ee="x")),r=P+e*f,n=R+i*f),$||K?($&&(r=$(r)),K&&(n=K(n))):O&&(r>E?r=E+(r-E)*d:z>r&&(r=z+(r-z)*d),he||(n>X?n=X+(n-X)*d:Y>n&&(n=Y+(n-Y)*d))),he||(r=Math.round(r),n=Math.round(n)),(be.x!==r||be.y!==n&&!he)&&(be.x=be.endX=r,he?be.endRotation=r:be.y=be.endY=n,Q=!0,be.isDragging||(be.isDragging=!0,q(be,"dragstart","onDragStart")))}},ze=function(t,e){if(!(!a||t&&H&&!e&&t.pointerId&&t.pointerId!==H)){be.isPressed=!1;var i,s,r,o=t,h=be.isDragging;if(te?(fe(te,"touchend",ze),fe(te,"touchmove",Ie),fe(te,"touchcancel",ze),fe(f,"touchstart",de)):fe(f,"mousemove",Ie),fe(f,"mouseup",ze),Q=!1,J)return t&&fe(t.target,"change",ze),q(be,"release","onRelease"),q(be,"click","onClick"),J=!1,void 0;if(D(ke),!he)for(s=Pe.length;--s>-1;)F(Pe[s],"cursor",n.cursor||"move");if(h&&(Ce=C=y(),be.isDragging=!1),S--,t){if(T&&(t=N(t,!1)),i=t.changedTouches,i&&(t=i[0],t!==j&&t.identifier!==H)){for(s=i.length;--s>-1&&(t=i[s]).identifier!==H;);if(0>s)return}be.pointerEvent=o,be.pointerX=t.pageX,be.pointerY=t.pageY}return o&&!h?(se&&(n.snap||n.bounds)&&De(n.throwProps),q(be,"release","onRelease"),q(be,"click","onClick"),o.target.click?o.target.click():f.createEvent&&(r=f.createEvent("MouseEvents"),r.initEvent("click",!0,!0),o.target.dispatchEvent(r))):(De(n.throwProps),T||!o||!n.dragClickables&&ge(o.target)||!h||(o.preventDefault(),o.preventManipulation&&o.preventManipulation()),q(be,"release","onRelease")),h&&q(be,"dragend","onDragEnd"),!0}},Fe=function(t){(be.isPressed||20>y()-Ce)&&(t.preventDefault?t.preventDefault():t.returnValue=!1,t.preventManipulation&&t.preventManipulation())};Z=Te.get(this.target),Z&&Z.kill(),this.startDrag=function(t){Ne(t),be.isDragging||(be.isDragging=!0,q(be,"dragstart","onDragStart"))},this.drag=Ie,this.endDrag=function(t){ze(t,!0)},this.timeSinceDrag=function(){return be.isDragging?0:(y()-Ce)/1e3},this.hitTest=function(t,e){return Te.hitTest(be.target,t,e)},this.applyBounds=function(t){var e,i;return t&&n.bounds!==t?(n.bounds=t,be.update(!0)):(Re(!0),Ae(),O&&(e=be.x,i=be.y,O&&(e>E?e=E:z>e&&(e=z),i>X?i=X:Y>i&&(i=Y)),(be.x!==e||be.y!==i)&&(be.x=be.endX=e,he?be.endRotation=e:be.y=be.endY=i,Q=!0,ke())),be)},this.update=function(t){var e=be.x,i=be.y;return Oe(),t?be.applyBounds():Re(!0),be.isPressed&&(ve&&Math.abs(e-be.x)>.01||we&&Math.abs(i-be.y)>.01&&!he)&&Me(),be},this.enable=function(t){var s,o,h;if("soft"!==t)for(o=Pe.length;--o>-1;)h=Pe[o],ce(h,"mousedown",Ne),ce(h,"touchstart",Ne),ce(h,"click",Fe),he||F(h,"cursor",n.cursor||"move"),h.ondragstart=h.onselectstart=m,F(h,"userSelect","none"),F(h,"touchCallout","none"),F(h,"touchAction","none");return a=!0,r&&"soft"!==t&&r.track(c||i,oe?"x,y":he?"rotation":"top,left"),c&&c.enable(),i._gsDragID=s="d"+b++,x[s]=this,c&&(c.element._gsDragID=s),e.set(i,{x:"+=0"}),this.update(!0),be},this.disable=function(t){var e,s,n=this.isDragging;if(!he)for(e=Pe.length;--e>-1;)F(Pe[e],"cursor",null);if("soft"!==t){for(e=Pe.length;--e>-1;)s=Pe[e],s.ondragstart=s.onselectstart=null,F(s,"userSelect","text"),F(s,"touchCallout","default"),F(s,"MSTouchAction","auto"),fe(s,"mousedown",Ne),fe(s,"touchstart",Ne),fe(s,"click",Fe);te&&(fe(te,"touchcancel",ze),fe(te,"touchend",ze),fe(te,"touchmove",Ie)),fe(f,"mouseup",ze),fe(f,"mousemove",Ie)}return a=!1,r&&"soft"!==t&&r.untrack(c||i,oe?"x,y":he?"rotation":"top,left"),c&&c.disable(),D(ke),this.isDragging=this.isPressed=J=!1,n&&q(this,"dragend","onDragEnd"),be},this.enabled=function(t,e){return arguments.length?t?this.enable(e):this.disable(e):a},this.kill=function(){return e.killTweensOf(c||i,!0,Se),be.disable(),delete x[i._gsDragID],be},-1!==ae.indexOf("scroll")&&(c=this.scrollProxy=new ye(i,M({onKill:function(){be.isPressed&&ze(null)}},n)),i.style.overflowY=we&&!ue?"auto":"hidden",i.style.overflowX=ve&&!ue?"auto":"hidden",i=c.content),n.force3D!==!1&&e.set(i,{force3D:!0}),he?Se.rotation=1:(ve&&(Se[le]=1),we&&(Se[pe]=1)),he?(U=u,B=U.css,U.overwrite=!1):oe&&(U=ve&&we?o:ve?h:l,B=U.css,U.overwrite=!1),this.enable()},we=Te.prototype=new t;we.constructor=Te,we.pointerX=we.pointerY=0,we.isDragging=we.isPressed=!1,Te.version="0.11.0",Te.zIndex=1e3,ce(f,"touchcancel",function(){}),ce(f,"contextmenu",function(){var t;for(t in x)x[t].isPressed&&x[t].endDrag()}),Te.create=function(t,i){"string"==typeof t&&(t=e.selector(t));for(var s=he(t)?le(t):[t],r=s.length;--r>-1;)s[r]=new Te(s[r],i);return s},Te.get=function(t){return x[(I(t)||{})._gsDragID]},Te.timeSinceDrag=function(){return(y()-C)/1e3};var xe=function(t,e){var i=t.pageX!==e?{left:t.pageX,top:t.pageY,right:t.pageX+1,bottom:t.pageY+1}:t.nodeType||t.left===e||t.top===e?I(t).getBoundingClientRect():t;return i.right===e&&i.width!==e?(i.right=i.left+i.width,i.bottom=i.top+i.height):i.width===e&&(i={width:i.right-i.left,height:i.bottom-i.top,right:i.right,left:i.left,bottom:i.bottom,top:i.top}),i};return Te.hitTest=function(t,e,i){if(t===e)return!1;var s,r,n,a=xe(t),o=xe(e),h=o.left>a.right||o.right<a.left||o.top>a.bottom||o.bottom<a.top;return h||!i?!h:(n=-1!==(i+"").indexOf("%"),i=parseFloat(i)||0,s={left:Math.max(a.left,o.left),top:Math.max(a.top,o.top)},s.width=Math.min(a.right,o.right)-s.left,s.height=Math.min(a.bottom,o.bottom)-s.top,0>s.width||0>s.height?!1:n?(i*=.01,r=s.width*s.height,r>=a.width*a.height*i||r>=o.width*o.height*i):s.width>i&&s.height>i)},Te},!0)}),_gsScope._gsDefine&&_gsScope._gsQueue.pop()(),function(t){"use strict";var e=function(){return(_gsScope.GreenSockGlobals||_gsScope)[t]};"function"==typeof define&&define.amd?define(["TweenLite"],e):"undefined"!=typeof module&&module.exports&&(require("../TweenLite.js"),require("../plugins/CSSPlugin.js"),module.exports=e())}("Draggable");
+var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof global?global:this||window;(_gsScope._gsQueue||(_gsScope._gsQueue=[])).push(function(){"use strict";_gsScope._gsDefine("utils.Draggable",["events.EventDispatcher","TweenLite"],function(t,e){var i,s,r,n,a,o={css:{}},l={css:{}},h={css:{}},u={css:{}},_=_gsScope._gsDefine.globals,c={},f=document,p=f.documentElement||{},d=[],m=function(){return!1},g=180/Math.PI,v=999999999999999,y=Date.now||function(){return(new Date).getTime()},T=!(f.addEventListener||!f.all),w=f.createElement("div"),x=[],b={},P=0,S=/^(?:a|input|textarea|button|select)$/i,C=0,k=0,R={},A=function(t){if("string"==typeof t&&(t=e.selector(t)),!t||t.nodeType)return[t];var i,s=[],r=t.length;for(i=0;i!==r;s.push(t[i++]));return s},O=function(){for(var t=x.length;--t>-1;)x[t]()},D=function(t){x.push(t),1===x.length&&e.ticker.addEventListener("tick",O,this,!1,1)},M=function(t){for(var i=x.length;--i>-1;)x[i]===t&&x.splice(i,1);e.to(L,0,{overwrite:"all",delay:15,onComplete:L})},L=function(){x.length||e.ticker.removeEventListener("tick",O)},N=function(t,e){var i;for(i in e)void 0===t[i]&&(t[i]=e[i]);return t},E=function(){return null!=window.pageYOffset?window.pageYOffset:null!=f.scrollTop?f.scrollTop:p.scrollTop||f.body.scrollTop||0},I=function(){return null!=window.pageXOffset?window.pageXOffset:null!=f.scrollLeft?f.scrollLeft:p.scrollLeft||f.body.scrollLeft||0},z=function(t,e){xe(t,"scroll",e),F(t.parentNode)||z(t.parentNode,e)},X=function(t,e){be(t,"scroll",e),F(t.parentNode)||X(t.parentNode,e)},F=function(t){return!(t&&t!==p&&t!==f&&t!==f.body&&t!==window&&t.nodeType&&t.parentNode)},B=function(t,e){var i="x"===e?"Width":"Height",s="scroll"+i,r="client"+i,n=f.body;return Math.max(0,F(t)?Math.max(p[s],n[s])-(window["inner"+i]||p[r]||n[r]):t[s]-t[r])},Y=function(t){var e=F(t),i=B(t,"x"),s=B(t,"y");e?t=R:Y(t.parentNode),t._gsMaxScrollX=i,t._gsMaxScrollY=s,t._gsScrollX=t.scrollLeft||0,t._gsScrollY=t.scrollTop||0},U=function(t,e){return t=t||window.event,c.pageX=t.clientX+f.body.scrollLeft+p.scrollLeft,c.pageY=t.clientY+f.body.scrollTop+p.scrollTop,e&&(t.returnValue=!1),c},j=function(t){return t?("string"==typeof t&&(t=e.selector(t)),t.length&&t!==window&&t[0]&&t[0].style&&!t.nodeType&&(t=t[0]),t===window||t.nodeType&&t.style?t:null):t},W=function(t,e){var s,r,n,a=t.style;if(void 0===a[e]){for(n=["O","Moz","ms","Ms","Webkit"],r=5,s=e.charAt(0).toUpperCase()+e.substr(1);--r>-1&&void 0===a[n[r]+s];);if(0>r)return"";i=3===r?"ms":n[r],e=i+s}return e},q=function(t,e,i){var s=t.style;s&&(void 0===s[e]&&(e=W(t,e)),null==i?s.removeProperty?s.removeProperty(e.replace(/([A-Z])/g,"-$1").toLowerCase()):s.removeAttribute(e):void 0!==s[e]&&(s[e]=i))},V=f.defaultView?f.defaultView.getComputedStyle:m,G=/(?:Left|Right|Width)/i,H=/(?:\d|\-|\+|=|#|\.)*/g,Q=function(t,e,i,s,r){if("px"===s||!s)return i;if("auto"===s||!i)return 0;var n,a=G.test(e),o=t,l=te.style,h=0>i;return h&&(i=-i),"%"===s&&-1!==e.indexOf("border")?n=i/100*(a?t.clientWidth:t.clientHeight):(l.cssText="border:0 solid red;position:"+$(t,"position",!0)+";line-height:0;","%"!==s&&o.appendChild?l[a?"borderLeftWidth":"borderTopWidth"]=i+s:(o=t.parentNode||f.body,l[a?"width":"height"]=i+s),o.appendChild(te),n=parseFloat(te[a?"offsetWidth":"offsetHeight"]),o.removeChild(te),0!==n||r||(n=Q(t,e,i,s,!0))),h?-n:n},Z=function(t,e){if("absolute"!==$(t,"position",!0))return 0;var i="left"===e?"Left":"Top",s=$(t,"margin"+i,!0);return t["offset"+i]-(Q(t,e,parseFloat(s),(s+"").replace(H,""))||0)},$=function(t,e,i){var s,r=(t._gsTransform||{})[e];return r||0===r?r:(t.style[e]?r=t.style[e]:(s=V(t))?(r=s.getPropertyValue(e.replace(/([A-Z])/g,"-$1").toLowerCase()),r=r||s.length?r:s[e]):t.currentStyle&&(r=t.currentStyle[e]),"auto"!==r||"top"!==e&&"left"!==e||(r=Z(t,e)),i?r:parseFloat(r)||0)},K=function(t,e,i){var s=t.vars,r=s[i],n=t._listeners[e];"function"==typeof r&&r.apply(s[i+"Scope"]||t,s[i+"Params"]||[t.pointerEvent]),n&&t.dispatchEvent(e)},J=function(t,e){var i,s,r,n=j(t);return n?ge(n,e):void 0!==t.left?(r=ce(e),{left:t.left-r.x,top:t.top-r.y,width:t.width,height:t.height}):(s=t.min||t.minX||t.minRotation||0,i=t.min||t.minY||0,{left:s,top:i,width:(t.max||t.maxX||t.maxRotation||0)-s,height:(t.max||t.maxY||0)-i})},te=f.createElement("div"),ee=""!==W(te,"perspective"),ie=W(te,"transformOrigin").replace(/^ms/g,"Ms").replace(/([A-Z])/g,"-$1").toLowerCase(),se=W(te,"transform"),re=se.replace(/^ms/g,"Ms").replace(/([A-Z])/g,"-$1").toLowerCase(),ne={},ae={},oe=function(){if(!T){var t="http://www.w3.org/2000/svg",e=f.createElementNS(t,"svg"),i=f.createElementNS(t,"rect");return i.setAttributeNS(null,"width","10"),i.setAttributeNS(null,"height","10"),e.appendChild(i),e}}(),le=window.SVGElement,he=function(t){return!!(le&&"function"==typeof t.getBBox&&t.getCTM&&(!t.parentNode||t.parentNode.getBBox&&t.parentNode.getCTM))},ue=["class","viewBox","width","height","xml:space"],_e=function(t){if(!t.getBoundingClientRect||!t.parentNode)return{offsetTop:0,offsetLeft:0,scaleX:1,scaleY:1,offsetParent:p};if(t._gsSVGData&&t._gsSVGData.lastUpdate===e.ticker.frame)return t._gsSVGData;var i,s,r,n,a,o,l=t,h=t.style.cssText,u=t._gsSVGData=t._gsSVGData||{};if("svg"!==(t.nodeName+"").toLowerCase()&&t.getBBox){for(l=t.parentNode,i=t.getBBox();l&&"svg"!==(l.nodeName+"").toLowerCase();)l=l.parentNode;return u=_e(l),{offsetTop:i.y*u.scaleY,offsetLeft:i.x*u.scaleX,scaleX:u.scaleX,scaleY:u.scaleY,offsetParent:l||p}}for(;!l.offsetParent&&l.parentNode;)l=l.parentNode;for(t.parentNode.insertBefore(oe,t),t.parentNode.removeChild(t),oe.style.cssText=h,oe.style[se]="none",a=ue.length;--a>-1;)o=t.getAttribute(ue[a]),o?oe.setAttribute(ue[a],o):oe.removeAttribute(ue[a]);return i=oe.getBoundingClientRect(),n=oe.firstChild.getBoundingClientRect(),r=l.offsetParent,r?(r===f.body&&p&&(r=p),s=r.getBoundingClientRect()):s={top:-E(),left:-I()},oe.parentNode.insertBefore(t,oe),t.parentNode.removeChild(oe),u.scaleX=n.width/10,u.scaleY=n.height/10,u.offsetLeft=i.left-s.left,u.offsetTop=i.top-s.top,u.offsetParent=l.offsetParent||p,u.lastUpdate=e.ticker.frame,u},ce=function(t,i){if(i=i||{},!t||t===p||!t.parentNode)return{x:0,y:0};var s=V(t),r=ie&&s?s.getPropertyValue(ie):"50% 50%",n=r.split(" "),a=-1!==r.indexOf("left")?"0%":-1!==r.indexOf("right")?"100%":n[0],o=-1!==r.indexOf("top")?"0%":-1!==r.indexOf("bottom")?"100%":n[1];return("center"===o||null==o)&&(o="50%"),("center"===a||isNaN(parseFloat(a)))&&(a="50%"),t.getBBox&&he(t)?(t._gsTransform||(e.set(t,{x:"+=0"}),void 0===t._gsTransform.xOrigin&&console.log("Draggable requires at least GSAP 1.16.0")),r=t.getBBox(),n=_e(t),i.x=(t._gsTransform.xOrigin-r.x)*n.scaleX,i.y=(t._gsTransform.yOrigin-r.y)*n.scaleY):(i.x=-1!==a.indexOf("%")?t.offsetWidth*parseFloat(a)/100:parseFloat(a),i.y=-1!==o.indexOf("%")?t.offsetHeight*parseFloat(o)/100:parseFloat(o)),i},fe=function(t,e,i){var s,r,a,o,l,h;return t!==window&&t&&t.parentNode?(s=V(t),r=s?s.getPropertyValue(re):t.currentStyle?t.currentStyle[se]:"1,0,0,1,0,0",r=(r+"").match(/(?:\-|\b)[\d\-\.e]+\b/g)||[1,0,0,1,0,0],r.length>6&&(r=[r[0],r[1],r[4],r[5],r[12],r[13]]),e&&(a=t.parentNode,h=t.getBBox&&he(t)||void 0===t.offsetLeft&&"svg"===(t.nodeName+"").toLowerCase()?_e(t):t,o=h.offsetParent,l=a===p||a===f.body,void 0===n&&f.body&&se&&(n=function(){var t,e,i=f.createElement("div"),s=f.createElement("div");return s.style.position="absolute",f.body.appendChild(i),i.appendChild(s),t=s.offsetParent,i.style[se]="rotate(1deg)",e=s.offsetParent===t,f.body.removeChild(i),e}()),r[4]=Number(r[4])+e.x+(h.offsetLeft||0)-i.x-(l?0:a.scrollLeft)+(o?parseInt($(o,"borderLeftWidth"),10)||0:0),r[5]=Number(r[5])+e.y+(h.offsetTop||0)-i.y-(l?0:a.scrollTop)+(o?parseInt($(o,"borderTopWidth"),10)||0:0),!a||a.offsetParent!==o||n&&"100100"!==fe(a).join("")||(r[4]-=a.offsetLeft||0,r[5]-=a.offsetTop||0),a&&"fixed"===$(t,"position",!0)&&(r[4]+=I(),r[5]+=E())),r):[1,0,0,1,0,0]},pe=function(t,e){if(!t||t===window||!t.parentNode)return[1,0,0,1,0,0];for(var i,s,r,n,a,o,l,h,u=ce(t,ne),_=ce(t.parentNode,ae),c=fe(t,u,_);(t=t.parentNode)&&t.parentNode&&t!==p;)u=_,_=ce(t.parentNode,u===ne?ae:ne),l=fe(t,u,_),i=c[0],s=c[1],r=c[2],n=c[3],a=c[4],o=c[5],c[0]=i*l[0]+s*l[2],c[1]=i*l[1]+s*l[3],c[2]=r*l[0]+n*l[2],c[3]=r*l[1]+n*l[3],c[4]=a*l[0]+o*l[2]+l[4],c[5]=a*l[1]+o*l[3]+l[5];return e&&(i=c[0],s=c[1],r=c[2],n=c[3],a=c[4],o=c[5],h=i*n-s*r,c[0]=n/h,c[1]=-s/h,c[2]=-r/h,c[3]=i/h,c[4]=(r*o-n*a)/h,c[5]=-(i*o-s*a)/h),c},de=function(t,e,i){var s=pe(t),r=e.x,n=e.y;return i=i===!0?e:i||{},i.x=r*s[0]+n*s[2]+s[4],i.y=r*s[1]+n*s[3]+s[5],i},me=function(t,e,i){var s=t.x*e[0]+t.y*e[2]+e[4],r=t.x*e[1]+t.y*e[3]+e[5];return t.x=s*i[0]+r*i[2]+i[4],t.y=s*i[1]+r*i[3]+i[5],t},ge=function(t,e){var i,s,r,n,a,o,l,h,u,_,c;return t===window?(n=E(),s=I(),r=s+(p.clientWidth||t.innerWidth||f.body.clientWidth||0),a=n+((t.innerHeight||0)-20<p.clientHeight?p.clientHeight:t.innerHeight||f.body.clientHeight||0)):(i=ce(t),s=-i.x,r=s+t.offsetWidth,n=-i.y,a=n+t.offsetHeight),t===e?{left:s,top:n,width:r-s,height:a-n}:(o=pe(t),l=pe(e,!0),h=me({x:s,y:n},o,l),u=me({x:r,y:n},o,l),_=me({x:r,y:a},o,l),c=me({x:s,y:a},o,l),s=Math.min(h.x,u.x,_.x,c.x),n=Math.min(h.y,u.y,_.y,c.y),{left:s,top:n,width:Math.max(h.x,u.x,_.x,c.x)-s,height:Math.max(h.y,u.y,_.y,c.y)-n})},ve=function(t){return t.length&&t[0]&&(t[0].nodeType&&t[0].style&&!t.nodeType||t[0].length&&t[0][0])?!0:!1},ye=function(t){var e,i,s,r=[],n=t.length;for(e=0;n>e;e++)if(i=t[e],ve(i))for(s=i.length,s=0;i.length>s;s++)r.push(i[s]);else r.push(i);return r},Te="ontouchstart"in p&&"orientation"in window,we=function(t){for(var e=t.split(","),i=(void 0!==te.onpointerdown?"pointerdown,pointermove,pointerup,pointercancel":void 0!==te.onmspointerdown?"MSPointerDown,MSPointerMove,MSPointerUp,MSPointerCancel":t).split(","),s={},r=8;--r>-1;)s[e[r]]=i[r],s[i[r]]=e[r];return s}("touchstart,touchmove,touchend,touchcancel"),xe=function(t,e,i){t.addEventListener?t.addEventListener(we[e]||e,i,!1):t.attachEvent&&t.attachEvent("on"+e,i)},be=function(t,e,i){t.removeEventListener?t.removeEventListener(we[e]||e,i):t.detachEvent&&t.detachEvent("on"+e,i)},Pe=function(t){s=t.touches&&t.touches.length>C,be(t.target,"touchend",Pe)},Se=function(t){s=t.touches&&t.touches.length>C,xe(t.target,"touchend",Pe)},Ce=function(t,e,i,s,r,n){var a,o,l,h={};if(e)if(1!==r&&e instanceof Array){for(h.end=a=[],l=e.length,o=0;l>o;o++)a[o]=e[o]*r;i+=1.1,s-=1.1}else h.end="function"==typeof e?function(i){return e.call(t,i)*r}:e;return(i||0===i)&&(h.max=i),(s||0===s)&&(h.min=s),n&&(h.velocity=0),h},ke=function(t){var e;return t&&t.getAttribute&&"BODY"!==t.nodeName?"true"===(e=t.getAttribute("data-clickable"))||"false"!==e&&(t.onclick||S.test(t.nodeName+"")||"true"===t.getAttribute("contentEditable"))?!0:ke(t.parentNode):!1},Re=function(t,e){for(var i,s=t.length;--s>-1;)i=t[s],i.ondragstart=i.onselectstart=e?null:m,q(i,"userSelect",e?"text":"none")},Ae=function(){var t,e=f.createElement("div"),i=f.createElement("div"),s=i.style,r=f.body||te;return s.display="inline-block",s.position="relative",e.style.cssText=i.innerHTML="width:90px; height:40px; padding:10px; overflow:auto; visibility: hidden",e.appendChild(i),r.appendChild(e),a=i.offsetHeight+18>e.scrollHeight,s.width="100%",se||(s.paddingRight="500px",t=e.scrollLeft=e.scrollWidth-e.clientWidth,s.left="-90px",t=t!==e.scrollLeft),r.removeChild(e),t}(),Oe=function(t,i){t=j(t),i=i||{};var s,r,n,o,l,h,u=f.createElement("div"),_=u.style,c=t.firstChild,p=0,d=0,m=t.scrollTop,g=t.scrollLeft,v=t.scrollWidth,y=t.scrollHeight,w=0,x=0,b=0;ee&&i.force3D!==!1?(l="translate3d(",h="px,0px)"):se&&(l="translate(",h="px)"),this.scrollTop=function(t,e){return arguments.length?(this.top(-t,e),void 0):-this.top()},this.scrollLeft=function(t,e){return arguments.length?(this.left(-t,e),void 0):-this.left()},this.left=function(s,r){if(!arguments.length)return-(t.scrollLeft+d);var n=t.scrollLeft-g,a=d;return(n>2||-2>n)&&!r?(g=t.scrollLeft,e.killTweensOf(this,!0,{left:1,scrollLeft:1}),this.left(-g),i.onKill&&i.onKill(),void 0):(s=-s,0>s?(d=0|s-.5,s=0):s>x?(d=0|s-x,s=x):d=0,(d||a)&&(l?this._suspendTransforms||(_[se]=l+-d+"px,"+-p+h):_.left=-d+"px",Ae&&d+w>=0&&(_.paddingRight=d+w+"px")),t.scrollLeft=0|s,g=t.scrollLeft,void 0)},this.top=function(s,r){if(!arguments.length)return-(t.scrollTop+p);var n=t.scrollTop-m,a=p;return(n>2||-2>n)&&!r?(m=t.scrollTop,e.killTweensOf(this,!0,{top:1,scrollTop:1}),this.top(-m),i.onKill&&i.onKill(),void 0):(s=-s,0>s?(p=0|s-.5,s=0):s>b?(p=0|s-b,s=b):p=0,(p||a)&&(l?this._suspendTransforms||(_[se]=l+-d+"px,"+-p+h):_.top=-p+"px"),t.scrollTop=0|s,m=t.scrollTop,void 0)},this.maxScrollTop=function(){return b},this.maxScrollLeft=function(){return x},this.disable=function(){for(c=u.firstChild;c;)o=c.nextSibling,t.appendChild(c),c=o;t===u.parentNode&&t.removeChild(u)},this.enable=function(){if(c=t.firstChild,c!==u){for(;c;)o=c.nextSibling,u.appendChild(c),c=o;t.appendChild(u),this.calibrate()}},this.calibrate=function(e){var i,o,l=t.clientWidth===s;m=t.scrollTop,g=t.scrollLeft,(!l||t.clientHeight!==r||u.offsetHeight!==n||v!==t.scrollWidth||y!==t.scrollHeight||e)&&((p||d)&&(i=this.left(),o=this.top(),this.left(-t.scrollLeft),this.top(-t.scrollTop)),(!l||e)&&(_.display="block",_.width="auto",_.paddingRight="0px",w=Math.max(0,t.scrollWidth-t.clientWidth),w&&(w+=$(t,"paddingLeft")+(a?$(t,"paddingRight"):0))),_.display="inline-block",_.position="relative",_.overflow="visible",_.verticalAlign="top",_.width="100%",_.paddingRight=w+"px",a&&(_.paddingBottom=$(t,"paddingBottom",!0)),T&&(_.zoom="1"),s=t.clientWidth,r=t.clientHeight,v=t.scrollWidth,y=t.scrollHeight,x=t.scrollWidth-s,b=t.scrollHeight-r,n=u.offsetHeight,_.display="block",(i||o)&&(this.left(i),this.top(o)))},this.content=u,this.element=t,this._suspendTransforms=!1,this.enable()},De=function(i,n){t.call(this,i),i=j(i),r||(r=_.com.greensock.plugins.ThrowPropsPlugin),this.vars=n=n||{},this.target=i,this.x=this.y=this.rotation=0,this.dragResistance=parseFloat(n.dragResistance)||0,this.edgeResistance=isNaN(n.edgeResistance)?1:parseFloat(n.edgeResistance)||0,this.lockAxis=n.lockAxis,this.autoScroll=n.autoScroll||0,this.lockedAxis=null;var a,c,m,x,S,O,L,E,I,B,W,V,G,H,Q,Z,te,ee,ie,se,re,ne,ae,oe,le,he,ue,_e,ce,fe=(n.type||(T?"top,left":"x,y")).toLowerCase(),me=-1!==fe.indexOf("x")||-1!==fe.indexOf("y"),ge=-1!==fe.indexOf("rotation"),ve=ge?"rotation":me?"x":"left",ye=me?"y":"top",Pe=-1!==fe.indexOf("x")||-1!==fe.indexOf("left")||"scroll"===fe,Ae=-1!==fe.indexOf("y")||-1!==fe.indexOf("top")||"scroll"===fe,Me=n.minimumMovement||2,Ne=this,Ee=A(n.trigger||n.handle||i),Ie={},ze=0,Xe=!1,Fe=n.clickableTest||ke,Be=function(t){if(Ne.autoScroll&&Ne.isDragging&&(ee||Xe)){var e,s,r,n,a,o,l,h,u=i,_=15*Ne.autoScroll;for(Xe=!1,R.scrollTop=null!=window.pageYOffset?window.pageYOffset:null!=p.scrollTop?p.scrollTop:f.body.scrollTop,R.scrollLeft=null!=window.pageXOffset?window.pageXOffset:null!=p.scrollLeft?p.scrollLeft:f.body.scrollLeft,n=Ne.pointerX-R.scrollLeft,a=Ne.pointerY-R.scrollTop;u&&!s;)s=F(u.parentNode),e=s?R:u.parentNode,r=s?{bottom:Math.max(p.clientHeight,window.innerHeight||0),right:Math.max(p.clientWidth,window.innerWidth||0),left:0,top:0}:e.getBoundingClientRect(),o=l=0,Ae&&(a>r.bottom-40&&(h=e._gsMaxScrollY-e.scrollTop)?(Xe=!0,l=Math.min(h,0|_*(1-Math.max(0,r.bottom-a)/40))):r.top+40>a&&e.scrollTop&&(Xe=!0,l=-Math.min(e.scrollTop,0|_*(1-Math.max(0,a-r.top)/40))),l&&(e.scrollTop+=l)),Pe&&(n>r.right-40&&(h=e._gsMaxScrollX-e.scrollLeft)?(Xe=!0,o=Math.min(h,0|_*(1-Math.max(0,r.right-n)/40))):r.left+40>n&&e.scrollLeft&&(Xe=!0,o=-Math.min(e.scrollLeft,0|_*(1-Math.max(0,n-r.left)/40))),o&&(e.scrollLeft+=o)),s&&(o||l)&&(window.scrollTo(e.scrollLeft,e.scrollTop),Ze(Ne.pointerX+o,Ne.pointerY+l)),u=e}if(ee){var d=Ne.x,m=Ne.y,g=1e-6;g>d&&d>-g&&(d=0),g>m&&m>-g&&(m=0),ge?(ce.data.rotation=Ne.rotation=d,ce.setRatio(1)):c?(Ae&&c.top(m),Pe&&c.left(d)):me?(Ae&&(ce.data.y=m),Pe&&(ce.data.x=d),ce.setRatio(1)):(Ae&&(i.style.top=m+"px"),Pe&&(i.style.left=d+"px")),E&&!t&&K(Ne,"drag","onDrag")}ee=!1},Ye=function(t,s){var r;i._gsTransform||!me&&!ge||e.set(i,{x:"+=0"}),me?(Ne.y=i._gsTransform.y,Ne.x=i._gsTransform.x):ge?Ne.x=Ne.rotation=i._gsTransform.rotation:c?(Ne.y=c.top(),Ne.x=c.left()):(Ne.y=parseInt(i.style.top,10)||0,Ne.x=parseInt(i.style.left,10)||0),!se&&!re||s||(se&&(r=se(Ne.x),r!==Ne.x&&(Ne.x=r,ge&&(Ne.rotation=r),ee=!0)),re&&(r=re(Ne.y),r!==Ne.y&&(Ne.y=r,ee=!0)),ee&&Be(!0)),n.onThrowUpdate&&!t&&n.onThrowUpdate.apply(n.onThrowUpdateScope||Ne,n.onThrowUpdateParams||d)},Ue=function(){var t,e,s,r;L=!1,c?(c.calibrate(),Ne.minX=B=-c.maxScrollLeft(),Ne.minY=V=-c.maxScrollTop(),Ne.maxX=I=Ne.maxY=W=0,L=!0):n.bounds&&(t=J(n.bounds,i.parentNode),ge?(Ne.minX=B=t.left,Ne.maxX=I=t.left+t.width,Ne.minY=V=Ne.maxY=W=0):void 0!==n.bounds.maxX||void 0!==n.bounds.maxY?(t=n.bounds,Ne.minX=B=t.minX,Ne.minY=V=t.minY,Ne.maxX=I=t.maxX,Ne.maxY=W=t.maxY):(e=J(i,i.parentNode),Ne.minX=B=$(i,ve)+t.left-e.left,Ne.minY=V=$(i,ye)+t.top-e.top,Ne.maxX=I=B+(t.width-e.width),Ne.maxY=W=V+(t.height-e.height)),B>I&&(Ne.minX=I,Ne.maxX=I=B,B=Ne.minX),V>W&&(Ne.minY=W,Ne.maxY=W=V,V=Ne.minY),ge&&(Ne.minRotation=B,Ne.maxRotation=I),L=!0),n.liveSnap&&(s=n.liveSnap===!0?n.snap||{}:n.liveSnap,r=s instanceof Array||"function"==typeof s,ge?(se=Ge(r?s:s.rotation,B,I,1),re=null):(Pe&&(se=Ge(r?s:s.x||s.left||s.scrollLeft,B,I,c?-1:1)),Ae&&(re=Ge(r?s:s.y||s.top||s.scrollTop,V,W,c?-1:1))))},je=function(t,e){var s,a,o;t&&r?(t===!0&&(s=n.snap||{},a=s instanceof Array||"function"==typeof s,t={resistance:(n.throwResistance||n.resistance||1e3)/(ge?10:1)},ge?t.rotation=Ce(Ne,a?s:s.rotation,I,B,1,e):(Pe&&(t[ve]=Ce(Ne,a?s:s.x||s.left||s.scrollLeft,I,B,c?-1:1,e||Ne.lockAxis&&"x"===Ne.lockedAxis)),Ae&&(t[ye]=Ce(Ne,a?s:s.y||s.top||s.scrollTop,W,V,c?-1:1,e||Ne.lockAxis&&"y"===Ne.lockedAxis)))),Ne.tween=o=r.to(c||i,{throwProps:t,ease:n.ease||_.Power3.easeOut,onComplete:n.onThrowComplete,onCompleteParams:n.onThrowCompleteParams,onCompleteScope:n.onThrowCompleteScope||Ne,onUpdate:n.fastMode?n.onThrowUpdate:Ye,onUpdateParams:n.fastMode?n.onThrowUpdateParams:null,onUpdateScope:n.onThrowUpdateScope||Ne},isNaN(n.maxDuration)?2:n.maxDuration,isNaN(n.minDuration)?.5:n.minDuration,isNaN(n.overshootTolerance)?1-Ne.edgeResistance+.2:n.overshootTolerance),n.fastMode||(c&&(c._suspendTransforms=!0),o.render(o.duration(),!0,!0),Ye(!0,!0),Ne.endX=Ne.x,Ne.endY=Ne.y,ge&&(Ne.endRotation=Ne.x),o.play(0),Ye(!0,!0),c&&(c._suspendTransforms=!1))):L&&Ne.applyBounds()},We=function(){oe=pe(i.parentNode,!0),oe[1]||oe[2]||1!=oe[0]||1!=oe[3]||0!=oe[4]||0!=oe[5]||(oe=null)},qe=function(){var t=1-Ne.edgeResistance;We(),c?(Ue(),O=c.top(),S=c.left()):(Ve()?(Ye(!0,!0),Ue()):Ne.applyBounds(),ge?(te=de(i,{x:0,y:0}),Ye(!0,!0),S=Ne.x,O=Ne.y=Math.atan2(te.y-x,m-te.x)*g):(ue=i.parentNode?i.parentNode.scrollTop||0:0,_e=i.parentNode?i.parentNode.scrollLeft||0:0,O=$(i,ye),S=$(i,ve))),L&&t&&(S>I?S=I+(S-I)/t:B>S&&(S=B-(B-S)/t),ge||(O>W?O=W+(O-W)/t:V>O&&(O=V-(V-O)/t)))},Ve=function(){return Ne.tween&&Ne.tween.isActive()},Ge=function(t,e,i,s){return"function"==typeof t?function(r){var n=Ne.isPressed?1-Ne.edgeResistance:1;return t.call(Ne,r>i?i+(r-i)*n:e>r?e+(r-e)*n:r)*s}:t instanceof Array?function(s){for(var r,n,a=t.length,o=0,l=v;--a>-1;)r=t[a],n=r-s,0>n&&(n=-n),l>n&&r>=e&&i>=r&&(o=a,l=n);return t[o]}:isNaN(t)?function(t){return t}:function(){return t*s}},He=function(t){var s,r;if(a&&!Ne.isPressed&&t){if(le=Ve(),Ne.pointerEvent=t,we[t.type]?(ae=-1!==t.type.indexOf("touch")?t.currentTarget:f,xe(ae,"touchend",$e),xe(ae,"touchmove",Qe),xe(ae,"touchcancel",$e),xe(f,"touchstart",Se)):(ae=null,xe(f,"mousemove",Qe)),xe(f,"mouseup",$e),t&&t.target&&xe(t.target,"mouseup",$e),ne=Fe.call(Ne,t.target)&&!n.dragClickables)return xe(t.target,"change",$e),K(Ne,"press","onPress"),Re(Ee,!0),void 0;if(T?t=U(t,!0):(t.preventDefault(),t.preventManipulation&&t.preventManipulation()),t.changedTouches?(t=Q=t.changedTouches[0],Z=t.identifier):t.pointerId?Z=t.pointerId:Q=null,C++,D(Be),x=Ne.pointerY=t.pageY,m=Ne.pointerX=t.pageX,!Ne.autoScroll||ge||c||!i.parentNode||i.getBBox||(Y(i.parentNode),i.parentNode._gsMaxScrollX&&!w.parentNode&&(w.style.width=i.parentNode.scrollWidth+"px",i.parentNode.appendChild(w))),qe(),oe&&(s=m*oe[0]+x*oe[2]+oe[4],x=m*oe[1]+x*oe[3]+oe[5],m=s),Ne.tween&&Ne.tween.kill(),e.killTweensOf(c||i,!0,Ie),c&&e.killTweensOf(i,!0,{scrollTo:1}),Ne.tween=Ne.lockedAxis=null,(n.zIndexBoost||!ge&&!c&&n.zIndexBoost!==!1)&&(i.style.zIndex=De.zIndex++),Ne.isPressed=!0,E=!(!n.onDrag&&!Ne._listeners.drag),!ge)for(r=Ee.length;--r>-1;)q(Ee[r],"cursor",n.cursor||"move");K(Ne,"press","onPress")}},Qe=function(t){if(a&&!s&&Ne.isPressed&&t){T?t=U(t,!0):(t.preventDefault(),t.preventManipulation&&t.preventManipulation()),Ne.pointerEvent=t;var e,i=t.changedTouches;if(i){if(t=i[0],t!==Q&&t.identifier!==Z){for(e=i.length;--e>-1&&(t=i[e]).identifier!==Z;);if(0>e)return}}else if(t.pointerId&&Z&&t.pointerId!==Z)return;Ne.autoScroll&&(Xe=!0),Ze(t.pageX,t.pageY)}},Ze=function(t,e){var i,s,r,n,a,o,l=1-Ne.dragResistance,h=1-Ne.edgeResistance;Ne.pointerX=t,Ne.pointerY=e,ge?(n=Math.atan2(te.y-e,t-te.x)*g,a=Ne.y-n,Ne.y=n,a>180?O-=360:-180>a&&(O+=360),r=S+(O-n)*l):(oe&&(o=t*oe[0]+e*oe[2]+oe[4],e=t*oe[1]+e*oe[3]+oe[5],t=o),s=e-x,i=t-m,Me>s&&s>-Me&&(s=0),Me>i&&i>-Me&&(i=0),Ne.lockAxis&&(i||s)&&("y"===Ne.lockedAxis||!Ne.lockedAxis&&Math.abs(i)>Math.abs(s)&&Pe?(s=0,Ne.lockedAxis="y"):Ae&&(i=0,Ne.lockedAxis="x")),r=S+i*l,n=O+s*l),se||re?(se&&(r=se(r)),re&&(n=re(n))):L&&(r>I?r=I+(r-I)*h:B>r&&(r=B+(r-B)*h),ge||(n>W?n=W+(n-W)*h:V>n&&(n=V+(n-V)*h))),ge||(r=Math.round(r),n=Math.round(n)),(Ne.x!==r||Ne.y!==n&&!ge)&&(Ne.x=Ne.endX=r,ge?Ne.endRotation=r:Ne.y=Ne.endY=n,ee=!0,Ne.isDragging||(Ne.isDragging=!0,K(Ne,"dragstart","onDragStart")))},$e=function(t,e){if(!(!a||t&&Z&&!e&&t.pointerId&&t.pointerId!==Z)){Ne.isPressed=!1;var s,r,o,l,h=t,u=Ne.isDragging;if(ae?(be(ae,"touchend",$e),be(ae,"touchmove",Qe),be(ae,"touchcancel",$e),be(f,"touchstart",Se)):be(f,"mousemove",Qe),be(f,"mouseup",$e),t&&t.target&&be(t.target,"mouseup",$e),ee=!1,w.parentNode&&w.parentNode.removeChild(w),ne)return t&&be(t.target,"change",$e),Re(Ee,!1),K(Ne,"release","onRelease"),K(Ne,"click","onClick"),ne=!1,void 0;if(M(Be),!ge)for(r=Ee.length;--r>-1;)q(Ee[r],"cursor",n.cursor||"move");if(u&&(ze=k=y(),Ne.isDragging=!1),C--,t){if(T&&(t=U(t,!1)),s=t.changedTouches,s&&(t=s[0],t!==Q&&t.identifier!==Z)){for(r=s.length;--r>-1&&(t=s[r]).identifier!==Z;);if(0>r)return}Ne.pointerEvent=h,Ne.pointerX=t.pageX,Ne.pointerY=t.pageY}return h&&!u?(le&&(n.snap||n.bounds)&&je(n.throwProps),K(Ne,"release","onRelease"),K(Ne,"click","onClick"),l=h.target||h.srcElement||i,l.click?l.click():f.createEvent&&(o=f.createEvent("MouseEvents"),o.initEvent("click",!0,!0),l.dispatchEvent(o)),he=y()):(je(n.throwProps),T||!h||!n.dragClickables&&Fe.call(Ne,h.target)||!u||(h.preventDefault(),h.preventManipulation&&h.preventManipulation()),K(Ne,"release","onRelease")),u&&K(Ne,"dragend","onDragEnd"),!0}},Ke=function(t){if(t&&Ne.isDragging){var e=t.target||t.srcElement||i.parentNode,s=e.scrollLeft-e._gsScrollX,r=e.scrollTop-e._gsScrollY;(s||r)&&(m-=s,x-=r,e._gsScrollX+=s,e._gsScrollY+=r,Ze(Ne.pointerX,Ne.pointerY))}},Je=function(t){var e=y(),i=40>e-he;(Ne.isPressed||20>e-ze||i)&&(t.preventDefault?(t.preventDefault(),i&&t.stopImmediatePropagation()):t.returnValue=!1,t.preventManipulation&&t.preventManipulation())};ie=De.get(this.target),ie&&ie.kill(),this.startDrag=function(t){He(t),Ne.isDragging||(Ne.isDragging=!0,K(Ne,"dragstart","onDragStart"))},this.drag=Qe,this.endDrag=function(t){$e(t,!0)},this.timeSinceDrag=function(){return Ne.isDragging?0:(y()-ze)/1e3},this.hitTest=function(t,e){return De.hitTest(Ne.target,t,e)},this.getDirection=function(t,e){var i,s,n,a,o,l,h="velocity"===t&&r?t:"object"!=typeof t||ge?"start":"element";return"element"===h&&(o=Le(Ne.target),l=Le(t)),i="start"===h?Ne.x-S:"velocity"===h?r.getVelocity(this.target,ve):o.left+o.width/2-(l.left+l.width/2),ge?0>i?"counter-clockwise":"clockwise":(e=e||2,s="start"===h?Ne.y-O:"velocity"===h?r.getVelocity(this.target,ye):o.top+o.height/2-(l.top+l.height/2),n=Math.abs(i/s),a=1/e>n?"":0>i?"left":"right",e>n&&(""!==a&&(a+="-"),a+=0>s?"up":"down"),a)},this.applyBounds=function(t){var e,i;return t&&n.bounds!==t?(n.bounds=t,Ne.update(!0)):(Ye(!0),Ue(),L&&(e=Ne.x,i=Ne.y,L&&(e>I?e=I:B>e&&(e=B),i>W?i=W:V>i&&(i=V)),(Ne.x!==e||Ne.y!==i)&&(Ne.x=Ne.endX=e,ge?Ne.endRotation=e:Ne.y=Ne.endY=i,ee=!0,Be())),Ne)},this.update=function(t){var e=Ne.x,i=Ne.y;return We(),Ke(),t?Ne.applyBounds():(ee&&Be(),Ye(!0)),Ne.isPressed&&(Pe&&Math.abs(e-Ne.x)>.01||Ae&&Math.abs(i-Ne.y)>.01&&!ge)&&qe(),Ne},this.enable=function(t){var s,o,l;if("soft"!==t){for(o=Ee.length;--o>-1;)l=Ee[o],xe(l,"mousedown",He),xe(l,"touchstart",He),xe(l,"click",Je),ge||q(l,"cursor",n.cursor||"move"),q(l,"touchCallout","none"),q(l,"touchAction","none");Re(Ee,!1)}return z(Ne.target,Ke),a=!0,r&&"soft"!==t&&r.track(c||i,me?"x,y":ge?"rotation":"top,left"),c&&c.enable(),i._gsDragID=s="d"+P++,b[s]=this,c&&(c.element._gsDragID=s),e.set(i,{x:"+=0"}),ce={t:i,data:T?H:i._gsTransform,tween:{},setRatio:T?function(){e.set(i,G)}:CSSPlugin._internals.set3DTransformRatio},this.update(!0),Ne},this.disable=function(t){var e,s,n=this.isDragging;if(!ge)for(e=Ee.length;--e>-1;)q(Ee[e],"cursor",null);if("soft"!==t){for(e=Ee.length;--e>-1;)s=Ee[e],q(s,"touchCallout","default"),q(s,"MSTouchAction","auto"),be(s,"mousedown",He),be(s,"touchstart",He),be(s,"click",Je);Re(Ee,!0),ae&&(be(ae,"touchcancel",$e),be(ae,"touchend",$e),be(ae,"touchmove",Qe)),be(f,"mouseup",$e),be(f,"mousemove",Qe)}return X(i,Ke),a=!1,r&&"soft"!==t&&r.untrack(c||i,me?"x,y":ge?"rotation":"top,left"),c&&c.disable(),M(Be),this.isDragging=this.isPressed=ne=!1,n&&K(this,"dragend","onDragEnd"),Ne},this.enabled=function(t,e){return arguments.length?t?this.enable(e):this.disable(e):a},this.kill=function(){return e.killTweensOf(c||i,!0,Ie),Ne.disable(),delete b[i._gsDragID],Ne},-1!==fe.indexOf("scroll")&&(c=this.scrollProxy=new Oe(i,N({onKill:function(){Ne.isPressed&&$e(null)}},n)),i.style.overflowY=Ae&&!Te?"auto":"hidden",i.style.overflowX=Pe&&!Te?"auto":"hidden",i=c.content),n.force3D!==!1&&e.set(i,{force3D:!0}),ge?Ie.rotation=1:(Pe&&(Ie[ve]=1),Ae&&(Ie[ye]=1)),ge?(G=u,H=G.css,G.overwrite=!1):me&&(G=Pe&&Ae?o:Pe?l:h,H=G.css,G.overwrite=!1),this.enable()},Me=De.prototype=new t;Me.constructor=De,Me.pointerX=Me.pointerY=0,Me.isDragging=Me.isPressed=!1,De.version="0.12.0",De.zIndex=1e3,xe(f,"touchcancel",function(){}),xe(f,"contextmenu",function(){var t;for(t in b)b[t].isPressed&&b[t].endDrag()}),De.create=function(t,i){"string"==typeof t&&(t=e.selector(t));for(var s=ve(t)?ye(t):[t],r=s.length;--r>-1;)s[r]=new De(s[r],i);return s},De.get=function(t){return b[(j(t)||{})._gsDragID]},De.timeSinceDrag=function(){return(y()-k)/1e3};var Le=function(t,e){var i=t.pageX!==e?{left:t.pageX,top:t.pageY,right:t.pageX+1,bottom:t.pageY+1}:t.nodeType||t.left===e||t.top===e?j(t).getBoundingClientRect():t;return i.right===e&&i.width!==e?(i.right=i.left+i.width,i.bottom=i.top+i.height):i.width===e&&(i={width:i.right-i.left,height:i.bottom-i.top,right:i.right,left:i.left,bottom:i.bottom,top:i.top}),i};return De.hitTest=function(t,e,i){if(t===e)return!1;var s,r,n,a=Le(t),o=Le(e),l=o.left>a.right||o.right<a.left||o.top>a.bottom||o.bottom<a.top;return l||!i?!l:(n=-1!==(i+"").indexOf("%"),i=parseFloat(i)||0,s={left:Math.max(a.left,o.left),top:Math.max(a.top,o.top)},s.width=Math.min(a.right,o.right)-s.left,s.height=Math.min(a.bottom,o.bottom)-s.top,0>s.width||0>s.height?!1:n?(i*=.01,r=s.width*s.height,r>=a.width*a.height*i||r>=o.width*o.height*i):s.width>i&&s.height>i)},w.style.cssText="visibility:hidden; height:1px; top:-1px; pointer-events:none; position:relative; clear:both;",De},!0)}),_gsScope._gsDefine&&_gsScope._gsQueue.pop()(),function(t){"use strict";var e=function(){return(_gsScope.GreenSockGlobals||_gsScope)[t]};"function"==typeof define&&define.amd?define(["TweenLite"],e):"undefined"!=typeof module&&module.exports&&(require("../TweenLite.js"),require("../plugins/CSSPlugin.js"),module.exports=e())}("Draggable");
 // jquery.royalslider v9.5.4
 (function(n){function u(b,f){var c,a=this,e=window.navigator,g=e.userAgent.toLowerCase();a.uid=n.rsModules.uid++;a.ns=".rs"+a.uid;var d=document.createElement("div").style,h=["webkit","Moz","ms","O"],k="",l=0,r;for(c=0;c<h.length;c++)r=h[c],!k&&r+"Transform"in d&&(k=r),r=r.toLowerCase(),window.requestAnimationFrame||(window.requestAnimationFrame=window[r+"RequestAnimationFrame"],window.cancelAnimationFrame=window[r+"CancelAnimationFrame"]||window[r+"CancelRequestAnimationFrame"]);window.requestAnimationFrame||
 (window.requestAnimationFrame=function(a,b){var c=(new Date).getTime(),d=Math.max(0,16-(c-l)),e=window.setTimeout(function(){a(c+d)},d);l=c+d;return e});window.cancelAnimationFrame||(window.cancelAnimationFrame=function(a){clearTimeout(a)});a.isIPAD=g.match(/(ipad)/);a.isIOS=a.isIPAD||g.match(/(iphone|ipod)/);c=function(a){a=/(chrome)[ \/]([\w.]+)/.exec(a)||/(webkit)[ \/]([\w.]+)/.exec(a)||/(opera)(?:.*version|)[ \/]([\w.]+)/.exec(a)||/(msie) ([\w.]+)/.exec(a)||0>a.indexOf("compatible")&&/(mozilla)(?:.*? rv:([\w.]+)|)/.exec(a)||

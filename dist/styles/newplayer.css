@@ -5087,62 +5087,6 @@ button.close {
   background-color: #e6e9ee; }
 
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/*New Player padding wrapper classes*/
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/*When setting this class for New Player use: 'outside-padding'*/
-#np_products .np_outside-padding {
-  padding-top: 35px;
-  padding-left: 90px;
-  padding-right: 90px;
-  padding-bottom: 35px; }
-
-/*When setting this class for New Player use: 'inside-padding'*/
-#np_products .np_inside-padding {
-  padding-left: 5%;
-  padding-right: 5%;
-  padding-bottom: 35px; }
-
-/*When setting this class for New Player use: 'button-padding'*/
-#np_products .np_button-padding {
-  padding-top: 30px;
-  padding-left: 15%;
-  padding-right: 15%;
-  padding-bottom: 35px; }
-
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/*responsive padding overrides*/
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-.container {
-  /*background-color: #000000;*/
-  /*position: absolute;*/
-  /*    background: url(./assets/images/OrionsHeart.jpg) no-repeat center center fixed;
-      background-color: #000000;
-      background-size: cover;
-      content: "";
-      bottom: 0;
-      left: 0;
-      right: 0;
-      top: 0;*/
-  /*z-index: -2;*/ }
-
-@media (max-width: 768px) {
-  #np_products .np_outside-padding {
-    padding: 0px; }
-
-  #np_products .np_inside-padding {
-    padding: 5%; }
-
-  #np_products .np_button-padding {
-    padding: 5%; } }
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/* text treatment classes*/
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/*Q and A text outdent*/
-#np_products .q-and-a-outdent {
-  text-indent: -28px;
-  margin-left: 28px; }
-
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*Sans font overrides*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 #np_products .sans-head {
@@ -5157,27 +5101,6 @@ button.close {
 
 #np_products .np_inside-padding .sans-head {
   border-bottom-color: white; }
-
-#np_products .sans-head-sub {
-  font-family: "akzidenz-grotesk_bqbold";
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  padding-bottom: 3px; }
-
-#np_products .sans-normal {
-  font-family: "akzidenz-grotesk_bqregular";
-  text-transform: none;
-  letter-spacing: 2px;
-  line-height: 130%; }
-
-#np_products .sans-small {
-  font-family: "akzidenz-grotesk_bqregular";
-  text-transform: none;
-  letter-spacing: 2px;
-  line-height: 130%;
-  font-size: 16px; }
-  #np_products .sans-small p {
-    padding-bottom: 10px; }
 
 /*#background-image { 
     position: absolute;
@@ -5216,37 +5139,14 @@ button.close {
     padding-bottom: 1.5rem;
     margin-top: 0;
     display: inline-block; } }
-@media (max-width: 768px) {
-  .collapse-toggle {
-    background-color: #e6e9ee;
-    cursor: pointer;
-    width: 100%;
-    border-bottom: none;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    padding-right: 7px;
-    padding-left: 7px; }
-    .collapse-toggle:hover, .collapse-toggle:focus {
-      /*background-color: darken($brand-offwhite, 5%);*/ }
-    .collapse-toggle:before {
-      font-family: 'elx-icons';
-      content: "\e613";
-      float: right;
-      color: #040a2b;
-      /*            -webkit-transition: opacity 1s ease-in-out;
-                  -moz-transition: opacity 1s ease-in-out;
-                  -o-transition: opacity 1s ease-in-out;*/
-      -webkit-transition: opacity 1s ease-in-out;
-              transition: opacity 1s ease-in-out; } }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player page type wrapper classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*When setting this ID for New Player use: 'newplayer-background'*/
 #np_reNutriv #np_newplayer-background {
-  position: absolute;
+  position: fixed;
   background-color: #000000;
   background-size: cover;
-  position: fixed;
   content: "";
   width: 100%;
   height: auto;
@@ -5254,9 +5154,9 @@ button.close {
   left: 0;
   right: 0;
   top: 0;
-  z-index: -2; }
+  z-index: -10; }
 
-#np_reNutriv #renutriv-background-image {
+#np_reNutriv #background-image {
   position: fixed;
   background-image: url("/assets/images/ESTL-005_ReNutriv_bg_img.jpg");
   background-position: right top;
@@ -5302,6 +5202,9 @@ button.close {
 
 #np_reNutriv small {
   color: white; }
+
+#np_reNutriv .dark h1, h2, h3, h4, h5 {
+  color: #333333; }
 
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player padding wrapper classes*/
@@ -5363,185 +5266,400 @@ button.close {
   padding-right: 20px; }
 
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player Reveal classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+#np_reNutriv .reveal-object {
+  position: absolute;
+  top: 0px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 100%;
+  max-width: 770px; }
+
+#np_reNutriv .np-reveal {
+  position: relative;
+  width: 100%;
+  height: 600px; }
+
+#np_reNutriv .reveal-button {
+  cursor: pointer; }
+
+#np_reNutriv .reveal-navigation {
+  width: 100%;
+  height: 100px; }
+
+#np_reNutriv .reveal-button-image {
+  position: absolute;
+  padding: 5.5%;
+  background-color: #FFFFFF; }
+
+#np_reNutriv .reveal-button-container {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  /*border: 2px dashed #444;*/ }
+
+#np_reNutriv .reveal-button-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto; }
+
+#np_reNutriv, .reveal-button {
+  position: relative;
+  width: 4.46em;
+  height: 4.46em;
+  margin-left: 0.2em;
+  margin-right: 0.2em; }
+
+#np_reNutriv .reveal-item-wrapper {
+  width: 100%; }
+
+#np_reNutriv .reveal-item {
+  width: 100%; }
+
+#np_reNutriv .reveal-content-wrapper {
+  position: relative; }
+
+#np_reNutriv .reveal-content-text {
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0; }
+
+#np_reNutriv .reveal-heading-text {
+  margin-top: -5px;
+  padding-top: 25px;
+  padding-left: 15px;
+  padding-right: 15px; }
+
+#np_reNutriv .reveal-text-body {
+  padding-bottom: 15px; }
+
+#np_reNutriv .reveal-content-text {
+  padding-top: 15px;
+  padding-left: 15px;
+  padding-right: 15px; }
+
+#np_reNutriv .reveal-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  opacity: 0.75;
+  z-index: -1; }
+
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player List classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+#np_reNutriv .column-1 {
+  margin-bottom: 1.5%; }
+
+#np_reNutriv .list-object video {
+  width: 100%;
+  height: auto; }
+
+#np_reNutriv .media-body {
+  padding: 5%;
+  background-color: #000000;
+  opacity: 0.75;
+  -webkit-filter: url(styles/inset-shadow.svg#inset-shadow);
+          filter: url(styles/inset-shadow.svg#inset-shadow); }
+
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player Drag and Drop Prioritize classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+#np_reNutriv .button-prioritize-content {
+  position: relative;
+  display: block; }
+
+#np_reNutriv .hit-area-prioritize-content {
+  position: absolute;
+  float: right;
+  right: 43%;
+  top: 43%; }
+
+#np_reNutriv .hit-area-number {
+  font-size: 7em;
+  color: #000000;
+  opacity: .15;
+  text-align: center;
+  padding-left: 20px; }
+
+#np_reNutriv .button-completion-prioritize-content {
+  position: absolute;
+  float: right;
+  right: 50%;
+  top: 36%; }
+
+#np_reNutriv .centered-prioritize-content {
+  width: 100%;
+  height: 100%;
+  float: right;
+  right: -50%;
+  position: relative; }
+
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player Drag and Drop match classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+#np_reNutriv .column-no-wrap {
+  float: none; }
+
+#np_reNutriv .boxElements {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  text-align: left;
+  color: white;
+  margin-bottom: 1.5%; }
+
+#np_reNutriv .hit-area-background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+  background-color: #313131;
+  box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65); }
+
+#np_reNutriv .boxElements svg {
+  /*fill:#313131;*/ }
+
+#np_reNutriv .completeCheck {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  text-align: left;
+  color: white;
+  margin-bottom: 2.5%; }
+
+#np_reNutriv foreignobject {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0; }
+
+#np_reNutriv .button-completion-content {
+  position: absolute;
+  float: right;
+  right: 50%;
+  top: 43%; }
+
+#np_reNutriv .centered-content {
+  width: 100%;
+  height: 100%;
+  float: right;
+  right: -50%;
+  position: relative; }
+
+.positive-feedback-image, .positive-feedback-content {
+  float: left;
+  line-height: 1em;
+  padding-left: 5%; }
+
+#np_reNutriv .positive-feedback-content {
+  width: auto; }
+
+#np_reNutriv .positive-feedback-image {
+  background-image: url("/assets/svgs/feedback-correct-icon-ReNutriv.svg");
+  background-repeat: no-repeat;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  background-size: 100%;
+  /* To fill the dimensions of container (button), or */
+  background-size: 40px auto;
+  /* to specify dimensions explicitly */ }
+
+#np_reNutriv .button-content {
+  position: relative;
+  padding: 5%; }
+
+#np_reNutriv rect {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0; }
+
+#np_reNutriv .button-content p {
+  padding: 0;
+  margin: 0; }
+
+#np_reNutriv .draggableButton {
+  cursor: pointer; }
+
+#np_reNutriv .draggableButtonsvg {
+  /*fill:#000000;*/ }
+
+#np_reNutriv .hit-area {
+  position: relative;
+  width: 100%;
+  height: 100%; }
+
+#np_reNutriv .hit-area svg {
+  /*fill: #313131;*/ }
+
+#np_reNutriv .hit-area rect {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  opacity: .90; }
+
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/* Hotspot Grid */
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*Hotspot button left position classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-#np_reNutriv .posA {
+.posA {
   left: 0%; }
 
-#np_reNutriv .posB {
+.posB {
   left: 6.25%; }
 
-#np_reNutriv .posC {
+.posC {
   left: 12.50%; }
 
-#np_reNutriv .posD {
+.posD {
   left: 18.75%; }
 
-#np_reNutriv .posE {
+.posE {
   left: 25%; }
 
-#np_reNutriv .posF {
+.posF {
   left: 31.25%; }
 
-#np_reNutriv .posG {
+.posG {
   left: 37.5%; }
 
-#np_reNutriv .posH {
+.posH {
   left: 43.75%; }
 
-#np_reNutriv .posI {
+.posI {
   left: 50%; }
 
-#np_reNutriv .posJ {
+.posJ {
   left: 56.25%; }
 
-#np_reNutriv .posK {
+.posK {
   left: 62.5%; }
 
-#np_reNutriv .posL {
+.posL {
   left: 68.75%; }
 
-#np_reNutriv .posM {
+.posM {
   left: 75%; }
 
-#np_reNutriv .posN {
+.posN {
   left: 81.25%; }
 
-#np_reNutriv .posO {
+.posO {
   left: 87.5%; }
 
-#np_reNutriv .posP {
+.posP {
   left: 93.75%; }
 
-#np_reNutriv .posQ {
+.posQ {
   left: 100%; }
 
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*Hotspot button top position classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-#np_reNutriv .pos1 {
+.pos1 {
   top: 0%; }
 
-#np_reNutriv .pos2 {
+.pos2 {
   top: 5.26%; }
 
-#np_reNutriv .pos3 {
+.pos3 {
   top: 10.52%; }
 
-#np_reNutriv .pos4 {
+.pos4 {
   top: 15.78%; }
 
-#np_reNutriv .pos5 {
+.pos5 {
   top: 21.05%; }
 
-#np_reNutriv .pos6 {
+.pos6 {
   top: 26.31%; }
 
-#np_reNutriv .pos7 {
+.pos7 {
   top: 31.57%; }
 
-#np_reNutriv .pos8 {
+.pos8 {
   top: 36.84%; }
 
-#np_reNutriv .pos9 {
+.pos9 {
   top: 42.10%; }
 
-#np_reNutriv .pos10 {
+.pos10 {
   top: 47.36%; }
 
-#np_reNutriv .pos11 {
+.pos11 {
   top: 52.63%; }
 
-#np_reNutriv .pos12 {
+.pos12 {
   top: 57.89%; }
 
-#np_reNutriv .pos13 {
+.pos13 {
   top: 63.15%; }
 
-#np_reNutriv .pos14 {
+.pos14 {
   top: 68.42%; }
 
-#np_reNutriv .pos15 {
+.pos15 {
   top: 73.68%; }
 
-#np_reNutriv .pos16 {
+.pos16 {
   top: 78.94%; }
 
-#np_reNutriv .pos17 {
+.pos17 {
   top: 84.21%; }
 
-#np_reNutriv .pos18 {
+.pos18 {
   top: 89.47%; }
 
-#np_reNutriv .pos19 {
+.pos19 {
   top: 94.73%; }
 
-.po20 {
+.pos20 {
   top: 100%; }
 
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/*New Player Drag and Drop classes*/
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-#np_reNutriv .draggableButton {
-  position: draggableContainer; }
-
-#np_reNutriv .draggableButton {
-  position: relative;
-  /*max-width:90px;*/
-  /*height: auto;*/
-  background-color: #333333;
-  margin: 0;
-  padding: 0;
-  cursor: pointer; }
-
-#np_reNutriv .hit-area {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background-color: #333333;
-  margin: 0;
-  padding: 0; }
-
-#np_reNutriv .boxElements {
-  width: 100%;
-  height: auto;
-  text-align: center;
-  color: white;
-  border-radius: 10px;
-  border: 2px solid black; }
-
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/* */
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/*When setting this class for New Player use: 'outside-padding'*/
-/*.np_outside-padding{
-    padding-top: 35px;
-    padding-left: 90px;
-    padding-right: 90px;
-    padding-bottom: 35px;
-}*/
-/*When setting this class for New Player use: 'inside-padding'*/
-/*.np_inside-padding{
-    padding-left: 5%;
-    padding-right: 5%;
-    padding-bottom: 35px;
-}*/
-/*When setting this class for New Player use: 'button-padding'*/
-/*.np_button-padding{
-    padding-top: 30px;
-    padding-left: 15%;
-    padding-right: 15%;
-    padding-bottom: 35px;
-}*/
-/*$top-image: margin-left:-100px;*/
-/*.topImage{
-    margin-left:-75px;
-}
-@media (max-width: $screen-sm) {
-    .topImage{
-        margin-left:-10px;
-    }
-}*/
 .caret {
   display: inline-block;
   /*width: 100;*/
@@ -5753,13 +5871,31 @@ button.close {
         }
     }
 }*/
-/* put reveal thumbnails on top
- TODO: make responsive */
-.npReveal .rsNav {
-  position: absolute; }
-
-.rsDefault .rsThumbs {
-  background-color: transparent; }
+.wheels {
+  position: relative;
+  top: 100px;
+  text-align: center;
+  width: 60%;
+  height: 400px;
+  /* clip the container for those not supporting csstransforms3d */ }
+  .no-csstransforms3d .wheels {
+    overflow: hidden;
+    height: 60px; }
+  .wheels .wheel {
+    position: relative;
+    height: 300px; }
+    .wheels .wheel > div {
+      position: absolute;
+      width: 45%;
+      height: 50px;
+      line-height: 3.5em;
+      text-align: center;
+      z-index: 999;
+      background: #fff;
+      border: solid 1px #333;
+      outline: 1px solid transparent;
+      -webkit-backface-visibility: hidden;
+      -ms-backface-visibility: hidden; }
 
 .modal-open {
   overflow: hidden; }
@@ -6475,12 +6611,64 @@ button.close {
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*support classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.debug,
+.hide {
+  display: none; }
+
 strong, b {
   font-family: "akzidenz-grotesk_bqbold"; }
 
 svg {
   width: 100%;
   height: 100%; }
+
+img.blur {
+  width: 367;
+  height: 459px;
+  filter: url(blur.svg#blur);
+  -webkit-filter: blur(3px);
+  filter: blur(3px); }
+
+.inset-shadow {
+  /*    width:367; 
+      height:459px; */
+  -webkit-filter: url(styles/inset-shadow.svg#inset-shadow);
+          filter: url(styles/inset-shadow.svg#inset-shadow);
+  /*    -webkit-filter: blur(3px); 
+      filter: blur(3px); */ }
+
+/*.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}*/
+.vertical-align {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row; }
+
+.vertical-align > [class^="col-"],
+.vertical-align > [class*=" col-"] {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  /* Optional, to align inner items 
+     horizontally inside the column */ }
 
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*Angular UI classes*/
@@ -6519,25 +6707,25 @@ svg {
 /*New Player padding wrapper classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*When setting this class for New Player use: 'outside-padding'*/
-/*.np_outside-padding{
-    padding-top: 35px;
-    padding-left: 90px;
-    padding-right: 90px;
-    padding-bottom: 35px;
-}*/
+.np_outside-padding {
+  padding-top: 35px;
+  padding-left: 90px;
+  padding-right: 90px;
+  padding-bottom: 35px; }
+
 /*When setting this class for New Player use: 'inside-padding'*/
-/*.np_inside-padding{
-    padding-left: 5%;
-    padding-right: 5%;
-    padding-bottom: 35px;
-}*/
+.np_inside-padding {
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-bottom: 35px; }
+
 /*When setting this class for New Player use: 'button-padding'*/
-/*.np_button-padding{
-    padding-top: 30px;
-    padding-left: 15%;
-    padding-right: 15%;
-    padding-bottom: 35px;
-}*/
+.np_button-padding {
+  padding-top: 30px;
+  padding-left: 15%;
+  padding-right: 15%;
+  padding-bottom: 35px; }
+
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*responsive padding overrides*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -6554,57 +6742,47 @@ svg {
     top: 0;*/
 /*z-index: -2;*/
 /*}*/
-/*@media (max-width: $screen-sm) {
-    .np_outside-padding{
-        padding: 0px;
-    }
-    .np_inside-padding{
-        padding: 5%;
-    }
-    .np_button-padding{
-        padding: 5%;
-    }
-}*/
+@media (max-width: 768px) {
+  .np_outside-padding {
+    padding: 0px; }
+
+  .np_inside-padding {
+    padding: 5%; }
+
+  .np_button-padding {
+    padding: 5%; } }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*Sans font overrides*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/*.sans-head{
-    font-family: $font-family-sans-serif_head !important;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    border-bottom: solid 1px;
-    border-bottom-color: $brand-lightgrey;
-    padding-top: 40px;
-    padding-bottom: 3px;
-    display: inline-block;
-}*/
-/*
-@media (max-width: $screen-sm) {
-    .collapse-toggle{
-        background-color: $brand-offwhite;
-        cursor: pointer;
-        width: 100%;
-        border-bottom: none;
-        padding-top: 15px;
-        padding-bottom: 15px;
-        padding-right: 7px;
-        padding-left: 7px;
-        &:hover,
-            &:focus {
-            background-color: darken($brand-offwhite, 5%);
-        }
-        &:before {
-            font-family: 'elx-icons';
-            content: "\e613";
-            float: right;
-            color: $brand-primary;
-                        -webkit-transition: opacity 1s ease-in-out;
-                        -moz-transition: opacity 1s ease-in-out;
-                        -o-transition: opacity 1s ease-in-out;
-            transition: opacity 1s ease-in-out;
-        }
-    }
-}*/
+.sans-head {
+  font-family: "akzidenz-grotesk_bqbold" !important;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border-bottom: solid 1px;
+  border-bottom-color: #cccccc;
+  padding-top: 40px;
+  padding-bottom: 3px;
+  display: inline-block; }
+
+@media (max-width: 768px) {
+  .collapse-toggle {
+    background-color: #e6e9ee;
+    cursor: pointer;
+    width: 100%;
+    border-bottom: none;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-right: 7px;
+    padding-left: 7px; }
+    .collapse-toggle:hover, .collapse-toggle:focus {
+      background-color: #d7dce4; }
+    .collapse-toggle:before {
+      font-family: 'elx-icons';
+      content: "\e613";
+      float: right;
+      color: #040a2b;
+      -webkit-transition: opacity 1s ease-in-out;
+      transition: opacity 1s ease-in-out; } }
 /*.np_inside-padding .sans-head{
     border-bottom-color: $brand-primary-light;
 }
@@ -6630,16 +6808,14 @@ svg {
         padding-bottom: 10px;
     }
 }*/
-/*@media (max-width: $screen-sm) {
-    .sans-normal{
-        padding-right: 7px;
-        padding-left: 7px;
-    }
-    .sans-small{
-        padding-right: 7px;
-        padding-left: 7px;
-    }
-}*/
+@media (max-width: 768px) {
+  .sans-normal {
+    padding-right: 7px;
+    padding-left: 7px; }
+
+  .sans-small {
+    padding-right: 7px;
+    padding-left: 7px; } }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player background color wrapper classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -6655,10 +6831,10 @@ svg {
 /* text treatment classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*Q and A text outdent*/
-/*.q-and-a-outdent{
-    text-indent:-28px;
-    margin-left:28px
-}*/
+.q-and-a-outdent {
+  text-indent: -28px;
+  margin-left: 28px; }
+
 /*////////////////////////////////////////////////////////////////////////////////*/
 .browsehappy {
   display: none;
@@ -6666,257 +6842,3 @@ svg {
   color: #000;
   margin: 0.2em 0;
   padding: 0.2em 0; }
-
-.debug,
-.hide {
-  display: none; }
-
-/*#background-image { 
-    position: absolute;
-    background: url(../../images/IMG_1423.JPG) no-repeat center center fixed;
-    background: url(../../images/IMG_1448.JPG) no-repeat center center fixed;
-    background: url(../../images/IMG_1466_w1920.jpg) no-repeat center center fixed;
-    background: url(../../images/IMG_1469.JPG) no-repeat center center fixed;
-    background: url(../../images/IMG_1658.JPG) no-repeat center center fixed;
-    background: url(../../images/IMG_1969.JPG) no-repeat center center fixed;
-    background: url(../../images/raven.png) no-repeat center center fixed;
-    background-size: cover;
-    content: "";
-    bottom: 0;
-    left: 0;
-    right: 0;
-    top: 0;
-    z-index: -2;
-}*/
-/*.container {
-    margin: 0 auto;
-}*/
-/*#manifestWrapper {
-    &.debug {
-        display: block;
-        .debug {
-            display: block;
-        }
-        .np-component {
-            margin: 0.5em;
-            padding: 0.5em;
-            border: 1px dashed red;
-        }
-    }
-}*/
-/*.npPage {
-    text-align: center;
-}*/
-/*.npMenu {
-    background: mix(black, white, 90%);
-    background: rgba(black, 0.9);
-    position: absolute;
-    top: 0;
-    left: -50%;
-    width: 50%;
-    -webkit-transition: 0.5s ease all;
-    transition: 0.5s ease all;
-    z-index: 100;
-    @include border-right-radius(20px);
-
-    ul {
-        list-style: none outside none;
-        padding: 0;
-        li {
-            margin: 0.2em 0 0.2em 1em;
-        }
-        ul {
-            font-size: 0.95em;
-        }
-    }
-
-    .hamburger {
-        color: black;
-        cursor: pointer;
-        position: absolute;
-        top: 0.5em;
-        right: -1em;
-        -webkit-transition: 0.5s ease all;
-        transition: 0.5s ease all;
-        &:hover {
-            text-decoration: none;
-        }
-    }
-
-    a {
-        color: white;
-        text-decoration: none;
-
-        &:hover {
-            text-decoration: underline;
-        }
-        &.selected:hover {
-            text-decoration: none;
-        }
-    }
-
-    .selected {
-        cursor: default;
-        text-decoration: none;
-    }
-
-    &.show {
-        left: 0;
-
-        .hamburger {
-            right: 1em;
-            color: white;
-        }
-    }
-}*/
-/*.npVideo {
-    width: 80%;
-    max-width: 640px;
-    margin: 0 auto;
-
-    * {
-        outline: 0;
-    }
-    video {
-        height: 100%;
-        width: 100%;
-    }
-}*/
-/*.npHTML {
-    font-size: 16px;
-    line-height: 20px;
-}*/
-/*.np-expandable {
-        &.np-cmp-main,
-        >.np-cmp-main {
-                cursor: pointer;
-                text-align: left;
-
-                &:before {
-                        content: "\00f054"; 
-                        float: left;
-                        font-family: 'FontAwesome';
-                        -webkit-transition: 0.5s ease all;
-                        transition: 0.5s ease all;
-                        -webkit-transform: rotate(90deg);
-                        transform: rotate(90deg);
-                        margin: 0 0.5em 0 0;
-                }
-        }
-        &.np-expandable-collapsed {
-                .np-cmp-main:before {
-                        -webkit-transform: rotate(0deg);
-                        transform: rotate(0deg);
-                }
-        }
-}*/
-/*.npColumn {
-
-        .row {
-                &:after {
-                        content: "."; 
-                        visibility: hidden; 
-                        display: block; 
-                        height: 0; 
-                        clear: both;
-                }
-
-                &.col-1 .column {
-                        width: 100%;
-                }
-                &.col-2 .column {
-                        width: 50%;
-                }
-                &.col-3 .column {
-                        width: 33.333333333%;
-                }
-                &.col-4 .column {
-                        width: 25%;
-                }
-                &.col-5 .column {
-                        width: 20%;
-                }
-                &.col-6 .column {
-                        width: 16.666666666%;
-                }
-                &.col-7 .column {
-                        width: 14.285714285%;
-                }
-
-                .column {
-                        float: left;
-
-                        &.col-last {
-                                &:after {
-                                        clear: both;
-                                        content: "."; 
-                                        visibility: hidden; 
-                                        display: block; 
-                                        height: 0; 
-                                        width: 100%;
-                                }
-                        }
-
-                }
-        }
-}*/
-/*.npButton {
-        background-color: #7f7f7f;
-        border: none;
-        @include border-top-radius(6px);
-        @include border-bottom-radius(6px);
-        -webkit-box-shadow: 0px 0px 5px 0px rgba(50, 50, 50, 0.75);
-        -moz-box-shadow:    0px 0px 5px 0px rgba(50, 50, 50, 0.75);
-        box-shadow:         0px 0px 5px 0px rgba(50, 50, 50, 0.75);
-        font-size: 14px;
-        line-height: 17px;
-        margin: 0.3em;
-        padding: 0.3em;
-        text-align: center;
-}*/
-/*@media screen and (max-width: 320px) {
-        .container {
-                max-width: 305px;
-        }
-
-}*/
-/*@media screen and (max-width: 767px) {
-        .container {
-                max-width: 420px;
-        }
-
-        .npColumn {
-                .row {
-                        &.col-1 .column {
-                                width: 100%;
-                        }
-                        &.col-2 .column {
-                                width: 100%;
-                        }
-                        &.col-3 .column {
-                                width: 100%;
-                        }
-                        &.col-4 .column {
-                                width: 100%;
-                        }
-                        &.col-5 .column {
-                                width: 100%;
-                        }
-                        &.col-6 .column {
-                                width: 100%;
-                        }
-                        &.col-7 .column {
-                                width: 100%;
-                        }
-                        .column {
-                                float: none;
-                        }
-                }
-        }
-}*/
-/* Responsive: Portrait tablets and up */
-/*@media screen and (min-width: 768px) {
-        .container {
-                max-width: 730px;
-        }
-}*/
