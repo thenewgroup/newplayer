@@ -3,7 +3,8 @@
   'use strict';
   angular
     .module('newplayer')
-    .controller('AppController', AppController);
+    .controller('AppController', AppController)
+    .value('sliders', {});
 
   /** @ngInject */
   function AppController($log, AssessmentService/*, ImagePreloadFactory, HomeService, $scope*/) {
