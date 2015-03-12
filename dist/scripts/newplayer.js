@@ -522,6 +522,27 @@
         $rootScope.$broadcast('npPageIdChanged', pageId);
       };
 
+      this.goToNextPage = function () {
+        var thisPage = this.getPageId();
+        var nextPage, i;
+        if (!thisPage) {
+          return;
+        }
+
+        var parent = this.getComponent(this.getPageId());
+        for (i = 0; i < parent.components.length; i++) {
+          var component = parent.components[i];
+          if (component.type === 'npPage') {
+            if (component.data.id === thisPage) {
+              continue;
+            }
+            nextPage = component.data.id;
+            break;
+          }
+        }
+        this.setPageId(nextPage);
+      };
+
       this.initialize = function (data, overrides) {
         $log.debug('ManifestService::initialize:', data, overrides);
 
@@ -2666,6 +2687,123 @@ function AssessmentService ( $log ) {
                     }
             );
 })();
+(function () {
+
+  'use strict';
+  angular
+    .module('newplayer.component')
+  /** @ngInject */
+    .controller('npMatchController',
+    function ($log, $scope, $rootScope, $timeout, ManifestService, $sce, sliders) {
+      var cmpData = $scope.component.data;
+      $log.debug('npQuestion::data', cmpData);
+
+      this.id = cmpData.id;
+      this.content = $sce.trustAsHtml(cmpData.content);
+      this.type = cmpData.type;
+      this.feedback = '';
+      this.canContinue = false;
+      var self = this;
+
+      var feedback = cmpData.feedback;
+
+      this.changed = function () {
+        $log.debug('npQuestion::answer changed');
+        if (feedback.immediate) {
+          this.feedback = '';
+        }
+      };
+
+      this.evaluate = function () {
+        var correct = true;
+        var allCorrect = true;
+        $log.debug('npQuestion::evaluate:', this.answer);
+        var answer;
+        _.each(sliders, function (slide) {
+          var s = slide.currSlide.holder;
+          var cmp = ManifestService.getComponent(s.children().attr('idx'));
+          var cmpData  = cmp.data;
+          if (!answer) {
+            answer = cmpData.correct;
+            return;
+          } else {
+            if (cmpData.correct === answer) {
+              return;
+            }
+           correct = false;
+          }
+        });
+
+        $log.debug('npMatch::evaluate:isCorrect', correct);
+
+        // set by ng-model of npAnswer's input's
+        if (feedback.immediate) {
+          if (correct) {
+            $rootScope.$emit('slider-disable-wrong');
+            this.feedback = feedback.correct;
+          } else {
+            this.feedback = feedback.incorrect;
+          }
+        }
+
+        // timeout and wait for dom manipulation to finish
+        $timeout(function () {
+          // check that alll are matched
+          _.each(sliders[0].slidesJQ, function (slide) {
+            if (!slide.data('correct')) {
+              allCorrect = false;
+              return false;
+            }
+          });
+
+          if (allCorrect) {
+              self.canContinue = true;
+          }
+        });
+      };
+
+      this.nextPage = function (evt) {
+        // TODO - have a better way to go to the next page in the manifest service
+        // si: I'd like to see a next page and previous page methods
+        ManifestService.goToNextPage();
+        evt.preventDefault();
+      };
+    }
+  )
+
+  /** @ngInject */
+    .run(
+    function ($log, $rootScope) {
+      $log.debug('npQuestion::component loaded!');
+    }
+  );
+})();
+(function () {
+
+  'use strict';
+  angular
+    .module('newplayer.component')
+
+  /** @ngInject */
+    .controller('npMatchRowController',
+    function ($log, $scope, $sce) {
+      var cmpData = $scope.component.data || {};
+      $log.debug('npMatchRow::data', cmpData);
+
+      this.id = cmpData.id;
+      this.label = $sce.trustAsHtml(cmpData.label);
+      // shuffle em up
+      $scope.components = _.shuffle($scope.components);
+    }
+  )
+
+  /** @ngInject */
+    .run(
+    function ($log, $rootScope) {
+      $log.debug('npMatchRow::component loaded!');
+    }
+  );
+})();
 (function() {
   'use strict';
 
@@ -2694,7 +2832,8 @@ function AssessmentService ( $log ) {
   'use strict';
   angular
     .module('newplayer')
-    .controller('AppController', AppController);
+    .controller('AppController', AppController)
+    .value('sliders', {});
 
   /** @ngInject */
   function AppController($log, AssessmentService/*, ImagePreloadFactory, HomeService, $scope*/) {
@@ -3409,7 +3548,16 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
     "\n" +
     "</div>\n" +
-    "\n"
+    "\n" +
+    "<div ng-if=\"npMatch\" class=\"np-cmp-wrapper {{component.type}} matchbox\" ng-controller=\"npAnswerController as npAnswer\">\n" +
+    "    <div class=\"slide-wrapper reveal-slide rsContent\">\n" +
+    "        <label>\n" +
+    "            <span class=\"npAnswer-label\" for=\"{{npAnswer.id}}_input\" ng-bind-html=\"npAnswer.label\"></span>\n" +
+    "        </label>\n" +
+    "\n" +
+    "        <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "    </div>\n" +
+    "</div>"
   );
 
 
@@ -3872,6 +4020,41 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "            </div>\n" +
     "        </div>\n" +
     "    </div>\n" +
+    "</div>"
+  );
+
+
+  $templateCache.put('scripts/component/npMatch/npMatch.html',
+    "<form class=\"np-cmp-wrapper {{component.type}} \" ng-controller=\"npMatchController as npMatch\" ng-submit=\"npMatch.evaluate()\">\n" +
+    "\n" +
+    "    <div class=\"debug\">\n" +
+    "        <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
+    "    </div>\n" +
+    "\n" +
+    "    <h5 class=\"dark text-uppercase\">question:</h5>\n" +
+    "    <div class=\"npMatch-content\" ng-bind-html=\"npMatch.content\"></div>\n" +
+    "\n" +
+    "\t<h5 class=\"dark text-uppercase\">answers:</h5>\n" +
+    "    <div np-component ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "\n" +
+    "    <button type=\"submit\" class=\"col-xs-3 btn-primary\">Submit</button> &nbsp;\n" +
+    "    <button id=\"next_button\" class=\"btn-default\" ng-click=\"npMatch.nextPage($event)\" ng-show=\"npMatch.canContinue\">Next</button>\n" +
+    "<!--    <div class=\"btn btn-default\">\n" +
+    "        <input type=\"submit\" />\n" +
+    "    </div>-->\n" +
+    "\n" +
+    "    <div class=\"npMatch-feedback\" ng-if=\"npMatch.feedback\" ng-bind-html=\"npMatch.feedback\"></div>\n" +
+    "</form>"
+  );
+
+
+  $templateCache.put('scripts/component/npMatchRow/npMatchRow.html',
+    "<div class=\"debug\">\n" +
+    "    <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
+    "</div>\n" +
+    "\n" +
+    "<div class=\"np-cmp-wrapper {{component.type}} rsDefault visibleNearby\" royalslider data-match=\"true\">\n" +
+    "    <div np-component ng-repeat=\"component in components | orderBy:random\" idx=\"{{component.idx}}\" style=\"display: inline-block; border: 2px solid black; width: 200px; margin-right: 10px;\"></div>\n" +
     "</div>"
   );
 
