@@ -373,7 +373,7 @@
                                     {
                                         "type": "npButton",
                                         "data": {
-                                            "link": "QuizIntro",
+                                            "link": "/api/products/name/foo",
                                             "type": "",
                                             "class": "btn btn-primary btn-sm",
                                             "content": "<span class='elx-heart'></span>  Favorite this"
