@@ -54,7 +54,9 @@
           ManifestService.setPageId(cmpData.link);
         } else {
           if (this.apiLink) {
-            APIService.getData(btnLink);
+            //TODO: we may need a `method` property to know what to use here
+            // i.e. GET, POST, PUT, DELETE
+            APIService.postData(btnLink);
             return;
           }
           window.open(this.link, this.target);

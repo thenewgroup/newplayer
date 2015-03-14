@@ -30,6 +30,24 @@
         return aPromise;
       };
 
+      this.postData = function (url) {
+        $log.debug('APIService::postData: URL:', url);
+        var aPromise =
+          $http.post(
+            url,
+            {
+              cache: true
+            }
+          )
+            .then(
+            function (data) {
+              $log.debug('APIService::Received data from server ', data);
+              return data.data;
+            }
+          );
+        return aPromise;
+      };
+
       /*,
        sendData:function(data){
        $log.debug('APIService::Sending data to '+baseUrl+'/npAPI/',data);
