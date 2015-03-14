@@ -1231,7 +1231,7 @@ function AssessmentService ( $log ) {
 
   /** @ngInject */
     .controller('npButtonController',
-    function ($log, $scope, $sce, $location, $element, ConfigService, ManifestService) {
+    function ($log, $scope, $sce, $location, $element, ConfigService, ManifestService, APIService) {
       var cmpData = $scope.component.data || {};
       $log.debug('npButton::data', cmpData);
 
@@ -1245,13 +1245,19 @@ function AssessmentService ( $log ) {
       this.link = '';
       this.target = cmpData.target;
       this.linkInternal = true;
+      this.apiLink = false;
       var btnLink = cmpData.link;
       if (angular.isString(btnLink)) {
         if (btnLink.indexOf('/') === 0) {
-          if (!this.target) {
-            this.target = '_top';
+          if (/^\/api\//.test(btnLink)) {
+            this.apiLink = true;
+            this.linkInternal = false;
+          } else {
+            if (!this.target) {
+              this.target = '_top';
+            }
+            this.linkInternal = false;
           }
-          this.linkInternal = false;
         } else if (/^([a-zA-Z]{1,10}:)?\/\//.test(btnLink)) {
           if (!this.target) {
             this.target = '_blank';
@@ -1272,6 +1278,10 @@ function AssessmentService ( $log ) {
           //$location.url(this.link);
           ManifestService.setPageId(cmpData.link);
         } else {
+          if (this.apiLink) {
+            APIService.getData(btnLink);
+            return;
+          }
           window.open(this.link, this.target);
         }
       };
