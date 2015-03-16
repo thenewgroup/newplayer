@@ -30,7 +30,7 @@
                             {
                                 "type": "npHTML",
                                 "data": {
-                                    "id": "renutriv-background-image",
+                                    "id": "background-image",
                                     "class": ""
                                 },
                                 "components": []
