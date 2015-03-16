@@ -28,13 +28,13 @@
                         $scope.$watch(function () {
                             return window.innerWidth;
                         }, function (value) {
-                            console.log('innerWidth:',value);
+//                            console.log('innerWidth:',value);
                             bodyWidth = value;
                         });
                         $scope.selectLink = function (MyTarget) {
 //                            var ele = document.getElementById(MyTarget);
 //                            var icon = document.getElementById('caretSVG');
-                            console.log('bodyWidth: ' + bodyWidth);
+//                            console.log('bodyWidth: ' + bodyWidth);
                             if (bodyWidth < 450) {
                                 eleHeight = '2150px';
                             } else if (bodyWidth < 650) {
@@ -46,7 +46,7 @@
                             } else {
                                 eleHeight = '850px';
                             }
-                            console.log('eleHeight: ' + eleHeight);
+//                            console.log('eleHeight: ' + eleHeight);
                             if (isCollapsed) {
                                 TweenMax.to(icon, .75, {
                                     css: {
