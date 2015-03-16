@@ -67,108 +67,44 @@
                                 "data": {
                                     "id": "",
                                     "class": "h6 instructional",
-                                    "content": "<p>(Instructional copy) Select each image to learn more.</p>"
+                                    "content": "<p>(Instructional copy) Select each image to learn more drag to select other images.</p>"
                                 },
                                 "components": []
                             },
                             {
-                                "type": "npReveal",
+                                "type": "npFlashCards",
                                 "data": {
-                                    "id": "reveal-test-id",
-                                    "class": "reveal-test-class"
+                                    "id": "flash-cards-test-id",
+                                    "class": "flash-cards-test-class"
                                 },
-                                "revealItems": [
+                                "flashCards": [
                                     {
-                                        "id": "reveal-0",
-                                        "heading": "Reveal heading Item #0",
-                                        "content": "Reveal Item #0 content content content content content content content content content content content content content content!!",
-                                        "buttonImage": "/assets/images/comet-sml.jpg",
-                                        "buttonAltText": "thumb",
-                                        "components": [
-                                            {
-                                                "type": "npImage",
-                                                "data": {
-                                                    "id": "reveal-1-image",
-                                                    "src": "/assets/images/comet-lrg.jpg",
-                                                    "alt": "choice"
-                                                },
-                                                "components": []
-                                            }
-                                        ]
+                                        "contentFront": "<p class='h4 flash-card-text-heading'>Heading.0 contentFront.</p><p>Copy here contentFront.</p><p><img alt='' class='flash_card_image' height='500' src='/assets/images/saturn1.jpg' width='500' /></p><p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p>",
+                                        "contentBack": "<p class='h4 flash-card-text-heading'>Heading.0 here contentBack.</p><p>Copy here contentBack.</p><p><img alt='' class='flash_card_image' height='500' src='/assets/images/saturn1.jpg' width='500' /></p><p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p>"
                                     },
                                     {
-                                        "id": "reveal-1",
-                                        "heading": "Reveal heading Item #1",
-                                        "content": "Reveal Item #1 more content content content content content content content content content content content content content!!",
-                                        "buttonImage": "/assets/images/ELX_Welcome_70x70.png",
-                                        "buttonAltText": "thumb",
-                                        "components": [
-                                            {
-                                                "type": "npVideo",
-                                                "data": {
-                                                    "id": "reveal-1-vid",
-                                                    "poster": "/assets/images/ELX_Welcome_640x360_ENG.png",
-                                                    "baseURL": "/assets/video/ELX_Welcome_640x360_ENG.mp4",
-                                                    "types": ["mp4"]
-                                                },
-                                                "components": []
-                                            }
-                                        ]
+                                        "contentFront": "<p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p><p><img alt='' class='flash_card_image' height='500' src='/assets/images/OrionsHeart.jpg' width='500' /></p><p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p>",
+                                        "contentBack": "<p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p><p><img alt='' class='flash_card_image' height='500' src='/assets/images/OrionsHeart.jpg' width='500' /></p><p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p>"
                                     },
                                     {
-                                        "id": "reveal-2",
-                                        "heading": "Reveal heading Item #2",
-                                        "content": "Reveal Item #2 content content content content content content content content content content content content content content!!",
-                                        "buttonImage": "/assets/images/earth.jpg",
-                                        "buttonAltText": "thumb",
-                                        "components": [
-                                            {
-                                                "type": "npImage",
-                                                "data": {
-                                                    "id": "reveal-1-image",
-                                                    "src": "/assets/images/earth.jpg",
-                                                    "alt": "choice"
-                                                },
-                                                "components": []
-                                            }
-                                        ]
+                                        "contentFront": "<p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p><p><img alt='' class='flash_card_image' height='500' src='/assets/images/earth.jpg' width='500' /></p><p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p>",
+                                        "contentBack": "<p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p><p><img alt='' class='flash_card_image' height='500' src='/assets/images/earth.jpg' width='500' /></p><p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p>"
                                     },
                                     {
-                                        "id": "reveal-1",
-                                        "heading": "Reveal heading Item #1",
-                                        "content": "Reveal Item #1 more content content content content content content content content content content content content content!!",
-                                        "buttonImage": "/assets/images/ELX_Welcome_70x70.png",
-                                        "buttonAltText": "thumb",
-                                        "components": [
-                                            {
-                                                "type": "npVideo",
-                                                "data": {
-                                                    "id": "reveal-1-vid",
-                                                    "poster": "/assets/images/ELX_Welcome_640x360_ENG.png",
-                                                    "baseURL": "/assets/video/ELX_Welcome_640x360_ENG.mp4",
-                                                    "types": ["mp4"]
-                                                },
-                                                "components": []
-                                            }
-                                        ]
+                                        "contentFront": "<p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p><p><img alt='' class='flash_card_image' height='500' src='/assets/images/thesun.jpg' width='500' /></p><p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p>",
+                                        "contentBack": "<p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p><p><img alt='' class='flash_card_image' height='500' src='/assets/images/thesun.jpg' width='500' /></p><p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p>"
                                     },
                                     {
-                                        "id": "reveal-2",
-                                        "heading": "Reveal heading Item #2",
-                                        "content": "Reveal Item #2 content content content content content content content content content content content content content content!!",
-                                        "buttonImage": "/assets/images/thesun.jpg",
-                                        "buttonAltText": "thumb",
-                                        "components": [
-                                            {
-                                                "type": "npImage",
-                                                "data": {
-                                                    "id": "reveal-1-image",
-                                                    "src": "/assets/images/thesun.jpg",
-                                                    "alt": "choice"
-                                                },
-                                                "components": []
-                                            }
-                                        ]
+                                        "contentFront": "<p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p><p><img alt='' class='flash_card_image' height='500' src='/assets/images/earth.jpg' width='500' /></p><p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p>",
+                                        "contentBack": "<p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p><p><img alt='' class='flash_card_image' height='500' src='/assets/images/earth.jpg' width='500' /></p><p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p>"
+                                    },
+                                    {
+                                        "contentFront": "<p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p><p><img alt='' class='flash_card_image' height='500' src='/assets/images/thesun2.jpg' width='500' /></p><p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p>",
+                                        "contentBack": "<p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p><p><img alt='' class='flash_card_image' height='500' src='/assets/images/thesun2.jpg' width='500' /></p><p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p>"
+                                    },
+                                    {
+                                        "contentFront": "<p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p><p><img alt='' class='flash_card_image' height='500' src='/assets/images/saturn2.jpg' width='500' /></p><p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p>",
+                                        "contentBack": "<p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p><p><img alt='' class='flash_card_image' height='500' src='/assets/images/saturn2.jpg' width='500' /></p><p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p>"
                                     }
                                 ]
                             }
