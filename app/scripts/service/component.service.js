@@ -187,10 +187,10 @@
       this.getTemplate = function (componentObj) {
         var templateURL = getTemplateURL(componentObj);
 
-        $log.info('ComponentService::getTemplate: cmp,templateURL:', componentObj, templateURL);
+//        $log.info('ComponentService::getTemplate: cmp,templateURL:', componentObj, templateURL);
         if (!!templateURL) {
           var templateData = $templateCache.get(templateURL);
-          $log.info('templateCache', templateData);
+//          $log.info('templateCache', templateData);
           return templateData;
         }
       };
