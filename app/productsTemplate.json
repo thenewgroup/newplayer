@@ -1,516 +1,465 @@
-[
-    {
-        "type": "npFeature",
-        "data": {
-            "id": "products",
-            "class": "productTemplate ",
-            "req": [],
-            "version": "0.0.1",
-            "timestamp": "1970-01-01_00:00:00"
-        },
-        "components": [
-            {
-                "type": "npContent",
-                "data": {
-                    "id": "content_en-US",
-                    "class": "",
-                    "language": "en-US",
-                    "title": "Advanced Night Repair",
-                    "description": "product template - Advanced Night Repair"
-                },
-                "components": [
-                    {
-                        "type": "npHTML",
-                        "data": {
-                            "id": "newplayer-background",
-                            "class": "",
-                            "content": ""
-                        },
-                        "components": []
-                    },
-                    {
-                        "type": "npHTML",
-                        "data": {
-                            "id": "",
-                            "class": "background-brand-primary-light outside-padding",
-                            "content": ""
-                        },
-                        "components": [
-                            {
-                                "type": "npHTML",
-                                "data": {
-                                    "id": "",
-                                    "class": "h1",
-                                    "content": "Advanced Night Repair"
-                                },
-                                "components": []
-                            },
-                            {
-                                "type": "npHTML",
-                                "data": {
-                                    "id": "",
-                                    "class": "h2",
-                                    "content": "Synchronized Recovery Complex II"
-                                },
-                                "components": []
-                            },
-                            {
-                                "type": "npColumn",
-                                "data": {
-                                    "id": "",
-                                    "class": "",
-                                    "cols": "2"
-                                },
-                                "components": [
-                                    {
-                                        "type": "npImage",
-                                        "data": {
-                                            "id": "",
-                                            "class": "topImage img-responsive ",
-                                            "src": "/assets/images/Product-Image.jpg",
-                                            "alt": "widget"
-                                        },
-                                        "components": []
-                                    },
-                                    {
-                                        "type": "npHTML",
-                                        "data": {
-                                            "id": "",
-                                            "class": "background-brand-offwhite inside-padding ",
-                                            "content": ""
-                                        },
-                                        "components": [
-                                            {
-                                                "type": "npHTML",
-                                                "data": {
-                                                    "id": "",
-                                                    "class": "h3 sans-head",
-                                                    "content": "Why there’s only 1"
-                                                },
-                                                "components": [
-                                                    {
-                                                        "type": "npHTML",
-                                                        "data": {
-                                                            "id": "",
-                                                            "class": "h4 sans-normal",
-                                                            "content": "<p>Our #1 lines and wrinkles serum—supercharged to help correct, prevent and repair the look of lines and wrinkles with exceptional speed. With CPR-75 Technology, proven to double skin’s own natural collagen production in just one week.*</p><p><small>*In vitro testing of CPR-75 Technology.</small></p>"
-                                                        },
-                                                        "components": []
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "npHTML",
-                                "data": {
-                                    "id": "",
-                                    "class": "h3 sans-head collapse-toggle",
-                                    "xplugin": "np-expandable",
-                                    "data-ng:click": "isCollapsed = !isCollapsed",
-                                    "data-collapse": "",
-                                    "content": "DEMONSTRATION"
-                                },
-                                "components": [
-                                    {
-                                        "type": "npHTML",
-                                        "data": {
-                                            "id": "",
-                                            "class": "h4 sans-normal collapse-element",
-                                            "xplugin": "npExpandable",
-                                            "data-ng:click": "",
-                                            "data-collapse": "isCollapsed",
-                                            "content": "Apply a small amount to the back of your customer’s hand and gently massage into skin. Ask customer to raise both hands (fingers pointing upward) to compare the difference. "
-                                        },
-                                        "components": []
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "npHTML",
-                                "data": {
-                                    "id": "",
-                                    "class": "h3 sans-head collapse-toggle",
-                                    "xplugin": "np-expandable",
-                                    "data-ng:click": "isCollapsed = !isCollapsed",
-                                    "data-collapse": "",
-                                    "content": "BENEFITS"
-                                },
-                                "components": [
-                                    {
-                                        "type": "npHTML",
-                                        "data": {
-                                            "id": "",
-                                            "class": "h4 sans-normal collapse-element",
-                                            "xplugin": "",
-                                            "data-ng:click": "",
-                                            "data-collapse": "isCollapsed",
-                                            "content": "<p><ol><li>Instantly—lines and wrinkles look plumped and smoothed.</li><li>In just one week—skin doubles its own natural collagen production.*</li><li>In just 4 weeks—96% of women showed a significant reduction in the look of lines & wrinkles.**</li></ol></p><p><small>*In vitro testing of CPR-75 Technology.</small></p><p><small>**In 4 week clinical testing of Perfectionist [CP+R].</small></p>"
-                                        },
-                                        "components": []
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "npHTML",
-                                "data": {
-                                    "id": "",
-                                    "class": "h3 sans-head  collapse-toggle",
-                                    "xplugin": "np-expandable",
-                                    "data-ng:click": "isCollapsed = !isCollapsed",
-                                    "data-collapse": "",
-                                    "content": "If she asks, share"
-                                },
-                                "components": [
-                                    {
-                                        "type": "npHTML",
-                                        "data": {
-                                            "id": "",
-                                            "class": "h4 sans-normal collapse-element",
-                                            "xplugin": "",
-                                            "data-ng:click": "",
-                                            "data-collapse": "isCollapsed",
-                                            "content": "<p>Flexible Elastomer Technology works as a virtual ‘liquid bandage’ to instantly fill in and immobilize the look of wrinkles. Light Diffusion Optics blur the look of lines and wrinkles.</p><p>Exclusive Wrinkle Lift Restructuring Peptides™ —a unique peptide blend helps skin stimulate new collagen and elastin production.</p><p><strong>Together these powerful technologies:</strong></p><p>Strengthen skin’s natural support structure giving skin a firmer more defined look with fewer visible lines.</p><p><small>*In vitro testing of CPR-75 Technology.</small></p>"
-                                        },
-                                        "components": []
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "npHTML",
-                                "data": {
-                                    "id": "",
-                                    "class": "h3 sans-head  collapse-toggle",
-                                    "xplugin": "np-expandable",
-                                    "data-ng:click": "isCollapsed = !isCollapsed",
-                                    "data-collapse": "",
-                                    "content": "Perfect partners"
-                                },
-                                "components": [
-                                    {
-                                        "type": "npHTML",
-                                        "data": {
-                                            "id": "",
-                                            "class": "collapse-element",
-                                            "xplugin": "",
-                                            "data-ng:click": "",
-                                            "data-collapse": "isCollapsed",
-                                            "content": ""
-                                        },
-                                        "components": [
-                                            {
-                                                "type": "npColumn",
-                                                "data": {
-                                                    "id": "",
-                                                    "cols": 2,
-                                                    "class": "row"
-                                                },
-                                                "components":
-                                                        [
-                                                            {
-                                                                "type": "npHTML",
-                                                                "data": {
-                                                                    "id": "",
-                                                                    "class": "row ",
-                                                                    "content": ""
-                                                                },
-                                                                "components": [
-                                                                    {
-                                                                        "type": "npImage",
-                                                                        "data": {
-                                                                            "id": "",
-                                                                            "class": " col-sm-4",
-                                                                            "src": "/assets/images/Product-Image.jpg",
-                                                                            "alt": "widget"
-                                                                        },
-                                                                        "components": [
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        "type": "npHTML",
-                                                                        "data": {
-                                                                            "id": "",
-                                                                            "class": " col-sm-8 sans-small",
-                                                                            "content": "<p>Advanced Time Zone Age Reversing Line/Wrinkle Collection</p>"
-                                                                        },
-                                                                        "components": []
-                                                                    },
-                                                                    {
-                                                                        "type": "npHTML",
-                                                                        "data": {
-                                                                            "id": "",
-                                                                            "class": " col-sm-8 sans-small",
-                                                                            "content": "<p><i>4 days ago</i></p>"
-                                                                        },
-                                                                        "components": []
-                                                                    }
-                                                                ]
-                                                            },
-                                                            {
-                                                                "type": "npHTML",
-                                                                "data": {
-                                                                    "id": "",
-                                                                    "class": "row ",
-                                                                    "content": ""
-                                                                },
-                                                                "components": [
-                                                                    {
-                                                                        "type": "npImage",
-                                                                        "data": {
-                                                                            "id": "",
-                                                                            "class": " col-sm-4",
-                                                                            "src": "/assets/images/Product-Image.jpg",
-                                                                            "alt": "widget"
-                                                                        },
-                                                                        "components": [
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        "type": "npHTML",
-                                                                        "data": {
-                                                                            "id": "",
-                                                                            "class": "col-sm-8 sans-small",
-                                                                            "content": "<p>Resilience Lift Firming/Sculpting Collection</p>"
-                                                                        },
-                                                                        "components": []
-                                                                    },
-                                                                    {
-                                                                        "type": "npHTML",
-                                                                        "data": {
-                                                                            "id": "",
-                                                                            "class": "col-sm-8 sans-small",
-                                                                            "content": "<p><i>3 months ago</i></p>"
-                                                                        },
-                                                                        "components": []
-                                                                    }
-                                                                ]
-                                                            }
-                                                        ]
-                                            },
-                                            {
-                                                "type": "npHTML",
-                                                "data": {
-                                                    "id": "",
-                                                    "class": "row",
-                                                    "content": ""
-                                                },
-                                                "components": [
-                                                    {
-                                                        "type": "npHTML",
-                                                        "data": {
-                                                            "id": "",
-                                                            "class": "h4 sans-normal",
-                                                            "content": "<p><strong>Need a phrase to help you link? Try one of these:</strong></p><p>Because you told me you're concerned with ___, I want to also show you ___.</p><p>Because you love ___, I also want to show you ___.</p>"
-                                                        },
-                                                        "components": []
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "npHTML",
-                                "data": {
-                                    "id": "",
-                                    "class": "h3 sans-head  collapse-toggle",
-                                    "xplugin": "np-expandable",
-                                    "data-ng:click": "isCollapsed = !isCollapsed",
-                                    "data-collapse": "",
-                                    "content": "STORY"
-                                },
-                                "components": [
-                                    {
-                                        "type": "npHTML",
-                                        "data": {
-                                            "id": "",
-                                            "class": "h4 sans-normal collapse-element",
-                                            "xplugin": "",
-                                            "data-ng:click": "",
-                                            "data-collapse": "isCollapsed",
-                                            "content": "<p>Our Scientists have long understood the importance of cellular energy and the critical role it plays in maintaining healthy, young looking skin. </p><p>Research shows that as we age, skin loses energy on every level—compromising its natural power to respond to the aging process. The result is that all critical age fighting mechanisms are slowed—collagen, elastin, laminins and other support proteins.  </p><p>To optimize skin’s natural line fighting ability, this overall energy  or “rhythm” must be promoted.</p><p>CPR-75 Technology delivers a surge of energy to help restore skin’s critical energy rhythm and gives it the power it needs to boost skin’s natural line-fighting power in just one week.*</p><p><small>*In vitro testing of CPR-75 Technology.</small></p>"
-                                        },
-                                        "components": []
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "npHTML",
-                                "data": {
-                                    "id": "",
-                                    "class": "h3 sans-head collapse-toggle",
-                                    "xplugin": "np-expandable",
-                                    "data-ng:click": "isCollapsed = !isCollapsed",
-                                    "data-collapse": "",
-                                    "content": "CUSTOMER QUESTIONS"
-                                },
-                                "components": [
-                                    {
-                                        "type": "npHTML",
-                                        "data": {
-                                            "id": "",
-                                            "class": "h4 sans-normal q-and-a-outdent collapse-element",
-                                            "xplugin": "",
-                                            "data-ng:click": "",
-                                            "data-collapse": "isCollapsed",
-                                            "content": "<p><strong>Q: “How do I use it?”</strong></p><p>A:  Apply AM and PM on clean skin before appropriate Estée Lauder moisturizer.</p><p><strong>Q: “When do I use it?”</strong></p><p>A:  Apply AM and PM on clean skin before appropriate Estée Lauder moisturizer. Estée Lauder moisturizer.</p>"
-                                        },
-                                        "components": []
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "npColumn",
-                                "data": {
-                                    "id": "",
-                                    "cols": 2,
-                                    "class": "row button-padding"
-                                },
-                                "components": [
-                                    {
-                                        "type": "npButton",
-                                        "data": {
-                                            "link": "/api/products/name/foo",
-                                            "type": "",
-                                            "class": "btn btn-primary btn-sm",
-                                            "content": "<span class='elx-heart'></span>  Favorite this"
-                                        },
-                                        "components": []
-                                    },
-                                    {
-                                        "type": "npButton",
-                                        "data": {
-                                            "link": "Question1",
-                                            "type": "btn btn-info btn-sm",
-                                            "content": "GET THE FULL FACT SHEET"
-                                        },
-                                        "components": []
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ]
+[  
+   {  
+      "type":"npFeature",
+      "data":{  
+         "id":"products",
+         "class":"productTemplate",
+         "version":"0.0.1",
+         "timestamp":"2015-Mar-Wed_08:03:28"
+      },
+      "components":[  
+         {  
+            "type":"npContent",
+            "data":{  
+               "id":"content_en",
+               "language":"en",
+               "title":"Product-Manifest-Advanced-Night-Repair-Synchronized-Recovery-Complex-II",
+               "description":"Manifest for product page. "
             },
-            {
-                "type": "npHTML",
-                "data": {
-                    "id": "",
-                    "class": "outside-padding",
-                    "content": ""
-                },
-                "components": [
-                    {
-                        "type": "npColumn",
-                        "data": {
-                            "id": "",
-                            "cols": 2,
-                            "class": "row"
+            "components":[  
+               {  
+                  "type":"npHTML",
+                  "data":{  
+                     "id":"newplayer-background"
+                  },
+                  "components":[  
+
+                  ]
+               },
+               {  
+                  "type":"npHTML",
+                  "data":{  
+                     "class":"background-brand-primary-light outside-padding"
+                  },
+                  "components":[  
+                     {  
+                        "type":"npHTML",
+                        "data":{  
+                           "class":"h1",
+                           "content":"Advanced Night Repair"
                         },
-                        "components": [
-                            {
-                                "type": "npHTML",
-                                "data": {
-                                    "id": "",
-                                    "class": "row ",
-                                    "content": ""
-                                },
-                                "components": [
-                                    {
-                                        "type": "npHTML",
-                                        "data": {
-                                            "id": "",
-                                            "class": "h5 sans-head-sub col-sm-12",
-                                            "content": "Perfect partners"
-                                        },
-                                        "components": []
-                                    },
-                                    {
-                                        "type": "npImage",
-                                        "data": {
-                                            "id": "",
-                                            "class": " col-sm-4 img-responsive",
-                                            "src": "/assets/images/Product-Image.jpg",
-                                            "alt": "widget"
-                                        },
-                                        "components": [
-                                        ]
-                                    },
-                                    {
-                                        "type": "npHTML",
-                                        "data": {
-                                            "id": "",
-                                            "class": " col-sm-8 sans-small",
-                                            "content": "<p>Flexible Elastomer Technology works as a virtual ‘liquid bandage’ to instion</p>"
-                                        },
-                                        "components": []
-                                    },
-                                    {
-                                        "type": "npHTML",
-                                        "data": {
-                                            "id": "",
-                                            "class": " col-sm-8 sans-small",
-                                            "content": "<p><i>1 year ago</i></p>"
-                                        },
-                                        "components": []
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "npHTML",
-                                "data": {
-                                    "id": "",
-                                    "class": "row ",
-                                    "content": ""
-                                },
-                                "components": [
-                                    {
-                                        "type": "npHTML",
-                                        "data": {
-                                            "id": "",
-                                            "class": "h5 sans-head-sub col-sm-12",
-                                            "content": "Perfect partners"
-                                        },
-                                        "components": []
-                                    },
-                                    {
-                                        "type": "npImage",
-                                        "data": {
-                                            "id": "",
-                                            "class": " col-sm-4 img-responsive",
-                                            "src": "/assets/images/Product-Image.jpg",
-                                            "alt": "widget"
-                                        },
-                                        "components": [
-                                        ]
-                                    },
-                                    {
-                                        "type": "npHTML",
-                                        "data": {
-                                            "id": "",
-                                            "class": " col-sm-8 sans-small",
-                                            "content": "<p>Flexible Elastomer Technology works as a virtual ‘liquid bandage’ to instion</p>"
-                                        },
-                                        "components": []
-                                    },
-                                    {
-                                        "type": "npHTML",
-                                        "data": {
-                                            "id": "",
-                                            "class": " col-sm-8 sans-small",
-                                            "content": "<p><i>1 year ago</i></p>"
-                                        },
-                                        "components": []
-                                    }
-                                ]
-                            }
+                        "components":[  
                         ]
-                    }
-                ]
-            }
-        ]
-    }
+                     },
+                     {  
+                        "type":"npHTML",
+                        "data":{  
+                           "class":"h2",
+                           "content":"Synchronized Recovery Complex II"
+                        },
+                        "components":[  
+                        ]
+                     },
+                     {  
+                        "type":"npColumn",
+                        "data":{  
+                           "class":"",
+                           "cols":"2"
+                        },
+                        "components":[  
+                           {  
+                              "type":"npImage",
+                              "data":{  
+                                 "src":"./assets/images/earth.jpg",
+                                 "id":"",
+                                 "class":"topImage img-responsive",
+                                 "alt":"Advanced-Night-Repair-Synchronized-Recovery-Complex-II"
+                              },
+                              "components":[  
+                              ]
+                           },
+                           {  
+                              "type":"npHTML",
+                              "data":{  
+                                 "class":"background-brand-offwhite inside-padding"
+                              },
+                              "components":[  
+                                 {  
+                                    "type":"npHTML",
+                                    "data":{  
+                                       "class":"h3 sans-head",
+                                       "content":"Why there's only one"
+                                    },
+                                    "components":[  
+                                       {  
+                                          "type":"npHTML",
+                                          "data":{  
+                                             "class":"h4 sans-normal",
+                                             "content":"<p>Our #1 &mdash; for everyone. Advanced Night Repair is our #1 bestselling repair serum that addresses the look of every key sign of aging, with over 25 patents*.</p><p><small>*Patents and patents pending worldwide</small></p>"
+                                          },
+                                          "components":[  
+                                          ]
+                                       }
+                                    ]
+                                 }
+                              ]
+                           }
+                        ]
+                     },
+                     {  
+                        "type":"npHTML",
+                        "data":{  
+                           "id":"",
+                           "class":"h3 sans-head collapse-toggle",
+                           "data-ng:click":"isCollapsed = !isCollapsed",
+                           "xplugin":"np-expandable",
+                           "content":"Demonstration"
+                        },
+                        "components":[  
+                           {  
+                              "type":"npHTML",
+                              "data":{  
+                                 "id":"",
+                                 "class":"h4 sans-normal collapse-element",
+                                 "data-collapse":"isCollapsed",
+                                 "content":"<p>Apply 1 dropper to the back of one hand and massage into skin.</p><p>&nbsp;</p><p>Lightly spray the backs of both hands with water, then compare hands. Tell your customer to pretend the water is a moisturizer.</p><p>Ask her to notice how the skin treated with Advanced Night Repair holds moisture, while the untreated skin experiences moisture loss (the water quickly rolls off).</p>"
+                              },
+                              "components":[  
+
+                              ]
+                           }
+                        ]
+                     },
+                     {  
+                        "type":"npHTML",
+                        "data":{  
+                           "id":"",
+                           "class":"h3 sans-head collapse-toggle",
+                           "data-ng:click":"isCollapsed = !isCollapsed",
+                           "xplugin":"np-expandable",
+                           "content":"Benefits"
+                        },
+                        "components":[  
+                           {  
+                              "type":"npHTML",
+                              "data":{  
+                                 "id":"",
+                                 "class":"h4 sans-normal collapse-element",
+                                 "data-collapse":"isCollapsed",
+                                 "content":"<p>1.Repair EVERY night&mdash;while you sleep, it helps maximize skin&rsquo;s natural nightly renewal.</p><p>2. Prevent and hydrate EVERY day&mdash;during the day, it helps protect skin from environmental assaults.</p><p>3. Addresses the look of EVERY key sign of aging&mdash;use it every day for a dramatic reduction in the look of every major sign of aging.</p>"
+                              },
+                              "components":[  
+
+                              ]
+                           }
+                        ]
+                     },
+                     {  
+                        "type":"npHTML",
+                        "data":{  
+                           "id":"",
+                           "class":"h3 sans-head collapse-toggle",
+                           "data-ng:click":"isCollapsed = !isCollapsed",
+                           "xplugin":"np-expandable",
+                           "content":"If she asks, share"
+                        },
+                        "components":[  
+                           {  
+                              "type":"npHTML",
+                              "data":{  
+                                 "id":"",
+                                 "class":"h4 sans-normal collapse-element",
+                                 "data-collapse":"isCollapsed",
+                                 "content":"<p>Our powerful Chronolux CB&trade; Technology helps support skin cells&#39; natural purification and synchronization processes for our most comprehensive repair serum.&nbsp;</p><p>PURIFICATION&mdash;A natural repair process that helps remove cellular debris that can accelerate premature signs of aging.</p><p>SYNCHRONIZATION&mdash; A natural repair process that ensures cellular renewal happens at the right time.</p><p>A powerful blend of anti-oxidants help neutralize free radicals to help prevent future damage. High levels of Hyaluronic Acid help lock in moisture to create the perfect environment for skin&#39;s natural renewal.</p><p>Tested and Proven. Lines and wrinkles look significantly reduced. Skin feels smoother, hydrated and stronger. Looks younger, radiant, more translucent and even toned.</p>"
+                              },
+                              "components":[  
+
+                              ]
+                           }
+                        ]
+                     },
+                     {  
+                        "type":"npHTML",
+                        "data":{  
+                           "class":"h3 sans-head collapse-toggle",
+                           "data-ng:click":"isCollapsed = !isCollapsed",
+                           "xplugin":"np-expandable",
+                           "content":"Perfect partners text"
+                        },
+                        "components":[  
+                           {  
+                              "type":"npHTML",
+                              "data":{  
+                                 "class":"collapse-element",
+                                 "data-collapse":"isCollapsed"
+                              },
+                              "components":[  
+                                 {  
+                                    "type":"npColumn",
+                                    "data":{  
+                                       "class":"row",
+                                       "cols":"2"
+                                    },
+                                    "components":[  
+                                       {  
+                                          "type":"npHTML",
+                                          "data":{  
+                                             "class":"row"
+                                          },
+                                          "components":[  
+                                             {  
+                                                "type":"npImage",
+                                                "data":{  
+                                 "src":"./assets/images/earth.jpg",
+                                                   "id":"",
+                                                   "class":"col-sm-4",
+                                                   "alt":"<a href='#/983'>Enlighten-Skintone Correcting Collection</a>"
+                                                },
+                                                "components":[  
+
+                                                ]
+                                             },
+                                             {  
+                                                "type":"npHTML",
+                                                "data":{  
+                                                   "class":"col-sm-8 sans-small",
+                                                   "content":"<a href='#/983'>Enlighten-Skintone Correcting Collection</a>",
+                                                   "link":"/api/products/name/Product-Manifest-Enlighten-Skintone-Correcting-Collection"
+                                                },
+                                                "components":[  
+
+                                                ]
+                                             },
+                                             {  
+                                                "type":"npHTML",
+                                                "data":{  
+                                                   "class":"col-sm-8 sans-small",
+                                                   "content":"1 month"
+                                                },
+                                                "components":[  
+
+                                                ]
+                                             }
+                                          ]
+                                       },
+                                       {  
+                                          "type":"npHTML",
+                                          "data":{  
+                                             "class":"row"
+                                          },
+                                          "components":[  
+
+                                          ]
+                                       }
+                                    ]
+                                 },
+                                 {  
+                                    "type":"npHTML",
+                                    "data":{  
+                                       "class":"row"
+                                    },
+                                    "components":[  
+                                       {  
+                                          "type":"npHTML",
+                                          "data":{  
+                                             "class":"h4 sans-normal",
+                                             "content":"<p><strong>Need a phrase to help you link? Try one of these:</strong></p><p>&quot;Because you told me you&#39;re concerned with ___, I want to also show you ___.&quot;</p><p>&quot;Because you love ___, I also want to show you ___.&quot;</p>"
+                                          },
+                                          "components":[  
+
+                                          ]
+                                       }
+                                    ]
+                                 }
+                              ]
+                           }
+                        ]
+                     },
+                     {  
+                        "type":"npHTML",
+                        "data":{  
+                           "id":"",
+                           "class":"h3 sans-head collapse-toggle",
+                           "data-ng:click":"isCollapsed = !isCollapsed",
+                           "xplugin":"np-expandable",
+                           "content":"Story"
+                        },
+                        "components":[  
+                           {  
+                              "type":"npHTML",
+                              "data":{  
+                                 "id":"",
+                                 "class":"h4 sans-normal collapse-element",
+                                 "data-collapse":"isCollapsed",
+                                 "content":"<p>Here&rsquo;s the truth: Damage happens. Whether you&#39;re 21 or 81, it&#39;s an inevitable fact of life. But, like anything else in life, it&#39;s not what happens, but how you handle it, that matters. That&#39;s where Advanced Night Repair comes in. It takes care of what your skin can&#39;t do alone. It&#39;s the power behind skin&#39;s ability to repair itself night after night and wake up refreshed, ready to take on the day. So as you sleep, tucked safely into bed, rest assured&mdash;Advanced Night Repair is working all night long, protecting and renewing your skin. Let the night move you&mdash;and wake up to more beautiful skin.</p>"
+                              },
+                              "components":[  
+
+                              ]
+                           }
+                        ]
+                     },
+                     {  
+                        "type":"npHTML",
+                        "data":{  
+                           "id":"",
+                           "class":"h3 sans-head collapse-toggle",
+                           "data-ng:click":"isCollapsed = !isCollapsed",
+                           "xplugin":"np-expandable",
+                           "content":"Perfect partners text"
+                        },
+                        "components":[  
+                           {  
+                              "type":"npHTML",
+                              "data":{  
+                                 "id":"",
+                                 "class":"h4 sans-normal collapse-element",
+                                 "data-collapse":"isCollapsed",
+                                 "content":"<p><strong>&quot;What results will I see?&quot;</strong></p><p>Advanced Night Repair has instant and long-term results. Customers can expect to feel instantly hydrated skin and will see a dramatic reduction in the look of every key sign of aging&mdash; lines, wrinkles, uneven skintone, and dehydration.&nbsp;</p><p>&nbsp;</p><p><strong>&quot;Is it better than other serums on the market?&quot;</strong></p><p>Some customers are skeptical. They see a lot of different serums on the market and will want to know why Advanced Night Repair is better. This is your opportunity to be proud. Tell her Advanced Night Repair was the first repair serum on the market, and today it represents more than 30 years of innovative scientific research and 25+ patents. It&rsquo;s exclusive to Estée Lauder and there is nothing else like it available today. But don&rsquo;t just tell her about it&mdash;show her the Water Demonstration. It&rsquo;s guaranteed to wow every time.</p><p>&nbsp;</p><p>&nbsp;</p><p><strong>&quot;How do I use it?&quot;</strong></p><p>Apply 5 drops over cleansed face and throat using Heart Ritual. Follow with Estée Lauder moisturizer.</p>"
+                              },
+                              "components":[  
+
+                              ]
+                           }
+                        ]
+                     },
+                     {  
+                        "type":"npColumn",
+                        "data":{  
+                           "class":"row button-padding",
+                           "cols":"2"
+                        },
+                        "components":[  
+                           {  
+                              "type":"npButton",
+                              "data":{  
+                                 "link":"/api/favorites/product/Product-Manifest-Advanced-Night-Repair-Synchronized-Recovery-Complex-II",
+                                 "type":"",
+                                 "class":"btn-open-favorites",
+                                 "content":"<span class='glyphicon glyphicon-heart-empty' aria-hidden='true'></span>  Favorite this"
+                              },
+                              "components":[  
+
+                              ]
+                           },
+                           {  
+                              "type":"npButton",
+                              "data":{  
+                                 "link":"Question1",
+                                 "type":"",
+                                 "class":"btn btn-info btn-sm",
+                                 "content":"GET THE FULL FACT SHEET"
+                              },
+                              "components":[  
+                              ]
+                           }
+                        ]
+                     }
+                  ]
+               }
+            ]
+         },
+         {  
+            "type":"npHTML",
+            "data":{  
+               "class":"outside-padding"
+            },
+            "components":[  
+               {  
+                  "type":"npColumn",
+                  "data":{  
+                     "class":"row ",
+                     "cols":"2"
+                  },
+                  "components":[  
+                     {  
+                        "type":"npHTML",
+                        "data":{  
+                           "class":"row"
+                        },
+                        "components":[  
+                           {  
+                              "type":"npHTML",
+                              "data":{  
+                                 "class":"h5 sans-head-sub col-sm-12",
+                                 "content":"SEE SIMILAR PRODUCTS:"
+                              },
+                              "components":[  
+                              ]
+                           },
+                           {  
+                              "type":"npImage",
+                              "data":{  
+                                 "src":"./assets/images/earth.jpg",
+                                 "id":"",
+                                 "class":"col-sm-4 img-responsive",
+                                 "alt":"<a href='#/977'>Advanced Night Repair Eye-Synchronized Complex II</a>"
+                              },
+                              "components":[  
+                              ]
+                           },
+                           {  
+                              "type":"npHTML",
+                              "data":{  
+                                 "class":"col-sm-8 sans-small",
+                                 "content":"<a href='#/977'>Advanced Night Repair Eye-Synchronized Complex II</a>",
+                                 "link":"/api/products/name/Product-Manifest-Advanced-Night-Repair-Eye-Synchronized-Complex-II"
+                              },
+                              "components":[  
+                              ]
+                           },
+                           {  
+                              "type":"npHTML",
+                              "data":{  
+                                 "class":"col-sm-8 sans-small",
+                                 "content":"1 month"
+                              },
+                              "components":[  
+                              ]
+                           }
+                        ]
+                     },
+                     {  
+                        "type":"npHTML",
+                        "data":{  
+                           "class":"row"
+                        },
+                        "components":[  
+                           {  
+                              "type":"npHTML",
+                              "data":{  
+                                 "class":"h5 sans-head-sub col-sm-12",
+                                 "content":"SUGGESTED FOR YOU"
+                              },
+                              "components":[  
+                              ]
+                           },
+                           {  
+                              "type":"npImage",
+                              "data":{  
+                                 "src":"./assets/images/earth.jpg",
+                                 "id":"",
+                                 "class":"col-sm-4 img-responsive",
+                                 "alt":"<a href='#/980'>Clear Difference-Advanced Blemish Collection</a>"
+                              },
+                              "components":[  
+                              ]
+                           },
+                           {  
+                              "type":"npHTML",
+                              "data":{  
+                                 "class":"col-sm-8 sans-small",
+                                 "content":"<a href='#/980'>Clear Difference-Advanced Blemish Collection</a>",
+                                 "link":"/api/products/name/Product-Manifest-Clear-Difference-Advanced-Blemish-Collection"
+                              },
+                              "components":[  
+                              ]
+                           },
+                           {  
+                              "type":"npHTML",
+                              "data":{  
+                                 "class":"col-sm-8 sans-small",
+                                 "content":"1 month"
+                              },
+                              "components":[  
+                              ]
+                           }
+                        ]
+                     }
+                  ]
+               }
+            ]
+         }
+      ]
+   }
 ]

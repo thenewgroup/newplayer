@@ -2,7 +2,7 @@
     'use strict';
     /** @ngInject */
     function npMediaElementDirective($log) {
-        $log.debug('\nnpHotspot mediaelementDirective::Init\n');
+        $log.debug('\nnpReveal mediaelementDirective::Init\n');
         var Directive = function () {
             this.restrict = 'A';
             this.link = function (scope, element, attrs, controller) {
@@ -81,7 +81,7 @@
             /** @ngInject */
             .run(
                     function ($log, $rootScope) {
-                        $log.debug('npHotspot::component loaded!');
+                        $log.debug('npReveal::component loaded!');
                     }
             );
 })();
