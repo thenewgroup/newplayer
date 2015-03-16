@@ -124,6 +124,79 @@
     padding-right: 20px;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player Flash Cards classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+#np_reNutriv .np-flash-card{  
+    position: fixed;
+    content: "";
+    width: 100%;
+    left: 0;
+    right: 0;
+}
+#np_reNutriv #flash-cards {
+    position:absolute;
+    left:0;
+}
+#np_reNutriv .flash-card-background {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    /*background-color: #FFFFFF;*/
+}
+#np_reNutriv .flash-card-overlay {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: #000000;
+}
+#np_reNutriv .flash-cards-wrapper {
+    white-space: nowrap;
+    width: auto;
+
+}
+#np_reNutriv .flash-card-content-text {
+    position: relative;
+}
+#np_reNutriv .flash-card-front-wrapper {
+    padding: 2em;
+}
+#np_reNutriv .flash-card-content-front {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: #FFFFFF;
+}
+#np_reNutriv .flash-card-content-back {
+    /*position: absolute;*/
+/*    left: 0;
+    top: 0;*/
+    background-color: #FFFFFF;
+}
+#np_reNutriv .flash-card-content-front p{
+    color: #000000;
+}
+#np_reNutriv .flash-card-content-back p{
+    color: #ff0000;
+}
+#np_reNutriv .flash-card-button {
+    position: relative;
+    top: 0;
+    right: 0;
+    color: #313131;
+    /*background-color: #ff0000;*/
+}
+#np_reNutriv .flash-cards-object {
+    display: inline-block;
+    position: relative;
+}
+
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Reveal classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 #np_reNutriv .reveal-object {
