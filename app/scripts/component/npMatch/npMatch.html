@@ -1,0 +1,20 @@
+<form class="np-cmp-wrapper {{component.type}} " ng-controller="npMatchController as npMatch" ng-submit="npMatch.evaluate()">
+
+    <div class="debug">
+        <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
+    </div>
+
+    <h5 class="dark text-uppercase">question:</h5>
+    <div class="npMatch-content" ng-bind-html="npMatch.content"></div>
+
+	<h5 class="dark text-uppercase">answers:</h5>
+    <div np-component ng-repeat="component in components" idx="{{component.idx}}"></div>
+
+    <button type="submit" class="col-xs-3 btn-primary">Submit</button> &nbsp;
+    <button id="next_button" class="btn-default" ng-click="npMatch.nextPage($event)" ng-show="npMatch.canContinue">Next</button>
+<!--    <div class="btn btn-default">
+        <input type="submit" />
+    </div>-->
+
+    <div class="npMatch-feedback" ng-if="npMatch.feedback" ng-bind-html="npMatch.feedback"></div>
+</form>

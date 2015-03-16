@@ -36,3 +36,12 @@
 
 </div>
 
+<div ng-if="npMatch" class="np-cmp-wrapper {{component.type}} matchbox" ng-controller="npAnswerController as npAnswer">
+    <div class="slide-wrapper reveal-slide rsContent">
+        <label>
+            <span class="npAnswer-label" for="{{npAnswer.id}}_input" ng-bind-html="npAnswer.label"></span>
+        </label>
+
+        <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+    </div>
+</div>
