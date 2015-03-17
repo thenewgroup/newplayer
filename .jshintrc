@@ -34,9 +34,9 @@
             "Strong" : false,
             "Draggable" : false,
             "SplitText" : false,
-            "VelocityTracker" : false, 
+            "VelocityTracker" : false,
             "CSSPlugin" : false,
-            "ThrowPropsPlugin" : false, 
+            "ThrowPropsPlugin" : false,
             "BezierPlugin" : false
         },
 	"esnext": true,

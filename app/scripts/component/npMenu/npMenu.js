@@ -1,3 +1,4 @@
+/* jshint -W003, -W117, -W026, -W040 */
 (function () {
 
   'use strict';
@@ -130,8 +131,8 @@
       vm.changePageId = function (toPage) {
         $log.info('changePageId', toPage);
         ManifestService.setPageId(toPage);
-      }
-    };
+      };
+    }
   }
 
 })();
