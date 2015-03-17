@@ -1,3 +1,4 @@
+/* jshint -W003, -W117 */
 (function () {
     'use strict';
     angular
@@ -48,14 +49,14 @@
                             }
 //                            console.log('eleHeight: ' + eleHeight);
                             if (isCollapsed) {
-                                TweenMax.to(icon, .75, {
+                                TweenMax.to(icon, 0.75, {
                                     css: {
                                         transformOrigin: "50% 50%",
                                         rotation: 0
                                     },
                                     ease: Cubic.easeOut
                                 });
-                                TweenMax.to(ele, .75, {
+                                TweenMax.to(ele, 0.75, {
                                     css: {
                                         autoAlpha: 0,
                                         height: "10px"
@@ -64,7 +65,7 @@
                                 });
                                 isCollapsed = !isCollapsed;
                             } else if (!isCollapsed) {
-                                TweenMax.to(icon, .75, {
+                                TweenMax.to(icon, 0.75, {
                                     css: {
                                         transformOrigin: "50% 50%",
                                         rotation: 90

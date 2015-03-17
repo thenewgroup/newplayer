@@ -1,3 +1,5 @@
+/* jshint -W003,-W004, -W038, -W117 */
+
 (function () {
 
     'use strict';

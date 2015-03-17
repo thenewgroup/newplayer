@@ -1,3 +1,4 @@
+/* jshint -W003, -W117 */
 (function () {
   'use strict';
 
