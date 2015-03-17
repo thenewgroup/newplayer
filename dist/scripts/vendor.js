@@ -8829,7 +8829,7 @@ if ( typeof window === "object" && typeof window.document === "object" ) {
 })( window );
 
 /**
- * @license AngularJS v1.3.13
+ * @license AngularJS v1.3.15
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -8884,7 +8884,7 @@ function minErr(module, ErrorConstructor) {
       return match;
     });
 
-    message = message + '\nhttp://errors.angularjs.org/1.3.13/' +
+    message = message + '\nhttp://errors.angularjs.org/1.3.15/' +
       (module ? module + '/' : '') + code;
     for (i = 2; i < arguments.length; i++) {
       message = message + (i == 2 ? '?' : '&') + 'p' + (i - 2) + '=' +
@@ -9376,6 +9376,12 @@ function isString(value) {return typeof value === 'string';}
  * @description
  * Determines if a reference is a `Number`.
  *
+ * This includes the "special" numbers `NaN`, `+Infinity` and `-Infinity`.
+ *
+ * If you wish to exclude these then you can use the native
+ * [`isFinite'](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/isFinite)
+ * method.
+ *
  * @param {*} value Reference to check.
  * @returns {boolean} True if `value` is a `Number`.
  */
@@ -9744,10 +9750,11 @@ function equals(o1, o2) {
       } else if (isDate(o1)) {
         if (!isDate(o2)) return false;
         return equals(o1.getTime(), o2.getTime());
-      } else if (isRegExp(o1) && isRegExp(o2)) {
-        return o1.toString() == o2.toString();
+      } else if (isRegExp(o1)) {
+        return isRegExp(o2) ? o1.toString() == o2.toString() : false;
       } else {
-        if (isScope(o1) || isScope(o2) || isWindow(o1) || isWindow(o2) || isArray(o2)) return false;
+        if (isScope(o1) || isScope(o2) || isWindow(o1) || isWindow(o2) ||
+          isArray(o2) || isDate(o2) || isRegExp(o2)) return false;
         keySet = {};
         for (key in o1) {
           if (key.charAt(0) === '$' || isFunction(o1[key])) continue;
@@ -10951,11 +10958,11 @@ function toDebugString(obj) {
  * - `codeName` – `{string}` – Code name of the release, such as "jiggling-armfat".
  */
 var version = {
-  full: '1.3.13',    // all of these placeholder strings will be replaced by grunt's
+  full: '1.3.15',    // all of these placeholder strings will be replaced by grunt's
   major: 1,    // package task
   minor: 3,
-  dot: 13,
-  codeName: 'meticulous-riffleshuffle'
+  dot: 15,
+  codeName: 'locality-filtration'
 };
 
 
@@ -11091,6 +11098,17 @@ function publishExternalAPI(angular) {
     }
   ]);
 }
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *     Any commits to this file should be reviewed with security in mind.  *
+ *   Changes to this file can potentially create security vulnerabilities. *
+ *          An approval from 2 Core members with history of modifying      *
+ *                         this file is required.                          *
+ *                                                                         *
+ *  Does the change somehow allow for arbitrary javascript to be executed? *
+ *    Or allows for someone to change the prototype of built-in objects?   *
+ *     Or gives undesired access to variables likes document or window?    *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 /* global JQLitePrototype: true,
   addEventListenerFn: true,
@@ -13515,6 +13533,7 @@ var $AnimateProvider = ['$provide', function($provide) {
        * @return {Promise} the animation callback promise
        */
       leave: function(element, options) {
+        applyStyles(element, options);
         element.remove();
         return asyncPromise();
       },
@@ -13919,11 +13938,19 @@ function Browser(window, document, $log, $sniffer) {
     fireUrlChange();
   }
 
+  function getCurrentState() {
+    try {
+      return history.state;
+    } catch (e) {
+      // MSIE can reportedly throw when there is no state (UNCONFIRMED).
+    }
+  }
+
   // This variable should be used *only* inside the cacheState function.
   var lastCachedState = null;
   function cacheState() {
     // This should be the only place in $browser where `history.state` is read.
-    cachedState = window.history.state;
+    cachedState = getCurrentState();
     cachedState = isUndefined(cachedState) ? null : cachedState;
 
     // Prevent callbacks fo fire twice if both hashchange & popstate were fired.
@@ -14520,7 +14547,7 @@ function $CacheFactoryProvider() {
  * the document, but it must be a descendent of the {@link ng.$rootElement $rootElement} (IE,
  * element with ng-app attribute), otherwise the template will be ignored.
  *
- * Adding via the $templateCache service:
+ * Adding via the `$templateCache` service:
  *
  * ```js
  * var myApp = angular.module('myApp', []);
@@ -14547,6 +14574,17 @@ function $TemplateCacheProvider() {
     return $cacheFactory('templates');
   }];
 }
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *     Any commits to this file should be reviewed with security in mind.  *
+ *   Changes to this file can potentially create security vulnerabilities. *
+ *          An approval from 2 Core members with history of modifying      *
+ *                         this file is required.                          *
+ *                                                                         *
+ *  Does the change somehow allow for arbitrary javascript to be executed? *
+ *    Or allows for someone to change the prototype of built-in objects?   *
+ *     Or gives undesired access to variables likes document or window?    *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 /* ! VARIABLE/FUNCTION NAMING CONVENTIONS THAT APPLY TO THIS FILE!
  *
@@ -14759,7 +14797,8 @@ function $TemplateCacheProvider() {
  * Require another directive and inject its controller as the fourth argument to the linking function. The
  * `require` takes a string name (or array of strings) of the directive(s) to pass in. If an array is used, the
  * injected argument will be an array in corresponding order. If no such directive can be
- * found, or if the directive does not have a controller, then an error is raised. The name can be prefixed with:
+ * found, or if the directive does not have a controller, then an error is raised (unless no link function
+ * is specified, in which case error checking is skipped). The name can be prefixed with:
  *
  * * (no prefix) - Locate the required controller on the current element. Throw an error if not found.
  * * `?` - Attempt to locate the required controller or pass `null` to the `link` fn if not found.
@@ -19309,7 +19348,15 @@ function $LocaleProvider() {
         mediumDate: 'MMM d, y',
         shortDate: 'M/d/yy',
         mediumTime: 'h:mm:ss a',
-        shortTime: 'h:mm a'
+        shortTime: 'h:mm a',
+        ERANAMES: [
+          "Before Christ",
+          "Anno Domini"
+        ],
+        ERAS: [
+          "BC",
+          "AD"
+        ]
       },
 
       pluralCat: function(num) {
@@ -20317,6 +20364,7 @@ function $LocationProvider() {
          <button ng-click="$log.warn(message)">warn</button>
          <button ng-click="$log.info(message)">info</button>
          <button ng-click="$log.error(message)">error</button>
+         <button ng-click="$log.debug(message)">debug</button>
        </div>
      </file>
    </example>
@@ -20446,6 +20494,17 @@ function $LogProvider() {
     }
   }];
 }
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *     Any commits to this file should be reviewed with security in mind.  *
+ *   Changes to this file can potentially create security vulnerabilities. *
+ *          An approval from 2 Core members with history of modifying      *
+ *                         this file is required.                          *
+ *                                                                         *
+ *  Does the change somehow allow for arbitrary javascript to be executed? *
+ *    Or allows for someone to change the prototype of built-in objects?   *
+ *     Or gives undesired access to variables likes document or window?    *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 var $parseMinErr = minErr('$parse');
 
@@ -22382,8 +22441,26 @@ function $RootScopeProvider() {
     return TTL;
   };
 
+  function createChildScopeClass(parent) {
+    function ChildScope() {
+      this.$$watchers = this.$$nextSibling =
+          this.$$childHead = this.$$childTail = null;
+      this.$$listeners = {};
+      this.$$listenerCount = {};
+      this.$$watchersCount = 0;
+      this.$id = nextUid();
+      this.$$ChildScope = null;
+    }
+    ChildScope.prototype = parent;
+    return ChildScope;
+  }
+
   this.$get = ['$injector', '$exceptionHandler', '$parse', '$browser',
       function($injector, $exceptionHandler, $parse, $browser) {
+
+    function destroyChildScope($event) {
+        $event.currentScope.$$destroyed = true;
+    }
 
     /**
      * @ngdoc type
@@ -22507,15 +22584,7 @@ function $RootScopeProvider() {
           // Only create a child scope class if somebody asks for one,
           // but cache it to allow the VM to optimize lookups.
           if (!this.$$ChildScope) {
-            this.$$ChildScope = function ChildScope() {
-              this.$$watchers = this.$$nextSibling =
-                  this.$$childHead = this.$$childTail = null;
-              this.$$listeners = {};
-              this.$$listenerCount = {};
-              this.$id = nextUid();
-              this.$$ChildScope = null;
-            };
-            this.$$ChildScope.prototype = this;
+            this.$$ChildScope = createChildScopeClass(this);
           }
           child = new this.$$ChildScope();
         }
@@ -22533,13 +22602,9 @@ function $RootScopeProvider() {
         // prototypically. In all other cases, this property needs to be set
         // when the parent scope is destroyed.
         // The listener needs to be added after the parent is set
-        if (isolate || parent != this) child.$on('$destroy', destroyChild);
+        if (isolate || parent != this) child.$on('$destroy', destroyChildScope);
 
         return child;
-
-        function destroyChild() {
-          child.$$destroyed = true;
-        }
       },
 
       /**
@@ -23699,6 +23764,17 @@ function $$SanitizeUriProvider() {
     };
   };
 }
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *     Any commits to this file should be reviewed with security in mind.  *
+ *   Changes to this file can potentially create security vulnerabilities. *
+ *          An approval from 2 Core members with history of modifying      *
+ *                         this file is required.                          *
+ *                                                                         *
+ *  Does the change somehow allow for arbitrary javascript to be executed? *
+ *    Or allows for someone to change the prototype of built-in objects?   *
+ *     Or gives undesired access to variables likes document or window?    *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 var $sceMinErr = minErr('$sce');
 
@@ -24875,7 +24951,7 @@ function $TemplateRequestProvider() {
       };
 
       return $http.get(tpl, httpOptions)
-        .finally(function() {
+        ['finally'](function() {
           handleRequestFn.totalPendingRequests--;
         })
         .then(function(response) {
@@ -25571,8 +25647,8 @@ function createPredicateFn(expression, comparator, matchAgainstAnyProp) {
 }
 
 function deepCompare(actual, expected, comparator, matchAgainstAnyProp, dontMatchWholeObject) {
-  var actualType = typeof actual;
-  var expectedType = typeof expected;
+  var actualType = (actual !== null) ? typeof actual : 'null';
+  var expectedType = (expected !== null) ? typeof expected : 'null';
 
   if ((expectedType === 'string') && (expected.charAt(0) === '!')) {
     return !deepCompare(actual, expected.substring(1), comparator, matchAgainstAnyProp);
@@ -25597,7 +25673,7 @@ function deepCompare(actual, expected, comparator, matchAgainstAnyProp, dontMatc
       } else if (expectedType === 'object') {
         for (key in expected) {
           var expectedVal = expected[key];
-          if (isFunction(expectedVal)) {
+          if (isFunction(expectedVal) || isUndefined(expectedVal)) {
             continue;
           }
 
@@ -25911,6 +25987,14 @@ function ampmGetter(date, formats) {
   return date.getHours() < 12 ? formats.AMPMS[0] : formats.AMPMS[1];
 }
 
+function eraGetter(date, formats) {
+  return date.getFullYear() <= 0 ? formats.ERAS[0] : formats.ERAS[1];
+}
+
+function longEraGetter(date, formats) {
+  return date.getFullYear() <= 0 ? formats.ERANAMES[0] : formats.ERANAMES[1];
+}
+
 var DATE_FORMATS = {
   yyyy: dateGetter('FullYear', 4),
     yy: dateGetter('FullYear', 2, 0, true),
@@ -25937,10 +26021,14 @@ var DATE_FORMATS = {
      a: ampmGetter,
      Z: timeZoneGetter,
     ww: weekGetter(2),
-     w: weekGetter(1)
+     w: weekGetter(1),
+     G: eraGetter,
+     GG: eraGetter,
+     GGG: eraGetter,
+     GGGG: longEraGetter
 };
 
-var DATE_FORMATS_SPLIT = /((?:[^yMdHhmsaZEw']+)|(?:'(?:[^']|'')*')|(?:E+|y+|M+|d+|H+|h+|m+|s+|a|Z|w+))(.*)/,
+var DATE_FORMATS_SPLIT = /((?:[^yMdHhmsaZEwG']+)|(?:'(?:[^']|'')*')|(?:E+|y+|M+|d+|H+|h+|m+|s+|a|Z|G+|w+))(.*)/,
     NUMBER_STRING = /^\-?\d+$/;
 
 /**
@@ -25977,6 +26065,8 @@ var DATE_FORMATS_SPLIT = /((?:[^yMdHhmsaZEw']+)|(?:'(?:[^']|'')*')|(?:E+|y+|M+|d
  *   * `'Z'`: 4 digit (+sign) representation of the timezone offset (-1200-+1200)
  *   * `'ww'`: Week of year, padded (00-53). Week 01 is the week with the first Thursday of the year
  *   * `'w'`: Week of year (0-53). Week 1 is the week with the first Thursday of the year
+ *   * `'G'`, `'GG'`, `'GGG'`: The abbreviated form of the era string (e.g. 'AD')
+ *   * `'GGGG'`: The long form of the era string (e.g. 'Anno Domini')
  *
  *   `format` string can also be one of the following predefined
  *   {@link guide/i18n localizable formats}:
@@ -26310,6 +26400,43 @@ function limitToFilter() {
  * @param {boolean=} reverse Reverse the order of the array.
  * @returns {Array} Sorted copy of the source array.
  *
+ *
+ * @example
+ * The example below demonstrates a simple ngRepeat, where the data is sorted
+ * by age in descending order (predicate is set to `'-age'`).
+ * `reverse` is not set, which means it defaults to `false`.
+   <example module="orderByExample">
+     <file name="index.html">
+       <script>
+         angular.module('orderByExample', [])
+           .controller('ExampleController', ['$scope', function($scope) {
+             $scope.friends =
+                 [{name:'John', phone:'555-1212', age:10},
+                  {name:'Mary', phone:'555-9876', age:19},
+                  {name:'Mike', phone:'555-4321', age:21},
+                  {name:'Adam', phone:'555-5678', age:35},
+                  {name:'Julie', phone:'555-8765', age:29}];
+           }]);
+       </script>
+       <div ng-controller="ExampleController">
+         <table class="friend">
+           <tr>
+             <th>Name</th>
+             <th>Phone Number</th>
+             <th>Age</th>
+           </tr>
+           <tr ng-repeat="friend in friends | orderBy:'-age'">
+             <td>{{friend.name}}</td>
+             <td>{{friend.phone}}</td>
+             <td>{{friend.age}}</td>
+           </tr>
+         </table>
+       </div>
+     </file>
+   </example>
+ *
+ * The predicate and reverse parameters can be controlled dynamically through scope properties,
+ * as shown in the next example.
  * @example
    <example module="orderByExample">
      <file name="index.html">
@@ -26684,20 +26811,24 @@ var htmlAnchorDirective = valueFn({
  *
  * @description
  *
- * We shouldn't do this, because it will make the button enabled on Chrome/Firefox but not on IE8 and older IEs:
+ * This directive sets the `disabled` attribute on the element if the
+ * {@link guide/expression expression} inside `ngDisabled` evaluates to truthy.
+ *
+ * A special directive is necessary because we cannot use interpolation inside the `disabled`
+ * attribute.  The following example would make the button enabled on Chrome/Firefox
+ * but not on older IEs:
+ *
  * ```html
- * <div ng-init="scope = { isDisabled: false }">
- *  <button disabled="{{scope.isDisabled}}">Disabled</button>
+ * <!-- See below for an example of ng-disabled being used correctly -->
+ * <div ng-init="isDisabled = false">
+ *  <button disabled="{{isDisabled}}">Disabled</button>
  * </div>
  * ```
  *
- * The HTML specification does not require browsers to preserve the values of boolean attributes
- * such as disabled. (Their presence means true and their absence means false.)
+ * This is because the HTML specification does not require browsers to preserve the values of
+ * boolean attributes such as `disabled` (Their presence means true and their absence means false.)
  * If we put an Angular interpolation expression into such an attribute then the
  * binding information would be lost when the browser removes the attribute.
- * The `ngDisabled` directive solves this problem for the `disabled` attribute.
- * This complementary directive is not removed by the browser and so provides
- * a permanent reliable place to store the binding information.
  *
  * @example
     <example>
@@ -26716,7 +26847,7 @@ var htmlAnchorDirective = valueFn({
  *
  * @element INPUT
  * @param {expression} ngDisabled If the {@link guide/expression expression} is truthy,
- *     then special attribute "disabled" will be set on the element
+ *     then the `disabled` attribute will be set on the element
  */
 
 
@@ -27264,7 +27395,7 @@ function FormController(element, attrs, $scope, $animate, $interpolate) {
  *
  * # Alias: {@link ng.directive:ngForm `ngForm`}
  *
- * In Angular forms can be nested. This means that the outer form is valid when all of the child
+ * In Angular, forms can be nested. This means that the outer form is valid when all of the child
  * forms are valid as well. However, browsers do not allow nesting of `<form>` elements, so
  * Angular provides the {@link ng.directive:ngForm `ngForm`} directive which behaves identically to
  * `<form>` but can be nested.  This allows you to have nested forms, which is very useful when
@@ -27402,9 +27533,11 @@ var formDirectiveFactory = function(isNgForm) {
       name: 'form',
       restrict: isNgForm ? 'EAC' : 'E',
       controller: FormController,
-      compile: function ngFormCompile(formElement) {
+      compile: function ngFormCompile(formElement, attr) {
         // Setup initial state of the control
         formElement.addClass(PRISTINE_CLASS).addClass(VALID_CLASS);
+
+        var nameAttr = attr.name ? 'name' : (isNgForm && attr.ngForm ? 'ngForm' : false);
 
         return {
           pre: function ngFormPreLink(scope, formElement, attr, controller) {
@@ -27436,23 +27569,21 @@ var formDirectiveFactory = function(isNgForm) {
               });
             }
 
-            var parentFormCtrl = controller.$$parentForm,
-                alias = controller.$name;
+            var parentFormCtrl = controller.$$parentForm;
 
-            if (alias) {
-              setter(scope, null, alias, controller, alias);
-              attr.$observe(attr.name ? 'name' : 'ngForm', function(newValue) {
-                if (alias === newValue) return;
-                setter(scope, null, alias, undefined, alias);
-                alias = newValue;
-                setter(scope, null, alias, controller, alias);
-                parentFormCtrl.$$renameControl(controller, alias);
+            if (nameAttr) {
+              setter(scope, null, controller.$name, controller, controller.$name);
+              attr.$observe(nameAttr, function(newValue) {
+                if (controller.$name === newValue) return;
+                setter(scope, null, controller.$name, undefined, controller.$name);
+                parentFormCtrl.$$renameControl(controller, newValue);
+                setter(scope, null, controller.$name, controller, controller.$name);
               });
             }
             formElement.on('$destroy', function() {
               parentFormCtrl.$removeControl(controller);
-              if (alias) {
-                setter(scope, null, alias, undefined, alias);
+              if (nameAttr) {
+                setter(scope, null, attr[nameAttr], undefined, controller.$name);
               }
               extend(controller, nullFormCtrl); //stop propagating child destruction handlers upwards
             });
@@ -28718,7 +28849,7 @@ function numberInputType(scope, element, attr, ctrl, $sniffer, $browser) {
     return value;
   });
 
-  if (attr.min || attr.ngMin) {
+  if (isDefined(attr.min) || attr.ngMin) {
     var minVal;
     ctrl.$validators.min = function(value) {
       return ctrl.$isEmpty(value) || isUndefined(minVal) || value >= minVal;
@@ -28734,7 +28865,7 @@ function numberInputType(scope, element, attr, ctrl, $sniffer, $browser) {
     });
   }
 
-  if (attr.max || attr.ngMax) {
+  if (isDefined(attr.max) || attr.ngMax) {
     var maxVal;
     ctrl.$validators.max = function(value) {
       return ctrl.$isEmpty(value) || isUndefined(maxVal) || value <= maxVal;
@@ -31425,8 +31556,8 @@ is set to `true`. The parse error is stored in `ngModel.$error.parse`.
  * data-binding. Notice how different directives (`contenteditable`, `ng-model`, and `required`)
  * collaborate together to achieve the desired result.
  *
- * Note that `contenteditable` is an HTML5 attribute, which tells the browser to let the element
- * contents be edited in place by the user.  This will not work on older browsers.
+ * `contenteditable` is an HTML5 attribute, which tells the browser to let the element
+ * contents be edited in place by the user.
  *
  * We are using the {@link ng.service:$sce $sce} service here and include the {@link ngSanitize $sanitize}
  * module to automatically remove "bad" content like inline event listener (e.g. `<span onclick="...">`).
@@ -31540,6 +31671,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
       ngModelGet = parsedNgModel,
       ngModelSet = parsedNgModelAssign,
       pendingDebounce = null,
+      parserValid,
       ctrl = this;
 
   this.$$setOptions = function(options) {
@@ -31812,16 +31944,12 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
     // the model although neither viewValue nor the model on the scope changed
     var modelValue = ctrl.$$rawModelValue;
 
-    // Check if the there's a parse error, so we don't unset it accidentially
-    var parserName = ctrl.$$parserName || 'parse';
-    var parserValid = ctrl.$error[parserName] ? false : undefined;
-
     var prevValid = ctrl.$valid;
     var prevModelValue = ctrl.$modelValue;
 
     var allowInvalid = ctrl.$options && ctrl.$options.allowInvalid;
 
-    ctrl.$$runValidators(parserValid, modelValue, viewValue, function(allValid) {
+    ctrl.$$runValidators(modelValue, viewValue, function(allValid) {
       // If there was no change in validity, don't update the model
       // This prevents changing an invalid modelValue to undefined
       if (!allowInvalid && prevValid !== allValid) {
@@ -31839,12 +31967,12 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
 
   };
 
-  this.$$runValidators = function(parseValid, modelValue, viewValue, doneCallback) {
+  this.$$runValidators = function(modelValue, viewValue, doneCallback) {
     currentValidationRunId++;
     var localValidationRunId = currentValidationRunId;
 
     // check parser error
-    if (!processParseErrors(parseValid)) {
+    if (!processParseErrors()) {
       validationDone(false);
       return;
     }
@@ -31854,21 +31982,22 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
     }
     processAsyncValidators();
 
-    function processParseErrors(parseValid) {
+    function processParseErrors() {
       var errorKey = ctrl.$$parserName || 'parse';
-      if (parseValid === undefined) {
+      if (parserValid === undefined) {
         setValidity(errorKey, null);
       } else {
-        setValidity(errorKey, parseValid);
-        if (!parseValid) {
+        if (!parserValid) {
           forEach(ctrl.$validators, function(v, name) {
             setValidity(name, null);
           });
           forEach(ctrl.$asyncValidators, function(v, name) {
             setValidity(name, null);
           });
-          return false;
         }
+        // Set the parse error last, to prevent unsetting it, should a $validators key == parserName
+        setValidity(errorKey, parserValid);
+        return parserValid;
       }
       return true;
     }
@@ -31963,7 +32092,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
   this.$$parseAndValidate = function() {
     var viewValue = ctrl.$$lastCommittedViewValue;
     var modelValue = viewValue;
-    var parserValid = isUndefined(modelValue) ? undefined : true;
+    parserValid = isUndefined(modelValue) ? undefined : true;
 
     if (parserValid) {
       for (var i = 0; i < ctrl.$parsers.length; i++) {
@@ -31989,7 +32118,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
 
     // Pass the $$lastCommittedViewValue here, because the cached viewValue might be out of date.
     // This can happen if e.g. $setViewValue is called from inside a parser
-    ctrl.$$runValidators(parserValid, modelValue, ctrl.$$lastCommittedViewValue, function(allValid) {
+    ctrl.$$runValidators(modelValue, ctrl.$$lastCommittedViewValue, function(allValid) {
       if (!allowInvalid) {
         // Note: Don't check ctrl.$valid here, as we could have
         // external validators (e.g. calculated on the server),
@@ -32110,6 +32239,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
     // TODO(perf): why not move this to the action fn?
     if (modelValue !== ctrl.$modelValue) {
       ctrl.$modelValue = ctrl.$$rawModelValue = modelValue;
+      parserValid = undefined;
 
       var formatters = ctrl.$formatters,
           idx = formatters.length;
@@ -32122,7 +32252,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
         ctrl.$viewValue = ctrl.$$lastCommittedViewValue = viewValue;
         ctrl.$render();
 
-        ctrl.$$runValidators(undefined, modelValue, viewValue, noop);
+        ctrl.$$runValidators(modelValue, viewValue, noop);
       }
     }
 
@@ -32938,6 +33068,55 @@ var ngPluralizeDirective = ['$locale', '$interpolate', function($locale, $interp
  * when keys are deleted and reinstated.
  *
  *
+ * # Tracking and Duplicates
+ *
+ * When the contents of the collection change, `ngRepeat` makes the corresponding changes to the DOM:
+ *
+ * * When an item is added, a new instance of the template is added to the DOM.
+ * * When an item is removed, its template instance is removed from the DOM.
+ * * When items are reordered, their respective templates are reordered in the DOM.
+ *
+ * By default, `ngRepeat` does not allow duplicate items in arrays. This is because when
+ * there are duplicates, it is not possible to maintain a one-to-one mapping between collection
+ * items and DOM elements.
+ *
+ * If you do need to repeat duplicate items, you can substitute the default tracking behavior
+ * with your own using the `track by` expression.
+ *
+ * For example, you may track items by the index of each item in the collection, using the
+ * special scope property `$index`:
+ * ```html
+ *    <div ng-repeat="n in [42, 42, 43, 43] track by $index">
+ *      {{n}}
+ *    </div>
+ * ```
+ *
+ * You may use arbitrary expressions in `track by`, including references to custom functions
+ * on the scope:
+ * ```html
+ *    <div ng-repeat="n in [42, 42, 43, 43] track by myTrackingFunction(n)">
+ *      {{n}}
+ *    </div>
+ * ```
+ *
+ * If you are working with objects that have an identifier property, you can track
+ * by the identifier instead of the whole object. Should you reload your data later, `ngRepeat`
+ * will not have to rebuild the DOM elements for items it has already rendered, even if the
+ * JavaScript objects in the collection have been substituted for new ones:
+ * ```html
+ *    <div ng-repeat="model in collection track by model.id">
+ *      {{model.name}}
+ *    </div>
+ * ```
+ *
+ * When no `track by` expression is provided, it is equivalent to tracking by the built-in
+ * `$id` function, which tracks items by their identity:
+ * ```html
+ *    <div ng-repeat="obj in collection track by $id(obj)">
+ *      {{obj.prop}}
+ *    </div>
+ * ```
+ *
  * # Special repeat start and end points
  * To repeat a series of elements instead of just one parent element, ngRepeat (as well as other ng directives) supports extending
  * the range of the repeater by defining explicit start and end points by using **ng-repeat-start** and **ng-repeat-end** respectively.
@@ -33005,12 +33184,12 @@ var ngPluralizeDirective = ['$locale', '$interpolate', function($locale, $interp
  *
  *     For example: `(name, age) in {'adam':10, 'amalie':12}`.
  *
- *   * `variable in expression track by tracking_expression` – You can also provide an optional tracking function
- *     which can be used to associate the objects in the collection with the DOM elements. If no tracking function
- *     is specified the ng-repeat associates elements by identity in the collection. It is an error to have
- *     more than one tracking function to resolve to the same key. (This would mean that two distinct objects are
- *     mapped to the same DOM element, which is not possible.)  Filters should be applied to the expression,
- *     before specifying a tracking expression.
+ *   * `variable in expression track by tracking_expression` – You can also provide an optional tracking expression
+ *     which can be used to associate the objects in the collection with the DOM elements. If no tracking expression
+ *     is specified, ng-repeat associates elements by identity. It is an error to have
+ *     more than one tracking expression value resolve to the same key. (This would mean that two distinct objects are
+ *     mapped to the same DOM element, which is not possible.)  If filters are used in the expression, they should be
+ *     applied before the tracking expression.
  *
  *     For example: `item in items` is equivalent to `item in items track by $id(item)`. This implies that the DOM elements
  *     will be associated by item identity in the array.
@@ -34959,11 +35138,22 @@ var minlengthDirective = function() {
 
 !window.angular.$$csp() && window.angular.element(document).find('head').prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}</style>');
 /**
- * @license AngularJS v1.3.13
+ * @license AngularJS v1.3.15
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
 (function(window, angular, undefined) {'use strict';
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *     Any commits to this file should be reviewed with security in mind.  *
+ *   Changes to this file can potentially create security vulnerabilities. *
+ *          An approval from 2 Core members with history of modifying      *
+ *                         this file is required.                          *
+ *                                                                         *
+ *  Does the change somehow allow for arbitrary javascript to be executed? *
+ *    Or allows for someone to change the prototype of built-in objects?   *
+ *     Or gives undesired access to variables likes document or window?    *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 var $sanitizeMinErr = angular.$$minErr('$sanitize');
 
@@ -35376,7 +35566,6 @@ function htmlParser(html, handler) {
 }
 
 var hiddenPre=document.createElement("pre");
-var spaceRe = /^(\s*)([\s\S]*?)(\s*)$/;
 /**
  * decodes all entities into regular string
  * @param value
@@ -35385,22 +35574,10 @@ var spaceRe = /^(\s*)([\s\S]*?)(\s*)$/;
 function decodeEntities(value) {
   if (!value) { return ''; }
 
-  // Note: IE8 does not preserve spaces at the start/end of innerHTML
-  // so we must capture them and reattach them afterward
-  var parts = spaceRe.exec(value);
-  var spaceBefore = parts[1];
-  var spaceAfter = parts[3];
-  var content = parts[2];
-  if (content) {
-    hiddenPre.innerHTML=content.replace(/</g,"&lt;");
-    // innerText depends on styling as it doesn't display hidden elements.
-    // Therefore, it's better to use textContent not to cause unnecessary
-    // reflows. However, IE<9 don't support textContent so the innerText
-    // fallback is necessary.
-    content = 'textContent' in hiddenPre ?
-      hiddenPre.textContent : hiddenPre.innerText;
-  }
-  return spaceBefore + content + spaceAfter;
+  hiddenPre.innerHTML = value.replace(/</g,"&lt;");
+  // innerText depends on styling as it doesn't display hidden elements.
+  // Therefore, it's better to use textContent not to cause unnecessary reflows.
+  return hiddenPre.textContent;
 }
 
 /**
@@ -35641,7 +35818,7 @@ angular.module('ngSanitize').filter('linky', ['$sanitize', function($sanitize) {
 })(window, window.angular);
 
 /**
- * @license AngularJS v1.3.13
+ * @license AngularJS v1.3.15
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -36267,7 +36444,7 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
  * angular-ui-bootstrap
  * http://angular-ui.github.io/bootstrap/
 
- * Version: 0.12.0 - 2014-11-16
+ * Version: 0.12.1 - 2015-02-20
  * License: MIT
  */
 angular.module("ui.bootstrap", ["ui.bootstrap.tpls", "ui.bootstrap.transition","ui.bootstrap.collapse","ui.bootstrap.accordion","ui.bootstrap.alert","ui.bootstrap.bindHtml","ui.bootstrap.buttons","ui.bootstrap.carousel","ui.bootstrap.dateparser","ui.bootstrap.position","ui.bootstrap.datepicker","ui.bootstrap.dropdown","ui.bootstrap.modal","ui.bootstrap.pagination","ui.bootstrap.tooltip","ui.bootstrap.popover","ui.bootstrap.progressbar","ui.bootstrap.rating","ui.bootstrap.tabs","ui.bootstrap.timepicker","ui.bootstrap.typeahead"]);
@@ -38877,14 +39054,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
 
               // Set the initial positioning.
               tooltip.css({ top: 0, left: 0, display: 'block' });
-
-              // Now we add it to the DOM because need some info about it. But it's not
-              // visible yet anyway.
-              if ( appendToBody ) {
-                  $document.find( 'body' ).append( tooltip );
-              } else {
-                element.after( tooltip );
-              }
+              ttScope.$digest();
 
               positionTooltip();
 
@@ -38924,7 +39094,13 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
                 removeTooltip();
               }
               tooltipLinkedScope = ttScope.$new();
-              tooltip = tooltipLinker(tooltipLinkedScope, angular.noop);
+              tooltip = tooltipLinker(tooltipLinkedScope, function (tooltip) {
+                if ( appendToBody ) {
+                  $document.find( 'body' ).append( tooltip );
+                } else {
+                  element.after( tooltip );
+                }
+              });
             }
 
             function removeTooltip() {
@@ -69723,7 +69899,7 @@ function log() {
 
 
 //! moment.js
-//! version : 2.8.4
+//! version : 2.9.0
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
 //! license : MIT
 //! momentjs.com
@@ -69734,9 +69910,9 @@ function log() {
     ************************************/
 
     var moment,
-        VERSION = '2.8.4',
+        VERSION = '2.9.0',
         // the global-scope this is NOT the global object in Node.js
-        globalScope = typeof global !== 'undefined' ? global : this,
+        globalScope = (typeof global !== 'undefined' && (typeof window === 'undefined' || window === global.window)) ? global : this,
         oldGlobalMoment,
         round = Math.round,
         hasOwnProperty = Object.prototype.hasOwnProperty,
@@ -69813,7 +69989,7 @@ function log() {
             ['HH', /(T| )\d\d/]
         ],
 
-        // timezone chunker '+10:00' > ['10', '00'] or '-1530' > ['-15', '30']
+        // timezone chunker '+10:00' > ['10', '00'] or '-1530' > ['-', '15', '30']
         parseTimezoneChunker = /([\+\-]|\d\d)/gi,
 
         // getter and setter names
@@ -69973,7 +70149,7 @@ function log() {
                 return leftZeroFill(this.milliseconds(), 3);
             },
             Z    : function () {
-                var a = -this.zone(),
+                var a = this.utcOffset(),
                     b = '+';
                 if (a < 0) {
                     a = -a;
@@ -69982,7 +70158,7 @@ function log() {
                 return b + leftZeroFill(toInt(a / 60), 2) + ':' + leftZeroFill(toInt(a) % 60, 2);
             },
             ZZ   : function () {
-                var a = -this.zone(),
+                var a = this.utcOffset(),
                     b = '+';
                 if (a < 0) {
                     a = -a;
@@ -70009,7 +70185,9 @@ function log() {
 
         deprecations = {},
 
-        lists = ['months', 'monthsShort', 'weekdays', 'weekdaysShort', 'weekdaysMin'];
+        lists = ['months', 'monthsShort', 'weekdays', 'weekdaysShort', 'weekdaysMin'],
+
+        updateInProgress = false;
 
     // Pick the first defined of two or three arguments. dfl comes from
     // default.
@@ -70078,6 +70256,26 @@ function log() {
         };
     }
 
+    function monthDiff(a, b) {
+        // difference in months
+        var wholeMonthDiff = ((b.year() - a.year()) * 12) + (b.month() - a.month()),
+            // b is in (anchor - 1 month, anchor + 1 month)
+            anchor = a.clone().add(wholeMonthDiff, 'months'),
+            anchor2, adjust;
+
+        if (b - anchor < 0) {
+            anchor2 = a.clone().add(wholeMonthDiff - 1, 'months');
+            // linear across the month
+            adjust = (b - anchor) / (anchor - anchor2);
+        } else {
+            anchor2 = a.clone().add(wholeMonthDiff + 1, 'months');
+            // linear across the month
+            adjust = (b - anchor) / (anchor2 - anchor);
+        }
+
+        return -(wholeMonthDiff + adjust);
+    }
+
     while (ordinalizeTokens.length) {
         i = ordinalizeTokens.pop();
         formatTokenFunctions[i + 'o'] = ordinalizeToken(formatTokenFunctions[i], i);
@@ -70088,6 +70286,31 @@ function log() {
     }
     formatTokenFunctions.DDDD = padToken(formatTokenFunctions.DDD, 3);
 
+
+    function meridiemFixWrap(locale, hour, meridiem) {
+        var isPm;
+
+        if (meridiem == null) {
+            // nothing to do
+            return hour;
+        }
+        if (locale.meridiemHour != null) {
+            return locale.meridiemHour(hour, meridiem);
+        } else if (locale.isPM != null) {
+            // Fallback
+            isPm = locale.isPM(meridiem);
+            if (isPm && hour < 12) {
+                hour += 12;
+            }
+            if (!isPm && hour === 12) {
+                hour = 0;
+            }
+            return hour;
+        } else {
+            // thie is not supposed to happen
+            return hour;
+        }
+    }
 
     /************************************
         Constructors
@@ -70103,6 +70326,13 @@ function log() {
         }
         copyConfig(this, config);
         this._d = new Date(+config._d);
+        // Prevent infinite loop in case updateOffset creates new moment
+        // objects.
+        if (updateInProgress === false) {
+            updateInProgress = true;
+            moment.updateOffset(this);
+            updateInProgress = false;
+        }
     }
 
     // Duration Constructor
@@ -70506,7 +70736,8 @@ function log() {
         return locales[name];
     }
 
-    // Return a moment from input, that is local/utc/zone equivalent to model.
+    // Return a moment from input, that is local/utc/utcOffset equivalent to
+    // model.
     function makeAs(input, model) {
         var res, diff;
         if (model._isUTC) {
@@ -70655,6 +70886,7 @@ function log() {
             }
         },
 
+
         _calendar : {
             sameDay : '[Today at] LT',
             nextDay : '[Tomorrow at] LT',
@@ -70717,6 +70949,14 @@ function log() {
         _week : {
             dow : 0, // Sunday is the first day of the week.
             doy : 6  // The week that contains Jan 1st is the first week of the year.
+        },
+
+        firstDayOfWeek : function () {
+            return this._week.dow;
+        },
+
+        firstDayOfYear : function () {
+            return this._week.doy;
         },
 
         _invalidDate: 'Invalid date',
@@ -70885,14 +71125,14 @@ function log() {
         }
     }
 
-    function timezoneMinutesFromString(string) {
+    function utcOffsetFromString(string) {
         string = string || '';
         var possibleTzMatches = (string.match(parseTokenTimezone) || []),
             tzChunk = possibleTzMatches[possibleTzMatches.length - 1] || [],
             parts = (tzChunk + '').match(parseTimezoneChunker) || ['-', 0, 0],
             minutes = +(parts[1] * 60) + toInt(parts[2]);
 
-        return parts[0] === '+' ? -minutes : minutes;
+        return parts[0] === '+' ? minutes : -minutes;
     }
 
     // function to convert string input to date
@@ -70956,7 +71196,8 @@ function log() {
         // AM / PM
         case 'a' : // fall through to A
         case 'A' :
-            config._isPm = config._locale.isPM(input);
+            config._meridiem = input;
+            // config._isPm = config._locale.isPM(input);
             break;
         // HOUR
         case 'h' : // fall through to hh
@@ -70996,7 +71237,7 @@ function log() {
         case 'Z' : // fall through to ZZ
         case 'ZZ' :
             config._useUTC = true;
-            config._tzm = timezoneMinutesFromString(input);
+            config._tzm = utcOffsetFromString(input);
             break;
         // WEEKDAY - human
         case 'dd':
@@ -71134,10 +71375,10 @@ function log() {
         }
 
         config._d = (config._useUTC ? makeUTCDate : makeDate).apply(null, input);
-        // Apply timezone offset from input. The actual zone can be changed
+        // Apply timezone offset from input. The actual utcOffset can be changed
         // with parseZone.
         if (config._tzm != null) {
-            config._d.setUTCMinutes(config._d.getUTCMinutes() + config._tzm);
+            config._d.setUTCMinutes(config._d.getUTCMinutes() - config._tzm);
         }
 
         if (config._nextDay) {
@@ -71233,14 +71474,9 @@ function log() {
         if (config._pf.bigHour === true && config._a[HOUR] <= 12) {
             config._pf.bigHour = undefined;
         }
-        // handle am pm
-        if (config._isPm && config._a[HOUR] < 12) {
-            config._a[HOUR] += 12;
-        }
-        // if is 12 am, change hours to 0
-        if (config._isPm === false && config._a[HOUR] === 12) {
-            config._a[HOUR] = 0;
-        }
+        // handle meridiem
+        config._a[HOUR] = meridiemFixWrap(config._locale, config._a[HOUR],
+                config._meridiem);
         dateFromConfig(config);
         checkOverflow(config);
     }
@@ -71682,6 +71918,8 @@ function log() {
                 s: parseIso(match[7]),
                 w: parseIso(match[8])
             };
+        } else if (duration == null) {// checks for null or undefined
+            duration = {};
         } else if (typeof duration === 'object' &&
                 ('from' in duration || 'to' in duration)) {
             diffRes = momentsDifference(moment(duration.from), moment(duration.to));
@@ -71846,6 +72084,8 @@ function log() {
         return toInt(input) + (toInt(input) > 68 ? 1900 : 2000);
     };
 
+    moment.isDate = isDate;
+
     /************************************
         Moment Prototype
     ************************************/
@@ -71858,7 +72098,7 @@ function log() {
         },
 
         valueOf : function () {
-            return +this._d + ((this._offset || 0) * 60000);
+            return +this._d - ((this._offset || 0) * 60000);
         },
 
         unix : function () {
@@ -71921,16 +72161,16 @@ function log() {
         },
 
         utc : function (keepLocalTime) {
-            return this.zone(0, keepLocalTime);
+            return this.utcOffset(0, keepLocalTime);
         },
 
         local : function (keepLocalTime) {
             if (this._isUTC) {
-                this.zone(0, keepLocalTime);
+                this.utcOffset(0, keepLocalTime);
                 this._isUTC = false;
 
                 if (keepLocalTime) {
-                    this.add(this._dateTzOffset(), 'm');
+                    this.subtract(this._dateUtcOffset(), 'm');
                 }
             }
             return this;
@@ -71947,29 +72187,20 @@ function log() {
 
         diff : function (input, units, asFloat) {
             var that = makeAs(input, this),
-                zoneDiff = (this.zone() - that.zone()) * 6e4,
-                diff, output, daysAdjust;
+                zoneDiff = (that.utcOffset() - this.utcOffset()) * 6e4,
+                anchor, diff, output, daysAdjust;
 
             units = normalizeUnits(units);
 
-            if (units === 'year' || units === 'month') {
-                // average number of days in the months in the given dates
-                diff = (this.daysInMonth() + that.daysInMonth()) * 432e5; // 24 * 60 * 60 * 1000 / 2
-                // difference in months
-                output = ((this.year() - that.year()) * 12) + (this.month() - that.month());
-                // adjust by taking difference in days, average number of days
-                // and dst in the given months.
-                daysAdjust = (this - moment(this).startOf('month')) -
-                    (that - moment(that).startOf('month'));
-                // same as above but with zones, to negate all dst
-                daysAdjust -= ((this.zone() - moment(this).startOf('month').zone()) -
-                        (that.zone() - moment(that).startOf('month').zone())) * 6e4;
-                output += daysAdjust / diff;
-                if (units === 'year') {
+            if (units === 'year' || units === 'month' || units === 'quarter') {
+                output = monthDiff(this, that);
+                if (units === 'quarter') {
+                    output = output / 3;
+                } else if (units === 'year') {
                     output = output / 12;
                 }
             } else {
-                diff = (this - that);
+                diff = this - that;
                 output = units === 'second' ? diff / 1e3 : // 1000
                     units === 'minute' ? diff / 6e4 : // 1000 * 60
                     units === 'hour' ? diff / 36e5 : // 1000 * 60 * 60
@@ -71990,7 +72221,8 @@ function log() {
 
         calendar : function (time) {
             // We want to compare the start of today, vs this.
-            // Getting start-of-today depends on whether we're zone'd or not.
+            // Getting start-of-today depends on whether we're locat/utc/offset
+            // or not.
             var now = time || moment(),
                 sod = makeAs(now, this).startOf('day'),
                 diff = this.diff(sod, 'days', true),
@@ -72008,8 +72240,8 @@ function log() {
         },
 
         isDST : function () {
-            return (this.zone() < this.clone().month(0).zone() ||
-                this.zone() < this.clone().month(5).zone());
+            return (this.utcOffset() > this.clone().month(0).utcOffset() ||
+                this.utcOffset() > this.clone().month(5).utcOffset());
         },
 
         day : function (input) {
@@ -72099,6 +72331,10 @@ function log() {
             }
         },
 
+        isBetween: function (from, to, units) {
+            return this.isAfter(from, units) && this.isBefore(to, units);
+        },
+
         isSame: function (input, units) {
             var inputMs;
             units = normalizeUnits(units || 'millisecond');
@@ -72127,9 +72363,27 @@ function log() {
                 }
         ),
 
+        zone : deprecate(
+                'moment().zone is deprecated, use moment().utcOffset instead. ' +
+                'https://github.com/moment/moment/issues/1779',
+                function (input, keepLocalTime) {
+                    if (input != null) {
+                        if (typeof input !== 'string') {
+                            input = -input;
+                        }
+
+                        this.utcOffset(input, keepLocalTime);
+
+                        return this;
+                    } else {
+                        return -this.utcOffset();
+                    }
+                }
+        ),
+
         // keepLocalTime = true means only change the timezone, without
-        // affecting the local hour. So 5:31:26 +0300 --[zone(2, true)]-->
-        // 5:31:26 +0200 It is possible that 5:31:26 doesn't exist int zone
+        // affecting the local hour. So 5:31:26 +0300 --[utcOffset(2, true)]-->
+        // 5:31:26 +0200 It is possible that 5:31:26 doesn't exist with offset
         // +0200, so we adjust the time as needed, to be valid.
         //
         // Keeping the time actually adds/subtracts (one hour)
@@ -72137,38 +72391,51 @@ function log() {
         // a second time. In case it wants us to change the offset again
         // _changeInProgress == true case, then we have to adjust, because
         // there is no such time in the given timezone.
-        zone : function (input, keepLocalTime) {
+        utcOffset : function (input, keepLocalTime) {
             var offset = this._offset || 0,
                 localAdjust;
             if (input != null) {
                 if (typeof input === 'string') {
-                    input = timezoneMinutesFromString(input);
+                    input = utcOffsetFromString(input);
                 }
                 if (Math.abs(input) < 16) {
                     input = input * 60;
                 }
                 if (!this._isUTC && keepLocalTime) {
-                    localAdjust = this._dateTzOffset();
+                    localAdjust = this._dateUtcOffset();
                 }
                 this._offset = input;
                 this._isUTC = true;
                 if (localAdjust != null) {
-                    this.subtract(localAdjust, 'm');
+                    this.add(localAdjust, 'm');
                 }
                 if (offset !== input) {
                     if (!keepLocalTime || this._changeInProgress) {
                         addOrSubtractDurationFromMoment(this,
-                                moment.duration(offset - input, 'm'), 1, false);
+                                moment.duration(input - offset, 'm'), 1, false);
                     } else if (!this._changeInProgress) {
                         this._changeInProgress = true;
                         moment.updateOffset(this, true);
                         this._changeInProgress = null;
                     }
                 }
+
+                return this;
             } else {
-                return this._isUTC ? offset : this._dateTzOffset();
+                return this._isUTC ? offset : this._dateUtcOffset();
             }
-            return this;
+        },
+
+        isLocal : function () {
+            return !this._isUTC;
+        },
+
+        isUtcOffset : function () {
+            return this._isUTC;
+        },
+
+        isUtc : function () {
+            return this._isUTC && this._offset === 0;
         },
 
         zoneAbbr : function () {
@@ -72181,9 +72448,9 @@ function log() {
 
         parseZone : function () {
             if (this._tzm) {
-                this.zone(this._tzm);
+                this.utcOffset(this._tzm);
             } else if (typeof this._i === 'string') {
-                this.zone(this._i);
+                this.utcOffset(utcOffsetFromString(this._i));
             }
             return this;
         },
@@ -72193,10 +72460,10 @@ function log() {
                 input = 0;
             }
             else {
-                input = moment(input).zone();
+                input = moment(input).utcOffset();
             }
 
-            return (this.zone() - input) % 60 === 0;
+            return (this.utcOffset() - input) % 60 === 0;
         },
 
         daysInMonth : function () {
@@ -72259,9 +72526,17 @@ function log() {
         },
 
         set : function (units, value) {
-            units = normalizeUnits(units);
-            if (typeof this[units] === 'function') {
-                this[units](value);
+            var unit;
+            if (typeof units === 'object') {
+                for (unit in units) {
+                    this.set(unit, units[unit]);
+                }
+            }
+            else {
+                units = normalizeUnits(units);
+                if (typeof this[units] === 'function') {
+                    this[units](value);
+                }
             }
             return this;
         },
@@ -72298,11 +72573,12 @@ function log() {
             return this._locale;
         },
 
-        _dateTzOffset : function () {
+        _dateUtcOffset : function () {
             // On Firefox.24 Date#getTimezoneOffset returns a floating point.
             // https://github.com/moment/moment/pull/1871
-            return Math.round(this._d.getTimezoneOffset() / 15) * 15;
+            return -Math.round(this._d.getTimezoneOffset() / 15) * 15;
         }
+
     });
 
     function rawMonthSetter(mom, value) {
@@ -72370,6 +72646,9 @@ function log() {
 
     // add aliased format methods
     moment.fn.toJSON = moment.fn.toISOString;
+
+    // alias isUtc for dev-friendliness
+    moment.fn.isUTC = moment.fn.isUtc;
 
     /************************************
         Duration Prototype
@@ -72558,6 +72837,10 @@ function log() {
 
         localeData : function () {
             return this._locale;
+        },
+
+        toJSON : function () {
+            return this.toISOString();
         }
     });
 
@@ -72645,7 +72928,7 @@ function log() {
     if (hasModule) {
         module.exports = moment;
     } else if (typeof define === 'function' && define.amd) {
-        define('moment', function (require, exports, module) {
+        define(function (require, exports, module) {
             if (module.config && module.config() && module.config().noGlobal === true) {
                 // release the global variable
                 globalScope.moment = oldGlobalMoment;
@@ -72660,34 +72943,34 @@ function log() {
 }).call(this);
 
 /*!
- * Bootstrap v3.3.2 (http://getbootstrap.com)
- * Copyright 2011-2015 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * Bootstrap v3.0.3 (http://getbootstrap.com)
+ * Copyright 2013 Twitter, Inc.
+ * Licensed under http://www.apache.org/licenses/LICENSE-2.0
  */
 
-if (typeof jQuery === 'undefined') {
-  throw new Error('Bootstrap\'s JavaScript requires jQuery')
-}
-
-+function ($) {
-  'use strict';
-  var version = $.fn.jquery.split(' ')[0].split('.')
-  if ((version[0] < 2 && version[1] < 9) || (version[0] == 1 && version[1] == 9 && version[2] < 1)) {
-    throw new Error('Bootstrap\'s JavaScript requires jQuery version 1.9.1 or higher')
-  }
-}(jQuery);
+if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery") }
 
 /* ========================================================================
- * Bootstrap: transition.js v3.3.2
+ * Bootstrap: transition.js v3.0.3
  * http://getbootstrap.com/javascript/#transitions
  * ========================================================================
- * Copyright 2011-2015 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * Copyright 2013 Twitter, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  * ======================================================================== */
 
 
-+function ($) {
-  'use strict';
++function ($) { "use strict";
 
   // CSS TRANSITION SUPPORT (Shoutout: http://www.modernizr.com/)
   // ============================================================
@@ -72696,10 +72979,10 @@ if (typeof jQuery === 'undefined') {
     var el = document.createElement('bootstrap')
 
     var transEndEventNames = {
-      WebkitTransition : 'webkitTransitionEnd',
-      MozTransition    : 'transitionend',
-      OTransition      : 'oTransitionEnd otransitionend',
-      transition       : 'transitionend'
+      'WebkitTransition' : 'webkitTransitionEnd'
+    , 'MozTransition'    : 'transitionend'
+    , 'OTransition'      : 'oTransitionEnd otransitionend'
+    , 'transition'       : 'transitionend'
     }
 
     for (var name in transEndEventNames) {
@@ -72707,15 +72990,12 @@ if (typeof jQuery === 'undefined') {
         return { end: transEndEventNames[name] }
       }
     }
-
-    return false // explicit for ie8 (  ._.)
   }
 
   // http://blog.alexmaccaw.com/css-transitions
   $.fn.emulateTransitionEnd = function (duration) {
-    var called = false
-    var $el = this
-    $(this).one('bsTransitionEnd', function () { called = true })
+    var called = false, $el = this
+    $(this).one($.support.transition.end, function () { called = true })
     var callback = function () { if (!called) $($el).trigger($.support.transition.end) }
     setTimeout(callback, duration)
     return this
@@ -72723,31 +73003,31 @@ if (typeof jQuery === 'undefined') {
 
   $(function () {
     $.support.transition = transitionEnd()
-
-    if (!$.support.transition) return
-
-    $.event.special.bsTransitionEnd = {
-      bindType: $.support.transition.end,
-      delegateType: $.support.transition.end,
-      handle: function (e) {
-        if ($(e.target).is(this)) return e.handleObj.handler.apply(this, arguments)
-      }
-    }
   })
 
 }(jQuery);
 
 /* ========================================================================
- * Bootstrap: alert.js v3.3.2
+ * Bootstrap: alert.js v3.0.3
  * http://getbootstrap.com/javascript/#alerts
  * ========================================================================
- * Copyright 2011-2015 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * Copyright 2013 Twitter, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  * ======================================================================== */
 
 
-+function ($) {
-  'use strict';
++function ($) { "use strict";
 
   // ALERT CLASS DEFINITION
   // ======================
@@ -72756,10 +73036,6 @@ if (typeof jQuery === 'undefined') {
   var Alert   = function (el) {
     $(el).on('click', dismiss, this.close)
   }
-
-  Alert.VERSION = '3.3.2'
-
-  Alert.TRANSITION_DURATION = 150
 
   Alert.prototype.close = function (e) {
     var $this    = $(this)
@@ -72775,7 +73051,7 @@ if (typeof jQuery === 'undefined') {
     if (e) e.preventDefault()
 
     if (!$parent.length) {
-      $parent = $this.closest('.alert')
+      $parent = $this.hasClass('alert') ? $this : $this.parent()
     }
 
     $parent.trigger(e = $.Event('close.bs.alert'))
@@ -72785,14 +73061,13 @@ if (typeof jQuery === 'undefined') {
     $parent.removeClass('in')
 
     function removeElement() {
-      // detach from parent, fire event then clean up data
-      $parent.detach().trigger('closed.bs.alert').remove()
+      $parent.trigger('closed.bs.alert').remove()
     }
 
     $.support.transition && $parent.hasClass('fade') ?
       $parent
-        .one('bsTransitionEnd', removeElement)
-        .emulateTransitionEnd(Alert.TRANSITION_DURATION) :
+        .one($.support.transition.end, removeElement)
+        .emulateTransitionEnd(150) :
       removeElement()
   }
 
@@ -72800,7 +73075,9 @@ if (typeof jQuery === 'undefined') {
   // ALERT PLUGIN DEFINITION
   // =======================
 
-  function Plugin(option) {
+  var old = $.fn.alert
+
+  $.fn.alert = function (option) {
     return this.each(function () {
       var $this = $(this)
       var data  = $this.data('bs.alert')
@@ -72810,9 +73087,6 @@ if (typeof jQuery === 'undefined') {
     })
   }
 
-  var old = $.fn.alert
-
-  $.fn.alert             = Plugin
   $.fn.alert.Constructor = Alert
 
 
@@ -72833,27 +73107,34 @@ if (typeof jQuery === 'undefined') {
 }(jQuery);
 
 /* ========================================================================
- * Bootstrap: button.js v3.3.2
+ * Bootstrap: button.js v3.0.3
  * http://getbootstrap.com/javascript/#buttons
  * ========================================================================
- * Copyright 2011-2015 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * Copyright 2013 Twitter, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  * ======================================================================== */
 
 
-+function ($) {
-  'use strict';
++function ($) { "use strict";
 
   // BUTTON PUBLIC CLASS DEFINITION
   // ==============================
 
   var Button = function (element, options) {
-    this.$element  = $(element)
-    this.options   = $.extend({}, Button.DEFAULTS, options)
-    this.isLoading = false
+    this.$element = $(element)
+    this.options  = $.extend({}, Button.DEFAULTS, options)
   }
-
-  Button.VERSION  = '3.3.2'
 
   Button.DEFAULTS = {
     loadingText: 'loading...'
@@ -72867,35 +73148,32 @@ if (typeof jQuery === 'undefined') {
 
     state = state + 'Text'
 
-    if (data.resetText == null) $el.data('resetText', $el[val]())
+    if (!data.resetText) $el.data('resetText', $el[val]())
+
+    $el[val](data[state] || this.options[state])
 
     // push to event loop to allow forms to submit
-    setTimeout($.proxy(function () {
-      $el[val](data[state] == null ? this.options[state] : data[state])
-
-      if (state == 'loadingText') {
-        this.isLoading = true
-        $el.addClass(d).attr(d, d)
-      } else if (this.isLoading) {
-        this.isLoading = false
-        $el.removeClass(d).removeAttr(d)
-      }
-    }, this), 0)
+    setTimeout(function () {
+      state == 'loadingText' ?
+        $el.addClass(d).attr(d, d) :
+        $el.removeClass(d).removeAttr(d);
+    }, 0)
   }
 
   Button.prototype.toggle = function () {
-    var changed = true
     var $parent = this.$element.closest('[data-toggle="buttons"]')
+    var changed = true
 
     if ($parent.length) {
       var $input = this.$element.find('input')
-      if ($input.prop('type') == 'radio') {
-        if ($input.prop('checked') && this.$element.hasClass('active')) changed = false
-        else $parent.find('.active').removeClass('active')
+      if ($input.prop('type') === 'radio') {
+        // see if clicking on current one
+        if ($input.prop('checked') && this.$element.hasClass('active'))
+          changed = false
+        else
+          $parent.find('.active').removeClass('active')
       }
       if (changed) $input.prop('checked', !this.$element.hasClass('active')).trigger('change')
-    } else {
-      this.$element.attr('aria-pressed', !this.$element.hasClass('active'))
     }
 
     if (changed) this.$element.toggleClass('active')
@@ -72905,7 +73183,9 @@ if (typeof jQuery === 'undefined') {
   // BUTTON PLUGIN DEFINITION
   // ========================
 
-  function Plugin(option) {
+  var old = $.fn.button
+
+  $.fn.button = function (option) {
     return this.each(function () {
       var $this   = $(this)
       var data    = $this.data('bs.button')
@@ -72918,9 +73198,6 @@ if (typeof jQuery === 'undefined') {
     })
   }
 
-  var old = $.fn.button
-
-  $.fn.button             = Plugin
   $.fn.button.Constructor = Button
 
 
@@ -72936,30 +73213,36 @@ if (typeof jQuery === 'undefined') {
   // BUTTON DATA-API
   // ===============
 
-  $(document)
-    .on('click.bs.button.data-api', '[data-toggle^="button"]', function (e) {
-      var $btn = $(e.target)
-      if (!$btn.hasClass('btn')) $btn = $btn.closest('.btn')
-      Plugin.call($btn, 'toggle')
-      e.preventDefault()
-    })
-    .on('focus.bs.button.data-api blur.bs.button.data-api', '[data-toggle^="button"]', function (e) {
-      $(e.target).closest('.btn').toggleClass('focus', /^focus(in)?$/.test(e.type))
-    })
+  $(document).on('click.bs.button.data-api', '[data-toggle^=button]', function (e) {
+    var $btn = $(e.target)
+    if (!$btn.hasClass('btn')) $btn = $btn.closest('.btn')
+    $btn.button('toggle')
+    e.preventDefault()
+  })
 
 }(jQuery);
 
 /* ========================================================================
- * Bootstrap: carousel.js v3.3.2
+ * Bootstrap: carousel.js v3.0.3
  * http://getbootstrap.com/javascript/#carousel
  * ========================================================================
- * Copyright 2011-2015 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * Copyright 2013 Twitter, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  * ======================================================================== */
 
 
-+function ($) {
-  'use strict';
++function ($) { "use strict";
 
   // CAROUSEL CLASS DEFINITION
   // =========================
@@ -72974,36 +73257,18 @@ if (typeof jQuery === 'undefined') {
     this.$active     =
     this.$items      = null
 
-    this.options.keyboard && this.$element.on('keydown.bs.carousel', $.proxy(this.keydown, this))
-
-    this.options.pause == 'hover' && !('ontouchstart' in document.documentElement) && this.$element
-      .on('mouseenter.bs.carousel', $.proxy(this.pause, this))
-      .on('mouseleave.bs.carousel', $.proxy(this.cycle, this))
+    this.options.pause == 'hover' && this.$element
+      .on('mouseenter', $.proxy(this.pause, this))
+      .on('mouseleave', $.proxy(this.cycle, this))
   }
-
-  Carousel.VERSION  = '3.3.2'
-
-  Carousel.TRANSITION_DURATION = 600
 
   Carousel.DEFAULTS = {
-    interval: 5000,
-    pause: 'hover',
-    wrap: true,
-    keyboard: true
+    interval: 5000
+  , pause: 'hover'
+  , wrap: true
   }
 
-  Carousel.prototype.keydown = function (e) {
-    if (/input|textarea/i.test(e.target.tagName)) return
-    switch (e.which) {
-      case 37: this.prev(); break
-      case 39: this.next(); break
-      default: return
-    }
-
-    e.preventDefault()
-  }
-
-  Carousel.prototype.cycle = function (e) {
+  Carousel.prototype.cycle =  function (e) {
     e || (this.paused = false)
 
     this.interval && clearInterval(this.interval)
@@ -73015,37 +73280,29 @@ if (typeof jQuery === 'undefined') {
     return this
   }
 
-  Carousel.prototype.getItemIndex = function (item) {
-    this.$items = item.parent().children('.item')
-    return this.$items.index(item || this.$active)
-  }
+  Carousel.prototype.getActiveIndex = function () {
+    this.$active = this.$element.find('.item.active')
+    this.$items  = this.$active.parent().children()
 
-  Carousel.prototype.getItemForDirection = function (direction, active) {
-    var activeIndex = this.getItemIndex(active)
-    var willWrap = (direction == 'prev' && activeIndex === 0)
-                || (direction == 'next' && activeIndex == (this.$items.length - 1))
-    if (willWrap && !this.options.wrap) return active
-    var delta = direction == 'prev' ? -1 : 1
-    var itemIndex = (activeIndex + delta) % this.$items.length
-    return this.$items.eq(itemIndex)
+    return this.$items.index(this.$active)
   }
 
   Carousel.prototype.to = function (pos) {
     var that        = this
-    var activeIndex = this.getItemIndex(this.$active = this.$element.find('.item.active'))
+    var activeIndex = this.getActiveIndex()
 
     if (pos > (this.$items.length - 1) || pos < 0) return
 
-    if (this.sliding)       return this.$element.one('slid.bs.carousel', function () { that.to(pos) }) // yes, "slid"
+    if (this.sliding)       return this.$element.one('slid.bs.carousel', function () { that.to(pos) })
     if (activeIndex == pos) return this.pause().cycle()
 
-    return this.slide(pos > activeIndex ? 'next' : 'prev', this.$items.eq(pos))
+    return this.slide(pos > activeIndex ? 'next' : 'prev', $(this.$items[pos]))
   }
 
   Carousel.prototype.pause = function (e) {
     e || (this.paused = true)
 
-    if (this.$element.find('.next, .prev').length && $.support.transition) {
+    if (this.$element.find('.next, .prev').length && $.support.transition.end) {
       this.$element.trigger($.support.transition.end)
       this.cycle(true)
     }
@@ -73067,52 +73324,55 @@ if (typeof jQuery === 'undefined') {
 
   Carousel.prototype.slide = function (type, next) {
     var $active   = this.$element.find('.item.active')
-    var $next     = next || this.getItemForDirection(type, $active)
+    var $next     = next || $active[type]()
     var isCycling = this.interval
     var direction = type == 'next' ? 'left' : 'right'
+    var fallback  = type == 'next' ? 'first' : 'last'
     var that      = this
 
-    if ($next.hasClass('active')) return (this.sliding = false)
-
-    var relatedTarget = $next[0]
-    var slideEvent = $.Event('slide.bs.carousel', {
-      relatedTarget: relatedTarget,
-      direction: direction
-    })
-    this.$element.trigger(slideEvent)
-    if (slideEvent.isDefaultPrevented()) return
+    if (!$next.length) {
+      if (!this.options.wrap) return
+      $next = this.$element.find('.item')[fallback]()
+    }
 
     this.sliding = true
 
     isCycling && this.pause()
 
+    var e = $.Event('slide.bs.carousel', { relatedTarget: $next[0], direction: direction })
+
+    if ($next.hasClass('active')) return
+
     if (this.$indicators.length) {
       this.$indicators.find('.active').removeClass('active')
-      var $nextIndicator = $(this.$indicators.children()[this.getItemIndex($next)])
-      $nextIndicator && $nextIndicator.addClass('active')
+      this.$element.one('slid.bs.carousel', function () {
+        var $nextIndicator = $(that.$indicators.children()[that.getActiveIndex()])
+        $nextIndicator && $nextIndicator.addClass('active')
+      })
     }
 
-    var slidEvent = $.Event('slid.bs.carousel', { relatedTarget: relatedTarget, direction: direction }) // yes, "slid"
     if ($.support.transition && this.$element.hasClass('slide')) {
+      this.$element.trigger(e)
+      if (e.isDefaultPrevented()) return
       $next.addClass(type)
       $next[0].offsetWidth // force reflow
       $active.addClass(direction)
       $next.addClass(direction)
       $active
-        .one('bsTransitionEnd', function () {
+        .one($.support.transition.end, function () {
           $next.removeClass([type, direction].join(' ')).addClass('active')
           $active.removeClass(['active', direction].join(' '))
           that.sliding = false
-          setTimeout(function () {
-            that.$element.trigger(slidEvent)
-          }, 0)
+          setTimeout(function () { that.$element.trigger('slid.bs.carousel') }, 0)
         })
-        .emulateTransitionEnd(Carousel.TRANSITION_DURATION)
+        .emulateTransitionEnd(600)
     } else {
+      this.$element.trigger(e)
+      if (e.isDefaultPrevented()) return
       $active.removeClass('active')
       $next.addClass('active')
       this.sliding = false
-      this.$element.trigger(slidEvent)
+      this.$element.trigger('slid.bs.carousel')
     }
 
     isCycling && this.cycle()
@@ -73124,7 +73384,9 @@ if (typeof jQuery === 'undefined') {
   // CAROUSEL PLUGIN DEFINITION
   // ==========================
 
-  function Plugin(option) {
+  var old = $.fn.carousel
+
+  $.fn.carousel = function (option) {
     return this.each(function () {
       var $this   = $(this)
       var data    = $this.data('bs.carousel')
@@ -73138,9 +73400,6 @@ if (typeof jQuery === 'undefined') {
     })
   }
 
-  var old = $.fn.carousel
-
-  $.fn.carousel             = Plugin
   $.fn.carousel.Constructor = Carousel
 
 
@@ -73156,48 +73415,52 @@ if (typeof jQuery === 'undefined') {
   // CAROUSEL DATA-API
   // =================
 
-  var clickHandler = function (e) {
-    var href
-    var $this   = $(this)
-    var $target = $($this.attr('data-target') || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')) // strip for ie7
-    if (!$target.hasClass('carousel')) return
+  $(document).on('click.bs.carousel.data-api', '[data-slide], [data-slide-to]', function (e) {
+    var $this   = $(this), href
+    var $target = $($this.attr('data-target') || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')) //strip for ie7
     var options = $.extend({}, $target.data(), $this.data())
     var slideIndex = $this.attr('data-slide-to')
     if (slideIndex) options.interval = false
 
-    Plugin.call($target, options)
+    $target.carousel(options)
 
-    if (slideIndex) {
+    if (slideIndex = $this.attr('data-slide-to')) {
       $target.data('bs.carousel').to(slideIndex)
     }
 
     e.preventDefault()
-  }
-
-  $(document)
-    .on('click.bs.carousel.data-api', '[data-slide]', clickHandler)
-    .on('click.bs.carousel.data-api', '[data-slide-to]', clickHandler)
+  })
 
   $(window).on('load', function () {
     $('[data-ride="carousel"]').each(function () {
       var $carousel = $(this)
-      Plugin.call($carousel, $carousel.data())
+      $carousel.carousel($carousel.data())
     })
   })
 
 }(jQuery);
 
 /* ========================================================================
- * Bootstrap: collapse.js v3.3.2
+ * Bootstrap: collapse.js v3.0.3
  * http://getbootstrap.com/javascript/#collapse
  * ========================================================================
- * Copyright 2011-2015 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * Copyright 2013 Twitter, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  * ======================================================================== */
 
 
-+function ($) {
-  'use strict';
++function ($) { "use strict";
 
   // COLLAPSE PUBLIC CLASS DEFINITION
   // ================================
@@ -73205,25 +73468,14 @@ if (typeof jQuery === 'undefined') {
   var Collapse = function (element, options) {
     this.$element      = $(element)
     this.options       = $.extend({}, Collapse.DEFAULTS, options)
-    this.$trigger      = $(this.options.trigger).filter('[href="#' + element.id + '"], [data-target="#' + element.id + '"]')
     this.transitioning = null
 
-    if (this.options.parent) {
-      this.$parent = this.getParent()
-    } else {
-      this.addAriaAndCollapsedClass(this.$element, this.$trigger)
-    }
-
+    if (this.options.parent) this.$parent = $(this.options.parent)
     if (this.options.toggle) this.toggle()
   }
 
-  Collapse.VERSION  = '3.3.2'
-
-  Collapse.TRANSITION_DURATION = 350
-
   Collapse.DEFAULTS = {
-    toggle: true,
-    trigger: '[data-toggle="collapse"]'
+    toggle: true
   }
 
   Collapse.prototype.dimension = function () {
@@ -73234,43 +73486,35 @@ if (typeof jQuery === 'undefined') {
   Collapse.prototype.show = function () {
     if (this.transitioning || this.$element.hasClass('in')) return
 
-    var activesData
-    var actives = this.$parent && this.$parent.children('.panel').children('.in, .collapsing')
-
-    if (actives && actives.length) {
-      activesData = actives.data('bs.collapse')
-      if (activesData && activesData.transitioning) return
-    }
-
     var startEvent = $.Event('show.bs.collapse')
     this.$element.trigger(startEvent)
     if (startEvent.isDefaultPrevented()) return
 
+    var actives = this.$parent && this.$parent.find('> .panel > .in')
+
     if (actives && actives.length) {
-      Plugin.call(actives, 'hide')
-      activesData || actives.data('bs.collapse', null)
+      var hasData = actives.data('bs.collapse')
+      if (hasData && hasData.transitioning) return
+      actives.collapse('hide')
+      hasData || actives.data('bs.collapse', null)
     }
 
     var dimension = this.dimension()
 
     this.$element
       .removeClass('collapse')
-      .addClass('collapsing')[dimension](0)
-      .attr('aria-expanded', true)
-
-    this.$trigger
-      .removeClass('collapsed')
-      .attr('aria-expanded', true)
+      .addClass('collapsing')
+      [dimension](0)
 
     this.transitioning = 1
 
     var complete = function () {
       this.$element
         .removeClass('collapsing')
-        .addClass('collapse in')[dimension]('')
+        .addClass('in')
+        [dimension]('auto')
       this.transitioning = 0
-      this.$element
-        .trigger('shown.bs.collapse')
+      this.$element.trigger('shown.bs.collapse')
     }
 
     if (!$.support.transition) return complete.call(this)
@@ -73278,8 +73522,9 @@ if (typeof jQuery === 'undefined') {
     var scrollSize = $.camelCase(['scroll', dimension].join('-'))
 
     this.$element
-      .one('bsTransitionEnd', $.proxy(complete, this))
-      .emulateTransitionEnd(Collapse.TRANSITION_DURATION)[dimension](this.$element[0][scrollSize])
+      .one($.support.transition.end, $.proxy(complete, this))
+      .emulateTransitionEnd(350)
+      [dimension](this.$element[0][scrollSize])
   }
 
   Collapse.prototype.hide = function () {
@@ -73291,85 +73536,54 @@ if (typeof jQuery === 'undefined') {
 
     var dimension = this.dimension()
 
-    this.$element[dimension](this.$element[dimension]())[0].offsetHeight
+    this.$element
+      [dimension](this.$element[dimension]())
+      [0].offsetHeight
 
     this.$element
       .addClass('collapsing')
-      .removeClass('collapse in')
-      .attr('aria-expanded', false)
-
-    this.$trigger
-      .addClass('collapsed')
-      .attr('aria-expanded', false)
+      .removeClass('collapse')
+      .removeClass('in')
 
     this.transitioning = 1
 
     var complete = function () {
       this.transitioning = 0
       this.$element
+        .trigger('hidden.bs.collapse')
         .removeClass('collapsing')
         .addClass('collapse')
-        .trigger('hidden.bs.collapse')
     }
 
     if (!$.support.transition) return complete.call(this)
 
     this.$element
       [dimension](0)
-      .one('bsTransitionEnd', $.proxy(complete, this))
-      .emulateTransitionEnd(Collapse.TRANSITION_DURATION)
+      .one($.support.transition.end, $.proxy(complete, this))
+      .emulateTransitionEnd(350)
   }
 
   Collapse.prototype.toggle = function () {
     this[this.$element.hasClass('in') ? 'hide' : 'show']()
   }
 
-  Collapse.prototype.getParent = function () {
-    return $(this.options.parent)
-      .find('[data-toggle="collapse"][data-parent="' + this.options.parent + '"]')
-      .each($.proxy(function (i, element) {
-        var $element = $(element)
-        this.addAriaAndCollapsedClass(getTargetFromTrigger($element), $element)
-      }, this))
-      .end()
-  }
-
-  Collapse.prototype.addAriaAndCollapsedClass = function ($element, $trigger) {
-    var isOpen = $element.hasClass('in')
-
-    $element.attr('aria-expanded', isOpen)
-    $trigger
-      .toggleClass('collapsed', !isOpen)
-      .attr('aria-expanded', isOpen)
-  }
-
-  function getTargetFromTrigger($trigger) {
-    var href
-    var target = $trigger.attr('data-target')
-      || (href = $trigger.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '') // strip for ie7
-
-    return $(target)
-  }
-
 
   // COLLAPSE PLUGIN DEFINITION
   // ==========================
 
-  function Plugin(option) {
+  var old = $.fn.collapse
+
+  $.fn.collapse = function (option) {
     return this.each(function () {
       var $this   = $(this)
       var data    = $this.data('bs.collapse')
       var options = $.extend({}, Collapse.DEFAULTS, $this.data(), typeof option == 'object' && option)
 
-      if (!data && options.toggle && option == 'show') options.toggle = false
       if (!data) $this.data('bs.collapse', (data = new Collapse(this, options)))
       if (typeof option == 'string') data[option]()
     })
   }
 
-  var old = $.fn.collapse
-
-  $.fn.collapse             = Plugin
   $.fn.collapse.Constructor = Collapse
 
 
@@ -73385,42 +73599,57 @@ if (typeof jQuery === 'undefined') {
   // COLLAPSE DATA-API
   // =================
 
-  $(document).on('click.bs.collapse.data-api', '[data-toggle="collapse"]', function (e) {
-    var $this   = $(this)
-
-    if (!$this.attr('data-target')) e.preventDefault()
-
-    var $target = getTargetFromTrigger($this)
+  $(document).on('click.bs.collapse.data-api', '[data-toggle=collapse]', function (e) {
+    var $this   = $(this), href
+    var target  = $this.attr('data-target')
+        || e.preventDefault()
+        || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '') //strip for ie7
+    var $target = $(target)
     var data    = $target.data('bs.collapse')
-    var option  = data ? 'toggle' : $.extend({}, $this.data(), { trigger: this })
+    var option  = data ? 'toggle' : $this.data()
+    var parent  = $this.attr('data-parent')
+    var $parent = parent && $(parent)
 
-    Plugin.call($target, option)
+    if (!data || !data.transitioning) {
+      if ($parent) $parent.find('[data-toggle=collapse][data-parent="' + parent + '"]').not($this).addClass('collapsed')
+      $this[$target.hasClass('in') ? 'addClass' : 'removeClass']('collapsed')
+    }
+
+    $target.collapse(option)
   })
 
 }(jQuery);
 
 /* ========================================================================
- * Bootstrap: dropdown.js v3.3.2
+ * Bootstrap: dropdown.js v3.0.3
  * http://getbootstrap.com/javascript/#dropdowns
  * ========================================================================
- * Copyright 2011-2015 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * Copyright 2013 Twitter, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  * ======================================================================== */
 
 
-+function ($) {
-  'use strict';
++function ($) { "use strict";
 
   // DROPDOWN CLASS DEFINITION
   // =========================
 
   var backdrop = '.dropdown-backdrop'
-  var toggle   = '[data-toggle="dropdown"]'
+  var toggle   = '[data-toggle=dropdown]'
   var Dropdown = function (element) {
     $(element).on('click.bs.dropdown', this.toggle)
   }
-
-  Dropdown.VERSION = '3.3.2'
 
   Dropdown.prototype.toggle = function (e) {
     var $this = $(this)
@@ -73438,25 +73667,22 @@ if (typeof jQuery === 'undefined') {
         $('<div class="dropdown-backdrop"/>').insertAfter($(this)).on('click', clearMenus)
       }
 
-      var relatedTarget = { relatedTarget: this }
-      $parent.trigger(e = $.Event('show.bs.dropdown', relatedTarget))
+      $parent.trigger(e = $.Event('show.bs.dropdown'))
 
       if (e.isDefaultPrevented()) return
 
-      $this
-        .trigger('focus')
-        .attr('aria-expanded', 'true')
-
       $parent
         .toggleClass('open')
-        .trigger('shown.bs.dropdown', relatedTarget)
+        .trigger('shown.bs.dropdown')
+
+      $this.focus()
     }
 
     return false
   }
 
   Dropdown.prototype.keydown = function (e) {
-    if (!/(38|40|27|32)/.test(e.which) || /input|textarea/i.test(e.target.tagName)) return
+    if (!/(38|40|27)/.test(e.keyCode)) return
 
     var $this = $(this)
 
@@ -73468,41 +73694,32 @@ if (typeof jQuery === 'undefined') {
     var $parent  = getParent($this)
     var isActive = $parent.hasClass('open')
 
-    if ((!isActive && e.which != 27) || (isActive && e.which == 27)) {
-      if (e.which == 27) $parent.find(toggle).trigger('focus')
-      return $this.trigger('click')
+    if (!isActive || (isActive && e.keyCode == 27)) {
+      if (e.which == 27) $parent.find(toggle).focus()
+      return $this.click()
     }
 
-    var desc = ' li:not(.divider):visible a'
-    var $items = $parent.find('[role="menu"]' + desc + ', [role="listbox"]' + desc)
+    var $items = $('[role=menu] li:not(.divider):visible a', $parent)
 
     if (!$items.length) return
 
-    var index = $items.index(e.target)
+    var index = $items.index($items.filter(':focus'))
 
-    if (e.which == 38 && index > 0)                 index--                        // up
-    if (e.which == 40 && index < $items.length - 1) index++                        // down
-    if (!~index)                                      index = 0
+    if (e.keyCode == 38 && index > 0)                 index--                        // up
+    if (e.keyCode == 40 && index < $items.length - 1) index++                        // down
+    if (!~index)                                      index=0
 
-    $items.eq(index).trigger('focus')
+    $items.eq(index).focus()
   }
 
-  function clearMenus(e) {
-    if (e && e.which === 3) return
+  function clearMenus() {
     $(backdrop).remove()
-    $(toggle).each(function () {
-      var $this         = $(this)
-      var $parent       = getParent($this)
-      var relatedTarget = { relatedTarget: this }
-
+    $(toggle).each(function (e) {
+      var $parent = getParent($(this))
       if (!$parent.hasClass('open')) return
-
-      $parent.trigger(e = $.Event('hide.bs.dropdown', relatedTarget))
-
+      $parent.trigger(e = $.Event('hide.bs.dropdown'))
       if (e.isDefaultPrevented()) return
-
-      $this.attr('aria-expanded', 'false')
-      $parent.removeClass('open').trigger('hidden.bs.dropdown', relatedTarget)
+      $parent.removeClass('open').trigger('hidden.bs.dropdown')
     })
   }
 
@@ -73511,7 +73728,7 @@ if (typeof jQuery === 'undefined') {
 
     if (!selector) {
       selector = $this.attr('href')
-      selector = selector && /#[A-Za-z]/.test(selector) && selector.replace(/.*(?=#[^\s]*$)/, '') // strip for ie7
+      selector = selector && /#/.test(selector) && selector.replace(/.*(?=#[^\s]*$)/, '') //strip for ie7
     }
 
     var $parent = selector && $(selector)
@@ -73523,7 +73740,9 @@ if (typeof jQuery === 'undefined') {
   // DROPDOWN PLUGIN DEFINITION
   // ==========================
 
-  function Plugin(option) {
+  var old = $.fn.dropdown
+
+  $.fn.dropdown = function (option) {
     return this.each(function () {
       var $this = $(this)
       var data  = $this.data('bs.dropdown')
@@ -73533,9 +73752,6 @@ if (typeof jQuery === 'undefined') {
     })
   }
 
-  var old = $.fn.dropdown
-
-  $.fn.dropdown             = Plugin
   $.fn.dropdown.Constructor = Dropdown
 
 
@@ -73554,58 +73770,53 @@ if (typeof jQuery === 'undefined') {
   $(document)
     .on('click.bs.dropdown.data-api', clearMenus)
     .on('click.bs.dropdown.data-api', '.dropdown form', function (e) { e.stopPropagation() })
-    .on('click.bs.dropdown.data-api', toggle, Dropdown.prototype.toggle)
-    .on('keydown.bs.dropdown.data-api', toggle, Dropdown.prototype.keydown)
-    .on('keydown.bs.dropdown.data-api', '[role="menu"]', Dropdown.prototype.keydown)
-    .on('keydown.bs.dropdown.data-api', '[role="listbox"]', Dropdown.prototype.keydown)
+    .on('click.bs.dropdown.data-api'  , toggle, Dropdown.prototype.toggle)
+    .on('keydown.bs.dropdown.data-api', toggle + ', [role=menu]' , Dropdown.prototype.keydown)
 
 }(jQuery);
 
 /* ========================================================================
- * Bootstrap: modal.js v3.3.2
+ * Bootstrap: modal.js v3.0.3
  * http://getbootstrap.com/javascript/#modals
  * ========================================================================
- * Copyright 2011-2015 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * Copyright 2013 Twitter, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  * ======================================================================== */
 
 
-+function ($) {
-  'use strict';
++function ($) { "use strict";
 
   // MODAL CLASS DEFINITION
   // ======================
 
   var Modal = function (element, options) {
-    this.options        = options
-    this.$body          = $(document.body)
-    this.$element       = $(element)
-    this.$backdrop      =
-    this.isShown        = null
-    this.scrollbarWidth = 0
+    this.options   = options
+    this.$element  = $(element)
+    this.$backdrop =
+    this.isShown   = null
 
-    if (this.options.remote) {
-      this.$element
-        .find('.modal-content')
-        .load(this.options.remote, $.proxy(function () {
-          this.$element.trigger('loaded.bs.modal')
-        }, this))
-    }
+    if (this.options.remote) this.$element.load(this.options.remote)
   }
 
-  Modal.VERSION  = '3.3.2'
-
-  Modal.TRANSITION_DURATION = 300
-  Modal.BACKDROP_TRANSITION_DURATION = 150
-
   Modal.DEFAULTS = {
-    backdrop: true,
-    keyboard: true,
-    show: true
+      backdrop: true
+    , keyboard: true
+    , show: true
   }
 
   Modal.prototype.toggle = function (_relatedTarget) {
-    return this.isShown ? this.hide() : this.show(_relatedTarget)
+    return this[!this.isShown ? 'show' : 'hide'](_relatedTarget)
   }
 
   Modal.prototype.show = function (_relatedTarget) {
@@ -73618,28 +73829,18 @@ if (typeof jQuery === 'undefined') {
 
     this.isShown = true
 
-    this.checkScrollbar()
-    this.setScrollbar()
-    this.$body.addClass('modal-open')
-
     this.escape()
-    this.resize()
 
-    this.$element.on('click.dismiss.bs.modal', '[data-dismiss="modal"]', $.proxy(this.hide, this))
+    this.$element.on('click.dismiss.modal', '[data-dismiss="modal"]', $.proxy(this.hide, this))
 
     this.backdrop(function () {
       var transition = $.support.transition && that.$element.hasClass('fade')
 
       if (!that.$element.parent().length) {
-        that.$element.appendTo(that.$body) // don't move modals dom position
+        that.$element.appendTo(document.body) // don't move modals dom position
       }
 
-      that.$element
-        .show()
-        .scrollTop(0)
-
-      if (that.options.backdrop) that.adjustBackdrop()
-      that.adjustDialog()
+      that.$element.show()
 
       if (transition) {
         that.$element[0].offsetWidth // force reflow
@@ -73655,11 +73856,11 @@ if (typeof jQuery === 'undefined') {
 
       transition ?
         that.$element.find('.modal-dialog') // wait for modal to slide in
-          .one('bsTransitionEnd', function () {
-            that.$element.trigger('focus').trigger(e)
+          .one($.support.transition.end, function () {
+            that.$element.focus().trigger(e)
           })
-          .emulateTransitionEnd(Modal.TRANSITION_DURATION) :
-        that.$element.trigger('focus').trigger(e)
+          .emulateTransitionEnd(300) :
+        that.$element.focus().trigger(e)
     })
   }
 
@@ -73675,19 +73876,18 @@ if (typeof jQuery === 'undefined') {
     this.isShown = false
 
     this.escape()
-    this.resize()
 
     $(document).off('focusin.bs.modal')
 
     this.$element
       .removeClass('in')
       .attr('aria-hidden', true)
-      .off('click.dismiss.bs.modal')
+      .off('click.dismiss.modal')
 
     $.support.transition && this.$element.hasClass('fade') ?
       this.$element
-        .one('bsTransitionEnd', $.proxy(this.hideModal, this))
-        .emulateTransitionEnd(Modal.TRANSITION_DURATION) :
+        .one($.support.transition.end, $.proxy(this.hideModal, this))
+        .emulateTransitionEnd(300) :
       this.hideModal()
   }
 
@@ -73696,26 +73896,18 @@ if (typeof jQuery === 'undefined') {
       .off('focusin.bs.modal') // guard against infinite focus loop
       .on('focusin.bs.modal', $.proxy(function (e) {
         if (this.$element[0] !== e.target && !this.$element.has(e.target).length) {
-          this.$element.trigger('focus')
+          this.$element.focus()
         }
       }, this))
   }
 
   Modal.prototype.escape = function () {
     if (this.isShown && this.options.keyboard) {
-      this.$element.on('keydown.dismiss.bs.modal', $.proxy(function (e) {
+      this.$element.on('keyup.dismiss.bs.modal', $.proxy(function (e) {
         e.which == 27 && this.hide()
       }, this))
     } else if (!this.isShown) {
-      this.$element.off('keydown.dismiss.bs.modal')
-    }
-  }
-
-  Modal.prototype.resize = function () {
-    if (this.isShown) {
-      $(window).on('resize.bs.modal', $.proxy(this.handleUpdate, this))
-    } else {
-      $(window).off('resize.bs.modal')
+      this.$element.off('keyup.dismiss.bs.modal')
     }
   }
 
@@ -73723,9 +73915,7 @@ if (typeof jQuery === 'undefined') {
     var that = this
     this.$element.hide()
     this.backdrop(function () {
-      that.$body.removeClass('modal-open')
-      that.resetAdjustments()
-      that.resetScrollbar()
+      that.removeBackdrop()
       that.$element.trigger('hidden.bs.modal')
     })
   }
@@ -73736,20 +73926,21 @@ if (typeof jQuery === 'undefined') {
   }
 
   Modal.prototype.backdrop = function (callback) {
-    var that = this
+    var that    = this
     var animate = this.$element.hasClass('fade') ? 'fade' : ''
 
     if (this.isShown && this.options.backdrop) {
       var doAnimate = $.support.transition && animate
 
       this.$backdrop = $('<div class="modal-backdrop ' + animate + '" />')
-        .prependTo(this.$element)
-        .on('click.dismiss.bs.modal', $.proxy(function (e) {
-          if (e.target !== e.currentTarget) return
-          this.options.backdrop == 'static'
-            ? this.$element[0].focus.call(this.$element[0])
-            : this.hide.call(this)
-        }, this))
+        .appendTo(document.body)
+
+      this.$element.on('click.dismiss.modal', $.proxy(function (e) {
+        if (e.target !== e.currentTarget) return
+        this.options.backdrop == 'static'
+          ? this.$element[0].focus.call(this.$element[0])
+          : this.hide.call(this)
+      }, this))
 
       if (doAnimate) this.$backdrop[0].offsetWidth // force reflow
 
@@ -73759,85 +73950,31 @@ if (typeof jQuery === 'undefined') {
 
       doAnimate ?
         this.$backdrop
-          .one('bsTransitionEnd', callback)
-          .emulateTransitionEnd(Modal.BACKDROP_TRANSITION_DURATION) :
+          .one($.support.transition.end, callback)
+          .emulateTransitionEnd(150) :
         callback()
 
     } else if (!this.isShown && this.$backdrop) {
       this.$backdrop.removeClass('in')
 
-      var callbackRemove = function () {
-        that.removeBackdrop()
-        callback && callback()
-      }
-      $.support.transition && this.$element.hasClass('fade') ?
+      $.support.transition && this.$element.hasClass('fade')?
         this.$backdrop
-          .one('bsTransitionEnd', callbackRemove)
-          .emulateTransitionEnd(Modal.BACKDROP_TRANSITION_DURATION) :
-        callbackRemove()
+          .one($.support.transition.end, callback)
+          .emulateTransitionEnd(150) :
+        callback()
 
     } else if (callback) {
       callback()
     }
   }
 
-  // these following methods are used to handle overflowing modals
-
-  Modal.prototype.handleUpdate = function () {
-    if (this.options.backdrop) this.adjustBackdrop()
-    this.adjustDialog()
-  }
-
-  Modal.prototype.adjustBackdrop = function () {
-    this.$backdrop
-      .css('height', 0)
-      .css('height', this.$element[0].scrollHeight)
-  }
-
-  Modal.prototype.adjustDialog = function () {
-    var modalIsOverflowing = this.$element[0].scrollHeight > document.documentElement.clientHeight
-
-    this.$element.css({
-      paddingLeft:  !this.bodyIsOverflowing && modalIsOverflowing ? this.scrollbarWidth : '',
-      paddingRight: this.bodyIsOverflowing && !modalIsOverflowing ? this.scrollbarWidth : ''
-    })
-  }
-
-  Modal.prototype.resetAdjustments = function () {
-    this.$element.css({
-      paddingLeft: '',
-      paddingRight: ''
-    })
-  }
-
-  Modal.prototype.checkScrollbar = function () {
-    this.bodyIsOverflowing = document.body.scrollHeight > document.documentElement.clientHeight
-    this.scrollbarWidth = this.measureScrollbar()
-  }
-
-  Modal.prototype.setScrollbar = function () {
-    var bodyPad = parseInt((this.$body.css('padding-right') || 0), 10)
-    if (this.bodyIsOverflowing) this.$body.css('padding-right', bodyPad + this.scrollbarWidth)
-  }
-
-  Modal.prototype.resetScrollbar = function () {
-    this.$body.css('padding-right', '')
-  }
-
-  Modal.prototype.measureScrollbar = function () { // thx walsh
-    var scrollDiv = document.createElement('div')
-    scrollDiv.className = 'modal-scrollbar-measure'
-    this.$body.append(scrollDiv)
-    var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth
-    this.$body[0].removeChild(scrollDiv)
-    return scrollbarWidth
-  }
-
 
   // MODAL PLUGIN DEFINITION
   // =======================
 
-  function Plugin(option, _relatedTarget) {
+  var old = $.fn.modal
+
+  $.fn.modal = function (option, _relatedTarget) {
     return this.each(function () {
       var $this   = $(this)
       var data    = $this.data('bs.modal')
@@ -73849,9 +73986,6 @@ if (typeof jQuery === 'undefined') {
     })
   }
 
-  var old = $.fn.modal
-
-  $.fn.modal             = Plugin
   $.fn.modal.Constructor = Modal
 
 
@@ -73870,34 +74004,46 @@ if (typeof jQuery === 'undefined') {
   $(document).on('click.bs.modal.data-api', '[data-toggle="modal"]', function (e) {
     var $this   = $(this)
     var href    = $this.attr('href')
-    var $target = $($this.attr('data-target') || (href && href.replace(/.*(?=#[^\s]+$)/, ''))) // strip for ie7
-    var option  = $target.data('bs.modal') ? 'toggle' : $.extend({ remote: !/#/.test(href) && href }, $target.data(), $this.data())
+    var $target = $($this.attr('data-target') || (href && href.replace(/.*(?=#[^\s]+$)/, ''))) //strip for ie7
+    var option  = $target.data('modal') ? 'toggle' : $.extend({ remote: !/#/.test(href) && href }, $target.data(), $this.data())
 
-    if ($this.is('a')) e.preventDefault()
+    e.preventDefault()
 
-    $target.one('show.bs.modal', function (showEvent) {
-      if (showEvent.isDefaultPrevented()) return // only register focus restorer if modal will actually get shown
-      $target.one('hidden.bs.modal', function () {
-        $this.is(':visible') && $this.trigger('focus')
+    $target
+      .modal(option, this)
+      .one('hide', function () {
+        $this.is(':visible') && $this.focus()
       })
-    })
-    Plugin.call($target, option, this)
   })
+
+  $(document)
+    .on('show.bs.modal',  '.modal', function () { $(document.body).addClass('modal-open') })
+    .on('hidden.bs.modal', '.modal', function () { $(document.body).removeClass('modal-open') })
 
 }(jQuery);
 
 /* ========================================================================
- * Bootstrap: tooltip.js v3.3.2
+ * Bootstrap: tooltip.js v3.0.3
  * http://getbootstrap.com/javascript/#tooltip
  * Inspired by the original jQuery.tipsy by Jason Frame
  * ========================================================================
- * Copyright 2011-2015 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * Copyright 2013 Twitter, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  * ======================================================================== */
 
 
-+function ($) {
-  'use strict';
++function ($) { "use strict";
 
   // TOOLTIP PUBLIC CLASS DEFINITION
   // ===============================
@@ -73913,32 +74059,23 @@ if (typeof jQuery === 'undefined') {
     this.init('tooltip', element, options)
   }
 
-  Tooltip.VERSION  = '3.3.2'
-
-  Tooltip.TRANSITION_DURATION = 150
-
   Tooltip.DEFAULTS = {
-    animation: true,
-    placement: 'top',
-    selector: false,
-    template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>',
-    trigger: 'hover focus',
-    title: '',
-    delay: 0,
-    html: false,
-    container: false,
-    viewport: {
-      selector: 'body',
-      padding: 0
-    }
+    animation: true
+  , placement: 'top'
+  , selector: false
+  , template: '<div class="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
+  , trigger: 'hover focus'
+  , title: ''
+  , delay: 0
+  , html: false
+  , container: false
   }
 
   Tooltip.prototype.init = function (type, element, options) {
-    this.enabled   = true
-    this.type      = type
-    this.$element  = $(element)
-    this.options   = this.getOptions(options)
-    this.$viewport = this.options.viewport && $(this.options.viewport.selector || this.options.viewport)
+    this.enabled  = true
+    this.type     = type
+    this.$element = $(element)
+    this.options  = this.getOptions(options)
 
     var triggers = this.options.trigger.split(' ')
 
@@ -73948,8 +74085,8 @@ if (typeof jQuery === 'undefined') {
       if (trigger == 'click') {
         this.$element.on('click.' + this.type, this.options.selector, $.proxy(this.toggle, this))
       } else if (trigger != 'manual') {
-        var eventIn  = trigger == 'hover' ? 'mouseenter' : 'focusin'
-        var eventOut = trigger == 'hover' ? 'mouseleave' : 'focusout'
+        var eventIn  = trigger == 'hover' ? 'mouseenter' : 'focus'
+        var eventOut = trigger == 'hover' ? 'mouseleave' : 'blur'
 
         this.$element.on(eventIn  + '.' + this.type, this.options.selector, $.proxy(this.enter, this))
         this.$element.on(eventOut + '.' + this.type, this.options.selector, $.proxy(this.leave, this))
@@ -73970,8 +74107,8 @@ if (typeof jQuery === 'undefined') {
 
     if (options.delay && typeof options.delay == 'number') {
       options.delay = {
-        show: options.delay,
-        hide: options.delay
+        show: options.delay
+      , hide: options.delay
       }
     }
 
@@ -73991,17 +74128,7 @@ if (typeof jQuery === 'undefined') {
 
   Tooltip.prototype.enter = function (obj) {
     var self = obj instanceof this.constructor ?
-      obj : $(obj.currentTarget).data('bs.' + this.type)
-
-    if (self && self.$tip && self.$tip.is(':visible')) {
-      self.hoverState = 'in'
-      return
-    }
-
-    if (!self) {
-      self = new this.constructor(obj.currentTarget, this.getDelegateOptions())
-      $(obj.currentTarget).data('bs.' + this.type, self)
-    }
+      obj : $(obj.currentTarget)[this.type](this.getDelegateOptions()).data('bs.' + this.type)
 
     clearTimeout(self.timeout)
 
@@ -74016,12 +74143,7 @@ if (typeof jQuery === 'undefined') {
 
   Tooltip.prototype.leave = function (obj) {
     var self = obj instanceof this.constructor ?
-      obj : $(obj.currentTarget).data('bs.' + this.type)
-
-    if (!self) {
-      self = new this.constructor(obj.currentTarget, this.getDelegateOptions())
-      $(obj.currentTarget).data('bs.' + this.type, self)
-    }
+      obj : $(obj.currentTarget)[this.type](this.getDelegateOptions()).data('bs.' + this.type)
 
     clearTimeout(self.timeout)
 
@@ -74035,22 +74157,16 @@ if (typeof jQuery === 'undefined') {
   }
 
   Tooltip.prototype.show = function () {
-    var e = $.Event('show.bs.' + this.type)
+    var e = $.Event('show.bs.'+ this.type)
 
     if (this.hasContent() && this.enabled) {
       this.$element.trigger(e)
 
-      var inDom = $.contains(this.$element[0].ownerDocument.documentElement, this.$element[0])
-      if (e.isDefaultPrevented() || !inDom) return
-      var that = this
+      if (e.isDefaultPrevented()) return
 
       var $tip = this.tip()
 
-      var tipId = this.getUID(this.type)
-
       this.setContent()
-      $tip.attr('id', tipId)
-      this.$element.attr('aria-describedby', tipId)
 
       if (this.options.animation) $tip.addClass('fade')
 
@@ -74066,7 +74182,6 @@ if (typeof jQuery === 'undefined') {
         .detach()
         .css({ top: 0, left: 0, display: 'block' })
         .addClass(placement)
-        .data('bs.' + this.type, this)
 
       this.options.container ? $tip.appendTo(this.options.container) : $tip.insertAfter(this.$element)
 
@@ -74075,14 +74190,18 @@ if (typeof jQuery === 'undefined') {
       var actualHeight = $tip[0].offsetHeight
 
       if (autoPlace) {
-        var orgPlacement = placement
-        var $container   = this.options.container ? $(this.options.container) : this.$element.parent()
-        var containerDim = this.getPosition($container)
+        var $parent = this.$element.parent()
 
-        placement = placement == 'bottom' && pos.bottom + actualHeight > containerDim.bottom ? 'top'    :
-                    placement == 'top'    && pos.top    - actualHeight < containerDim.top    ? 'bottom' :
-                    placement == 'right'  && pos.right  + actualWidth  > containerDim.width  ? 'left'   :
-                    placement == 'left'   && pos.left   - actualWidth  < containerDim.left   ? 'right'  :
+        var orgPlacement = placement
+        var docScroll    = document.documentElement.scrollTop || document.body.scrollTop
+        var parentWidth  = this.options.container == 'body' ? window.innerWidth  : $parent.outerWidth()
+        var parentHeight = this.options.container == 'body' ? window.innerHeight : $parent.outerHeight()
+        var parentLeft   = this.options.container == 'body' ? 0 : $parent.offset().left
+
+        placement = placement == 'bottom' && pos.top   + pos.height  + actualHeight - docScroll > parentHeight  ? 'top'    :
+                    placement == 'top'    && pos.top   - docScroll   - actualHeight < 0                         ? 'bottom' :
+                    placement == 'right'  && pos.right + actualWidth > parentWidth                              ? 'left'   :
+                    placement == 'left'   && pos.left  - actualWidth < parentLeft                               ? 'right'  :
                     placement
 
         $tip
@@ -74093,24 +74212,12 @@ if (typeof jQuery === 'undefined') {
       var calculatedOffset = this.getCalculatedOffset(placement, pos, actualWidth, actualHeight)
 
       this.applyPlacement(calculatedOffset, placement)
-
-      var complete = function () {
-        var prevHoverState = that.hoverState
-        that.$element.trigger('shown.bs.' + that.type)
-        that.hoverState = null
-
-        if (prevHoverState == 'out') that.leave(that)
-      }
-
-      $.support.transition && this.$tip.hasClass('fade') ?
-        $tip
-          .one('bsTransitionEnd', complete)
-          .emulateTransitionEnd(Tooltip.TRANSITION_DURATION) :
-        complete()
+      this.$element.trigger('shown.bs.' + this.type)
     }
   }
 
-  Tooltip.prototype.applyPlacement = function (offset, placement) {
+  Tooltip.prototype.applyPlacement = function(offset, placement) {
+    var replace
     var $tip   = this.tip()
     var width  = $tip[0].offsetWidth
     var height = $tip[0].offsetHeight
@@ -74126,44 +74233,42 @@ if (typeof jQuery === 'undefined') {
     offset.top  = offset.top  + marginTop
     offset.left = offset.left + marginLeft
 
-    // $.fn.offset doesn't round pixel values
-    // so we use setOffset directly with our own function B-0
-    $.offset.setOffset($tip[0], $.extend({
-      using: function (props) {
-        $tip.css({
-          top: Math.round(props.top),
-          left: Math.round(props.left)
-        })
-      }
-    }, offset), 0)
-
-    $tip.addClass('in')
+    $tip
+      .offset(offset)
+      .addClass('in')
 
     // check to see if placing tip in new offset caused the tip to resize itself
     var actualWidth  = $tip[0].offsetWidth
     var actualHeight = $tip[0].offsetHeight
 
     if (placement == 'top' && actualHeight != height) {
+      replace = true
       offset.top = offset.top + height - actualHeight
     }
 
-    var delta = this.getViewportAdjustedDelta(placement, offset, actualWidth, actualHeight)
+    if (/bottom|top/.test(placement)) {
+      var delta = 0
 
-    if (delta.left) offset.left += delta.left
-    else offset.top += delta.top
+      if (offset.left < 0) {
+        delta       = offset.left * -2
+        offset.left = 0
 
-    var isVertical          = /top|bottom/.test(placement)
-    var arrowDelta          = isVertical ? delta.left * 2 - width + actualWidth : delta.top * 2 - height + actualHeight
-    var arrowOffsetPosition = isVertical ? 'offsetWidth' : 'offsetHeight'
+        $tip.offset(offset)
 
-    $tip.offset(offset)
-    this.replaceArrow(arrowDelta, $tip[0][arrowOffsetPosition], isVertical)
+        actualWidth  = $tip[0].offsetWidth
+        actualHeight = $tip[0].offsetHeight
+      }
+
+      this.replaceArrow(delta - width + actualWidth, actualWidth, 'left')
+    } else {
+      this.replaceArrow(actualHeight - height, actualHeight, 'top')
+    }
+
+    if (replace) $tip.offset(offset)
   }
 
-  Tooltip.prototype.replaceArrow = function (delta, dimension, isHorizontal) {
-    this.arrow()
-      .css(isHorizontal ? 'left' : 'top', 50 * (1 - delta / dimension) + '%')
-      .css(isHorizontal ? 'top' : 'left', '')
+  Tooltip.prototype.replaceArrow = function(delta, dimension, position) {
+    this.arrow().css(position, delta ? (50 * (1 - delta / dimension) + "%") : '')
   }
 
   Tooltip.prototype.setContent = function () {
@@ -74174,17 +74279,13 @@ if (typeof jQuery === 'undefined') {
     $tip.removeClass('fade in top bottom left right')
   }
 
-  Tooltip.prototype.hide = function (callback) {
+  Tooltip.prototype.hide = function () {
     var that = this
     var $tip = this.tip()
     var e    = $.Event('hide.bs.' + this.type)
 
     function complete() {
       if (that.hoverState != 'in') $tip.detach()
-      that.$element
-        .removeAttr('aria-describedby')
-        .trigger('hidden.bs.' + that.type)
-      callback && callback()
     }
 
     this.$element.trigger(e)
@@ -74195,18 +74296,18 @@ if (typeof jQuery === 'undefined') {
 
     $.support.transition && this.$tip.hasClass('fade') ?
       $tip
-        .one('bsTransitionEnd', complete)
-        .emulateTransitionEnd(Tooltip.TRANSITION_DURATION) :
+        .one($.support.transition.end, complete)
+        .emulateTransitionEnd(150) :
       complete()
 
-    this.hoverState = null
+    this.$element.trigger('hidden.bs.' + this.type)
 
     return this
   }
 
   Tooltip.prototype.fixTitle = function () {
     var $e = this.$element
-    if ($e.attr('title') || typeof ($e.attr('data-original-title')) != 'string') {
+    if ($e.attr('title') || typeof($e.attr('data-original-title')) != 'string') {
       $e.attr('data-original-title', $e.attr('title') || '').attr('title', '')
     }
   }
@@ -74215,58 +74316,19 @@ if (typeof jQuery === 'undefined') {
     return this.getTitle()
   }
 
-  Tooltip.prototype.getPosition = function ($element) {
-    $element   = $element || this.$element
-
-    var el     = $element[0]
-    var isBody = el.tagName == 'BODY'
-
-    var elRect    = el.getBoundingClientRect()
-    if (elRect.width == null) {
-      // width and height are missing in IE8, so compute them manually; see https://github.com/twbs/bootstrap/issues/14093
-      elRect = $.extend({}, elRect, { width: elRect.right - elRect.left, height: elRect.bottom - elRect.top })
-    }
-    var elOffset  = isBody ? { top: 0, left: 0 } : $element.offset()
-    var scroll    = { scroll: isBody ? document.documentElement.scrollTop || document.body.scrollTop : $element.scrollTop() }
-    var outerDims = isBody ? { width: $(window).width(), height: $(window).height() } : null
-
-    return $.extend({}, elRect, scroll, outerDims, elOffset)
+  Tooltip.prototype.getPosition = function () {
+    var el = this.$element[0]
+    return $.extend({}, (typeof el.getBoundingClientRect == 'function') ? el.getBoundingClientRect() : {
+      width: el.offsetWidth
+    , height: el.offsetHeight
+    }, this.$element.offset())
   }
 
   Tooltip.prototype.getCalculatedOffset = function (placement, pos, actualWidth, actualHeight) {
-    return placement == 'bottom' ? { top: pos.top + pos.height,   left: pos.left + pos.width / 2 - actualWidth / 2 } :
-           placement == 'top'    ? { top: pos.top - actualHeight, left: pos.left + pos.width / 2 - actualWidth / 2 } :
+    return placement == 'bottom' ? { top: pos.top + pos.height,   left: pos.left + pos.width / 2 - actualWidth / 2  } :
+           placement == 'top'    ? { top: pos.top - actualHeight, left: pos.left + pos.width / 2 - actualWidth / 2  } :
            placement == 'left'   ? { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth } :
-        /* placement == 'right' */ { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width }
-
-  }
-
-  Tooltip.prototype.getViewportAdjustedDelta = function (placement, pos, actualWidth, actualHeight) {
-    var delta = { top: 0, left: 0 }
-    if (!this.$viewport) return delta
-
-    var viewportPadding = this.options.viewport && this.options.viewport.padding || 0
-    var viewportDimensions = this.getPosition(this.$viewport)
-
-    if (/right|left/.test(placement)) {
-      var topEdgeOffset    = pos.top - viewportPadding - viewportDimensions.scroll
-      var bottomEdgeOffset = pos.top + viewportPadding - viewportDimensions.scroll + actualHeight
-      if (topEdgeOffset < viewportDimensions.top) { // top overflow
-        delta.top = viewportDimensions.top - topEdgeOffset
-      } else if (bottomEdgeOffset > viewportDimensions.top + viewportDimensions.height) { // bottom overflow
-        delta.top = viewportDimensions.top + viewportDimensions.height - bottomEdgeOffset
-      }
-    } else {
-      var leftEdgeOffset  = pos.left - viewportPadding
-      var rightEdgeOffset = pos.left + viewportPadding + actualWidth
-      if (leftEdgeOffset < viewportDimensions.left) { // left overflow
-        delta.left = viewportDimensions.left - leftEdgeOffset
-      } else if (rightEdgeOffset > viewportDimensions.width) { // right overflow
-        delta.left = viewportDimensions.left + viewportDimensions.width - rightEdgeOffset
-      }
-    }
-
-    return delta
+        /* placement == 'right' */ { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width   }
   }
 
   Tooltip.prototype.getTitle = function () {
@@ -74280,18 +74342,20 @@ if (typeof jQuery === 'undefined') {
     return title
   }
 
-  Tooltip.prototype.getUID = function (prefix) {
-    do prefix += ~~(Math.random() * 1000000)
-    while (document.getElementById(prefix))
-    return prefix
-  }
-
   Tooltip.prototype.tip = function () {
-    return (this.$tip = this.$tip || $(this.options.template))
+    return this.$tip = this.$tip || $(this.options.template)
   }
 
   Tooltip.prototype.arrow = function () {
-    return (this.$arrow = this.$arrow || this.tip().find('.tooltip-arrow'))
+    return this.$arrow = this.$arrow || this.tip().find('.tooltip-arrow')
+  }
+
+  Tooltip.prototype.validate = function () {
+    if (!this.$element[0].parentNode) {
+      this.hide()
+      this.$element = null
+      this.options  = null
+    }
   }
 
   Tooltip.prototype.enable = function () {
@@ -74307,45 +74371,31 @@ if (typeof jQuery === 'undefined') {
   }
 
   Tooltip.prototype.toggle = function (e) {
-    var self = this
-    if (e) {
-      self = $(e.currentTarget).data('bs.' + this.type)
-      if (!self) {
-        self = new this.constructor(e.currentTarget, this.getDelegateOptions())
-        $(e.currentTarget).data('bs.' + this.type, self)
-      }
-    }
-
+    var self = e ? $(e.currentTarget)[this.type](this.getDelegateOptions()).data('bs.' + this.type) : this
     self.tip().hasClass('in') ? self.leave(self) : self.enter(self)
   }
 
   Tooltip.prototype.destroy = function () {
-    var that = this
-    clearTimeout(this.timeout)
-    this.hide(function () {
-      that.$element.off('.' + that.type).removeData('bs.' + that.type)
-    })
+    this.hide().$element.off('.' + this.type).removeData('bs.' + this.type)
   }
 
 
   // TOOLTIP PLUGIN DEFINITION
   // =========================
 
-  function Plugin(option) {
+  var old = $.fn.tooltip
+
+  $.fn.tooltip = function (option) {
     return this.each(function () {
       var $this   = $(this)
       var data    = $this.data('bs.tooltip')
       var options = typeof option == 'object' && option
 
-      if (!data && option == 'destroy') return
       if (!data) $this.data('bs.tooltip', (data = new Tooltip(this, options)))
       if (typeof option == 'string') data[option]()
     })
   }
 
-  var old = $.fn.tooltip
-
-  $.fn.tooltip             = Plugin
   $.fn.tooltip.Constructor = Tooltip
 
 
@@ -74360,16 +74410,26 @@ if (typeof jQuery === 'undefined') {
 }(jQuery);
 
 /* ========================================================================
- * Bootstrap: popover.js v3.3.2
+ * Bootstrap: popover.js v3.0.3
  * http://getbootstrap.com/javascript/#popovers
  * ========================================================================
- * Copyright 2011-2015 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * Copyright 2013 Twitter, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  * ======================================================================== */
 
 
-+function ($) {
-  'use strict';
++function ($) { "use strict";
 
   // POPOVER PUBLIC CLASS DEFINITION
   // ===============================
@@ -74380,13 +74440,11 @@ if (typeof jQuery === 'undefined') {
 
   if (!$.fn.tooltip) throw new Error('Popover requires tooltip.js')
 
-  Popover.VERSION  = '3.3.2'
-
-  Popover.DEFAULTS = $.extend({}, $.fn.tooltip.Constructor.DEFAULTS, {
-    placement: 'right',
-    trigger: 'click',
-    content: '',
-    template: '<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+  Popover.DEFAULTS = $.extend({} , $.fn.tooltip.Constructor.DEFAULTS, {
+    placement: 'right'
+  , trigger: 'click'
+  , content: ''
+  , template: '<div class="popover"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
   })
 
 
@@ -74407,9 +74465,7 @@ if (typeof jQuery === 'undefined') {
     var content = this.getContent()
 
     $tip.find('.popover-title')[this.options.html ? 'html' : 'text'](title)
-    $tip.find('.popover-content').children().detach().end()[ // we use append for html objects to maintain js events
-      this.options.html ? (typeof content == 'string' ? 'html' : 'append') : 'text'
-    ](content)
+    $tip.find('.popover-content')[this.options.html ? 'html' : 'text'](content)
 
     $tip.removeClass('fade top bottom left right in')
 
@@ -74433,7 +74489,7 @@ if (typeof jQuery === 'undefined') {
   }
 
   Popover.prototype.arrow = function () {
-    return (this.$arrow = this.$arrow || this.tip().find('.arrow'))
+    return this.$arrow = this.$arrow || this.tip().find('.arrow')
   }
 
   Popover.prototype.tip = function () {
@@ -74445,21 +74501,19 @@ if (typeof jQuery === 'undefined') {
   // POPOVER PLUGIN DEFINITION
   // =========================
 
-  function Plugin(option) {
+  var old = $.fn.popover
+
+  $.fn.popover = function (option) {
     return this.each(function () {
       var $this   = $(this)
       var data    = $this.data('bs.popover')
       var options = typeof option == 'object' && option
 
-      if (!data && option == 'destroy') return
       if (!data) $this.data('bs.popover', (data = new Popover(this, options)))
       if (typeof option == 'string') data[option]()
     })
   }
 
-  var old = $.fn.popover
-
-  $.fn.popover             = Plugin
   $.fn.popover.Constructor = Popover
 
 
@@ -74474,73 +74528,70 @@ if (typeof jQuery === 'undefined') {
 }(jQuery);
 
 /* ========================================================================
- * Bootstrap: scrollspy.js v3.3.2
+ * Bootstrap: scrollspy.js v3.0.3
  * http://getbootstrap.com/javascript/#scrollspy
  * ========================================================================
- * Copyright 2011-2015 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * Copyright 2013 Twitter, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  * ======================================================================== */
 
 
-+function ($) {
-  'use strict';
++function ($) { "use strict";
 
   // SCROLLSPY CLASS DEFINITION
   // ==========================
 
   function ScrollSpy(element, options) {
+    var href
     var process  = $.proxy(this.process, this)
 
+    this.$element       = $(element).is('body') ? $(window) : $(element)
     this.$body          = $('body')
-    this.$scrollElement = $(element).is('body') ? $(window) : $(element)
+    this.$scrollElement = this.$element.on('scroll.bs.scroll-spy.data-api', process)
     this.options        = $.extend({}, ScrollSpy.DEFAULTS, options)
-    this.selector       = (this.options.target || '') + ' .nav li > a'
-    this.offsets        = []
-    this.targets        = []
+    this.selector       = (this.options.target
+      || ((href = $(element).attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')) //strip for ie7
+      || '') + ' .nav li > a'
+    this.offsets        = $([])
+    this.targets        = $([])
     this.activeTarget   = null
-    this.scrollHeight   = 0
 
-    this.$scrollElement.on('scroll.bs.scrollspy', process)
     this.refresh()
     this.process()
   }
-
-  ScrollSpy.VERSION  = '3.3.2'
 
   ScrollSpy.DEFAULTS = {
     offset: 10
   }
 
-  ScrollSpy.prototype.getScrollHeight = function () {
-    return this.$scrollElement[0].scrollHeight || Math.max(this.$body[0].scrollHeight, document.documentElement.scrollHeight)
-  }
-
   ScrollSpy.prototype.refresh = function () {
-    var offsetMethod = 'offset'
-    var offsetBase   = 0
+    var offsetMethod = this.$element[0] == window ? 'offset' : 'position'
 
-    if (!$.isWindow(this.$scrollElement[0])) {
-      offsetMethod = 'position'
-      offsetBase   = this.$scrollElement.scrollTop()
-    }
-
-    this.offsets = []
-    this.targets = []
-    this.scrollHeight = this.getScrollHeight()
+    this.offsets = $([])
+    this.targets = $([])
 
     var self     = this
-
-    this.$body
+    var $targets = this.$body
       .find(this.selector)
       .map(function () {
         var $el   = $(this)
         var href  = $el.data('target') || $el.attr('href')
-        var $href = /^#./.test(href) && $(href)
+        var $href = /^#\w/.test(href) && $(href)
 
         return ($href
           && $href.length
-          && $href.is(':visible')
-          && [[$href[offsetMethod]().top + offsetBase, href]]) || null
+          && [[ $href[offsetMethod]().top + (!$.isWindow(self.$scrollElement.get(0)) && self.$scrollElement.scrollTop()), href ]]) || null
       })
       .sort(function (a, b) { return a[0] - b[0] })
       .each(function () {
@@ -74551,48 +74602,41 @@ if (typeof jQuery === 'undefined') {
 
   ScrollSpy.prototype.process = function () {
     var scrollTop    = this.$scrollElement.scrollTop() + this.options.offset
-    var scrollHeight = this.getScrollHeight()
-    var maxScroll    = this.options.offset + scrollHeight - this.$scrollElement.height()
+    var scrollHeight = this.$scrollElement[0].scrollHeight || this.$body[0].scrollHeight
+    var maxScroll    = scrollHeight - this.$scrollElement.height()
     var offsets      = this.offsets
     var targets      = this.targets
     var activeTarget = this.activeTarget
     var i
 
-    if (this.scrollHeight != scrollHeight) {
-      this.refresh()
-    }
-
     if (scrollTop >= maxScroll) {
-      return activeTarget != (i = targets[targets.length - 1]) && this.activate(i)
-    }
-
-    if (activeTarget && scrollTop < offsets[0]) {
-      this.activeTarget = null
-      return this.clear()
+      return activeTarget != (i = targets.last()[0]) && this.activate(i)
     }
 
     for (i = offsets.length; i--;) {
       activeTarget != targets[i]
         && scrollTop >= offsets[i]
         && (!offsets[i + 1] || scrollTop <= offsets[i + 1])
-        && this.activate(targets[i])
+        && this.activate( targets[i] )
     }
   }
 
   ScrollSpy.prototype.activate = function (target) {
     this.activeTarget = target
 
-    this.clear()
+    $(this.selector)
+      .parents('.active')
+      .removeClass('active')
 
-    var selector = this.selector +
-        '[data-target="' + target + '"],' +
-        this.selector + '[href="' + target + '"]'
+    var selector = this.selector
+      + '[data-target="' + target + '"],'
+      + this.selector + '[href="' + target + '"]'
 
     var active = $(selector)
       .parents('li')
       .addClass('active')
 
-    if (active.parent('.dropdown-menu').length) {
+    if (active.parent('.dropdown-menu').length)  {
       active = active
         .closest('li.dropdown')
         .addClass('active')
@@ -74601,17 +74645,13 @@ if (typeof jQuery === 'undefined') {
     active.trigger('activate.bs.scrollspy')
   }
 
-  ScrollSpy.prototype.clear = function () {
-    $(this.selector)
-      .parentsUntil(this.options.target, '.active')
-      .removeClass('active')
-  }
-
 
   // SCROLLSPY PLUGIN DEFINITION
   // ===========================
 
-  function Plugin(option) {
+  var old = $.fn.scrollspy
+
+  $.fn.scrollspy = function (option) {
     return this.each(function () {
       var $this   = $(this)
       var data    = $this.data('bs.scrollspy')
@@ -74622,9 +74662,6 @@ if (typeof jQuery === 'undefined') {
     })
   }
 
-  var old = $.fn.scrollspy
-
-  $.fn.scrollspy             = Plugin
   $.fn.scrollspy.Constructor = ScrollSpy
 
 
@@ -74640,26 +74677,36 @@ if (typeof jQuery === 'undefined') {
   // SCROLLSPY DATA-API
   // ==================
 
-  $(window).on('load.bs.scrollspy.data-api', function () {
+  $(window).on('load', function () {
     $('[data-spy="scroll"]').each(function () {
       var $spy = $(this)
-      Plugin.call($spy, $spy.data())
+      $spy.scrollspy($spy.data())
     })
   })
 
 }(jQuery);
 
 /* ========================================================================
- * Bootstrap: tab.js v3.3.2
+ * Bootstrap: tab.js v3.0.3
  * http://getbootstrap.com/javascript/#tabs
  * ========================================================================
- * Copyright 2011-2015 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * Copyright 2013 Twitter, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  * ======================================================================== */
 
 
-+function ($) {
-  'use strict';
++function ($) { "use strict";
 
   // TAB CLASS DEFINITION
   // ====================
@@ -74668,10 +74715,6 @@ if (typeof jQuery === 'undefined') {
     this.element = $(element)
   }
 
-  Tab.VERSION = '3.3.2'
-
-  Tab.TRANSITION_DURATION = 150
-
   Tab.prototype.show = function () {
     var $this    = this.element
     var $ul      = $this.closest('ul:not(.dropdown-menu)')
@@ -74679,35 +74722,27 @@ if (typeof jQuery === 'undefined') {
 
     if (!selector) {
       selector = $this.attr('href')
-      selector = selector && selector.replace(/.*(?=#[^\s]*$)/, '') // strip for ie7
+      selector = selector && selector.replace(/.*(?=#[^\s]*$)/, '') //strip for ie7
     }
 
     if ($this.parent('li').hasClass('active')) return
 
-    var $previous = $ul.find('.active:last a')
-    var hideEvent = $.Event('hide.bs.tab', {
-      relatedTarget: $this[0]
-    })
-    var showEvent = $.Event('show.bs.tab', {
-      relatedTarget: $previous[0]
+    var previous = $ul.find('.active:last a')[0]
+    var e        = $.Event('show.bs.tab', {
+      relatedTarget: previous
     })
 
-    $previous.trigger(hideEvent)
-    $this.trigger(showEvent)
+    $this.trigger(e)
 
-    if (showEvent.isDefaultPrevented() || hideEvent.isDefaultPrevented()) return
+    if (e.isDefaultPrevented()) return
 
     var $target = $(selector)
 
-    this.activate($this.closest('li'), $ul)
+    this.activate($this.parent('li'), $ul)
     this.activate($target, $target.parent(), function () {
-      $previous.trigger({
-        type: 'hidden.bs.tab',
-        relatedTarget: $this[0]
-      })
       $this.trigger({
-        type: 'shown.bs.tab',
-        relatedTarget: $previous[0]
+        type: 'shown.bs.tab'
+      , relatedTarget: previous
       })
     })
   }
@@ -74716,21 +74751,15 @@ if (typeof jQuery === 'undefined') {
     var $active    = container.find('> .active')
     var transition = callback
       && $.support.transition
-      && (($active.length && $active.hasClass('fade')) || !!container.find('> .fade').length)
+      && $active.hasClass('fade')
 
     function next() {
       $active
         .removeClass('active')
         .find('> .dropdown-menu > .active')
-          .removeClass('active')
-        .end()
-        .find('[data-toggle="tab"]')
-          .attr('aria-expanded', false)
+        .removeClass('active')
 
-      element
-        .addClass('active')
-        .find('[data-toggle="tab"]')
-          .attr('aria-expanded', true)
+      element.addClass('active')
 
       if (transition) {
         element[0].offsetWidth // reflow for transition
@@ -74740,21 +74769,16 @@ if (typeof jQuery === 'undefined') {
       }
 
       if (element.parent('.dropdown-menu')) {
-        element
-          .closest('li.dropdown')
-            .addClass('active')
-          .end()
-          .find('[data-toggle="tab"]')
-            .attr('aria-expanded', true)
+        element.closest('li.dropdown').addClass('active')
       }
 
       callback && callback()
     }
 
-    $active.length && transition ?
+    transition ?
       $active
-        .one('bsTransitionEnd', next)
-        .emulateTransitionEnd(Tab.TRANSITION_DURATION) :
+        .one($.support.transition.end, next)
+        .emulateTransitionEnd(150) :
       next()
 
     $active.removeClass('in')
@@ -74764,7 +74788,9 @@ if (typeof jQuery === 'undefined') {
   // TAB PLUGIN DEFINITION
   // =====================
 
-  function Plugin(option) {
+  var old = $.fn.tab
+
+  $.fn.tab = function ( option ) {
     return this.each(function () {
       var $this = $(this)
       var data  = $this.data('bs.tab')
@@ -74774,9 +74800,6 @@ if (typeof jQuery === 'undefined') {
     })
   }
 
-  var old = $.fn.tab
-
-  $.fn.tab             = Plugin
   $.fn.tab.Constructor = Tab
 
 
@@ -74792,84 +74815,55 @@ if (typeof jQuery === 'undefined') {
   // TAB DATA-API
   // ============
 
-  var clickHandler = function (e) {
+  $(document).on('click.bs.tab.data-api', '[data-toggle="tab"], [data-toggle="pill"]', function (e) {
     e.preventDefault()
-    Plugin.call($(this), 'show')
-  }
-
-  $(document)
-    .on('click.bs.tab.data-api', '[data-toggle="tab"]', clickHandler)
-    .on('click.bs.tab.data-api', '[data-toggle="pill"]', clickHandler)
+    $(this).tab('show')
+  })
 
 }(jQuery);
 
 /* ========================================================================
- * Bootstrap: affix.js v3.3.2
+ * Bootstrap: affix.js v3.0.3
  * http://getbootstrap.com/javascript/#affix
  * ========================================================================
- * Copyright 2011-2015 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * Copyright 2013 Twitter, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  * ======================================================================== */
 
 
-+function ($) {
-  'use strict';
++function ($) { "use strict";
 
   // AFFIX CLASS DEFINITION
   // ======================
 
   var Affix = function (element, options) {
     this.options = $.extend({}, Affix.DEFAULTS, options)
-
-    this.$target = $(this.options.target)
+    this.$window = $(window)
       .on('scroll.bs.affix.data-api', $.proxy(this.checkPosition, this))
       .on('click.bs.affix.data-api',  $.proxy(this.checkPositionWithEventLoop, this))
 
-    this.$element     = $(element)
-    this.affixed      =
-    this.unpin        =
-    this.pinnedOffset = null
+    this.$element = $(element)
+    this.affixed  =
+    this.unpin    = null
 
     this.checkPosition()
   }
 
-  Affix.VERSION  = '3.3.2'
-
-  Affix.RESET    = 'affix affix-top affix-bottom'
+  Affix.RESET = 'affix affix-top affix-bottom'
 
   Affix.DEFAULTS = {
-    offset: 0,
-    target: window
-  }
-
-  Affix.prototype.getState = function (scrollHeight, height, offsetTop, offsetBottom) {
-    var scrollTop    = this.$target.scrollTop()
-    var position     = this.$element.offset()
-    var targetHeight = this.$target.height()
-
-    if (offsetTop != null && this.affixed == 'top') return scrollTop < offsetTop ? 'top' : false
-
-    if (this.affixed == 'bottom') {
-      if (offsetTop != null) return (scrollTop + this.unpin <= position.top) ? false : 'bottom'
-      return (scrollTop + targetHeight <= scrollHeight - offsetBottom) ? false : 'bottom'
-    }
-
-    var initializing   = this.affixed == null
-    var colliderTop    = initializing ? scrollTop : position.top
-    var colliderHeight = initializing ? targetHeight : height
-
-    if (offsetTop != null && scrollTop <= offsetTop) return 'top'
-    if (offsetBottom != null && (colliderTop + colliderHeight >= scrollHeight - offsetBottom)) return 'bottom'
-
-    return false
-  }
-
-  Affix.prototype.getPinnedOffset = function () {
-    if (this.pinnedOffset) return this.pinnedOffset
-    this.$element.removeClass(Affix.RESET).addClass('affix')
-    var scrollTop = this.$target.scrollTop()
-    var position  = this.$element.offset()
-    return (this.pinnedOffset = position.top - scrollTop)
+    offset: 0
   }
 
   Affix.prototype.checkPositionWithEventLoop = function () {
@@ -74879,41 +74873,31 @@ if (typeof jQuery === 'undefined') {
   Affix.prototype.checkPosition = function () {
     if (!this.$element.is(':visible')) return
 
-    var height       = this.$element.height()
+    var scrollHeight = $(document).height()
+    var scrollTop    = this.$window.scrollTop()
+    var position     = this.$element.offset()
     var offset       = this.options.offset
     var offsetTop    = offset.top
     var offsetBottom = offset.bottom
-    var scrollHeight = $('body').height()
 
     if (typeof offset != 'object')         offsetBottom = offsetTop = offset
-    if (typeof offsetTop == 'function')    offsetTop    = offset.top(this.$element)
-    if (typeof offsetBottom == 'function') offsetBottom = offset.bottom(this.$element)
+    if (typeof offsetTop == 'function')    offsetTop    = offset.top()
+    if (typeof offsetBottom == 'function') offsetBottom = offset.bottom()
 
-    var affix = this.getState(scrollHeight, height, offsetTop, offsetBottom)
+    var affix = this.unpin   != null && (scrollTop + this.unpin <= position.top) ? false :
+                offsetBottom != null && (position.top + this.$element.height() >= scrollHeight - offsetBottom) ? 'bottom' :
+                offsetTop    != null && (scrollTop <= offsetTop) ? 'top' : false
 
-    if (this.affixed != affix) {
-      if (this.unpin != null) this.$element.css('top', '')
+    if (this.affixed === affix) return
+    if (this.unpin) this.$element.css('top', '')
 
-      var affixType = 'affix' + (affix ? '-' + affix : '')
-      var e         = $.Event(affixType + '.bs.affix')
+    this.affixed = affix
+    this.unpin   = affix == 'bottom' ? position.top - scrollTop : null
 
-      this.$element.trigger(e)
-
-      if (e.isDefaultPrevented()) return
-
-      this.affixed = affix
-      this.unpin = affix == 'bottom' ? this.getPinnedOffset() : null
-
-      this.$element
-        .removeClass(Affix.RESET)
-        .addClass(affixType)
-        .trigger(affixType.replace('affix', 'affixed') + '.bs.affix')
-    }
+    this.$element.removeClass(Affix.RESET).addClass('affix' + (affix ? '-' + affix : ''))
 
     if (affix == 'bottom') {
-      this.$element.offset({
-        top: scrollHeight - height - offsetBottom
-      })
+      this.$element.offset({ top: document.body.offsetHeight - offsetBottom - this.$element.height() })
     }
   }
 
@@ -74921,7 +74905,9 @@ if (typeof jQuery === 'undefined') {
   // AFFIX PLUGIN DEFINITION
   // =======================
 
-  function Plugin(option) {
+  var old = $.fn.affix
+
+  $.fn.affix = function (option) {
     return this.each(function () {
       var $this   = $(this)
       var data    = $this.data('bs.affix')
@@ -74932,9 +74918,6 @@ if (typeof jQuery === 'undefined') {
     })
   }
 
-  var old = $.fn.affix
-
-  $.fn.affix             = Plugin
   $.fn.affix.Constructor = Affix
 
 
@@ -74957,10 +74940,10 @@ if (typeof jQuery === 'undefined') {
 
       data.offset = data.offset || {}
 
-      if (data.offsetBottom != null) data.offset.bottom = data.offsetBottom
-      if (data.offsetTop    != null) data.offset.top    = data.offsetTop
+      if (data.offsetBottom) data.offset.bottom = data.offsetBottom
+      if (data.offsetTop)    data.offset.top    = data.offsetTop
 
-      Plugin.call($spy, data)
+      $spy.affix(data)
     })
   })
 
@@ -74984,7 +74967,7 @@ if (typeof jQuery === 'undefined') {
 var mejs = mejs || {};
 
 // version number
-mejs.version = '2.16.2'; 
+mejs.version = '2.16.4'; 
 
 
 // player number (for missing, same id attr)
@@ -76236,6 +76219,8 @@ mejs.HtmlMediaElementShim = {
 		// flash/silverlight vars
 		initVars = [
 			'id=' + pluginid,
+			'jsinitfunction=' + "mejs.MediaPluginBridge.initPlugin",
+			'jscallbackfunction=' + "mejs.MediaPluginBridge.fireEvent",
 			'isvideo=' + ((playback.isVideo) ? "true" : "false"),
 			'autoplay=' + ((autoplay) ? "true" : "false"),
 			'preload=' + preload,
@@ -76244,7 +76229,7 @@ mejs.HtmlMediaElementShim = {
 			'timerrate=' + options.timerRate,
 			'flashstreamer=' + options.flashStreamer,
 			'height=' + height,
-      'pseudostreamstart=' + options.pseudoStreamingStartQueryParam];
+			'pseudostreamstart=' + options.pseudoStreamingStartQueryParam];
 
 		if (playback.url !== null) {
 			if (playback.method == 'flash') {
@@ -76361,33 +76346,33 @@ mejs.HtmlMediaElementShim = {
 				container.innerHTML ='<iframe src="//player.vimeo.com/video/' + pluginMediaElement.vimeoid + '?api=1&portrait=0&byline=0&title=0&player_id=' + player_id + '" width="' + width +'" height="' + height +'" frameborder="0" class="mejs-shim" id="' + player_id + '" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
 				if (typeof($f) == 'function') { // froogaloop available
 					var player = $f(container.childNodes[0]);
+					
 					player.addEvent('ready', function() {
-						$.extend( player, {
-							playVideo: function() {
-								player.api( 'play' );
-							}, 
-							stopVideo: function() {
-								player.api( 'unload' );
-							}, 
-							pauseVideo: function() {
-								player.api( 'pause' );
-							}, 
-							seekTo: function( seconds ) {
-								player.api( 'seekTo', seconds );
-							}, 
-							setVolume: function( volume ) {
-								player.api( 'setVolume', volume );
-							}, 
-							setMuted: function( muted ) {
-								if( muted ) {
-									player.lastVolume = player.api( 'getVolume' );
-									player.api( 'setVolume', 0 );
-								} else {
-									player.api( 'setVolume', player.lastVolume );
-									delete player.lastVolume;
-								}
+						
+						player.playVideo = function() {
+							player.api( 'play' );
+						} 
+						player.stopVideo = function() {
+							player.api( 'unload' );
+						} 
+						player.pauseVideo = function() {
+							player.api( 'pause' );
+						} 
+						player.seekTo = function( seconds ) {
+							player.api( 'seekTo', seconds );
+						}
+						player.setVolume = function( volume ) {
+							player.api( 'setVolume', volume );
+						}
+						player.setMuted = function( muted ) {
+							if( muted ) {
+								player.lastVolume = player.api( 'getVolume' );
+								player.api( 'setVolume', 0 );
+							} else {
+								player.api( 'setVolume', player.lastVolume );
+								delete player.lastVolume;
 							}
-						});
+						}						
 
 						function createEvent(player, pluginMediaElement, eventName, e) {
 							var obj = {
@@ -77183,10 +77168,11 @@ if (typeof jQuery != 'undefined') {
 				t.$media.removeAttr('controls');
 				var videoPlayerTitle = t.isVideo ?
 					mejs.i18n.t('Video Player') : mejs.i18n.t('Audio Player');
+				// insert description for screen readers
+				$('<span class="mejs-offscreen">' + videoPlayerTitle + '</span>').insertBefore(t.$media);
 				// build container
 				t.container =
-					$('<span class="mejs-offscreen">' + videoPlayerTitle + '</span>'+
-                    '<div id="' + t.id + '" class="mejs-container ' + (mejs.MediaFeatures.svg ? 'svg' : 'no-svg') + 
+					$('<div id="' + t.id + '" class="mejs-container ' + (mejs.MediaFeatures.svg ? 'svg' : 'no-svg') +
                       '" tabindex="0" role="application" aria-label="' + videoPlayerTitle + '">'+
 						'<div class="mejs-inner">'+
 							'<div class="mejs-mediaelement"></div>'+
@@ -77634,7 +77620,7 @@ if (typeof jQuery != 'undefined') {
 						}
 					}
 				});
-                
+
 				// webkit has trouble doing this without a delay
 				setTimeout(function () {
 					t.setPlayerSize(t.width, t.height);
@@ -77653,9 +77639,10 @@ if (typeof jQuery != 'undefined') {
 					t.setControlsSize();
 				});
 
-				// TEMP: needs to be moved somewhere else
-				if (t.media.pluginType == 'youtube' && t.options.autoplay) {
-				//LOK-Soft: added t.options.autoplay to if -- I can only guess this is for hiding play button when autoplaying youtube, general hiding play button layer causes missing button on player load
+				// This is a work-around for a bug in the YouTube iFrame player, which means
+				//  we can't use the play() API for the initial playback on iOS or Android;
+				//  user has to start playback directly by tapping on the iFrame.
+				if (t.media.pluginType == 'youtube' && ( mf.isiOS || mf.isAndroid ) ) {
 					t.container.find('.mejs-overlay-play').hide();
 				}
 			}
@@ -78026,12 +78013,12 @@ if (typeof jQuery != 'undefined') {
 				t.container.keydown(function () {
 					t.keyboardAction = true;
 				});
-            
+
 				// listen for key presses
 				t.globalBind('keydown', function(e) {
 					return t.onkeydown(player, media, e);
 				});
-            
+
 
 				// check if someone clicked outside a player region, then kill its focus
 				t.globalBind('click', function(event) {
@@ -78159,6 +78146,11 @@ if (typeof jQuery != 'undefined') {
 			}
 			t.globalUnbind();
 			delete t.node.player;
+		},
+		rebuildtracks: function(){
+			var t = this;
+			t.findTracks();
+			t.buildtracks(t, t.controls, t.layers, t.media);
 		}
 	};
 
@@ -78345,8 +78337,8 @@ if (typeof jQuery != 'undefined') {
 		buildprogress: function(player, controls, layers, media) {
 
 			$('<div class="mejs-time-rail">' +
-				'<a href="javascript:void(0);" class="mejs-time-total mejs-time-slider">' +
-				'<span class="mejs-offscreen">' + this.options.progessHelpText + '</span>' +
+				'<span  class="mejs-time-total mejs-time-slider">' +
+				//'<span class="mejs-offscreen">' + this.options.progessHelpText + '</span>' +
 				'<span class="mejs-time-buffering"></span>' +
 				'<span class="mejs-time-loaded"></span>' +
 				'<span class="mejs-time-current"></span>' +
@@ -78355,7 +78347,6 @@ if (typeof jQuery != 'undefined') {
 				'<span class="mejs-time-float-current">00:00</span>' +
 				'<span class="mejs-time-float-corner"></span>' +
 				'</span>' +
-				'</a>' +
 				'</div>')
 				.appendTo(controls);
 			controls.find('.mejs-time-buffering').hide();
@@ -79512,7 +79503,7 @@ if (typeof jQuery != 'undefined') {
 						var newSpeed = $(this).attr('value');
 						playbackspeed = newSpeed;
 						media.playbackRate = parseFloat(newSpeed);
-						speedButton.find('button').html('test' + newSpeed + t.options.speedChar);
+						speedButton.find('button').html(newSpeed + t.options.speedChar);
 						speedButton.find('.mejs-speed-selected').removeClass('mejs-speed-selected');
 						speedButton.find('input[type="radio"]:checked').next().addClass('mejs-speed-selected');
 					});
@@ -79551,6 +79542,14 @@ if (typeof jQuery != 'undefined') {
 
 		hasChapters: false,
 
+		cleartracks: function(player, controls, layers, media){
+			if(player) {
+				if(player.captions) player.captions.remove();
+				if(player.chapters) player.chapters.remove();
+				if(player.captionsText) player.captionsText.remove();
+				if(player.captionsButton) player.captionsButton.remove();
+			}
+		},
 		buildtracks: function(player, controls, layers, media) {
 			if (player.tracks.length === 0)
 				return;
@@ -79564,6 +79563,7 @@ if (typeof jQuery != 'undefined') {
 					t.domNode.textTracks[i].mode = "hidden";
 				}
 			}
+			t.cleartracks(player, controls, layers, media);
 			player.chapters =
 					$('<div class="mejs-chapters mejs-layer"></div>')
 						.prependTo(layers).hide();
@@ -80439,12 +80439,11 @@ $.extend(mejs.MepDefaults,
 
 })(mejs.$);
 /**
-* @version: 1.3.17
+* @version: 1.3.19
 * @author: Dan Grossman http://www.dangrossman.info/
-* @date: 2014-11-25
-* @copyright: Copyright (c) 2012-2014 Dan Grossman. All rights reserved.
+* @copyright: Copyright (c) 2012-2015 Dan Grossman. All rights reserved.
 * @license: Licensed under the MIT license. See http://www.opensource.org/licenses/mit-license.php
-* @website: http://www.improvely.com/
+* @website: https://www.improvely.com/
 */
 
 (function(root, factory) {
@@ -80569,7 +80568,7 @@ $.extend(mejs.MepDefaults,
 
             this.startDate = moment().startOf('day');
             this.endDate = moment().endOf('day');
-            this.timeZone = moment().zone();
+            this.timeZone = moment().utcOffset();
             this.minDate = false;
             this.maxDate = false;
             this.dateLimit = false;
@@ -80744,11 +80743,11 @@ $.extend(mejs.MepDefaults,
             //if no start/end dates set, check if an input element contains initial values
             if (typeof options.startDate === 'undefined' && typeof options.endDate === 'undefined') {
                 if ($(this.element).is('input[type=text]')) {
-                    var val = $(this.element).val(), 
+                    var val = $(this.element).val(),
                         split = val.split(this.separator);
-                    
+
                     start = end = null;
-                    
+
                     if (split.length == 2) {
                         start = moment(split[0], this.format);
                         end = moment(split[1], this.format);
@@ -80766,10 +80765,10 @@ $.extend(mejs.MepDefaults,
             // bind the time zone used to build the calendar to either the timeZone passed in through the options or the zone of the startDate (which will be the local time zone by default)
             if (typeof options.timeZone === 'string' || typeof options.timeZone === 'number') {
                 this.timeZone = options.timeZone;
-                this.startDate.zone(this.timeZone);
-                this.endDate.zone(this.timeZone);
+                this.startDate.utcOffset(this.timeZone);
+                this.endDate.utcOffset(this.timeZone);
             } else {
-                this.timeZone = moment(this.startDate).zone();
+                this.timeZone = moment(this.startDate).utcOffset();
             }
 
             if (typeof options.ranges === 'object') {
@@ -80887,7 +80886,7 @@ $.extend(mejs.MepDefaults,
 
         setStartDate: function(startDate) {
             if (typeof startDate === 'string')
-                this.startDate = moment(startDate, this.format).zone(this.timeZone);
+                this.startDate = moment(startDate, this.format).utcOffset(this.timeZone);
 
             if (typeof startDate === 'object')
                 this.startDate = moment(startDate);
@@ -80904,7 +80903,7 @@ $.extend(mejs.MepDefaults,
 
         setEndDate: function(endDate) {
             if (typeof endDate === 'string')
-                this.endDate = moment(endDate, this.format).zone(this.timeZone);
+                this.endDate = moment(endDate, this.format).utcOffset(this.timeZone);
 
             if (typeof endDate === 'object')
                 this.endDate = moment(endDate);
@@ -80945,12 +80944,12 @@ $.extend(mejs.MepDefaults,
                 end = null;
 
             if(dateString.length === 2) {
-                start = moment(dateString[0], this.format).zone(this.timeZone);
-                end = moment(dateString[1], this.format).zone(this.timeZone);
+                start = moment(dateString[0], this.format).utcOffset(this.timeZone);
+                end = moment(dateString[1], this.format).utcOffset(this.timeZone);
             }
 
             if (this.singleDatePicker || start === null || end === null) {
-                start = moment(this.element.val(), this.format).zone(this.timeZone);
+                start = moment(this.element.val(), this.format).utcOffset(this.timeZone);
                 end = start;
             }
 
@@ -81119,11 +81118,11 @@ $.extend(mejs.MepDefaults,
 
             var startDate, endDate;
             if (el.attr('name') === 'daterangepicker_start') {
-                startDate = date;
+                startDate = (false !== this.minDate && date.isBefore(this.minDate)) ? this.minDate : date;
                 endDate = this.endDate;
             } else {
                 startDate = this.startDate;
-                endDate = date;
+                endDate = (false !== this.maxDate && date.isAfter(this.maxDate)) ? this.maxDate : date;
             }
             this.setCustomDates(startDate, endDate);
         },
@@ -81138,8 +81137,10 @@ $.extend(mejs.MepDefaults,
         updateInputText: function() {
             if (this.element.is('input') && !this.singleDatePicker) {
                 this.element.val(this.startDate.format(this.format) + this.separator + this.endDate.format(this.format));
+                this.element.trigger('change');
             } else if (this.element.is('input')) {
                 this.element.val(this.endDate.format(this.format));
+                this.element.trigger('change');
             }
         },
 
@@ -81209,6 +81210,9 @@ $.extend(mejs.MepDefaults,
             if (startDate.isAfter(endDate)) {
                 var difference = this.endDate.diff(this.startDate);
                 endDate = moment(startDate).add(difference, 'ms');
+                if (this.maxDate && endDate.isAfter(this.maxDate)) {
+                  endDate = this.maxDate;
+                }
             }
             this.startDate = startDate;
             this.endDate = endDate;
@@ -81287,6 +81291,28 @@ $.extend(mejs.MepDefaults,
             // Month must be Number for new moment versions
             var month = parseInt(cal.find('.monthselect').val(), 10);
             var year = cal.find('.yearselect').val();
+
+            if (!isLeft && !this.singleDatePicker) {
+                if (year < this.startDate.year() || (year == this.startDate.year() && month < this.startDate.month())) {
+                    month = this.startDate.month();
+                    year = this.startDate.year();
+                }
+            }
+
+            if (this.minDate) {
+                if (year < this.minDate.year() || (year == this.minDate.year() && month < this.minDate.month())) {
+                    month = this.minDate.month();
+                    year = this.minDate.year();
+                }
+            }
+
+            if (this.maxDate) {
+                if (year > this.maxDate.year() || (year == this.maxDate.year() && month > this.maxDate.month())) {
+                    month = this.maxDate.month();
+                    year = this.maxDate.year();
+                }
+            }
+
 
             this[leftOrRight+'Calendar'].month.month(month).year(year);
             this.updateCalendars();
@@ -81399,7 +81425,7 @@ $.extend(mejs.MepDefaults,
             if (dayOfWeek == this.locale.firstDay)
                 startDay = daysInLastMonth - 6;
 
-            var curDate = moment([lastYear, lastMonth, startDay, 12, minute, second]).zone(this.timeZone);
+            var curDate = moment([lastYear, lastMonth, startDay, 12, minute, second]).utcOffset(this.timeZone);
 
             var col, row;
             for (i = 0, col = 0, row = 0; i < 42; i++, col++, curDate = moment(curDate).add(24, 'hour')) {
@@ -81467,7 +81493,7 @@ $.extend(mejs.MepDefaults,
                 html += '<th></th>';
 
             if (!minDate || minDate.isBefore(calendar.firstDay)) {
-                html += '<th class="prev available"><i class="fa fa-arrow-left icon-arrow-left glyphicon glyphicon-arrow-left"></i></th>';
+                html += '<th class="prev available"><i class="fa fa-arrow-left icon icon-arrow-left glyphicon glyphicon-arrow-left"></i></th>';
             } else {
                 html += '<th></th>';
             }
@@ -81480,7 +81506,7 @@ $.extend(mejs.MepDefaults,
 
             html += '<th colspan="5" class="month">' + dateHtml + '</th>';
             if (!maxDate || maxDate.isAfter(calendar.lastDay)) {
-                html += '<th class="next available"><i class="fa fa-arrow-right icon-arrow-right glyphicon glyphicon-arrow-right"></i></th>';
+                html += '<th class="next available"><i class="fa fa-arrow-right icon icon-arrow-right glyphicon glyphicon-arrow-right"></i></th>';
             } else {
                 html += '<th></th>';
             }
@@ -81694,8 +81720,8 @@ $.extend(mejs.MepDefaults,
 }));
 
 /*!
- * VERSION: 1.16.0
- * DATE: 2015-03-01
+ * VERSION: 1.16.1
+ * DATE: 2015-03-13
  * UPDATES AND DOCS AT: http://greensock.com
  * 
  * Includes all of the following: TweenLite, TweenMax, TimelineLite, TimelineMax, EasePack, CSSPlugin, RoundPropsPlugin, BezierPlugin, AttrPlugin, DirectionalRotationPlugin
@@ -81736,7 +81762,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			p = TweenMax.prototype = TweenLite.to({}, 0.1, {}),
 			_blankArray = [];
 
-		TweenMax.version = "1.16.0";
+		TweenMax.version = "1.16.1";
 		p.constructor = TweenMax;
 		p.kill()._gc = false;
 		TweenMax.killTweensOf = TweenMax.killDelayedCallsTo = TweenLite.killTweensOf;
@@ -81814,7 +81840,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				prevCycle = this._cycle,
 				duration = this._duration,
 				prevRawPrevTime = this._rawPrevTime,
-				isComplete, callback, pt, cycleDuration, r, type, pow, rawPrevTime, i;
+				isComplete, callback, pt, cycleDuration, r, type, pow, rawPrevTime;
 			if (time >= totalDur) {
 				this._totalTime = totalDur;
 				this._cycle = this._repeat;
@@ -81828,6 +81854,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				if (!this._reversed) {
 					isComplete = true;
 					callback = "onComplete";
+					force = (force || this._timeline.autoRemoveChildren); //otherwise, if the animation is unpaused/activated after it's already finished, it doesn't get removed from the parent timeline.
 				}
 				if (duration === 0) if (this._initted || !this.vars.lazy || force) { //zero-duration tweens are tricky because we must discern the momentum/direction of time in order to determine whether the starting values should be rendered or the ending values. If the "playhead" of its timeline goes past the zero-duration tween in the forward direction or lands directly on it, the end values should be rendered, but if the timeline's "playhead" moves past it in the backward direction (from a postitive time to a negative time), the starting values must be rendered.
 					if (this._startTime === this._timeline._duration) { //if a zero-duration tween is at the VERY end of a timeline and that timeline renders at its end, it will typically add a tiny bit of cushion to the render time to prevent rounding errors from getting in the way of tweens rendering their VERY end. If we then reverse() that timeline, the zero-duration tween will trigger its onReverseComplete even though technically the playhead didn't pass over it again. It's a very specific edge case we must accommodate.
@@ -82341,8 +82368,9 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				var tl = tween._timeline,
 					time = tl._totalTime,
 					startTime = tween._startTime,
-					next = tween.ratio ? _tinyNum : 0,
-					prev = tween.ratio ? 0 : _tinyNum,
+					reversed = (tween._rawPrevTime < 0 || (tween._rawPrevTime === 0 && tl._reversed)),//don't use tween.ratio because if the playhead lands exactly on top of the addPause(), ratio will be 1 even if the master timeline was reversed (which is correct). The key here is to sense the direction of the playhead.
+					next = reversed ? 0 : _tinyNum,
+					prev = reversed ? _tinyNum : 0,
 					sibling;
 				if (callback || !this._forcingPlayhead) { //if the user calls a method that moves the playhead (like progress() or time()), it should honor that and skip any pauses (although if there's a callback positioned at that pause, it must jump there and make the call to ensure the time is EXACTLY what it is supposed to be, and then proceed to where the playhead is being forced). Otherwise, imagine placing a pause in the middle of a timeline and then doing timeline.progress(0.9) - it would get stuck where the pause is.
 					tl.pause(startTime);
@@ -82360,7 +82388,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					if (callback) {
 						callback.apply(scope || tl, params || _blankArray);
 					}
-					if (this._forcingPlayhead) {
+					if (this._forcingPlayhead || !tl._paused) { //the callback could have called resume().
 						tl.seek(time);
 					}
 				}
@@ -82374,7 +82402,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			},
 			p = TimelineLite.prototype = new SimpleTimeline();
 
-		TimelineLite.version = "1.16.0";
+		TimelineLite.version = "1.16.1";
 		p.constructor = TimelineLite;
 		p.kill()._gc = p._forcingPlayhead = false;
 
@@ -82667,6 +82695,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				if (!this._reversed) if (!this._hasPausedChild()) {
 					isComplete = true;
 					callback = "onComplete";
+					internalForce = !!this._timeline.autoRemoveChildren; //otherwise, if the animation is unpaused/activated after it's already finished, it doesn't get removed from the parent timeline.
 					if (this._duration === 0) if (time === 0 || this._rawPrevTime < 0 || this._rawPrevTime === _tinyNum) if (this._rawPrevTime !== time && this._first) {
 						internalForce = true;
 						if (this._rawPrevTime > _tinyNum) {
@@ -82991,7 +83020,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					time = this._time;
 				while (tween) {
 					if (tween._startTime === time && tween.data === "isPause") {
-						tween._rawPrevTime = time; //remember, _rawPrevTime is how zero-duration tweens/callbacks sense directionality and determine whether or not to fire. If _rawPrevTime is the same as _startTime on the next render, it won't fire.
+						tween._rawPrevTime = 0; //remember, _rawPrevTime is how zero-duration tweens/callbacks sense directionality and determine whether or not to fire. If _rawPrevTime is the same as _startTime on the next render, it won't fire.
 					}
 					tween = tween._next;
 				}
@@ -83052,7 +83081,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 
 		p.constructor = TimelineMax;
 		p.kill()._gc = false;
-		TimelineMax.version = "1.16.0";
+		TimelineMax.version = "1.16.1";
 
 		p.invalidate = function() {
 			this._yoyo = (this.vars.yoyo === true);
@@ -83141,6 +83170,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				if (!this._reversed) if (!this._hasPausedChild()) {
 					isComplete = true;
 					callback = "onComplete";
+					internalForce = !!this._timeline.autoRemoveChildren; //otherwise, if the animation is unpaused/activated after it's already finished, it doesn't get removed from the parent timeline.
 					if (this._duration === 0) if (time === 0 || prevRawPrevTime < 0 || prevRawPrevTime === _tinyNum) if (prevRawPrevTime !== time && this._first) {
 						internalForce = true;
 						if (prevRawPrevTime > _tinyNum) {
@@ -84103,7 +84133,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			p = CSSPlugin.prototype = new TweenPlugin("css");
 
 		p.constructor = CSSPlugin;
-		CSSPlugin.version = "1.16.0";
+		CSSPlugin.version = "1.16.1";
 		CSSPlugin.API = 2;
 		CSSPlugin.defaultTransformPerspective = 0;
 		CSSPlugin.defaultSkewType = "compensated";
@@ -84385,6 +84415,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				if (x === "center" || (isNaN(parseFloat(x)) && (x + "").indexOf("=") === -1)) { //remember, the user could flip-flop the values and say "bottom center" or "center bottom", etc. "center" is ambiguous because it could be used to describe horizontal or vertical, hence the isNaN(). If there's an "=" sign in the value, it's relative.
 					x = "50%";
 				}
+				v = x + " " + y + ((a.length > 2) ? " " + a[2] : "");
 				if (recObj) {
 					recObj.oxp = (x.indexOf("%") !== -1);
 					recObj.oyp = (y.indexOf("%") !== -1);
@@ -84392,8 +84423,9 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					recObj.oyr = (y.charAt(1) === "=");
 					recObj.ox = parseFloat(x.replace(_NaNExp, ""));
 					recObj.oy = parseFloat(y.replace(_NaNExp, ""));
+					recObj.v = v;
 				}
-				return x + " " + y + ((a.length > 2) ? " " + a[2] : "");
+				return recObj || v;
 			},
 
 			/**
@@ -84845,7 +84877,6 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					bv = ba[i];
 					ev = ea[i];
 					bn = parseFloat(bv);
-
 					//if the value begins with a number (most common). It's fine if it has a suffix like px
 					if (bn || bn === 0) {
 						pt.appendXtra("", bn, _parseChange(ev, bn), ev.replace(_relNumExp, ""), (autoRound && ev.indexOf("px") !== -1), true);
@@ -85458,26 +85489,73 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			},
 			*/
 
-			_set3DTransformRatio = _internals.set3DTransformRatio = function(v) {
+			_setTransformRatio = _internals.set3DTransformRatio = _internals.setTransformRatio = function(v) {
 				var t = this.data, //refers to the element's _gsTransform object
 					style = this.t.style,
-					angle = t.rotation * _DEG2RAD,
+					angle = t.rotation,
+					rotationX = t.rotationX,
+					rotationY = t.rotationY,
 					sx = t.scaleX,
 					sy = t.scaleY,
 					sz = t.scaleZ,
 					x = t.x,
 					y = t.y,
 					z = t.z,
+					isSVG = t.svg,
 					perspective = t.perspective,
+					force3D = t.force3D,
 					a11, a12, a13, a21, a22, a23, a31, a32, a33, a41, a42, a43,
-					zOrigin, min, cos, sin, t1, t2, transform, comma, zero;
-				if (v === 1 || v === 0 || !t.force3D) if (t.force3D !== true) if (!t.rotationY && !t.rotationX && sz === 1 && !perspective && !z && (this.tween._totalTime === this.tween._totalDuration || !this.tween._totalTime)) { //on the final render (which could be 0 for a from tween), if there are no 3D aspects, render in 2D to free up memory and improve performance especially on mobile devices. Check the tween's totalTime/totalDuration too in order to make sure it doesn't happen between repeats if it's a repeating tween.
-					_set2DTransformRatio.call(this, v);
+					zOrigin, min, cos, sin, t1, t2, transform, comma, zero, skew, rnd;
+
+				//check to see if we should render as 2D (and SVGs must use 2D when _useSVGTransformAttr is true)
+				if (((((v === 1 || v === 0) && force3D === "auto" && (this.tween._totalTime === this.tween._totalDuration || !this.tween._totalTime)) || !force3D) && !z && !perspective && !rotationY && !rotationX) || (_useSVGTransformAttr && isSVG) || !_supports3D) { //on the final render (which could be 0 for a from tween), if there are no 3D aspects, render in 2D to free up memory and improve performance especially on mobile devices. Check the tween's totalTime/totalDuration too in order to make sure it doesn't happen between repeats if it's a repeating tween.
+
+					//2D
+					if (angle || t.skewX || isSVG) {
+						angle *= _DEG2RAD;
+						skew = t.skewX * _DEG2RAD;
+						rnd = 100000;
+						a11 = Math.cos(angle) * sx;
+						a21 = Math.sin(angle) * sx;
+						a12 = Math.sin(angle - skew) * -sy;
+						a22 = Math.cos(angle - skew) * sy;
+						if (skew && t.skewType === "simple") { //by default, we compensate skewing on the other axis to make it look more natural, but you can set the skewType to "simple" to use the uncompensated skewing that CSS does
+							t1 = Math.tan(skew);
+							t1 = Math.sqrt(1 + t1 * t1);
+							a12 *= t1;
+							a22 *= t1;
+							if (t.skewY) {
+								a11 *= t1;
+								a21 *= t1;
+							}
+						}
+						if (isSVG) {
+							x += t.xOrigin - (t.xOrigin * a11 + t.yOrigin * a12);
+							y += t.yOrigin - (t.xOrigin * a21 + t.yOrigin * a22);
+							min = 0.000001;
+							if (x < min) if (x > -min) {
+								x = 0;
+							}
+							if (y < min) if (y > -min) {
+								y = 0;
+							}
+						}
+						transform = (((a11 * rnd) | 0) / rnd) + "," + (((a21 * rnd) | 0) / rnd) + "," + (((a12 * rnd) | 0) / rnd) + "," + (((a22 * rnd) | 0) / rnd) + "," + x + "," + y + ")";
+						if (isSVG && _useSVGTransformAttr) {
+							this.t.setAttribute("transform", "matrix(" + transform);
+						} else {
+							//some browsers have a hard time with very small values like 2.4492935982947064e-16 (notice the "e-" towards the end) and would render the object slightly off. So we round to 5 decimal places.
+							style[_transformProp] = ((t.xPercent || t.yPercent) ? "translate(" + t.xPercent + "%," + t.yPercent + "%) matrix(" : "matrix(") + transform;
+						}
+					} else {
+						style[_transformProp] = ((t.xPercent || t.yPercent) ? "translate(" + t.xPercent + "%," + t.yPercent + "%) matrix(" : "matrix(") + sx + ",0,0," + sy + "," + x + "," + y + ")";
+					}
 					return;
+
 				}
-				if (_isFirefox) {
+				if (_isFirefox) { //Firefox has a bug (at least in v25) that causes it to render the transparent part of 32-bit PNG images as black when displayed inside an iframe and the 3D scale is very small and doesn't change sufficiently enough between renders (like if you use a Power4.easeInOut to scale from 0 to 1 where the beginning values only change a tiny amount to begin the tween before accelerating). In this case, we force the scale to be 0.00002 instead which is visually the same but works around the Firefox issue.
 					min = 0.0001;
-					if (sx < min && sx > -min) { //Firefox has a bug (at least in v25) that causes it to render the transparent part of 32-bit PNG images as black when displayed inside an iframe and the 3D scale is very small and doesn't change sufficiently enough between renders (like if you use a Power4.easeInOut to scale from 0 to 1 where the beginning values only change a tiny amount to begin the tween before accelerating). In this case, we force the scale to be 0.00002 instead which is visually the same but works around the Firefox issue.
+					if (sx < min && sx > -min) {
 						sx = sz = 0.00002;
 					}
 					if (sy < min && sy > -min) {
@@ -85488,6 +85566,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					}
 				}
 				if (angle || t.skewX) {
+					angle *= _DEG2RAD;
 					cos = a11 = Math.cos(angle);
 					sin = a21 = Math.sin(angle);
 					if (t.skewX) {
@@ -85499,12 +85578,16 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 							t1 = Math.sqrt(1 + t1 * t1);
 							cos *= t1;
 							sin *= t1;
+							if (t.skewY) {
+								a11 *= t1;
+								a21 *= t1;
+							}
 						}
 					}
 					a12 = -sin;
 					a22 = cos;
 
-				} else if (!t.rotationY && !t.rotationX && sz === 1 && !perspective && !t.svg) { //if we're only translating and/or 2D scaling, this is faster...
+				} else if (!rotationY && !rotationX && sz === 1 && !perspective && !isSVG) { //if we're only translating and/or 2D scaling, this is faster...
 					style[_transformProp] = ((t.xPercent || t.yPercent) ? "translate(" + t.xPercent + "%," + t.yPercent + "%) translate3d(" : "translate3d(") + x + "px," + y + "px," + z +"px)" + ((sx !== 1 || sy !== 1) ? " scale(" + sx + "," + sy + ")" : "");
 					return;
 				} else {
@@ -85538,7 +85621,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				min = 0.000001; //threshold below which browsers use scientific notation which won't work.
 				comma = ",";
 				zero = "0";
-				angle = t.rotationY * _DEG2RAD;
+				angle = rotationY * _DEG2RAD;
 				if (angle) {
 					cos = Math.cos(angle);
 					sin = Math.sin(angle);
@@ -85551,7 +85634,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					a11 *= cos;
 					a21 *= cos;
 				}
-				angle = t.rotationX * _DEG2RAD;
+				angle = rotationX * _DEG2RAD;
 				if (angle) {
 					cos = Math.cos(angle);
 					sin = Math.sin(angle);
@@ -85585,13 +85668,13 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					a41*=sx;
 				}
 
-				if (zOrigin || t.svg) {
+				if (zOrigin || isSVG) {
 					if (zOrigin) {
 						x += a13*-zOrigin;
 						y += a23*-zOrigin;
 						z += a33*-zOrigin+zOrigin;
 					}
-					if (t.svg) { //due to bugs in some browsers, we need to manage the transform-origin of SVG manually
+					if (isSVG) { //due to bugs in some browsers, we need to manage the transform-origin of SVG manually
 						x += t.xOrigin - (t.xOrigin * a11 + t.yOrigin * a12);
 						y += t.yOrigin - (t.xOrigin * a21 + t.yOrigin * a22);
 					}
@@ -85610,7 +85693,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				transform = ((t.xPercent || t.yPercent) ? "translate(" + t.xPercent + "%," + t.yPercent + "%) matrix3d(" : "matrix3d(");
 				transform += ((a11 < min && a11 > -min) ? zero : a11) + comma + ((a21 < min && a21 > -min) ? zero : a21) + comma + ((a31 < min && a31 > -min) ? zero : a31);
 				transform += comma + ((a41 < min && a41 > -min) ? zero : a41) + comma + ((a12 < min && a12 > -min) ? zero : a12) + comma + ((a22 < min && a22 > -min) ? zero : a22);
-				if (t.rotationX || t.rotationY) { //performance optimization (often there's no rotationX or rotationY, so we can skip these calculations)
+				if (rotationX || rotationY) { //performance optimization (often there's no rotationX or rotationY, so we can skip these calculations)
 					transform += comma + ((a32 < min && a32 > -min) ? zero : a32) + comma + ((a42 < min && a42 > -min) ? zero : a42) + comma + ((a13 < min && a13 > -min) ? zero : a13);
 					transform += comma + ((a23 < min && a23 > -min) ? zero : a23) + comma + ((a33 < min && a33 > -min) ? zero : a33) + comma + ((a43 < min && a43 > -min) ? zero : a43) + comma;
 				} else {
@@ -85619,57 +85702,6 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				transform += x + comma + y + comma + z + comma + (perspective ? (1 + (-z / perspective)) : 1) + ")";
 
 				style[_transformProp] = transform;
-			},
-
-			_set2DTransformRatio = _internals.set2DTransformRatio = function(v) {
-				var t = this.data, //refers to the element's _gsTransform object
-					targ = this.t,
-					style = targ.style,
-					x = t.x,
-					y = t.y,
-					ang, skew, rnd, sx, sy, a, b, c, d, matrix, min, t1;
-				if ((t.rotationX || t.rotationY || t.z || t.force3D === true || (t.force3D === "auto" && v !== 1 && v !== 0)) && !(t.svg && _useSVGTransformAttr) && _supports3D) { //if a 3D tween begins while a 2D one is running, we need to kick the rendering over to the 3D method. For example, imagine a yoyo-ing, infinitely repeating scale tween running, and then the object gets rotated in 3D space with a different tween.
-					this.setRatio = _set3DTransformRatio;
-					_set3DTransformRatio.call(this, v);
-					return;
-				}
-				sx = t.scaleX;
-				sy = t.scaleY;
-				if (t.rotation || t.skewX || t.svg) {
-					ang = t.rotation * _DEG2RAD;
-					skew = t.skewX * _DEG2RAD;
-					rnd = 100000;
-					a = Math.cos(ang) * sx;
-					b = Math.sin(ang) * sx;
-					c = Math.sin(ang - skew) * -sy;
-					d = Math.cos(ang - skew) * sy;
-					if (skew && t.skewType === "simple") { //by default, we compensate skewing on the other axis to make it look more natural, but you can set the skewType to "simple" to use the uncompensated skewing that CSS does
-						t1 = Math.tan(skew);
-						t1 = Math.sqrt(1 + t1 * t1);
-						c *= t1;
-						d *= t1;
-					}
-					if (t.svg) {
-						x += t.xOrigin - (t.xOrigin * a + t.yOrigin * c);
-						y += t.yOrigin - (t.xOrigin * b + t.yOrigin * d);
-						min = 0.000001;
-						if (x < min) if (x > -min) {
-							x = 0;
-						}
-						if (y < min) if (y > -min) {
-							y = 0;
-						}
-					}
-					matrix = (((a * rnd) | 0) / rnd) + "," + (((b * rnd) | 0) / rnd) + "," + (((c * rnd) | 0) / rnd) + "," + (((d * rnd) | 0) / rnd) + "," + x + "," + y + ")";
-					if (t.svg && _useSVGTransformAttr) {
-						targ.setAttribute("transform", "matrix(" + matrix);
-					} else {
-						//some browsers have a hard time with very small values like 2.4492935982947064e-16 (notice the "e-" towards the end) and would render the object slightly off. So we round to 5 decimal places.
-						style[_transformProp] = ((t.xPercent || t.yPercent) ? "translate(" + t.xPercent + "%," + t.yPercent + "%) matrix(" : "matrix(") + matrix;
-					}
-				} else {
-					style[_transformProp] = ((t.xPercent || t.yPercent) ? "translate(" + t.xPercent + "%," + t.yPercent + "%) matrix(" : "matrix(") + sx + ",0,0," + sy + "," + x + "," + y + ")";
-				}
 			};
 
 		p = Transform.prototype;
@@ -85795,7 +85827,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 						pt.xs0 = pt.e = orig;
 					}
 
-				//for older versions of IE (6-8), we need to manually calculate things inside the setRatio() function. We record origin x and y (ox and oy) and whether or not the values are percentages (oxp and oyp).
+					//for older versions of IE (6-8), we need to manually calculate things inside the setRatio() function. We record origin x and y (ox and oy) and whether or not the values are percentages (oxp and oyp).
 				} else {
 					_parsePosition(orig + "", m1);
 				}
@@ -86044,14 +86076,12 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			}
 			t._gsClassPT = pt;
 			pt.e = (e.charAt(1) !== "=") ? e : b.replace(new RegExp("\\s*\\b" + e.substr(2) + "\\b"), "") + ((e.charAt(0) === "+") ? " " + e.substr(2) : "");
-			if (cssp._tween._duration) { //if it's a zero-duration tween, there's no need to tween anything or parse the data. In fact, if we switch classes temporarily (which we must do for proper parsing) and the class has a transition applied, it could cause a quick flash to the end state and back again initially in some browsers.
-				t.setAttribute("class", pt.e);
-				difData = _cssDif(t, bs, _getAllStyles(t), vars, cnptLookup);
-				t.setAttribute("class", b);
-				pt.data = difData.firstMPT;
-				t.style.cssText = cssText; //we recorded cssText before we swapped classes and ran _getAllStyles() because in cases when a className tween is overwritten, we remove all the related tweening properties from that class change (otherwise class-specific stuff can't override properties we've directly set on the target's style object due to specificity).
-				pt = pt.xfirst = cssp.parse(t, difData.difs, pt, plugin); //we record the CSSPropTween as the xfirst so that we can handle overwriting propertly (if "className" gets overwritten, we must kill all the properties associated with the className part of the tween, so we can loop through from xfirst to the pt itself)
-			}
+			t.setAttribute("class", pt.e);
+			difData = _cssDif(t, bs, _getAllStyles(t), vars, cnptLookup);
+			t.setAttribute("class", b);
+			pt.data = difData.firstMPT;
+			t.style.cssText = cssText; //we recorded cssText before we swapped classes and ran _getAllStyles() because in cases when a className tween is overwritten, we remove all the related tweening properties from that class change (otherwise class-specific stuff can't override properties we've directly set on the target's style object due to specificity).
+			pt = pt.xfirst = cssp.parse(t, difData.difs, pt, plugin); //we record the CSSPropTween as the xfirst so that we can handle overwriting propertly (if "className" gets overwritten, we must kill all the properties associated with the className part of the tween, so we can loop through from xfirst to the pt itself)
 			return pt;
 		}});
 
@@ -86060,7 +86090,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			if (v === 1 || v === 0) if (this.data._totalTime === this.data._totalDuration && this.data.data !== "isFromStart") { //this.data refers to the tween. Only clear at the END of the tween (remember, from() tweens make the ratio go from 1 to 0, so we can't just check that and if the tween is the zero-duration one that's created internally to render the starting values in a from() tween, ignore that because otherwise, for example, from(...{height:100, clearProps:"height", delay:1}) would wipe the height at the beginning of the tween and after 1 second, it'd kick back in).
 				var s = this.t.style,
 					transformParse = _specialProps.transform.parse,
-					a, p, i, clearTransform;
+					a, p, i, clearTransform, transform;
 				if (this.e === "all") {
 					s.cssText = "";
 					clearTransform = true;
@@ -86081,7 +86111,11 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				}
 				if (clearTransform) {
 					_removeProp(s, _transformProp);
-					if (this.t._gsTransform) {
+					transform = this.t._gsTransform;
+					if (transform) {
+						if (transform.svg) {
+							this.t.removeAttribute("data-svg-origin");
+						}
 						delete this.t._gsTransform;
 					}
 				}
@@ -86148,7 +86182,12 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				vars = v;
 				style.cssText = first;
 			}
-			this._firstPT = pt = this.parse(target, vars, null);
+
+			if (vars.className) { //className tweens will combine any differences they find in the css with the vars that are passed in, so {className:"myClass", scale:0.5, left:20} would work.
+				this._firstPT = pt = _specialProps.className.parse(target, vars.className, "className", this, null, null, vars);
+			} else {
+				this._firstPT = pt = this.parse(target, vars, null);
+			}
 
 			if (this._transformType) {
 				threeD = (this._transformType === 3);
@@ -86178,9 +86217,10 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				}
 				tpt = new CSSPropTween(target, "transform", 0, 0, null, 2);
 				this._linkCSSP(tpt, null, pt2);
-				tpt.setRatio = (threeD && _supports3D) ? _set3DTransformRatio : _transformProp ? _set2DTransformRatio : _setIETransformRatio;
+				tpt.setRatio = _transformProp ? _setTransformRatio : _setIETransformRatio;
 				tpt.data = this._transform || _getTransform(target, _cs, true);
 				tpt.tween = tween;
+				tpt.pr = -1; //ensures that the transforms get applied after the components are updated.
 				_overwriteProps.pop(); //we don't want to force the overwrite of all "transform" tweens of the target - we only care about individual transform properties like scaleX, rotation, etc. The CSSPropTween constructor automatically adds the property to _overwriteProps which is why we need to pop() here.
 			}
 
@@ -87484,7 +87524,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 
 			//a bug in iOS 6 Safari occasionally prevents the requestAnimationFrame from working initially, so we use a 1.5-second timeout that automatically falls back to setTimeout() if it senses this condition.
 			setTimeout(function() {
-				if (_useRAF && (!_id || _self.frame < 5)) {
+				if (_useRAF && _self.frame < 5) {
 					_self.useRAF(false);
 				}
 			}, 1500);
@@ -88021,7 +88061,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		p._firstPT = p._targets = p._overwrittenProps = p._startAt = null;
 		p._notifyPluginsOfEnabled = p._lazy = false;
 
-		TweenLite.version = "1.16.0";
+		TweenLite.version = "1.16.1";
 		TweenLite.defaultEase = p._ease = new Ease(null, null, 1, 1);
 		TweenLite.defaultOverwrite = "auto";
 		TweenLite.ticker = _ticker;
@@ -88385,6 +88425,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 				if (!this._reversed ) {
 					isComplete = true;
 					callback = "onComplete";
+					force = (force || this._timeline.autoRemoveChildren); //otherwise, if the animation is unpaused/activated after it's already finished, it doesn't get removed from the parent timeline.
 				}
 				if (duration === 0) if (this._initted || !this.vars.lazy || force) { //zero-duration tweens are tricky because we must discern the momentum/direction of time in order to determine whether the starting values should be rendered or the ending values. If the "playhead" of its timeline goes past the zero-duration tween in the forward direction or lands directly on it, the end values should be rendered, but if the timeline's "playhead" moves past it in the backward direction (from a postitive time to a negative time), the starting values must be rendered.
 					if (this._startTime === this._timeline._duration) { //if a zero-duration tween is at the VERY end of a timeline and that timeline renders at its end, it will typically add a tiny bit of cushion to the render time to prevent rounding errors from getting in the way of tweens rendering their VERY end. If we then reverse() that timeline, the zero-duration tween will trigger its onReverseComplete even though technically the playhead didn't pass over it again. It's a very specific edge case we must accommodate.
@@ -88900,11 +88941,11 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 
 })((typeof(module) !== "undefined" && module.exports && typeof(global) !== "undefined") ? global : this || window, "TweenMax");
 /*!
- * VERSION: 0.12.0
- * DATE: 2015-03-01
+ * VERSION: 0.13.0
+ * DATE: 2015-03-13
  * UPDATES AND DOCS AT: http://greensock.com
  *
- * Requires TweenLite and CSSPlugin version 1.11.0 or later (TweenMax contains both TweenLite and CSSPlugin). ThrowPropsPlugin is required for momentum-based continuation of movement after the mouse/touch is released (ThrowPropsPlugin is a membership benefit of Club GreenSock - http://www.greensock.com/club/).
+ * Requires TweenLite and CSSPlugin version 1.16.1 or later (TweenMax contains both TweenLite and CSSPlugin). ThrowPropsPlugin is required for momentum-based continuation of movement after the mouse/touch is released (ThrowPropsPlugin is a membership benefit of Club GreenSock - http://greensock.com/club/).
  *
  * @license Copyright (c) 2008-2015, GreenSock. All rights reserved.
  * This work is subject to the terms at http://greensock.com/standard-license or for
@@ -88912,7 +88953,20 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
  * 
  * @author: Jack Doyle, jack@greensock.com
  */
-var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof global?global:this||window;(_gsScope._gsQueue||(_gsScope._gsQueue=[])).push(function(){"use strict";_gsScope._gsDefine("utils.Draggable",["events.EventDispatcher","TweenLite"],function(t,e){var i,s,r,n,a,o={css:{}},l={css:{}},h={css:{}},u={css:{}},_=_gsScope._gsDefine.globals,c={},f=document,p=f.documentElement||{},d=[],m=function(){return!1},g=180/Math.PI,v=999999999999999,y=Date.now||function(){return(new Date).getTime()},T=!(f.addEventListener||!f.all),w=f.createElement("div"),x=[],b={},P=0,S=/^(?:a|input|textarea|button|select)$/i,C=0,k=0,R={},A=function(t){if("string"==typeof t&&(t=e.selector(t)),!t||t.nodeType)return[t];var i,s=[],r=t.length;for(i=0;i!==r;s.push(t[i++]));return s},O=function(){for(var t=x.length;--t>-1;)x[t]()},D=function(t){x.push(t),1===x.length&&e.ticker.addEventListener("tick",O,this,!1,1)},M=function(t){for(var i=x.length;--i>-1;)x[i]===t&&x.splice(i,1);e.to(L,0,{overwrite:"all",delay:15,onComplete:L})},L=function(){x.length||e.ticker.removeEventListener("tick",O)},N=function(t,e){var i;for(i in e)void 0===t[i]&&(t[i]=e[i]);return t},E=function(){return null!=window.pageYOffset?window.pageYOffset:null!=f.scrollTop?f.scrollTop:p.scrollTop||f.body.scrollTop||0},I=function(){return null!=window.pageXOffset?window.pageXOffset:null!=f.scrollLeft?f.scrollLeft:p.scrollLeft||f.body.scrollLeft||0},z=function(t,e){xe(t,"scroll",e),F(t.parentNode)||z(t.parentNode,e)},X=function(t,e){be(t,"scroll",e),F(t.parentNode)||X(t.parentNode,e)},F=function(t){return!(t&&t!==p&&t!==f&&t!==f.body&&t!==window&&t.nodeType&&t.parentNode)},B=function(t,e){var i="x"===e?"Width":"Height",s="scroll"+i,r="client"+i,n=f.body;return Math.max(0,F(t)?Math.max(p[s],n[s])-(window["inner"+i]||p[r]||n[r]):t[s]-t[r])},Y=function(t){var e=F(t),i=B(t,"x"),s=B(t,"y");e?t=R:Y(t.parentNode),t._gsMaxScrollX=i,t._gsMaxScrollY=s,t._gsScrollX=t.scrollLeft||0,t._gsScrollY=t.scrollTop||0},U=function(t,e){return t=t||window.event,c.pageX=t.clientX+f.body.scrollLeft+p.scrollLeft,c.pageY=t.clientY+f.body.scrollTop+p.scrollTop,e&&(t.returnValue=!1),c},j=function(t){return t?("string"==typeof t&&(t=e.selector(t)),t.length&&t!==window&&t[0]&&t[0].style&&!t.nodeType&&(t=t[0]),t===window||t.nodeType&&t.style?t:null):t},W=function(t,e){var s,r,n,a=t.style;if(void 0===a[e]){for(n=["O","Moz","ms","Ms","Webkit"],r=5,s=e.charAt(0).toUpperCase()+e.substr(1);--r>-1&&void 0===a[n[r]+s];);if(0>r)return"";i=3===r?"ms":n[r],e=i+s}return e},q=function(t,e,i){var s=t.style;s&&(void 0===s[e]&&(e=W(t,e)),null==i?s.removeProperty?s.removeProperty(e.replace(/([A-Z])/g,"-$1").toLowerCase()):s.removeAttribute(e):void 0!==s[e]&&(s[e]=i))},V=f.defaultView?f.defaultView.getComputedStyle:m,G=/(?:Left|Right|Width)/i,H=/(?:\d|\-|\+|=|#|\.)*/g,Q=function(t,e,i,s,r){if("px"===s||!s)return i;if("auto"===s||!i)return 0;var n,a=G.test(e),o=t,l=te.style,h=0>i;return h&&(i=-i),"%"===s&&-1!==e.indexOf("border")?n=i/100*(a?t.clientWidth:t.clientHeight):(l.cssText="border:0 solid red;position:"+$(t,"position",!0)+";line-height:0;","%"!==s&&o.appendChild?l[a?"borderLeftWidth":"borderTopWidth"]=i+s:(o=t.parentNode||f.body,l[a?"width":"height"]=i+s),o.appendChild(te),n=parseFloat(te[a?"offsetWidth":"offsetHeight"]),o.removeChild(te),0!==n||r||(n=Q(t,e,i,s,!0))),h?-n:n},Z=function(t,e){if("absolute"!==$(t,"position",!0))return 0;var i="left"===e?"Left":"Top",s=$(t,"margin"+i,!0);return t["offset"+i]-(Q(t,e,parseFloat(s),(s+"").replace(H,""))||0)},$=function(t,e,i){var s,r=(t._gsTransform||{})[e];return r||0===r?r:(t.style[e]?r=t.style[e]:(s=V(t))?(r=s.getPropertyValue(e.replace(/([A-Z])/g,"-$1").toLowerCase()),r=r||s.length?r:s[e]):t.currentStyle&&(r=t.currentStyle[e]),"auto"!==r||"top"!==e&&"left"!==e||(r=Z(t,e)),i?r:parseFloat(r)||0)},K=function(t,e,i){var s=t.vars,r=s[i],n=t._listeners[e];"function"==typeof r&&r.apply(s[i+"Scope"]||t,s[i+"Params"]||[t.pointerEvent]),n&&t.dispatchEvent(e)},J=function(t,e){var i,s,r,n=j(t);return n?ge(n,e):void 0!==t.left?(r=ce(e),{left:t.left-r.x,top:t.top-r.y,width:t.width,height:t.height}):(s=t.min||t.minX||t.minRotation||0,i=t.min||t.minY||0,{left:s,top:i,width:(t.max||t.maxX||t.maxRotation||0)-s,height:(t.max||t.maxY||0)-i})},te=f.createElement("div"),ee=""!==W(te,"perspective"),ie=W(te,"transformOrigin").replace(/^ms/g,"Ms").replace(/([A-Z])/g,"-$1").toLowerCase(),se=W(te,"transform"),re=se.replace(/^ms/g,"Ms").replace(/([A-Z])/g,"-$1").toLowerCase(),ne={},ae={},oe=function(){if(!T){var t="http://www.w3.org/2000/svg",e=f.createElementNS(t,"svg"),i=f.createElementNS(t,"rect");return i.setAttributeNS(null,"width","10"),i.setAttributeNS(null,"height","10"),e.appendChild(i),e}}(),le=window.SVGElement,he=function(t){return!!(le&&"function"==typeof t.getBBox&&t.getCTM&&(!t.parentNode||t.parentNode.getBBox&&t.parentNode.getCTM))},ue=["class","viewBox","width","height","xml:space"],_e=function(t){if(!t.getBoundingClientRect||!t.parentNode)return{offsetTop:0,offsetLeft:0,scaleX:1,scaleY:1,offsetParent:p};if(t._gsSVGData&&t._gsSVGData.lastUpdate===e.ticker.frame)return t._gsSVGData;var i,s,r,n,a,o,l=t,h=t.style.cssText,u=t._gsSVGData=t._gsSVGData||{};if("svg"!==(t.nodeName+"").toLowerCase()&&t.getBBox){for(l=t.parentNode,i=t.getBBox();l&&"svg"!==(l.nodeName+"").toLowerCase();)l=l.parentNode;return u=_e(l),{offsetTop:i.y*u.scaleY,offsetLeft:i.x*u.scaleX,scaleX:u.scaleX,scaleY:u.scaleY,offsetParent:l||p}}for(;!l.offsetParent&&l.parentNode;)l=l.parentNode;for(t.parentNode.insertBefore(oe,t),t.parentNode.removeChild(t),oe.style.cssText=h,oe.style[se]="none",a=ue.length;--a>-1;)o=t.getAttribute(ue[a]),o?oe.setAttribute(ue[a],o):oe.removeAttribute(ue[a]);return i=oe.getBoundingClientRect(),n=oe.firstChild.getBoundingClientRect(),r=l.offsetParent,r?(r===f.body&&p&&(r=p),s=r.getBoundingClientRect()):s={top:-E(),left:-I()},oe.parentNode.insertBefore(t,oe),t.parentNode.removeChild(oe),u.scaleX=n.width/10,u.scaleY=n.height/10,u.offsetLeft=i.left-s.left,u.offsetTop=i.top-s.top,u.offsetParent=l.offsetParent||p,u.lastUpdate=e.ticker.frame,u},ce=function(t,i){if(i=i||{},!t||t===p||!t.parentNode)return{x:0,y:0};var s=V(t),r=ie&&s?s.getPropertyValue(ie):"50% 50%",n=r.split(" "),a=-1!==r.indexOf("left")?"0%":-1!==r.indexOf("right")?"100%":n[0],o=-1!==r.indexOf("top")?"0%":-1!==r.indexOf("bottom")?"100%":n[1];return("center"===o||null==o)&&(o="50%"),("center"===a||isNaN(parseFloat(a)))&&(a="50%"),t.getBBox&&he(t)?(t._gsTransform||(e.set(t,{x:"+=0"}),void 0===t._gsTransform.xOrigin&&console.log("Draggable requires at least GSAP 1.16.0")),r=t.getBBox(),n=_e(t),i.x=(t._gsTransform.xOrigin-r.x)*n.scaleX,i.y=(t._gsTransform.yOrigin-r.y)*n.scaleY):(i.x=-1!==a.indexOf("%")?t.offsetWidth*parseFloat(a)/100:parseFloat(a),i.y=-1!==o.indexOf("%")?t.offsetHeight*parseFloat(o)/100:parseFloat(o)),i},fe=function(t,e,i){var s,r,a,o,l,h;return t!==window&&t&&t.parentNode?(s=V(t),r=s?s.getPropertyValue(re):t.currentStyle?t.currentStyle[se]:"1,0,0,1,0,0",r=(r+"").match(/(?:\-|\b)[\d\-\.e]+\b/g)||[1,0,0,1,0,0],r.length>6&&(r=[r[0],r[1],r[4],r[5],r[12],r[13]]),e&&(a=t.parentNode,h=t.getBBox&&he(t)||void 0===t.offsetLeft&&"svg"===(t.nodeName+"").toLowerCase()?_e(t):t,o=h.offsetParent,l=a===p||a===f.body,void 0===n&&f.body&&se&&(n=function(){var t,e,i=f.createElement("div"),s=f.createElement("div");return s.style.position="absolute",f.body.appendChild(i),i.appendChild(s),t=s.offsetParent,i.style[se]="rotate(1deg)",e=s.offsetParent===t,f.body.removeChild(i),e}()),r[4]=Number(r[4])+e.x+(h.offsetLeft||0)-i.x-(l?0:a.scrollLeft)+(o?parseInt($(o,"borderLeftWidth"),10)||0:0),r[5]=Number(r[5])+e.y+(h.offsetTop||0)-i.y-(l?0:a.scrollTop)+(o?parseInt($(o,"borderTopWidth"),10)||0:0),!a||a.offsetParent!==o||n&&"100100"!==fe(a).join("")||(r[4]-=a.offsetLeft||0,r[5]-=a.offsetTop||0),a&&"fixed"===$(t,"position",!0)&&(r[4]+=I(),r[5]+=E())),r):[1,0,0,1,0,0]},pe=function(t,e){if(!t||t===window||!t.parentNode)return[1,0,0,1,0,0];for(var i,s,r,n,a,o,l,h,u=ce(t,ne),_=ce(t.parentNode,ae),c=fe(t,u,_);(t=t.parentNode)&&t.parentNode&&t!==p;)u=_,_=ce(t.parentNode,u===ne?ae:ne),l=fe(t,u,_),i=c[0],s=c[1],r=c[2],n=c[3],a=c[4],o=c[5],c[0]=i*l[0]+s*l[2],c[1]=i*l[1]+s*l[3],c[2]=r*l[0]+n*l[2],c[3]=r*l[1]+n*l[3],c[4]=a*l[0]+o*l[2]+l[4],c[5]=a*l[1]+o*l[3]+l[5];return e&&(i=c[0],s=c[1],r=c[2],n=c[3],a=c[4],o=c[5],h=i*n-s*r,c[0]=n/h,c[1]=-s/h,c[2]=-r/h,c[3]=i/h,c[4]=(r*o-n*a)/h,c[5]=-(i*o-s*a)/h),c},de=function(t,e,i){var s=pe(t),r=e.x,n=e.y;return i=i===!0?e:i||{},i.x=r*s[0]+n*s[2]+s[4],i.y=r*s[1]+n*s[3]+s[5],i},me=function(t,e,i){var s=t.x*e[0]+t.y*e[2]+e[4],r=t.x*e[1]+t.y*e[3]+e[5];return t.x=s*i[0]+r*i[2]+i[4],t.y=s*i[1]+r*i[3]+i[5],t},ge=function(t,e){var i,s,r,n,a,o,l,h,u,_,c;return t===window?(n=E(),s=I(),r=s+(p.clientWidth||t.innerWidth||f.body.clientWidth||0),a=n+((t.innerHeight||0)-20<p.clientHeight?p.clientHeight:t.innerHeight||f.body.clientHeight||0)):(i=ce(t),s=-i.x,r=s+t.offsetWidth,n=-i.y,a=n+t.offsetHeight),t===e?{left:s,top:n,width:r-s,height:a-n}:(o=pe(t),l=pe(e,!0),h=me({x:s,y:n},o,l),u=me({x:r,y:n},o,l),_=me({x:r,y:a},o,l),c=me({x:s,y:a},o,l),s=Math.min(h.x,u.x,_.x,c.x),n=Math.min(h.y,u.y,_.y,c.y),{left:s,top:n,width:Math.max(h.x,u.x,_.x,c.x)-s,height:Math.max(h.y,u.y,_.y,c.y)-n})},ve=function(t){return t.length&&t[0]&&(t[0].nodeType&&t[0].style&&!t.nodeType||t[0].length&&t[0][0])?!0:!1},ye=function(t){var e,i,s,r=[],n=t.length;for(e=0;n>e;e++)if(i=t[e],ve(i))for(s=i.length,s=0;i.length>s;s++)r.push(i[s]);else r.push(i);return r},Te="ontouchstart"in p&&"orientation"in window,we=function(t){for(var e=t.split(","),i=(void 0!==te.onpointerdown?"pointerdown,pointermove,pointerup,pointercancel":void 0!==te.onmspointerdown?"MSPointerDown,MSPointerMove,MSPointerUp,MSPointerCancel":t).split(","),s={},r=8;--r>-1;)s[e[r]]=i[r],s[i[r]]=e[r];return s}("touchstart,touchmove,touchend,touchcancel"),xe=function(t,e,i){t.addEventListener?t.addEventListener(we[e]||e,i,!1):t.attachEvent&&t.attachEvent("on"+e,i)},be=function(t,e,i){t.removeEventListener?t.removeEventListener(we[e]||e,i):t.detachEvent&&t.detachEvent("on"+e,i)},Pe=function(t){s=t.touches&&t.touches.length>C,be(t.target,"touchend",Pe)},Se=function(t){s=t.touches&&t.touches.length>C,xe(t.target,"touchend",Pe)},Ce=function(t,e,i,s,r,n){var a,o,l,h={};if(e)if(1!==r&&e instanceof Array){for(h.end=a=[],l=e.length,o=0;l>o;o++)a[o]=e[o]*r;i+=1.1,s-=1.1}else h.end="function"==typeof e?function(i){return e.call(t,i)*r}:e;return(i||0===i)&&(h.max=i),(s||0===s)&&(h.min=s),n&&(h.velocity=0),h},ke=function(t){var e;return t&&t.getAttribute&&"BODY"!==t.nodeName?"true"===(e=t.getAttribute("data-clickable"))||"false"!==e&&(t.onclick||S.test(t.nodeName+"")||"true"===t.getAttribute("contentEditable"))?!0:ke(t.parentNode):!1},Re=function(t,e){for(var i,s=t.length;--s>-1;)i=t[s],i.ondragstart=i.onselectstart=e?null:m,q(i,"userSelect",e?"text":"none")},Ae=function(){var t,e=f.createElement("div"),i=f.createElement("div"),s=i.style,r=f.body||te;return s.display="inline-block",s.position="relative",e.style.cssText=i.innerHTML="width:90px; height:40px; padding:10px; overflow:auto; visibility: hidden",e.appendChild(i),r.appendChild(e),a=i.offsetHeight+18>e.scrollHeight,s.width="100%",se||(s.paddingRight="500px",t=e.scrollLeft=e.scrollWidth-e.clientWidth,s.left="-90px",t=t!==e.scrollLeft),r.removeChild(e),t}(),Oe=function(t,i){t=j(t),i=i||{};var s,r,n,o,l,h,u=f.createElement("div"),_=u.style,c=t.firstChild,p=0,d=0,m=t.scrollTop,g=t.scrollLeft,v=t.scrollWidth,y=t.scrollHeight,w=0,x=0,b=0;ee&&i.force3D!==!1?(l="translate3d(",h="px,0px)"):se&&(l="translate(",h="px)"),this.scrollTop=function(t,e){return arguments.length?(this.top(-t,e),void 0):-this.top()},this.scrollLeft=function(t,e){return arguments.length?(this.left(-t,e),void 0):-this.left()},this.left=function(s,r){if(!arguments.length)return-(t.scrollLeft+d);var n=t.scrollLeft-g,a=d;return(n>2||-2>n)&&!r?(g=t.scrollLeft,e.killTweensOf(this,!0,{left:1,scrollLeft:1}),this.left(-g),i.onKill&&i.onKill(),void 0):(s=-s,0>s?(d=0|s-.5,s=0):s>x?(d=0|s-x,s=x):d=0,(d||a)&&(l?this._suspendTransforms||(_[se]=l+-d+"px,"+-p+h):_.left=-d+"px",Ae&&d+w>=0&&(_.paddingRight=d+w+"px")),t.scrollLeft=0|s,g=t.scrollLeft,void 0)},this.top=function(s,r){if(!arguments.length)return-(t.scrollTop+p);var n=t.scrollTop-m,a=p;return(n>2||-2>n)&&!r?(m=t.scrollTop,e.killTweensOf(this,!0,{top:1,scrollTop:1}),this.top(-m),i.onKill&&i.onKill(),void 0):(s=-s,0>s?(p=0|s-.5,s=0):s>b?(p=0|s-b,s=b):p=0,(p||a)&&(l?this._suspendTransforms||(_[se]=l+-d+"px,"+-p+h):_.top=-p+"px"),t.scrollTop=0|s,m=t.scrollTop,void 0)},this.maxScrollTop=function(){return b},this.maxScrollLeft=function(){return x},this.disable=function(){for(c=u.firstChild;c;)o=c.nextSibling,t.appendChild(c),c=o;t===u.parentNode&&t.removeChild(u)},this.enable=function(){if(c=t.firstChild,c!==u){for(;c;)o=c.nextSibling,u.appendChild(c),c=o;t.appendChild(u),this.calibrate()}},this.calibrate=function(e){var i,o,l=t.clientWidth===s;m=t.scrollTop,g=t.scrollLeft,(!l||t.clientHeight!==r||u.offsetHeight!==n||v!==t.scrollWidth||y!==t.scrollHeight||e)&&((p||d)&&(i=this.left(),o=this.top(),this.left(-t.scrollLeft),this.top(-t.scrollTop)),(!l||e)&&(_.display="block",_.width="auto",_.paddingRight="0px",w=Math.max(0,t.scrollWidth-t.clientWidth),w&&(w+=$(t,"paddingLeft")+(a?$(t,"paddingRight"):0))),_.display="inline-block",_.position="relative",_.overflow="visible",_.verticalAlign="top",_.width="100%",_.paddingRight=w+"px",a&&(_.paddingBottom=$(t,"paddingBottom",!0)),T&&(_.zoom="1"),s=t.clientWidth,r=t.clientHeight,v=t.scrollWidth,y=t.scrollHeight,x=t.scrollWidth-s,b=t.scrollHeight-r,n=u.offsetHeight,_.display="block",(i||o)&&(this.left(i),this.top(o)))},this.content=u,this.element=t,this._suspendTransforms=!1,this.enable()},De=function(i,n){t.call(this,i),i=j(i),r||(r=_.com.greensock.plugins.ThrowPropsPlugin),this.vars=n=n||{},this.target=i,this.x=this.y=this.rotation=0,this.dragResistance=parseFloat(n.dragResistance)||0,this.edgeResistance=isNaN(n.edgeResistance)?1:parseFloat(n.edgeResistance)||0,this.lockAxis=n.lockAxis,this.autoScroll=n.autoScroll||0,this.lockedAxis=null;var a,c,m,x,S,O,L,E,I,B,W,V,G,H,Q,Z,te,ee,ie,se,re,ne,ae,oe,le,he,ue,_e,ce,fe=(n.type||(T?"top,left":"x,y")).toLowerCase(),me=-1!==fe.indexOf("x")||-1!==fe.indexOf("y"),ge=-1!==fe.indexOf("rotation"),ve=ge?"rotation":me?"x":"left",ye=me?"y":"top",Pe=-1!==fe.indexOf("x")||-1!==fe.indexOf("left")||"scroll"===fe,Ae=-1!==fe.indexOf("y")||-1!==fe.indexOf("top")||"scroll"===fe,Me=n.minimumMovement||2,Ne=this,Ee=A(n.trigger||n.handle||i),Ie={},ze=0,Xe=!1,Fe=n.clickableTest||ke,Be=function(t){if(Ne.autoScroll&&Ne.isDragging&&(ee||Xe)){var e,s,r,n,a,o,l,h,u=i,_=15*Ne.autoScroll;for(Xe=!1,R.scrollTop=null!=window.pageYOffset?window.pageYOffset:null!=p.scrollTop?p.scrollTop:f.body.scrollTop,R.scrollLeft=null!=window.pageXOffset?window.pageXOffset:null!=p.scrollLeft?p.scrollLeft:f.body.scrollLeft,n=Ne.pointerX-R.scrollLeft,a=Ne.pointerY-R.scrollTop;u&&!s;)s=F(u.parentNode),e=s?R:u.parentNode,r=s?{bottom:Math.max(p.clientHeight,window.innerHeight||0),right:Math.max(p.clientWidth,window.innerWidth||0),left:0,top:0}:e.getBoundingClientRect(),o=l=0,Ae&&(a>r.bottom-40&&(h=e._gsMaxScrollY-e.scrollTop)?(Xe=!0,l=Math.min(h,0|_*(1-Math.max(0,r.bottom-a)/40))):r.top+40>a&&e.scrollTop&&(Xe=!0,l=-Math.min(e.scrollTop,0|_*(1-Math.max(0,a-r.top)/40))),l&&(e.scrollTop+=l)),Pe&&(n>r.right-40&&(h=e._gsMaxScrollX-e.scrollLeft)?(Xe=!0,o=Math.min(h,0|_*(1-Math.max(0,r.right-n)/40))):r.left+40>n&&e.scrollLeft&&(Xe=!0,o=-Math.min(e.scrollLeft,0|_*(1-Math.max(0,n-r.left)/40))),o&&(e.scrollLeft+=o)),s&&(o||l)&&(window.scrollTo(e.scrollLeft,e.scrollTop),Ze(Ne.pointerX+o,Ne.pointerY+l)),u=e}if(ee){var d=Ne.x,m=Ne.y,g=1e-6;g>d&&d>-g&&(d=0),g>m&&m>-g&&(m=0),ge?(ce.data.rotation=Ne.rotation=d,ce.setRatio(1)):c?(Ae&&c.top(m),Pe&&c.left(d)):me?(Ae&&(ce.data.y=m),Pe&&(ce.data.x=d),ce.setRatio(1)):(Ae&&(i.style.top=m+"px"),Pe&&(i.style.left=d+"px")),E&&!t&&K(Ne,"drag","onDrag")}ee=!1},Ye=function(t,s){var r;i._gsTransform||!me&&!ge||e.set(i,{x:"+=0"}),me?(Ne.y=i._gsTransform.y,Ne.x=i._gsTransform.x):ge?Ne.x=Ne.rotation=i._gsTransform.rotation:c?(Ne.y=c.top(),Ne.x=c.left()):(Ne.y=parseInt(i.style.top,10)||0,Ne.x=parseInt(i.style.left,10)||0),!se&&!re||s||(se&&(r=se(Ne.x),r!==Ne.x&&(Ne.x=r,ge&&(Ne.rotation=r),ee=!0)),re&&(r=re(Ne.y),r!==Ne.y&&(Ne.y=r,ee=!0)),ee&&Be(!0)),n.onThrowUpdate&&!t&&n.onThrowUpdate.apply(n.onThrowUpdateScope||Ne,n.onThrowUpdateParams||d)},Ue=function(){var t,e,s,r;L=!1,c?(c.calibrate(),Ne.minX=B=-c.maxScrollLeft(),Ne.minY=V=-c.maxScrollTop(),Ne.maxX=I=Ne.maxY=W=0,L=!0):n.bounds&&(t=J(n.bounds,i.parentNode),ge?(Ne.minX=B=t.left,Ne.maxX=I=t.left+t.width,Ne.minY=V=Ne.maxY=W=0):void 0!==n.bounds.maxX||void 0!==n.bounds.maxY?(t=n.bounds,Ne.minX=B=t.minX,Ne.minY=V=t.minY,Ne.maxX=I=t.maxX,Ne.maxY=W=t.maxY):(e=J(i,i.parentNode),Ne.minX=B=$(i,ve)+t.left-e.left,Ne.minY=V=$(i,ye)+t.top-e.top,Ne.maxX=I=B+(t.width-e.width),Ne.maxY=W=V+(t.height-e.height)),B>I&&(Ne.minX=I,Ne.maxX=I=B,B=Ne.minX),V>W&&(Ne.minY=W,Ne.maxY=W=V,V=Ne.minY),ge&&(Ne.minRotation=B,Ne.maxRotation=I),L=!0),n.liveSnap&&(s=n.liveSnap===!0?n.snap||{}:n.liveSnap,r=s instanceof Array||"function"==typeof s,ge?(se=Ge(r?s:s.rotation,B,I,1),re=null):(Pe&&(se=Ge(r?s:s.x||s.left||s.scrollLeft,B,I,c?-1:1)),Ae&&(re=Ge(r?s:s.y||s.top||s.scrollTop,V,W,c?-1:1))))},je=function(t,e){var s,a,o;t&&r?(t===!0&&(s=n.snap||{},a=s instanceof Array||"function"==typeof s,t={resistance:(n.throwResistance||n.resistance||1e3)/(ge?10:1)},ge?t.rotation=Ce(Ne,a?s:s.rotation,I,B,1,e):(Pe&&(t[ve]=Ce(Ne,a?s:s.x||s.left||s.scrollLeft,I,B,c?-1:1,e||Ne.lockAxis&&"x"===Ne.lockedAxis)),Ae&&(t[ye]=Ce(Ne,a?s:s.y||s.top||s.scrollTop,W,V,c?-1:1,e||Ne.lockAxis&&"y"===Ne.lockedAxis)))),Ne.tween=o=r.to(c||i,{throwProps:t,ease:n.ease||_.Power3.easeOut,onComplete:n.onThrowComplete,onCompleteParams:n.onThrowCompleteParams,onCompleteScope:n.onThrowCompleteScope||Ne,onUpdate:n.fastMode?n.onThrowUpdate:Ye,onUpdateParams:n.fastMode?n.onThrowUpdateParams:null,onUpdateScope:n.onThrowUpdateScope||Ne},isNaN(n.maxDuration)?2:n.maxDuration,isNaN(n.minDuration)?.5:n.minDuration,isNaN(n.overshootTolerance)?1-Ne.edgeResistance+.2:n.overshootTolerance),n.fastMode||(c&&(c._suspendTransforms=!0),o.render(o.duration(),!0,!0),Ye(!0,!0),Ne.endX=Ne.x,Ne.endY=Ne.y,ge&&(Ne.endRotation=Ne.x),o.play(0),Ye(!0,!0),c&&(c._suspendTransforms=!1))):L&&Ne.applyBounds()},We=function(){oe=pe(i.parentNode,!0),oe[1]||oe[2]||1!=oe[0]||1!=oe[3]||0!=oe[4]||0!=oe[5]||(oe=null)},qe=function(){var t=1-Ne.edgeResistance;We(),c?(Ue(),O=c.top(),S=c.left()):(Ve()?(Ye(!0,!0),Ue()):Ne.applyBounds(),ge?(te=de(i,{x:0,y:0}),Ye(!0,!0),S=Ne.x,O=Ne.y=Math.atan2(te.y-x,m-te.x)*g):(ue=i.parentNode?i.parentNode.scrollTop||0:0,_e=i.parentNode?i.parentNode.scrollLeft||0:0,O=$(i,ye),S=$(i,ve))),L&&t&&(S>I?S=I+(S-I)/t:B>S&&(S=B-(B-S)/t),ge||(O>W?O=W+(O-W)/t:V>O&&(O=V-(V-O)/t)))},Ve=function(){return Ne.tween&&Ne.tween.isActive()},Ge=function(t,e,i,s){return"function"==typeof t?function(r){var n=Ne.isPressed?1-Ne.edgeResistance:1;return t.call(Ne,r>i?i+(r-i)*n:e>r?e+(r-e)*n:r)*s}:t instanceof Array?function(s){for(var r,n,a=t.length,o=0,l=v;--a>-1;)r=t[a],n=r-s,0>n&&(n=-n),l>n&&r>=e&&i>=r&&(o=a,l=n);return t[o]}:isNaN(t)?function(t){return t}:function(){return t*s}},He=function(t){var s,r;if(a&&!Ne.isPressed&&t){if(le=Ve(),Ne.pointerEvent=t,we[t.type]?(ae=-1!==t.type.indexOf("touch")?t.currentTarget:f,xe(ae,"touchend",$e),xe(ae,"touchmove",Qe),xe(ae,"touchcancel",$e),xe(f,"touchstart",Se)):(ae=null,xe(f,"mousemove",Qe)),xe(f,"mouseup",$e),t&&t.target&&xe(t.target,"mouseup",$e),ne=Fe.call(Ne,t.target)&&!n.dragClickables)return xe(t.target,"change",$e),K(Ne,"press","onPress"),Re(Ee,!0),void 0;if(T?t=U(t,!0):(t.preventDefault(),t.preventManipulation&&t.preventManipulation()),t.changedTouches?(t=Q=t.changedTouches[0],Z=t.identifier):t.pointerId?Z=t.pointerId:Q=null,C++,D(Be),x=Ne.pointerY=t.pageY,m=Ne.pointerX=t.pageX,!Ne.autoScroll||ge||c||!i.parentNode||i.getBBox||(Y(i.parentNode),i.parentNode._gsMaxScrollX&&!w.parentNode&&(w.style.width=i.parentNode.scrollWidth+"px",i.parentNode.appendChild(w))),qe(),oe&&(s=m*oe[0]+x*oe[2]+oe[4],x=m*oe[1]+x*oe[3]+oe[5],m=s),Ne.tween&&Ne.tween.kill(),e.killTweensOf(c||i,!0,Ie),c&&e.killTweensOf(i,!0,{scrollTo:1}),Ne.tween=Ne.lockedAxis=null,(n.zIndexBoost||!ge&&!c&&n.zIndexBoost!==!1)&&(i.style.zIndex=De.zIndex++),Ne.isPressed=!0,E=!(!n.onDrag&&!Ne._listeners.drag),!ge)for(r=Ee.length;--r>-1;)q(Ee[r],"cursor",n.cursor||"move");K(Ne,"press","onPress")}},Qe=function(t){if(a&&!s&&Ne.isPressed&&t){T?t=U(t,!0):(t.preventDefault(),t.preventManipulation&&t.preventManipulation()),Ne.pointerEvent=t;var e,i=t.changedTouches;if(i){if(t=i[0],t!==Q&&t.identifier!==Z){for(e=i.length;--e>-1&&(t=i[e]).identifier!==Z;);if(0>e)return}}else if(t.pointerId&&Z&&t.pointerId!==Z)return;Ne.autoScroll&&(Xe=!0),Ze(t.pageX,t.pageY)}},Ze=function(t,e){var i,s,r,n,a,o,l=1-Ne.dragResistance,h=1-Ne.edgeResistance;Ne.pointerX=t,Ne.pointerY=e,ge?(n=Math.atan2(te.y-e,t-te.x)*g,a=Ne.y-n,Ne.y=n,a>180?O-=360:-180>a&&(O+=360),r=S+(O-n)*l):(oe&&(o=t*oe[0]+e*oe[2]+oe[4],e=t*oe[1]+e*oe[3]+oe[5],t=o),s=e-x,i=t-m,Me>s&&s>-Me&&(s=0),Me>i&&i>-Me&&(i=0),Ne.lockAxis&&(i||s)&&("y"===Ne.lockedAxis||!Ne.lockedAxis&&Math.abs(i)>Math.abs(s)&&Pe?(s=0,Ne.lockedAxis="y"):Ae&&(i=0,Ne.lockedAxis="x")),r=S+i*l,n=O+s*l),se||re?(se&&(r=se(r)),re&&(n=re(n))):L&&(r>I?r=I+(r-I)*h:B>r&&(r=B+(r-B)*h),ge||(n>W?n=W+(n-W)*h:V>n&&(n=V+(n-V)*h))),ge||(r=Math.round(r),n=Math.round(n)),(Ne.x!==r||Ne.y!==n&&!ge)&&(Ne.x=Ne.endX=r,ge?Ne.endRotation=r:Ne.y=Ne.endY=n,ee=!0,Ne.isDragging||(Ne.isDragging=!0,K(Ne,"dragstart","onDragStart")))},$e=function(t,e){if(!(!a||t&&Z&&!e&&t.pointerId&&t.pointerId!==Z)){Ne.isPressed=!1;var s,r,o,l,h=t,u=Ne.isDragging;if(ae?(be(ae,"touchend",$e),be(ae,"touchmove",Qe),be(ae,"touchcancel",$e),be(f,"touchstart",Se)):be(f,"mousemove",Qe),be(f,"mouseup",$e),t&&t.target&&be(t.target,"mouseup",$e),ee=!1,w.parentNode&&w.parentNode.removeChild(w),ne)return t&&be(t.target,"change",$e),Re(Ee,!1),K(Ne,"release","onRelease"),K(Ne,"click","onClick"),ne=!1,void 0;if(M(Be),!ge)for(r=Ee.length;--r>-1;)q(Ee[r],"cursor",n.cursor||"move");if(u&&(ze=k=y(),Ne.isDragging=!1),C--,t){if(T&&(t=U(t,!1)),s=t.changedTouches,s&&(t=s[0],t!==Q&&t.identifier!==Z)){for(r=s.length;--r>-1&&(t=s[r]).identifier!==Z;);if(0>r)return}Ne.pointerEvent=h,Ne.pointerX=t.pageX,Ne.pointerY=t.pageY}return h&&!u?(le&&(n.snap||n.bounds)&&je(n.throwProps),K(Ne,"release","onRelease"),K(Ne,"click","onClick"),l=h.target||h.srcElement||i,l.click?l.click():f.createEvent&&(o=f.createEvent("MouseEvents"),o.initEvent("click",!0,!0),l.dispatchEvent(o)),he=y()):(je(n.throwProps),T||!h||!n.dragClickables&&Fe.call(Ne,h.target)||!u||(h.preventDefault(),h.preventManipulation&&h.preventManipulation()),K(Ne,"release","onRelease")),u&&K(Ne,"dragend","onDragEnd"),!0}},Ke=function(t){if(t&&Ne.isDragging){var e=t.target||t.srcElement||i.parentNode,s=e.scrollLeft-e._gsScrollX,r=e.scrollTop-e._gsScrollY;(s||r)&&(m-=s,x-=r,e._gsScrollX+=s,e._gsScrollY+=r,Ze(Ne.pointerX,Ne.pointerY))}},Je=function(t){var e=y(),i=40>e-he;(Ne.isPressed||20>e-ze||i)&&(t.preventDefault?(t.preventDefault(),i&&t.stopImmediatePropagation()):t.returnValue=!1,t.preventManipulation&&t.preventManipulation())};ie=De.get(this.target),ie&&ie.kill(),this.startDrag=function(t){He(t),Ne.isDragging||(Ne.isDragging=!0,K(Ne,"dragstart","onDragStart"))},this.drag=Qe,this.endDrag=function(t){$e(t,!0)},this.timeSinceDrag=function(){return Ne.isDragging?0:(y()-ze)/1e3},this.hitTest=function(t,e){return De.hitTest(Ne.target,t,e)},this.getDirection=function(t,e){var i,s,n,a,o,l,h="velocity"===t&&r?t:"object"!=typeof t||ge?"start":"element";return"element"===h&&(o=Le(Ne.target),l=Le(t)),i="start"===h?Ne.x-S:"velocity"===h?r.getVelocity(this.target,ve):o.left+o.width/2-(l.left+l.width/2),ge?0>i?"counter-clockwise":"clockwise":(e=e||2,s="start"===h?Ne.y-O:"velocity"===h?r.getVelocity(this.target,ye):o.top+o.height/2-(l.top+l.height/2),n=Math.abs(i/s),a=1/e>n?"":0>i?"left":"right",e>n&&(""!==a&&(a+="-"),a+=0>s?"up":"down"),a)},this.applyBounds=function(t){var e,i;return t&&n.bounds!==t?(n.bounds=t,Ne.update(!0)):(Ye(!0),Ue(),L&&(e=Ne.x,i=Ne.y,L&&(e>I?e=I:B>e&&(e=B),i>W?i=W:V>i&&(i=V)),(Ne.x!==e||Ne.y!==i)&&(Ne.x=Ne.endX=e,ge?Ne.endRotation=e:Ne.y=Ne.endY=i,ee=!0,Be())),Ne)},this.update=function(t){var e=Ne.x,i=Ne.y;return We(),Ke(),t?Ne.applyBounds():(ee&&Be(),Ye(!0)),Ne.isPressed&&(Pe&&Math.abs(e-Ne.x)>.01||Ae&&Math.abs(i-Ne.y)>.01&&!ge)&&qe(),Ne},this.enable=function(t){var s,o,l;if("soft"!==t){for(o=Ee.length;--o>-1;)l=Ee[o],xe(l,"mousedown",He),xe(l,"touchstart",He),xe(l,"click",Je),ge||q(l,"cursor",n.cursor||"move"),q(l,"touchCallout","none"),q(l,"touchAction","none");Re(Ee,!1)}return z(Ne.target,Ke),a=!0,r&&"soft"!==t&&r.track(c||i,me?"x,y":ge?"rotation":"top,left"),c&&c.enable(),i._gsDragID=s="d"+P++,b[s]=this,c&&(c.element._gsDragID=s),e.set(i,{x:"+=0"}),ce={t:i,data:T?H:i._gsTransform,tween:{},setRatio:T?function(){e.set(i,G)}:CSSPlugin._internals.set3DTransformRatio},this.update(!0),Ne},this.disable=function(t){var e,s,n=this.isDragging;if(!ge)for(e=Ee.length;--e>-1;)q(Ee[e],"cursor",null);if("soft"!==t){for(e=Ee.length;--e>-1;)s=Ee[e],q(s,"touchCallout","default"),q(s,"MSTouchAction","auto"),be(s,"mousedown",He),be(s,"touchstart",He),be(s,"click",Je);Re(Ee,!0),ae&&(be(ae,"touchcancel",$e),be(ae,"touchend",$e),be(ae,"touchmove",Qe)),be(f,"mouseup",$e),be(f,"mousemove",Qe)}return X(i,Ke),a=!1,r&&"soft"!==t&&r.untrack(c||i,me?"x,y":ge?"rotation":"top,left"),c&&c.disable(),M(Be),this.isDragging=this.isPressed=ne=!1,n&&K(this,"dragend","onDragEnd"),Ne},this.enabled=function(t,e){return arguments.length?t?this.enable(e):this.disable(e):a},this.kill=function(){return e.killTweensOf(c||i,!0,Ie),Ne.disable(),delete b[i._gsDragID],Ne},-1!==fe.indexOf("scroll")&&(c=this.scrollProxy=new Oe(i,N({onKill:function(){Ne.isPressed&&$e(null)}},n)),i.style.overflowY=Ae&&!Te?"auto":"hidden",i.style.overflowX=Pe&&!Te?"auto":"hidden",i=c.content),n.force3D!==!1&&e.set(i,{force3D:!0}),ge?Ie.rotation=1:(Pe&&(Ie[ve]=1),Ae&&(Ie[ye]=1)),ge?(G=u,H=G.css,G.overwrite=!1):me&&(G=Pe&&Ae?o:Pe?l:h,H=G.css,G.overwrite=!1),this.enable()},Me=De.prototype=new t;Me.constructor=De,Me.pointerX=Me.pointerY=0,Me.isDragging=Me.isPressed=!1,De.version="0.12.0",De.zIndex=1e3,xe(f,"touchcancel",function(){}),xe(f,"contextmenu",function(){var t;for(t in b)b[t].isPressed&&b[t].endDrag()}),De.create=function(t,i){"string"==typeof t&&(t=e.selector(t));for(var s=ve(t)?ye(t):[t],r=s.length;--r>-1;)s[r]=new De(s[r],i);return s},De.get=function(t){return b[(j(t)||{})._gsDragID]},De.timeSinceDrag=function(){return(y()-k)/1e3};var Le=function(t,e){var i=t.pageX!==e?{left:t.pageX,top:t.pageY,right:t.pageX+1,bottom:t.pageY+1}:t.nodeType||t.left===e||t.top===e?j(t).getBoundingClientRect():t;return i.right===e&&i.width!==e?(i.right=i.left+i.width,i.bottom=i.top+i.height):i.width===e&&(i={width:i.right-i.left,height:i.bottom-i.top,right:i.right,left:i.left,bottom:i.bottom,top:i.top}),i};return De.hitTest=function(t,e,i){if(t===e)return!1;var s,r,n,a=Le(t),o=Le(e),l=o.left>a.right||o.right<a.left||o.top>a.bottom||o.bottom<a.top;return l||!i?!l:(n=-1!==(i+"").indexOf("%"),i=parseFloat(i)||0,s={left:Math.max(a.left,o.left),top:Math.max(a.top,o.top)},s.width=Math.min(a.right,o.right)-s.left,s.height=Math.min(a.bottom,o.bottom)-s.top,0>s.width||0>s.height?!1:n?(i*=.01,r=s.width*s.height,r>=a.width*a.height*i||r>=o.width*o.height*i):s.width>i&&s.height>i)},w.style.cssText="visibility:hidden; height:1px; top:-1px; pointer-events:none; position:relative; clear:both;",De},!0)}),_gsScope._gsDefine&&_gsScope._gsQueue.pop()(),function(t){"use strict";var e=function(){return(_gsScope.GreenSockGlobals||_gsScope)[t]};"function"==typeof define&&define.amd?define(["TweenLite"],e):"undefined"!=typeof module&&module.exports&&(require("../TweenLite.js"),require("../plugins/CSSPlugin.js"),module.exports=e())}("Draggable");
+var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof global?global:this||window;(_gsScope._gsQueue||(_gsScope._gsQueue=[])).push(function(){"use strict";_gsScope._gsDefine("utils.Draggable",["events.EventDispatcher","TweenLite"],function(t,e){var i,s,r,n,a,o={css:{}},l={css:{}},h={css:{}},u={css:{}},_=_gsScope._gsDefine.globals,c={},f=document,p=f.documentElement||{},d=[],m=function(){return!1},g=180/Math.PI,v=999999999999999,y=Date.now||function(){return(new Date).getTime()},T=!(f.addEventListener||!f.all),w=f.createElement("div"),x=[],b={},P=0,S=/^(?:a|input|textarea|button|select)$/i,C=0,k=-1!==navigator.userAgent.toLowerCase().indexOf("android"),R=0,A={},O=function(t){if("string"==typeof t&&(t=e.selector(t)),!t||t.nodeType)return[t];var i,s=[],r=t.length;for(i=0;i!==r;s.push(t[i++]));return s},D=function(){for(var t=x.length;--t>-1;)x[t]()},M=function(t){x.push(t),1===x.length&&e.ticker.addEventListener("tick",D,this,!1,1)},L=function(t){for(var i=x.length;--i>-1;)x[i]===t&&x.splice(i,1);e.to(N,0,{overwrite:"all",delay:15,onComplete:N})},N=function(){x.length||e.ticker.removeEventListener("tick",D)},E=function(t,e){var i;for(i in e)void 0===t[i]&&(t[i]=e[i]);return t},I=function(){return null!=window.pageYOffset?window.pageYOffset:null!=f.scrollTop?f.scrollTop:p.scrollTop||f.body.scrollTop||0},z=function(){return null!=window.pageXOffset?window.pageXOffset:null!=f.scrollLeft?f.scrollLeft:p.scrollLeft||f.body.scrollLeft||0},X=function(t,e){be(t,"scroll",e),B(t.parentNode)||X(t.parentNode,e)},F=function(t,e){Pe(t,"scroll",e),B(t.parentNode)||F(t.parentNode,e)},B=function(t){return!(t&&t!==p&&t!==f&&t!==f.body&&t!==window&&t.nodeType&&t.parentNode)},Y=function(t,e){var i="x"===e?"Width":"Height",s="scroll"+i,r="client"+i,n=f.body;return Math.max(0,B(t)?Math.max(p[s],n[s])-(window["inner"+i]||p[r]||n[r]):t[s]-t[r])},U=function(t){var e=B(t),i=Y(t,"x"),s=Y(t,"y");e?t=A:U(t.parentNode),t._gsMaxScrollX=i,t._gsMaxScrollY=s,t._gsScrollX=t.scrollLeft||0,t._gsScrollY=t.scrollTop||0},j=function(t,e){return t=t||window.event,c.pageX=t.clientX+f.body.scrollLeft+p.scrollLeft,c.pageY=t.clientY+f.body.scrollTop+p.scrollTop,e&&(t.returnValue=!1),c},W=function(t){return t?("string"==typeof t&&(t=e.selector(t)),t.length&&t!==window&&t[0]&&t[0].style&&!t.nodeType&&(t=t[0]),t===window||t.nodeType&&t.style?t:null):t},q=function(t,e){var s,r,n,a=t.style;if(void 0===a[e]){for(n=["O","Moz","ms","Ms","Webkit"],r=5,s=e.charAt(0).toUpperCase()+e.substr(1);--r>-1&&void 0===a[n[r]+s];);if(0>r)return"";i=3===r?"ms":n[r],e=i+s}return e},V=function(t,e,i){var s=t.style;s&&(void 0===s[e]&&(e=q(t,e)),null==i?s.removeProperty?s.removeProperty(e.replace(/([A-Z])/g,"-$1").toLowerCase()):s.removeAttribute(e):void 0!==s[e]&&(s[e]=i))},G=f.defaultView?f.defaultView.getComputedStyle:m,H=/(?:Left|Right|Width)/i,Q=/(?:\d|\-|\+|=|#|\.)*/g,Z=function(t,e,i,s,r){if("px"===s||!s)return i;if("auto"===s||!i)return 0;var n,a=H.test(e),o=t,l=ee.style,h=0>i;return h&&(i=-i),"%"===s&&-1!==e.indexOf("border")?n=i/100*(a?t.clientWidth:t.clientHeight):(l.cssText="border:0 solid red;position:"+K(t,"position",!0)+";line-height:0;","%"!==s&&o.appendChild?l[a?"borderLeftWidth":"borderTopWidth"]=i+s:(o=t.parentNode||f.body,l[a?"width":"height"]=i+s),o.appendChild(ee),n=parseFloat(ee[a?"offsetWidth":"offsetHeight"]),o.removeChild(ee),0!==n||r||(n=Z(t,e,i,s,!0))),h?-n:n},$=function(t,e){if("absolute"!==K(t,"position",!0))return 0;var i="left"===e?"Left":"Top",s=K(t,"margin"+i,!0);return t["offset"+i]-(Z(t,e,parseFloat(s),(s+"").replace(Q,""))||0)},K=function(t,e,i){var s,r=(t._gsTransform||{})[e];return r||0===r?r:(t.style[e]?r=t.style[e]:(s=G(t))?(r=s.getPropertyValue(e.replace(/([A-Z])/g,"-$1").toLowerCase()),r=r||s.length?r:s[e]):t.currentStyle&&(r=t.currentStyle[e]),"auto"!==r||"top"!==e&&"left"!==e||(r=$(t,e)),i?r:parseFloat(r)||0)},J=function(t,e,i){var s=t.vars,r=s[i],n=t._listeners[e];"function"==typeof r&&r.apply(s[i+"Scope"]||t,s[i+"Params"]||[t.pointerEvent]),n&&t.dispatchEvent(e)},te=function(t,e){var i,s,r,n=W(t);return n?ve(n,e):void 0!==t.left?(r=fe(e),{left:t.left-r.x,top:t.top-r.y,width:t.width,height:t.height}):(s=t.min||t.minX||t.minRotation||0,i=t.min||t.minY||0,{left:s,top:i,width:(t.max||t.maxX||t.maxRotation||0)-s,height:(t.max||t.maxY||0)-i})},ee=f.createElement("div"),ie=""!==q(ee,"perspective"),se=q(ee,"transformOrigin").replace(/^ms/g,"Ms").replace(/([A-Z])/g,"-$1").toLowerCase(),re=q(ee,"transform"),ne=re.replace(/^ms/g,"Ms").replace(/([A-Z])/g,"-$1").toLowerCase(),ae={},oe={},le=function(){if(!T){var t="http://www.w3.org/2000/svg",e=f.createElementNS(t,"svg"),i=f.createElementNS(t,"rect");return i.setAttributeNS(null,"width","10"),i.setAttributeNS(null,"height","10"),e.appendChild(i),e}}(),he=window.SVGElement,ue=function(t){return!!(he&&"function"==typeof t.getBBox&&t.getCTM&&(!t.parentNode||t.parentNode.getBBox&&t.parentNode.getCTM))},_e=["class","viewBox","width","height","xml:space"],ce=function(t){if(!t.getBoundingClientRect||!t.parentNode)return{offsetTop:0,offsetLeft:0,scaleX:1,scaleY:1,offsetParent:p};if(t._gsSVGData&&t._gsSVGData.lastUpdate===e.ticker.frame)return t._gsSVGData;var i,s,r,n,a,o,l=t,h=t.style.cssText,u=t._gsSVGData=t._gsSVGData||{};if("svg"!==(t.nodeName+"").toLowerCase()&&t.getBBox){for(l=t.parentNode,i=t.getBBox();l&&"svg"!==(l.nodeName+"").toLowerCase();)l=l.parentNode;return u=ce(l),{offsetTop:i.y*u.scaleY,offsetLeft:i.x*u.scaleX,scaleX:u.scaleX,scaleY:u.scaleY,offsetParent:l||p}}for(;!l.offsetParent&&l.parentNode;)l=l.parentNode;for(t.parentNode.insertBefore(le,t),t.parentNode.removeChild(t),le.style.cssText=h,le.style[re]="none",a=_e.length;--a>-1;)o=t.getAttribute(_e[a]),o?le.setAttribute(_e[a],o):le.removeAttribute(_e[a]);return i=le.getBoundingClientRect(),n=le.firstChild.getBoundingClientRect(),r=l.offsetParent,r?(r===f.body&&p&&(r=p),s=r.getBoundingClientRect()):s={top:-I(),left:-z()},le.parentNode.insertBefore(t,le),t.parentNode.removeChild(le),u.scaleX=n.width/10,u.scaleY=n.height/10,u.offsetLeft=i.left-s.left,u.offsetTop=i.top-s.top,u.offsetParent=l.offsetParent||p,u.lastUpdate=e.ticker.frame,u},fe=function(t,i){if(i=i||{},!t||t===p||!t.parentNode)return{x:0,y:0};var s=G(t),r=se&&s?s.getPropertyValue(se):"50% 50%",n=r.split(" "),a=-1!==r.indexOf("left")?"0%":-1!==r.indexOf("right")?"100%":n[0],o=-1!==r.indexOf("top")?"0%":-1!==r.indexOf("bottom")?"100%":n[1];return("center"===o||null==o)&&(o="50%"),("center"===a||isNaN(parseFloat(a)))&&(a="50%"),t.getBBox&&ue(t)?(t._gsTransform||(e.set(t,{x:"+=0",overwrite:!1}),void 0===t._gsTransform.xOrigin&&console.log("Draggable requires at least GSAP 1.16.1")),r=t.getBBox(),n=ce(t),i.x=(t._gsTransform.xOrigin-r.x)*n.scaleX,i.y=(t._gsTransform.yOrigin-r.y)*n.scaleY):(i.x=-1!==a.indexOf("%")?t.offsetWidth*parseFloat(a)/100:parseFloat(a),i.y=-1!==o.indexOf("%")?t.offsetHeight*parseFloat(o)/100:parseFloat(o)),i},pe=function(t,e,i){var s,r,a,o,l,h;return t!==window&&t&&t.parentNode?(s=G(t),r=s?s.getPropertyValue(ne):t.currentStyle?t.currentStyle[re]:"1,0,0,1,0,0",r=(r+"").match(/(?:\-|\b)[\d\-\.e]+\b/g)||[1,0,0,1,0,0],r.length>6&&(r=[r[0],r[1],r[4],r[5],r[12],r[13]]),e&&(a=t.parentNode,h=t.getBBox&&ue(t)||void 0===t.offsetLeft&&"svg"===(t.nodeName+"").toLowerCase()?ce(t):t,o=h.offsetParent,l=a===p||a===f.body,void 0===n&&f.body&&re&&(n=function(){var t,e,i=f.createElement("div"),s=f.createElement("div");return s.style.position="absolute",f.body.appendChild(i),i.appendChild(s),t=s.offsetParent,i.style[re]="rotate(1deg)",e=s.offsetParent===t,f.body.removeChild(i),e}()),r[4]=Number(r[4])+e.x+(h.offsetLeft||0)-i.x-(l?0:a.scrollLeft)+(o?parseInt(K(o,"borderLeftWidth"),10)||0:0),r[5]=Number(r[5])+e.y+(h.offsetTop||0)-i.y-(l?0:a.scrollTop)+(o?parseInt(K(o,"borderTopWidth"),10)||0:0),!a||a.offsetParent!==o||n&&"100100"!==pe(a).join("")||(r[4]-=a.offsetLeft||0,r[5]-=a.offsetTop||0),a&&"fixed"===K(t,"position",!0)&&(r[4]+=z(),r[5]+=I())),r):[1,0,0,1,0,0]},de=function(t,e){if(!t||t===window||!t.parentNode)return[1,0,0,1,0,0];for(var i,s,r,n,a,o,l,h,u=fe(t,ae),_=fe(t.parentNode,oe),c=pe(t,u,_);(t=t.parentNode)&&t.parentNode&&t!==p;)u=_,_=fe(t.parentNode,u===ae?oe:ae),l=pe(t,u,_),i=c[0],s=c[1],r=c[2],n=c[3],a=c[4],o=c[5],c[0]=i*l[0]+s*l[2],c[1]=i*l[1]+s*l[3],c[2]=r*l[0]+n*l[2],c[3]=r*l[1]+n*l[3],c[4]=a*l[0]+o*l[2]+l[4],c[5]=a*l[1]+o*l[3]+l[5];return e&&(i=c[0],s=c[1],r=c[2],n=c[3],a=c[4],o=c[5],h=i*n-s*r,c[0]=n/h,c[1]=-s/h,c[2]=-r/h,c[3]=i/h,c[4]=(r*o-n*a)/h,c[5]=-(i*o-s*a)/h),c},me=function(t,e,i){var s=de(t),r=e.x,n=e.y;return i=i===!0?e:i||{},i.x=r*s[0]+n*s[2]+s[4],i.y=r*s[1]+n*s[3]+s[5],i},ge=function(t,e,i){var s=t.x*e[0]+t.y*e[2]+e[4],r=t.x*e[1]+t.y*e[3]+e[5];return t.x=s*i[0]+r*i[2]+i[4],t.y=s*i[1]+r*i[3]+i[5],t},ve=function(t,e){var i,s,r,n,a,o,l,h,u,_,c;return t===window?(n=I(),s=z(),r=s+(p.clientWidth||t.innerWidth||f.body.clientWidth||0),a=n+((t.innerHeight||0)-20<p.clientHeight?p.clientHeight:t.innerHeight||f.body.clientHeight||0)):(i=fe(t),s=-i.x,r=s+t.offsetWidth,n=-i.y,a=n+t.offsetHeight),t===e?{left:s,top:n,width:r-s,height:a-n}:(o=de(t),l=de(e,!0),h=ge({x:s,y:n},o,l),u=ge({x:r,y:n},o,l),_=ge({x:r,y:a},o,l),c=ge({x:s,y:a},o,l),s=Math.min(h.x,u.x,_.x,c.x),n=Math.min(h.y,u.y,_.y,c.y),{left:s,top:n,width:Math.max(h.x,u.x,_.x,c.x)-s,height:Math.max(h.y,u.y,_.y,c.y)-n})},ye=function(t){return t.length&&t[0]&&(t[0].nodeType&&t[0].style&&!t.nodeType||t[0].length&&t[0][0])?!0:!1},Te=function(t){var e,i,s,r=[],n=t.length;for(e=0;n>e;e++)if(i=t[e],ye(i))for(s=i.length,s=0;i.length>s;s++)r.push(i[s]);else r.push(i);return r},we="ontouchstart"in p&&"orientation"in window,xe=function(t){for(var e=t.split(","),i=(void 0!==ee.onpointerdown?"pointerdown,pointermove,pointerup,pointercancel":void 0!==ee.onmspointerdown?"MSPointerDown,MSPointerMove,MSPointerUp,MSPointerCancel":t).split(","),s={},r=8;--r>-1;)s[e[r]]=i[r],s[i[r]]=e[r];return s}("touchstart,touchmove,touchend,touchcancel"),be=function(t,e,i,s){t.addEventListener?t.addEventListener(xe[e]||e,i,s):t.attachEvent&&t.attachEvent("on"+e,i)},Pe=function(t,e,i){t.removeEventListener?t.removeEventListener(xe[e]||e,i):t.detachEvent&&t.detachEvent("on"+e,i)},Se=function(t){s=t.touches&&t.touches.length>C,Pe(t.target,"touchend",Se)},Ce=function(t){s=t.touches&&t.touches.length>C,be(t.target,"touchend",Se)},ke=function(t,e,i,s,r,n){var a,o,l,h={};if(e)if(1!==r&&e instanceof Array){for(h.end=a=[],l=e.length,o=0;l>o;o++)a[o]=e[o]*r;i+=1.1,s-=1.1}else h.end="function"==typeof e?function(i){return e.call(t,i)*r}:e;return(i||0===i)&&(h.max=i),(s||0===s)&&(h.min=s),n&&(h.velocity=0),h},Re=function(t){var e;return t&&t.getAttribute&&"BODY"!==t.nodeName?"true"===(e=t.getAttribute("data-clickable"))||"false"!==e&&(t.onclick||S.test(t.nodeName+"")||"true"===t.getAttribute("contentEditable"))?!0:Re(t.parentNode):!1},Ae=function(t,e){for(var i,s=t.length;--s>-1;)i=t[s],i.ondragstart=i.onselectstart=e?null:m,V(i,"userSelect",e?"text":"none")},Oe=function(){var t,e=f.createElement("div"),i=f.createElement("div"),s=i.style,r=f.body||ee;return s.display="inline-block",s.position="relative",e.style.cssText=i.innerHTML="width:90px; height:40px; padding:10px; overflow:auto; visibility: hidden",e.appendChild(i),r.appendChild(e),a=i.offsetHeight+18>e.scrollHeight,s.width="100%",re||(s.paddingRight="500px",t=e.scrollLeft=e.scrollWidth-e.clientWidth,s.left="-90px",t=t!==e.scrollLeft),r.removeChild(e),t}(),De=function(t,i){t=W(t),i=i||{};var s,r,n,o,l,h,u=f.createElement("div"),_=u.style,c=t.firstChild,p=0,d=0,m=t.scrollTop,g=t.scrollLeft,v=t.scrollWidth,y=t.scrollHeight,w=0,x=0,b=0;ie&&i.force3D!==!1?(l="translate3d(",h="px,0px)"):re&&(l="translate(",h="px)"),this.scrollTop=function(t,e){return arguments.length?(this.top(-t,e),void 0):-this.top()},this.scrollLeft=function(t,e){return arguments.length?(this.left(-t,e),void 0):-this.left()},this.left=function(s,r){if(!arguments.length)return-(t.scrollLeft+d);var n=t.scrollLeft-g,a=d;return(n>2||-2>n)&&!r?(g=t.scrollLeft,e.killTweensOf(this,!0,{left:1,scrollLeft:1}),this.left(-g),i.onKill&&i.onKill(),void 0):(s=-s,0>s?(d=0|s-.5,s=0):s>x?(d=0|s-x,s=x):d=0,(d||a)&&(l?this._suspendTransforms||(_[re]=l+-d+"px,"+-p+h):_.left=-d+"px",Oe&&d+w>=0&&(_.paddingRight=d+w+"px")),t.scrollLeft=0|s,g=t.scrollLeft,void 0)},this.top=function(s,r){if(!arguments.length)return-(t.scrollTop+p);var n=t.scrollTop-m,a=p;return(n>2||-2>n)&&!r?(m=t.scrollTop,e.killTweensOf(this,!0,{top:1,scrollTop:1}),this.top(-m),i.onKill&&i.onKill(),void 0):(s=-s,0>s?(p=0|s-.5,s=0):s>b?(p=0|s-b,s=b):p=0,(p||a)&&(l?this._suspendTransforms||(_[re]=l+-d+"px,"+-p+h):_.top=-p+"px"),t.scrollTop=0|s,m=t.scrollTop,void 0)},this.maxScrollTop=function(){return b},this.maxScrollLeft=function(){return x},this.disable=function(){for(c=u.firstChild;c;)o=c.nextSibling,t.appendChild(c),c=o;t===u.parentNode&&t.removeChild(u)},this.enable=function(){if(c=t.firstChild,c!==u){for(;c;)o=c.nextSibling,u.appendChild(c),c=o;t.appendChild(u),this.calibrate()}},this.calibrate=function(e){var i,o,l=t.clientWidth===s;m=t.scrollTop,g=t.scrollLeft,(!l||t.clientHeight!==r||u.offsetHeight!==n||v!==t.scrollWidth||y!==t.scrollHeight||e)&&((p||d)&&(i=this.left(),o=this.top(),this.left(-t.scrollLeft),this.top(-t.scrollTop)),(!l||e)&&(_.display="block",_.width="auto",_.paddingRight="0px",w=Math.max(0,t.scrollWidth-t.clientWidth),w&&(w+=K(t,"paddingLeft")+(a?K(t,"paddingRight"):0))),_.display="inline-block",_.position="relative",_.overflow="visible",_.verticalAlign="top",_.width="100%",_.paddingRight=w+"px",a&&(_.paddingBottom=K(t,"paddingBottom",!0)),T&&(_.zoom="1"),s=t.clientWidth,r=t.clientHeight,v=t.scrollWidth,y=t.scrollHeight,x=t.scrollWidth-s,b=t.scrollHeight-r,n=u.offsetHeight,_.display="block",(i||o)&&(this.left(i),this.top(o)))},this.content=u,this.element=t,this._suspendTransforms=!1,this.enable()},Me=function(i,n){t.call(this,i),i=W(i),r||(r=_.com.greensock.plugins.ThrowPropsPlugin),this.vars=n=n||{},this.target=i,this.x=this.y=this.rotation=0,this.dragResistance=parseFloat(n.dragResistance)||0,this.edgeResistance=isNaN(n.edgeResistance)?1:parseFloat(n.edgeResistance)||0,this.lockAxis=n.lockAxis,this.autoScroll=n.autoScroll||0,this.lockedAxis=null,this.allowEventDefault=!!n.allowEventDefault;var a,c,m,x,S,D,N,I,z,Y,q,G,H,Q,Z,$,ee,ie,se,re,ne,ae,oe,le,he,ue,_e,ce,fe,pe,ge,ve=(n.type||(T?"top,left":"x,y")).toLowerCase(),ye=-1!==ve.indexOf("x")||-1!==ve.indexOf("y"),Te=-1!==ve.indexOf("rotation"),Se=Te?"rotation":ye?"x":"left",Oe=ye?"y":"top",Le=-1!==ve.indexOf("x")||-1!==ve.indexOf("left")||"scroll"===ve,Ee=-1!==ve.indexOf("y")||-1!==ve.indexOf("top")||"scroll"===ve,Ie=n.minimumMovement||2,ze=this,Xe=O(n.trigger||n.handle||i),Fe={},Be=0,Ye=!1,Ue=n.clickableTest||Re,je=function(t){if(ze.autoScroll&&ze.isDragging&&(ie||Ye)){var e,s,r,n,a,o,l,h,u=i,_=15*ze.autoScroll;for(Ye=!1,A.scrollTop=null!=window.pageYOffset?window.pageYOffset:null!=p.scrollTop?p.scrollTop:f.body.scrollTop,A.scrollLeft=null!=window.pageXOffset?window.pageXOffset:null!=p.scrollLeft?p.scrollLeft:f.body.scrollLeft,n=ze.pointerX-A.scrollLeft,a=ze.pointerY-A.scrollTop;u&&!s;)s=B(u.parentNode),e=s?A:u.parentNode,r=s?{bottom:Math.max(p.clientHeight,window.innerHeight||0),right:Math.max(p.clientWidth,window.innerWidth||0),left:0,top:0}:e.getBoundingClientRect(),o=l=0,Ee&&(a>r.bottom-40&&(h=e._gsMaxScrollY-e.scrollTop)?(Ye=!0,l=Math.min(h,0|_*(1-Math.max(0,r.bottom-a)/40))):r.top+40>a&&e.scrollTop&&(Ye=!0,l=-Math.min(e.scrollTop,0|_*(1-Math.max(0,a-r.top)/40))),l&&(e.scrollTop+=l)),Le&&(n>r.right-40&&(h=e._gsMaxScrollX-e.scrollLeft)?(Ye=!0,o=Math.min(h,0|_*(1-Math.max(0,r.right-n)/40))):r.left+40>n&&e.scrollLeft&&(Ye=!0,o=-Math.min(e.scrollLeft,0|_*(1-Math.max(0,n-r.left)/40))),o&&(e.scrollLeft+=o)),s&&(o||l)&&(window.scrollTo(e.scrollLeft,e.scrollTop),Je(ze.pointerX+o,ze.pointerY+l)),u=e}if(ie){var d=ze.x,m=ze.y,g=1e-6;g>d&&d>-g&&(d=0),g>m&&m>-g&&(m=0),Te?(fe.data.rotation=ze.rotation=d,fe.setRatio(1)):c?(Ee&&c.top(m),Le&&c.left(d)):ye?(Ee&&(fe.data.y=m),Le&&(fe.data.x=d),fe.setRatio(1)):(Ee&&(i.style.top=m+"px"),Le&&(i.style.left=d+"px")),I&&!t&&J(ze,"drag","onDrag")}ie=!1},We=function(t,s){var r;i._gsTransform||!ye&&!Te||e.set(i,{x:"+=0",overwrite:!1}),ye?(ze.y=i._gsTransform.y,ze.x=i._gsTransform.x):Te?ze.x=ze.rotation=i._gsTransform.rotation:c?(ze.y=c.top(),ze.x=c.left()):(ze.y=parseInt(i.style.top,10)||0,ze.x=parseInt(i.style.left,10)||0),!re&&!ne||s||(re&&(r=re(ze.x),r!==ze.x&&(ze.x=r,Te&&(ze.rotation=r),ie=!0)),ne&&(r=ne(ze.y),r!==ze.y&&(ze.y=r,ie=!0)),ie&&je(!0)),n.onThrowUpdate&&!t&&n.onThrowUpdate.apply(n.onThrowUpdateScope||ze,n.onThrowUpdateParams||d)},qe=function(){var t,e,s,r;N=!1,c?(c.calibrate(),ze.minX=Y=-c.maxScrollLeft(),ze.minY=G=-c.maxScrollTop(),ze.maxX=z=ze.maxY=q=0,N=!0):n.bounds&&(t=te(n.bounds,i.parentNode),Te?(ze.minX=Y=t.left,ze.maxX=z=t.left+t.width,ze.minY=G=ze.maxY=q=0):void 0!==n.bounds.maxX||void 0!==n.bounds.maxY?(t=n.bounds,ze.minX=Y=t.minX,ze.minY=G=t.minY,ze.maxX=z=t.maxX,ze.maxY=q=t.maxY):(e=te(i,i.parentNode),ze.minX=Y=K(i,Se)+t.left-e.left,ze.minY=G=K(i,Oe)+t.top-e.top,ze.maxX=z=Y+(t.width-e.width),ze.maxY=q=G+(t.height-e.height)),Y>z&&(ze.minX=z,ze.maxX=z=Y,Y=ze.minX),G>q&&(ze.minY=q,ze.maxY=q=G,G=ze.minY),Te&&(ze.minRotation=Y,ze.maxRotation=z),N=!0),n.liveSnap&&(s=n.liveSnap===!0?n.snap||{}:n.liveSnap,r=s instanceof Array||"function"==typeof s,Te?(re=Ze(r?s:s.rotation,Y,z,1),ne=null):(Le&&(re=Ze(r?s:s.x||s.left||s.scrollLeft,Y,z,c?-1:1)),Ee&&(ne=Ze(r?s:s.y||s.top||s.scrollTop,G,q,c?-1:1))))},Ve=function(t,e){var s,a,o;t&&r?(t===!0&&(s=n.snap||{},a=s instanceof Array||"function"==typeof s,t={resistance:(n.throwResistance||n.resistance||1e3)/(Te?10:1)},Te?t.rotation=ke(ze,a?s:s.rotation,z,Y,1,e):(Le&&(t[Se]=ke(ze,a?s:s.x||s.left||s.scrollLeft,z,Y,c?-1:1,e||"x"===ze.lockedAxis)),Ee&&(t[Oe]=ke(ze,a?s:s.y||s.top||s.scrollTop,q,G,c?-1:1,e||"y"===ze.lockedAxis)))),ze.tween=o=r.to(c||i,{throwProps:t,ease:n.ease||_.Power3.easeOut,onComplete:n.onThrowComplete,onCompleteParams:n.onThrowCompleteParams,onCompleteScope:n.onThrowCompleteScope||ze,onUpdate:n.fastMode?n.onThrowUpdate:We,onUpdateParams:n.fastMode?n.onThrowUpdateParams:null,onUpdateScope:n.onThrowUpdateScope||ze},isNaN(n.maxDuration)?2:n.maxDuration,isNaN(n.minDuration)?.5:n.minDuration,isNaN(n.overshootTolerance)?1-ze.edgeResistance+.2:n.overshootTolerance),n.fastMode||(c&&(c._suspendTransforms=!0),o.render(o.duration(),!0,!0),We(!0,!0),ze.endX=ze.x,ze.endY=ze.y,Te&&(ze.endRotation=ze.x),o.play(0),We(!0,!0),c&&(c._suspendTransforms=!1))):N&&ze.applyBounds()},Ge=function(){le=de(i.parentNode,!0),le[1]||le[2]||1!=le[0]||1!=le[3]||0!=le[4]||0!=le[5]||(le=null)},He=function(){var t=1-ze.edgeResistance;Ge(),c?(qe(),D=c.top(),S=c.left()):(Qe()?(We(!0,!0),qe()):ze.applyBounds(),Te?(ee=me(i,{x:0,y:0}),We(!0,!0),S=ze.x,D=ze.y=Math.atan2(ee.y-x,m-ee.x)*g):(_e=i.parentNode?i.parentNode.scrollTop||0:0,ce=i.parentNode?i.parentNode.scrollLeft||0:0,D=K(i,Oe),S=K(i,Se))),N&&t&&(S>z?S=z+(S-z)/t:Y>S&&(S=Y-(Y-S)/t),Te||(D>q?D=q+(D-q)/t:G>D&&(D=G-(G-D)/t)))},Qe=function(){return ze.tween&&ze.tween.isActive()},Ze=function(t,e,i,s){return"function"==typeof t?function(r){var n=ze.isPressed?1-ze.edgeResistance:1;return t.call(ze,r>i?i+(r-i)*n:e>r?e+(r-e)*n:r)*s}:t instanceof Array?function(s){for(var r,n,a=t.length,o=0,l=v;--a>-1;)r=t[a],n=r-s,0>n&&(n=-n),l>n&&r>=e&&i>=r&&(o=a,l=n);return t[o]}:isNaN(t)?function(t){return t}:function(){return t*s}},$e=function(t){var s,r;if(a&&!ze.isPressed&&t&&!("mousedown"===t.type&&30>y()-ue&&xe[ze.pointerEvent.type])){if(he=Qe(),ze.pointerEvent=t,xe[t.type]?(oe=-1!==t.type.indexOf("touch")?t.currentTarget:f,be(oe,"touchend",ti),be(oe,"touchmove",Ke),be(oe,"touchcancel",ti),be(f,"touchstart",Ce)):(oe=null,be(f,"mousemove",Ke)),ge=null,be(f,"mouseup",ti),t&&t.target&&be(t.target,"mouseup",ti),ae=Ue.call(ze,t.target)&&!n.dragClickables)return be(t.target,"change",ti),J(ze,"press","onPress"),Ae(Xe,!0),void 0;if(pe=!oe||Le===Ee||c||ze.vars.allowNativeTouchScrolling===!1?!1:Le?"y":"x",T?t=j(t,!0):pe||ze.allowEventDefault||(t.preventDefault(),t.preventManipulation&&t.preventManipulation()),t.changedTouches?(t=Z=t.changedTouches[0],$=t.identifier):t.pointerId?$=t.pointerId:Z=null,C++,M(je),x=ze.pointerY=t.pageY,m=ze.pointerX=t.pageX,(pe||ze.autoScroll)&&U(i.parentNode),!ze.autoScroll||Te||c||!i.parentNode||i.getBBox||!i.parentNode._gsMaxScrollX||w.parentNode||(w.style.width=i.parentNode.scrollWidth+"px",i.parentNode.appendChild(w)),He(),le&&(s=m*le[0]+x*le[2]+le[4],x=m*le[1]+x*le[3]+le[5],m=s),ze.tween&&ze.tween.kill(),e.killTweensOf(c||i,!0,Fe),c&&e.killTweensOf(i,!0,{scrollTo:1}),ze.tween=ze.lockedAxis=null,(n.zIndexBoost||!Te&&!c&&n.zIndexBoost!==!1)&&(i.style.zIndex=Me.zIndex++),ze.isPressed=!0,I=!(!n.onDrag&&!ze._listeners.drag),!Te)for(r=Xe.length;--r>-1;)V(Xe[r],"cursor",n.cursor||"move");J(ze,"press","onPress")}},Ke=function(t){var e,i,r,n,o=t;if(a&&!s&&ze.isPressed&&t){if(ze.pointerEvent=t,e=t.changedTouches){if(t=e[0],t!==Z&&t.identifier!==$){for(n=e.length;--n>-1&&(t=e[n]).identifier!==$;);if(0>n)return}}else if(t.pointerId&&$&&t.pointerId!==$)return;if(T)t=j(t,!0);else{if(oe&&pe&&!ge&&(i=t.pageX,r=t.pageY,le&&(n=i*le[0]+r*le[2]+le[4],r=i*le[1]+r*le[3]+le[5],i=n),ge=Math.abs(i-m)>Math.abs(r-x)&&Le?"x":"y",ze.vars.lockAxisOnTouchScroll!==!1&&(ze.lockedAxis="x"===ge?"y":"x","function"==typeof ze.vars.onLockAxis&&ze.vars.onLockAxis.call(ze,o)),k&&pe===ge))return ti(o),void 0;ze.allowEventDefault||pe&&(!ge||pe===ge)||o.cancelable===!1||(o.preventDefault(),o.preventManipulation&&o.preventManipulation())}ze.autoScroll&&(Ye=!0),Je(t.pageX,t.pageY)}},Je=function(t,e){var i,s,r,n,a,o,l=1-ze.dragResistance,h=1-ze.edgeResistance;ze.pointerX=t,ze.pointerY=e,Te?(n=Math.atan2(ee.y-e,t-ee.x)*g,a=ze.y-n,ze.y=n,a>180?D-=360:-180>a&&(D+=360),r=S+(D-n)*l):(le&&(o=t*le[0]+e*le[2]+le[4],e=t*le[1]+e*le[3]+le[5],t=o),s=e-x,i=t-m,Ie>s&&s>-Ie&&(s=0),Ie>i&&i>-Ie&&(i=0),(ze.lockAxis||ze.lockedAxis)&&(i||s)&&(o=ze.lockedAxis,o||(ze.lockedAxis=o=Le&&Math.abs(i)>Math.abs(s)?"y":Ee?"x":null,o&&"function"==typeof ze.vars.onLockAxis&&ze.vars.onLockAxis.call(ze,ze.pointerEvent)),"y"===o?s=0:"x"===o&&(i=0)),r=S+i*l,n=D+s*l),re||ne?(re&&(r=re(r)),ne&&(n=ne(n))):N&&(r>z?r=z+(r-z)*h:Y>r&&(r=Y+(r-Y)*h),Te||(n>q?n=q+(n-q)*h:G>n&&(n=G+(n-G)*h))),Te||(r=Math.round(r),n=Math.round(n)),(ze.x!==r||ze.y!==n&&!Te)&&(ze.x=ze.endX=r,Te?ze.endRotation=r:ze.y=ze.endY=n,ie=!0,ze.isDragging||(ze.isDragging=!0,J(ze,"dragstart","onDragStart")))},ti=function(t,e){if(a&&ze.isPressed&&(!t||!$||e||!t.pointerId||t.pointerId===$)){ze.isPressed=!1;var s,r,o,l,h=t,u=ze.isDragging;if(oe?(Pe(oe,"touchend",ti),Pe(oe,"touchmove",Ke),Pe(oe,"touchcancel",ti),Pe(f,"touchstart",Ce)):Pe(f,"mousemove",Ke),Pe(f,"mouseup",ti),t&&t.target&&Pe(t.target,"mouseup",ti),ie=!1,w.parentNode&&w.parentNode.removeChild(w),ae)return t&&Pe(t.target,"change",ti),Ae(Xe,!1),J(ze,"release","onRelease"),J(ze,"click","onClick"),ae=!1,void 0;if(L(je),!Te)for(r=Xe.length;--r>-1;)V(Xe[r],"cursor",n.cursor||"move");if(u&&(Be=R=y(),ze.isDragging=!1),C--,t){if(T&&(t=j(t,!1)),s=t.changedTouches,s&&(t=s[0],t!==Z&&t.identifier!==$)){for(r=s.length;--r>-1&&(t=s[r]).identifier!==$;);if(0>r)return}ze.pointerEvent=h,ze.pointerX=t.pageX,ze.pointerY=t.pageY}return h&&!u?(he&&(n.snap||n.bounds)&&Ve(n.throwProps),J(ze,"release","onRelease"),k&&"touchmove"===h.type||(J(ze,"click","onClick"),l=h.target||h.srcElement||i,l.click?l.click():f.createEvent&&(o=f.createEvent("MouseEvents"),o.initEvent("click",!0,!0),l.dispatchEvent(o)),ue=y())):(Ve(n.throwProps),T||ze.allowEventDefault||!h||!n.dragClickables&&Ue.call(ze,h.target)||!u||pe&&(!ge||pe!==ge)||h.cancelable===!1||(h.preventDefault(),h.preventManipulation&&h.preventManipulation()),J(ze,"release","onRelease")),u&&J(ze,"dragend","onDragEnd"),!0}},ei=function(t){if(t&&ze.isDragging){var e=t.target||t.srcElement||i.parentNode,s=e.scrollLeft-e._gsScrollX,r=e.scrollTop-e._gsScrollY;(s||r)&&(m-=s,x-=r,e._gsScrollX+=s,e._gsScrollY+=r,Je(ze.pointerX,ze.pointerY))}},ii=function(t){var e=y(),i=40>e-ue,s=40>e-Be;(ze.isPressed||s||i)&&(t.preventDefault?(t.preventDefault(),(i||s&&ze.vars.suppressClickOnDrag!==!1)&&t.stopImmediatePropagation()):t.returnValue=!1,t.preventManipulation&&t.preventManipulation())};se=Me.get(this.target),se&&se.kill(),this.startDrag=function(t){$e(t),ze.isDragging||(ze.isDragging=!0,J(ze,"dragstart","onDragStart"))},this.drag=Ke,this.endDrag=function(t){ti(t,!0)},this.timeSinceDrag=function(){return ze.isDragging?0:(y()-Be)/1e3},this.hitTest=function(t,e){return Me.hitTest(ze.target,t,e)},this.getDirection=function(t,e){var i,s,n,a,o,l,h="velocity"===t&&r?t:"object"!=typeof t||Te?"start":"element";return"element"===h&&(o=Ne(ze.target),l=Ne(t)),i="start"===h?ze.x-S:"velocity"===h?r.getVelocity(this.target,Se):o.left+o.width/2-(l.left+l.width/2),Te?0>i?"counter-clockwise":"clockwise":(e=e||2,s="start"===h?ze.y-D:"velocity"===h?r.getVelocity(this.target,Oe):o.top+o.height/2-(l.top+l.height/2),n=Math.abs(i/s),a=1/e>n?"":0>i?"left":"right",e>n&&(""!==a&&(a+="-"),a+=0>s?"up":"down"),a)},this.applyBounds=function(t){var e,i;return t&&n.bounds!==t?(n.bounds=t,ze.update(!0)):(We(!0),qe(),N&&(e=ze.x,i=ze.y,N&&(e>z?e=z:Y>e&&(e=Y),i>q?i=q:G>i&&(i=G)),(ze.x!==e||ze.y!==i)&&(ze.x=ze.endX=e,Te?ze.endRotation=e:ze.y=ze.endY=i,ie=!0,je())),ze)},this.update=function(t){var e=ze.x,i=ze.y;return Ge(),t?ze.applyBounds():(ie&&je(),We(!0)),ze.isPressed&&(Le&&Math.abs(e-ze.x)>.01||Ee&&Math.abs(i-ze.y)>.01&&!Te)&&He(),ze},this.enable=function(t){var s,o,l;if("soft"!==t){for(o=Xe.length;--o>-1;)l=Xe[o],be(l,"mousedown",$e),be(l,"touchstart",$e),be(l,"click",ii,!0),Te||V(l,"cursor",n.cursor||"move"),V(l,"touchCallout","none"),V(l,"touchAction",Le===Ee||c?"none":Le?"pan-y":"pan-x");Ae(Xe,!1)}return X(ze.target,ei),a=!0,r&&"soft"!==t&&r.track(c||i,ye?"x,y":Te?"rotation":"top,left"),c&&c.enable(),i._gsDragID=s="d"+P++,b[s]=this,c&&(c.element._gsDragID=s),e.set(i,{x:"+=0",overwrite:!1}),fe={t:i,data:T?Q:i._gsTransform,tween:{},setRatio:T?function(){e.set(i,H)}:CSSPlugin._internals.setTransformRatio||CSSPlugin._internals.set3DTransformRatio},this.update(!0),ze},this.disable=function(t){var e,s,n=this.isDragging;if(!Te)for(e=Xe.length;--e>-1;)V(Xe[e],"cursor",null);if("soft"!==t){for(e=Xe.length;--e>-1;)s=Xe[e],V(s,"touchCallout",null),V(s,"touchAction",null),Pe(s,"mousedown",$e),Pe(s,"touchstart",$e),Pe(s,"click",ii);Ae(Xe,!0),oe&&(Pe(oe,"touchcancel",ti),Pe(oe,"touchend",ti),Pe(oe,"touchmove",Ke)),Pe(f,"mouseup",ti),Pe(f,"mousemove",Ke)}return F(i,ei),a=!1,r&&"soft"!==t&&r.untrack(c||i,ye?"x,y":Te?"rotation":"top,left"),c&&c.disable(),L(je),this.isDragging=this.isPressed=ae=!1,n&&J(this,"dragend","onDragEnd"),ze},this.enabled=function(t,e){return arguments.length?t?this.enable(e):this.disable(e):a},this.kill=function(){return e.killTweensOf(c||i,!0,Fe),ze.disable(),delete b[i._gsDragID],ze},-1!==ve.indexOf("scroll")&&(c=this.scrollProxy=new De(i,E({onKill:function(){ze.isPressed&&ti(null)}},n)),i.style.overflowY=Ee&&!we?"auto":"hidden",i.style.overflowX=Le&&!we?"auto":"hidden",i=c.content),n.force3D!==!1&&e.set(i,{force3D:!0}),Te?Fe.rotation=1:(Le&&(Fe[Se]=1),Ee&&(Fe[Oe]=1)),Te?(H=u,Q=H.css,H.overwrite=!1):ye&&(H=Le&&Ee?o:Le?l:h,Q=H.css,H.overwrite=!1),this.enable()},Le=Me.prototype=new t;Le.constructor=Me,Le.pointerX=Le.pointerY=0,Le.isDragging=Le.isPressed=!1,Me.version="0.13.0",Me.zIndex=1e3,be(f,"touchcancel",function(){}),be(f,"contextmenu",function(){var t;for(t in b)b[t].isPressed&&b[t].endDrag()}),Me.create=function(t,i){"string"==typeof t&&(t=e.selector(t));for(var s=ye(t)?Te(t):[t],r=s.length;--r>-1;)s[r]=new Me(s[r],i);return s},Me.get=function(t){return b[(W(t)||{})._gsDragID]},Me.timeSinceDrag=function(){return(y()-R)/1e3};var Ne=function(t,e){var i=t.pageX!==e?{left:t.pageX,top:t.pageY,right:t.pageX+1,bottom:t.pageY+1}:t.nodeType||t.left===e||t.top===e?W(t).getBoundingClientRect():t;return i.right===e&&i.width!==e?(i.right=i.left+i.width,i.bottom=i.top+i.height):i.width===e&&(i={width:i.right-i.left,height:i.bottom-i.top,right:i.right,left:i.left,bottom:i.bottom,top:i.top}),i};return Me.hitTest=function(t,e,i){if(t===e)return!1;var s,r,n,a=Ne(t),o=Ne(e),l=o.left>a.right||o.right<a.left||o.top>a.bottom||o.bottom<a.top;return l||!i?!l:(n=-1!==(i+"").indexOf("%"),i=parseFloat(i)||0,s={left:Math.max(a.left,o.left),top:Math.max(a.top,o.top)},s.width=Math.min(a.right,o.right)-s.left,s.height=Math.min(a.bottom,o.bottom)-s.top,0>s.width||0>s.height?!1:n?(i*=.01,r=s.width*s.height,r>=a.width*a.height*i||r>=o.width*o.height*i):s.width>i&&s.height>i)},w.style.cssText="visibility:hidden;height:1px;top:-1px;pointer-events:none;position:relative;clear:both;",Me},!0)}),_gsScope._gsDefine&&_gsScope._gsQueue.pop()(),function(t){"use strict";var e=function(){return(_gsScope.GreenSockGlobals||_gsScope)[t]};"function"==typeof define&&define.amd?define(["TweenLite"],e):"undefined"!=typeof module&&module.exports&&(require("../TweenLite.js"),require("../plugins/CSSPlugin.js"),module.exports=e())}("Draggable");
+/*!
+ * VERSION: 0.9.8
+ * DATE: 2015-03-12
+ * UPDATES AND DOCS AT: http://greensock.com
+ *
+ * @license Copyright (c) 2008-2015, GreenSock. All rights reserved.
+ * ThrowPropsPlugin is a Club GreenSock membership benefit; You must have a valid membership to use
+ * this code without violating the terms of use. Visit http://greensock.com/club/ to sign up or get more details.
+ * This work is subject to the software agreement that was issued with your membership.
+ * 
+ * @author: Jack Doyle, jack@greensock.com
+ */
+var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof global?global:this||window;(_gsScope._gsQueue||(_gsScope._gsQueue=[])).push(function(){"use strict";_gsScope._gsDefine("plugins.ThrowPropsPlugin",["plugins.TweenPlugin","TweenLite","easing.Ease","utils.VelocityTracker"],function(t,e,i,r){var s,n,o,a,l=function(){t.call(this,"throwProps"),this._overwriteProps.length=0},h=999999999999999,u=1e-10,p=_gsScope._gsDefine.globals,f=!1,c={x:1,y:1,z:2,scale:1,scaleX:1,scaleY:1,rotation:1,rotationZ:1,rotationX:2,rotationY:2,skewX:1,skewY:1,xPercent:1,yPercent:1},_=function(t,e,i,r){for(var s,n,o=e.length,a=0,l=h;--o>-1;)s=e[o],n=s-t,0>n&&(n=-n),l>n&&s>=r&&i>=s&&(a=o,l=n);return e[a]},d=function(t,e,i,r){if("auto"===t.end)return t;i=isNaN(i)?h:i,r=isNaN(r)?-h:r;var s="function"==typeof t.end?t.end(e):t.end instanceof Array?_(e,t.end,i,r):Number(t.end);return s>i?s=i:r>s&&(s=r),{max:s,min:s,unitFactor:t.unitFactor}},g=function(t,e,i){for(var r in e)void 0===t[r]&&r!==i&&(t[r]=e[r]);return t},m=l.calculateChange=function(t,r,s,n){null==n&&(n=.05);var o=r instanceof i?r:r?new i(r):e.defaultEase;return s*n*t/o.getRatio(n)},v=l.calculateDuration=function(t,r,s,n,o){o=o||.05;var a=n instanceof i?n:n?new i(n):e.defaultEase;return Math.abs((r-t)*a.getRatio(o)/s/o)},y=l.calculateTweenDuration=function(t,s,n,o,a,h){if("string"==typeof t&&(t=e.selector(t)),!t)return 0;null==n&&(n=10),null==o&&(o=.2),null==a&&(a=1),t.length&&(t=t[0]||t);var p,c,_,y,x,w,T,b,P,S,k=0,C=9999999999,O=s.throwProps||s,R=s.ease instanceof i?s.ease:s.ease?new i(s.ease):e.defaultEase,A=isNaN(O.checkpoint)?.05:Number(O.checkpoint),M=isNaN(O.resistance)?l.defaultResistance:Number(O.resistance);for(p in O)"resistance"!==p&&"checkpoint"!==p&&"preventOvershoot"!==p&&(c=O[p],"object"!=typeof c&&(P=P||r.getByTarget(t),P&&P.isTrackingProp(p)?c="number"==typeof c?{velocity:c}:{velocity:P.getVelocity(p)}:(y=Number(c)||0,_=y*M>0?y/M:y/-M)),"object"==typeof c&&(void 0!==c.velocity&&"number"==typeof c.velocity?y=Number(c.velocity)||0:(P=P||r.getByTarget(t),y=P&&P.isTrackingProp(p)?P.getVelocity(p):0),x=isNaN(c.resistance)?M:Number(c.resistance),_=y*x>0?y/x:y/-x,w="function"==typeof t[p]?t[p.indexOf("set")||"function"!=typeof t["get"+p.substr(3)]?p:"get"+p.substr(3)]():t[p]||0,T=w+m(y,R,_,A),void 0!==c.end&&(c=d(c,T,c.max,c.min),(h||f)&&(O[p]=g(c,O[p],"end"))),void 0!==c.max&&T>Number(c.max)+u?(S=c.unitFactor||l.defaultUnitFactors[p]||1,b=w>c.max&&c.min!==c.max||y*S>-15&&45>y*S?o+.1*(n-o):v(w,c.max,y,R,A),C>b+a&&(C=b+a)):void 0!==c.min&&Number(c.min)-u>T&&(S=c.unitFactor||l.defaultUnitFactors[p]||1,b=c.min>w&&c.min!==c.max||y*S>-45&&15>y*S?o+.1*(n-o):v(w,c.min,y,R,A),C>b+a&&(C=b+a)),b>k&&(k=b)),_>k&&(k=_));return k>C&&(k=C),k>n?n:o>k?o:k},x=l.prototype=new t("throwProps");return x.constructor=l,l.version="0.9.8",l.API=2,l._autoCSS=!0,l.defaultResistance=100,l.defaultUnitFactors={time:1e3,totalTime:1e3},l.track=function(t,e,i){return r.track(t,e,i)},l.untrack=function(t,e){r.untrack(t,e)},l.isTracking=function(t,e){return r.isTracking(t,e)},l.getVelocity=function(t,e){var i=r.getByTarget(t);return i?i.getVelocity(e):0/0},l._cssRegister=function(){var t=p.com.greensock.plugins.CSSPlugin;if(t){var e=t._internals,i=e._parseToProxy,o=e._setPluginRatio,a=e.CSSPropTween;e._registerComplexSpecialProp("throwProps",{parser:function(t,e,h,u,p,f){f=new l;var _,d,g,m,v,y={},x={},w={},T={},b={},P={};n={};for(g in e)"resistance"!==g&&"preventOvershoot"!==g&&(d=e[g],"object"==typeof d?(void 0!==d.velocity&&"number"==typeof d.velocity?y[g]=Number(d.velocity)||0:(v=v||r.getByTarget(t),y[g]=v&&v.isTrackingProp(g)?v.getVelocity(g):0),void 0!==d.end&&(T[g]=d.end),void 0!==d.min&&(x[g]=d.min),void 0!==d.max&&(w[g]=d.max),d.preventOvershoot&&(P[g]=!0),void 0!==d.resistance&&(_=!0,b[g]=d.resistance)):"number"==typeof d?y[g]=d:(v=v||r.getByTarget(t),y[g]=v&&v.isTrackingProp(g)?v.getVelocity(g):d||0),c[g]&&u._enableTransforms(2===c[g]));m=i(t,y,u,p,f),s=m.proxy,y=m.end;for(g in s)n[g]={velocity:y[g],min:x[g],max:w[g],end:T[g],resistance:b[g],preventOvershoot:P[g]};return null!=e.resistance&&(n.resistance=e.resistance),e.preventOvershoot&&(n.preventOvershoot=!0),p=new a(t,"throwProps",0,0,m.pt,2),u._overwriteProps.pop(),p.plugin=f,p.setRatio=o,p.data=m,f._onInitTween(s,n,u._tween),p}})}},l.to=function(t,i,r,l,h){i.throwProps||(i={throwProps:i}),0===h&&(i.throwProps.preventOvershoot=!0),f=!0;var u=new e(t,1,i);return u.render(0,!0,!0),u.vars.css?(u.duration(y(s,{throwProps:n,ease:i.ease},r,l,h)),u._delay&&!u.vars.immediateRender?u.invalidate():o._onInitTween(s,a,u),f=!1,u):(u.kill(),u=new e(t,y(t,i,r,l,h),i),f=!1,u)},x._onInitTween=function(t,e,i){this.target=t,this._props=[],o=this,a=e;var s,n,l,h,u,p,c,_,v,y=i._ease,x=isNaN(e.checkpoint)?.05:Number(e.checkpoint),w=i._duration,T=e.preventOvershoot,b=0;for(s in e)if("resistance"!==s&&"checkpoint"!==s&&"preventOvershoot"!==s){if(n=e[s],"number"==typeof n)u=Number(n)||0;else if("object"!=typeof n||isNaN(n.velocity)){if(v=v||r.getByTarget(t),!v||!v.isTrackingProp(s))throw"ERROR: No velocity was defined in the throwProps tween of "+t+" property: "+s;u=v.getVelocity(s)}else u=Number(n.velocity);p=m(u,y,w,x),_=0,h="function"==typeof t[s],l=h?t[s.indexOf("set")||"function"!=typeof t["get"+s.substr(3)]?s:"get"+s.substr(3)]():t[s],"object"==typeof n&&(c=l+p,void 0!==n.end&&(n=d(n,c,n.max,n.min),f&&(e[s]=g(n,e[s],"end"))),void 0!==n.max&&c>Number(n.max)?T||n.preventOvershoot?p=n.max-l:_=n.max-l-p:void 0!==n.min&&Number(n.min)>c&&(T||n.preventOvershoot?p=n.min-l:_=n.min-l-p)),this._overwriteProps[b]=s,this._props[b++]={p:s,s:l,c1:p,c2:_,f:h,r:!1}}return!0},x._kill=function(e){for(var i=this._props.length;--i>-1;)null!=e[this._props[i].p]&&this._props.splice(i,1);return t.prototype._kill.call(this,e)},x._roundProps=function(t,e){for(var i=this._props,r=i.length;--r>-1;)(t[i[r]]||t.throwProps)&&(i[r].r=e)},x.setRatio=function(t){for(var e,i,r=this._props.length;--r>-1;)e=this._props[r],i=e.s+e.c1*t+e.c2*t*t,e.r&&(i=Math.round(i)),e.f?this.target[e.p](i):this.target[e.p]=i},t.activate([l]),l},!0),_gsScope._gsDefine("utils.VelocityTracker",["TweenLite"],function(t){var e,i,r,s,n=/([A-Z])/g,o={},a={x:1,y:1,z:2,scale:1,scaleX:1,scaleY:1,rotation:1,rotationZ:1,rotationX:2,rotationY:2,skewX:1,skewY:1,xPercent:1,yPercent:1},l=document.defaultView?document.defaultView.getComputedStyle:function(){},h=function(t,e,i){var r=(t._gsTransform||o)[e];return r||0===r?r:(t.style[e]?r=t.style[e]:(i=i||l(t,null))?r=i[e]||i.getPropertyValue(e)||i.getPropertyValue(e.replace(n,"-$1").toLowerCase()):t.currentStyle&&(r=t.currentStyle[e]),parseFloat(r)||0)},u=t.ticker,p=function(t,e,i){this.p=t,this.f=e,this.v1=this.v2=0,this.t1=this.t2=u.time,this.css=!1,this.type="",this._prev=null,i&&(this._next=i,i._prev=this)},f=function(){var t,i,n=e,o=u.time;if(o-r>=.03)for(s=r,r=o;n;){for(i=n._firstVP;i;)t=i.css?h(n.target,i.p):i.f?n.target[i.p]():n.target[i.p],(t!==i.v1||o-i.t1>.15)&&(i.v2=i.v1,i.v1=t,i.t2=i.t1,i.t1=o),i=i._next;n=n._next}},c=function(t){this._lookup={},this.target=t,this.elem=t.style&&t.nodeType?!0:!1,i||(u.addEventListener("tick",f,null,!1,-100),r=s=u.time,i=!0),e&&(this._next=e,e._prev=this),e=this},_=c.getByTarget=function(t){for(var i=e;i;){if(i.target===t)return i;i=i._next}},d=c.prototype;return d.addProp=function(e,i){if(!this._lookup[e]){var r=this.target,s="function"==typeof r[e],n=s?this._altProp(e):e,o=this._firstVP;this._firstVP=this._lookup[e]=this._lookup[n]=o=new p(n!==e&&0===e.indexOf("set")?n:e,s,o),o.css=this.elem&&(void 0!==this.target.style[o.p]||a[o.p]),o.css&&a[o.p]&&!r._gsTransform&&t.set(r,{x:"+=0",overwrite:!1}),o.type=i||o.css&&0===e.indexOf("rotation")?"deg":"",o.v1=o.v2=o.css?h(r,o.p):s?r[o.p]():r[o.p]}},d.removeProp=function(t){var e=this._lookup[t];e&&(e._prev?e._prev._next=e._next:e===this._firstVP&&(this._firstVP=e._next),e._next&&(e._next._prev=e._prev),this._lookup[t]=0,e.f&&(this._lookup[this._altProp(t)]=0))},d.isTrackingProp=function(t){return this._lookup[t]instanceof p},d.getVelocity=function(t){var e,i,r,s=this._lookup[t],n=this.target;if(!s)throw"The velocity of "+t+" is not being tracked.";return e=s.css?h(n,s.p):s.f?n[s.p]():n[s.p],i=e-s.v2,("rad"===s.type||"deg"===s.type)&&(r="rad"===s.type?2*Math.PI:360,i%=r,i!==i%(r/2)&&(i=0>i?i+r:i-r)),i/(u.time-s.t2)},d._altProp=function(t){var e=t.substr(0,3),i=("get"===e?"set":"set"===e?"get":e)+t.substr(3);return"function"==typeof this.target[i]?i:t},c.getByTarget=function(i){var r=e;for("string"==typeof i&&(i=t.selector(i)),i.length&&i!==window&&i[0]&&i[0].style&&!i.nodeType&&(i=i[0]);r;){if(r.target===i)return r;r=r._next}},c.track=function(t,e,i){var r=_(t),s=e.split(","),n=s.length;for(i=(i||"").split(","),r||(r=new c(t));--n>-1;)r.addProp(s[n],i[n]||i[0]);return r},c.untrack=function(t,i){var r=_(t),s=(i||"").split(","),n=s.length;if(r){for(;--n>-1;)r.removeProp(s[n]);r._firstVP&&i||(r._prev?r._prev._next=r._next:r===e&&(e=r._next),r._next&&(r._next._prev=r._prev))}},c.isTracking=function(t,e){var i=_(t);return i?!e&&i._firstVP?!0:i.isTrackingProp(e):!1},c},!0)}),_gsScope._gsDefine&&_gsScope._gsQueue.pop()(),function(t){"use strict";var e=function(){return(_gsScope.GreenSockGlobals||_gsScope)[t]};"function"==typeof define&&define.amd?define(["TweenLite"],e):"undefined"!=typeof module&&module.exports&&(require("../TweenLite.js"),module.exports=e())}("ThrowPropsPlugin");
 // jquery.royalslider v9.5.7
 (function(n){function v(b,f){var c,a=this,e=window.navigator,g=e.userAgent.toLowerCase();a.uid=n.rsModules.uid++;a.ns=".rs"+a.uid;var d=document.createElement("div").style,h=["webkit","Moz","ms","O"],k="",l=0,q;for(c=0;c<h.length;c++)q=h[c],!k&&q+"Transform"in d&&(k=q),q=q.toLowerCase(),window.requestAnimationFrame||(window.requestAnimationFrame=window[q+"RequestAnimationFrame"],window.cancelAnimationFrame=window[q+"CancelAnimationFrame"]||window[q+"CancelRequestAnimationFrame"]);window.requestAnimationFrame||
 (window.requestAnimationFrame=function(a,b){var c=(new Date).getTime(),d=Math.max(0,16-(c-l)),e=window.setTimeout(function(){a(c+d)},d);l=c+d;return e});window.cancelAnimationFrame||(window.cancelAnimationFrame=function(a){clearTimeout(a)});a.isIPAD=g.match(/(ipad)/);a.isIOS=a.isIPAD||g.match(/(iphone|ipod)/);c=function(a){a=/(chrome)[ \/]([\w.]+)/.exec(a)||/(webkit)[ \/]([\w.]+)/.exec(a)||/(opera)(?:.*version|)[ \/]([\w.]+)/.exec(a)||/(msie) ([\w.]+)/.exec(a)||0>a.indexOf("compatible")&&/(mozilla)(?:.*? rv:([\w.]+)|)/.exec(a)||
