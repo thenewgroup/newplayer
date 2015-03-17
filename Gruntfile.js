@@ -212,7 +212,31 @@ module.exports = function (grunt) {
       app: {
         ignorePath: /^\/|\.\.\//,
         src: ['<%= config.app %>/index.html'],
-        exclude: ['bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js']
+        exclude: [
+            "bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js",
+            "bower_components/angulartics/src/angulartics-adobe.js",
+            "bower_components/angulartics/src/angulartics-intercom.js",
+            "bower_components/angulartics/src/angulartics-baidu.js",
+            "bower_components/angulartics/src/angulartics-kissmetrics.js",
+            "bower_components/angulartics/src/angulartics-chartbeat.js",
+            "bower_components/angulartics/src/angulartics-localytics.js",
+            "bower_components/angulartics/src/angulartics-cnzz.js",
+            "bower_components/angulartics/src/angulartics-loggly.js",
+            "bower_components/angulartics/src/angulartics-debug.js",
+            "bower_components/angulartics/src/angulartics-marketo.js",
+            "bower_components/angulartics/src/angulartics-flurry.js",
+            "bower_components/angulartics/src/angulartics-mixpanel.js",
+            "bower_components/angulartics/src/angulartics-ga-cordova-google-analytics-plugin.js",
+            "bower_components/angulartics/src/angulartics-piwik.js",
+            "bower_components/angulartics/src/angulartics-ga-cordova.js",
+            "bower_components/angulartics/src/angulartics-scroll.js",
+            "bower_components/angulartics/src/angulartics-ga.js",
+            "bower_components/angulartics/src/angulartics-segmentio.js",
+            "bower_components/angulartics/src/angulartics-gtm-cordova.js",
+            "bower_components/angulartics/src/angulartics-splunk.js",
+            "bower_components/angulartics/src/angulartics-woopra.js",
+            "bower_components/angulartics/src/angulartics-hubspot.js",
+        ]
       },
       sass: {
         src: ['<%= config.app %>/styles/{,*/}*.{scss,sass}'],
@@ -428,7 +452,7 @@ module.exports = function (grunt) {
         uglify: true
       }
     },
-
+    
     // Run some tasks in parallel to speed up build process
     concurrent: {
       server: [

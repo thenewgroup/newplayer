@@ -9,14 +9,18 @@
       'ngSanitize',
       'newplayer.service',
       'newplayer.component',
-      'angular-royalslider'
+      'angular-royalslider',
+      'angulartics',
+      'angulartics.google.tagmanager'
     ]
   )
 
   /** @ngInject */
     .factory('AssessmentService', AssessmentService)
 
-    .config( /** @ngInject */ function ($logProvider) {
+    .config( /** @ngInject */ function ($logProvider, $analyticsProvider) {
       $logProvider.debugEnabled(false);
+      $analyticsProvider.firstPageview(false); /* Records pages that don't use $state or $route */
+      $analyticsProvider.withAutoBase(false);  /* Records full path */
     });
 })();

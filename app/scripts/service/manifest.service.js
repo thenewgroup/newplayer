@@ -11,7 +11,7 @@
    */
 
   /** @ngInject */
-  function ManifestService($log, $rootScope /*, $timeout, $http, $q */) {
+  function ManifestService($log, $rootScope, $analytics  /*, $timeout, $http, $q */) {
     $log.debug('\nManifestService::Init\n');
 
     var Service = function () {
@@ -334,12 +334,16 @@
         return this.pageId;
       };
       this.setPageId = function (pageId) {
+        if (this.getPageId() === pageId) {
+          return;
+        }
         $log.debug('ManifestService, setPageId', pageId);
         // reset component index for reparsing new page
         setComponentIdx(null);
 
         this.pageId = pageId;
         $rootScope.$broadcast('npPageIdChanged', pageId);
+        $analytics.pageTrack('/' + pageId);
       };
 
       this.goToNextPage = function () {
