@@ -67,6 +67,9 @@
 #np_reNutriv .dark h1, h2, h3, h4, h5 {
     color: $gray-dark;
 }
+#np_reNutriv .gold {
+    color: #9a7d46;
+}
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player padding wrapper classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -177,8 +180,8 @@
 }
 #np_reNutriv .flash-card-content-back {
     /*position: absolute;*/
-/*    left: 0;
-    top: 0;*/
+    /*    left: 0;
+        top: 0;*/
     background-color: #FFFFFF;
 }
 #np_reNutriv .flash-card-content-front p{
@@ -202,47 +205,69 @@
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Trivia/Spinner classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-// FROM - http://codepen.io/Aldlevine/pen/yGLqd
 
+#np_reNutriv .np-spinner-wrapper {
+    position: relative;
+    overflow: hidden;
+    height: 400px;
+    background-color: $gray-dark;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
+    /*width: 135px;*/
+}
+#np_reNutriv .np-spinner{
+    color: $gold;
+}
+#np_reNutriv .method2 {
+    -webkit-mask-image: -webkit-linear-gradient(top, rgba(248,248,170,1), rgba(202,160,78,.5) 50%, rgba(248,248,170,1));
+    -webkit-mask-image: linear-gradient(top, rgba(248,248,170,1), rgba(202,160,78,.5) 50%, rgba(248,248,170,1));
+}
+#np_reNutriv .np-spinner div{
+    font-family: $re-nu-serif;
+    font-size: floor(($font-size-base * 2.5));
+    color: $gold-gradiant;
+    line-height: 2.1em;
+    text-align: center;
+}
+#np_reNutriv .np-gold-border {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 400px;
+}
 /*
 ////////////////////////////////////////////////////////////////////////////////
-::::::::::::: Spinner classes
+:::::::::::::                 Spinner classes                      :::::::::::::
+// FROM - http://codepen.io/Aldlevine/pen/yGLqd
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 */
-.wheels {
-  position: relative;
-  top: 100px;
-  text-align: center;
-  width: 60%;
-  height: 400px;
-  // overflow: hidden;
-
-  /* clip the container for those not supporting csstransforms3d */
-  .no-csstransforms3d & {
-    overflow: hidden;
-    height: 60px;
-  }
-
-  .wheel {
+#np_reNutriv .wheels {
     position: relative;
-    // width: 100%;
-    height: 300px;
-
-    > div {
-      position: absolute;
-      width: 45%;
-      height: 50px;
-      line-height: 3.5em;
-      text-align: center;
-      z-index: 999;
-      background: #fff;
-      border: solid 1px #333;
-      outline: 1px solid transparent;
-
-      -webkit-backface-visibility:hidden;
-      -ms-backface-visibility: hidden;
+    top: 100px;
+    text-align: center;
+    width: 100%;
+    /*height: 600px;*/
+    /*clip the container for those not supporting csstransforms3d*/ 
+    .no-csstransforms3d & {
+        overflow: hidden;
+        height: 65px;
     }
-  }
+    .wheel {
+        position: relative;
+        // width: 100%;
+        height: 600px;
+        top: 70px;
+        > div {
+            position: absolute;
+            width: 100%;
+            height: 65px;
+            z-index: 999;
+            background-color: $gray-dark;
+            border-bottom: solid 1px;
+            border-bottom-color: $gold;
+            outline: 1px solid transparent;
+            backface-visibility:hidden;
+        }
+    }
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Reveal classes*/
@@ -275,7 +300,7 @@
 }
 /*
 ////////////////////////////////////////////////////////////////////////////////
-::::::::::::: evenly ditribute navigation
+::::::::::::: evenly ditribute navigation begin ::::::::::::::::::::::::::::::::
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 */
 #np_reNutriv .reveal-button-container {
@@ -301,7 +326,7 @@
 }
 /*
 ////////////////////////////////////////////////////////////////////////////////
-::::::::::::: evenly ditribute navigation
+::::::::::::: evenly ditribute navigation end ::::::::::::::::::::::::::::::::::
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 */
 #np_reNutriv .reveal-item-wrapper{
