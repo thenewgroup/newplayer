@@ -1,0 +1,4 @@
+app/scripts/component/npHotspot/mediaelement/GreenSock/TweenMax.min.js
+
+app/scripts/component/npDragAndDrop/mediaelement/GreenSock/TweenMax.min.js
+app/scripts/component/npDragAndDrop/mediaelement/GreenSock/utils/Draggable.min.js

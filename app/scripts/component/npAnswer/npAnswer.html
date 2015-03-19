@@ -1,31 +1,47 @@
 <div class="debug">
-	<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
+    <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
 </div>
 
-<div ng-if="npQuestion.type === 'radio'" class="np-cmp-wrapper {{component.type}}" ng-controller="npAnswerController as npAnswer">
+<div ng-if="npQuestion.type === 'radio'" class="np-cmp-wrapper {{component.type}} radio" ng-controller="npAnswerController as npAnswer">
 
-	<input type="radio" class="npAnswer-radio np-cmp-main" name="radio" ng-model="npQuestion.answer" value="{{component.idx}}" id="{{npAnswer.id}}_input" ng-change="npQuestion.changed()" />
-	<label class="npAnswer-label" for="{{npAnswer.id}}_input" ng-bind-html="npAnswer.label"></label>
+    <label>
+        <input type="radio" class="npAnswer-radio np-cmp-main " name="radio" ng-model="npQuestion.answer" value="{{component.idx}}" id="{{npAnswer.id}}_input" ng-change="npQuestion.changed()" />
+        <span class="npAnswer-label" for="{{npAnswer.id}}_input" ng-bind-html="npAnswer.label" ></span>
 
-	<div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+    </label>
 
-</div>
-
-<div ng-if="npQuestion.type === 'checkbox'" class="np-cmp-wrapper {{component.type}}" ng-controller="npAnswerController as npAnswer">
-
-	<input type="checkbox" class="npAnswer-checkbox np-cmp-main" name="checkbox{{npAnswer.id}}" ng-model="npQuestion.answer[component.idx]" value="{{component.idx}}" id="{{npAnswer.id}}_input" ng-change="npQuestion.changed()" />
-	<label class="npAnswer-label" for="{{npAnswer.id}}_input" ng-bind-html="npAnswer.label"></label>
-
-	<div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+    <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
 
 </div>
 
-<div ng-if="npQuestion.type === 'text'" class="np-cmp-wrapper {{component.type}}" ng-controller="npAnswerController as npAnswer">
+<div ng-if="npQuestion.type === 'checkbox'" class="np-cmp-wrapper {{component.type}} checkbox" ng-controller="npAnswerController as npAnswer">
 
-	<label class="npAnswer-label" for="{{npAnswer.id}}_input" ng-bind-html="npAnswer.label"></label>
-	<input type="text" class="npAnswer-text np-cmp-main" name="text{{npAnswer.id}}" ng-model="npQuestion.answer" value="" id="{{npAnswer.id}}_input" ng-change="npQuestion.changed()" />
+    <label>
+        <input type="checkbox" class="npAnswer-checkbox np-cmp-main " name="checkbox{{npAnswer.id}}" ng-model="npQuestion.answer[component.idx]" value="{{component.idx}}" id="{{npAnswer.id}}_input" ng-change="npQuestion.changed()" />
+        <span class="npAnswer-label" for="{{npAnswer.id}}_input" ng-bind-html="npAnswer.label"></span>
+    </label>
 
-	<div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+    <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
 
 </div>
 
+
+<div ng-if="npQuestion.type === 'text'" class="np-cmp-wrapper {{component.type}} input-group" ng-controller="npAnswerController as npAnswer">
+
+    <!--<label class="npAnswer-label " for="{{npAnswer.id}}_input" ng-bind-html="npAnswer.label"></label>-->
+    <span class="npAnswer-label input-group-addon" for="{{npAnswer.id}}_input" ng-bind-html="npAnswer.label"></span>
+    <input type="text" class="npAnswer-text np-cmp-main form-control" name="text{{npAnswer.id}}" ng-model="npQuestion.answer" value="" id="{{npAnswer.id}}_input" ng-change="npQuestion.changed()" />
+
+    <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+
+</div>
+
+<div ng-if="npMatch" class="np-cmp-wrapper {{component.type}} matchbox" ng-controller="npAnswerController as npAnswer">
+    <div class="slide-wrapper reveal-slide rsContent">
+        <label>
+            <span class="npAnswer-label" for="{{npAnswer.id}}_input" ng-bind-html="npAnswer.label"></span>
+        </label>
+
+        <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+    </div>
+</div>

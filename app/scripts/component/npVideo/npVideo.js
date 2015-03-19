@@ -1,75 +1,43 @@
-'use strict';
+/* jshint -W003, -W117 */
+(function () {
+  'use strict';
 
-angular
-	.module(
-		'npVideo', []
-		/*, [ 'com.2fdevs.videogular' ] */
-	);
+  angular
+    .module('newplayer.component')
+  /** @ngInject */
+    .directive('npVideo', NpVideoDirective);
 
-/** @ngInject */
-function npMediaElementDirective( $log )
-{
-	$log.debug('\nmediaelementDirective::Init\n');
-	var Directive = function()
-	{
-		this.restrict = 'A';
-		this.link = function( scope, element, attrs, controller ) {
-			jQuery(element).attr( 'poster', scope.poster );
-			jQuery(element).attr( 'src', scope.mp4 );
-			jQuery(element).prepend( scope.sources );
-			attrs.$observe('src', function() {
-				$log.debug('mediaelementDirective::element', element);
-				jQuery(element).mediaelementplayer();
-			});
-		};
-	};
-	return new Directive();
-}
+  /** @ngInject */
+  function NpVideoDirective($log) {
+    $log.info('DEBUG | \npVideo::Init\n');
+    return {
+      restrict: 'EA',
+      controller: NpVideoController,
+      controllerAs: 'npVideo',
+      bindToController: true
+    };
+  }
 
-angular
-	.module('npVideo')
+  /** @ngInject */
+  function NpVideoController($log, $scope, $sce) {
 
-	/** @ngInject */
-	.controller( 'npVideoController',
-		function( $log, $scope, $sce, $element )
-		{
-			var cmpData = $scope.component.data || {};
-			$log.debug( 'npVideo::data', cmpData, $element );
+    var vm = this,
+        types = $scope.component.data.types;
 
-			this.baseURL = cmpData.baseURL;
+    if (angular.isArray(types) && types.length > 0) {
+      var sources = [];
+      for (var typeIdx in types) {
+        var type = types[typeIdx];
+        sources.push({
+          type: type,
+          mime: 'video/' + type,
+          src: $sce.trustAsResourceUrl($scope.component.data.baseURL + '.' + type)
+        });
+      }
+      $scope.npVideo = {
+        sources: sources
+      };
+    }
+  }
 
-			if ( cmpData.poster )
-			{
-				$scope.poster = cmpData.poster;
-			}
-
-			// video source elements need to be static BEFORE mediaElement is initiated
-			// binding the attributes to the model was not working
-			// alternatively, fire the mediaelement after the source attributes are bound?
-			var types = cmpData.types;
-			if ( angular.isArray( types ) && types.length > 0 )
-			{
-				$log.debug( 'npVideo::data:types', types );
-				var sources = '';
-				for ( var typeIdx in types )
-				{
-					var type = types[typeIdx];
-					$log.debug( 'npVideo::data:types:type', typeIdx, type );
-					sources += '<source type="video/' + type + '" src="' + this.baseURL + '.' + type + '" />';
-					$scope[type] = this.baseURL + '.' + type;
-				}
-				$scope.sources = sources;
-			}
-		}
-	)
-
-	.directive( 'mediaelement', npMediaElementDirective )
-
-	/** @ngInject */
-	.run(
-		function( $log, $rootScope )
-		{
-			$log.debug('npVideo::component loaded!');
-		}
-	);
-
+})();

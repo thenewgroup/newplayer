@@ -1,275 +1,241 @@
-// bower:scss
-// endbower
-@import "compass-mixins/lib/compass/css3/border-radius";
-
-.browsehappy {
-	display: none;
-	background: #ccc;
-	color: #000;
-	margin: 0.2em 0;
-	padding: 0.2em 0;
-}
-
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*main bootstrap override classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+@import "_bootstrap.scss";
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*support classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 .debug,
 .hide {
-	display: none;
+    display: none;
 }
-
-.container {
-	margin: 0 auto;
+strong, b{
+    font-family: $font-family-sans-serif_head;
 }
-
-#manifestWrapper {
-	&.debug {
-		display: block;
-		.debug {
-			display: block;
-		}
-		.np-component {
-			margin: 0.5em;
-			padding: 0.5em;
-			border: 1px dashed red;
-		}
-	}
+svg {
+    width: 100%;
+    height:100%;
 }
-
-.npPage {
-	text-align: center;
+img.blur {
+    width:367; 
+    height:459px; 
+    filter: url(blur.svg#blur); 
+    /*-webkit-filter: blur(3px);*/ 
+    filter: blur(3px); 
 }
-
-.npMenu {
-	background: mix(black, white, 90%);
-	background: rgba(black, 0.9);
-	position: absolute;
-	top: 0;
-	left: -50%;
-	width: 50%;
-	-webkit-transition: 0.5s ease all;
-	transition: 0.5s ease all;
-	z-index: 100;
-	@include border-right-radius(20px);
-
-	ul {
-		list-style: none outside none;
-		padding: 0;
-		li {
-			margin: 0.2em 0 0.2em 1em;
-		}
-		ul {
-			font-size: 0.95em;
-		}
-	}
-
-	.hamburger {
-		color: black;
-		cursor: pointer;
-		position: absolute;
-		top: 0.5em;
-		right: -1em;
-		-webkit-transition: 0.5s ease all;
-		transition: 0.5s ease all;
-		&:hover {
-			text-decoration: none;
-		}
-	}
-
-	a {
-		color: white;
-		text-decoration: none;
-
-		&:hover {
-			text-decoration: underline;
-		}
-		&.selected:hover {
-			text-decoration: none;
-		}
-	}
-
-	.selected {
-		cursor: default;
-		text-decoration: none;
-	}
-
-	&.show {
-		left: 0;
-
-		.hamburger {
-			right: 1em;
-			color: white;
-		}
-	}
+.inset-shadow {
+    /*    width:367; 
+        height:459px; */
+    filter: url(styles/inset-shadow.svg#inset-shadow); 
+    /*    -webkit-filter: blur(3px); 
+        filter: blur(3px); */
 }
-
-.npVideo {
-	video {
-		height: auto;
-	}
+/*.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}*/
+.vertical-align {
+    display: flex;
+    flex-direction: row;
 }
-
-.npHTML {
-	font-size: 16px;
-	line-height: 20px;
+.vertical-align > [class^="col-"],
+.vertical-align > [class*=" col-"] {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Optional, to align inner items 
+                                horizontally inside the column */
 }
-
-.np-expandable {
-	&.np-cmp-main,
-	>.np-cmp-main {
-		cursor: pointer;
-		text-align: left;
-
-		&:before {
-			content: "\00f054"; 
-			float: left;
-			font-family: 'FontAwesome';
-			-webkit-transition: 0.5s ease all;
-			transition: 0.5s ease all;
-			-webkit-transform: rotate(90deg);
-			transform: rotate(90deg);
-			margin: 0 0.5em 0 0;
-		}
-	}
-	&.np-expandable-collapsed {
-		.np-cmp-main:before {
-			-webkit-transform: rotate(0deg);
-			transform: rotate(0deg);
-		}
-	}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*Angular UI classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.nav, .pagination, .carousel, .panel-title a { 
+    cursor: pointer; 
 }
-
-.npColumn {
-	line-height: 0; 
-	font-size: 0;
-
-	&:after {
-		content: "."; 
-		visibility: hidden; 
-		display: block; 
-		height: 0; 
-		clear: both;
-	}
-
-	.column {
-		float: left;
-		line-height: 0; 
-		font-size: 0;
-
-		&.col-last {
-			&:after {
-				content: "."; 
-				visibility: hidden; 
-				display: inline-block; 
-				height: 0; 
-				clear: both;
-				width: 100%;
-			}
-		}
-		&.col-1 {
-			width: 100%;
-		}
-		&.col-2 {
-			width: 50%;
-		}
-		&.col-3 {
-			width: 33.333333333%;
-		}
-		&.col-4 {
-			width: 25%;
-		}
-		&.col-5 {
-			width: 20%;
-		}
-		&.col-6 {
-			width: 16.666666666%;
-		}
-		&.col-7 {
-			width: 14.285714285%;
-		}
-
-		* {
-			font-size: 16px;
-			line-height: 20px;
-		}
-	}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*Button overrides*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.btn {     
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 5px; 
+    margin-bottom: 10px;
+    min-width: 20%;
+    width:100%;
 }
-
-.npButton {
-	background-color: #7f7f7f;
-	border: none;
-	@include border-radius(6px);
-	-webkit-box-shadow: 0px 0px 5px 0px rgba(50, 50, 50, 0.75);
-	-moz-box-shadow:    0px 0px 5px 0px rgba(50, 50, 50, 0.75);
-	box-shadow:         0px 0px 5px 0px rgba(50, 50, 50, 0.75);
-	font-size: 14px;
-	line-height: 17px;
-	margin: 0.3em;
-	padding: 0.3em;
-	text-align: center;
-}
-
-@media screen and (max-width: 320px) {
-	.container {
-		max-width: 305px;
-	}
+.btn-favorite { 
+    margin-top: 5px; 
+    margin-bottom: 10px;
 
 }
-
-@media screen and (max-width: 767px) {
-	.container {
-		max-width: 420px;
-	}
-
-	.npVideo {
-		video {
-			width: 100%;
-		}
-		.mejs-mediaelement {
-			position: relative;
-		}
-		.mejs-video {
-			width: 100% !important;
-			height: auto !important;
-		}
-		.mejs-overlay,
-		.mejs-poster {
-			height: auto !important;
-			width: auto !important;
-		}
-	}
-
-	.npColumn {
-		.column {
-			float: none;
-
-			&.col-1 {
-				width: 100%;
-			}
-			&.col-2 {
-				width: 100%;
-			}
-			&.col-3 {
-				width: 100%;
-			}
-			&.col-4 {
-				width: 100%;
-			}
-			&.col-5 {
-				width: 100%;
-			}
-			&.col-6 {
-				width: 100%;
-			}
-			&.col-7 {
-				width: 100%;
-			}
-
-		}
-	}
+.np_btn-info { 
+    margin-top: 5px; 
+    margin-bottom: 10px;
+    display: none;
+}
+.glyphicon-heart-empty{
+    color: $brand-info;
+}
+.icon {
+    background-image: url(../assets/svgs/heart-icon.svg);
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-size: 25%;
+    background-origin: content-box ;
+    padding-left: 16px; /* Or size of icon + spacing */
 }
 
-/* Responsive: Portrait tablets and up */
-@media screen and (min-width: 768px) {
-	.container {
-		max-width: 730px;
-	}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player padding wrapper classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*When setting this class for New Player use: 'outside-padding'*/
+.np_outside-padding{
+    padding-top: 35px;
+    padding-left: 90px;
+    padding-right: 90px;
+    padding-bottom: 35px;
+}
+/*When setting this class for New Player use: 'inside-padding'*/
+.np_inside-padding{
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 35px;
+}
+/*When setting this class for New Player use: 'button-padding'*/
+.np_button-padding{
+    padding-top: 30px;
+    padding-left: 15%;
+    padding-right: 15%;
+    padding-bottom: 35px;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*responsive padding overrides*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*.container{*/
+/*background-color: #000000;*/
+/*position: absolute;*/
+/*    background: url(./assets/images/OrionsHeart.jpg) no-repeat center center fixed;
+    background-color: #000000;
+    background-size: cover;
+    content: "";
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;*/
+/*z-index: -2;*/
+/*}*/
+@media (max-width: $screen-sm) {
+    .np_outside-padding{
+        padding: 0px;
+    }
+    .np_inside-padding{
+        padding: 5%;
+    }
+    .np_button-padding{
+        padding: 5%;
+    }
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*Sans font overrides*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.sans-head{
+    font-family: $font-family-sans-serif_head !important;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: solid 1px;
+    border-bottom-color: $brand-lightgrey;
+    padding-top: 40px;
+    padding-bottom: 3px;
+    display: inline-block;
+}
+
+@media (max-width: $screen-sm) {
+    .collapse-toggle{
+        background-color: $brand-offwhite;
+        cursor: pointer;
+        width: 100%;
+        border-bottom: none;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        padding-right: 7px;
+        padding-left: 7px;
+        &:hover,
+            &:focus {
+            background-color: darken($brand-offwhite, 5%);
+        }
+        &:before {
+            font-family: 'elx-icons';
+            content: "\e613";
+            float: right;
+            color: $brand-primary;
+            -webkit-transition: opacity 1s ease-in-out;
+            -moz-transition: opacity 1s ease-in-out;
+            -o-transition: opacity 1s ease-in-out;
+            transition: opacity 1s ease-in-out;
+        }
+    }
+}
+/*.np_inside-padding .sans-head{
+    border-bottom-color: $brand-primary-light;
+}
+.sans-head-sub{
+    font-family: $font-family-sans-serif_head;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding-bottom: 3px;
+}
+.sans-normal{
+    font-family: $font-family-sans-serif;
+    text-transform: none;
+    letter-spacing: 2px;
+    line-height: 130%;
+}
+.sans-small{
+    font-family: $font-family-sans-serif;
+    text-transform: none;
+    letter-spacing: 2px;
+    line-height: 130%;
+    font-size: $font-size-small;
+    p{
+        padding-bottom: 10px;
+    }
+}*/
+@media (max-width: $screen-sm) {
+    .sans-normal{
+        padding-right: 7px;
+        padding-left: 7px;
+    }
+    .sans-small{
+        padding-right: 7px;
+        padding-left: 7px;
+    }
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player background color wrapper classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*When setting this class for New Player use: 'background-brand-primary-light'*/
+/*.np_background-brand-primary-light{
+    background-color: $brand-primary-light;
+}*/
+/*When setting this class for New Player use: 'background-brand-offwhite' */
+/*.np_background-brand-offwhite{
+    background-color: $brand-offwhite;
+}*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/* text treatment classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*Q and A text outdent*/
+/*.q-and-a-outdent{
+    text-indent:-28px;
+    margin-left:28px
+}*/
+
+/*////////////////////////////////////////////////////////////////////////////////*/
+.browsehappy {
+    display: none;
+    background: #ccc;
+    color: #000;
+    margin: 0.2em 0;
+    padding: 0.2em 0;
 }
 

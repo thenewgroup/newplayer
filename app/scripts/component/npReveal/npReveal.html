@@ -1,0 +1,41 @@
+<div npReveal id="{{npReveal.id}}" class="{{component.type}} np-cmp-wrapper np-reveal" ng-controller="npRevealController as npReveal">
+    <div class="debug">
+        <h3>{{component.type}} -- 
+            <small>{{component.idx}}</small>
+        </h3>
+    </div>
+    <!--:::::::::::: buttons ::::::::::::::::--> 
+    <div class="reveal-navigation col-md-12">
+        <div class=" reveal-button-container">
+            <div revealButton class="reveal-button" ng-repeat="revealItem in npReveal.revealItems" ng-click="npReveal.update(revealItem)">
+                <div class="reveal-button-wrap">
+                    <img class="reveal-button-image img-responsive" ng-src="{{revealItem.buttonImage}}" alt="{{revealItem.buttonAlt}}" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--:::::::::::: buttons ::::::::::::::::-->
+
+    <!--::::::::::::  reveal  ::::::::::::::::-->
+    <div class="col-md-12">
+        <div class="reveal-object" ng-repeat="revealItemComponent in npReveal.revealItemComponents">
+            <div class="reveal-wrapper">
+                <div class="reveal-item-wrapper">
+                    <img ng-if="revealItemComponent.components[0].type == 'npImage'" class="reveal-item reveal-image img-responsive" ng-src="{{revealItemComponent.components[0].data.src}}" alt="{{component.alt}}" />
+                    <video controls ng-if="revealItemComponent.components[0].type == 'npVideo'" class="reveal-item reveal-video" poster="{{revealItemComponent.components[0].data.poster}}">
+                        <source ng-src="{{revealItemComponent.components[0].data.baseURL}}"/>
+                    </video>
+                </div>
+                <div class="reveal-content-wrapper">
+                    <div class="reveal-background"></div>
+                    <div class="reveal-content-text">
+                        <p class="h4 reveal-text-heading" ng-bind-html="revealItemComponent.heading"></p>
+                        <p class=" reveal-text-body" ng-bind-html="revealItemComponent.content"></p>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div> 
+    <!--::::::::::::  reveal  ::::::::::::::::-->
+    <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+</div>

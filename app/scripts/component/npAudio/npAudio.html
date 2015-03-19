@@ -1,0 +1,94 @@
+<!--<div class="{{component.type}}" ng-controller="npAudioController as npAudio" id="{{npAudio.id}}">
+
+    <div class="debug">
+        <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
+    </div>
+    
+    <videogular vg-theme="npAudio.config.theme.url">
+            <vg-video vg-src="npAudio.config.sources" vg-native-controls="true"></vg-video>
+    </videogular>
+    
+    <audio
+        width="100%"
+        preload="auto"
+        mediaelement>
+        
+                        <source type="video/{{npAudio.types[0]}}" src="{{npAudio.baseURL}}.{{npAudio.types[0]}}" />
+                        <source ng-repeat="type in npAudio.types" type="video/{{type}}" src="{{npAudio.baseURL}}.{{type}}" />
+        
+        <object width="100%"  type="application/x-shockwave-flash" data="scripts/component/npAudio/mediaelement/flashmediaelement.swf">
+            <param name="movie" value="scripts/component/npAudio/mediaelement/flashmediaelement.swf" />
+            <param name="flashvars" value="controls=true&file={{npAudio.baseURL}}.mp3" />
+             Image as a last resort 
+            <img src="myvideo.jpg" width="320" height="240" title="No video playback capabilities" />
+        </object>
+    </audio>
+
+    <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+</div>-->
+
+<!--////////////////////////////////////////////////////////////////////////////////-->
+<!--////////////////////////////////////////////////////////////////////////////////-->
+<!--////////////////////////////////////////////////////////////////////////////////-->
+
+<np-audio component="component" class="{{component.type}}" id="{{component.data.id}}">
+
+  <div class="debug">
+    <h3>{{component.type}} --
+      <small>{{component.idx}}</small>
+    </h3>
+  </div>
+
+  <audio
+    width="{{component.data.width}}"
+    preload="{{component.data.preload}}"
+    ng-src="{{component.data.src}}"
+    controls="controls"
+    mediaelelement>
+
+    <source ng-repeat="source in npAudio.sources" type="audio/{{source.type}}" ng-src="{{source.src}}" />
+
+    <object width="{{component.data.width}}" height="{{component.data.height}}" type="application/x-shockwave-flash"
+            data="scripts/component/npAudio/mediaelement/flashmediaelement.swf">
+      <param name="movie" value="scripts/component/npAudio/mediaelement/flashmediaelement.swf"/>
+      <param name="flashvars" value="controls=true&file={{component.data.baseURL}}.mp3"/>
+      <!--<param name="allowfullscreen" value="false"/>-->
+    </object>
+  </audio>
+
+  <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+</np-audio>
+
+<!--////////////////////////////////////////////////////////////////////////////////-->
+<!--////////////////////////////////////////////////////////////////////////////////-->
+<!--////////////////////////////////////////////////////////////////////////////////-->
+
+<!--<np-video component="component" class="{{component.type}}" id="{{component.data.id}}">
+
+  <div class="debug">
+    <h3>{{component.type}} --
+      <small>{{component.idx}}</small>
+    </h3>
+  </div>
+
+  <video
+    height="{{component.data.height}}"
+    width="{{component.data.width}}"
+    poster="{{component.data.poster}}"
+    preload="{{component.data.preload}}"
+    ng-src="{{component.data.src}}"
+    controls="controls"
+    mediaelelement>
+
+    <source ng-repeat="source in npVideo.sources" type="video/{{source.type}}" ng-src="{{source.src}}" />
+
+    <object width="{{component.data.width}}" height="{{component.data.height}}" type="application/x-shockwave-flash"
+            data="scripts/component/npVideo/mediaelement/flashmediaelement.swf">
+      <param name="movie" value="scripts/component/npVideo/mediaelement/flashmediaelement.swf"/>
+      <param name="flashvars" value="controls=true&file={{component.data.baseURL}}.mp4"/>
+      <param name="allowfullscreen" value="false"/>
+    </object>
+  </video>
+
+  <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+</np-video>-->

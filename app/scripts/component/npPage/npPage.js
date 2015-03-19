@@ -1,72 +1,58 @@
-'use strict';
+/* jshint -W003, -W117 */
+(function () {
 
-angular
-	.module(
-		'npPage',
-		[ ]
-	);
+  'use strict';
+  angular
+    .module('newplayer.component')
+  /** @ngInject */
+    .controller('npPageController',
+    function ($log, $scope, $rootScope, ManifestService) {
+      var cmpData = $scope.component.data || {};
+      $log.debug('npPage::data', cmpData, $scope.contentTitle);
 
-angular
-	.module('npPage')
+      this.title = cmpData.title;
+      var parentIdx = $scope.component.idx.slice(0);
+      parentIdx.pop();
 
-	/** @ngInject */
-	.controller( 'npPageController',
-		function( $log, $scope, $rootScope, $state, ManifestService )
-		{
-			var cmpData = $scope.component.data || {};
-			$log.debug( 'npPage::data', cmpData, $scope.contentTitle );
+      var pageId = ManifestService.getPageId();
+      if (!pageId) {
+        var firstPageCmp = ManifestService.getFirst('npPage', parentIdx);
+        pageId = firstPageCmp.data.id;
+        ManifestService.setPageId(pageId);
+        $log.debug('npPage::set page', pageId);
+      }
 
-			this.title = cmpData.title;
+      npPageIdChanged(null, pageId);
 
-			var parentIdx = $scope.component.idx.slice(0);
-			parentIdx.pop();
+      $rootScope.$on('npPageIdChanged', npPageIdChanged);
 
-			var pageId = ManifestService.getPageId();
-			if ( !pageId )
-			{
-				var firstPageCmp = ManifestService.getFirst('npPage', parentIdx);
-				pageId = firstPageCmp.data.id;
-				ManifestService.setPageId( pageId );
-				$log.debug('npPage::set page', pageId);
-				/* redirecting interrupts component loading
-				$state.go(
-					'manifest.lang.page',
-					{
-						lang: ManifestService.getLang(),
-						pageId: pageId
-					},
-					{
-						location: 'replace'
-					}
-				);
-				*/
-			}
+      function npPageIdChanged(event, newPageId) {
 
-			// check if current route is for this page
-			$log.debug( 'npPage::on current page?', ManifestService.getPageId(), cmpData.id );
-			if ( cmpData.id === pageId )
-			{
-				$scope.currentPage = true;
-				$scope.npPage = $scope;
+        pageId = newPageId;
 
-				// set page title
-				if ( $rootScope.PageTitle )
-				{
-					$rootScope.PageTitle += ': ' + cmpData.title;
-				} else {
-					$rootScope.PageTitle = cmpData.title;
-				}
-			} else {
-				$scope.currentPage = false;
-			}
-		}
-	)
+        // check if current route is for this page
+        $log.debug('npPage::on current page?', pageId, cmpData.id);
+        if (cmpData.id === pageId) {
+          $scope.currentPage = true;
+          $scope.npPage = $scope;
 
-	/** @ngInject */
-	.run(
-		function( $log, $rootScope )
-		{
-			$log.debug('npPage::component loaded!');
-		}
-	);
+          // set page title
+          if ($rootScope.PageTitle) {
+            $rootScope.PageTitle += ': ' + cmpData.title;
+          } else {
+            $rootScope.PageTitle = cmpData.title;
+          }
+        } else {
+          $scope.currentPage = false;
+        }
+      }
+    }
+  )
 
+  /** @ngInject */
+    .run(
+    function ($log, $rootScope) {
+      $log.debug('npPage::component loaded!');
+    }
+  );
+})();
