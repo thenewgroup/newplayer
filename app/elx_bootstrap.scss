@@ -1,6 +1,7 @@
 // Core variables and mixins
 /*@import "../../bootstrap-sass-official/assets/stylesheets/bootstrap/variables";*/
-@import "_variables";
+/*@import "_variables";*/
+@import "styles/_variables.scss";
 @import "../../bootstrap-sass-official/assets/stylesheets/bootstrap/mixins";
 /*@import "mixins/_gradient.scss";*/
 
@@ -8,10 +9,10 @@
 @import "../../bootstrap-sass-official/assets/stylesheets/bootstrap/normalize";
 @import "../../bootstrap-sass-official/assets/stylesheets/bootstrap/print";
 @import "../../bootstrap-sass-official/assets/stylesheets/bootstrap/glyphicons";
-@import "_icons.scss";
+@import "styles/_icons.scss";
 
 // Core CSS
-@import "_scaffolding";
+@import "styles/_scaffolding";
 /*@import "../../bootstrap-sass-official/assets/stylesheets/bootstrap/scaffolding";*/
 @import "../../bootstrap-sass-official/assets/stylesheets/bootstrap/type";
 @import "../../bootstrap-sass-official/assets/stylesheets/bootstrap/code";
@@ -44,10 +45,10 @@
 @import "../../bootstrap-sass-official/assets/stylesheets/bootstrap/close";
 
 //Custom Classes
-@import "_products.scss";
-@import "_reNutriv.scss";
-@import "_collapse.scss";
-@import "_spinner.scss";
+@import "styles/_products.scss";
+@import "styles/_reNutriv.scss";
+@import "styles/_collapse.scss";
+@import "styles/_spinner.scss";
 //@import "_reveal.scss";
 // Components w/ JavaScript
 @import "../../bootstrap-sass-official/assets/stylesheets/bootstrap/modals";
