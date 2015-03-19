@@ -1,6 +1,6 @@
 // FROM - http://codepen.io/Aldlevine/pen/yGLqd
 
-.wheels {
+/*.wheels {
   position: relative;
   top: 100px;
   text-align: center;
@@ -8,7 +8,7 @@
   height: 400px;
   // overflow: hidden;
 
-  /* clip the container for those not supporting csstransforms3d */
+   clip the container for those not supporting csstransforms3d 
   .no-csstransforms3d & {
     overflow: hidden;
     height: 60px;
@@ -34,4 +34,4 @@
       -ms-backface-visibility: hidden;
     }
   }
-}
+}*/
