@@ -7,7 +7,7 @@
     .factory('ConfigService', ConfigService);
 
   /** @ngInject */
-  function ConfigService($log, APIService, ManifestService/*, $timeout, $q, $rootScope*/) {
+  function ConfigService($log, $rootScope, APIService, ManifestService/*, $timeout, $q, $rootScope*/) {
     $log.debug('configService::Init');
 
     var Service = function () {
@@ -64,6 +64,13 @@
 
         if( !!npConfig.overrideManifest ) {
           setOverride(npConfig.overrideManifest);
+        }
+
+        if (!!npConfig.onPageHandler) {
+          // run this when the page changes
+          $rootScope.$on('npPageIdChanged', function(pageId) {
+            npConfig.onPageHandler(pageId);
+          });
         }
       }
 

@@ -18,7 +18,8 @@
                 manifestURL: '@npUrl',
                 overrideURL: '@npOverrideUrl',
                 overrideData: '@npOverrideData',
-                language: '@npLang'
+                language: '@npLang',
+                onclickHandler: '@onclickHandler'
             },
             //compile: function (tElement, tAttrs, transclude, ConfigService)
             //{
