@@ -167,7 +167,7 @@ $font-family-base:        $font-family-sans-serif !default;
 
 $font-size-base:          14px !default;
 $font-size-large:         ceil(($font-size-base * 1.25)) !default; // ~18px
-$font-size-small:         ceil(($font-size-base * 1.1)) !default; // ~16px
+$font-size-small:         ceil(($font-size-base * 1.15)) !default; // ~17px
 
 
 /*Headline*/
@@ -500,7 +500,6 @@ $screen-xs-max:              ($screen-sm-min - 1) !default;
 $screen-sm-max:              ($screen-md-min - 1) !default;
 $screen-md-max:              ($screen-lg-min - 1) !default;
 
-
 //== Grid system
 //
 //## Define your custom responsive grid.
@@ -654,7 +653,7 @@ $pagination-disabled-border:           #ddd !default;
 
 $pager-bg:                             $pagination-bg !default;
 $pager-border:                         $pagination-border !default;
-$pager-border-radius:                  15px !default;
+$pager-border-radius:                  $border-radius-base !default;
 
 $pager-hover-bg:                       $pagination-hover-bg !default;
 
@@ -794,9 +793,9 @@ $modal-header-border-color:   #e5e5e5 !default;
 //::::Modal footer border color
 $modal-footer-border-color:   $modal-header-border-color !default;
 
-$modal-lg:                    900px !default;
-$modal-md:                    600px !default;
-$modal-sm:                    300px !default;
+$modal-lg:                    $screen-lg;
+$modal-md:                    $screen-md;
+$modal-sm:                    $screen-xs;
 
 
 //== Alerts
