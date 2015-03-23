@@ -15,25 +15,25 @@
                         var feedback = cmpData.feedback;
                         var feedback_label = $element.find('.question-feedback-label');
                         var feedback_checkbox_x = $element.find('.checkbox-x');
-                        console.log(
-                                '\n::::::::::::::::::::::::::::::::::::::npQuestions::default:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                '\n:::', this,
-                                '\n::type::', cmpData.type,
-                                '\n::feedback::', feedback,
-                                '\n::feedback_label::', feedback_label,
-                                '\n::$element::', $element,
-                                '\n::feedback_checkbox_x::', feedback_checkbox_x,
-                                '\n::$element.find(".checkbox-x")::', $element.find(".checkbox-x"),
-                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                );
+//                        console.log(
+//                                '\n::::::::::::::::::::::::::::::::::::::npQuestions::default:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                '\n:::', this,
+//                                '\n::type::', cmpData.type,
+//                                '\n::feedback::', feedback,
+//                                '\n::feedback_label::', feedback_label,
+//                                '\n::$element::', $element,
+//                                '\n::feedback_checkbox_x::', feedback_checkbox_x,
+//                                '\n::$element.find(".checkbox-x")::', $element.find(".checkbox-x"),
+//                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                );
                         this.changed = function (event) {
-                            console.log(
-                                    '\n::::::::::::::::::::::::::::::::::::::npQuestions::changed:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                    '\n::id::', event,
-                                    '\n::id::', event.target,
-                                    '\n::id::', event.currentTarget,
-                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                    );
+//                            console.log(
+//                                    '\n::::::::::::::::::::::::::::::::::::::npQuestions::changed:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                    '\n::id::', event,
+//                                    '\n::id::', event.target,
+//                                    '\n::id::', event.currentTarget,
+//                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                    );
                             TweenMax.to(event.target, .25, {
                                 autoAlpha: 1,
                                 ease: Power3.easeOut
@@ -45,13 +45,13 @@
                         };
                         this.evaluate = function () {
                             var correct = true;
-                            console.log(
-                                    '\n::::::::::::::::::::::::::::::::::::::npQuestions::evaluate:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                    '\n::this::', this,
-                                    '\n::this.answer::', this.answer,
-                                    '\n::cmpData::', cmpData,
-                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                    );
+//                            console.log(
+//                                    '\n::::::::::::::::::::::::::::::::::::::npQuestions::evaluate:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                    '\n::this::', this,
+//                                    '\n::this.answer::', this.answer,
+//                                    '\n::cmpData::', cmpData,
+//                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                    );
                             $log.debug('npQuestion::evaluate:', this.answer);
                             if (!!this.answer) {
                                 switch (this.type) {
