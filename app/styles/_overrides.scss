@@ -1,17 +1,12 @@
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*main bootstrap override classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-@import "_bootstrap.scss";
-@import "_overrides.scss";
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/*support classes*/
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/*.debug,
+.debug,
 .hide {
     display: none;
 }
-strong, b{
-    font-family: $font-family-sans-serif_head;
+.np-bs strong, b{
+    /*font-family: $font-family-sans-serif_head;*/
 }
 svg {
     width: 100%;
@@ -20,21 +15,22 @@ svg {
 img.blur {
     width:367; 
     height:459px; 
-    filter: url(blur.svg#blur);
+    filter: url(blur.svg#blur); 
+    /*-webkit-filter: blur(3px);*/ 
     filter: blur(3px); 
 }
 .inset-shadow {
-        width:367; 
-        height:459px; 
+    /*    width:367; 
+        height:459px; */
     filter: url(styles/inset-shadow.svg#inset-shadow); 
-        -webkit-filter: blur(3px); 
-        filter: blur(3px); 
+    /*    -webkit-filter: blur(3px); 
+        filter: blur(3px); */
 }
-.vcenter {
+/*.vcenter {
     display: inline-block;
     vertical-align: middle;
     float: none;
-}
+}*/
 .vertical-align {
     display: flex;
     flex-direction: row;
@@ -43,18 +39,18 @@ img.blur {
 .vertical-align > [class*=" col-"] {
     display: flex;
     align-items: center;
-    justify-content: center;  Optional, to align inner items 
-                                horizontally inside the column 
+    justify-content: center; /* Optional, to align inner items 
+                                horizontally inside the column */
 }
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-Angular UI classes
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*Angular UI classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 .nav, .pagination, .carousel, .panel-title a { 
     cursor: pointer; 
 }
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-Button overrides
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*Button overrides*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 .btn {     
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -74,7 +70,7 @@ Button overrides
     display: none;
 }
 .glyphicon-heart-empty{
-    color: $brand-info;
+    /*color: $brand-info;*/
 }
 .icon {
     background-image: url(../assets/svgs/heart-icon.svg);
@@ -82,50 +78,49 @@ Button overrides
     background-repeat: no-repeat;
     background-size: 25%;
     background-origin: content-box ;
-    padding-left: 16px;  Or size of icon + spacing 
+    padding-left: 16px; /* Or size of icon + spacing */
 }
 
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-New Player padding wrapper classes
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-When setting this class for New Player use: 'outside-padding'
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player padding wrapper classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*When setting this class for New Player use: 'outside-padding'*/
 .np_outside-padding{
-    position: relative;
     padding-top: 35px;
     padding-left: 90px;
     padding-right: 90px;
     padding-bottom: 35px;
 }
-When setting this class for New Player use: 'inside-padding'
+/*When setting this class for New Player use: 'inside-padding'*/
 .np_inside-padding{
     padding-left: 5%;
     padding-right: 5%;
     padding-bottom: 35px;
 }
-When setting this class for New Player use: 'button-padding'
+/*When setting this class for New Player use: 'button-padding'*/
 .np_button-padding{
     padding-top: 30px;
     padding-left: 15%;
     padding-right: 15%;
     padding-bottom: 35px;
 }
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-responsive padding overrides
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-.container{
-background-color: #000000;
-position: absolute;
-    background: url(./assets/images/OrionsHeart.jpg) no-repeat center center fixed;
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*responsive padding overrides*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*.container{*/
+/*background-color: #000000;*/
+/*position: absolute;*/
+/*    background: url(./assets/images/OrionsHeart.jpg) no-repeat center center fixed;
     background-color: #000000;
     background-size: cover;
     content: "";
     bottom: 0;
     left: 0;
     right: 0;
-    top: 0;
-z-index: -2;
-}
-@media (max-width: $screen-sm) {
+    top: 0;*/
+/*z-index: -2;*/
+/*}*/
+/*@media (max-width: $screen-sm) {
     .np_outside-padding{
         padding: 0px;
     }
@@ -135,11 +130,11 @@ z-index: -2;
     .np_button-padding{
         padding: 5%;
     }
-}
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-Sans font overrides
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-.sans-head{
+}*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*Sans font overrides*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*.sans-head{
     font-family: $font-family-sans-serif_head !important;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -148,9 +143,9 @@ Sans font overrides
     padding-top: 40px;
     padding-bottom: 3px;
     display: inline-block;
-}
+}*/
 
-@media (max-width: $screen-sm) {
+/*@media (max-width: $screen-sm) {
     .collapse-toggle{
         background-color: $brand-offwhite;
         cursor: pointer;
@@ -175,8 +170,8 @@ Sans font overrides
             transition: opacity 1s ease-in-out;
         }
     }
-}
-.np_inside-padding .sans-head{
+}*/
+/*.np_inside-padding .sans-head{
     border-bottom-color: $brand-primary-light;
 }
 .sans-head-sub{
@@ -200,8 +195,8 @@ Sans font overrides
     p{
         padding-bottom: 10px;
     }
-}
-@media (max-width: $screen-sm) {
+}*/
+/*@media (max-width: $screen-sm) {
     .sans-normal{
         padding-right: 7px;
         padding-left: 7px;
@@ -210,32 +205,33 @@ Sans font overrides
         padding-right: 7px;
         padding-left: 7px;
     }
-}
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-New Player background color wrapper classes
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-When setting this class for New Player use: 'background-brand-primary-light'
-.np_background-brand-primary-light{
+}*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player background color wrapper classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*When setting this class for New Player use: 'background-brand-primary-light'*/
+/*.np_background-brand-primary-light{
     background-color: $brand-primary-light;
-}
-When setting this class for New Player use: 'background-brand-offwhite' 
-.np_background-brand-offwhite{
+}*/
+/*When setting this class for New Player use: 'background-brand-offwhite' */
+/*.np_background-brand-offwhite{
     background-color: $brand-offwhite;
-}
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
- text treatment classes
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-Q and A text outdent
-.q-and-a-outdent{
+}*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/* text treatment classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*Q and A text outdent*/
+/*.q-and-a-outdent{
     text-indent:-28px;
     margin-left:28px
-}
-/////////////////////////////////////////////////////////////////////////////
-.browsehappy {
+}*/
+
+/*////////////////////////////////////////////////////////////////////////////////*/
+/*.browsehappy {
     display: none;
     background: #ccc;
     color: #000;
     margin: 0.2em 0;
     padding: 0.2em 0;
-}
-*/
+}*/
+

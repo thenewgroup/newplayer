@@ -10,7 +10,7 @@
         },
         "components": [
             {
-                "type": "npTriva",
+                "type": "npContent",
                 "data": {
                     "id": "content_en-US",
                     "class": "",
@@ -74,9 +74,8 @@
                             {
                                 "type": "npTrivia",
                                 "data": {
-                                    "required": true,
-                                    "forced": true,
-                                    "type": "radio",
+                                    "required": false,
+                                    "forced": false,
                                     "difficulty": 1,
                                     "content": " This is the 'What number am I thinking of?' trivia!",
                                     "feedback": {
@@ -101,13 +100,12 @@
                                                 "data": {
                                                     "class": "row",
                                                     "id": "Question1",
-                                                    "required": true,
-                                                    "forced": true,
-                                                    "type": "radio",
+                                                    "required": false,
+                                                    "forced": false,
+                                                    "type": "checkbox",
                                                     "difficulty": 1,
                                                     "content": "What number am I thinking of? QUESTION 1",
                                                     "feedback": {
-                                                        "immediate": true,
                                                         "correct": "Hey, that's right!",
                                                         "incorrect": "No! ... What are you thinking!?"
                                                     }
@@ -116,6 +114,7 @@
                                                     {
                                                         "type": "npAnswer",
                                                         "data": {
+                                                            "class": "answer-text",
                                                             "label": "8",
                                                             "correct": false
                                                         },
@@ -125,6 +124,7 @@
                                                     {
                                                         "type": "npAnswer",
                                                         "data": {
+                                                            "class": "answer-text",
                                                             "label": "7,433.6",
                                                             "correct": false
                                                         },
@@ -134,6 +134,7 @@
                                                     {
                                                         "type": "npAnswer",
                                                         "data": {
+                                                            "class": "answer-text",
                                                             "label": "<img src=\"http://i.istockimg.com/file_thumbview_approve/33898764/2/stock-photo-33898764-isolated-chicken-with-egg.jpg\" height=\"50\" />",
                                                             "correct": true
                                                         },
@@ -143,6 +144,7 @@
                                                     {
                                                         "type": "npAnswer",
                                                         "data": {
+                                                            "class": "answer-text",
                                                             "label": "<strong>Bologna!</strong>",
                                                             "correct": true
                                                         },
@@ -150,6 +152,15 @@
                                                         ]
                                                     }
                                                 ]
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "Page2",
+                                                    "class": "btn-next",
+                                                    "content": "NEXT"
+                                                },
+                                                "components": []
                                             }
                                         ]
                                     },
@@ -162,71 +173,79 @@
                                             "inMenu": true,
                                             "required": false
                                         },
-                                        "components":
-                                                [
+                                        "components": [
+                                            {
+                                                "type": "npQuestion",
+                                                "data": {
+                                                    "class": "row",
+                                                    "required": false,
+                                                    "forced": false,
+                                                    "type": "checkbox",
+                                                    "difficulty": 2,
+                                                    "content": "What number am I thinking of? QUESTION 2",
+                                                    "feedback": {
+                                                        "immediate": false,
+                                                        "correct": "Hey, that's right!",
+                                                        "incorrect": "No! ... What are you thinking!?"
+                                                    }
+                                                },
+                                                "components": [
                                                     {
-                                                        "type": "npQuestion",
+                                                        "type": "npAnswer",
                                                         "data": {
-                                                            "class": "row",
-                                                            "required": true,
-                                                            "forced": true,
-                                                            "type": "checkbox",
-                                                            "difficulty": 2,
-                                                            "content": "What number am I thinking of? QUESTION 2",
-                                                            "feedback": {
-                                                                "immediate": true,
-                                                                "correct": "Hey, that's right!",
-                                                                "incorrect": "No! ... What are you thinking!?"
-                                                            }
+                                                            "class": "answer-text",
+                                                            "label": "800000000",
+                                                            "correct": false
                                                         },
                                                         "components": [
-                                                            {
-                                                                "type": "npAnswer",
-                                                                "data": {
-                                                                    "label": "800000000",
-                                                                    "correct": false
-                                                                },
-                                                                "feedback": {
-                                                                    "correct": "correct",
-                                                                    "incorrect": "No! ... incorrect!?"
-                                                                },
-                                                                "components": [
-                                                                ]
-                                                            },
-                                                            {
-                                                                "type": "npAnswer",
-                                                                "data": {
-                                                                    "label": "7,433.6",
-                                                                    "correct": false,
-                                                                    "correct": "Hey, that's right!",
-                                                                    "incorrect": "No! ... What are you thinking!?"
-                                                                },
-                                                                "components": [
-                                                                ]
-                                                            },
-                                                            {
-                                                                "type": "npAnswer",
-                                                                "data": {
-                                                                    "label": "<img src=\"http://i.istockimg.com/file_thumbview_approve/33898764/2/stock-photo-33898764-isolated-chicken-with-egg.jpg\" height=\"50\" />",
-                                                                    "correct": true,
-                                                                    "correct": "Hey, that's right!",
-                                                                    "incorrect": "No! ... What are you thinking!?"
-                                                                },
-                                                                "components": [
-                                                                ]
-                                                            },
-                                                            {
-                                                                "type": "npAnswer",
-                                                                "data": {
-                                                                    "label": "<strong>Bologna!</strong>",
-                                                                    "correct": true
-                                                                },
-                                                                "components": [
-                                                                ]
-                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "class": "answer-text",
+                                                            "label": "7,433.6",
+                                                            "correct": false,
+                                                            "correct": "Hey, that's right!",
+                                                            "incorrect": "No! ... What are you thinking!?"
+                                                        },
+                                                        "components": [
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "class": "answer-text",
+                                                            "label": "<img src=\"http://i.istockimg.com/file_thumbview_approve/33898764/2/stock-photo-33898764-isolated-chicken-with-egg.jpg\" height=\"50\" />",
+                                                            "correct": true,
+                                                            "correct": "Hey, that's right!",
+                                                            "incorrect": "No! ... What are you thinking!?"
+                                                        },
+                                                        "components": [
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "class": "answer-text",
+                                                            "label": "<strong>Bologna!</strong>",
+                                                            "correct": true
+                                                        },
+                                                        "components": [
                                                         ]
                                                     }
                                                 ]
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "Page3",
+                                                    "class": "btn-next",
+                                                    "content": "NEXT"
+                                                },
+                                                "components": []
+                                            }
+                                        ]
                                     },
                                     {
                                         "type": "npPage",
@@ -258,6 +277,7 @@
                                                             {
                                                                 "type": "npAnswer",
                                                                 "data": {
+                                                                    "class": "answer-text",
                                                                     "label": "Answer:",
                                                                     "correct": "/ice\\s?cream/i"
                                                                 },

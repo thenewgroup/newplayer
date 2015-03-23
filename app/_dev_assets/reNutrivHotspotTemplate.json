@@ -101,7 +101,7 @@
                                         }
                                     ],
                                     "feedback": "<p>this is the placeholder content</p>",
-                                    "image": "/assets/images/hotspotTest.jpg"
+                                    "image": "../_dev_assets/assets/images/hotspotTest.jpg"
                                 },
                                 "components": []
                             }

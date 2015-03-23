@@ -10,7 +10,6 @@
                         var cmpData = $scope.component.data;
                         var pagesLen = $scope.components.length;
                         $log.debug('npTrivia::data', cmpData);
-
                         vm.id = cmpData.id;
                         vm.content = $sce.trustAsHtml(cmpData.content);
                         vm.type = cmpData.type;
@@ -25,7 +24,6 @@
                         $timeout(function () {
                             ManifestService.setPageId(vm.pageId);
                         });
-
                         $rootScope.$on('question.answered', function (evt, correct) {
                             if (correct) {
                                 vm.assment.pageViewed();
@@ -50,5 +48,4 @@
                         $log.debug('npTrivia::component loaded!');
                     }
             );
-
 })();

@@ -27,6 +27,10 @@
                     delay_time = attrs.delaytime || 1000,
                     shuffle_spaces = attrs.shufflespaces || true;
             var $wheel = element.find('.wheel');
+            var $wheel_div = element.find('.wheel div');
+            TweenMax.set($wheel, {
+                alpha: 0
+            });
             function shuffle() {
                 element.find('.wheel div[data-pick="true"]').removeAttr('data-pick');
                 var difficulty = element.data('difficulty');
@@ -40,8 +44,14 @@
                 var $choice = element.find('.wheel div[data-pick="true"]').remove();
                 element.find('.wheel').append($choice);
                 //////////////////////////////////////////////////////////////////////////////////////
-                // using clipping now //// no spin for you! //
+                // using clipping now :: no spin for you! //
                 //////////////////////////////////////////////////////////////////////////////////////
+                TweenMax.to($choice, .25, {
+                    alpha: 0
+                });
+                TweenMax.to($wheel, .25, {
+                    alpha: 0
+                });
                 if (!Modernizr.csstransforms3d) {
                     element.find('.wheel').append(element.find('.wheel div').clone());
                     element.find('.wheel div').css({
@@ -51,18 +61,21 @@
                     element.find('.wheel').animate({"top": "-=1250px"}, 5000);
                     return;
                 }
-                TweenMax.set($wheel, {transformStyle: 'preserve-3d', alpha: 0});
+                TweenMax.set($wheel, {
+                    transformStyle: 'preserve-3d',
+                    alpha: 0
+                });
                 _.each(element.find('.wheel div'), function (elem, index) {
-                    console.log(
-                            '\n::::::::::::::::::::::::::::::::::::::npFlashCards::data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
-                            '\n::index::', index,
-                            '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                            );
+//                    console.log(
+//                            '\n::::::::::::::::::::::::::::::::::::::npSpinner::data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                            '\n::index::', index,
+//                            '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                            );
                     //////////////////////////////////////////////////////////////////////////////////////
                     // adjust index amount (number in template) vs numberDisplayed to detirmine facete 
                     // number displayed.
                     //////////////////////////////////////////////////////////////////////////////////////
-                    var numberDisplayed = 19;
+                    var numberDisplayed = 20;
                     TweenMax.to(elem, 0, {
                         rotationX: (numberDisplayed * index),
                         transformOrigin: '0 10 -200px'
@@ -82,6 +95,11 @@
                     alpha: 1,
                     rotationX: 0,
                     transformOrigin: transformOrigin
+//                    ease: Elastic.easeOut.config(1, 0.3)
+                });
+                TweenMax.to($choice, .25, {
+                    alpha: 1,
+                    ease: Power3.easeOut
                 });
             }
             $timeout(function () {
