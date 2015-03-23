@@ -202,6 +202,53 @@
     display: inline-block;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player Matching Game classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+#np_reNutriv .matching-game{
+    height:450px;
+}
+#np_reNutriv .question-match{
+    position: relative;
+    height:auto;
+    float: left;
+    width: 100%;
+}
+#np_reNutriv .question-match-outline{
+    position: absolute;
+    height: 360px;
+    right: 39%;
+    left: 39%;
+    margin-top: -20px;
+    margin-bottom: 20px;
+    box-shadow: 10px 10px 105px 50px rgba(0,0,0,0.5);
+}
+#np_reNutriv .question-match-outline-inner{
+    height:100%;
+}
+#np_reNutriv .question-match-set{
+    position: absolute;
+    height:100%;
+    right: 0;
+    left: 0;
+}
+#np_reNutriv .btn-match-submit-wrapper{
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right:0;
+}
+#np_reNutriv .btn-match-submit{
+    font-family: $re-nu-serif;
+    color: $brand-primary-light;
+    border-color: #9a7d46;
+    background-color: #000000;
+    text-transform: uppercase;
+    padding-top: 5px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    margin-left: 33%;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Quiz classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 #np_reNutriv .quiz-label{
