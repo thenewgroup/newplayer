@@ -60,7 +60,7 @@
                            {  
                               "type":"npImage",
                               "data":{  
-                                 "src":"./assets/images/earth.jpg",
+                                 "src":"../_dev_assets/assets/images/earth.jpg",
                                  "id":"",
                                  "class":"topImage img-responsive",
                                  "alt":"Advanced-Night-Repair-Synchronized-Recovery-Complex-II"
@@ -200,7 +200,7 @@
                                              {  
                                                 "type":"npImage",
                                                 "data":{  
-                                 "src":"./assets/images/earth.jpg",
+                                 "src":"../_dev_assets/assets/images/earth.jpg",
                                                    "id":"",
                                                    "class":"col-sm-4",
                                                    "alt":"<a href='#/983'>Enlighten-Skintone Correcting Collection</a>"
@@ -380,7 +380,7 @@
                            {  
                               "type":"npImage",
                               "data":{  
-                                 "src":"./assets/images/earth.jpg",
+                                 "src":"../_dev_assets/assets/images/earth.jpg",
                                  "id":"",
                                  "class":"col-sm-4 img-responsive",
                                  "alt":"<a href='#/977'>Advanced Night Repair Eye-Synchronized Complex II</a>"
@@ -427,7 +427,7 @@
                            {  
                               "type":"npImage",
                               "data":{  
-                                 "src":"./assets/images/earth.jpg",
+                                 "src":"../_dev_assets/assets/images/earth.jpg",
                                  "id":"",
                                  "class":"col-sm-4 img-responsive",
                                  "alt":"<a href='#/980'>Clear Difference-Advanced Blemish Collection</a>"
