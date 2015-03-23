@@ -86,6 +86,7 @@ img.blur {
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*When setting this class for New Player use: 'outside-padding'*/
 .np_outside-padding{
+    position: relative;
     padding-top: 35px;
     padding-left: 90px;
     padding-right: 90px;
