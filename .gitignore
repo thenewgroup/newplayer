@@ -4,5 +4,3 @@ app/scripts/templates.js
 .sass-cache
 bower_components
 test/bower_components
-_assets
-app/_dev_assets
