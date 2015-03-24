@@ -15,7 +15,9 @@
                         $scope.$apply(function () {
                             var np_wrapper = $element.find('.np_outside-padding');
                             var hotspotImage = $element.find('.hotspotImage');
-                            var page_container = $element.find('.modal');
+//                            var page_container = $element.find('.modal .modal-open');
+                            var page_container = $element.find('.modal-open');
+                            var page_container = $('.modal-open');
                             TweenMax.to(np_wrapper, 0.25, {
                                 autoAlpha: 0.25,
                                 ease: Power2.easeOut
