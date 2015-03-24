@@ -7122,11 +7122,6 @@ img.blur {
   /*    -webkit-filter: blur(3px); 
       filter: blur(3px); */ }
 
-/*.vcenter {
-    display: inline-block;
-    vertical-align: middle;
-    float: none;
-}*/
 .vertical-align {
   display: -webkit-box;
   display: -webkit-flex;
