@@ -1,8 +1,8 @@
 <div class="debug">
     <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
 </div>
-<div ng-if="npQuestion.type === 'radio'" class="np-cmp-wrapper {{component.type}} radio answer-wrapper" ng-controller="npAnswerController as npAnswer">
-    <div type="radio" class="npAnswer-radio np-cmp-main answer-radio" name="radio" ng-model="npQuestion.answer" value="{{component.idx}}" id="{{npAnswer.id}}" ng-click="npQuestion.changed(npAnswer.id)">
+<div ng-if="npQuestion.type === 'radio'" class="row np-cmp-wrapper {{component.type}} radio answer-wrapper" ng-controller="npAnswerController as npAnswer">
+    <div type="radio" class="col-sm-1 npAnswer-radio np-cmp-main answer-radio" name="radio" ng-model="npQuestion.answer" value="{{component.idx}}" id="{{npAnswer.id}}" ng-click="npQuestion.changed(npAnswer.id)">
         <div class="checkbox-box">
             <svg  version="1.2" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"xml:space="preserve" preserveAspectRatio="none">
                 <style type="text/css">
@@ -29,7 +29,9 @@
             </svg>
         </div>
     </div>
-    <span class="npAnswer-label answer-text p" for="{{npAnswer.id}}_input" ng-bind-html="npAnswer.label"></span>
+    <div class="col-sm-11">
+        <span class="npAnswer-label answer-text p" for="{{npAnswer.id}}_input" ng-bind-html="npAnswer.label"></span>
+    </div>
     <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
 </div>
 <!--<div ng-if="npQuestion.type === 'radio'" class="np-cmp-wrapper {{component.type}} radio" ng-controller="npAnswerController as npAnswer">
@@ -39,8 +41,8 @@
     </label>
     <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
 </div>-->
-<div ng-if="npQuestion.type === 'checkbox'" ng-checked="false"class="np-cmp-wrapper {{component.type}} checkbox answer-wrapper" ng-controller="npAnswerController as npAnswer">
-    <div type="checkbox" class="npAnswer-checkbox np-cmp-main answer-checkbox" name="checkbox{{npAnswer.id}}" ng-model="npQuestion.answer[component.idx]" value="{{component.idx}}" id="{{npAnswer.id}}" ng-click="npQuestion.changed($event)">
+<div ng-if="npQuestion.type === 'checkbox'" ng-checked="false"class="row np-cmp-wrapper {{component.type}} checkbox answer-wrapper" ng-controller="npAnswerController as npAnswer">
+    <div type="checkbox" class="col-xs-1 npAnswer-checkbox np-cmp-main answer-checkbox" name="checkbox{{npAnswer.id}}" ng-model="npQuestion.answer[component.idx]" value="{{component.idx}}" id="{{npAnswer.id}}" ng-click="npQuestion.changed($event)">
         <div class="checkbox-box">
             <svg  version="1.2" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"xml:space="preserve" preserveAspectRatio="none">
                 <style type="text/css">
@@ -67,8 +69,9 @@
             </svg>
         </div>
     </div>
-    <span class="npAnswer-label answer-text" for="{{npAnswer.id}}_input" ng-bind-html="npAnswer.label"></span>
-
+    <div class="col-xs-11">
+        <span class="npAnswer-label answer-text" for="{{npAnswer.id}}_input" ng-bind-html="npAnswer.label"></span>
+    </div>
     <!--    <div>
             <label>
                 <input type="checkbox" class="npAnswer-checkbox np-cmp-main " name="checkbox{{npAnswer.id}}" ng-model="npQuestion.answer[component.idx]" value="{{component.idx}}" id="{{npAnswer.id}}_input" ng-change="npQuestion.changed()" />
