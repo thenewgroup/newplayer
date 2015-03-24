@@ -3917,7 +3917,8 @@ function AssessmentService ( $log ) {
                 manifestURL: '@npUrl',
                 overrideURL: '@npOverrideUrl',
                 overrideData: '@npOverrideData',
-                language: '@npLang'
+                language: '@npLang',
+                manifestData: '=?'
             },
             //compile: function (tElement, tAttrs, transclude, ConfigService)
             //{

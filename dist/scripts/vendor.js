@@ -8829,7 +8829,7 @@ if ( typeof window === "object" && typeof window.document === "object" ) {
 })( window );
 
 /**
- * @license AngularJS v1.3.15
+ * @license AngularJS v1.3.13
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -8884,7 +8884,7 @@ function minErr(module, ErrorConstructor) {
       return match;
     });
 
-    message = message + '\nhttp://errors.angularjs.org/1.3.15/' +
+    message = message + '\nhttp://errors.angularjs.org/1.3.13/' +
       (module ? module + '/' : '') + code;
     for (i = 2; i < arguments.length; i++) {
       message = message + (i == 2 ? '?' : '&') + 'p' + (i - 2) + '=' +
@@ -9376,12 +9376,6 @@ function isString(value) {return typeof value === 'string';}
  * @description
  * Determines if a reference is a `Number`.
  *
- * This includes the "special" numbers `NaN`, `+Infinity` and `-Infinity`.
- *
- * If you wish to exclude these then you can use the native
- * [`isFinite'](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/isFinite)
- * method.
- *
  * @param {*} value Reference to check.
  * @returns {boolean} True if `value` is a `Number`.
  */
@@ -9750,11 +9744,10 @@ function equals(o1, o2) {
       } else if (isDate(o1)) {
         if (!isDate(o2)) return false;
         return equals(o1.getTime(), o2.getTime());
-      } else if (isRegExp(o1)) {
-        return isRegExp(o2) ? o1.toString() == o2.toString() : false;
+      } else if (isRegExp(o1) && isRegExp(o2)) {
+        return o1.toString() == o2.toString();
       } else {
-        if (isScope(o1) || isScope(o2) || isWindow(o1) || isWindow(o2) ||
-          isArray(o2) || isDate(o2) || isRegExp(o2)) return false;
+        if (isScope(o1) || isScope(o2) || isWindow(o1) || isWindow(o2) || isArray(o2)) return false;
         keySet = {};
         for (key in o1) {
           if (key.charAt(0) === '$' || isFunction(o1[key])) continue;
@@ -10958,11 +10951,11 @@ function toDebugString(obj) {
  * - `codeName` – `{string}` – Code name of the release, such as "jiggling-armfat".
  */
 var version = {
-  full: '1.3.15',    // all of these placeholder strings will be replaced by grunt's
+  full: '1.3.13',    // all of these placeholder strings will be replaced by grunt's
   major: 1,    // package task
   minor: 3,
-  dot: 15,
-  codeName: 'locality-filtration'
+  dot: 13,
+  codeName: 'meticulous-riffleshuffle'
 };
 
 
@@ -11098,17 +11091,6 @@ function publishExternalAPI(angular) {
     }
   ]);
 }
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- *     Any commits to this file should be reviewed with security in mind.  *
- *   Changes to this file can potentially create security vulnerabilities. *
- *          An approval from 2 Core members with history of modifying      *
- *                         this file is required.                          *
- *                                                                         *
- *  Does the change somehow allow for arbitrary javascript to be executed? *
- *    Or allows for someone to change the prototype of built-in objects?   *
- *     Or gives undesired access to variables likes document or window?    *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 /* global JQLitePrototype: true,
   addEventListenerFn: true,
@@ -13533,7 +13515,6 @@ var $AnimateProvider = ['$provide', function($provide) {
        * @return {Promise} the animation callback promise
        */
       leave: function(element, options) {
-        applyStyles(element, options);
         element.remove();
         return asyncPromise();
       },
@@ -13938,19 +13919,11 @@ function Browser(window, document, $log, $sniffer) {
     fireUrlChange();
   }
 
-  function getCurrentState() {
-    try {
-      return history.state;
-    } catch (e) {
-      // MSIE can reportedly throw when there is no state (UNCONFIRMED).
-    }
-  }
-
   // This variable should be used *only* inside the cacheState function.
   var lastCachedState = null;
   function cacheState() {
     // This should be the only place in $browser where `history.state` is read.
-    cachedState = getCurrentState();
+    cachedState = window.history.state;
     cachedState = isUndefined(cachedState) ? null : cachedState;
 
     // Prevent callbacks fo fire twice if both hashchange & popstate were fired.
@@ -14547,7 +14520,7 @@ function $CacheFactoryProvider() {
  * the document, but it must be a descendent of the {@link ng.$rootElement $rootElement} (IE,
  * element with ng-app attribute), otherwise the template will be ignored.
  *
- * Adding via the `$templateCache` service:
+ * Adding via the $templateCache service:
  *
  * ```js
  * var myApp = angular.module('myApp', []);
@@ -14574,17 +14547,6 @@ function $TemplateCacheProvider() {
     return $cacheFactory('templates');
   }];
 }
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- *     Any commits to this file should be reviewed with security in mind.  *
- *   Changes to this file can potentially create security vulnerabilities. *
- *          An approval from 2 Core members with history of modifying      *
- *                         this file is required.                          *
- *                                                                         *
- *  Does the change somehow allow for arbitrary javascript to be executed? *
- *    Or allows for someone to change the prototype of built-in objects?   *
- *     Or gives undesired access to variables likes document or window?    *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 /* ! VARIABLE/FUNCTION NAMING CONVENTIONS THAT APPLY TO THIS FILE!
  *
@@ -14797,8 +14759,7 @@ function $TemplateCacheProvider() {
  * Require another directive and inject its controller as the fourth argument to the linking function. The
  * `require` takes a string name (or array of strings) of the directive(s) to pass in. If an array is used, the
  * injected argument will be an array in corresponding order. If no such directive can be
- * found, or if the directive does not have a controller, then an error is raised (unless no link function
- * is specified, in which case error checking is skipped). The name can be prefixed with:
+ * found, or if the directive does not have a controller, then an error is raised. The name can be prefixed with:
  *
  * * (no prefix) - Locate the required controller on the current element. Throw an error if not found.
  * * `?` - Attempt to locate the required controller or pass `null` to the `link` fn if not found.
@@ -19348,15 +19309,7 @@ function $LocaleProvider() {
         mediumDate: 'MMM d, y',
         shortDate: 'M/d/yy',
         mediumTime: 'h:mm:ss a',
-        shortTime: 'h:mm a',
-        ERANAMES: [
-          "Before Christ",
-          "Anno Domini"
-        ],
-        ERAS: [
-          "BC",
-          "AD"
-        ]
+        shortTime: 'h:mm a'
       },
 
       pluralCat: function(num) {
@@ -20364,7 +20317,6 @@ function $LocationProvider() {
          <button ng-click="$log.warn(message)">warn</button>
          <button ng-click="$log.info(message)">info</button>
          <button ng-click="$log.error(message)">error</button>
-         <button ng-click="$log.debug(message)">debug</button>
        </div>
      </file>
    </example>
@@ -20494,17 +20446,6 @@ function $LogProvider() {
     }
   }];
 }
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- *     Any commits to this file should be reviewed with security in mind.  *
- *   Changes to this file can potentially create security vulnerabilities. *
- *          An approval from 2 Core members with history of modifying      *
- *                         this file is required.                          *
- *                                                                         *
- *  Does the change somehow allow for arbitrary javascript to be executed? *
- *    Or allows for someone to change the prototype of built-in objects?   *
- *     Or gives undesired access to variables likes document or window?    *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 var $parseMinErr = minErr('$parse');
 
@@ -22441,26 +22382,8 @@ function $RootScopeProvider() {
     return TTL;
   };
 
-  function createChildScopeClass(parent) {
-    function ChildScope() {
-      this.$$watchers = this.$$nextSibling =
-          this.$$childHead = this.$$childTail = null;
-      this.$$listeners = {};
-      this.$$listenerCount = {};
-      this.$$watchersCount = 0;
-      this.$id = nextUid();
-      this.$$ChildScope = null;
-    }
-    ChildScope.prototype = parent;
-    return ChildScope;
-  }
-
   this.$get = ['$injector', '$exceptionHandler', '$parse', '$browser',
       function($injector, $exceptionHandler, $parse, $browser) {
-
-    function destroyChildScope($event) {
-        $event.currentScope.$$destroyed = true;
-    }
 
     /**
      * @ngdoc type
@@ -22584,7 +22507,15 @@ function $RootScopeProvider() {
           // Only create a child scope class if somebody asks for one,
           // but cache it to allow the VM to optimize lookups.
           if (!this.$$ChildScope) {
-            this.$$ChildScope = createChildScopeClass(this);
+            this.$$ChildScope = function ChildScope() {
+              this.$$watchers = this.$$nextSibling =
+                  this.$$childHead = this.$$childTail = null;
+              this.$$listeners = {};
+              this.$$listenerCount = {};
+              this.$id = nextUid();
+              this.$$ChildScope = null;
+            };
+            this.$$ChildScope.prototype = this;
           }
           child = new this.$$ChildScope();
         }
@@ -22602,9 +22533,13 @@ function $RootScopeProvider() {
         // prototypically. In all other cases, this property needs to be set
         // when the parent scope is destroyed.
         // The listener needs to be added after the parent is set
-        if (isolate || parent != this) child.$on('$destroy', destroyChildScope);
+        if (isolate || parent != this) child.$on('$destroy', destroyChild);
 
         return child;
+
+        function destroyChild() {
+          child.$$destroyed = true;
+        }
       },
 
       /**
@@ -23764,17 +23699,6 @@ function $$SanitizeUriProvider() {
     };
   };
 }
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- *     Any commits to this file should be reviewed with security in mind.  *
- *   Changes to this file can potentially create security vulnerabilities. *
- *          An approval from 2 Core members with history of modifying      *
- *                         this file is required.                          *
- *                                                                         *
- *  Does the change somehow allow for arbitrary javascript to be executed? *
- *    Or allows for someone to change the prototype of built-in objects?   *
- *     Or gives undesired access to variables likes document or window?    *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 var $sceMinErr = minErr('$sce');
 
@@ -24951,7 +24875,7 @@ function $TemplateRequestProvider() {
       };
 
       return $http.get(tpl, httpOptions)
-        ['finally'](function() {
+        .finally(function() {
           handleRequestFn.totalPendingRequests--;
         })
         .then(function(response) {
@@ -25647,8 +25571,8 @@ function createPredicateFn(expression, comparator, matchAgainstAnyProp) {
 }
 
 function deepCompare(actual, expected, comparator, matchAgainstAnyProp, dontMatchWholeObject) {
-  var actualType = (actual !== null) ? typeof actual : 'null';
-  var expectedType = (expected !== null) ? typeof expected : 'null';
+  var actualType = typeof actual;
+  var expectedType = typeof expected;
 
   if ((expectedType === 'string') && (expected.charAt(0) === '!')) {
     return !deepCompare(actual, expected.substring(1), comparator, matchAgainstAnyProp);
@@ -25673,7 +25597,7 @@ function deepCompare(actual, expected, comparator, matchAgainstAnyProp, dontMatc
       } else if (expectedType === 'object') {
         for (key in expected) {
           var expectedVal = expected[key];
-          if (isFunction(expectedVal) || isUndefined(expectedVal)) {
+          if (isFunction(expectedVal)) {
             continue;
           }
 
@@ -25987,14 +25911,6 @@ function ampmGetter(date, formats) {
   return date.getHours() < 12 ? formats.AMPMS[0] : formats.AMPMS[1];
 }
 
-function eraGetter(date, formats) {
-  return date.getFullYear() <= 0 ? formats.ERAS[0] : formats.ERAS[1];
-}
-
-function longEraGetter(date, formats) {
-  return date.getFullYear() <= 0 ? formats.ERANAMES[0] : formats.ERANAMES[1];
-}
-
 var DATE_FORMATS = {
   yyyy: dateGetter('FullYear', 4),
     yy: dateGetter('FullYear', 2, 0, true),
@@ -26021,14 +25937,10 @@ var DATE_FORMATS = {
      a: ampmGetter,
      Z: timeZoneGetter,
     ww: weekGetter(2),
-     w: weekGetter(1),
-     G: eraGetter,
-     GG: eraGetter,
-     GGG: eraGetter,
-     GGGG: longEraGetter
+     w: weekGetter(1)
 };
 
-var DATE_FORMATS_SPLIT = /((?:[^yMdHhmsaZEwG']+)|(?:'(?:[^']|'')*')|(?:E+|y+|M+|d+|H+|h+|m+|s+|a|Z|G+|w+))(.*)/,
+var DATE_FORMATS_SPLIT = /((?:[^yMdHhmsaZEw']+)|(?:'(?:[^']|'')*')|(?:E+|y+|M+|d+|H+|h+|m+|s+|a|Z|w+))(.*)/,
     NUMBER_STRING = /^\-?\d+$/;
 
 /**
@@ -26065,8 +25977,6 @@ var DATE_FORMATS_SPLIT = /((?:[^yMdHhmsaZEwG']+)|(?:'(?:[^']|'')*')|(?:E+|y+|M+|
  *   * `'Z'`: 4 digit (+sign) representation of the timezone offset (-1200-+1200)
  *   * `'ww'`: Week of year, padded (00-53). Week 01 is the week with the first Thursday of the year
  *   * `'w'`: Week of year (0-53). Week 1 is the week with the first Thursday of the year
- *   * `'G'`, `'GG'`, `'GGG'`: The abbreviated form of the era string (e.g. 'AD')
- *   * `'GGGG'`: The long form of the era string (e.g. 'Anno Domini')
  *
  *   `format` string can also be one of the following predefined
  *   {@link guide/i18n localizable formats}:
@@ -26400,43 +26310,6 @@ function limitToFilter() {
  * @param {boolean=} reverse Reverse the order of the array.
  * @returns {Array} Sorted copy of the source array.
  *
- *
- * @example
- * The example below demonstrates a simple ngRepeat, where the data is sorted
- * by age in descending order (predicate is set to `'-age'`).
- * `reverse` is not set, which means it defaults to `false`.
-   <example module="orderByExample">
-     <file name="index.html">
-       <script>
-         angular.module('orderByExample', [])
-           .controller('ExampleController', ['$scope', function($scope) {
-             $scope.friends =
-                 [{name:'John', phone:'555-1212', age:10},
-                  {name:'Mary', phone:'555-9876', age:19},
-                  {name:'Mike', phone:'555-4321', age:21},
-                  {name:'Adam', phone:'555-5678', age:35},
-                  {name:'Julie', phone:'555-8765', age:29}];
-           }]);
-       </script>
-       <div ng-controller="ExampleController">
-         <table class="friend">
-           <tr>
-             <th>Name</th>
-             <th>Phone Number</th>
-             <th>Age</th>
-           </tr>
-           <tr ng-repeat="friend in friends | orderBy:'-age'">
-             <td>{{friend.name}}</td>
-             <td>{{friend.phone}}</td>
-             <td>{{friend.age}}</td>
-           </tr>
-         </table>
-       </div>
-     </file>
-   </example>
- *
- * The predicate and reverse parameters can be controlled dynamically through scope properties,
- * as shown in the next example.
  * @example
    <example module="orderByExample">
      <file name="index.html">
@@ -26811,24 +26684,20 @@ var htmlAnchorDirective = valueFn({
  *
  * @description
  *
- * This directive sets the `disabled` attribute on the element if the
- * {@link guide/expression expression} inside `ngDisabled` evaluates to truthy.
- *
- * A special directive is necessary because we cannot use interpolation inside the `disabled`
- * attribute.  The following example would make the button enabled on Chrome/Firefox
- * but not on older IEs:
- *
+ * We shouldn't do this, because it will make the button enabled on Chrome/Firefox but not on IE8 and older IEs:
  * ```html
- * <!-- See below for an example of ng-disabled being used correctly -->
- * <div ng-init="isDisabled = false">
- *  <button disabled="{{isDisabled}}">Disabled</button>
+ * <div ng-init="scope = { isDisabled: false }">
+ *  <button disabled="{{scope.isDisabled}}">Disabled</button>
  * </div>
  * ```
  *
- * This is because the HTML specification does not require browsers to preserve the values of
- * boolean attributes such as `disabled` (Their presence means true and their absence means false.)
+ * The HTML specification does not require browsers to preserve the values of boolean attributes
+ * such as disabled. (Their presence means true and their absence means false.)
  * If we put an Angular interpolation expression into such an attribute then the
  * binding information would be lost when the browser removes the attribute.
+ * The `ngDisabled` directive solves this problem for the `disabled` attribute.
+ * This complementary directive is not removed by the browser and so provides
+ * a permanent reliable place to store the binding information.
  *
  * @example
     <example>
@@ -26847,7 +26716,7 @@ var htmlAnchorDirective = valueFn({
  *
  * @element INPUT
  * @param {expression} ngDisabled If the {@link guide/expression expression} is truthy,
- *     then the `disabled` attribute will be set on the element
+ *     then special attribute "disabled" will be set on the element
  */
 
 
@@ -27395,7 +27264,7 @@ function FormController(element, attrs, $scope, $animate, $interpolate) {
  *
  * # Alias: {@link ng.directive:ngForm `ngForm`}
  *
- * In Angular, forms can be nested. This means that the outer form is valid when all of the child
+ * In Angular forms can be nested. This means that the outer form is valid when all of the child
  * forms are valid as well. However, browsers do not allow nesting of `<form>` elements, so
  * Angular provides the {@link ng.directive:ngForm `ngForm`} directive which behaves identically to
  * `<form>` but can be nested.  This allows you to have nested forms, which is very useful when
@@ -27533,11 +27402,9 @@ var formDirectiveFactory = function(isNgForm) {
       name: 'form',
       restrict: isNgForm ? 'EAC' : 'E',
       controller: FormController,
-      compile: function ngFormCompile(formElement, attr) {
+      compile: function ngFormCompile(formElement) {
         // Setup initial state of the control
         formElement.addClass(PRISTINE_CLASS).addClass(VALID_CLASS);
-
-        var nameAttr = attr.name ? 'name' : (isNgForm && attr.ngForm ? 'ngForm' : false);
 
         return {
           pre: function ngFormPreLink(scope, formElement, attr, controller) {
@@ -27569,21 +27436,23 @@ var formDirectiveFactory = function(isNgForm) {
               });
             }
 
-            var parentFormCtrl = controller.$$parentForm;
+            var parentFormCtrl = controller.$$parentForm,
+                alias = controller.$name;
 
-            if (nameAttr) {
-              setter(scope, null, controller.$name, controller, controller.$name);
-              attr.$observe(nameAttr, function(newValue) {
-                if (controller.$name === newValue) return;
-                setter(scope, null, controller.$name, undefined, controller.$name);
-                parentFormCtrl.$$renameControl(controller, newValue);
-                setter(scope, null, controller.$name, controller, controller.$name);
+            if (alias) {
+              setter(scope, null, alias, controller, alias);
+              attr.$observe(attr.name ? 'name' : 'ngForm', function(newValue) {
+                if (alias === newValue) return;
+                setter(scope, null, alias, undefined, alias);
+                alias = newValue;
+                setter(scope, null, alias, controller, alias);
+                parentFormCtrl.$$renameControl(controller, alias);
               });
             }
             formElement.on('$destroy', function() {
               parentFormCtrl.$removeControl(controller);
-              if (nameAttr) {
-                setter(scope, null, attr[nameAttr], undefined, controller.$name);
+              if (alias) {
+                setter(scope, null, alias, undefined, alias);
               }
               extend(controller, nullFormCtrl); //stop propagating child destruction handlers upwards
             });
@@ -28849,7 +28718,7 @@ function numberInputType(scope, element, attr, ctrl, $sniffer, $browser) {
     return value;
   });
 
-  if (isDefined(attr.min) || attr.ngMin) {
+  if (attr.min || attr.ngMin) {
     var minVal;
     ctrl.$validators.min = function(value) {
       return ctrl.$isEmpty(value) || isUndefined(minVal) || value >= minVal;
@@ -28865,7 +28734,7 @@ function numberInputType(scope, element, attr, ctrl, $sniffer, $browser) {
     });
   }
 
-  if (isDefined(attr.max) || attr.ngMax) {
+  if (attr.max || attr.ngMax) {
     var maxVal;
     ctrl.$validators.max = function(value) {
       return ctrl.$isEmpty(value) || isUndefined(maxVal) || value <= maxVal;
@@ -31556,8 +31425,8 @@ is set to `true`. The parse error is stored in `ngModel.$error.parse`.
  * data-binding. Notice how different directives (`contenteditable`, `ng-model`, and `required`)
  * collaborate together to achieve the desired result.
  *
- * `contenteditable` is an HTML5 attribute, which tells the browser to let the element
- * contents be edited in place by the user.
+ * Note that `contenteditable` is an HTML5 attribute, which tells the browser to let the element
+ * contents be edited in place by the user.  This will not work on older browsers.
  *
  * We are using the {@link ng.service:$sce $sce} service here and include the {@link ngSanitize $sanitize}
  * module to automatically remove "bad" content like inline event listener (e.g. `<span onclick="...">`).
@@ -31671,7 +31540,6 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
       ngModelGet = parsedNgModel,
       ngModelSet = parsedNgModelAssign,
       pendingDebounce = null,
-      parserValid,
       ctrl = this;
 
   this.$$setOptions = function(options) {
@@ -31944,12 +31812,16 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
     // the model although neither viewValue nor the model on the scope changed
     var modelValue = ctrl.$$rawModelValue;
 
+    // Check if the there's a parse error, so we don't unset it accidentially
+    var parserName = ctrl.$$parserName || 'parse';
+    var parserValid = ctrl.$error[parserName] ? false : undefined;
+
     var prevValid = ctrl.$valid;
     var prevModelValue = ctrl.$modelValue;
 
     var allowInvalid = ctrl.$options && ctrl.$options.allowInvalid;
 
-    ctrl.$$runValidators(modelValue, viewValue, function(allValid) {
+    ctrl.$$runValidators(parserValid, modelValue, viewValue, function(allValid) {
       // If there was no change in validity, don't update the model
       // This prevents changing an invalid modelValue to undefined
       if (!allowInvalid && prevValid !== allValid) {
@@ -31967,12 +31839,12 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
 
   };
 
-  this.$$runValidators = function(modelValue, viewValue, doneCallback) {
+  this.$$runValidators = function(parseValid, modelValue, viewValue, doneCallback) {
     currentValidationRunId++;
     var localValidationRunId = currentValidationRunId;
 
     // check parser error
-    if (!processParseErrors()) {
+    if (!processParseErrors(parseValid)) {
       validationDone(false);
       return;
     }
@@ -31982,22 +31854,21 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
     }
     processAsyncValidators();
 
-    function processParseErrors() {
+    function processParseErrors(parseValid) {
       var errorKey = ctrl.$$parserName || 'parse';
-      if (parserValid === undefined) {
+      if (parseValid === undefined) {
         setValidity(errorKey, null);
       } else {
-        if (!parserValid) {
+        setValidity(errorKey, parseValid);
+        if (!parseValid) {
           forEach(ctrl.$validators, function(v, name) {
             setValidity(name, null);
           });
           forEach(ctrl.$asyncValidators, function(v, name) {
             setValidity(name, null);
           });
+          return false;
         }
-        // Set the parse error last, to prevent unsetting it, should a $validators key == parserName
-        setValidity(errorKey, parserValid);
-        return parserValid;
       }
       return true;
     }
@@ -32092,7 +31963,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
   this.$$parseAndValidate = function() {
     var viewValue = ctrl.$$lastCommittedViewValue;
     var modelValue = viewValue;
-    parserValid = isUndefined(modelValue) ? undefined : true;
+    var parserValid = isUndefined(modelValue) ? undefined : true;
 
     if (parserValid) {
       for (var i = 0; i < ctrl.$parsers.length; i++) {
@@ -32118,7 +31989,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
 
     // Pass the $$lastCommittedViewValue here, because the cached viewValue might be out of date.
     // This can happen if e.g. $setViewValue is called from inside a parser
-    ctrl.$$runValidators(modelValue, ctrl.$$lastCommittedViewValue, function(allValid) {
+    ctrl.$$runValidators(parserValid, modelValue, ctrl.$$lastCommittedViewValue, function(allValid) {
       if (!allowInvalid) {
         // Note: Don't check ctrl.$valid here, as we could have
         // external validators (e.g. calculated on the server),
@@ -32239,7 +32110,6 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
     // TODO(perf): why not move this to the action fn?
     if (modelValue !== ctrl.$modelValue) {
       ctrl.$modelValue = ctrl.$$rawModelValue = modelValue;
-      parserValid = undefined;
 
       var formatters = ctrl.$formatters,
           idx = formatters.length;
@@ -32252,7 +32122,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
         ctrl.$viewValue = ctrl.$$lastCommittedViewValue = viewValue;
         ctrl.$render();
 
-        ctrl.$$runValidators(modelValue, viewValue, noop);
+        ctrl.$$runValidators(undefined, modelValue, viewValue, noop);
       }
     }
 
@@ -33068,55 +32938,6 @@ var ngPluralizeDirective = ['$locale', '$interpolate', function($locale, $interp
  * when keys are deleted and reinstated.
  *
  *
- * # Tracking and Duplicates
- *
- * When the contents of the collection change, `ngRepeat` makes the corresponding changes to the DOM:
- *
- * * When an item is added, a new instance of the template is added to the DOM.
- * * When an item is removed, its template instance is removed from the DOM.
- * * When items are reordered, their respective templates are reordered in the DOM.
- *
- * By default, `ngRepeat` does not allow duplicate items in arrays. This is because when
- * there are duplicates, it is not possible to maintain a one-to-one mapping between collection
- * items and DOM elements.
- *
- * If you do need to repeat duplicate items, you can substitute the default tracking behavior
- * with your own using the `track by` expression.
- *
- * For example, you may track items by the index of each item in the collection, using the
- * special scope property `$index`:
- * ```html
- *    <div ng-repeat="n in [42, 42, 43, 43] track by $index">
- *      {{n}}
- *    </div>
- * ```
- *
- * You may use arbitrary expressions in `track by`, including references to custom functions
- * on the scope:
- * ```html
- *    <div ng-repeat="n in [42, 42, 43, 43] track by myTrackingFunction(n)">
- *      {{n}}
- *    </div>
- * ```
- *
- * If you are working with objects that have an identifier property, you can track
- * by the identifier instead of the whole object. Should you reload your data later, `ngRepeat`
- * will not have to rebuild the DOM elements for items it has already rendered, even if the
- * JavaScript objects in the collection have been substituted for new ones:
- * ```html
- *    <div ng-repeat="model in collection track by model.id">
- *      {{model.name}}
- *    </div>
- * ```
- *
- * When no `track by` expression is provided, it is equivalent to tracking by the built-in
- * `$id` function, which tracks items by their identity:
- * ```html
- *    <div ng-repeat="obj in collection track by $id(obj)">
- *      {{obj.prop}}
- *    </div>
- * ```
- *
  * # Special repeat start and end points
  * To repeat a series of elements instead of just one parent element, ngRepeat (as well as other ng directives) supports extending
  * the range of the repeater by defining explicit start and end points by using **ng-repeat-start** and **ng-repeat-end** respectively.
@@ -33184,12 +33005,12 @@ var ngPluralizeDirective = ['$locale', '$interpolate', function($locale, $interp
  *
  *     For example: `(name, age) in {'adam':10, 'amalie':12}`.
  *
- *   * `variable in expression track by tracking_expression` – You can also provide an optional tracking expression
- *     which can be used to associate the objects in the collection with the DOM elements. If no tracking expression
- *     is specified, ng-repeat associates elements by identity. It is an error to have
- *     more than one tracking expression value resolve to the same key. (This would mean that two distinct objects are
- *     mapped to the same DOM element, which is not possible.)  If filters are used in the expression, they should be
- *     applied before the tracking expression.
+ *   * `variable in expression track by tracking_expression` – You can also provide an optional tracking function
+ *     which can be used to associate the objects in the collection with the DOM elements. If no tracking function
+ *     is specified the ng-repeat associates elements by identity in the collection. It is an error to have
+ *     more than one tracking function to resolve to the same key. (This would mean that two distinct objects are
+ *     mapped to the same DOM element, which is not possible.)  Filters should be applied to the expression,
+ *     before specifying a tracking expression.
  *
  *     For example: `item in items` is equivalent to `item in items track by $id(item)`. This implies that the DOM elements
  *     will be associated by item identity in the array.
@@ -35138,22 +34959,11 @@ var minlengthDirective = function() {
 
 !window.angular.$$csp() && window.angular.element(document).find('head').prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}</style>');
 /**
- * @license AngularJS v1.3.15
+ * @license AngularJS v1.3.13
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
 (function(window, angular, undefined) {'use strict';
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- *     Any commits to this file should be reviewed with security in mind.  *
- *   Changes to this file can potentially create security vulnerabilities. *
- *          An approval from 2 Core members with history of modifying      *
- *                         this file is required.                          *
- *                                                                         *
- *  Does the change somehow allow for arbitrary javascript to be executed? *
- *    Or allows for someone to change the prototype of built-in objects?   *
- *     Or gives undesired access to variables likes document or window?    *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 var $sanitizeMinErr = angular.$$minErr('$sanitize');
 
@@ -35566,6 +35376,7 @@ function htmlParser(html, handler) {
 }
 
 var hiddenPre=document.createElement("pre");
+var spaceRe = /^(\s*)([\s\S]*?)(\s*)$/;
 /**
  * decodes all entities into regular string
  * @param value
@@ -35574,10 +35385,22 @@ var hiddenPre=document.createElement("pre");
 function decodeEntities(value) {
   if (!value) { return ''; }
 
-  hiddenPre.innerHTML = value.replace(/</g,"&lt;");
-  // innerText depends on styling as it doesn't display hidden elements.
-  // Therefore, it's better to use textContent not to cause unnecessary reflows.
-  return hiddenPre.textContent;
+  // Note: IE8 does not preserve spaces at the start/end of innerHTML
+  // so we must capture them and reattach them afterward
+  var parts = spaceRe.exec(value);
+  var spaceBefore = parts[1];
+  var spaceAfter = parts[3];
+  var content = parts[2];
+  if (content) {
+    hiddenPre.innerHTML=content.replace(/</g,"&lt;");
+    // innerText depends on styling as it doesn't display hidden elements.
+    // Therefore, it's better to use textContent not to cause unnecessary
+    // reflows. However, IE<9 don't support textContent so the innerText
+    // fallback is necessary.
+    content = 'textContent' in hiddenPre ?
+      hiddenPre.textContent : hiddenPre.innerText;
+  }
+  return spaceBefore + content + spaceAfter;
 }
 
 /**
@@ -35818,7 +35641,7 @@ angular.module('ngSanitize').filter('linky', ['$sanitize', function($sanitize) {
 })(window, window.angular);
 
 /**
- * @license AngularJS v1.3.15
+ * @license AngularJS v1.3.13
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -36444,7 +36267,7 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
  * angular-ui-bootstrap
  * http://angular-ui.github.io/bootstrap/
 
- * Version: 0.12.1 - 2015-02-20
+ * Version: 0.12.0 - 2014-11-16
  * License: MIT
  */
 angular.module("ui.bootstrap", ["ui.bootstrap.tpls", "ui.bootstrap.transition","ui.bootstrap.collapse","ui.bootstrap.accordion","ui.bootstrap.alert","ui.bootstrap.bindHtml","ui.bootstrap.buttons","ui.bootstrap.carousel","ui.bootstrap.dateparser","ui.bootstrap.position","ui.bootstrap.datepicker","ui.bootstrap.dropdown","ui.bootstrap.modal","ui.bootstrap.pagination","ui.bootstrap.tooltip","ui.bootstrap.popover","ui.bootstrap.progressbar","ui.bootstrap.rating","ui.bootstrap.tabs","ui.bootstrap.timepicker","ui.bootstrap.typeahead"]);
@@ -39054,7 +38877,14 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
 
               // Set the initial positioning.
               tooltip.css({ top: 0, left: 0, display: 'block' });
-              ttScope.$digest();
+
+              // Now we add it to the DOM because need some info about it. But it's not
+              // visible yet anyway.
+              if ( appendToBody ) {
+                  $document.find( 'body' ).append( tooltip );
+              } else {
+                element.after( tooltip );
+              }
 
               positionTooltip();
 
@@ -39094,13 +38924,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
                 removeTooltip();
               }
               tooltipLinkedScope = ttScope.$new();
-              tooltip = tooltipLinker(tooltipLinkedScope, function (tooltip) {
-                if ( appendToBody ) {
-                  $document.find( 'body' ).append( tooltip );
-                } else {
-                  element.after( tooltip );
-                }
-              });
+              tooltip = tooltipLinker(tooltipLinkedScope, angular.noop);
             }
 
             function removeTooltip() {
@@ -69899,7 +69723,7 @@ function log() {
 
 
 //! moment.js
-//! version : 2.9.0
+//! version : 2.8.4
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
 //! license : MIT
 //! momentjs.com
@@ -69910,9 +69734,9 @@ function log() {
     ************************************/
 
     var moment,
-        VERSION = '2.9.0',
+        VERSION = '2.8.4',
         // the global-scope this is NOT the global object in Node.js
-        globalScope = (typeof global !== 'undefined' && (typeof window === 'undefined' || window === global.window)) ? global : this,
+        globalScope = typeof global !== 'undefined' ? global : this,
         oldGlobalMoment,
         round = Math.round,
         hasOwnProperty = Object.prototype.hasOwnProperty,
@@ -69989,7 +69813,7 @@ function log() {
             ['HH', /(T| )\d\d/]
         ],
 
-        // timezone chunker '+10:00' > ['10', '00'] or '-1530' > ['-', '15', '30']
+        // timezone chunker '+10:00' > ['10', '00'] or '-1530' > ['-15', '30']
         parseTimezoneChunker = /([\+\-]|\d\d)/gi,
 
         // getter and setter names
@@ -70149,7 +69973,7 @@ function log() {
                 return leftZeroFill(this.milliseconds(), 3);
             },
             Z    : function () {
-                var a = this.utcOffset(),
+                var a = -this.zone(),
                     b = '+';
                 if (a < 0) {
                     a = -a;
@@ -70158,7 +69982,7 @@ function log() {
                 return b + leftZeroFill(toInt(a / 60), 2) + ':' + leftZeroFill(toInt(a) % 60, 2);
             },
             ZZ   : function () {
-                var a = this.utcOffset(),
+                var a = -this.zone(),
                     b = '+';
                 if (a < 0) {
                     a = -a;
@@ -70185,9 +70009,7 @@ function log() {
 
         deprecations = {},
 
-        lists = ['months', 'monthsShort', 'weekdays', 'weekdaysShort', 'weekdaysMin'],
-
-        updateInProgress = false;
+        lists = ['months', 'monthsShort', 'weekdays', 'weekdaysShort', 'weekdaysMin'];
 
     // Pick the first defined of two or three arguments. dfl comes from
     // default.
@@ -70256,26 +70078,6 @@ function log() {
         };
     }
 
-    function monthDiff(a, b) {
-        // difference in months
-        var wholeMonthDiff = ((b.year() - a.year()) * 12) + (b.month() - a.month()),
-            // b is in (anchor - 1 month, anchor + 1 month)
-            anchor = a.clone().add(wholeMonthDiff, 'months'),
-            anchor2, adjust;
-
-        if (b - anchor < 0) {
-            anchor2 = a.clone().add(wholeMonthDiff - 1, 'months');
-            // linear across the month
-            adjust = (b - anchor) / (anchor - anchor2);
-        } else {
-            anchor2 = a.clone().add(wholeMonthDiff + 1, 'months');
-            // linear across the month
-            adjust = (b - anchor) / (anchor2 - anchor);
-        }
-
-        return -(wholeMonthDiff + adjust);
-    }
-
     while (ordinalizeTokens.length) {
         i = ordinalizeTokens.pop();
         formatTokenFunctions[i + 'o'] = ordinalizeToken(formatTokenFunctions[i], i);
@@ -70286,31 +70088,6 @@ function log() {
     }
     formatTokenFunctions.DDDD = padToken(formatTokenFunctions.DDD, 3);
 
-
-    function meridiemFixWrap(locale, hour, meridiem) {
-        var isPm;
-
-        if (meridiem == null) {
-            // nothing to do
-            return hour;
-        }
-        if (locale.meridiemHour != null) {
-            return locale.meridiemHour(hour, meridiem);
-        } else if (locale.isPM != null) {
-            // Fallback
-            isPm = locale.isPM(meridiem);
-            if (isPm && hour < 12) {
-                hour += 12;
-            }
-            if (!isPm && hour === 12) {
-                hour = 0;
-            }
-            return hour;
-        } else {
-            // thie is not supposed to happen
-            return hour;
-        }
-    }
 
     /************************************
         Constructors
@@ -70326,13 +70103,6 @@ function log() {
         }
         copyConfig(this, config);
         this._d = new Date(+config._d);
-        // Prevent infinite loop in case updateOffset creates new moment
-        // objects.
-        if (updateInProgress === false) {
-            updateInProgress = true;
-            moment.updateOffset(this);
-            updateInProgress = false;
-        }
     }
 
     // Duration Constructor
@@ -70736,8 +70506,7 @@ function log() {
         return locales[name];
     }
 
-    // Return a moment from input, that is local/utc/utcOffset equivalent to
-    // model.
+    // Return a moment from input, that is local/utc/zone equivalent to model.
     function makeAs(input, model) {
         var res, diff;
         if (model._isUTC) {
@@ -70886,7 +70655,6 @@ function log() {
             }
         },
 
-
         _calendar : {
             sameDay : '[Today at] LT',
             nextDay : '[Tomorrow at] LT',
@@ -70949,14 +70717,6 @@ function log() {
         _week : {
             dow : 0, // Sunday is the first day of the week.
             doy : 6  // The week that contains Jan 1st is the first week of the year.
-        },
-
-        firstDayOfWeek : function () {
-            return this._week.dow;
-        },
-
-        firstDayOfYear : function () {
-            return this._week.doy;
         },
 
         _invalidDate: 'Invalid date',
@@ -71125,14 +70885,14 @@ function log() {
         }
     }
 
-    function utcOffsetFromString(string) {
+    function timezoneMinutesFromString(string) {
         string = string || '';
         var possibleTzMatches = (string.match(parseTokenTimezone) || []),
             tzChunk = possibleTzMatches[possibleTzMatches.length - 1] || [],
             parts = (tzChunk + '').match(parseTimezoneChunker) || ['-', 0, 0],
             minutes = +(parts[1] * 60) + toInt(parts[2]);
 
-        return parts[0] === '+' ? minutes : -minutes;
+        return parts[0] === '+' ? -minutes : minutes;
     }
 
     // function to convert string input to date
@@ -71196,8 +70956,7 @@ function log() {
         // AM / PM
         case 'a' : // fall through to A
         case 'A' :
-            config._meridiem = input;
-            // config._isPm = config._locale.isPM(input);
+            config._isPm = config._locale.isPM(input);
             break;
         // HOUR
         case 'h' : // fall through to hh
@@ -71237,7 +70996,7 @@ function log() {
         case 'Z' : // fall through to ZZ
         case 'ZZ' :
             config._useUTC = true;
-            config._tzm = utcOffsetFromString(input);
+            config._tzm = timezoneMinutesFromString(input);
             break;
         // WEEKDAY - human
         case 'dd':
@@ -71375,10 +71134,10 @@ function log() {
         }
 
         config._d = (config._useUTC ? makeUTCDate : makeDate).apply(null, input);
-        // Apply timezone offset from input. The actual utcOffset can be changed
+        // Apply timezone offset from input. The actual zone can be changed
         // with parseZone.
         if (config._tzm != null) {
-            config._d.setUTCMinutes(config._d.getUTCMinutes() - config._tzm);
+            config._d.setUTCMinutes(config._d.getUTCMinutes() + config._tzm);
         }
 
         if (config._nextDay) {
@@ -71474,9 +71233,14 @@ function log() {
         if (config._pf.bigHour === true && config._a[HOUR] <= 12) {
             config._pf.bigHour = undefined;
         }
-        // handle meridiem
-        config._a[HOUR] = meridiemFixWrap(config._locale, config._a[HOUR],
-                config._meridiem);
+        // handle am pm
+        if (config._isPm && config._a[HOUR] < 12) {
+            config._a[HOUR] += 12;
+        }
+        // if is 12 am, change hours to 0
+        if (config._isPm === false && config._a[HOUR] === 12) {
+            config._a[HOUR] = 0;
+        }
         dateFromConfig(config);
         checkOverflow(config);
     }
@@ -71918,8 +71682,6 @@ function log() {
                 s: parseIso(match[7]),
                 w: parseIso(match[8])
             };
-        } else if (duration == null) {// checks for null or undefined
-            duration = {};
         } else if (typeof duration === 'object' &&
                 ('from' in duration || 'to' in duration)) {
             diffRes = momentsDifference(moment(duration.from), moment(duration.to));
@@ -72084,8 +71846,6 @@ function log() {
         return toInt(input) + (toInt(input) > 68 ? 1900 : 2000);
     };
 
-    moment.isDate = isDate;
-
     /************************************
         Moment Prototype
     ************************************/
@@ -72098,7 +71858,7 @@ function log() {
         },
 
         valueOf : function () {
-            return +this._d - ((this._offset || 0) * 60000);
+            return +this._d + ((this._offset || 0) * 60000);
         },
 
         unix : function () {
@@ -72161,16 +71921,16 @@ function log() {
         },
 
         utc : function (keepLocalTime) {
-            return this.utcOffset(0, keepLocalTime);
+            return this.zone(0, keepLocalTime);
         },
 
         local : function (keepLocalTime) {
             if (this._isUTC) {
-                this.utcOffset(0, keepLocalTime);
+                this.zone(0, keepLocalTime);
                 this._isUTC = false;
 
                 if (keepLocalTime) {
-                    this.subtract(this._dateUtcOffset(), 'm');
+                    this.add(this._dateTzOffset(), 'm');
                 }
             }
             return this;
@@ -72187,20 +71947,29 @@ function log() {
 
         diff : function (input, units, asFloat) {
             var that = makeAs(input, this),
-                zoneDiff = (that.utcOffset() - this.utcOffset()) * 6e4,
-                anchor, diff, output, daysAdjust;
+                zoneDiff = (this.zone() - that.zone()) * 6e4,
+                diff, output, daysAdjust;
 
             units = normalizeUnits(units);
 
-            if (units === 'year' || units === 'month' || units === 'quarter') {
-                output = monthDiff(this, that);
-                if (units === 'quarter') {
-                    output = output / 3;
-                } else if (units === 'year') {
+            if (units === 'year' || units === 'month') {
+                // average number of days in the months in the given dates
+                diff = (this.daysInMonth() + that.daysInMonth()) * 432e5; // 24 * 60 * 60 * 1000 / 2
+                // difference in months
+                output = ((this.year() - that.year()) * 12) + (this.month() - that.month());
+                // adjust by taking difference in days, average number of days
+                // and dst in the given months.
+                daysAdjust = (this - moment(this).startOf('month')) -
+                    (that - moment(that).startOf('month'));
+                // same as above but with zones, to negate all dst
+                daysAdjust -= ((this.zone() - moment(this).startOf('month').zone()) -
+                        (that.zone() - moment(that).startOf('month').zone())) * 6e4;
+                output += daysAdjust / diff;
+                if (units === 'year') {
                     output = output / 12;
                 }
             } else {
-                diff = this - that;
+                diff = (this - that);
                 output = units === 'second' ? diff / 1e3 : // 1000
                     units === 'minute' ? diff / 6e4 : // 1000 * 60
                     units === 'hour' ? diff / 36e5 : // 1000 * 60 * 60
@@ -72221,8 +71990,7 @@ function log() {
 
         calendar : function (time) {
             // We want to compare the start of today, vs this.
-            // Getting start-of-today depends on whether we're locat/utc/offset
-            // or not.
+            // Getting start-of-today depends on whether we're zone'd or not.
             var now = time || moment(),
                 sod = makeAs(now, this).startOf('day'),
                 diff = this.diff(sod, 'days', true),
@@ -72240,8 +72008,8 @@ function log() {
         },
 
         isDST : function () {
-            return (this.utcOffset() > this.clone().month(0).utcOffset() ||
-                this.utcOffset() > this.clone().month(5).utcOffset());
+            return (this.zone() < this.clone().month(0).zone() ||
+                this.zone() < this.clone().month(5).zone());
         },
 
         day : function (input) {
@@ -72331,10 +72099,6 @@ function log() {
             }
         },
 
-        isBetween: function (from, to, units) {
-            return this.isAfter(from, units) && this.isBefore(to, units);
-        },
-
         isSame: function (input, units) {
             var inputMs;
             units = normalizeUnits(units || 'millisecond');
@@ -72363,27 +72127,9 @@ function log() {
                 }
         ),
 
-        zone : deprecate(
-                'moment().zone is deprecated, use moment().utcOffset instead. ' +
-                'https://github.com/moment/moment/issues/1779',
-                function (input, keepLocalTime) {
-                    if (input != null) {
-                        if (typeof input !== 'string') {
-                            input = -input;
-                        }
-
-                        this.utcOffset(input, keepLocalTime);
-
-                        return this;
-                    } else {
-                        return -this.utcOffset();
-                    }
-                }
-        ),
-
         // keepLocalTime = true means only change the timezone, without
-        // affecting the local hour. So 5:31:26 +0300 --[utcOffset(2, true)]-->
-        // 5:31:26 +0200 It is possible that 5:31:26 doesn't exist with offset
+        // affecting the local hour. So 5:31:26 +0300 --[zone(2, true)]-->
+        // 5:31:26 +0200 It is possible that 5:31:26 doesn't exist int zone
         // +0200, so we adjust the time as needed, to be valid.
         //
         // Keeping the time actually adds/subtracts (one hour)
@@ -72391,51 +72137,38 @@ function log() {
         // a second time. In case it wants us to change the offset again
         // _changeInProgress == true case, then we have to adjust, because
         // there is no such time in the given timezone.
-        utcOffset : function (input, keepLocalTime) {
+        zone : function (input, keepLocalTime) {
             var offset = this._offset || 0,
                 localAdjust;
             if (input != null) {
                 if (typeof input === 'string') {
-                    input = utcOffsetFromString(input);
+                    input = timezoneMinutesFromString(input);
                 }
                 if (Math.abs(input) < 16) {
                     input = input * 60;
                 }
                 if (!this._isUTC && keepLocalTime) {
-                    localAdjust = this._dateUtcOffset();
+                    localAdjust = this._dateTzOffset();
                 }
                 this._offset = input;
                 this._isUTC = true;
                 if (localAdjust != null) {
-                    this.add(localAdjust, 'm');
+                    this.subtract(localAdjust, 'm');
                 }
                 if (offset !== input) {
                     if (!keepLocalTime || this._changeInProgress) {
                         addOrSubtractDurationFromMoment(this,
-                                moment.duration(input - offset, 'm'), 1, false);
+                                moment.duration(offset - input, 'm'), 1, false);
                     } else if (!this._changeInProgress) {
                         this._changeInProgress = true;
                         moment.updateOffset(this, true);
                         this._changeInProgress = null;
                     }
                 }
-
-                return this;
             } else {
-                return this._isUTC ? offset : this._dateUtcOffset();
+                return this._isUTC ? offset : this._dateTzOffset();
             }
-        },
-
-        isLocal : function () {
-            return !this._isUTC;
-        },
-
-        isUtcOffset : function () {
-            return this._isUTC;
-        },
-
-        isUtc : function () {
-            return this._isUTC && this._offset === 0;
+            return this;
         },
 
         zoneAbbr : function () {
@@ -72448,9 +72181,9 @@ function log() {
 
         parseZone : function () {
             if (this._tzm) {
-                this.utcOffset(this._tzm);
+                this.zone(this._tzm);
             } else if (typeof this._i === 'string') {
-                this.utcOffset(utcOffsetFromString(this._i));
+                this.zone(this._i);
             }
             return this;
         },
@@ -72460,10 +72193,10 @@ function log() {
                 input = 0;
             }
             else {
-                input = moment(input).utcOffset();
+                input = moment(input).zone();
             }
 
-            return (this.utcOffset() - input) % 60 === 0;
+            return (this.zone() - input) % 60 === 0;
         },
 
         daysInMonth : function () {
@@ -72526,17 +72259,9 @@ function log() {
         },
 
         set : function (units, value) {
-            var unit;
-            if (typeof units === 'object') {
-                for (unit in units) {
-                    this.set(unit, units[unit]);
-                }
-            }
-            else {
-                units = normalizeUnits(units);
-                if (typeof this[units] === 'function') {
-                    this[units](value);
-                }
+            units = normalizeUnits(units);
+            if (typeof this[units] === 'function') {
+                this[units](value);
             }
             return this;
         },
@@ -72573,12 +72298,11 @@ function log() {
             return this._locale;
         },
 
-        _dateUtcOffset : function () {
+        _dateTzOffset : function () {
             // On Firefox.24 Date#getTimezoneOffset returns a floating point.
             // https://github.com/moment/moment/pull/1871
-            return -Math.round(this._d.getTimezoneOffset() / 15) * 15;
+            return Math.round(this._d.getTimezoneOffset() / 15) * 15;
         }
-
     });
 
     function rawMonthSetter(mom, value) {
@@ -72646,9 +72370,6 @@ function log() {
 
     // add aliased format methods
     moment.fn.toJSON = moment.fn.toISOString;
-
-    // alias isUtc for dev-friendliness
-    moment.fn.isUTC = moment.fn.isUtc;
 
     /************************************
         Duration Prototype
@@ -72837,10 +72558,6 @@ function log() {
 
         localeData : function () {
             return this._locale;
-        },
-
-        toJSON : function () {
-            return this.toISOString();
         }
     });
 
@@ -72928,7 +72645,7 @@ function log() {
     if (hasModule) {
         module.exports = moment;
     } else if (typeof define === 'function' && define.amd) {
-        define(function (require, exports, module) {
+        define('moment', function (require, exports, module) {
             if (module.config && module.config() && module.config().noGlobal === true) {
                 // release the global variable
                 globalScope.moment = oldGlobalMoment;
@@ -74967,7 +74684,7 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
 var mejs = mejs || {};
 
 // version number
-mejs.version = '2.16.4'; 
+mejs.version = '2.16.2'; 
 
 
 // player number (for missing, same id attr)
@@ -76219,8 +75936,6 @@ mejs.HtmlMediaElementShim = {
 		// flash/silverlight vars
 		initVars = [
 			'id=' + pluginid,
-			'jsinitfunction=' + "mejs.MediaPluginBridge.initPlugin",
-			'jscallbackfunction=' + "mejs.MediaPluginBridge.fireEvent",
 			'isvideo=' + ((playback.isVideo) ? "true" : "false"),
 			'autoplay=' + ((autoplay) ? "true" : "false"),
 			'preload=' + preload,
@@ -76229,7 +75944,7 @@ mejs.HtmlMediaElementShim = {
 			'timerrate=' + options.timerRate,
 			'flashstreamer=' + options.flashStreamer,
 			'height=' + height,
-			'pseudostreamstart=' + options.pseudoStreamingStartQueryParam];
+      'pseudostreamstart=' + options.pseudoStreamingStartQueryParam];
 
 		if (playback.url !== null) {
 			if (playback.method == 'flash') {
@@ -76346,33 +76061,33 @@ mejs.HtmlMediaElementShim = {
 				container.innerHTML ='<iframe src="//player.vimeo.com/video/' + pluginMediaElement.vimeoid + '?api=1&portrait=0&byline=0&title=0&player_id=' + player_id + '" width="' + width +'" height="' + height +'" frameborder="0" class="mejs-shim" id="' + player_id + '" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
 				if (typeof($f) == 'function') { // froogaloop available
 					var player = $f(container.childNodes[0]);
-					
 					player.addEvent('ready', function() {
-						
-						player.playVideo = function() {
-							player.api( 'play' );
-						} 
-						player.stopVideo = function() {
-							player.api( 'unload' );
-						} 
-						player.pauseVideo = function() {
-							player.api( 'pause' );
-						} 
-						player.seekTo = function( seconds ) {
-							player.api( 'seekTo', seconds );
-						}
-						player.setVolume = function( volume ) {
-							player.api( 'setVolume', volume );
-						}
-						player.setMuted = function( muted ) {
-							if( muted ) {
-								player.lastVolume = player.api( 'getVolume' );
-								player.api( 'setVolume', 0 );
-							} else {
-								player.api( 'setVolume', player.lastVolume );
-								delete player.lastVolume;
+						$.extend( player, {
+							playVideo: function() {
+								player.api( 'play' );
+							}, 
+							stopVideo: function() {
+								player.api( 'unload' );
+							}, 
+							pauseVideo: function() {
+								player.api( 'pause' );
+							}, 
+							seekTo: function( seconds ) {
+								player.api( 'seekTo', seconds );
+							}, 
+							setVolume: function( volume ) {
+								player.api( 'setVolume', volume );
+							}, 
+							setMuted: function( muted ) {
+								if( muted ) {
+									player.lastVolume = player.api( 'getVolume' );
+									player.api( 'setVolume', 0 );
+								} else {
+									player.api( 'setVolume', player.lastVolume );
+									delete player.lastVolume;
+								}
 							}
-						}						
+						});
 
 						function createEvent(player, pluginMediaElement, eventName, e) {
 							var obj = {
@@ -77168,11 +76883,10 @@ if (typeof jQuery != 'undefined') {
 				t.$media.removeAttr('controls');
 				var videoPlayerTitle = t.isVideo ?
 					mejs.i18n.t('Video Player') : mejs.i18n.t('Audio Player');
-				// insert description for screen readers
-				$('<span class="mejs-offscreen">' + videoPlayerTitle + '</span>').insertBefore(t.$media);
 				// build container
 				t.container =
-					$('<div id="' + t.id + '" class="mejs-container ' + (mejs.MediaFeatures.svg ? 'svg' : 'no-svg') +
+					$('<span class="mejs-offscreen">' + videoPlayerTitle + '</span>'+
+                    '<div id="' + t.id + '" class="mejs-container ' + (mejs.MediaFeatures.svg ? 'svg' : 'no-svg') + 
                       '" tabindex="0" role="application" aria-label="' + videoPlayerTitle + '">'+
 						'<div class="mejs-inner">'+
 							'<div class="mejs-mediaelement"></div>'+
@@ -77620,7 +77334,7 @@ if (typeof jQuery != 'undefined') {
 						}
 					}
 				});
-
+                
 				// webkit has trouble doing this without a delay
 				setTimeout(function () {
 					t.setPlayerSize(t.width, t.height);
@@ -77639,10 +77353,9 @@ if (typeof jQuery != 'undefined') {
 					t.setControlsSize();
 				});
 
-				// This is a work-around for a bug in the YouTube iFrame player, which means
-				//  we can't use the play() API for the initial playback on iOS or Android;
-				//  user has to start playback directly by tapping on the iFrame.
-				if (t.media.pluginType == 'youtube' && ( mf.isiOS || mf.isAndroid ) ) {
+				// TEMP: needs to be moved somewhere else
+				if (t.media.pluginType == 'youtube' && t.options.autoplay) {
+				//LOK-Soft: added t.options.autoplay to if -- I can only guess this is for hiding play button when autoplaying youtube, general hiding play button layer causes missing button on player load
 					t.container.find('.mejs-overlay-play').hide();
 				}
 			}
@@ -78013,12 +77726,12 @@ if (typeof jQuery != 'undefined') {
 				t.container.keydown(function () {
 					t.keyboardAction = true;
 				});
-
+            
 				// listen for key presses
 				t.globalBind('keydown', function(e) {
 					return t.onkeydown(player, media, e);
 				});
-
+            
 
 				// check if someone clicked outside a player region, then kill its focus
 				t.globalBind('click', function(event) {
@@ -78146,11 +77859,6 @@ if (typeof jQuery != 'undefined') {
 			}
 			t.globalUnbind();
 			delete t.node.player;
-		},
-		rebuildtracks: function(){
-			var t = this;
-			t.findTracks();
-			t.buildtracks(t, t.controls, t.layers, t.media);
 		}
 	};
 
@@ -78337,8 +78045,8 @@ if (typeof jQuery != 'undefined') {
 		buildprogress: function(player, controls, layers, media) {
 
 			$('<div class="mejs-time-rail">' +
-				'<span  class="mejs-time-total mejs-time-slider">' +
-				//'<span class="mejs-offscreen">' + this.options.progessHelpText + '</span>' +
+				'<a href="javascript:void(0);" class="mejs-time-total mejs-time-slider">' +
+				'<span class="mejs-offscreen">' + this.options.progessHelpText + '</span>' +
 				'<span class="mejs-time-buffering"></span>' +
 				'<span class="mejs-time-loaded"></span>' +
 				'<span class="mejs-time-current"></span>' +
@@ -78347,6 +78055,7 @@ if (typeof jQuery != 'undefined') {
 				'<span class="mejs-time-float-current">00:00</span>' +
 				'<span class="mejs-time-float-corner"></span>' +
 				'</span>' +
+				'</a>' +
 				'</div>')
 				.appendTo(controls);
 			controls.find('.mejs-time-buffering').hide();
@@ -79503,7 +79212,7 @@ if (typeof jQuery != 'undefined') {
 						var newSpeed = $(this).attr('value');
 						playbackspeed = newSpeed;
 						media.playbackRate = parseFloat(newSpeed);
-						speedButton.find('button').html(newSpeed + t.options.speedChar);
+						speedButton.find('button').html('test' + newSpeed + t.options.speedChar);
 						speedButton.find('.mejs-speed-selected').removeClass('mejs-speed-selected');
 						speedButton.find('input[type="radio"]:checked').next().addClass('mejs-speed-selected');
 					});
@@ -79542,14 +79251,6 @@ if (typeof jQuery != 'undefined') {
 
 		hasChapters: false,
 
-		cleartracks: function(player, controls, layers, media){
-			if(player) {
-				if(player.captions) player.captions.remove();
-				if(player.chapters) player.chapters.remove();
-				if(player.captionsText) player.captionsText.remove();
-				if(player.captionsButton) player.captionsButton.remove();
-			}
-		},
 		buildtracks: function(player, controls, layers, media) {
 			if (player.tracks.length === 0)
 				return;
@@ -79563,7 +79264,6 @@ if (typeof jQuery != 'undefined') {
 					t.domNode.textTracks[i].mode = "hidden";
 				}
 			}
-			t.cleartracks(player, controls, layers, media);
 			player.chapters =
 					$('<div class="mejs-chapters mejs-layer"></div>')
 						.prependTo(layers).hide();
@@ -80439,11 +80139,12 @@ $.extend(mejs.MepDefaults,
 
 })(mejs.$);
 /**
-* @version: 1.3.19
+* @version: 1.3.17
 * @author: Dan Grossman http://www.dangrossman.info/
-* @copyright: Copyright (c) 2012-2015 Dan Grossman. All rights reserved.
+* @date: 2014-11-25
+* @copyright: Copyright (c) 2012-2014 Dan Grossman. All rights reserved.
 * @license: Licensed under the MIT license. See http://www.opensource.org/licenses/mit-license.php
-* @website: https://www.improvely.com/
+* @website: http://www.improvely.com/
 */
 
 (function(root, factory) {
@@ -80568,7 +80269,7 @@ $.extend(mejs.MepDefaults,
 
             this.startDate = moment().startOf('day');
             this.endDate = moment().endOf('day');
-            this.timeZone = moment().utcOffset();
+            this.timeZone = moment().zone();
             this.minDate = false;
             this.maxDate = false;
             this.dateLimit = false;
@@ -80743,11 +80444,11 @@ $.extend(mejs.MepDefaults,
             //if no start/end dates set, check if an input element contains initial values
             if (typeof options.startDate === 'undefined' && typeof options.endDate === 'undefined') {
                 if ($(this.element).is('input[type=text]')) {
-                    var val = $(this.element).val(),
+                    var val = $(this.element).val(), 
                         split = val.split(this.separator);
-
+                    
                     start = end = null;
-
+                    
                     if (split.length == 2) {
                         start = moment(split[0], this.format);
                         end = moment(split[1], this.format);
@@ -80765,10 +80466,10 @@ $.extend(mejs.MepDefaults,
             // bind the time zone used to build the calendar to either the timeZone passed in through the options or the zone of the startDate (which will be the local time zone by default)
             if (typeof options.timeZone === 'string' || typeof options.timeZone === 'number') {
                 this.timeZone = options.timeZone;
-                this.startDate.utcOffset(this.timeZone);
-                this.endDate.utcOffset(this.timeZone);
+                this.startDate.zone(this.timeZone);
+                this.endDate.zone(this.timeZone);
             } else {
-                this.timeZone = moment(this.startDate).utcOffset();
+                this.timeZone = moment(this.startDate).zone();
             }
 
             if (typeof options.ranges === 'object') {
@@ -80886,7 +80587,7 @@ $.extend(mejs.MepDefaults,
 
         setStartDate: function(startDate) {
             if (typeof startDate === 'string')
-                this.startDate = moment(startDate, this.format).utcOffset(this.timeZone);
+                this.startDate = moment(startDate, this.format).zone(this.timeZone);
 
             if (typeof startDate === 'object')
                 this.startDate = moment(startDate);
@@ -80903,7 +80604,7 @@ $.extend(mejs.MepDefaults,
 
         setEndDate: function(endDate) {
             if (typeof endDate === 'string')
-                this.endDate = moment(endDate, this.format).utcOffset(this.timeZone);
+                this.endDate = moment(endDate, this.format).zone(this.timeZone);
 
             if (typeof endDate === 'object')
                 this.endDate = moment(endDate);
@@ -80944,12 +80645,12 @@ $.extend(mejs.MepDefaults,
                 end = null;
 
             if(dateString.length === 2) {
-                start = moment(dateString[0], this.format).utcOffset(this.timeZone);
-                end = moment(dateString[1], this.format).utcOffset(this.timeZone);
+                start = moment(dateString[0], this.format).zone(this.timeZone);
+                end = moment(dateString[1], this.format).zone(this.timeZone);
             }
 
             if (this.singleDatePicker || start === null || end === null) {
-                start = moment(this.element.val(), this.format).utcOffset(this.timeZone);
+                start = moment(this.element.val(), this.format).zone(this.timeZone);
                 end = start;
             }
 
@@ -81118,11 +80819,11 @@ $.extend(mejs.MepDefaults,
 
             var startDate, endDate;
             if (el.attr('name') === 'daterangepicker_start') {
-                startDate = (false !== this.minDate && date.isBefore(this.minDate)) ? this.minDate : date;
+                startDate = date;
                 endDate = this.endDate;
             } else {
                 startDate = this.startDate;
-                endDate = (false !== this.maxDate && date.isAfter(this.maxDate)) ? this.maxDate : date;
+                endDate = date;
             }
             this.setCustomDates(startDate, endDate);
         },
@@ -81137,10 +80838,8 @@ $.extend(mejs.MepDefaults,
         updateInputText: function() {
             if (this.element.is('input') && !this.singleDatePicker) {
                 this.element.val(this.startDate.format(this.format) + this.separator + this.endDate.format(this.format));
-                this.element.trigger('change');
             } else if (this.element.is('input')) {
                 this.element.val(this.endDate.format(this.format));
-                this.element.trigger('change');
             }
         },
 
@@ -81210,9 +80909,6 @@ $.extend(mejs.MepDefaults,
             if (startDate.isAfter(endDate)) {
                 var difference = this.endDate.diff(this.startDate);
                 endDate = moment(startDate).add(difference, 'ms');
-                if (this.maxDate && endDate.isAfter(this.maxDate)) {
-                  endDate = this.maxDate;
-                }
             }
             this.startDate = startDate;
             this.endDate = endDate;
@@ -81291,28 +80987,6 @@ $.extend(mejs.MepDefaults,
             // Month must be Number for new moment versions
             var month = parseInt(cal.find('.monthselect').val(), 10);
             var year = cal.find('.yearselect').val();
-
-            if (!isLeft && !this.singleDatePicker) {
-                if (year < this.startDate.year() || (year == this.startDate.year() && month < this.startDate.month())) {
-                    month = this.startDate.month();
-                    year = this.startDate.year();
-                }
-            }
-
-            if (this.minDate) {
-                if (year < this.minDate.year() || (year == this.minDate.year() && month < this.minDate.month())) {
-                    month = this.minDate.month();
-                    year = this.minDate.year();
-                }
-            }
-
-            if (this.maxDate) {
-                if (year > this.maxDate.year() || (year == this.maxDate.year() && month > this.maxDate.month())) {
-                    month = this.maxDate.month();
-                    year = this.maxDate.year();
-                }
-            }
-
 
             this[leftOrRight+'Calendar'].month.month(month).year(year);
             this.updateCalendars();
@@ -81425,7 +81099,7 @@ $.extend(mejs.MepDefaults,
             if (dayOfWeek == this.locale.firstDay)
                 startDay = daysInLastMonth - 6;
 
-            var curDate = moment([lastYear, lastMonth, startDay, 12, minute, second]).utcOffset(this.timeZone);
+            var curDate = moment([lastYear, lastMonth, startDay, 12, minute, second]).zone(this.timeZone);
 
             var col, row;
             for (i = 0, col = 0, row = 0; i < 42; i++, col++, curDate = moment(curDate).add(24, 'hour')) {
@@ -81493,7 +81167,7 @@ $.extend(mejs.MepDefaults,
                 html += '<th></th>';
 
             if (!minDate || minDate.isBefore(calendar.firstDay)) {
-                html += '<th class="prev available"><i class="fa fa-arrow-left icon icon-arrow-left glyphicon glyphicon-arrow-left"></i></th>';
+                html += '<th class="prev available"><i class="fa fa-arrow-left icon-arrow-left glyphicon glyphicon-arrow-left"></i></th>';
             } else {
                 html += '<th></th>';
             }
@@ -81506,7 +81180,7 @@ $.extend(mejs.MepDefaults,
 
             html += '<th colspan="5" class="month">' + dateHtml + '</th>';
             if (!maxDate || maxDate.isAfter(calendar.lastDay)) {
-                html += '<th class="next available"><i class="fa fa-arrow-right icon icon-arrow-right glyphicon glyphicon-arrow-right"></i></th>';
+                html += '<th class="next available"><i class="fa fa-arrow-right icon-arrow-right glyphicon glyphicon-arrow-right"></i></th>';
             } else {
                 html += '<th></th>';
             }
@@ -81720,8 +81394,8 @@ $.extend(mejs.MepDefaults,
 }));
 
 /*!
- * VERSION: 1.16.1
- * DATE: 2015-03-13
+ * VERSION: 1.16.0
+ * DATE: 2015-03-01
  * UPDATES AND DOCS AT: http://greensock.com
  * 
  * Includes all of the following: TweenLite, TweenMax, TimelineLite, TimelineMax, EasePack, CSSPlugin, RoundPropsPlugin, BezierPlugin, AttrPlugin, DirectionalRotationPlugin
@@ -81762,7 +81436,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			p = TweenMax.prototype = TweenLite.to({}, 0.1, {}),
 			_blankArray = [];
 
-		TweenMax.version = "1.16.1";
+		TweenMax.version = "1.16.0";
 		p.constructor = TweenMax;
 		p.kill()._gc = false;
 		TweenMax.killTweensOf = TweenMax.killDelayedCallsTo = TweenLite.killTweensOf;
@@ -81840,7 +81514,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				prevCycle = this._cycle,
 				duration = this._duration,
 				prevRawPrevTime = this._rawPrevTime,
-				isComplete, callback, pt, cycleDuration, r, type, pow, rawPrevTime;
+				isComplete, callback, pt, cycleDuration, r, type, pow, rawPrevTime, i;
 			if (time >= totalDur) {
 				this._totalTime = totalDur;
 				this._cycle = this._repeat;
@@ -81854,7 +81528,6 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				if (!this._reversed) {
 					isComplete = true;
 					callback = "onComplete";
-					force = (force || this._timeline.autoRemoveChildren); //otherwise, if the animation is unpaused/activated after it's already finished, it doesn't get removed from the parent timeline.
 				}
 				if (duration === 0) if (this._initted || !this.vars.lazy || force) { //zero-duration tweens are tricky because we must discern the momentum/direction of time in order to determine whether the starting values should be rendered or the ending values. If the "playhead" of its timeline goes past the zero-duration tween in the forward direction or lands directly on it, the end values should be rendered, but if the timeline's "playhead" moves past it in the backward direction (from a postitive time to a negative time), the starting values must be rendered.
 					if (this._startTime === this._timeline._duration) { //if a zero-duration tween is at the VERY end of a timeline and that timeline renders at its end, it will typically add a tiny bit of cushion to the render time to prevent rounding errors from getting in the way of tweens rendering their VERY end. If we then reverse() that timeline, the zero-duration tween will trigger its onReverseComplete even though technically the playhead didn't pass over it again. It's a very specific edge case we must accommodate.
@@ -82368,9 +82041,8 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				var tl = tween._timeline,
 					time = tl._totalTime,
 					startTime = tween._startTime,
-					reversed = (tween._rawPrevTime < 0 || (tween._rawPrevTime === 0 && tl._reversed)),//don't use tween.ratio because if the playhead lands exactly on top of the addPause(), ratio will be 1 even if the master timeline was reversed (which is correct). The key here is to sense the direction of the playhead.
-					next = reversed ? 0 : _tinyNum,
-					prev = reversed ? _tinyNum : 0,
+					next = tween.ratio ? _tinyNum : 0,
+					prev = tween.ratio ? 0 : _tinyNum,
 					sibling;
 				if (callback || !this._forcingPlayhead) { //if the user calls a method that moves the playhead (like progress() or time()), it should honor that and skip any pauses (although if there's a callback positioned at that pause, it must jump there and make the call to ensure the time is EXACTLY what it is supposed to be, and then proceed to where the playhead is being forced). Otherwise, imagine placing a pause in the middle of a timeline and then doing timeline.progress(0.9) - it would get stuck where the pause is.
 					tl.pause(startTime);
@@ -82388,7 +82060,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					if (callback) {
 						callback.apply(scope || tl, params || _blankArray);
 					}
-					if (this._forcingPlayhead || !tl._paused) { //the callback could have called resume().
+					if (this._forcingPlayhead) {
 						tl.seek(time);
 					}
 				}
@@ -82402,7 +82074,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			},
 			p = TimelineLite.prototype = new SimpleTimeline();
 
-		TimelineLite.version = "1.16.1";
+		TimelineLite.version = "1.16.0";
 		p.constructor = TimelineLite;
 		p.kill()._gc = p._forcingPlayhead = false;
 
@@ -82695,7 +82367,6 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				if (!this._reversed) if (!this._hasPausedChild()) {
 					isComplete = true;
 					callback = "onComplete";
-					internalForce = !!this._timeline.autoRemoveChildren; //otherwise, if the animation is unpaused/activated after it's already finished, it doesn't get removed from the parent timeline.
 					if (this._duration === 0) if (time === 0 || this._rawPrevTime < 0 || this._rawPrevTime === _tinyNum) if (this._rawPrevTime !== time && this._first) {
 						internalForce = true;
 						if (this._rawPrevTime > _tinyNum) {
@@ -83020,7 +82691,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					time = this._time;
 				while (tween) {
 					if (tween._startTime === time && tween.data === "isPause") {
-						tween._rawPrevTime = 0; //remember, _rawPrevTime is how zero-duration tweens/callbacks sense directionality and determine whether or not to fire. If _rawPrevTime is the same as _startTime on the next render, it won't fire.
+						tween._rawPrevTime = time; //remember, _rawPrevTime is how zero-duration tweens/callbacks sense directionality and determine whether or not to fire. If _rawPrevTime is the same as _startTime on the next render, it won't fire.
 					}
 					tween = tween._next;
 				}
@@ -83081,7 +82752,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 
 		p.constructor = TimelineMax;
 		p.kill()._gc = false;
-		TimelineMax.version = "1.16.1";
+		TimelineMax.version = "1.16.0";
 
 		p.invalidate = function() {
 			this._yoyo = (this.vars.yoyo === true);
@@ -83170,7 +82841,6 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				if (!this._reversed) if (!this._hasPausedChild()) {
 					isComplete = true;
 					callback = "onComplete";
-					internalForce = !!this._timeline.autoRemoveChildren; //otherwise, if the animation is unpaused/activated after it's already finished, it doesn't get removed from the parent timeline.
 					if (this._duration === 0) if (time === 0 || prevRawPrevTime < 0 || prevRawPrevTime === _tinyNum) if (prevRawPrevTime !== time && this._first) {
 						internalForce = true;
 						if (prevRawPrevTime > _tinyNum) {
@@ -84133,7 +83803,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			p = CSSPlugin.prototype = new TweenPlugin("css");
 
 		p.constructor = CSSPlugin;
-		CSSPlugin.version = "1.16.1";
+		CSSPlugin.version = "1.16.0";
 		CSSPlugin.API = 2;
 		CSSPlugin.defaultTransformPerspective = 0;
 		CSSPlugin.defaultSkewType = "compensated";
@@ -84415,7 +84085,6 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				if (x === "center" || (isNaN(parseFloat(x)) && (x + "").indexOf("=") === -1)) { //remember, the user could flip-flop the values and say "bottom center" or "center bottom", etc. "center" is ambiguous because it could be used to describe horizontal or vertical, hence the isNaN(). If there's an "=" sign in the value, it's relative.
 					x = "50%";
 				}
-				v = x + " " + y + ((a.length > 2) ? " " + a[2] : "");
 				if (recObj) {
 					recObj.oxp = (x.indexOf("%") !== -1);
 					recObj.oyp = (y.indexOf("%") !== -1);
@@ -84423,9 +84092,8 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					recObj.oyr = (y.charAt(1) === "=");
 					recObj.ox = parseFloat(x.replace(_NaNExp, ""));
 					recObj.oy = parseFloat(y.replace(_NaNExp, ""));
-					recObj.v = v;
 				}
-				return recObj || v;
+				return x + " " + y + ((a.length > 2) ? " " + a[2] : "");
 			},
 
 			/**
@@ -84877,6 +84545,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					bv = ba[i];
 					ev = ea[i];
 					bn = parseFloat(bv);
+
 					//if the value begins with a number (most common). It's fine if it has a suffix like px
 					if (bn || bn === 0) {
 						pt.appendXtra("", bn, _parseChange(ev, bn), ev.replace(_relNumExp, ""), (autoRound && ev.indexOf("px") !== -1), true);
@@ -85489,73 +85158,26 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			},
 			*/
 
-			_setTransformRatio = _internals.set3DTransformRatio = _internals.setTransformRatio = function(v) {
+			_set3DTransformRatio = _internals.set3DTransformRatio = function(v) {
 				var t = this.data, //refers to the element's _gsTransform object
 					style = this.t.style,
-					angle = t.rotation,
-					rotationX = t.rotationX,
-					rotationY = t.rotationY,
+					angle = t.rotation * _DEG2RAD,
 					sx = t.scaleX,
 					sy = t.scaleY,
 					sz = t.scaleZ,
 					x = t.x,
 					y = t.y,
 					z = t.z,
-					isSVG = t.svg,
 					perspective = t.perspective,
-					force3D = t.force3D,
 					a11, a12, a13, a21, a22, a23, a31, a32, a33, a41, a42, a43,
-					zOrigin, min, cos, sin, t1, t2, transform, comma, zero, skew, rnd;
-
-				//check to see if we should render as 2D (and SVGs must use 2D when _useSVGTransformAttr is true)
-				if (((((v === 1 || v === 0) && force3D === "auto" && (this.tween._totalTime === this.tween._totalDuration || !this.tween._totalTime)) || !force3D) && !z && !perspective && !rotationY && !rotationX) || (_useSVGTransformAttr && isSVG) || !_supports3D) { //on the final render (which could be 0 for a from tween), if there are no 3D aspects, render in 2D to free up memory and improve performance especially on mobile devices. Check the tween's totalTime/totalDuration too in order to make sure it doesn't happen between repeats if it's a repeating tween.
-
-					//2D
-					if (angle || t.skewX || isSVG) {
-						angle *= _DEG2RAD;
-						skew = t.skewX * _DEG2RAD;
-						rnd = 100000;
-						a11 = Math.cos(angle) * sx;
-						a21 = Math.sin(angle) * sx;
-						a12 = Math.sin(angle - skew) * -sy;
-						a22 = Math.cos(angle - skew) * sy;
-						if (skew && t.skewType === "simple") { //by default, we compensate skewing on the other axis to make it look more natural, but you can set the skewType to "simple" to use the uncompensated skewing that CSS does
-							t1 = Math.tan(skew);
-							t1 = Math.sqrt(1 + t1 * t1);
-							a12 *= t1;
-							a22 *= t1;
-							if (t.skewY) {
-								a11 *= t1;
-								a21 *= t1;
-							}
-						}
-						if (isSVG) {
-							x += t.xOrigin - (t.xOrigin * a11 + t.yOrigin * a12);
-							y += t.yOrigin - (t.xOrigin * a21 + t.yOrigin * a22);
-							min = 0.000001;
-							if (x < min) if (x > -min) {
-								x = 0;
-							}
-							if (y < min) if (y > -min) {
-								y = 0;
-							}
-						}
-						transform = (((a11 * rnd) | 0) / rnd) + "," + (((a21 * rnd) | 0) / rnd) + "," + (((a12 * rnd) | 0) / rnd) + "," + (((a22 * rnd) | 0) / rnd) + "," + x + "," + y + ")";
-						if (isSVG && _useSVGTransformAttr) {
-							this.t.setAttribute("transform", "matrix(" + transform);
-						} else {
-							//some browsers have a hard time with very small values like 2.4492935982947064e-16 (notice the "e-" towards the end) and would render the object slightly off. So we round to 5 decimal places.
-							style[_transformProp] = ((t.xPercent || t.yPercent) ? "translate(" + t.xPercent + "%," + t.yPercent + "%) matrix(" : "matrix(") + transform;
-						}
-					} else {
-						style[_transformProp] = ((t.xPercent || t.yPercent) ? "translate(" + t.xPercent + "%," + t.yPercent + "%) matrix(" : "matrix(") + sx + ",0,0," + sy + "," + x + "," + y + ")";
-					}
+					zOrigin, min, cos, sin, t1, t2, transform, comma, zero;
+				if (v === 1 || v === 0 || !t.force3D) if (t.force3D !== true) if (!t.rotationY && !t.rotationX && sz === 1 && !perspective && !z && (this.tween._totalTime === this.tween._totalDuration || !this.tween._totalTime)) { //on the final render (which could be 0 for a from tween), if there are no 3D aspects, render in 2D to free up memory and improve performance especially on mobile devices. Check the tween's totalTime/totalDuration too in order to make sure it doesn't happen between repeats if it's a repeating tween.
+					_set2DTransformRatio.call(this, v);
 					return;
-
 				}
-				if (_isFirefox) { //Firefox has a bug (at least in v25) that causes it to render the transparent part of 32-bit PNG images as black when displayed inside an iframe and the 3D scale is very small and doesn't change sufficiently enough between renders (like if you use a Power4.easeInOut to scale from 0 to 1 where the beginning values only change a tiny amount to begin the tween before accelerating). In this case, we force the scale to be 0.00002 instead which is visually the same but works around the Firefox issue.
+				if (_isFirefox) {
 					min = 0.0001;
-					if (sx < min && sx > -min) {
+					if (sx < min && sx > -min) { //Firefox has a bug (at least in v25) that causes it to render the transparent part of 32-bit PNG images as black when displayed inside an iframe and the 3D scale is very small and doesn't change sufficiently enough between renders (like if you use a Power4.easeInOut to scale from 0 to 1 where the beginning values only change a tiny amount to begin the tween before accelerating). In this case, we force the scale to be 0.00002 instead which is visually the same but works around the Firefox issue.
 						sx = sz = 0.00002;
 					}
 					if (sy < min && sy > -min) {
@@ -85566,7 +85188,6 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					}
 				}
 				if (angle || t.skewX) {
-					angle *= _DEG2RAD;
 					cos = a11 = Math.cos(angle);
 					sin = a21 = Math.sin(angle);
 					if (t.skewX) {
@@ -85578,16 +85199,12 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 							t1 = Math.sqrt(1 + t1 * t1);
 							cos *= t1;
 							sin *= t1;
-							if (t.skewY) {
-								a11 *= t1;
-								a21 *= t1;
-							}
 						}
 					}
 					a12 = -sin;
 					a22 = cos;
 
-				} else if (!rotationY && !rotationX && sz === 1 && !perspective && !isSVG) { //if we're only translating and/or 2D scaling, this is faster...
+				} else if (!t.rotationY && !t.rotationX && sz === 1 && !perspective && !t.svg) { //if we're only translating and/or 2D scaling, this is faster...
 					style[_transformProp] = ((t.xPercent || t.yPercent) ? "translate(" + t.xPercent + "%," + t.yPercent + "%) translate3d(" : "translate3d(") + x + "px," + y + "px," + z +"px)" + ((sx !== 1 || sy !== 1) ? " scale(" + sx + "," + sy + ")" : "");
 					return;
 				} else {
@@ -85621,7 +85238,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				min = 0.000001; //threshold below which browsers use scientific notation which won't work.
 				comma = ",";
 				zero = "0";
-				angle = rotationY * _DEG2RAD;
+				angle = t.rotationY * _DEG2RAD;
 				if (angle) {
 					cos = Math.cos(angle);
 					sin = Math.sin(angle);
@@ -85634,7 +85251,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					a11 *= cos;
 					a21 *= cos;
 				}
-				angle = rotationX * _DEG2RAD;
+				angle = t.rotationX * _DEG2RAD;
 				if (angle) {
 					cos = Math.cos(angle);
 					sin = Math.sin(angle);
@@ -85668,13 +85285,13 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					a41*=sx;
 				}
 
-				if (zOrigin || isSVG) {
+				if (zOrigin || t.svg) {
 					if (zOrigin) {
 						x += a13*-zOrigin;
 						y += a23*-zOrigin;
 						z += a33*-zOrigin+zOrigin;
 					}
-					if (isSVG) { //due to bugs in some browsers, we need to manage the transform-origin of SVG manually
+					if (t.svg) { //due to bugs in some browsers, we need to manage the transform-origin of SVG manually
 						x += t.xOrigin - (t.xOrigin * a11 + t.yOrigin * a12);
 						y += t.yOrigin - (t.xOrigin * a21 + t.yOrigin * a22);
 					}
@@ -85693,7 +85310,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				transform = ((t.xPercent || t.yPercent) ? "translate(" + t.xPercent + "%," + t.yPercent + "%) matrix3d(" : "matrix3d(");
 				transform += ((a11 < min && a11 > -min) ? zero : a11) + comma + ((a21 < min && a21 > -min) ? zero : a21) + comma + ((a31 < min && a31 > -min) ? zero : a31);
 				transform += comma + ((a41 < min && a41 > -min) ? zero : a41) + comma + ((a12 < min && a12 > -min) ? zero : a12) + comma + ((a22 < min && a22 > -min) ? zero : a22);
-				if (rotationX || rotationY) { //performance optimization (often there's no rotationX or rotationY, so we can skip these calculations)
+				if (t.rotationX || t.rotationY) { //performance optimization (often there's no rotationX or rotationY, so we can skip these calculations)
 					transform += comma + ((a32 < min && a32 > -min) ? zero : a32) + comma + ((a42 < min && a42 > -min) ? zero : a42) + comma + ((a13 < min && a13 > -min) ? zero : a13);
 					transform += comma + ((a23 < min && a23 > -min) ? zero : a23) + comma + ((a33 < min && a33 > -min) ? zero : a33) + comma + ((a43 < min && a43 > -min) ? zero : a43) + comma;
 				} else {
@@ -85702,6 +85319,57 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				transform += x + comma + y + comma + z + comma + (perspective ? (1 + (-z / perspective)) : 1) + ")";
 
 				style[_transformProp] = transform;
+			},
+
+			_set2DTransformRatio = _internals.set2DTransformRatio = function(v) {
+				var t = this.data, //refers to the element's _gsTransform object
+					targ = this.t,
+					style = targ.style,
+					x = t.x,
+					y = t.y,
+					ang, skew, rnd, sx, sy, a, b, c, d, matrix, min, t1;
+				if ((t.rotationX || t.rotationY || t.z || t.force3D === true || (t.force3D === "auto" && v !== 1 && v !== 0)) && !(t.svg && _useSVGTransformAttr) && _supports3D) { //if a 3D tween begins while a 2D one is running, we need to kick the rendering over to the 3D method. For example, imagine a yoyo-ing, infinitely repeating scale tween running, and then the object gets rotated in 3D space with a different tween.
+					this.setRatio = _set3DTransformRatio;
+					_set3DTransformRatio.call(this, v);
+					return;
+				}
+				sx = t.scaleX;
+				sy = t.scaleY;
+				if (t.rotation || t.skewX || t.svg) {
+					ang = t.rotation * _DEG2RAD;
+					skew = t.skewX * _DEG2RAD;
+					rnd = 100000;
+					a = Math.cos(ang) * sx;
+					b = Math.sin(ang) * sx;
+					c = Math.sin(ang - skew) * -sy;
+					d = Math.cos(ang - skew) * sy;
+					if (skew && t.skewType === "simple") { //by default, we compensate skewing on the other axis to make it look more natural, but you can set the skewType to "simple" to use the uncompensated skewing that CSS does
+						t1 = Math.tan(skew);
+						t1 = Math.sqrt(1 + t1 * t1);
+						c *= t1;
+						d *= t1;
+					}
+					if (t.svg) {
+						x += t.xOrigin - (t.xOrigin * a + t.yOrigin * c);
+						y += t.yOrigin - (t.xOrigin * b + t.yOrigin * d);
+						min = 0.000001;
+						if (x < min) if (x > -min) {
+							x = 0;
+						}
+						if (y < min) if (y > -min) {
+							y = 0;
+						}
+					}
+					matrix = (((a * rnd) | 0) / rnd) + "," + (((b * rnd) | 0) / rnd) + "," + (((c * rnd) | 0) / rnd) + "," + (((d * rnd) | 0) / rnd) + "," + x + "," + y + ")";
+					if (t.svg && _useSVGTransformAttr) {
+						targ.setAttribute("transform", "matrix(" + matrix);
+					} else {
+						//some browsers have a hard time with very small values like 2.4492935982947064e-16 (notice the "e-" towards the end) and would render the object slightly off. So we round to 5 decimal places.
+						style[_transformProp] = ((t.xPercent || t.yPercent) ? "translate(" + t.xPercent + "%," + t.yPercent + "%) matrix(" : "matrix(") + matrix;
+					}
+				} else {
+					style[_transformProp] = ((t.xPercent || t.yPercent) ? "translate(" + t.xPercent + "%," + t.yPercent + "%) matrix(" : "matrix(") + sx + ",0,0," + sy + "," + x + "," + y + ")";
+				}
 			};
 
 		p = Transform.prototype;
@@ -85827,7 +85495,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 						pt.xs0 = pt.e = orig;
 					}
 
-					//for older versions of IE (6-8), we need to manually calculate things inside the setRatio() function. We record origin x and y (ox and oy) and whether or not the values are percentages (oxp and oyp).
+				//for older versions of IE (6-8), we need to manually calculate things inside the setRatio() function. We record origin x and y (ox and oy) and whether or not the values are percentages (oxp and oyp).
 				} else {
 					_parsePosition(orig + "", m1);
 				}
@@ -86076,12 +85744,14 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			}
 			t._gsClassPT = pt;
 			pt.e = (e.charAt(1) !== "=") ? e : b.replace(new RegExp("\\s*\\b" + e.substr(2) + "\\b"), "") + ((e.charAt(0) === "+") ? " " + e.substr(2) : "");
-			t.setAttribute("class", pt.e);
-			difData = _cssDif(t, bs, _getAllStyles(t), vars, cnptLookup);
-			t.setAttribute("class", b);
-			pt.data = difData.firstMPT;
-			t.style.cssText = cssText; //we recorded cssText before we swapped classes and ran _getAllStyles() because in cases when a className tween is overwritten, we remove all the related tweening properties from that class change (otherwise class-specific stuff can't override properties we've directly set on the target's style object due to specificity).
-			pt = pt.xfirst = cssp.parse(t, difData.difs, pt, plugin); //we record the CSSPropTween as the xfirst so that we can handle overwriting propertly (if "className" gets overwritten, we must kill all the properties associated with the className part of the tween, so we can loop through from xfirst to the pt itself)
+			if (cssp._tween._duration) { //if it's a zero-duration tween, there's no need to tween anything or parse the data. In fact, if we switch classes temporarily (which we must do for proper parsing) and the class has a transition applied, it could cause a quick flash to the end state and back again initially in some browsers.
+				t.setAttribute("class", pt.e);
+				difData = _cssDif(t, bs, _getAllStyles(t), vars, cnptLookup);
+				t.setAttribute("class", b);
+				pt.data = difData.firstMPT;
+				t.style.cssText = cssText; //we recorded cssText before we swapped classes and ran _getAllStyles() because in cases when a className tween is overwritten, we remove all the related tweening properties from that class change (otherwise class-specific stuff can't override properties we've directly set on the target's style object due to specificity).
+				pt = pt.xfirst = cssp.parse(t, difData.difs, pt, plugin); //we record the CSSPropTween as the xfirst so that we can handle overwriting propertly (if "className" gets overwritten, we must kill all the properties associated with the className part of the tween, so we can loop through from xfirst to the pt itself)
+			}
 			return pt;
 		}});
 
@@ -86090,7 +85760,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			if (v === 1 || v === 0) if (this.data._totalTime === this.data._totalDuration && this.data.data !== "isFromStart") { //this.data refers to the tween. Only clear at the END of the tween (remember, from() tweens make the ratio go from 1 to 0, so we can't just check that and if the tween is the zero-duration one that's created internally to render the starting values in a from() tween, ignore that because otherwise, for example, from(...{height:100, clearProps:"height", delay:1}) would wipe the height at the beginning of the tween and after 1 second, it'd kick back in).
 				var s = this.t.style,
 					transformParse = _specialProps.transform.parse,
-					a, p, i, clearTransform, transform;
+					a, p, i, clearTransform;
 				if (this.e === "all") {
 					s.cssText = "";
 					clearTransform = true;
@@ -86111,11 +85781,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				}
 				if (clearTransform) {
 					_removeProp(s, _transformProp);
-					transform = this.t._gsTransform;
-					if (transform) {
-						if (transform.svg) {
-							this.t.removeAttribute("data-svg-origin");
-						}
+					if (this.t._gsTransform) {
 						delete this.t._gsTransform;
 					}
 				}
@@ -86182,12 +85848,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				vars = v;
 				style.cssText = first;
 			}
-
-			if (vars.className) { //className tweens will combine any differences they find in the css with the vars that are passed in, so {className:"myClass", scale:0.5, left:20} would work.
-				this._firstPT = pt = _specialProps.className.parse(target, vars.className, "className", this, null, null, vars);
-			} else {
-				this._firstPT = pt = this.parse(target, vars, null);
-			}
+			this._firstPT = pt = this.parse(target, vars, null);
 
 			if (this._transformType) {
 				threeD = (this._transformType === 3);
@@ -86217,10 +85878,9 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				}
 				tpt = new CSSPropTween(target, "transform", 0, 0, null, 2);
 				this._linkCSSP(tpt, null, pt2);
-				tpt.setRatio = _transformProp ? _setTransformRatio : _setIETransformRatio;
+				tpt.setRatio = (threeD && _supports3D) ? _set3DTransformRatio : _transformProp ? _set2DTransformRatio : _setIETransformRatio;
 				tpt.data = this._transform || _getTransform(target, _cs, true);
 				tpt.tween = tween;
-				tpt.pr = -1; //ensures that the transforms get applied after the components are updated.
 				_overwriteProps.pop(); //we don't want to force the overwrite of all "transform" tweens of the target - we only care about individual transform properties like scaleX, rotation, etc. The CSSPropTween constructor automatically adds the property to _overwriteProps which is why we need to pop() here.
 			}
 
@@ -87524,7 +87184,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 
 			//a bug in iOS 6 Safari occasionally prevents the requestAnimationFrame from working initially, so we use a 1.5-second timeout that automatically falls back to setTimeout() if it senses this condition.
 			setTimeout(function() {
-				if (_useRAF && _self.frame < 5) {
+				if (_useRAF && (!_id || _self.frame < 5)) {
 					_self.useRAF(false);
 				}
 			}, 1500);
@@ -88061,7 +87721,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		p._firstPT = p._targets = p._overwrittenProps = p._startAt = null;
 		p._notifyPluginsOfEnabled = p._lazy = false;
 
-		TweenLite.version = "1.16.1";
+		TweenLite.version = "1.16.0";
 		TweenLite.defaultEase = p._ease = new Ease(null, null, 1, 1);
 		TweenLite.defaultOverwrite = "auto";
 		TweenLite.ticker = _ticker;
@@ -88425,7 +88085,6 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 				if (!this._reversed ) {
 					isComplete = true;
 					callback = "onComplete";
-					force = (force || this._timeline.autoRemoveChildren); //otherwise, if the animation is unpaused/activated after it's already finished, it doesn't get removed from the parent timeline.
 				}
 				if (duration === 0) if (this._initted || !this.vars.lazy || force) { //zero-duration tweens are tricky because we must discern the momentum/direction of time in order to determine whether the starting values should be rendered or the ending values. If the "playhead" of its timeline goes past the zero-duration tween in the forward direction or lands directly on it, the end values should be rendered, but if the timeline's "playhead" moves past it in the backward direction (from a postitive time to a negative time), the starting values must be rendered.
 					if (this._startTime === this._timeline._duration) { //if a zero-duration tween is at the VERY end of a timeline and that timeline renders at its end, it will typically add a tiny bit of cushion to the render time to prevent rounding errors from getting in the way of tweens rendering their VERY end. If we then reverse() that timeline, the zero-duration tween will trigger its onReverseComplete even though technically the playhead didn't pass over it again. It's a very specific edge case we must accommodate.
@@ -88941,11 +88600,11 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 
 })((typeof(module) !== "undefined" && module.exports && typeof(global) !== "undefined") ? global : this || window, "TweenMax");
 /*!
- * VERSION: 0.13.0
- * DATE: 2015-03-13
+ * VERSION: 0.12.0
+ * DATE: 2015-03-01
  * UPDATES AND DOCS AT: http://greensock.com
  *
- * Requires TweenLite and CSSPlugin version 1.16.1 or later (TweenMax contains both TweenLite and CSSPlugin). ThrowPropsPlugin is required for momentum-based continuation of movement after the mouse/touch is released (ThrowPropsPlugin is a membership benefit of Club GreenSock - http://greensock.com/club/).
+ * Requires TweenLite and CSSPlugin version 1.11.0 or later (TweenMax contains both TweenLite and CSSPlugin). ThrowPropsPlugin is required for momentum-based continuation of movement after the mouse/touch is released (ThrowPropsPlugin is a membership benefit of Club GreenSock - http://www.greensock.com/club/).
  *
  * @license Copyright (c) 2008-2015, GreenSock. All rights reserved.
  * This work is subject to the terms at http://greensock.com/standard-license or for
@@ -88953,7 +88612,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
  * 
  * @author: Jack Doyle, jack@greensock.com
  */
-var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof global?global:this||window;(_gsScope._gsQueue||(_gsScope._gsQueue=[])).push(function(){"use strict";_gsScope._gsDefine("utils.Draggable",["events.EventDispatcher","TweenLite"],function(t,e){var i,s,r,n,a,o={css:{}},l={css:{}},h={css:{}},u={css:{}},_=_gsScope._gsDefine.globals,c={},f=document,p=f.documentElement||{},d=[],m=function(){return!1},g=180/Math.PI,v=999999999999999,y=Date.now||function(){return(new Date).getTime()},T=!(f.addEventListener||!f.all),w=f.createElement("div"),x=[],b={},P=0,S=/^(?:a|input|textarea|button|select)$/i,C=0,k=-1!==navigator.userAgent.toLowerCase().indexOf("android"),R=0,A={},O=function(t){if("string"==typeof t&&(t=e.selector(t)),!t||t.nodeType)return[t];var i,s=[],r=t.length;for(i=0;i!==r;s.push(t[i++]));return s},D=function(){for(var t=x.length;--t>-1;)x[t]()},M=function(t){x.push(t),1===x.length&&e.ticker.addEventListener("tick",D,this,!1,1)},L=function(t){for(var i=x.length;--i>-1;)x[i]===t&&x.splice(i,1);e.to(N,0,{overwrite:"all",delay:15,onComplete:N})},N=function(){x.length||e.ticker.removeEventListener("tick",D)},E=function(t,e){var i;for(i in e)void 0===t[i]&&(t[i]=e[i]);return t},I=function(){return null!=window.pageYOffset?window.pageYOffset:null!=f.scrollTop?f.scrollTop:p.scrollTop||f.body.scrollTop||0},z=function(){return null!=window.pageXOffset?window.pageXOffset:null!=f.scrollLeft?f.scrollLeft:p.scrollLeft||f.body.scrollLeft||0},X=function(t,e){be(t,"scroll",e),B(t.parentNode)||X(t.parentNode,e)},F=function(t,e){Pe(t,"scroll",e),B(t.parentNode)||F(t.parentNode,e)},B=function(t){return!(t&&t!==p&&t!==f&&t!==f.body&&t!==window&&t.nodeType&&t.parentNode)},Y=function(t,e){var i="x"===e?"Width":"Height",s="scroll"+i,r="client"+i,n=f.body;return Math.max(0,B(t)?Math.max(p[s],n[s])-(window["inner"+i]||p[r]||n[r]):t[s]-t[r])},U=function(t){var e=B(t),i=Y(t,"x"),s=Y(t,"y");e?t=A:U(t.parentNode),t._gsMaxScrollX=i,t._gsMaxScrollY=s,t._gsScrollX=t.scrollLeft||0,t._gsScrollY=t.scrollTop||0},j=function(t,e){return t=t||window.event,c.pageX=t.clientX+f.body.scrollLeft+p.scrollLeft,c.pageY=t.clientY+f.body.scrollTop+p.scrollTop,e&&(t.returnValue=!1),c},W=function(t){return t?("string"==typeof t&&(t=e.selector(t)),t.length&&t!==window&&t[0]&&t[0].style&&!t.nodeType&&(t=t[0]),t===window||t.nodeType&&t.style?t:null):t},q=function(t,e){var s,r,n,a=t.style;if(void 0===a[e]){for(n=["O","Moz","ms","Ms","Webkit"],r=5,s=e.charAt(0).toUpperCase()+e.substr(1);--r>-1&&void 0===a[n[r]+s];);if(0>r)return"";i=3===r?"ms":n[r],e=i+s}return e},V=function(t,e,i){var s=t.style;s&&(void 0===s[e]&&(e=q(t,e)),null==i?s.removeProperty?s.removeProperty(e.replace(/([A-Z])/g,"-$1").toLowerCase()):s.removeAttribute(e):void 0!==s[e]&&(s[e]=i))},G=f.defaultView?f.defaultView.getComputedStyle:m,H=/(?:Left|Right|Width)/i,Q=/(?:\d|\-|\+|=|#|\.)*/g,Z=function(t,e,i,s,r){if("px"===s||!s)return i;if("auto"===s||!i)return 0;var n,a=H.test(e),o=t,l=ee.style,h=0>i;return h&&(i=-i),"%"===s&&-1!==e.indexOf("border")?n=i/100*(a?t.clientWidth:t.clientHeight):(l.cssText="border:0 solid red;position:"+K(t,"position",!0)+";line-height:0;","%"!==s&&o.appendChild?l[a?"borderLeftWidth":"borderTopWidth"]=i+s:(o=t.parentNode||f.body,l[a?"width":"height"]=i+s),o.appendChild(ee),n=parseFloat(ee[a?"offsetWidth":"offsetHeight"]),o.removeChild(ee),0!==n||r||(n=Z(t,e,i,s,!0))),h?-n:n},$=function(t,e){if("absolute"!==K(t,"position",!0))return 0;var i="left"===e?"Left":"Top",s=K(t,"margin"+i,!0);return t["offset"+i]-(Z(t,e,parseFloat(s),(s+"").replace(Q,""))||0)},K=function(t,e,i){var s,r=(t._gsTransform||{})[e];return r||0===r?r:(t.style[e]?r=t.style[e]:(s=G(t))?(r=s.getPropertyValue(e.replace(/([A-Z])/g,"-$1").toLowerCase()),r=r||s.length?r:s[e]):t.currentStyle&&(r=t.currentStyle[e]),"auto"!==r||"top"!==e&&"left"!==e||(r=$(t,e)),i?r:parseFloat(r)||0)},J=function(t,e,i){var s=t.vars,r=s[i],n=t._listeners[e];"function"==typeof r&&r.apply(s[i+"Scope"]||t,s[i+"Params"]||[t.pointerEvent]),n&&t.dispatchEvent(e)},te=function(t,e){var i,s,r,n=W(t);return n?ve(n,e):void 0!==t.left?(r=fe(e),{left:t.left-r.x,top:t.top-r.y,width:t.width,height:t.height}):(s=t.min||t.minX||t.minRotation||0,i=t.min||t.minY||0,{left:s,top:i,width:(t.max||t.maxX||t.maxRotation||0)-s,height:(t.max||t.maxY||0)-i})},ee=f.createElement("div"),ie=""!==q(ee,"perspective"),se=q(ee,"transformOrigin").replace(/^ms/g,"Ms").replace(/([A-Z])/g,"-$1").toLowerCase(),re=q(ee,"transform"),ne=re.replace(/^ms/g,"Ms").replace(/([A-Z])/g,"-$1").toLowerCase(),ae={},oe={},le=function(){if(!T){var t="http://www.w3.org/2000/svg",e=f.createElementNS(t,"svg"),i=f.createElementNS(t,"rect");return i.setAttributeNS(null,"width","10"),i.setAttributeNS(null,"height","10"),e.appendChild(i),e}}(),he=window.SVGElement,ue=function(t){return!!(he&&"function"==typeof t.getBBox&&t.getCTM&&(!t.parentNode||t.parentNode.getBBox&&t.parentNode.getCTM))},_e=["class","viewBox","width","height","xml:space"],ce=function(t){if(!t.getBoundingClientRect||!t.parentNode)return{offsetTop:0,offsetLeft:0,scaleX:1,scaleY:1,offsetParent:p};if(t._gsSVGData&&t._gsSVGData.lastUpdate===e.ticker.frame)return t._gsSVGData;var i,s,r,n,a,o,l=t,h=t.style.cssText,u=t._gsSVGData=t._gsSVGData||{};if("svg"!==(t.nodeName+"").toLowerCase()&&t.getBBox){for(l=t.parentNode,i=t.getBBox();l&&"svg"!==(l.nodeName+"").toLowerCase();)l=l.parentNode;return u=ce(l),{offsetTop:i.y*u.scaleY,offsetLeft:i.x*u.scaleX,scaleX:u.scaleX,scaleY:u.scaleY,offsetParent:l||p}}for(;!l.offsetParent&&l.parentNode;)l=l.parentNode;for(t.parentNode.insertBefore(le,t),t.parentNode.removeChild(t),le.style.cssText=h,le.style[re]="none",a=_e.length;--a>-1;)o=t.getAttribute(_e[a]),o?le.setAttribute(_e[a],o):le.removeAttribute(_e[a]);return i=le.getBoundingClientRect(),n=le.firstChild.getBoundingClientRect(),r=l.offsetParent,r?(r===f.body&&p&&(r=p),s=r.getBoundingClientRect()):s={top:-I(),left:-z()},le.parentNode.insertBefore(t,le),t.parentNode.removeChild(le),u.scaleX=n.width/10,u.scaleY=n.height/10,u.offsetLeft=i.left-s.left,u.offsetTop=i.top-s.top,u.offsetParent=l.offsetParent||p,u.lastUpdate=e.ticker.frame,u},fe=function(t,i){if(i=i||{},!t||t===p||!t.parentNode)return{x:0,y:0};var s=G(t),r=se&&s?s.getPropertyValue(se):"50% 50%",n=r.split(" "),a=-1!==r.indexOf("left")?"0%":-1!==r.indexOf("right")?"100%":n[0],o=-1!==r.indexOf("top")?"0%":-1!==r.indexOf("bottom")?"100%":n[1];return("center"===o||null==o)&&(o="50%"),("center"===a||isNaN(parseFloat(a)))&&(a="50%"),t.getBBox&&ue(t)?(t._gsTransform||(e.set(t,{x:"+=0",overwrite:!1}),void 0===t._gsTransform.xOrigin&&console.log("Draggable requires at least GSAP 1.16.1")),r=t.getBBox(),n=ce(t),i.x=(t._gsTransform.xOrigin-r.x)*n.scaleX,i.y=(t._gsTransform.yOrigin-r.y)*n.scaleY):(i.x=-1!==a.indexOf("%")?t.offsetWidth*parseFloat(a)/100:parseFloat(a),i.y=-1!==o.indexOf("%")?t.offsetHeight*parseFloat(o)/100:parseFloat(o)),i},pe=function(t,e,i){var s,r,a,o,l,h;return t!==window&&t&&t.parentNode?(s=G(t),r=s?s.getPropertyValue(ne):t.currentStyle?t.currentStyle[re]:"1,0,0,1,0,0",r=(r+"").match(/(?:\-|\b)[\d\-\.e]+\b/g)||[1,0,0,1,0,0],r.length>6&&(r=[r[0],r[1],r[4],r[5],r[12],r[13]]),e&&(a=t.parentNode,h=t.getBBox&&ue(t)||void 0===t.offsetLeft&&"svg"===(t.nodeName+"").toLowerCase()?ce(t):t,o=h.offsetParent,l=a===p||a===f.body,void 0===n&&f.body&&re&&(n=function(){var t,e,i=f.createElement("div"),s=f.createElement("div");return s.style.position="absolute",f.body.appendChild(i),i.appendChild(s),t=s.offsetParent,i.style[re]="rotate(1deg)",e=s.offsetParent===t,f.body.removeChild(i),e}()),r[4]=Number(r[4])+e.x+(h.offsetLeft||0)-i.x-(l?0:a.scrollLeft)+(o?parseInt(K(o,"borderLeftWidth"),10)||0:0),r[5]=Number(r[5])+e.y+(h.offsetTop||0)-i.y-(l?0:a.scrollTop)+(o?parseInt(K(o,"borderTopWidth"),10)||0:0),!a||a.offsetParent!==o||n&&"100100"!==pe(a).join("")||(r[4]-=a.offsetLeft||0,r[5]-=a.offsetTop||0),a&&"fixed"===K(t,"position",!0)&&(r[4]+=z(),r[5]+=I())),r):[1,0,0,1,0,0]},de=function(t,e){if(!t||t===window||!t.parentNode)return[1,0,0,1,0,0];for(var i,s,r,n,a,o,l,h,u=fe(t,ae),_=fe(t.parentNode,oe),c=pe(t,u,_);(t=t.parentNode)&&t.parentNode&&t!==p;)u=_,_=fe(t.parentNode,u===ae?oe:ae),l=pe(t,u,_),i=c[0],s=c[1],r=c[2],n=c[3],a=c[4],o=c[5],c[0]=i*l[0]+s*l[2],c[1]=i*l[1]+s*l[3],c[2]=r*l[0]+n*l[2],c[3]=r*l[1]+n*l[3],c[4]=a*l[0]+o*l[2]+l[4],c[5]=a*l[1]+o*l[3]+l[5];return e&&(i=c[0],s=c[1],r=c[2],n=c[3],a=c[4],o=c[5],h=i*n-s*r,c[0]=n/h,c[1]=-s/h,c[2]=-r/h,c[3]=i/h,c[4]=(r*o-n*a)/h,c[5]=-(i*o-s*a)/h),c},me=function(t,e,i){var s=de(t),r=e.x,n=e.y;return i=i===!0?e:i||{},i.x=r*s[0]+n*s[2]+s[4],i.y=r*s[1]+n*s[3]+s[5],i},ge=function(t,e,i){var s=t.x*e[0]+t.y*e[2]+e[4],r=t.x*e[1]+t.y*e[3]+e[5];return t.x=s*i[0]+r*i[2]+i[4],t.y=s*i[1]+r*i[3]+i[5],t},ve=function(t,e){var i,s,r,n,a,o,l,h,u,_,c;return t===window?(n=I(),s=z(),r=s+(p.clientWidth||t.innerWidth||f.body.clientWidth||0),a=n+((t.innerHeight||0)-20<p.clientHeight?p.clientHeight:t.innerHeight||f.body.clientHeight||0)):(i=fe(t),s=-i.x,r=s+t.offsetWidth,n=-i.y,a=n+t.offsetHeight),t===e?{left:s,top:n,width:r-s,height:a-n}:(o=de(t),l=de(e,!0),h=ge({x:s,y:n},o,l),u=ge({x:r,y:n},o,l),_=ge({x:r,y:a},o,l),c=ge({x:s,y:a},o,l),s=Math.min(h.x,u.x,_.x,c.x),n=Math.min(h.y,u.y,_.y,c.y),{left:s,top:n,width:Math.max(h.x,u.x,_.x,c.x)-s,height:Math.max(h.y,u.y,_.y,c.y)-n})},ye=function(t){return t.length&&t[0]&&(t[0].nodeType&&t[0].style&&!t.nodeType||t[0].length&&t[0][0])?!0:!1},Te=function(t){var e,i,s,r=[],n=t.length;for(e=0;n>e;e++)if(i=t[e],ye(i))for(s=i.length,s=0;i.length>s;s++)r.push(i[s]);else r.push(i);return r},we="ontouchstart"in p&&"orientation"in window,xe=function(t){for(var e=t.split(","),i=(void 0!==ee.onpointerdown?"pointerdown,pointermove,pointerup,pointercancel":void 0!==ee.onmspointerdown?"MSPointerDown,MSPointerMove,MSPointerUp,MSPointerCancel":t).split(","),s={},r=8;--r>-1;)s[e[r]]=i[r],s[i[r]]=e[r];return s}("touchstart,touchmove,touchend,touchcancel"),be=function(t,e,i,s){t.addEventListener?t.addEventListener(xe[e]||e,i,s):t.attachEvent&&t.attachEvent("on"+e,i)},Pe=function(t,e,i){t.removeEventListener?t.removeEventListener(xe[e]||e,i):t.detachEvent&&t.detachEvent("on"+e,i)},Se=function(t){s=t.touches&&t.touches.length>C,Pe(t.target,"touchend",Se)},Ce=function(t){s=t.touches&&t.touches.length>C,be(t.target,"touchend",Se)},ke=function(t,e,i,s,r,n){var a,o,l,h={};if(e)if(1!==r&&e instanceof Array){for(h.end=a=[],l=e.length,o=0;l>o;o++)a[o]=e[o]*r;i+=1.1,s-=1.1}else h.end="function"==typeof e?function(i){return e.call(t,i)*r}:e;return(i||0===i)&&(h.max=i),(s||0===s)&&(h.min=s),n&&(h.velocity=0),h},Re=function(t){var e;return t&&t.getAttribute&&"BODY"!==t.nodeName?"true"===(e=t.getAttribute("data-clickable"))||"false"!==e&&(t.onclick||S.test(t.nodeName+"")||"true"===t.getAttribute("contentEditable"))?!0:Re(t.parentNode):!1},Ae=function(t,e){for(var i,s=t.length;--s>-1;)i=t[s],i.ondragstart=i.onselectstart=e?null:m,V(i,"userSelect",e?"text":"none")},Oe=function(){var t,e=f.createElement("div"),i=f.createElement("div"),s=i.style,r=f.body||ee;return s.display="inline-block",s.position="relative",e.style.cssText=i.innerHTML="width:90px; height:40px; padding:10px; overflow:auto; visibility: hidden",e.appendChild(i),r.appendChild(e),a=i.offsetHeight+18>e.scrollHeight,s.width="100%",re||(s.paddingRight="500px",t=e.scrollLeft=e.scrollWidth-e.clientWidth,s.left="-90px",t=t!==e.scrollLeft),r.removeChild(e),t}(),De=function(t,i){t=W(t),i=i||{};var s,r,n,o,l,h,u=f.createElement("div"),_=u.style,c=t.firstChild,p=0,d=0,m=t.scrollTop,g=t.scrollLeft,v=t.scrollWidth,y=t.scrollHeight,w=0,x=0,b=0;ie&&i.force3D!==!1?(l="translate3d(",h="px,0px)"):re&&(l="translate(",h="px)"),this.scrollTop=function(t,e){return arguments.length?(this.top(-t,e),void 0):-this.top()},this.scrollLeft=function(t,e){return arguments.length?(this.left(-t,e),void 0):-this.left()},this.left=function(s,r){if(!arguments.length)return-(t.scrollLeft+d);var n=t.scrollLeft-g,a=d;return(n>2||-2>n)&&!r?(g=t.scrollLeft,e.killTweensOf(this,!0,{left:1,scrollLeft:1}),this.left(-g),i.onKill&&i.onKill(),void 0):(s=-s,0>s?(d=0|s-.5,s=0):s>x?(d=0|s-x,s=x):d=0,(d||a)&&(l?this._suspendTransforms||(_[re]=l+-d+"px,"+-p+h):_.left=-d+"px",Oe&&d+w>=0&&(_.paddingRight=d+w+"px")),t.scrollLeft=0|s,g=t.scrollLeft,void 0)},this.top=function(s,r){if(!arguments.length)return-(t.scrollTop+p);var n=t.scrollTop-m,a=p;return(n>2||-2>n)&&!r?(m=t.scrollTop,e.killTweensOf(this,!0,{top:1,scrollTop:1}),this.top(-m),i.onKill&&i.onKill(),void 0):(s=-s,0>s?(p=0|s-.5,s=0):s>b?(p=0|s-b,s=b):p=0,(p||a)&&(l?this._suspendTransforms||(_[re]=l+-d+"px,"+-p+h):_.top=-p+"px"),t.scrollTop=0|s,m=t.scrollTop,void 0)},this.maxScrollTop=function(){return b},this.maxScrollLeft=function(){return x},this.disable=function(){for(c=u.firstChild;c;)o=c.nextSibling,t.appendChild(c),c=o;t===u.parentNode&&t.removeChild(u)},this.enable=function(){if(c=t.firstChild,c!==u){for(;c;)o=c.nextSibling,u.appendChild(c),c=o;t.appendChild(u),this.calibrate()}},this.calibrate=function(e){var i,o,l=t.clientWidth===s;m=t.scrollTop,g=t.scrollLeft,(!l||t.clientHeight!==r||u.offsetHeight!==n||v!==t.scrollWidth||y!==t.scrollHeight||e)&&((p||d)&&(i=this.left(),o=this.top(),this.left(-t.scrollLeft),this.top(-t.scrollTop)),(!l||e)&&(_.display="block",_.width="auto",_.paddingRight="0px",w=Math.max(0,t.scrollWidth-t.clientWidth),w&&(w+=K(t,"paddingLeft")+(a?K(t,"paddingRight"):0))),_.display="inline-block",_.position="relative",_.overflow="visible",_.verticalAlign="top",_.width="100%",_.paddingRight=w+"px",a&&(_.paddingBottom=K(t,"paddingBottom",!0)),T&&(_.zoom="1"),s=t.clientWidth,r=t.clientHeight,v=t.scrollWidth,y=t.scrollHeight,x=t.scrollWidth-s,b=t.scrollHeight-r,n=u.offsetHeight,_.display="block",(i||o)&&(this.left(i),this.top(o)))},this.content=u,this.element=t,this._suspendTransforms=!1,this.enable()},Me=function(i,n){t.call(this,i),i=W(i),r||(r=_.com.greensock.plugins.ThrowPropsPlugin),this.vars=n=n||{},this.target=i,this.x=this.y=this.rotation=0,this.dragResistance=parseFloat(n.dragResistance)||0,this.edgeResistance=isNaN(n.edgeResistance)?1:parseFloat(n.edgeResistance)||0,this.lockAxis=n.lockAxis,this.autoScroll=n.autoScroll||0,this.lockedAxis=null,this.allowEventDefault=!!n.allowEventDefault;var a,c,m,x,S,D,N,I,z,Y,q,G,H,Q,Z,$,ee,ie,se,re,ne,ae,oe,le,he,ue,_e,ce,fe,pe,ge,ve=(n.type||(T?"top,left":"x,y")).toLowerCase(),ye=-1!==ve.indexOf("x")||-1!==ve.indexOf("y"),Te=-1!==ve.indexOf("rotation"),Se=Te?"rotation":ye?"x":"left",Oe=ye?"y":"top",Le=-1!==ve.indexOf("x")||-1!==ve.indexOf("left")||"scroll"===ve,Ee=-1!==ve.indexOf("y")||-1!==ve.indexOf("top")||"scroll"===ve,Ie=n.minimumMovement||2,ze=this,Xe=O(n.trigger||n.handle||i),Fe={},Be=0,Ye=!1,Ue=n.clickableTest||Re,je=function(t){if(ze.autoScroll&&ze.isDragging&&(ie||Ye)){var e,s,r,n,a,o,l,h,u=i,_=15*ze.autoScroll;for(Ye=!1,A.scrollTop=null!=window.pageYOffset?window.pageYOffset:null!=p.scrollTop?p.scrollTop:f.body.scrollTop,A.scrollLeft=null!=window.pageXOffset?window.pageXOffset:null!=p.scrollLeft?p.scrollLeft:f.body.scrollLeft,n=ze.pointerX-A.scrollLeft,a=ze.pointerY-A.scrollTop;u&&!s;)s=B(u.parentNode),e=s?A:u.parentNode,r=s?{bottom:Math.max(p.clientHeight,window.innerHeight||0),right:Math.max(p.clientWidth,window.innerWidth||0),left:0,top:0}:e.getBoundingClientRect(),o=l=0,Ee&&(a>r.bottom-40&&(h=e._gsMaxScrollY-e.scrollTop)?(Ye=!0,l=Math.min(h,0|_*(1-Math.max(0,r.bottom-a)/40))):r.top+40>a&&e.scrollTop&&(Ye=!0,l=-Math.min(e.scrollTop,0|_*(1-Math.max(0,a-r.top)/40))),l&&(e.scrollTop+=l)),Le&&(n>r.right-40&&(h=e._gsMaxScrollX-e.scrollLeft)?(Ye=!0,o=Math.min(h,0|_*(1-Math.max(0,r.right-n)/40))):r.left+40>n&&e.scrollLeft&&(Ye=!0,o=-Math.min(e.scrollLeft,0|_*(1-Math.max(0,n-r.left)/40))),o&&(e.scrollLeft+=o)),s&&(o||l)&&(window.scrollTo(e.scrollLeft,e.scrollTop),Je(ze.pointerX+o,ze.pointerY+l)),u=e}if(ie){var d=ze.x,m=ze.y,g=1e-6;g>d&&d>-g&&(d=0),g>m&&m>-g&&(m=0),Te?(fe.data.rotation=ze.rotation=d,fe.setRatio(1)):c?(Ee&&c.top(m),Le&&c.left(d)):ye?(Ee&&(fe.data.y=m),Le&&(fe.data.x=d),fe.setRatio(1)):(Ee&&(i.style.top=m+"px"),Le&&(i.style.left=d+"px")),I&&!t&&J(ze,"drag","onDrag")}ie=!1},We=function(t,s){var r;i._gsTransform||!ye&&!Te||e.set(i,{x:"+=0",overwrite:!1}),ye?(ze.y=i._gsTransform.y,ze.x=i._gsTransform.x):Te?ze.x=ze.rotation=i._gsTransform.rotation:c?(ze.y=c.top(),ze.x=c.left()):(ze.y=parseInt(i.style.top,10)||0,ze.x=parseInt(i.style.left,10)||0),!re&&!ne||s||(re&&(r=re(ze.x),r!==ze.x&&(ze.x=r,Te&&(ze.rotation=r),ie=!0)),ne&&(r=ne(ze.y),r!==ze.y&&(ze.y=r,ie=!0)),ie&&je(!0)),n.onThrowUpdate&&!t&&n.onThrowUpdate.apply(n.onThrowUpdateScope||ze,n.onThrowUpdateParams||d)},qe=function(){var t,e,s,r;N=!1,c?(c.calibrate(),ze.minX=Y=-c.maxScrollLeft(),ze.minY=G=-c.maxScrollTop(),ze.maxX=z=ze.maxY=q=0,N=!0):n.bounds&&(t=te(n.bounds,i.parentNode),Te?(ze.minX=Y=t.left,ze.maxX=z=t.left+t.width,ze.minY=G=ze.maxY=q=0):void 0!==n.bounds.maxX||void 0!==n.bounds.maxY?(t=n.bounds,ze.minX=Y=t.minX,ze.minY=G=t.minY,ze.maxX=z=t.maxX,ze.maxY=q=t.maxY):(e=te(i,i.parentNode),ze.minX=Y=K(i,Se)+t.left-e.left,ze.minY=G=K(i,Oe)+t.top-e.top,ze.maxX=z=Y+(t.width-e.width),ze.maxY=q=G+(t.height-e.height)),Y>z&&(ze.minX=z,ze.maxX=z=Y,Y=ze.minX),G>q&&(ze.minY=q,ze.maxY=q=G,G=ze.minY),Te&&(ze.minRotation=Y,ze.maxRotation=z),N=!0),n.liveSnap&&(s=n.liveSnap===!0?n.snap||{}:n.liveSnap,r=s instanceof Array||"function"==typeof s,Te?(re=Ze(r?s:s.rotation,Y,z,1),ne=null):(Le&&(re=Ze(r?s:s.x||s.left||s.scrollLeft,Y,z,c?-1:1)),Ee&&(ne=Ze(r?s:s.y||s.top||s.scrollTop,G,q,c?-1:1))))},Ve=function(t,e){var s,a,o;t&&r?(t===!0&&(s=n.snap||{},a=s instanceof Array||"function"==typeof s,t={resistance:(n.throwResistance||n.resistance||1e3)/(Te?10:1)},Te?t.rotation=ke(ze,a?s:s.rotation,z,Y,1,e):(Le&&(t[Se]=ke(ze,a?s:s.x||s.left||s.scrollLeft,z,Y,c?-1:1,e||"x"===ze.lockedAxis)),Ee&&(t[Oe]=ke(ze,a?s:s.y||s.top||s.scrollTop,q,G,c?-1:1,e||"y"===ze.lockedAxis)))),ze.tween=o=r.to(c||i,{throwProps:t,ease:n.ease||_.Power3.easeOut,onComplete:n.onThrowComplete,onCompleteParams:n.onThrowCompleteParams,onCompleteScope:n.onThrowCompleteScope||ze,onUpdate:n.fastMode?n.onThrowUpdate:We,onUpdateParams:n.fastMode?n.onThrowUpdateParams:null,onUpdateScope:n.onThrowUpdateScope||ze},isNaN(n.maxDuration)?2:n.maxDuration,isNaN(n.minDuration)?.5:n.minDuration,isNaN(n.overshootTolerance)?1-ze.edgeResistance+.2:n.overshootTolerance),n.fastMode||(c&&(c._suspendTransforms=!0),o.render(o.duration(),!0,!0),We(!0,!0),ze.endX=ze.x,ze.endY=ze.y,Te&&(ze.endRotation=ze.x),o.play(0),We(!0,!0),c&&(c._suspendTransforms=!1))):N&&ze.applyBounds()},Ge=function(){le=de(i.parentNode,!0),le[1]||le[2]||1!=le[0]||1!=le[3]||0!=le[4]||0!=le[5]||(le=null)},He=function(){var t=1-ze.edgeResistance;Ge(),c?(qe(),D=c.top(),S=c.left()):(Qe()?(We(!0,!0),qe()):ze.applyBounds(),Te?(ee=me(i,{x:0,y:0}),We(!0,!0),S=ze.x,D=ze.y=Math.atan2(ee.y-x,m-ee.x)*g):(_e=i.parentNode?i.parentNode.scrollTop||0:0,ce=i.parentNode?i.parentNode.scrollLeft||0:0,D=K(i,Oe),S=K(i,Se))),N&&t&&(S>z?S=z+(S-z)/t:Y>S&&(S=Y-(Y-S)/t),Te||(D>q?D=q+(D-q)/t:G>D&&(D=G-(G-D)/t)))},Qe=function(){return ze.tween&&ze.tween.isActive()},Ze=function(t,e,i,s){return"function"==typeof t?function(r){var n=ze.isPressed?1-ze.edgeResistance:1;return t.call(ze,r>i?i+(r-i)*n:e>r?e+(r-e)*n:r)*s}:t instanceof Array?function(s){for(var r,n,a=t.length,o=0,l=v;--a>-1;)r=t[a],n=r-s,0>n&&(n=-n),l>n&&r>=e&&i>=r&&(o=a,l=n);return t[o]}:isNaN(t)?function(t){return t}:function(){return t*s}},$e=function(t){var s,r;if(a&&!ze.isPressed&&t&&!("mousedown"===t.type&&30>y()-ue&&xe[ze.pointerEvent.type])){if(he=Qe(),ze.pointerEvent=t,xe[t.type]?(oe=-1!==t.type.indexOf("touch")?t.currentTarget:f,be(oe,"touchend",ti),be(oe,"touchmove",Ke),be(oe,"touchcancel",ti),be(f,"touchstart",Ce)):(oe=null,be(f,"mousemove",Ke)),ge=null,be(f,"mouseup",ti),t&&t.target&&be(t.target,"mouseup",ti),ae=Ue.call(ze,t.target)&&!n.dragClickables)return be(t.target,"change",ti),J(ze,"press","onPress"),Ae(Xe,!0),void 0;if(pe=!oe||Le===Ee||c||ze.vars.allowNativeTouchScrolling===!1?!1:Le?"y":"x",T?t=j(t,!0):pe||ze.allowEventDefault||(t.preventDefault(),t.preventManipulation&&t.preventManipulation()),t.changedTouches?(t=Z=t.changedTouches[0],$=t.identifier):t.pointerId?$=t.pointerId:Z=null,C++,M(je),x=ze.pointerY=t.pageY,m=ze.pointerX=t.pageX,(pe||ze.autoScroll)&&U(i.parentNode),!ze.autoScroll||Te||c||!i.parentNode||i.getBBox||!i.parentNode._gsMaxScrollX||w.parentNode||(w.style.width=i.parentNode.scrollWidth+"px",i.parentNode.appendChild(w)),He(),le&&(s=m*le[0]+x*le[2]+le[4],x=m*le[1]+x*le[3]+le[5],m=s),ze.tween&&ze.tween.kill(),e.killTweensOf(c||i,!0,Fe),c&&e.killTweensOf(i,!0,{scrollTo:1}),ze.tween=ze.lockedAxis=null,(n.zIndexBoost||!Te&&!c&&n.zIndexBoost!==!1)&&(i.style.zIndex=Me.zIndex++),ze.isPressed=!0,I=!(!n.onDrag&&!ze._listeners.drag),!Te)for(r=Xe.length;--r>-1;)V(Xe[r],"cursor",n.cursor||"move");J(ze,"press","onPress")}},Ke=function(t){var e,i,r,n,o=t;if(a&&!s&&ze.isPressed&&t){if(ze.pointerEvent=t,e=t.changedTouches){if(t=e[0],t!==Z&&t.identifier!==$){for(n=e.length;--n>-1&&(t=e[n]).identifier!==$;);if(0>n)return}}else if(t.pointerId&&$&&t.pointerId!==$)return;if(T)t=j(t,!0);else{if(oe&&pe&&!ge&&(i=t.pageX,r=t.pageY,le&&(n=i*le[0]+r*le[2]+le[4],r=i*le[1]+r*le[3]+le[5],i=n),ge=Math.abs(i-m)>Math.abs(r-x)&&Le?"x":"y",ze.vars.lockAxisOnTouchScroll!==!1&&(ze.lockedAxis="x"===ge?"y":"x","function"==typeof ze.vars.onLockAxis&&ze.vars.onLockAxis.call(ze,o)),k&&pe===ge))return ti(o),void 0;ze.allowEventDefault||pe&&(!ge||pe===ge)||o.cancelable===!1||(o.preventDefault(),o.preventManipulation&&o.preventManipulation())}ze.autoScroll&&(Ye=!0),Je(t.pageX,t.pageY)}},Je=function(t,e){var i,s,r,n,a,o,l=1-ze.dragResistance,h=1-ze.edgeResistance;ze.pointerX=t,ze.pointerY=e,Te?(n=Math.atan2(ee.y-e,t-ee.x)*g,a=ze.y-n,ze.y=n,a>180?D-=360:-180>a&&(D+=360),r=S+(D-n)*l):(le&&(o=t*le[0]+e*le[2]+le[4],e=t*le[1]+e*le[3]+le[5],t=o),s=e-x,i=t-m,Ie>s&&s>-Ie&&(s=0),Ie>i&&i>-Ie&&(i=0),(ze.lockAxis||ze.lockedAxis)&&(i||s)&&(o=ze.lockedAxis,o||(ze.lockedAxis=o=Le&&Math.abs(i)>Math.abs(s)?"y":Ee?"x":null,o&&"function"==typeof ze.vars.onLockAxis&&ze.vars.onLockAxis.call(ze,ze.pointerEvent)),"y"===o?s=0:"x"===o&&(i=0)),r=S+i*l,n=D+s*l),re||ne?(re&&(r=re(r)),ne&&(n=ne(n))):N&&(r>z?r=z+(r-z)*h:Y>r&&(r=Y+(r-Y)*h),Te||(n>q?n=q+(n-q)*h:G>n&&(n=G+(n-G)*h))),Te||(r=Math.round(r),n=Math.round(n)),(ze.x!==r||ze.y!==n&&!Te)&&(ze.x=ze.endX=r,Te?ze.endRotation=r:ze.y=ze.endY=n,ie=!0,ze.isDragging||(ze.isDragging=!0,J(ze,"dragstart","onDragStart")))},ti=function(t,e){if(a&&ze.isPressed&&(!t||!$||e||!t.pointerId||t.pointerId===$)){ze.isPressed=!1;var s,r,o,l,h=t,u=ze.isDragging;if(oe?(Pe(oe,"touchend",ti),Pe(oe,"touchmove",Ke),Pe(oe,"touchcancel",ti),Pe(f,"touchstart",Ce)):Pe(f,"mousemove",Ke),Pe(f,"mouseup",ti),t&&t.target&&Pe(t.target,"mouseup",ti),ie=!1,w.parentNode&&w.parentNode.removeChild(w),ae)return t&&Pe(t.target,"change",ti),Ae(Xe,!1),J(ze,"release","onRelease"),J(ze,"click","onClick"),ae=!1,void 0;if(L(je),!Te)for(r=Xe.length;--r>-1;)V(Xe[r],"cursor",n.cursor||"move");if(u&&(Be=R=y(),ze.isDragging=!1),C--,t){if(T&&(t=j(t,!1)),s=t.changedTouches,s&&(t=s[0],t!==Z&&t.identifier!==$)){for(r=s.length;--r>-1&&(t=s[r]).identifier!==$;);if(0>r)return}ze.pointerEvent=h,ze.pointerX=t.pageX,ze.pointerY=t.pageY}return h&&!u?(he&&(n.snap||n.bounds)&&Ve(n.throwProps),J(ze,"release","onRelease"),k&&"touchmove"===h.type||(J(ze,"click","onClick"),l=h.target||h.srcElement||i,l.click?l.click():f.createEvent&&(o=f.createEvent("MouseEvents"),o.initEvent("click",!0,!0),l.dispatchEvent(o)),ue=y())):(Ve(n.throwProps),T||ze.allowEventDefault||!h||!n.dragClickables&&Ue.call(ze,h.target)||!u||pe&&(!ge||pe!==ge)||h.cancelable===!1||(h.preventDefault(),h.preventManipulation&&h.preventManipulation()),J(ze,"release","onRelease")),u&&J(ze,"dragend","onDragEnd"),!0}},ei=function(t){if(t&&ze.isDragging){var e=t.target||t.srcElement||i.parentNode,s=e.scrollLeft-e._gsScrollX,r=e.scrollTop-e._gsScrollY;(s||r)&&(m-=s,x-=r,e._gsScrollX+=s,e._gsScrollY+=r,Je(ze.pointerX,ze.pointerY))}},ii=function(t){var e=y(),i=40>e-ue,s=40>e-Be;(ze.isPressed||s||i)&&(t.preventDefault?(t.preventDefault(),(i||s&&ze.vars.suppressClickOnDrag!==!1)&&t.stopImmediatePropagation()):t.returnValue=!1,t.preventManipulation&&t.preventManipulation())};se=Me.get(this.target),se&&se.kill(),this.startDrag=function(t){$e(t),ze.isDragging||(ze.isDragging=!0,J(ze,"dragstart","onDragStart"))},this.drag=Ke,this.endDrag=function(t){ti(t,!0)},this.timeSinceDrag=function(){return ze.isDragging?0:(y()-Be)/1e3},this.hitTest=function(t,e){return Me.hitTest(ze.target,t,e)},this.getDirection=function(t,e){var i,s,n,a,o,l,h="velocity"===t&&r?t:"object"!=typeof t||Te?"start":"element";return"element"===h&&(o=Ne(ze.target),l=Ne(t)),i="start"===h?ze.x-S:"velocity"===h?r.getVelocity(this.target,Se):o.left+o.width/2-(l.left+l.width/2),Te?0>i?"counter-clockwise":"clockwise":(e=e||2,s="start"===h?ze.y-D:"velocity"===h?r.getVelocity(this.target,Oe):o.top+o.height/2-(l.top+l.height/2),n=Math.abs(i/s),a=1/e>n?"":0>i?"left":"right",e>n&&(""!==a&&(a+="-"),a+=0>s?"up":"down"),a)},this.applyBounds=function(t){var e,i;return t&&n.bounds!==t?(n.bounds=t,ze.update(!0)):(We(!0),qe(),N&&(e=ze.x,i=ze.y,N&&(e>z?e=z:Y>e&&(e=Y),i>q?i=q:G>i&&(i=G)),(ze.x!==e||ze.y!==i)&&(ze.x=ze.endX=e,Te?ze.endRotation=e:ze.y=ze.endY=i,ie=!0,je())),ze)},this.update=function(t){var e=ze.x,i=ze.y;return Ge(),t?ze.applyBounds():(ie&&je(),We(!0)),ze.isPressed&&(Le&&Math.abs(e-ze.x)>.01||Ee&&Math.abs(i-ze.y)>.01&&!Te)&&He(),ze},this.enable=function(t){var s,o,l;if("soft"!==t){for(o=Xe.length;--o>-1;)l=Xe[o],be(l,"mousedown",$e),be(l,"touchstart",$e),be(l,"click",ii,!0),Te||V(l,"cursor",n.cursor||"move"),V(l,"touchCallout","none"),V(l,"touchAction",Le===Ee||c?"none":Le?"pan-y":"pan-x");Ae(Xe,!1)}return X(ze.target,ei),a=!0,r&&"soft"!==t&&r.track(c||i,ye?"x,y":Te?"rotation":"top,left"),c&&c.enable(),i._gsDragID=s="d"+P++,b[s]=this,c&&(c.element._gsDragID=s),e.set(i,{x:"+=0",overwrite:!1}),fe={t:i,data:T?Q:i._gsTransform,tween:{},setRatio:T?function(){e.set(i,H)}:CSSPlugin._internals.setTransformRatio||CSSPlugin._internals.set3DTransformRatio},this.update(!0),ze},this.disable=function(t){var e,s,n=this.isDragging;if(!Te)for(e=Xe.length;--e>-1;)V(Xe[e],"cursor",null);if("soft"!==t){for(e=Xe.length;--e>-1;)s=Xe[e],V(s,"touchCallout",null),V(s,"touchAction",null),Pe(s,"mousedown",$e),Pe(s,"touchstart",$e),Pe(s,"click",ii);Ae(Xe,!0),oe&&(Pe(oe,"touchcancel",ti),Pe(oe,"touchend",ti),Pe(oe,"touchmove",Ke)),Pe(f,"mouseup",ti),Pe(f,"mousemove",Ke)}return F(i,ei),a=!1,r&&"soft"!==t&&r.untrack(c||i,ye?"x,y":Te?"rotation":"top,left"),c&&c.disable(),L(je),this.isDragging=this.isPressed=ae=!1,n&&J(this,"dragend","onDragEnd"),ze},this.enabled=function(t,e){return arguments.length?t?this.enable(e):this.disable(e):a},this.kill=function(){return e.killTweensOf(c||i,!0,Fe),ze.disable(),delete b[i._gsDragID],ze},-1!==ve.indexOf("scroll")&&(c=this.scrollProxy=new De(i,E({onKill:function(){ze.isPressed&&ti(null)}},n)),i.style.overflowY=Ee&&!we?"auto":"hidden",i.style.overflowX=Le&&!we?"auto":"hidden",i=c.content),n.force3D!==!1&&e.set(i,{force3D:!0}),Te?Fe.rotation=1:(Le&&(Fe[Se]=1),Ee&&(Fe[Oe]=1)),Te?(H=u,Q=H.css,H.overwrite=!1):ye&&(H=Le&&Ee?o:Le?l:h,Q=H.css,H.overwrite=!1),this.enable()},Le=Me.prototype=new t;Le.constructor=Me,Le.pointerX=Le.pointerY=0,Le.isDragging=Le.isPressed=!1,Me.version="0.13.0",Me.zIndex=1e3,be(f,"touchcancel",function(){}),be(f,"contextmenu",function(){var t;for(t in b)b[t].isPressed&&b[t].endDrag()}),Me.create=function(t,i){"string"==typeof t&&(t=e.selector(t));for(var s=ye(t)?Te(t):[t],r=s.length;--r>-1;)s[r]=new Me(s[r],i);return s},Me.get=function(t){return b[(W(t)||{})._gsDragID]},Me.timeSinceDrag=function(){return(y()-R)/1e3};var Ne=function(t,e){var i=t.pageX!==e?{left:t.pageX,top:t.pageY,right:t.pageX+1,bottom:t.pageY+1}:t.nodeType||t.left===e||t.top===e?W(t).getBoundingClientRect():t;return i.right===e&&i.width!==e?(i.right=i.left+i.width,i.bottom=i.top+i.height):i.width===e&&(i={width:i.right-i.left,height:i.bottom-i.top,right:i.right,left:i.left,bottom:i.bottom,top:i.top}),i};return Me.hitTest=function(t,e,i){if(t===e)return!1;var s,r,n,a=Ne(t),o=Ne(e),l=o.left>a.right||o.right<a.left||o.top>a.bottom||o.bottom<a.top;return l||!i?!l:(n=-1!==(i+"").indexOf("%"),i=parseFloat(i)||0,s={left:Math.max(a.left,o.left),top:Math.max(a.top,o.top)},s.width=Math.min(a.right,o.right)-s.left,s.height=Math.min(a.bottom,o.bottom)-s.top,0>s.width||0>s.height?!1:n?(i*=.01,r=s.width*s.height,r>=a.width*a.height*i||r>=o.width*o.height*i):s.width>i&&s.height>i)},w.style.cssText="visibility:hidden;height:1px;top:-1px;pointer-events:none;position:relative;clear:both;",Me},!0)}),_gsScope._gsDefine&&_gsScope._gsQueue.pop()(),function(t){"use strict";var e=function(){return(_gsScope.GreenSockGlobals||_gsScope)[t]};"function"==typeof define&&define.amd?define(["TweenLite"],e):"undefined"!=typeof module&&module.exports&&(require("../TweenLite.js"),require("../plugins/CSSPlugin.js"),module.exports=e())}("Draggable");
+var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof global?global:this||window;(_gsScope._gsQueue||(_gsScope._gsQueue=[])).push(function(){"use strict";_gsScope._gsDefine("utils.Draggable",["events.EventDispatcher","TweenLite"],function(t,e){var i,s,r,n,a,o={css:{}},l={css:{}},h={css:{}},u={css:{}},_=_gsScope._gsDefine.globals,c={},f=document,p=f.documentElement||{},d=[],m=function(){return!1},g=180/Math.PI,v=999999999999999,y=Date.now||function(){return(new Date).getTime()},T=!(f.addEventListener||!f.all),w=f.createElement("div"),x=[],b={},P=0,S=/^(?:a|input|textarea|button|select)$/i,C=0,k=0,R={},A=function(t){if("string"==typeof t&&(t=e.selector(t)),!t||t.nodeType)return[t];var i,s=[],r=t.length;for(i=0;i!==r;s.push(t[i++]));return s},O=function(){for(var t=x.length;--t>-1;)x[t]()},D=function(t){x.push(t),1===x.length&&e.ticker.addEventListener("tick",O,this,!1,1)},M=function(t){for(var i=x.length;--i>-1;)x[i]===t&&x.splice(i,1);e.to(L,0,{overwrite:"all",delay:15,onComplete:L})},L=function(){x.length||e.ticker.removeEventListener("tick",O)},N=function(t,e){var i;for(i in e)void 0===t[i]&&(t[i]=e[i]);return t},E=function(){return null!=window.pageYOffset?window.pageYOffset:null!=f.scrollTop?f.scrollTop:p.scrollTop||f.body.scrollTop||0},I=function(){return null!=window.pageXOffset?window.pageXOffset:null!=f.scrollLeft?f.scrollLeft:p.scrollLeft||f.body.scrollLeft||0},z=function(t,e){xe(t,"scroll",e),F(t.parentNode)||z(t.parentNode,e)},X=function(t,e){be(t,"scroll",e),F(t.parentNode)||X(t.parentNode,e)},F=function(t){return!(t&&t!==p&&t!==f&&t!==f.body&&t!==window&&t.nodeType&&t.parentNode)},B=function(t,e){var i="x"===e?"Width":"Height",s="scroll"+i,r="client"+i,n=f.body;return Math.max(0,F(t)?Math.max(p[s],n[s])-(window["inner"+i]||p[r]||n[r]):t[s]-t[r])},Y=function(t){var e=F(t),i=B(t,"x"),s=B(t,"y");e?t=R:Y(t.parentNode),t._gsMaxScrollX=i,t._gsMaxScrollY=s,t._gsScrollX=t.scrollLeft||0,t._gsScrollY=t.scrollTop||0},U=function(t,e){return t=t||window.event,c.pageX=t.clientX+f.body.scrollLeft+p.scrollLeft,c.pageY=t.clientY+f.body.scrollTop+p.scrollTop,e&&(t.returnValue=!1),c},j=function(t){return t?("string"==typeof t&&(t=e.selector(t)),t.length&&t!==window&&t[0]&&t[0].style&&!t.nodeType&&(t=t[0]),t===window||t.nodeType&&t.style?t:null):t},W=function(t,e){var s,r,n,a=t.style;if(void 0===a[e]){for(n=["O","Moz","ms","Ms","Webkit"],r=5,s=e.charAt(0).toUpperCase()+e.substr(1);--r>-1&&void 0===a[n[r]+s];);if(0>r)return"";i=3===r?"ms":n[r],e=i+s}return e},q=function(t,e,i){var s=t.style;s&&(void 0===s[e]&&(e=W(t,e)),null==i?s.removeProperty?s.removeProperty(e.replace(/([A-Z])/g,"-$1").toLowerCase()):s.removeAttribute(e):void 0!==s[e]&&(s[e]=i))},V=f.defaultView?f.defaultView.getComputedStyle:m,G=/(?:Left|Right|Width)/i,H=/(?:\d|\-|\+|=|#|\.)*/g,Q=function(t,e,i,s,r){if("px"===s||!s)return i;if("auto"===s||!i)return 0;var n,a=G.test(e),o=t,l=te.style,h=0>i;return h&&(i=-i),"%"===s&&-1!==e.indexOf("border")?n=i/100*(a?t.clientWidth:t.clientHeight):(l.cssText="border:0 solid red;position:"+$(t,"position",!0)+";line-height:0;","%"!==s&&o.appendChild?l[a?"borderLeftWidth":"borderTopWidth"]=i+s:(o=t.parentNode||f.body,l[a?"width":"height"]=i+s),o.appendChild(te),n=parseFloat(te[a?"offsetWidth":"offsetHeight"]),o.removeChild(te),0!==n||r||(n=Q(t,e,i,s,!0))),h?-n:n},Z=function(t,e){if("absolute"!==$(t,"position",!0))return 0;var i="left"===e?"Left":"Top",s=$(t,"margin"+i,!0);return t["offset"+i]-(Q(t,e,parseFloat(s),(s+"").replace(H,""))||0)},$=function(t,e,i){var s,r=(t._gsTransform||{})[e];return r||0===r?r:(t.style[e]?r=t.style[e]:(s=V(t))?(r=s.getPropertyValue(e.replace(/([A-Z])/g,"-$1").toLowerCase()),r=r||s.length?r:s[e]):t.currentStyle&&(r=t.currentStyle[e]),"auto"!==r||"top"!==e&&"left"!==e||(r=Z(t,e)),i?r:parseFloat(r)||0)},K=function(t,e,i){var s=t.vars,r=s[i],n=t._listeners[e];"function"==typeof r&&r.apply(s[i+"Scope"]||t,s[i+"Params"]||[t.pointerEvent]),n&&t.dispatchEvent(e)},J=function(t,e){var i,s,r,n=j(t);return n?ge(n,e):void 0!==t.left?(r=ce(e),{left:t.left-r.x,top:t.top-r.y,width:t.width,height:t.height}):(s=t.min||t.minX||t.minRotation||0,i=t.min||t.minY||0,{left:s,top:i,width:(t.max||t.maxX||t.maxRotation||0)-s,height:(t.max||t.maxY||0)-i})},te=f.createElement("div"),ee=""!==W(te,"perspective"),ie=W(te,"transformOrigin").replace(/^ms/g,"Ms").replace(/([A-Z])/g,"-$1").toLowerCase(),se=W(te,"transform"),re=se.replace(/^ms/g,"Ms").replace(/([A-Z])/g,"-$1").toLowerCase(),ne={},ae={},oe=function(){if(!T){var t="http://www.w3.org/2000/svg",e=f.createElementNS(t,"svg"),i=f.createElementNS(t,"rect");return i.setAttributeNS(null,"width","10"),i.setAttributeNS(null,"height","10"),e.appendChild(i),e}}(),le=window.SVGElement,he=function(t){return!!(le&&"function"==typeof t.getBBox&&t.getCTM&&(!t.parentNode||t.parentNode.getBBox&&t.parentNode.getCTM))},ue=["class","viewBox","width","height","xml:space"],_e=function(t){if(!t.getBoundingClientRect||!t.parentNode)return{offsetTop:0,offsetLeft:0,scaleX:1,scaleY:1,offsetParent:p};if(t._gsSVGData&&t._gsSVGData.lastUpdate===e.ticker.frame)return t._gsSVGData;var i,s,r,n,a,o,l=t,h=t.style.cssText,u=t._gsSVGData=t._gsSVGData||{};if("svg"!==(t.nodeName+"").toLowerCase()&&t.getBBox){for(l=t.parentNode,i=t.getBBox();l&&"svg"!==(l.nodeName+"").toLowerCase();)l=l.parentNode;return u=_e(l),{offsetTop:i.y*u.scaleY,offsetLeft:i.x*u.scaleX,scaleX:u.scaleX,scaleY:u.scaleY,offsetParent:l||p}}for(;!l.offsetParent&&l.parentNode;)l=l.parentNode;for(t.parentNode.insertBefore(oe,t),t.parentNode.removeChild(t),oe.style.cssText=h,oe.style[se]="none",a=ue.length;--a>-1;)o=t.getAttribute(ue[a]),o?oe.setAttribute(ue[a],o):oe.removeAttribute(ue[a]);return i=oe.getBoundingClientRect(),n=oe.firstChild.getBoundingClientRect(),r=l.offsetParent,r?(r===f.body&&p&&(r=p),s=r.getBoundingClientRect()):s={top:-E(),left:-I()},oe.parentNode.insertBefore(t,oe),t.parentNode.removeChild(oe),u.scaleX=n.width/10,u.scaleY=n.height/10,u.offsetLeft=i.left-s.left,u.offsetTop=i.top-s.top,u.offsetParent=l.offsetParent||p,u.lastUpdate=e.ticker.frame,u},ce=function(t,i){if(i=i||{},!t||t===p||!t.parentNode)return{x:0,y:0};var s=V(t),r=ie&&s?s.getPropertyValue(ie):"50% 50%",n=r.split(" "),a=-1!==r.indexOf("left")?"0%":-1!==r.indexOf("right")?"100%":n[0],o=-1!==r.indexOf("top")?"0%":-1!==r.indexOf("bottom")?"100%":n[1];return("center"===o||null==o)&&(o="50%"),("center"===a||isNaN(parseFloat(a)))&&(a="50%"),t.getBBox&&he(t)?(t._gsTransform||(e.set(t,{x:"+=0"}),void 0===t._gsTransform.xOrigin&&console.log("Draggable requires at least GSAP 1.16.0")),r=t.getBBox(),n=_e(t),i.x=(t._gsTransform.xOrigin-r.x)*n.scaleX,i.y=(t._gsTransform.yOrigin-r.y)*n.scaleY):(i.x=-1!==a.indexOf("%")?t.offsetWidth*parseFloat(a)/100:parseFloat(a),i.y=-1!==o.indexOf("%")?t.offsetHeight*parseFloat(o)/100:parseFloat(o)),i},fe=function(t,e,i){var s,r,a,o,l,h;return t!==window&&t&&t.parentNode?(s=V(t),r=s?s.getPropertyValue(re):t.currentStyle?t.currentStyle[se]:"1,0,0,1,0,0",r=(r+"").match(/(?:\-|\b)[\d\-\.e]+\b/g)||[1,0,0,1,0,0],r.length>6&&(r=[r[0],r[1],r[4],r[5],r[12],r[13]]),e&&(a=t.parentNode,h=t.getBBox&&he(t)||void 0===t.offsetLeft&&"svg"===(t.nodeName+"").toLowerCase()?_e(t):t,o=h.offsetParent,l=a===p||a===f.body,void 0===n&&f.body&&se&&(n=function(){var t,e,i=f.createElement("div"),s=f.createElement("div");return s.style.position="absolute",f.body.appendChild(i),i.appendChild(s),t=s.offsetParent,i.style[se]="rotate(1deg)",e=s.offsetParent===t,f.body.removeChild(i),e}()),r[4]=Number(r[4])+e.x+(h.offsetLeft||0)-i.x-(l?0:a.scrollLeft)+(o?parseInt($(o,"borderLeftWidth"),10)||0:0),r[5]=Number(r[5])+e.y+(h.offsetTop||0)-i.y-(l?0:a.scrollTop)+(o?parseInt($(o,"borderTopWidth"),10)||0:0),!a||a.offsetParent!==o||n&&"100100"!==fe(a).join("")||(r[4]-=a.offsetLeft||0,r[5]-=a.offsetTop||0),a&&"fixed"===$(t,"position",!0)&&(r[4]+=I(),r[5]+=E())),r):[1,0,0,1,0,0]},pe=function(t,e){if(!t||t===window||!t.parentNode)return[1,0,0,1,0,0];for(var i,s,r,n,a,o,l,h,u=ce(t,ne),_=ce(t.parentNode,ae),c=fe(t,u,_);(t=t.parentNode)&&t.parentNode&&t!==p;)u=_,_=ce(t.parentNode,u===ne?ae:ne),l=fe(t,u,_),i=c[0],s=c[1],r=c[2],n=c[3],a=c[4],o=c[5],c[0]=i*l[0]+s*l[2],c[1]=i*l[1]+s*l[3],c[2]=r*l[0]+n*l[2],c[3]=r*l[1]+n*l[3],c[4]=a*l[0]+o*l[2]+l[4],c[5]=a*l[1]+o*l[3]+l[5];return e&&(i=c[0],s=c[1],r=c[2],n=c[3],a=c[4],o=c[5],h=i*n-s*r,c[0]=n/h,c[1]=-s/h,c[2]=-r/h,c[3]=i/h,c[4]=(r*o-n*a)/h,c[5]=-(i*o-s*a)/h),c},de=function(t,e,i){var s=pe(t),r=e.x,n=e.y;return i=i===!0?e:i||{},i.x=r*s[0]+n*s[2]+s[4],i.y=r*s[1]+n*s[3]+s[5],i},me=function(t,e,i){var s=t.x*e[0]+t.y*e[2]+e[4],r=t.x*e[1]+t.y*e[3]+e[5];return t.x=s*i[0]+r*i[2]+i[4],t.y=s*i[1]+r*i[3]+i[5],t},ge=function(t,e){var i,s,r,n,a,o,l,h,u,_,c;return t===window?(n=E(),s=I(),r=s+(p.clientWidth||t.innerWidth||f.body.clientWidth||0),a=n+((t.innerHeight||0)-20<p.clientHeight?p.clientHeight:t.innerHeight||f.body.clientHeight||0)):(i=ce(t),s=-i.x,r=s+t.offsetWidth,n=-i.y,a=n+t.offsetHeight),t===e?{left:s,top:n,width:r-s,height:a-n}:(o=pe(t),l=pe(e,!0),h=me({x:s,y:n},o,l),u=me({x:r,y:n},o,l),_=me({x:r,y:a},o,l),c=me({x:s,y:a},o,l),s=Math.min(h.x,u.x,_.x,c.x),n=Math.min(h.y,u.y,_.y,c.y),{left:s,top:n,width:Math.max(h.x,u.x,_.x,c.x)-s,height:Math.max(h.y,u.y,_.y,c.y)-n})},ve=function(t){return t.length&&t[0]&&(t[0].nodeType&&t[0].style&&!t.nodeType||t[0].length&&t[0][0])?!0:!1},ye=function(t){var e,i,s,r=[],n=t.length;for(e=0;n>e;e++)if(i=t[e],ve(i))for(s=i.length,s=0;i.length>s;s++)r.push(i[s]);else r.push(i);return r},Te="ontouchstart"in p&&"orientation"in window,we=function(t){for(var e=t.split(","),i=(void 0!==te.onpointerdown?"pointerdown,pointermove,pointerup,pointercancel":void 0!==te.onmspointerdown?"MSPointerDown,MSPointerMove,MSPointerUp,MSPointerCancel":t).split(","),s={},r=8;--r>-1;)s[e[r]]=i[r],s[i[r]]=e[r];return s}("touchstart,touchmove,touchend,touchcancel"),xe=function(t,e,i){t.addEventListener?t.addEventListener(we[e]||e,i,!1):t.attachEvent&&t.attachEvent("on"+e,i)},be=function(t,e,i){t.removeEventListener?t.removeEventListener(we[e]||e,i):t.detachEvent&&t.detachEvent("on"+e,i)},Pe=function(t){s=t.touches&&t.touches.length>C,be(t.target,"touchend",Pe)},Se=function(t){s=t.touches&&t.touches.length>C,xe(t.target,"touchend",Pe)},Ce=function(t,e,i,s,r,n){var a,o,l,h={};if(e)if(1!==r&&e instanceof Array){for(h.end=a=[],l=e.length,o=0;l>o;o++)a[o]=e[o]*r;i+=1.1,s-=1.1}else h.end="function"==typeof e?function(i){return e.call(t,i)*r}:e;return(i||0===i)&&(h.max=i),(s||0===s)&&(h.min=s),n&&(h.velocity=0),h},ke=function(t){var e;return t&&t.getAttribute&&"BODY"!==t.nodeName?"true"===(e=t.getAttribute("data-clickable"))||"false"!==e&&(t.onclick||S.test(t.nodeName+"")||"true"===t.getAttribute("contentEditable"))?!0:ke(t.parentNode):!1},Re=function(t,e){for(var i,s=t.length;--s>-1;)i=t[s],i.ondragstart=i.onselectstart=e?null:m,q(i,"userSelect",e?"text":"none")},Ae=function(){var t,e=f.createElement("div"),i=f.createElement("div"),s=i.style,r=f.body||te;return s.display="inline-block",s.position="relative",e.style.cssText=i.innerHTML="width:90px; height:40px; padding:10px; overflow:auto; visibility: hidden",e.appendChild(i),r.appendChild(e),a=i.offsetHeight+18>e.scrollHeight,s.width="100%",se||(s.paddingRight="500px",t=e.scrollLeft=e.scrollWidth-e.clientWidth,s.left="-90px",t=t!==e.scrollLeft),r.removeChild(e),t}(),Oe=function(t,i){t=j(t),i=i||{};var s,r,n,o,l,h,u=f.createElement("div"),_=u.style,c=t.firstChild,p=0,d=0,m=t.scrollTop,g=t.scrollLeft,v=t.scrollWidth,y=t.scrollHeight,w=0,x=0,b=0;ee&&i.force3D!==!1?(l="translate3d(",h="px,0px)"):se&&(l="translate(",h="px)"),this.scrollTop=function(t,e){return arguments.length?(this.top(-t,e),void 0):-this.top()},this.scrollLeft=function(t,e){return arguments.length?(this.left(-t,e),void 0):-this.left()},this.left=function(s,r){if(!arguments.length)return-(t.scrollLeft+d);var n=t.scrollLeft-g,a=d;return(n>2||-2>n)&&!r?(g=t.scrollLeft,e.killTweensOf(this,!0,{left:1,scrollLeft:1}),this.left(-g),i.onKill&&i.onKill(),void 0):(s=-s,0>s?(d=0|s-.5,s=0):s>x?(d=0|s-x,s=x):d=0,(d||a)&&(l?this._suspendTransforms||(_[se]=l+-d+"px,"+-p+h):_.left=-d+"px",Ae&&d+w>=0&&(_.paddingRight=d+w+"px")),t.scrollLeft=0|s,g=t.scrollLeft,void 0)},this.top=function(s,r){if(!arguments.length)return-(t.scrollTop+p);var n=t.scrollTop-m,a=p;return(n>2||-2>n)&&!r?(m=t.scrollTop,e.killTweensOf(this,!0,{top:1,scrollTop:1}),this.top(-m),i.onKill&&i.onKill(),void 0):(s=-s,0>s?(p=0|s-.5,s=0):s>b?(p=0|s-b,s=b):p=0,(p||a)&&(l?this._suspendTransforms||(_[se]=l+-d+"px,"+-p+h):_.top=-p+"px"),t.scrollTop=0|s,m=t.scrollTop,void 0)},this.maxScrollTop=function(){return b},this.maxScrollLeft=function(){return x},this.disable=function(){for(c=u.firstChild;c;)o=c.nextSibling,t.appendChild(c),c=o;t===u.parentNode&&t.removeChild(u)},this.enable=function(){if(c=t.firstChild,c!==u){for(;c;)o=c.nextSibling,u.appendChild(c),c=o;t.appendChild(u),this.calibrate()}},this.calibrate=function(e){var i,o,l=t.clientWidth===s;m=t.scrollTop,g=t.scrollLeft,(!l||t.clientHeight!==r||u.offsetHeight!==n||v!==t.scrollWidth||y!==t.scrollHeight||e)&&((p||d)&&(i=this.left(),o=this.top(),this.left(-t.scrollLeft),this.top(-t.scrollTop)),(!l||e)&&(_.display="block",_.width="auto",_.paddingRight="0px",w=Math.max(0,t.scrollWidth-t.clientWidth),w&&(w+=$(t,"paddingLeft")+(a?$(t,"paddingRight"):0))),_.display="inline-block",_.position="relative",_.overflow="visible",_.verticalAlign="top",_.width="100%",_.paddingRight=w+"px",a&&(_.paddingBottom=$(t,"paddingBottom",!0)),T&&(_.zoom="1"),s=t.clientWidth,r=t.clientHeight,v=t.scrollWidth,y=t.scrollHeight,x=t.scrollWidth-s,b=t.scrollHeight-r,n=u.offsetHeight,_.display="block",(i||o)&&(this.left(i),this.top(o)))},this.content=u,this.element=t,this._suspendTransforms=!1,this.enable()},De=function(i,n){t.call(this,i),i=j(i),r||(r=_.com.greensock.plugins.ThrowPropsPlugin),this.vars=n=n||{},this.target=i,this.x=this.y=this.rotation=0,this.dragResistance=parseFloat(n.dragResistance)||0,this.edgeResistance=isNaN(n.edgeResistance)?1:parseFloat(n.edgeResistance)||0,this.lockAxis=n.lockAxis,this.autoScroll=n.autoScroll||0,this.lockedAxis=null;var a,c,m,x,S,O,L,E,I,B,W,V,G,H,Q,Z,te,ee,ie,se,re,ne,ae,oe,le,he,ue,_e,ce,fe=(n.type||(T?"top,left":"x,y")).toLowerCase(),me=-1!==fe.indexOf("x")||-1!==fe.indexOf("y"),ge=-1!==fe.indexOf("rotation"),ve=ge?"rotation":me?"x":"left",ye=me?"y":"top",Pe=-1!==fe.indexOf("x")||-1!==fe.indexOf("left")||"scroll"===fe,Ae=-1!==fe.indexOf("y")||-1!==fe.indexOf("top")||"scroll"===fe,Me=n.minimumMovement||2,Ne=this,Ee=A(n.trigger||n.handle||i),Ie={},ze=0,Xe=!1,Fe=n.clickableTest||ke,Be=function(t){if(Ne.autoScroll&&Ne.isDragging&&(ee||Xe)){var e,s,r,n,a,o,l,h,u=i,_=15*Ne.autoScroll;for(Xe=!1,R.scrollTop=null!=window.pageYOffset?window.pageYOffset:null!=p.scrollTop?p.scrollTop:f.body.scrollTop,R.scrollLeft=null!=window.pageXOffset?window.pageXOffset:null!=p.scrollLeft?p.scrollLeft:f.body.scrollLeft,n=Ne.pointerX-R.scrollLeft,a=Ne.pointerY-R.scrollTop;u&&!s;)s=F(u.parentNode),e=s?R:u.parentNode,r=s?{bottom:Math.max(p.clientHeight,window.innerHeight||0),right:Math.max(p.clientWidth,window.innerWidth||0),left:0,top:0}:e.getBoundingClientRect(),o=l=0,Ae&&(a>r.bottom-40&&(h=e._gsMaxScrollY-e.scrollTop)?(Xe=!0,l=Math.min(h,0|_*(1-Math.max(0,r.bottom-a)/40))):r.top+40>a&&e.scrollTop&&(Xe=!0,l=-Math.min(e.scrollTop,0|_*(1-Math.max(0,a-r.top)/40))),l&&(e.scrollTop+=l)),Pe&&(n>r.right-40&&(h=e._gsMaxScrollX-e.scrollLeft)?(Xe=!0,o=Math.min(h,0|_*(1-Math.max(0,r.right-n)/40))):r.left+40>n&&e.scrollLeft&&(Xe=!0,o=-Math.min(e.scrollLeft,0|_*(1-Math.max(0,n-r.left)/40))),o&&(e.scrollLeft+=o)),s&&(o||l)&&(window.scrollTo(e.scrollLeft,e.scrollTop),Ze(Ne.pointerX+o,Ne.pointerY+l)),u=e}if(ee){var d=Ne.x,m=Ne.y,g=1e-6;g>d&&d>-g&&(d=0),g>m&&m>-g&&(m=0),ge?(ce.data.rotation=Ne.rotation=d,ce.setRatio(1)):c?(Ae&&c.top(m),Pe&&c.left(d)):me?(Ae&&(ce.data.y=m),Pe&&(ce.data.x=d),ce.setRatio(1)):(Ae&&(i.style.top=m+"px"),Pe&&(i.style.left=d+"px")),E&&!t&&K(Ne,"drag","onDrag")}ee=!1},Ye=function(t,s){var r;i._gsTransform||!me&&!ge||e.set(i,{x:"+=0"}),me?(Ne.y=i._gsTransform.y,Ne.x=i._gsTransform.x):ge?Ne.x=Ne.rotation=i._gsTransform.rotation:c?(Ne.y=c.top(),Ne.x=c.left()):(Ne.y=parseInt(i.style.top,10)||0,Ne.x=parseInt(i.style.left,10)||0),!se&&!re||s||(se&&(r=se(Ne.x),r!==Ne.x&&(Ne.x=r,ge&&(Ne.rotation=r),ee=!0)),re&&(r=re(Ne.y),r!==Ne.y&&(Ne.y=r,ee=!0)),ee&&Be(!0)),n.onThrowUpdate&&!t&&n.onThrowUpdate.apply(n.onThrowUpdateScope||Ne,n.onThrowUpdateParams||d)},Ue=function(){var t,e,s,r;L=!1,c?(c.calibrate(),Ne.minX=B=-c.maxScrollLeft(),Ne.minY=V=-c.maxScrollTop(),Ne.maxX=I=Ne.maxY=W=0,L=!0):n.bounds&&(t=J(n.bounds,i.parentNode),ge?(Ne.minX=B=t.left,Ne.maxX=I=t.left+t.width,Ne.minY=V=Ne.maxY=W=0):void 0!==n.bounds.maxX||void 0!==n.bounds.maxY?(t=n.bounds,Ne.minX=B=t.minX,Ne.minY=V=t.minY,Ne.maxX=I=t.maxX,Ne.maxY=W=t.maxY):(e=J(i,i.parentNode),Ne.minX=B=$(i,ve)+t.left-e.left,Ne.minY=V=$(i,ye)+t.top-e.top,Ne.maxX=I=B+(t.width-e.width),Ne.maxY=W=V+(t.height-e.height)),B>I&&(Ne.minX=I,Ne.maxX=I=B,B=Ne.minX),V>W&&(Ne.minY=W,Ne.maxY=W=V,V=Ne.minY),ge&&(Ne.minRotation=B,Ne.maxRotation=I),L=!0),n.liveSnap&&(s=n.liveSnap===!0?n.snap||{}:n.liveSnap,r=s instanceof Array||"function"==typeof s,ge?(se=Ge(r?s:s.rotation,B,I,1),re=null):(Pe&&(se=Ge(r?s:s.x||s.left||s.scrollLeft,B,I,c?-1:1)),Ae&&(re=Ge(r?s:s.y||s.top||s.scrollTop,V,W,c?-1:1))))},je=function(t,e){var s,a,o;t&&r?(t===!0&&(s=n.snap||{},a=s instanceof Array||"function"==typeof s,t={resistance:(n.throwResistance||n.resistance||1e3)/(ge?10:1)},ge?t.rotation=Ce(Ne,a?s:s.rotation,I,B,1,e):(Pe&&(t[ve]=Ce(Ne,a?s:s.x||s.left||s.scrollLeft,I,B,c?-1:1,e||Ne.lockAxis&&"x"===Ne.lockedAxis)),Ae&&(t[ye]=Ce(Ne,a?s:s.y||s.top||s.scrollTop,W,V,c?-1:1,e||Ne.lockAxis&&"y"===Ne.lockedAxis)))),Ne.tween=o=r.to(c||i,{throwProps:t,ease:n.ease||_.Power3.easeOut,onComplete:n.onThrowComplete,onCompleteParams:n.onThrowCompleteParams,onCompleteScope:n.onThrowCompleteScope||Ne,onUpdate:n.fastMode?n.onThrowUpdate:Ye,onUpdateParams:n.fastMode?n.onThrowUpdateParams:null,onUpdateScope:n.onThrowUpdateScope||Ne},isNaN(n.maxDuration)?2:n.maxDuration,isNaN(n.minDuration)?.5:n.minDuration,isNaN(n.overshootTolerance)?1-Ne.edgeResistance+.2:n.overshootTolerance),n.fastMode||(c&&(c._suspendTransforms=!0),o.render(o.duration(),!0,!0),Ye(!0,!0),Ne.endX=Ne.x,Ne.endY=Ne.y,ge&&(Ne.endRotation=Ne.x),o.play(0),Ye(!0,!0),c&&(c._suspendTransforms=!1))):L&&Ne.applyBounds()},We=function(){oe=pe(i.parentNode,!0),oe[1]||oe[2]||1!=oe[0]||1!=oe[3]||0!=oe[4]||0!=oe[5]||(oe=null)},qe=function(){var t=1-Ne.edgeResistance;We(),c?(Ue(),O=c.top(),S=c.left()):(Ve()?(Ye(!0,!0),Ue()):Ne.applyBounds(),ge?(te=de(i,{x:0,y:0}),Ye(!0,!0),S=Ne.x,O=Ne.y=Math.atan2(te.y-x,m-te.x)*g):(ue=i.parentNode?i.parentNode.scrollTop||0:0,_e=i.parentNode?i.parentNode.scrollLeft||0:0,O=$(i,ye),S=$(i,ve))),L&&t&&(S>I?S=I+(S-I)/t:B>S&&(S=B-(B-S)/t),ge||(O>W?O=W+(O-W)/t:V>O&&(O=V-(V-O)/t)))},Ve=function(){return Ne.tween&&Ne.tween.isActive()},Ge=function(t,e,i,s){return"function"==typeof t?function(r){var n=Ne.isPressed?1-Ne.edgeResistance:1;return t.call(Ne,r>i?i+(r-i)*n:e>r?e+(r-e)*n:r)*s}:t instanceof Array?function(s){for(var r,n,a=t.length,o=0,l=v;--a>-1;)r=t[a],n=r-s,0>n&&(n=-n),l>n&&r>=e&&i>=r&&(o=a,l=n);return t[o]}:isNaN(t)?function(t){return t}:function(){return t*s}},He=function(t){var s,r;if(a&&!Ne.isPressed&&t){if(le=Ve(),Ne.pointerEvent=t,we[t.type]?(ae=-1!==t.type.indexOf("touch")?t.currentTarget:f,xe(ae,"touchend",$e),xe(ae,"touchmove",Qe),xe(ae,"touchcancel",$e),xe(f,"touchstart",Se)):(ae=null,xe(f,"mousemove",Qe)),xe(f,"mouseup",$e),t&&t.target&&xe(t.target,"mouseup",$e),ne=Fe.call(Ne,t.target)&&!n.dragClickables)return xe(t.target,"change",$e),K(Ne,"press","onPress"),Re(Ee,!0),void 0;if(T?t=U(t,!0):(t.preventDefault(),t.preventManipulation&&t.preventManipulation()),t.changedTouches?(t=Q=t.changedTouches[0],Z=t.identifier):t.pointerId?Z=t.pointerId:Q=null,C++,D(Be),x=Ne.pointerY=t.pageY,m=Ne.pointerX=t.pageX,!Ne.autoScroll||ge||c||!i.parentNode||i.getBBox||(Y(i.parentNode),i.parentNode._gsMaxScrollX&&!w.parentNode&&(w.style.width=i.parentNode.scrollWidth+"px",i.parentNode.appendChild(w))),qe(),oe&&(s=m*oe[0]+x*oe[2]+oe[4],x=m*oe[1]+x*oe[3]+oe[5],m=s),Ne.tween&&Ne.tween.kill(),e.killTweensOf(c||i,!0,Ie),c&&e.killTweensOf(i,!0,{scrollTo:1}),Ne.tween=Ne.lockedAxis=null,(n.zIndexBoost||!ge&&!c&&n.zIndexBoost!==!1)&&(i.style.zIndex=De.zIndex++),Ne.isPressed=!0,E=!(!n.onDrag&&!Ne._listeners.drag),!ge)for(r=Ee.length;--r>-1;)q(Ee[r],"cursor",n.cursor||"move");K(Ne,"press","onPress")}},Qe=function(t){if(a&&!s&&Ne.isPressed&&t){T?t=U(t,!0):(t.preventDefault(),t.preventManipulation&&t.preventManipulation()),Ne.pointerEvent=t;var e,i=t.changedTouches;if(i){if(t=i[0],t!==Q&&t.identifier!==Z){for(e=i.length;--e>-1&&(t=i[e]).identifier!==Z;);if(0>e)return}}else if(t.pointerId&&Z&&t.pointerId!==Z)return;Ne.autoScroll&&(Xe=!0),Ze(t.pageX,t.pageY)}},Ze=function(t,e){var i,s,r,n,a,o,l=1-Ne.dragResistance,h=1-Ne.edgeResistance;Ne.pointerX=t,Ne.pointerY=e,ge?(n=Math.atan2(te.y-e,t-te.x)*g,a=Ne.y-n,Ne.y=n,a>180?O-=360:-180>a&&(O+=360),r=S+(O-n)*l):(oe&&(o=t*oe[0]+e*oe[2]+oe[4],e=t*oe[1]+e*oe[3]+oe[5],t=o),s=e-x,i=t-m,Me>s&&s>-Me&&(s=0),Me>i&&i>-Me&&(i=0),Ne.lockAxis&&(i||s)&&("y"===Ne.lockedAxis||!Ne.lockedAxis&&Math.abs(i)>Math.abs(s)&&Pe?(s=0,Ne.lockedAxis="y"):Ae&&(i=0,Ne.lockedAxis="x")),r=S+i*l,n=O+s*l),se||re?(se&&(r=se(r)),re&&(n=re(n))):L&&(r>I?r=I+(r-I)*h:B>r&&(r=B+(r-B)*h),ge||(n>W?n=W+(n-W)*h:V>n&&(n=V+(n-V)*h))),ge||(r=Math.round(r),n=Math.round(n)),(Ne.x!==r||Ne.y!==n&&!ge)&&(Ne.x=Ne.endX=r,ge?Ne.endRotation=r:Ne.y=Ne.endY=n,ee=!0,Ne.isDragging||(Ne.isDragging=!0,K(Ne,"dragstart","onDragStart")))},$e=function(t,e){if(!(!a||t&&Z&&!e&&t.pointerId&&t.pointerId!==Z)){Ne.isPressed=!1;var s,r,o,l,h=t,u=Ne.isDragging;if(ae?(be(ae,"touchend",$e),be(ae,"touchmove",Qe),be(ae,"touchcancel",$e),be(f,"touchstart",Se)):be(f,"mousemove",Qe),be(f,"mouseup",$e),t&&t.target&&be(t.target,"mouseup",$e),ee=!1,w.parentNode&&w.parentNode.removeChild(w),ne)return t&&be(t.target,"change",$e),Re(Ee,!1),K(Ne,"release","onRelease"),K(Ne,"click","onClick"),ne=!1,void 0;if(M(Be),!ge)for(r=Ee.length;--r>-1;)q(Ee[r],"cursor",n.cursor||"move");if(u&&(ze=k=y(),Ne.isDragging=!1),C--,t){if(T&&(t=U(t,!1)),s=t.changedTouches,s&&(t=s[0],t!==Q&&t.identifier!==Z)){for(r=s.length;--r>-1&&(t=s[r]).identifier!==Z;);if(0>r)return}Ne.pointerEvent=h,Ne.pointerX=t.pageX,Ne.pointerY=t.pageY}return h&&!u?(le&&(n.snap||n.bounds)&&je(n.throwProps),K(Ne,"release","onRelease"),K(Ne,"click","onClick"),l=h.target||h.srcElement||i,l.click?l.click():f.createEvent&&(o=f.createEvent("MouseEvents"),o.initEvent("click",!0,!0),l.dispatchEvent(o)),he=y()):(je(n.throwProps),T||!h||!n.dragClickables&&Fe.call(Ne,h.target)||!u||(h.preventDefault(),h.preventManipulation&&h.preventManipulation()),K(Ne,"release","onRelease")),u&&K(Ne,"dragend","onDragEnd"),!0}},Ke=function(t){if(t&&Ne.isDragging){var e=t.target||t.srcElement||i.parentNode,s=e.scrollLeft-e._gsScrollX,r=e.scrollTop-e._gsScrollY;(s||r)&&(m-=s,x-=r,e._gsScrollX+=s,e._gsScrollY+=r,Ze(Ne.pointerX,Ne.pointerY))}},Je=function(t){var e=y(),i=40>e-he;(Ne.isPressed||20>e-ze||i)&&(t.preventDefault?(t.preventDefault(),i&&t.stopImmediatePropagation()):t.returnValue=!1,t.preventManipulation&&t.preventManipulation())};ie=De.get(this.target),ie&&ie.kill(),this.startDrag=function(t){He(t),Ne.isDragging||(Ne.isDragging=!0,K(Ne,"dragstart","onDragStart"))},this.drag=Qe,this.endDrag=function(t){$e(t,!0)},this.timeSinceDrag=function(){return Ne.isDragging?0:(y()-ze)/1e3},this.hitTest=function(t,e){return De.hitTest(Ne.target,t,e)},this.getDirection=function(t,e){var i,s,n,a,o,l,h="velocity"===t&&r?t:"object"!=typeof t||ge?"start":"element";return"element"===h&&(o=Le(Ne.target),l=Le(t)),i="start"===h?Ne.x-S:"velocity"===h?r.getVelocity(this.target,ve):o.left+o.width/2-(l.left+l.width/2),ge?0>i?"counter-clockwise":"clockwise":(e=e||2,s="start"===h?Ne.y-O:"velocity"===h?r.getVelocity(this.target,ye):o.top+o.height/2-(l.top+l.height/2),n=Math.abs(i/s),a=1/e>n?"":0>i?"left":"right",e>n&&(""!==a&&(a+="-"),a+=0>s?"up":"down"),a)},this.applyBounds=function(t){var e,i;return t&&n.bounds!==t?(n.bounds=t,Ne.update(!0)):(Ye(!0),Ue(),L&&(e=Ne.x,i=Ne.y,L&&(e>I?e=I:B>e&&(e=B),i>W?i=W:V>i&&(i=V)),(Ne.x!==e||Ne.y!==i)&&(Ne.x=Ne.endX=e,ge?Ne.endRotation=e:Ne.y=Ne.endY=i,ee=!0,Be())),Ne)},this.update=function(t){var e=Ne.x,i=Ne.y;return We(),Ke(),t?Ne.applyBounds():(ee&&Be(),Ye(!0)),Ne.isPressed&&(Pe&&Math.abs(e-Ne.x)>.01||Ae&&Math.abs(i-Ne.y)>.01&&!ge)&&qe(),Ne},this.enable=function(t){var s,o,l;if("soft"!==t){for(o=Ee.length;--o>-1;)l=Ee[o],xe(l,"mousedown",He),xe(l,"touchstart",He),xe(l,"click",Je),ge||q(l,"cursor",n.cursor||"move"),q(l,"touchCallout","none"),q(l,"touchAction","none");Re(Ee,!1)}return z(Ne.target,Ke),a=!0,r&&"soft"!==t&&r.track(c||i,me?"x,y":ge?"rotation":"top,left"),c&&c.enable(),i._gsDragID=s="d"+P++,b[s]=this,c&&(c.element._gsDragID=s),e.set(i,{x:"+=0"}),ce={t:i,data:T?H:i._gsTransform,tween:{},setRatio:T?function(){e.set(i,G)}:CSSPlugin._internals.set3DTransformRatio},this.update(!0),Ne},this.disable=function(t){var e,s,n=this.isDragging;if(!ge)for(e=Ee.length;--e>-1;)q(Ee[e],"cursor",null);if("soft"!==t){for(e=Ee.length;--e>-1;)s=Ee[e],q(s,"touchCallout","default"),q(s,"MSTouchAction","auto"),be(s,"mousedown",He),be(s,"touchstart",He),be(s,"click",Je);Re(Ee,!0),ae&&(be(ae,"touchcancel",$e),be(ae,"touchend",$e),be(ae,"touchmove",Qe)),be(f,"mouseup",$e),be(f,"mousemove",Qe)}return X(i,Ke),a=!1,r&&"soft"!==t&&r.untrack(c||i,me?"x,y":ge?"rotation":"top,left"),c&&c.disable(),M(Be),this.isDragging=this.isPressed=ne=!1,n&&K(this,"dragend","onDragEnd"),Ne},this.enabled=function(t,e){return arguments.length?t?this.enable(e):this.disable(e):a},this.kill=function(){return e.killTweensOf(c||i,!0,Ie),Ne.disable(),delete b[i._gsDragID],Ne},-1!==fe.indexOf("scroll")&&(c=this.scrollProxy=new Oe(i,N({onKill:function(){Ne.isPressed&&$e(null)}},n)),i.style.overflowY=Ae&&!Te?"auto":"hidden",i.style.overflowX=Pe&&!Te?"auto":"hidden",i=c.content),n.force3D!==!1&&e.set(i,{force3D:!0}),ge?Ie.rotation=1:(Pe&&(Ie[ve]=1),Ae&&(Ie[ye]=1)),ge?(G=u,H=G.css,G.overwrite=!1):me&&(G=Pe&&Ae?o:Pe?l:h,H=G.css,G.overwrite=!1),this.enable()},Me=De.prototype=new t;Me.constructor=De,Me.pointerX=Me.pointerY=0,Me.isDragging=Me.isPressed=!1,De.version="0.12.0",De.zIndex=1e3,xe(f,"touchcancel",function(){}),xe(f,"contextmenu",function(){var t;for(t in b)b[t].isPressed&&b[t].endDrag()}),De.create=function(t,i){"string"==typeof t&&(t=e.selector(t));for(var s=ve(t)?ye(t):[t],r=s.length;--r>-1;)s[r]=new De(s[r],i);return s},De.get=function(t){return b[(j(t)||{})._gsDragID]},De.timeSinceDrag=function(){return(y()-k)/1e3};var Le=function(t,e){var i=t.pageX!==e?{left:t.pageX,top:t.pageY,right:t.pageX+1,bottom:t.pageY+1}:t.nodeType||t.left===e||t.top===e?j(t).getBoundingClientRect():t;return i.right===e&&i.width!==e?(i.right=i.left+i.width,i.bottom=i.top+i.height):i.width===e&&(i={width:i.right-i.left,height:i.bottom-i.top,right:i.right,left:i.left,bottom:i.bottom,top:i.top}),i};return De.hitTest=function(t,e,i){if(t===e)return!1;var s,r,n,a=Le(t),o=Le(e),l=o.left>a.right||o.right<a.left||o.top>a.bottom||o.bottom<a.top;return l||!i?!l:(n=-1!==(i+"").indexOf("%"),i=parseFloat(i)||0,s={left:Math.max(a.left,o.left),top:Math.max(a.top,o.top)},s.width=Math.min(a.right,o.right)-s.left,s.height=Math.min(a.bottom,o.bottom)-s.top,0>s.width||0>s.height?!1:n?(i*=.01,r=s.width*s.height,r>=a.width*a.height*i||r>=o.width*o.height*i):s.width>i&&s.height>i)},w.style.cssText="visibility:hidden; height:1px; top:-1px; pointer-events:none; position:relative; clear:both;",De},!0)}),_gsScope._gsDefine&&_gsScope._gsQueue.pop()(),function(t){"use strict";var e=function(){return(_gsScope.GreenSockGlobals||_gsScope)[t]};"function"==typeof define&&define.amd?define(["TweenLite"],e):"undefined"!=typeof module&&module.exports&&(require("../TweenLite.js"),require("../plugins/CSSPlugin.js"),module.exports=e())}("Draggable");
 /*!
  * VERSION: 1.7.5
  * DATE: 2015-02-26
@@ -88965,7 +88624,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
  * 
  * @author: Jack Doyle, jack@greensock.com
  **/
-var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof global?global:this||window;(_gsScope._gsQueue||(_gsScope._gsQueue=[])).push(function(){"use strict";var t=document.documentElement,e=window,i=function(i,r){var s="x"===r?"Width":"Height",n="scroll"+s,a="client"+s,o=document.body;return i===e||i===t||i===o?Math.max(t[n],o[n])-(e["inner"+s]||t[a]||o[a]):i[n]-i["offset"+s]},r=_gsScope._gsDefine.plugin({propName:"scrollTo",API:2,version:"1.7.5",init:function(t,r,s){return this._wdw=t===e,this._target=t,this._tween=s,"object"!=typeof r&&(r={y:r}),this.vars=r,this._autoKill=r.autoKill!==!1,this.x=this.xPrev=this.getX(),this.y=this.yPrev=this.getY(),null!=r.x?(this._addTween(this,"x",this.x,"max"===r.x?i(t,"x"):r.x,"scrollTo_x",!0),this._overwriteProps.push("scrollTo_x")):this.skipX=!0,null!=r.y?(this._addTween(this,"y",this.y,"max"===r.y?i(t,"y"):r.y,"scrollTo_y",!0),this._overwriteProps.push("scrollTo_y")):this.skipY=!0,!0},set:function(t){this._super.setRatio.call(this,t);var r=this._wdw||!this.skipX?this.getX():this.xPrev,s=this._wdw||!this.skipY?this.getY():this.yPrev,n=s-this.yPrev,a=r-this.xPrev;this._autoKill&&(!this.skipX&&(a>7||-7>a)&&i(this._target,"x")>r&&(this.skipX=!0),!this.skipY&&(n>7||-7>n)&&i(this._target,"y")>s&&(this.skipY=!0),this.skipX&&this.skipY&&(this._tween.kill(),this.vars.onAutoKill&&this.vars.onAutoKill.apply(this.vars.onAutoKillScope||this._tween,this.vars.onAutoKillParams||[]))),this._wdw?e.scrollTo(this.skipX?r:this.x,this.skipY?s:this.y):(this.skipY||(this._target.scrollTop=this.y),this.skipX||(this._target.scrollLeft=this.x)),this.xPrev=this.x,this.yPrev=this.y}}),s=r.prototype;r.max=i,s.getX=function(){return this._wdw?null!=e.pageXOffset?e.pageXOffset:null!=t.scrollLeft?t.scrollLeft:document.body.scrollLeft:this._target.scrollLeft},s.getY=function(){return this._wdw?null!=e.pageYOffset?e.pageYOffset:null!=t.scrollTop?t.scrollTop:document.body.scrollTop:this._target.scrollTop},s._kill=function(t){return t.scrollTo_x&&(this.skipX=!0),t.scrollTo_y&&(this.skipY=!0),this._super._kill.call(this,t)}}),_gsScope._gsDefine&&_gsScope._gsQueue.pop()();
+var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof global?global:this||window;(_gsScope._gsQueue||(_gsScope._gsQueue=[])).push(function(){"use strict";var t=document.documentElement,e=window,i=function(i,r){var s="x"===r?"Width":"Height",n="scroll"+s,o="client"+s,a=document.body;return i===e||i===t||i===a?Math.max(t[n],a[n])-(e["inner"+s]||t[o]||a[o]):i[n]-i["offset"+s]},r=_gsScope._gsDefine.plugin({propName:"scrollTo",API:2,version:"1.7.5",init:function(t,r,s){return this._wdw=t===e,this._target=t,this._tween=s,"object"!=typeof r&&(r={y:r}),this.vars=r,this._autoKill=r.autoKill!==!1,this.x=this.xPrev=this.getX(),this.y=this.yPrev=this.getY(),null!=r.x?(this._addTween(this,"x",this.x,"max"===r.x?i(t,"x"):r.x,"scrollTo_x",!0),this._overwriteProps.push("scrollTo_x")):this.skipX=!0,null!=r.y?(this._addTween(this,"y",this.y,"max"===r.y?i(t,"y"):r.y,"scrollTo_y",!0),this._overwriteProps.push("scrollTo_y")):this.skipY=!0,!0},set:function(t){this._super.setRatio.call(this,t);var r=this._wdw||!this.skipX?this.getX():this.xPrev,s=this._wdw||!this.skipY?this.getY():this.yPrev,n=s-this.yPrev,o=r-this.xPrev;this._autoKill&&(!this.skipX&&(o>7||-7>o)&&i(this._target,"x")>r&&(this.skipX=!0),!this.skipY&&(n>7||-7>n)&&i(this._target,"y")>s&&(this.skipY=!0),this.skipX&&this.skipY&&(this._tween.kill(),this.vars.onAutoKill&&this.vars.onAutoKill.apply(this.vars.onAutoKillScope||this._tween,this.vars.onAutoKillParams||[]))),this._wdw?e.scrollTo(this.skipX?r:this.x,this.skipY?s:this.y):(this.skipY||(this._target.scrollTop=this.y),this.skipX||(this._target.scrollLeft=this.x)),this.xPrev=this.x,this.yPrev=this.y}}),s=r.prototype;r.max=i,s.getX=function(){return this._wdw?null!=e.pageXOffset?e.pageXOffset:null!=t.scrollLeft?t.scrollLeft:document.body.scrollLeft:this._target.scrollLeft},s.getY=function(){return this._wdw?null!=e.pageYOffset?e.pageYOffset:null!=t.scrollTop?t.scrollTop:document.body.scrollTop:this._target.scrollTop},s._kill=function(t){return t.scrollTo_x&&(this.skipX=!0),t.scrollTo_y&&(this.skipY=!0),this._super._kill.call(this,t)}}),_gsScope._gsDefine&&_gsScope._gsQueue.pop()();
 /*!
  * VERSION: 0.9.8
  * DATE: 2015-03-12
