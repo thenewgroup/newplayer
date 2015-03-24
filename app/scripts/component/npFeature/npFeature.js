@@ -1,5 +1,4 @@
 (function () {
-
     'use strict';
     angular
             .module('newplayer.component')
@@ -9,29 +8,6 @@
                     function ($log, $scope/*, ManifestService*/, $element) {
                         var cmpData = $scope.component.data || {};
                         $log.debug('npFeature::data', cmpData);
-
-//                        setTimeout(function () {
-//                            $scope.$apply(function () {
-//                                var hotspotImage = $element.find('.hotspotImage');
-//                                var page_container = $element.find('.container');
-//                                console.log(
-//                                        '\n::::::::::::::::::::::::::::::::::::::page_container::setTimeout:::::::::::::::::::::::::::::::::::::::::::::::::',
-//                                        '\n::page_container::', page_container,
-//                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-//                                        );
-//                                TweenMax.to(page_container, 0.25, {
-//                                    autoAlpha: 0,
-//                                    ease: Power2.easeOut
-//                                });
-//                                TweenMax.to(window, 1.25, {
-//                                    scrollTo: {y: 100},
-//                                    ease: Power2.easeOut
-//                                });
-//
-//                            });
-//                        });
-
-
                     }
             )
             .directive('newPlayerPageTop', function () {
@@ -41,11 +17,11 @@
                             var main = $element.find('.np_outside-padding');
                             var hotspotImage = $element.find('.hotspotImage');
                             var page_container = $element.find('.container');
-                            console.log(
-                                    '\n::::::::::::::::::::::::::::::::::::::page_container::setTimeout:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                    '\n::page_container::', page_container,
-                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                    );
+//                            console.log(
+//                                    '\n::::::::::::::::::::::::::::::::::::::page_container::setTimeout:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                    '\n::page_container::', page_container,
+//                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                    );
                             TweenMax.to(main, 0.25, {
                                 autoAlpha: 0,
                                 ease: Power2.easeOut
@@ -58,11 +34,11 @@
                                 });
                             }
                             function atTop() {
-                                console.log(
-                                        '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                        '\n::page_container::', page_container,
-                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                        );
+//                                console.log(
+//                                        '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                        '\n::page_container::', page_container,
+//                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                        );
                                 TweenMax.to(main, 0.5, {
                                     autoAlpha: 1,
                                     ease: Power2.easeOut
@@ -73,7 +49,6 @@
                     });
                 };
             })
-
             /** @ngInject */
             .run(
                     function ($log, $rootScope) {
