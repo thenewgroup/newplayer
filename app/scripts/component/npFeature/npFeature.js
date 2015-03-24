@@ -21,6 +21,11 @@
                                 ease: Power2.easeOut
                             });
                             function scroller() {
+                                console.log(
+                                        '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                        '\n::page_container::', page_container,
+                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                        );
                                 TweenMax.to(page_container, .75, {
                                     scrollTo: {y: 0},
                                     ease: Power2.easeInOut,
