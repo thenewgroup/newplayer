@@ -86,6 +86,7 @@ img.blur {
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*When setting this class for New Player use: 'outside-padding'*/
 .np_outside-padding{
+    position: relative;
     padding-top: 35px;
     padding-left: 90px;
     padding-right: 90px;
@@ -93,12 +94,14 @@ img.blur {
 }
 /*When setting this class for New Player use: 'inside-padding'*/
 .np_inside-padding{
+    position: relative;
     padding-left: 5%;
     padding-right: 5%;
     padding-bottom: 35px;
 }
 /*When setting this class for New Player use: 'button-padding'*/
 .np_button-padding{
+    position: relative;
     padding-top: 30px;
     padding-left: 15%;
     padding-right: 15%;
