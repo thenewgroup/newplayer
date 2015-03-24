@@ -16,11 +16,6 @@
                             var np_wrapper = $element.find('.np_outside-padding');
                             var hotspotImage = $element.find('.hotspotImage');
                             var page_container = $element.find('.modal');
-//                            console.log(
-//                                    '\n::::::::::::::::::::::::::::::::::::::page_container::setTimeout:::::::::::::::::::::::::::::::::::::::::::::::::',
-//                                    '\n::page_container::', page_container,
-//                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-//                                    );
                             TweenMax.to(np_wrapper, 0.25, {
                                 autoAlpha: 0.25,
                                 ease: Power2.easeOut
