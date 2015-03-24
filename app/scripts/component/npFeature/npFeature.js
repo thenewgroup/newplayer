@@ -2,7 +2,6 @@
     'use strict';
     angular
             .module('newplayer.component')
-
             /** @ngInject */
             .controller('npFeatureController',
                     function ($log, $scope/*, ManifestService*/, $element) {
