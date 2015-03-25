@@ -42,7 +42,7 @@ module.exports = function (grunt) {
     watch: {
       bower: {
         files: ['bower.json'],
-        tasks: ['wiredep']
+        tasks: ['wiredep:app', 'wiredep:sass']
       },
       js: {
         files: userJS,
@@ -213,6 +213,11 @@ module.exports = function (grunt) {
         ignorePath: /^\/|\.\.\//,
         src: ['<%= config.app %>/index.html'],
         exclude: ['bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js']
+      },
+      dist: {
+        ignorePath: /^\/|\.\.\//,
+        src: ['<%= config.app %>/index.html'],
+        exclude: ['bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js', '/jquery/', '/angular/']
       },
       sass: {
         src: ['<%= config.app %>/styles/{,*/}*.{scss,sass}'],
@@ -474,7 +479,8 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
-      'wiredep',
+      'wiredep:app',
+      'wiredep:sass',
       'ngtemplates',
       'concurrent:server',
       'autoprefixer',
@@ -505,7 +511,27 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
-    'wiredep',
+    'wiredep:app',
+    'wiredep:sass',
+    'useminPrepare',
+    'concurrent:dist',
+    'autoprefixer',
+    'ngtemplates',
+    'concat',
+    'ngAnnotate',
+    //'cssmin',
+    //'uglify',
+    'copy:dist',
+    'modernizr',
+    //'rev'//,
+    'usemin',
+    'htmlmin'
+  ]);
+
+  grunt.registerTask('dist', [
+    'clean:dist',
+    'wiredep:dist',
+    'wiredep:sass',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
