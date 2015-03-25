@@ -33,6 +33,12 @@
                             this.feedback = button.feedback;
                             var idx = this.hotspotButtons.indexOf(button);
                             //////////////////////
+                            console.log(
+                                    '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                    '\n::button::', button,
+                                    '\n::idx::', idx,
+                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                    );
                             $scope.$watch('npHotspot.feedback', function (newValue, oldValue) {
                                 contentAreaHeight = 0;
                                 TweenMax.to(contentArea, 1, {
@@ -55,6 +61,17 @@
                                         ease: Power4.easeOut
                                     });
                                 });
+                            });
+                            $('.hotspotButton').each(function (index, totalArea) {
+                                contentAreaHeight = contentAreaHeight + $(this).outerHeight(true);
+                                TweenMax.to($(this), 1, {
+                                    rotation: 0,
+                                    ease: Power4.easeOut
+                                });
+                            });
+                            TweenMax.to($('.hotspotButton')[idx], 1, {
+                                rotation: -45,
+                                ease: Power4.easeOut
                             });
                         };
                     }
