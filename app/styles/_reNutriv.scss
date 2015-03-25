@@ -15,7 +15,6 @@
     left: 0;
     right: 0;
     top: 0;
-    /*z-index: -1;*/
 }
 #np_reNutriv #background-image {
     position:fixed;
@@ -58,7 +57,7 @@
 #np_reNutriv h1, h2, h3, h4, h5{
     color: $brand-primary-light;
 }
-#np_reNutriv p{
+#np_reNutriv p ul ol{
     color: $brand-primary-light;
 }
 #np_reNutriv small{
@@ -276,8 +275,8 @@
     position: relative;
     width: 20px;
     height: 20px;
-    float: left;
-    margin-right: 20px;
+    /*float: left;*/
+    /*margin-right: 20px;*/
     /*border-color: $gold;*/
     border-color: #9a7d46;
     background-color: #000000;
@@ -298,6 +297,7 @@
     height: 20px;
     display: block;
     margin: auto;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
 }
 #np_reNutriv .checkbox-box svg{ 
     position: absolute;
@@ -323,10 +323,10 @@
 }
 #np_reNutriv .answer-text{ 
     font-family: $font-family-sans-serif;
-    float: left;
+    /*float: left;*/
     color: $brand-primary-light;
     letter-spacing: 2px;
-    margin-right: 20px;
+    /*margin-right: 20px;*/
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Quiz Questions classes*/
@@ -340,8 +340,6 @@
 }
 #np_reNutriv .question-feedback{ 
     position: relative;
-    /*width: 100%;*/
-    /*width: 475px;*/
     height: 110px;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -354,9 +352,14 @@
 }
 #np_reNutriv .question-feedback-text{ 
     font-family: $font-family-sans-serif;
-    /*size: $font-size-small;*/
+    float: left;
     color: $brand-primary-light;
     letter-spacing: 2px;
+}
+#np_reNutriv .negative-feedback-icon{ 
+    width: 20px;
+    margin-right: 10px;
+    float: left;
 }
 #np_reNutriv .question-feedback-label{ 
     font-family: $font-family-sans-serif;
@@ -570,13 +573,14 @@
     height: 100%;
     background-color: #000000;
     opacity: 0.75;
-    z-index: -1;
+    /*z-index: -1;*/
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player List classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 #np_reNutriv .list-item{
-
+    color: $brand-primary-light;
+    letter-spacing: 2px;
 }
 #np_reNutriv .column-1{
     margin-bottom: 1.5%;
@@ -590,6 +594,11 @@
     background-color: #000000;
     opacity: 0.75;
     filter: url(styles/inset-shadow.svg#inset-shadow); 
+}
+#np_reNutriv .list-body-text{
+    color: $brand-primary-light;
+    letter-spacing: 2px;
+    font-size: $font-size-base;
 }
 
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -651,7 +660,7 @@
     left:0;
     bottom:0;
     right:0;
-    z-index: -1;
+    /*z-index: -1;*/
     background-color: #313131;
     box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
 }

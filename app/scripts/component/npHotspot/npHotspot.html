@@ -6,7 +6,7 @@
                     <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
                 </div>
                 <img class="{{component.type}} np-cmp-main img-responsive" ng-controller="npHotspotController as npHotspot" ng-src="{{npHotspot.src}}" alt="{{npHotspot.alt}}" />
-                <div ng-repeat="hotspotButton in npHotspot.hotspotButtons">
+                <div hotspot-button-build ng-repeat="hotspotButton in npHotspot.hotspotButtons">
                     <div class="{{hotspotButton.class}} hotspotButton" ng-click="npHotspot.update(hotspotButton)">
                         <!--<img class="hotspotButtonImage" ng-src="{{hotspotButton.image}}" alt="{{npHotspot.alt}}" />-->
                         <div class="hotspotButtonImage" ></div>
