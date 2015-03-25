@@ -15,6 +15,17 @@
                         this.baseURL = cmpData.baseURL;
                         this.src = cmpData.image;
                         //////////////////////
+                        var contentArea = '';
+                        setTimeout(function () {
+                            $scope.$apply(function () {
+                                contentArea = $element.find('.content-area');
+                                function onPageLoadSet() {
+//                                    hotspotButton = $('.hotspotButton');
+                                    TweenMax.set(contentArea, {opacity: 0, force3D: true});
+                                }
+                                onPageLoadSet();
+                            });
+                        });
                         $scope.feedback = this.feedback = cmpData.feedback;
                         $scope.image = this.image = cmpData.image;
                         //////////////////////
@@ -23,10 +34,15 @@
                             var idx = this.hotspotButtons.indexOf(button);
                             //////////////////////
                             $scope.$watch('npHotspot.feedback', function (newValue, oldValue) {
+                                contentAreaHeight = 0;
+                                TweenMax.to(contentArea, 1, {
+                                    opacity: 1,
+                                    ease: Power4.easeOut
+                                });
                                 $('.npHotspot-feedback p').each(function (index, totalArea) {
-                                    var contentAreaHeight = $(this).outerHeight(true) + 50;
+                                    contentAreaHeight = contentAreaHeight + $(this).outerHeight(true);
                                     TweenMax.to($('.content-background'), 1, {
-                                        height: contentAreaHeight,
+                                        height: contentAreaHeight + 25,
                                         ease: Power4.easeOut
                                     });
                                     TweenMax.to($('.npHotspot-feedback'), 0.1, {
@@ -43,6 +59,23 @@
                         };
                     }
             )
+            .directive('hotspotButtonBuild', function () {
+                return function ($scope, $element, attrs) {
+                    var hotspotButton = '';
+                    setTimeout(function () {
+                        $scope.$apply(function () {
+                            hotspotButton = $element.find('.hotspotButton');
+                            function onPageLoadBuild() {
+                                hotspotButton = $('.hotspotButton');
+                                TweenMax.set(hotspotButton, {opacity: 0, scale: .25, force3D: true});
+                                TweenMax.set(hotspotButton, {opacity: 0, scale: .25, force3D: true});
+                                TweenMax.staggerTo(hotspotButton, 2, {scale: 1, opacity: 1, delay: 0.5, ease: Elastic.easeOut, force3D: true}, 0.2);
+                            }
+                            onPageLoadBuild();
+                        });
+                    });
+                };
+            })
             .directive('mediaelement', npMediaElementDirective)
             /** @ngInject */
             .run(
