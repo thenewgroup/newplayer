@@ -19,7 +19,7 @@
                 overrideURL: '@npOverrideUrl',
                 overrideData: '@npOverrideData',
                 language: '@npLang',
-                onclickHandler: '@onclickHandler'
+                onTrackService: '@onTrackService'
             },
             //compile: function (tElement, tAttrs, transclude, ConfigService)
             //{

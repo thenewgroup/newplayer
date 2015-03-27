@@ -6,7 +6,7 @@
 
   /** @ngInject */
     .controller('npButtonController',
-    function ($log, $scope, $sce, $location, $element, ConfigService, ManifestService, APIService) {
+    function ($log, $scope, $sce, $location, $element, ConfigService, ManifestService, APIService, TrackingService) {
       var cmpData = $scope.component.data || {};
       $log.debug('npButton::data', cmpData);
 
@@ -56,9 +56,12 @@
           if (this.apiLink) {
             //TODO: we may need a `method` property to know what to use here
             // i.e. GET, POST, PUT, DELETE
+            TrackingService.trackApiCall(btnLink);
             APIService.postData(btnLink);
             return;
           }
+
+          TrackingService.trackExternalLinkClick(btnLink);
           window.open(this.link, this.target);
         }
       };

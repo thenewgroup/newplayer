@@ -66,11 +66,10 @@
           setOverride(npConfig.overrideManifest);
         }
 
-        if (!!npConfig.onPageHandler) {
+        if (!!npConfig.onTrackService) {
+          debugger;
           // run this when the page changes
-          $rootScope.$on('npPageIdChanged', function(pageId) {
-            npConfig.onPageHandler(pageId);
-          });
+          self.tracking = npConfig.onTrackService;
         }
       }
 
