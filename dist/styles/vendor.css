@@ -7120,7 +7120,6 @@ td.visible-print {
 /* Accessibility: hide screen reader texts (and prefer "top" for RTL languages). */
 	position: absolute !important;
 	top: -10000px;
-	left: -10000px;
 	overflow: hidden;
 	width: 1px;
 	height: 1px;
@@ -7313,7 +7312,7 @@ td.visible-print {
 	background-image: url(controls.png);
 }
 
-	/* :focus for accessibility */
+/* :focus for accessibility */
 .mejs-controls .mejs-button button:focus {
 	outline: dotted 1px #999;
 }
@@ -8101,8 +8100,9 @@ div.mejs-speed-button {
 /*!
  * Stylesheet for the Date Range Picker, for use with Bootstrap 3.x
  *
- * Copyright 2013-2015 Dan Grossman ( http://www.dangrossman.info )
- * Licensed under the MIT license. See http://www.opensource.org/licenses/mit-license.php
+ * Copyright 2013 Dan Grossman ( http://www.dangrossman.info )
+ * Licensed under the Apache License v2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Built for http://www.improvely.com
  */

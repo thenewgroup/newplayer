@@ -81,7 +81,7 @@
     .factory('ConfigService', ConfigService);
 
   /** @ngInject */
-  function ConfigService($log, APIService, ManifestService/*, $timeout, $q, $rootScope*/) {
+  function ConfigService($log, $rootScope, APIService, ManifestService/*, $timeout, $q, $rootScope*/) {
     $log.debug('configService::Init');
 
     var Service = function () {
@@ -138,6 +138,12 @@
 
         if( !!npConfig.overrideManifest ) {
           setOverride(npConfig.overrideManifest);
+        }
+
+        if (!!npConfig.onTrackService) {
+          debugger;
+          // run this when the page changes
+          self.tracking = npConfig.onTrackService;
         }
       }
 
@@ -537,6 +543,9 @@
       this.setPageId = function (pageId) {
         $log.debug('ManifestService, setPageId', pageId);
         // reset component index for reparsing new page
+        if (this.pageId === pageId) {
+          return;
+        }
         setComponentIdx(null);
 
         this.pageId = pageId;
@@ -826,6 +835,42 @@
   }
 })();
 
+/* jshint -W004 */
+(function() {
+  'use strict';
+
+  angular
+    .module('newplayer.service')
+    .factory('TrackingService', TrackingService);
+
+  /*
+   * console:
+   * angular.element(document.body).injector().get('TrackingService')
+   */
+
+  /** @ngInject */
+  function TrackingService($log, $rootScope, ConfigService /*, $timeout, $http, $q */) {
+    $log.debug('\nTrackingService::Init\n');
+
+    var Service = function () {
+      var self = this;
+
+      this.trackPageView = function (pageId) {
+      	ConfigService.tracking('pageView', pageId);
+      };
+
+      this.trackExternalLinkClick = function (link) {
+      	ConfigService.tracking('externalLink', link);
+      };
+
+      this.trackApiCall = function (api) {
+      	ConfigService.tracking('apiCall', api);
+      };
+    };
+
+    return new Service();
+  }
+})();
 (function () {
   'use strict';
   angular.module('newplayer.component', ['newplayer.service']);
@@ -1258,7 +1303,7 @@ function AssessmentService ( $log ) {
 
   /** @ngInject */
     .controller('npButtonController',
-    function ($log, $scope, $sce, $location, $element, ConfigService, ManifestService, APIService) {
+    function ($log, $scope, $sce, $location, $element, ConfigService, ManifestService, APIService, TrackingService) {
       var cmpData = $scope.component.data || {};
       $log.debug('npButton::data', cmpData);
 
@@ -1308,9 +1353,12 @@ function AssessmentService ( $log ) {
           if (this.apiLink) {
             //TODO: we may need a `method` property to know what to use here
             // i.e. GET, POST, PUT, DELETE
+            TrackingService.trackApiCall(btnLink);
             APIService.postData(btnLink);
             return;
           }
+
+          TrackingService.trackExternalLinkClick(btnLink);
           window.open(this.link, this.target);
         }
       };
@@ -2343,7 +2391,7 @@ function AssessmentService ( $log ) {
     .module('newplayer.component')
   /** @ngInject */
     .controller('npPageController',
-    function ($log, $scope, $rootScope, ManifestService) {
+    function ($log, $scope, $rootScope, ManifestService, TrackingService) {
       var cmpData = $scope.component.data || {};
       $log.debug('npPage::data', cmpData, $scope.contentTitle);
 
@@ -2381,6 +2429,7 @@ function AssessmentService ( $log ) {
           }
         } else {
           $scope.currentPage = false;
+          TrackingService.trackPageView(pageId);
         }
       }
     }
@@ -3852,7 +3901,8 @@ function AssessmentService ( $log ) {
                 manifestURL: '@npUrl',
                 overrideURL: '@npOverrideUrl',
                 overrideData: '@npOverrideData',
-                language: '@npLang'
+                language: '@npLang',
+                onTrackService: '@onTrackService'
             },
             //compile: function (tElement, tAttrs, transclude, ConfigService)
             //{
