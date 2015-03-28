@@ -7,7 +7,7 @@
     .factory('ConfigService', ConfigService);
 
   /** @ngInject */
-  function ConfigService($log, APIService, ManifestService/*, $timeout, $q, $rootScope*/) {
+  function ConfigService($log, $rootScope, APIService, ManifestService/*, $timeout, $q, $rootScope*/) {
     $log.debug('configService::Init');
 
     var Service = function () {
@@ -64,6 +64,11 @@
 
         if( !!npConfig.overrideManifest ) {
           setOverride(npConfig.overrideManifest);
+        }
+
+        if (!!npConfig.onTrackService && _.isFunction(npConfig.onTrackService)) {
+          // run this when the page changes
+          self.tracking = npConfig.onTrackService;
         }
       }
 
