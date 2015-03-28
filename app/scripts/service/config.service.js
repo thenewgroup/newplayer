@@ -66,8 +66,7 @@
           setOverride(npConfig.overrideManifest);
         }
 
-        if (!!npConfig.onTrackService) {
-          debugger;
+        if (!!npConfig.onTrackService && _.isFunction(npConfig.onTrackService)) {
           // run this when the page changes
           self.tracking = npConfig.onTrackService;
         }
