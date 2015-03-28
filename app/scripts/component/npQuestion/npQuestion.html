@@ -1,21 +1,72 @@
-<form class="np-cmp-wrapper {{component.type}} " ng-controller="npQuestionController as npQuestion" ng-submit="npQuestion.evaluate()">
-
+<div class="np-cmp-wrapper {{component.type}} " ng-controller="npQuestionController as npQuestion" ng-submit="npQuestion.evaluate()">
+    <!--<form class="np-cmp-wrapper {{component.type}} " ng-controller="npQuestionController as npQuestion" ng-submit="npQuestion.evaluate()">-->
     <div class="debug">
         <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
     </div>
-
-    <h5 class="dark text-uppercase">question:</h5>
-    <div class="npQuestion-content" ng-bind-html="npQuestion.content"></div>
-
-	<h5 class="dark text-uppercase">answers:</h5>
+    <p class="h5 quiz-label">question:</p>
+    <!--<h5 class="dark text-uppercase">question:</h5>-->
+    <div class="npQuestion-content question-text h4" ng-bind-html="npQuestion.content"></div>
+    <p class="h5 quiz-label">answers:</p>
     <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
-
-    <button type="submit" class="col-xs-3 btn-primary">Submit</button> &nbsp;
-    <button id="next_button" class="btn-default" ng-click="npQuestion.nextPage($event)">Next</button>
-<!--    <div class="btn btn-default">
-        <input type="submit" />
-    </div>-->
-
-    <div class="npQuestion-feedback" ng-if="npQuestion.feedback" ng-bind-html="npQuestion.feedback"></div>
-
-</form>
+    <div class="row">
+        <button type="submit" class="btn-submit" ng-click="npQuestion.evaluate()">
+            <span>Submit</span>
+        </button>
+    </div>
+    <!--<button id="next_button" class="btn-default" ng-click="npQuestion.nextPage($event)">Next</button>-->
+    <!--    <div class="btn btn-default">
+            <input type="submit" />
+        </div>-->
+    <div question-feedback-build class="row">
+        <div  class="col-sm-7 question-feedback">
+            <div class="question-feedback-wrapper">
+                <div class="negative-feedback-icon">
+                    <svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="22.8px" height="22.801px" viewBox="599.8 837.1 22.8 22.801" enable-background="new 599.8 837.1 22.8 22.801" xml:space="preserve">
+                        <path fill="#9A7D46" d="M611.2,859.9c-6.3,0-11.4-5.101-11.4-11.4s5.101-11.4,11.4-11.4S622.6,842.2,622.6,848.5 S617.5,859.9,611.2,859.9z M611.2,838.1c-5.7,0-10.4,4.7-10.4,10.4s4.7,10.4,10.4,10.4s10.399-4.7,10.399-10.4 S616.9,838.1,611.2,838.1z"/>
+                        <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="874.293" y1="-1086.3877" x2="861.2496" y2="-1099.811" gradientTransform="matrix(1 0 0 -1 -256 -245)">
+                            <stop  offset="0.1642" style="stop-color:#CAA04E"/>
+                            <stop  offset="0.1698" style="stop-color:#CCA352"/>
+                            <stop  offset="0.2532" style="stop-color:#E4C682"/>
+                            <stop  offset="0.3167" style="stop-color:#F2DCA0"/>
+                            <stop  offset="0.3527" style="stop-color:#F8E4AB"/>
+                            <stop  offset="0.4062" style="stop-color:#EBD191"/>
+                            <stop  offset="0.48" style="stop-color:#DDBC74"/>
+                            <stop  offset="0.5532" style="stop-color:#D2AC5F"/>
+                            <stop  offset="0.6249" style="stop-color:#CCA352"/>
+                            <stop  offset="0.6933" style="stop-color:#CAA04E"/>
+                            <stop  offset="0.7957" style="stop-color:#D5B05B"/>
+                            <stop  offset="0.9955" style="stop-color:#F2DA7E"/>
+                            <stop  offset="1" style="stop-color:#F3DB7F"/>
+                        </linearGradient>
+                        <polygon fill="url(#SVGID_1_)" points="605.8,856.5 611.2,851.2 616.5,856.5 619,854 613.7,848.7 619,843.4 616.5,840.8 611.2,846.1 605.9,840.8 603.4,843.4 608.7,848.7 603.3,854 "/>
+                    </svg>
+                </div>
+                <div class="npQuestion-feedback question-feedback-text" ng-if="npQuestion.feedback" ng-bind-html="npQuestion.feedback"></div>
+                <div class="question-feedback-label">Feedback area</div>
+            </div>
+            <!--            <div  class="question-feedback-outline">
+                            <svg  version="1.2" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"xml:space="preserve" preserveAspectRatio="none">
+                                <style type="text/css">
+                                    <![CDATA[
+                                    .st0{fill:url(#SVGID_1_);}
+                                    .st1{display:inline;}
+                                    .st2{display:none;}
+                                    ]]>
+                                </style>
+                                <g id="Layer_2">
+                                    <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="0.8359" y1="0.9399" x2="367.8515" y2="221.4724">
+                                        <stop  offset="0" style="stop-color:#CAA04C"/>
+                                        <stop  offset="0.3497" style="stop-color:#F8E4AA"/>
+                                        <stop  offset="0.638" style="stop-color:#CAA04D"/>
+                                        <stop  offset="0.9816" style="stop-color:#F3DB7E"/>
+                                    </linearGradient>
+                                    <rect fill="url(#MyGradient)" stroke="url(#SVGID_1_)" vector-effect="non-scaling-stroke" stroke-width="3" x="0" y="0" width="100%" height="100%"/>
+                                </g>
+                            </svg>
+                        </div>-->
+        </div>
+        <div  class="col-sm-5">
+        </div>
+    </div>
+    <!--</form>-->
+</div>

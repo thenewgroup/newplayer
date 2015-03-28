@@ -81,7 +81,7 @@
     .factory('ConfigService', ConfigService);
 
   /** @ngInject */
-  function ConfigService($log, $rootScope, APIService, ManifestService/*, $timeout, $q, $rootScope*/) {
+  function ConfigService($log, APIService, ManifestService/*, $timeout, $q, $rootScope*/) {
     $log.debug('configService::Init');
 
     var Service = function () {
@@ -138,12 +138,6 @@
 
         if( !!npConfig.overrideManifest ) {
           setOverride(npConfig.overrideManifest);
-        }
-
-        if (!!npConfig.onTrackService) {
-          debugger;
-          // run this when the page changes
-          self.tracking = npConfig.onTrackService;
         }
       }
 
@@ -543,9 +537,6 @@
       this.setPageId = function (pageId) {
         $log.debug('ManifestService, setPageId', pageId);
         // reset component index for reparsing new page
-        if (this.pageId === pageId) {
-          return;
-        }
         setComponentIdx(null);
 
         this.pageId = pageId;
@@ -835,42 +826,6 @@
   }
 })();
 
-/* jshint -W004 */
-(function() {
-  'use strict';
-
-  angular
-    .module('newplayer.service')
-    .factory('TrackingService', TrackingService);
-
-  /*
-   * console:
-   * angular.element(document.body).injector().get('TrackingService')
-   */
-
-  /** @ngInject */
-  function TrackingService($log, $rootScope, ConfigService /*, $timeout, $http, $q */) {
-    $log.debug('\nTrackingService::Init\n');
-
-    var Service = function () {
-      var self = this;
-
-      this.trackPageView = function (pageId) {
-      	ConfigService.tracking('pageView', pageId);
-      };
-
-      this.trackExternalLinkClick = function (link) {
-      	ConfigService.tracking('externalLink', link);
-      };
-
-      this.trackApiCall = function (api) {
-      	ConfigService.tracking('apiCall', api);
-      };
-    };
-
-    return new Service();
-  }
-})();
 (function () {
   'use strict';
   angular.module('newplayer.component', ['newplayer.service']);
@@ -1134,22 +1089,18 @@ function AssessmentService ( $log ) {
 })();
 
 (function () {
-
   'use strict';
   angular
     .module('newplayer.component')
-
   /** @ngInject */
     .controller('npAnswerController',
     function ($log, $scope, $sce) {
       var cmpData = $scope.component.data || {};
       $log.debug('npAnswer::data', cmpData);
-
       this.id = cmpData.id;
       this.label = $sce.trustAsHtml(cmpData.label);
     }
   )
-
   /** @ngInject */
     .run(
     function ($log, $rootScope) {
@@ -1303,7 +1254,7 @@ function AssessmentService ( $log ) {
 
   /** @ngInject */
     .controller('npButtonController',
-    function ($log, $scope, $sce, $location, $element, ConfigService, ManifestService, APIService, TrackingService) {
+    function ($log, $scope, $sce, $location, $element, ConfigService, ManifestService, APIService) {
       var cmpData = $scope.component.data || {};
       $log.debug('npButton::data', cmpData);
 
@@ -1353,12 +1304,9 @@ function AssessmentService ( $log ) {
           if (this.apiLink) {
             //TODO: we may need a `method` property to know what to use here
             // i.e. GET, POST, PUT, DELETE
-            TrackingService.trackApiCall(btnLink);
             APIService.postData(btnLink);
             return;
           }
-
-          TrackingService.trackExternalLinkClick(btnLink);
           window.open(this.link, this.target);
         }
       };
@@ -1469,25 +1417,62 @@ function AssessmentService ( $log ) {
 
 
 (function () {
-
-  'use strict';
-  angular
-    .module('newplayer.component')
-
-  /** @ngInject */
-    .controller('npFeatureController',
-    function ($log, $scope/*, ManifestService*/) {
-      var cmpData = $scope.component.data || {};
-      $log.debug('npFeature::data', cmpData);
-    }
-  )
-
-  /** @ngInject */
-    .run(
-    function ($log, $rootScope) {
-      $log.debug('npFeature::component loaded!');
-    }
-  );
+    'use strict';
+    angular
+            .module('newplayer.component')
+            /** @ngInject */
+            .controller('npFeatureController',
+                    function ($log, $scope/*, ManifestService*/, $element) {
+                        var cmpData = $scope.component.data || {};
+                        $log.debug('npFeature::data', cmpData);
+                    }
+            )
+            .directive('newPlayerPageTop', function () {
+                return function ($scope, $element, attrs) {
+                    setTimeout(function () {
+                        $scope.$apply(function () {
+//                            var np_wrapper = $element.find('.np_outside-padding');
+//                            var hotspotImage = $element.find('.hotspotImage');
+//                            var page_container = $element.find('.modal-open');
+//                            var page_container = $('.modal-open');
+//                            TweenMax.to(np_wrapper, 0.25, {
+//                                autoAlpha: 0.25,
+//                                ease: Power2.easeOut
+//                            });
+//                            function scroller() {
+//                                console.log(
+//                                        '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                        '\n::page_container::', page_container,
+//                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                        );
+//                                TweenMax.to(page_container, .75, {
+//                                    scrollTo: {y: 0},
+//                                    ease: Power2.easeInOut,
+//                                    onComplete: atTop
+//                                });
+//                            }
+//                            function atTop() {
+//                                console.log(
+//                                        '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                        '\n::page_container::', page_container,
+//                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                        );
+//                                TweenMax.to(np_wrapper, 0.5, {
+//                                    autoAlpha: 1,
+//                                    ease: Power2.easeOut
+//                                });
+//                            }
+//                            scroller();
+                        });
+                    });
+                };
+            })
+            /** @ngInject */
+            .run(
+                    function ($log, $rootScope) {
+                        $log.debug('npFeature::component loaded!');
+                    }
+            );
 })();
 
 
@@ -1553,6 +1538,17 @@ function AssessmentService ( $log ) {
                         this.baseURL = cmpData.baseURL;
                         this.src = cmpData.image;
                         //////////////////////
+                        var contentArea = '';
+                        setTimeout(function () {
+                            $scope.$apply(function () {
+                                contentArea = $element.find('.content-area');
+                                function onPageLoadSet() {
+//                                    hotspotButton = $('.hotspotButton');
+                                    TweenMax.set(contentArea, {opacity: 0, force3D: true});
+                                }
+                                onPageLoadSet();
+                            });
+                        });
                         $scope.feedback = this.feedback = cmpData.feedback;
                         $scope.image = this.image = cmpData.image;
                         //////////////////////
@@ -1560,11 +1556,22 @@ function AssessmentService ( $log ) {
                             this.feedback = button.feedback;
                             var idx = this.hotspotButtons.indexOf(button);
                             //////////////////////
+                            console.log(
+                                    '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                    '\n::button::', button,
+                                    '\n::idx::', idx,
+                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                    );
                             $scope.$watch('npHotspot.feedback', function (newValue, oldValue) {
+                                contentAreaHeight = 0;
+                                TweenMax.to(contentArea, 1, {
+                                    opacity: 1,
+                                    ease: Power4.easeOut
+                                });
                                 $('.npHotspot-feedback p').each(function (index, totalArea) {
-                                    var contentAreaHeight = $(this).outerHeight(true) + 50;
+                                    contentAreaHeight = contentAreaHeight + $(this).outerHeight(true);
                                     TweenMax.to($('.content-background'), 1, {
-                                        height: contentAreaHeight,
+                                        height: contentAreaHeight + 25,
                                         ease: Power4.easeOut
                                     });
                                     TweenMax.to($('.npHotspot-feedback'), 0.1, {
@@ -1578,9 +1585,37 @@ function AssessmentService ( $log ) {
                                     });
                                 });
                             });
+                            $('.hotspotButton').each(function (index, totalArea) {
+                                contentAreaHeight = contentAreaHeight + $(this).outerHeight(true);
+                                TweenMax.to($(this), 1, {
+                                    rotation: 0,
+                                    ease: Power4.easeOut
+                                });
+                            });
+                            TweenMax.to($('.hotspotButton')[idx], 1, {
+                                rotation: -45,
+                                ease: Power4.easeOut
+                            });
                         };
                     }
             )
+            .directive('hotspotButtonBuild', function () {
+                return function ($scope, $element, attrs) {
+                    var hotspotButton = '';
+                    setTimeout(function () {
+                        $scope.$apply(function () {
+                            hotspotButton = $element.find('.hotspotButton');
+                            function onPageLoadBuild() {
+                                hotspotButton = $('.hotspotButton');
+                                TweenMax.set(hotspotButton, {opacity: 0, scale: .25, force3D: true});
+                                TweenMax.set(hotspotButton, {opacity: 0, scale: .25, force3D: true});
+                                TweenMax.staggerTo(hotspotButton, 2, {scale: 1, opacity: 1, delay: 0.5, ease: Elastic.easeOut, force3D: true}, 0.2);
+                            }
+                            onPageLoadBuild();
+                        });
+                    });
+                };
+            })
             .directive('mediaelement', npMediaElementDirective)
             /** @ngInject */
             .run(
@@ -2391,7 +2426,7 @@ function AssessmentService ( $log ) {
     .module('newplayer.component')
   /** @ngInject */
     .controller('npPageController',
-    function ($log, $scope, $rootScope, ManifestService, TrackingService) {
+    function ($log, $scope, $rootScope, ManifestService) {
       var cmpData = $scope.component.data || {};
       $log.debug('npPage::data', cmpData, $scope.contentTitle);
 
@@ -2429,7 +2464,6 @@ function AssessmentService ( $log ) {
           }
         } else {
           $scope.currentPage = false;
-          TrackingService.trackPageView(pageId);
         }
       }
     }
@@ -2444,117 +2478,176 @@ function AssessmentService ( $log ) {
 })();
 
 (function () {
-
-  'use strict';
-  angular
-    .module('newplayer.component')
-  /** @ngInject */
-    .controller('npQuestionController',
-    function ($log, $scope, $rootScope, ManifestService, $sce) {
-      var cmpData = $scope.component.data;
-      $log.debug('npQuestion::data', cmpData);
-
-      this.id = cmpData.id;
-      this.content = $sce.trustAsHtml(cmpData.content);
-      this.type = cmpData.type;
-      this.feedback = '';
-      this.canContinue = false;
-
-      var feedback = cmpData.feedback;
-
-      this.changed = function () {
-        $log.debug('npQuestion::answer changed');
-        if (feedback.immediate) {
-          this.feedback = '';
-        }
-      };
-
-      this.evaluate = function () {
-        var correct = true;
-        $log.debug('npQuestion::evaluate:', this.answer);
-        if (!!this.answer) {
-          switch (this.type) {
-            case 'radio':
-              var radAnswer = ManifestService.getComponent(this.answer);
-              if (angular.isString(radAnswer.data.feedback)) {
-                this.feedback = radAnswer.data.feedback;
-              }
-              correct = radAnswer.data.correct;
-              break;
-            case 'checkbox':
-              var chkAnswers = ManifestService.getAll('npAnswer', $scope.cmpIdx);
-              var idx;
-              for (idx in chkAnswers) {
-                if (chkAnswers[idx].data.correct) {
-                  // confirm all correct answers were checked
-                  if (!this.answer[chkAnswers[idx].idx]) {
-                    correct = false;
-                  }
-                } else {
-                  // confirm no incorrect answers were checked
-                  if (this.answer[chkAnswers[idx].idx]) {
-                    correct = false;
-                  }
-                }
-              }
-              break;
-            case 'text':
-              var txtAnswer = ManifestService.getFirst('npAnswer', $scope.cmpIdx);
-              var key = txtAnswer.data.correct;
-              var regExp, pat, mod = 'i';
-              if (angular.isString(key)) {
-                if (key.indexOf('/') === 0) {
-                  pat = key.substring(1, key.lastIndexOf('/'));
-                  mod = key.substring(key.lastIndexOf('/') + 1);
-                }
-              } else if (angular.isArray(key)) {
-                pat = '^(' + key.join('|') + ')$';
-              }
-              regExp = new RegExp(pat, mod);
-              if (!regExp.test(this.answer)) {
-                if (angular.isObject(txtAnswer.data.feedback) && angular.isString(txtAnswer.data.feedback.incorrect)) {
-                  this.feedback = txtAnswer.data.feedback.incorrect;
-                }
-                correct = false;
-              } else {
-                if (angular.isObject(txtAnswer.data.feedback) && angular.isString(txtAnswer.data.feedback.correct)) {
-                  this.feedback = txtAnswer.data.feedback.correct;
-                }
-              }
-              break;
-          }
-        } else {
-          correct = false;
-        }
-        $log.debug('npQuestion::evaluate:isCorrect', correct);
-
-        // set by ng-model of npAnswer's input's
-        if (feedback.immediate && this.feedback === '') {
-          if (correct) {
-            this.feedback = feedback.correct;
-            this.canContinue = true;
-          } else {
-            this.feedback = feedback.incorrect;
-            this.canContinue = false;
-          }
-        }
-      };
-
-      this.nextPage = function (evt) {
-        evt.preventDefault();
-        if (this.canContinue) {
-          $rootScope.$emit('question.answered', true);
-        }
-      };
-    }
-  )
-
-  /** @ngInject */
-    .run(
-    function ($log, $rootScope) {
-      $log.debug('npQuestion::component loaded!');
-    }
-  );
+    'use strict';
+    angular
+            .module('newplayer.component')
+            /** @ngInject */
+            .controller('npQuestionController',
+                    function ($log, $scope, $rootScope, ManifestService, $sce, $element) {
+                        var cmpData = $scope.component.data;
+                        $log.debug('npQuestion::data', cmpData);
+                        this.id = cmpData.id;
+                        this.content = $sce.trustAsHtml(cmpData.content);
+                        this.type = cmpData.type;
+                        this.feedback = '';
+                        this.canContinue = false;
+                        var feedback = cmpData.feedback;
+                        var feedback_label = $element.find('.question-feedback-label');
+                        var feedback_checkbox_x = $element.find('.checkbox-x');
+                        var negativeFeedbackIcon = '';
+//                        console.log(
+//                                '\n::::::::::::::::::::::::::::::::::::::npQuestions::default:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                '\n:::', this,
+//                                '\n::type::', cmpData.type,
+//                                '\n::feedback::', feedback,
+//                                '\n::feedback_label::', feedback_label,
+//                                '\n::$element::', $element,
+//                                '\n::feedback_checkbox_x::', feedback_checkbox_x,
+//                                '\n::$element.find(".checkbox-x")::', $element.find(".checkbox-x"),
+//                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                );
+                        this.changed = function (event) {
+//                            console.log(
+//                                    '\n::::::::::::::::::::::::::::::::::::::npQuestions::changed:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                    '\n::id::', event,
+//                                    '\n::id::', event.target,
+//                                    '\n::id::', event.currentTarget,
+//                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                    );
+                            TweenMax.to(event.target, .25, {
+                                autoAlpha: 1,
+                                ease: Power3.easeOut
+                            });
+                            $log.debug('npQuestion::answer changed');
+                            if (feedback.immediate) {
+                                this.feedback = '';
+                                negativeFeedbackIcon = $element.find('.negative-feedback-icon');
+                                TweenMax.set(negativeFeedbackIcon, {opacity: 0, scale: 2.5, force3D: true});
+                            }
+                        };
+                        this.evaluate = function () {
+                            var correct = true;
+                            negativeFeedbackIcon = $element.find('.negative-feedback-icon');
+                            TweenMax.to(negativeFeedbackIcon, 0.75, {
+                                opacity: 1,
+                                scale: 1,
+                                force3D: true
+                            });
+//                            console.log(
+//                                    '\n::::::::::::::::::::::::::::::::::::::npQuestions::evaluate:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                    '\n::this::', this,
+//                                    '\n::this.answer::', this.answer,
+//                                    '\n::cmpData::', cmpData,
+//                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                    );
+                            $log.debug('npQuestion::evaluate:', this.answer);
+                            if (!!this.answer) {
+                                switch (this.type) {
+                                    case 'radio':
+                                        var radAnswer = ManifestService.getComponent(this.answer);
+                                        if (angular.isString(radAnswer.data.feedback)) {
+                                            this.feedback = radAnswer.data.feedback;
+                                        }
+                                        correct = radAnswer.data.correct;
+                                        break;
+                                    case 'checkbox':
+                                        var chkAnswers = ManifestService.getAll('npAnswer', $scope.cmpIdx);
+                                        var idx;
+                                        for (idx in chkAnswers) {
+                                            if (chkAnswers[idx].data.correct) {
+                                                console.log(
+                                                        '\n::::::::::::::::::::::::::::::::::::::npQuestions::default:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                                        '\n::idx::', idx,
+                                                        '\n::chkAnswers::', chkAnswers,
+                                                        '\n::this.answer[chkAnswers[idx].idx]::', this.answer[chkAnswers[idx].idx],
+                                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                                        );
+                                                // confirm all correct answers were checked
+                                                if (!this.answer[chkAnswers[idx].idx]) {
+                                                    correct = false;
+                                                }
+                                            } else {
+                                                // confirm no incorrect answers were checked
+                                                if (this.answer[chkAnswers[idx].idx]) {
+                                                    correct = false;
+                                                }
+                                            }
+                                        }
+                                        break;
+                                    case 'text':
+                                        var txtAnswer = ManifestService.getFirst('npAnswer', $scope.cmpIdx);
+                                        var key = txtAnswer.data.correct;
+                                        var regExp, pat, mod = 'i';
+                                        if (angular.isString(key)) {
+                                            if (key.indexOf('/') === 0) {
+                                                pat = key.substring(1, key.lastIndexOf('/'));
+                                                mod = key.substring(key.lastIndexOf('/') + 1);
+                                            }
+                                        } else if (angular.isArray(key)) {
+                                            pat = '^(' + key.join('|') + ')$';
+                                        }
+                                        regExp = new RegExp(pat, mod);
+                                        if (!regExp.test(this.answer)) {
+                                            if (angular.isObject(txtAnswer.data.feedback) && angular.isString(txtAnswer.data.feedback.incorrect)) {
+                                                this.feedback = txtAnswer.data.feedback.incorrect;
+                                                feedback_label.remove();
+                                            }
+                                            correct = false;
+                                        } else {
+                                            if (angular.isObject(txtAnswer.data.feedback) && angular.isString(txtAnswer.data.feedback.correct)) {
+                                                this.feedback = txtAnswer.data.feedback.correct;
+                                                feedback_label.remove();
+                                            }
+                                        }
+                                        break;
+                                }
+                            } else {
+                                correct = false;
+                            }
+                            $log.debug('npQuestion::evaluate:isCorrect', correct);
+                            // set by ng-model of npAnswer's input's
+                            if (feedback.immediate && this.feedback === '') {
+                                feedback_label.remove();
+                                if (correct) {
+                                    this.feedback = feedback.correct;
+                                    this.canContinue = true;
+                                } else {
+                                    this.feedback = feedback.incorrect;
+                                    this.canContinue = false;
+                                }
+                            }
+                        };
+                        this.nextPage = function (evt) {
+                            evt.preventDefault();
+                            if (this.canContinue) {
+                                $rootScope.$emit('question.answered', true);
+                            }
+                        };
+                    }
+            )
+            .directive('questionFeedbackBuild', function () {
+                return function ($scope, $element, attrs) {
+                    var negativeFeedbackIcon = '';
+                    setTimeout(function () {
+                        $scope.$apply(function () {
+                            negativeFeedbackIcon = $element.find('.hotspotButton');
+                            function onPageLoadBuild() {
+                                negativeFeedbackIcon = $('.negative-feedback-icon');
+                                TweenMax.set(negativeFeedbackIcon, {opacity: 0, scale: 2.5, force3D: true});
+//                                TweenMax.set(hotspotButton, {opacity: 0, scale: .25, force3D: true});
+//                                TweenMax.staggerTo(hotspotButton, 2, {scale: 1, opacity: 1, delay: 0.5, ease: Elastic.easeOut, force3D: true}, 0.2);
+                            }
+                            onPageLoadBuild();
+                        });
+                    });
+                };
+            })
+            /** @ngInject */
+            .run(
+                    function ($log, $rootScope) {
+                        $log.debug('npQuestion::component loaded!');
+                    }
+            );
 })();
 (function () {
 
@@ -3374,7 +3467,6 @@ function AssessmentService ( $log ) {
                         var cmpData = $scope.component.data;
                         var pagesLen = $scope.components.length;
                         $log.debug('npTrivia::data', cmpData);
-
                         vm.id = cmpData.id;
                         vm.content = $sce.trustAsHtml(cmpData.content);
                         vm.type = cmpData.type;
@@ -3389,7 +3481,6 @@ function AssessmentService ( $log ) {
                         $timeout(function () {
                             ManifestService.setPageId(vm.pageId);
                         });
-
                         $rootScope.$on('question.answered', function (evt, correct) {
                             if (correct) {
                                 vm.assment.pageViewed();
@@ -3414,7 +3505,6 @@ function AssessmentService ( $log ) {
                         $log.debug('npTrivia::component loaded!');
                     }
             );
-
 })();
 
 (function() {
@@ -3902,7 +3992,7 @@ function AssessmentService ( $log ) {
                 overrideURL: '@npOverrideUrl',
                 overrideData: '@npOverrideData',
                 language: '@npLang',
-                onTrackService: '@onTrackService'
+                manifestData: '=?'
             },
             //compile: function (tElement, tAttrs, transclude, ConfigService)
             //{
@@ -4135,6 +4225,10 @@ function AssessmentService ( $log ) {
                     delay_time = attrs.delaytime || 1000,
                     shuffle_spaces = attrs.shufflespaces || true;
             var $wheel = element.find('.wheel');
+            var $wheel_div = element.find('.wheel div');
+            TweenMax.set($wheel, {
+                alpha: 0
+            });
             function shuffle() {
                 element.find('.wheel div[data-pick="true"]').removeAttr('data-pick');
                 var difficulty = element.data('difficulty');
@@ -4148,8 +4242,14 @@ function AssessmentService ( $log ) {
                 var $choice = element.find('.wheel div[data-pick="true"]').remove();
                 element.find('.wheel').append($choice);
                 //////////////////////////////////////////////////////////////////////////////////////
-                // using clipping now //// no spin for you! //
+                // using clipping now :: no spin for you! //
                 //////////////////////////////////////////////////////////////////////////////////////
+                TweenMax.to($choice, .25, {
+                    alpha: 0
+                });
+                TweenMax.to($wheel, .25, {
+                    alpha: 0
+                });
                 if (!Modernizr.csstransforms3d) {
                     element.find('.wheel').append(element.find('.wheel div').clone());
                     element.find('.wheel div').css({
@@ -4159,18 +4259,21 @@ function AssessmentService ( $log ) {
                     element.find('.wheel').animate({"top": "-=1250px"}, 5000);
                     return;
                 }
-                TweenMax.set($wheel, {transformStyle: 'preserve-3d', alpha: 0});
+                TweenMax.set($wheel, {
+                    transformStyle: 'preserve-3d',
+                    alpha: 0
+                });
                 _.each(element.find('.wheel div'), function (elem, index) {
-                    console.log(
-                            '\n::::::::::::::::::::::::::::::::::::::npFlashCards::data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
-                            '\n::index::', index,
-                            '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                            );
+//                    console.log(
+//                            '\n::::::::::::::::::::::::::::::::::::::npSpinner::data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                            '\n::index::', index,
+//                            '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                            );
                     //////////////////////////////////////////////////////////////////////////////////////
                     // adjust index amount (number in template) vs numberDisplayed to detirmine facete 
                     // number displayed.
                     //////////////////////////////////////////////////////////////////////////////////////
-                    var numberDisplayed = 19;
+                    var numberDisplayed = 20;
                     TweenMax.to(elem, 0, {
                         rotationX: (numberDisplayed * index),
                         transformOrigin: '0 10 -200px'
@@ -4190,6 +4293,11 @@ function AssessmentService ( $log ) {
                     alpha: 1,
                     rotationX: 0,
                     transformOrigin: transformOrigin
+//                    ease: Elastic.easeOut.config(1, 0.3)
+                });
+                TweenMax.to($choice, .25, {
+                    alpha: 1,
+                    ease: Power3.easeOut
                 });
             }
             $timeout(function () {
@@ -4237,50 +4345,105 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "<div class=\"debug\">\n" +
     "    <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
     "</div>\n" +
-    "\n" +
-    "<div ng-if=\"npQuestion.type === 'radio'\" class=\"np-cmp-wrapper {{component.type}} radio\" ng-controller=\"npAnswerController as npAnswer\">\n" +
-    "\n" +
+    "<div ng-if=\"npQuestion.type === 'radio'\" class=\"row np-cmp-wrapper {{component.type}} radio answer-wrapper\" ng-controller=\"npAnswerController as npAnswer\">\n" +
+    "    <div type=\"radio\" class=\"col-sm-1 npAnswer-radio np-cmp-main answer-radio\" name=\"radio\" ng-model=\"npQuestion.answer\" value=\"{{component.idx}}\" id=\"{{npAnswer.id}}\" ng-click=\"npQuestion.changed(npAnswer.id)\">\n" +
+    "        <div class=\"checkbox-box\">\n" +
+    "            <svg  version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
+    "                <style type=\"text/css\">\n" +
+    "                    <![CDATA[\n" +
+    "                    .st0{fill:url(#SVGID_1_);}\n" +
+    "                    .st1{display:inline;}\n" +
+    "                    .st2{display:none;}\n" +
+    "                    ]]>\n" +
+    "                </style>\n" +
+    "                <g id=\"Layer_2\">\n" +
+    "                    <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"0.8359\" y1=\"0.9399\" x2=\"367.8515\" y2=\"221.4724\">\n" +
+    "                        <stop  offset=\"0\" style=\"stop-color:#CAA04C\"/>\n" +
+    "                        <stop  offset=\"0.3497\" style=\"stop-color:#F8E4AA\"/>\n" +
+    "                        <stop  offset=\"0.638\" style=\"stop-color:#CAA04D\"/>\n" +
+    "                        <stop  offset=\"0.9816\" style=\"stop-color:#F3DB7E\"/>\n" +
+    "                    </linearGradient>\n" +
+    "                    <rect fill=\"url(#MyGradient)\" stroke=\"url(#SVGID_1_)\" vector-effect=\"non-scaling-stroke\" stroke-width=\"3\" x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
+    "                </g>\n" +
+    "            </svg>\n" +
+    "        </div>\n" +
+    "        <div class=\"checkbox-x\">\n" +
+    "            <svg version=\"1.0\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"22.121px\" height=\"22.121px\" viewBox=\"796.393 809.141 22.121 22.121\" style=\"enable-background:new 796.393 809.141 22.121 22.121;\" xml:space=\"preserve\">\n" +
+    "                <g>\n" +
+    "                    <line style=\"fill:none;stroke:#040A2B;stroke-width:3;stroke-miterlimit:10;\" x1=\"797.453\" y1=\"830.201\" x2=\"817.453\" y2=\"810.201\"/>\n" +
+    "                    <line style=\"fill:none;stroke:#040A2B;stroke-width:3;stroke-miterlimit:10;\" x1=\"817.453\" y1=\"830.201\" x2=\"797.453\" y2=\"810.201\"/>\n" +
+    "                </g>\n" +
+    "            </svg>\n" +
+    "        </div> \n" +
+    "    </div>\n" +
+    "    <div class=\"col-sm-10\">\n" +
+    "        <span class=\"npAnswer-label answer-text p\" for=\"{{npAnswer.id}}_input\" ng-bind-html=\"npAnswer.label\"></span>\n" +
+    "    </div>\n" +
+    "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "</div>\n" +
+    "<!--<div ng-if=\"npQuestion.type === 'radio'\" class=\"np-cmp-wrapper {{component.type}} radio\" ng-controller=\"npAnswerController as npAnswer\">\n" +
     "    <label>\n" +
     "        <input type=\"radio\" class=\"npAnswer-radio np-cmp-main \" name=\"radio\" ng-model=\"npQuestion.answer\" value=\"{{component.idx}}\" id=\"{{npAnswer.id}}_input\" ng-change=\"npQuestion.changed()\" />\n" +
-    "        <span class=\"npAnswer-label\" for=\"{{npAnswer.id}}_input\" ng-bind-html=\"npAnswer.label\" ></span>\n" +
-    "\n" +
+    "        <span class=\"npAnswer-label answer-text-radio\" for=\"{{npAnswer.id}}_input\" ng-bind-html=\"npAnswer.label\" ></span>\n" +
     "    </label>\n" +
-    "\n" +
     "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
-    "\n" +
-    "</div>\n" +
-    "\n" +
-    "<div ng-if=\"npQuestion.type === 'checkbox'\" class=\"np-cmp-wrapper {{component.type}} checkbox\" ng-controller=\"npAnswerController as npAnswer\">\n" +
-    "\n" +
-    "    <label>\n" +
-    "        <input type=\"checkbox\" class=\"npAnswer-checkbox np-cmp-main \" name=\"checkbox{{npAnswer.id}}\" ng-model=\"npQuestion.answer[component.idx]\" value=\"{{component.idx}}\" id=\"{{npAnswer.id}}_input\" ng-change=\"npQuestion.changed()\" />\n" +
-    "        <span class=\"npAnswer-label\" for=\"{{npAnswer.id}}_input\" ng-bind-html=\"npAnswer.label\"></span>\n" +
-    "    </label>\n" +
-    "\n" +
+    "</div>-->\n" +
+    "<div ng-if=\"npQuestion.type === 'checkbox'\" ng-checked=\"false\"class=\"row np-cmp-wrapper {{component.type}} checkbox answer-wrapper\" ng-controller=\"npAnswerController as npAnswer\">\n" +
+    "    <div type=\"checkbox\" class=\"col-xs-1 npAnswer-checkbox np-cmp-main answer-checkbox\" name=\"checkbox{{npAnswer.id}}\" ng-model=\"npQuestion.answer[component.idx]\" value=\"{{component.idx}}\" id=\"{{npAnswer.id}}\" ng-click=\"npQuestion.changed($event)\">\n" +
+    "        <div class=\"checkbox-box\">\n" +
+    "            <svg  version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
+    "                <style type=\"text/css\">\n" +
+    "                    <![CDATA[\n" +
+    "                    .st0{fill:url(#SVGID_1_);}\n" +
+    "                    .st1{display:inline;}\n" +
+    "                    .st2{display:none;}\n" +
+    "                    ]]>\n" +
+    "                </style>\n" +
+    "                <g id=\"Layer_2\">\n" +
+    "                    <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"0.8359\" y1=\"0.9399\" x2=\"367.8515\" y2=\"221.4724\">\n" +
+    "                        <stop  offset=\"0\" style=\"stop-color:#CAA04C\"/>\n" +
+    "                        <stop  offset=\"0.3497\" style=\"stop-color:#F8E4AA\"/>\n" +
+    "                        <stop  offset=\"0.638\" style=\"stop-color:#CAA04D\"/>\n" +
+    "                        <stop  offset=\"0.9816\" style=\"stop-color:#F3DB7E\"/>\n" +
+    "                    </linearGradient>\n" +
+    "                    <rect fill=\"url(#MyGradient)\" stroke=\"url(#SVGID_1_)\" vector-effect=\"non-scaling-stroke\" stroke-width=\"3\" x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
+    "                </g>\n" +
+    "            </svg>\n" +
+    "        </div>\n" +
+    "        <div class=\"checkbox-x\">\n" +
+    "            <svg version=\"1.0\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"22.121px\" height=\"22.121px\" viewBox=\"796.393 809.141 22.121 22.121\" style=\"enable-background:new 796.393 809.141 22.121 22.121;\" xml:space=\"preserve\">\n" +
+    "                <g>\n" +
+    "                    <line style=\"fill:none;stroke:#9a7d46;stroke-width:2;stroke-miterlimit:10;\" x1=\"797.453\" y1=\"830.201\" x2=\"817.453\" y2=\"810.201\"/>\n" +
+    "                    <line style=\"fill:none;stroke:#9a7d46;stroke-width:2;stroke-miterlimit:10;\" x1=\"817.453\" y1=\"830.201\" x2=\"797.453\" y2=\"810.201\"/>\n" +
+    "                </g>\n" +
+    "            </svg>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"col-xs-9\">\n" +
+    "        <span class=\"npAnswer-label answer-text\" for=\"{{npAnswer.id}}_input\" ng-bind-html=\"npAnswer.label\"></span>\n" +
+    "    </div>\n" +
+    "    <!--    <div>\n" +
+    "            <label>\n" +
+    "                <input type=\"checkbox\" class=\"npAnswer-checkbox np-cmp-main \" name=\"checkbox{{npAnswer.id}}\" ng-model=\"npQuestion.answer[component.idx]\" value=\"{{component.idx}}\" id=\"{{npAnswer.id}}_input\" ng-change=\"npQuestion.changed()\" />\n" +
+    "                <span class=\"npAnswer-label\" for=\"{{npAnswer.id}}_input\" ng-bind-html=\"npAnswer.label\"></span>\n" +
+    "            </label>\n" +
+    "        </div>-->\n" +
     "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
-    "\n" +
     "</div>\n" +
-    "\n" +
-    "\n" +
     "<div ng-if=\"npQuestion.type === 'text'\" class=\"np-cmp-wrapper {{component.type}} input-group\" ng-controller=\"npAnswerController as npAnswer\">\n" +
-    "\n" +
     "    <!--<label class=\"npAnswer-label \" for=\"{{npAnswer.id}}_input\" ng-bind-html=\"npAnswer.label\"></label>-->\n" +
-    "    <span class=\"npAnswer-label input-group-addon\" for=\"{{npAnswer.id}}_input\" ng-bind-html=\"npAnswer.label\"></span>\n" +
-    "    <input type=\"text\" class=\"npAnswer-text np-cmp-main form-control\" name=\"text{{npAnswer.id}}\" ng-model=\"npQuestion.answer\" value=\"\" id=\"{{npAnswer.id}}_input\" ng-change=\"npQuestion.changed()\" />\n" +
-    "\n" +
+    "    <span class=\"npAnswer-label input-group-addon answer-text-input\" for=\"{{npAnswer.id}}_input\" ng-bind-html=\"npAnswer.label\"></span>\n" +
+    "    <input type=\"text\" class=\"npAnswer-text np-cmp-main form-control answer-text-input\" name=\"text{{npAnswer.id}}\" ng-model=\"npQuestion.answer\" value=\"\" id=\"{{npAnswer.id}}_input\" ng-change=\"npQuestion.changed()\" />\n" +
     "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
-    "\n" +
     "</div>\n" +
-    "\n" +
     "<div ng-if=\"npMatch\" class=\"np-cmp-wrapper {{component.type}} matchbox\" ng-controller=\"npAnswerController as npAnswer\">\n" +
     "    <div class=\"slide-wrapper reveal-slide rsContent\">\n" +
     "        <label>\n" +
     "            <span class=\"npAnswer-label\" for=\"{{npAnswer.id}}_input\" ng-bind-html=\"npAnswer.label\"></span>\n" +
     "        </label>\n" +
-    "\n" +
     "        <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
     "    </div>\n" +
-    "</div>"
+    "</div>\n"
   );
 
 
@@ -4383,17 +4546,15 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('scripts/component/npButton/npButton.html',
+    "<!--<div class=\"{{component.type}} {{npButton.type}} np-cmp-main btn\"  ng-controller=\"npButtonController as npButton\" ng-click=\"npButton.go()\">-->\n" +
     "<button class=\"{{component.type}} {{npButton.type}} np-cmp-main btn\"  ng-controller=\"npButtonController as npButton\" ng-click=\"npButton.go()\">\n" +
-    "\n" +
-    "    <div class=\"debug\">\n" +
-    "        <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
-    "    </div>\n" +
-    "\n" +
+    "    <span class=\"debug\">\n" +
+    "        <span class=\"h3\">{{component.type}} -- <small>{{component.idx}}</small></span>\n" +
+    "    </span>\n" +
     "    <span ng-bind-html=\"npButton.content\"></span>\n" +
-    "\n" +
     "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
-    "\n" +
-    "</button>\n"
+    "</button>\n" +
+    "<!--</div>-->"
   );
 
 
@@ -4459,7 +4620,6 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                            .st2{display:none;}\n" +
     "                            ]]>\n" +
     "                        </style>\n" +
-    "                        <!--<g id=\"Layer_2\">-->\n" +
     "                        <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"0\" y1=\"0\" x2=\"400\" y2=\"200\">\n" +
     "                            <stop  offset=\"0\" style=\"stop-color:#CAA04C\"/>\n" +
     "                            <stop  offset=\"0.3497\" style=\"stop-color:#F8E4AA\"/>\n" +
@@ -4467,15 +4627,12 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                            <stop  offset=\"0.9816\" style=\"stop-color:#F3DB7E\"/>\n" +
     "                        </linearGradient>\n" +
     "                        <rect fill=\"\" stroke=\"url(#SVGID_1_)\" stroke-width=\"3\" vector-effect=\"non-scaling-stroke\"  x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
-    "                        <!--                        </g>\n" +
-    "                                                <g id=\"Layer_3\">-->\n" +
     "                        <foreignObject x=\"5%\" y=\"0\" width=\"100%\" height=\"100%\">\n" +
     "                            <div class=\"{{draggableButton.class}} button-content\">\n" +
     "                                <img class=\"draggableButtonImage\" ng-src=\"{{draggableButton.image}}\" alt=\"{{draggableButton.alt}}\" />\n" +
     "                                <div class=\"draggableButtonContent\" ng-bind-html=\"draggableButton.content\" ></div>\n" +
     "                            </div>\n" +
     "                        </foreignObject>\n" +
-    "                        <!--</g>-->\n" +
     "                    </svg>\n" +
     "                </div>\n" +
     "            </div>\n" +
@@ -4483,6 +4640,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "            <div class=\"col-xs-6\">\n" +
     "                <div id=\"hitAreaWrapper\">                    \n" +
     "                    <div ng-repeat=\"draggableButton in npDragAndDropMatch.draggableButtons\" class=\"{{hitArea.class}} hit-area boxElements\">\n" +
+    "                        <div class=\"hit-area-background\"></div>\n" +
     "                        <svg class=\"complete-background\" version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
     "                            <g class=\"complete-background-Layer_1\">\n" +
     "                                <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"486.5701\" y1=\"836.5667\" x2=\"474.7614\" y2=\"851.428\" gradientTransform=\"matrix(0.9984 5.588965e-02 -5.588965e-02 0.9984 48.0441 -25.572)\">\n" +
@@ -4513,7 +4671,6 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                                </foreignObject>\n" +
     "                            </g>\n" +
     "                        </svg>\n" +
-    "                        <div class=\"hit-area-background\"></div>\n" +
     "                    </div>\n" +
     "                </div>\n" +
     "            </div> \n" +
@@ -4599,7 +4756,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('scripts/component/npFeature/npFeature.html',
-    "<div class=\"np-cmp-wrapper {{component.type}}\" ng-controller=\"npFeatureController as npFeature\">\n" +
+    "<div new-player-page-top class=\"np-cmp-wrapper {{component.type}}\" ng-controller=\"npFeatureController as npFeature\">\n" +
     "\n" +
     "\t<div class=\"debug\">\n" +
     "\t\t<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
@@ -4737,7 +4894,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                    <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
     "                </div>\n" +
     "                <img class=\"{{component.type}} np-cmp-main img-responsive\" ng-controller=\"npHotspotController as npHotspot\" ng-src=\"{{npHotspot.src}}\" alt=\"{{npHotspot.alt}}\" />\n" +
-    "                <div ng-repeat=\"hotspotButton in npHotspot.hotspotButtons\">\n" +
+    "                <div hotspot-button-build ng-repeat=\"hotspotButton in npHotspot.hotspotButtons\">\n" +
     "                    <div class=\"{{hotspotButton.class}} hotspotButton\" ng-click=\"npHotspot.update(hotspotButton)\">\n" +
     "                        <!--<img class=\"hotspotButtonImage\" ng-src=\"{{hotspotButton.image}}\" alt=\"{{npHotspot.alt}}\" />-->\n" +
     "                        <div class=\"hotspotButtonImage\" ></div>\n" +
@@ -4809,8 +4966,8 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "        </div>\n" +
     "        <div class=\"column-2 col-md-8\">\n" +
     "            <div class=\"media-body\">\n" +
-    "                <h4 ng-bind-html=\"npList.heading\" class=\"media-heading\"></h4>\n" +
-    "                <div ng-bind-html=\"npList.content\" class=\"np-cmp-main\" ng-if=\"!npList.link\"></div>\n" +
+    "                <div ng-bind-html=\"npList.heading\" class=\"media-heading h4\"></div>\n" +
+    "                <div ng-bind-html=\"npList.content\" class=\"np-cmp-main list-body-text\" ng-if=\"!npList.link\"></div>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "    </div>\n" +
@@ -4893,27 +5050,78 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('scripts/component/npQuestion/npQuestion.html',
-    "<form class=\"np-cmp-wrapper {{component.type}} \" ng-controller=\"npQuestionController as npQuestion\" ng-submit=\"npQuestion.evaluate()\">\n" +
-    "\n" +
+    "<div class=\"np-cmp-wrapper {{component.type}} \" ng-controller=\"npQuestionController as npQuestion\" ng-submit=\"npQuestion.evaluate()\">\n" +
+    "    <!--<form class=\"np-cmp-wrapper {{component.type}} \" ng-controller=\"npQuestionController as npQuestion\" ng-submit=\"npQuestion.evaluate()\">-->\n" +
     "    <div class=\"debug\">\n" +
     "        <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
     "    </div>\n" +
-    "\n" +
-    "    <h5 class=\"dark text-uppercase\">question:</h5>\n" +
-    "    <div class=\"npQuestion-content\" ng-bind-html=\"npQuestion.content\"></div>\n" +
-    "\n" +
-    "\t<h5 class=\"dark text-uppercase\">answers:</h5>\n" +
+    "    <p class=\"h5 quiz-label\">question:</p>\n" +
+    "    <!--<h5 class=\"dark text-uppercase\">question:</h5>-->\n" +
+    "    <div class=\"npQuestion-content question-text h4\" ng-bind-html=\"npQuestion.content\"></div>\n" +
+    "    <p class=\"h5 quiz-label\">answers:</p>\n" +
     "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
-    "\n" +
-    "    <button type=\"submit\" class=\"col-xs-3 btn-primary\">Submit</button> &nbsp;\n" +
-    "    <button id=\"next_button\" class=\"btn-default\" ng-click=\"npQuestion.nextPage($event)\">Next</button>\n" +
-    "<!--    <div class=\"btn btn-default\">\n" +
-    "        <input type=\"submit\" />\n" +
-    "    </div>-->\n" +
-    "\n" +
-    "    <div class=\"npQuestion-feedback\" ng-if=\"npQuestion.feedback\" ng-bind-html=\"npQuestion.feedback\"></div>\n" +
-    "\n" +
-    "</form>"
+    "    <div class=\"row\">\n" +
+    "        <button type=\"submit\" class=\"btn-submit\" ng-click=\"npQuestion.evaluate()\">\n" +
+    "            <span>Submit</span>\n" +
+    "        </button>\n" +
+    "    </div>\n" +
+    "    <!--<button id=\"next_button\" class=\"btn-default\" ng-click=\"npQuestion.nextPage($event)\">Next</button>-->\n" +
+    "    <!--    <div class=\"btn btn-default\">\n" +
+    "            <input type=\"submit\" />\n" +
+    "        </div>-->\n" +
+    "    <div question-feedback-build class=\"row\">\n" +
+    "        <div  class=\"col-sm-7 question-feedback\">\n" +
+    "            <div class=\"question-feedback-wrapper\">\n" +
+    "                <div class=\"negative-feedback-icon\">\n" +
+    "                    <svg version=\"1.0\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"22.8px\" height=\"22.801px\" viewBox=\"599.8 837.1 22.8 22.801\" enable-background=\"new 599.8 837.1 22.8 22.801\" xml:space=\"preserve\">\n" +
+    "                        <path fill=\"#9A7D46\" d=\"M611.2,859.9c-6.3,0-11.4-5.101-11.4-11.4s5.101-11.4,11.4-11.4S622.6,842.2,622.6,848.5 S617.5,859.9,611.2,859.9z M611.2,838.1c-5.7,0-10.4,4.7-10.4,10.4s4.7,10.4,10.4,10.4s10.399-4.7,10.399-10.4 S616.9,838.1,611.2,838.1z\"/>\n" +
+    "                        <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"874.293\" y1=\"-1086.3877\" x2=\"861.2496\" y2=\"-1099.811\" gradientTransform=\"matrix(1 0 0 -1 -256 -245)\">\n" +
+    "                            <stop  offset=\"0.1642\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                            <stop  offset=\"0.1698\" style=\"stop-color:#CCA352\"/>\n" +
+    "                            <stop  offset=\"0.2532\" style=\"stop-color:#E4C682\"/>\n" +
+    "                            <stop  offset=\"0.3167\" style=\"stop-color:#F2DCA0\"/>\n" +
+    "                            <stop  offset=\"0.3527\" style=\"stop-color:#F8E4AB\"/>\n" +
+    "                            <stop  offset=\"0.4062\" style=\"stop-color:#EBD191\"/>\n" +
+    "                            <stop  offset=\"0.48\" style=\"stop-color:#DDBC74\"/>\n" +
+    "                            <stop  offset=\"0.5532\" style=\"stop-color:#D2AC5F\"/>\n" +
+    "                            <stop  offset=\"0.6249\" style=\"stop-color:#CCA352\"/>\n" +
+    "                            <stop  offset=\"0.6933\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                            <stop  offset=\"0.7957\" style=\"stop-color:#D5B05B\"/>\n" +
+    "                            <stop  offset=\"0.9955\" style=\"stop-color:#F2DA7E\"/>\n" +
+    "                            <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
+    "                        </linearGradient>\n" +
+    "                        <polygon fill=\"url(#SVGID_1_)\" points=\"605.8,856.5 611.2,851.2 616.5,856.5 619,854 613.7,848.7 619,843.4 616.5,840.8 611.2,846.1 605.9,840.8 603.4,843.4 608.7,848.7 603.3,854 \"/>\n" +
+    "                    </svg>\n" +
+    "                </div>\n" +
+    "                <div class=\"npQuestion-feedback question-feedback-text\" ng-if=\"npQuestion.feedback\" ng-bind-html=\"npQuestion.feedback\"></div>\n" +
+    "                <div class=\"question-feedback-label\">Feedback area</div>\n" +
+    "            </div>\n" +
+    "            <!--            <div  class=\"question-feedback-outline\">\n" +
+    "                            <svg  version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
+    "                                <style type=\"text/css\">\n" +
+    "                                    <![CDATA[\n" +
+    "                                    .st0{fill:url(#SVGID_1_);}\n" +
+    "                                    .st1{display:inline;}\n" +
+    "                                    .st2{display:none;}\n" +
+    "                                    ]]>\n" +
+    "                                </style>\n" +
+    "                                <g id=\"Layer_2\">\n" +
+    "                                    <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"0.8359\" y1=\"0.9399\" x2=\"367.8515\" y2=\"221.4724\">\n" +
+    "                                        <stop  offset=\"0\" style=\"stop-color:#CAA04C\"/>\n" +
+    "                                        <stop  offset=\"0.3497\" style=\"stop-color:#F8E4AA\"/>\n" +
+    "                                        <stop  offset=\"0.638\" style=\"stop-color:#CAA04D\"/>\n" +
+    "                                        <stop  offset=\"0.9816\" style=\"stop-color:#F3DB7E\"/>\n" +
+    "                                    </linearGradient>\n" +
+    "                                    <rect fill=\"url(#MyGradient)\" stroke=\"url(#SVGID_1_)\" vector-effect=\"non-scaling-stroke\" stroke-width=\"3\" x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
+    "                                </g>\n" +
+    "                            </svg>\n" +
+    "                        </div>-->\n" +
+    "        </div>\n" +
+    "        <div  class=\"col-sm-5\">\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <!--</form>-->\n" +
+    "</div>"
   );
 
 
@@ -4983,39 +5191,25 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('scripts/component/npTrivia/npTrivia.html',
     "<form class=\"np-cmp-wrapper {{component.type}}\" ng-controller=\"npTriviaController as npTrivia\" ng-submit=\"npTrivia.evaluate()\">\n" +
-    "\n" +
     "    <div class=\"debug\">\n" +
     "        <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
     "    </div>\n" +
-    "\n" +
+    "    <!--    <div class=\"row\">\n" +
+    "            <div class=\"npTrivia-content h4 col-xs-12\" ng-bind-html=\"npTrivia.content\"></div>\n" +
+    "        </div>-->\n" +
     "    <div class=\"row\">\n" +
-    "        <div class=\"npTrivia-content h4 col-xs-12\" ng-bind-html=\"npTrivia.content\"></div>\n" +
-    "    </div>\n" +
-    "\n" +
-    "    <div class=\"row\">\n" +
-    "        <div class=\"col-sm-2\">\n" +
+    "        <div class=\"col-sm-2 np-spinner\">\n" +
     "            <div class=\"np-spinner-wrapper\">\n" +
-    "                <div class=\"np-gold-border\">\n" +
-    "                    <svg  version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" viewBox=\"0 0 368 222\" xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
-    "                        <style type=\"text/css\">\n" +
-    "                            <![CDATA[\n" +
-    "                            .st0{fill:url(#SVGID_1_);}\n" +
-    "                            .st1{display:inline;}\n" +
-    "                            .st2{display:none;}\n" +
-    "                            ]]>\n" +
-    "                        </style>\n" +
-    "                        <g id=\"Layer_2\">\n" +
-    "                            <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"0.8359\" y1=\"0.9399\" x2=\"367.8515\" y2=\"221.4724\">\n" +
-    "                                <stop  offset=\"0\" style=\"stop-color:#CAA04C\"/>\n" +
-    "                                <stop  offset=\"0.3497\" style=\"stop-color:#F8E4AA\"/>\n" +
-    "                                <stop  offset=\"0.638\" style=\"stop-color:#CAA04D\"/>\n" +
-    "                                <stop  offset=\"0.9816\" style=\"stop-color:#F3DB7E\"/>\n" +
-    "                            </linearGradient>\n" +
-    "                            <rect fill=\"url(#MyGradient)\" stroke=\"url(#SVGID_1_)\" vector-effect=\"non-scaling-stroke\" stroke-width=\"3\" x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
-    "                        </g>\n" +
-    "                    </svg>\n" +
-    "                </div>\n" +
-    "                <np-price-is-right-spinner class=\"col-xs-6 np-spinner \" spinTime=\"2000\" ng-hide=\"!npTrivia.pageId\" data-difficulty=\"{{npTrivia.difficulty}}\">\n" +
+    "                <np-price-is-right-spinner class=\"np-spinner\" spinTime=\"2000\" ng-hide=\"!npTrivia.pageId\" data-difficulty=\"{{npTrivia.difficulty}}\">\n" +
+    "                    <div>0</div>\n" +
+    "                    <div>100</div>\n" +
+    "                    <div>200</div>\n" +
+    "                    <div>300</div>\n" +
+    "                    <div>400</div>\n" +
+    "                    <div>500</div>\n" +
+    "                    <div>600</div>\n" +
+    "                    <div>700</div>\n" +
+    "                    <div>800</div>\n" +
     "                    <div>0</div>\n" +
     "                    <div>100</div>\n" +
     "                    <div>200</div>\n" +
@@ -5027,20 +5221,44 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                    <div>800</div>\n" +
     "                    <div>900</div>\n" +
     "                    <div>1000</div>\n" +
-    "                    <div>1000</div>\n" +
-    "                    <div>1000</div>\n" +
-    "                    <div>1000</div>\n" +
-    "                    <div>1000</div>\n" +
-    "                    <div>1000</div>\n" +
-    "                    <div>1000</div>\n" +
-    "                    <div>1000</div>\n" +
-    "                    <div>1000</div>\n" +
-    "                    <div>1000</div>\n" +
     "                </np-price-is-right-spinner>\n" +
+    "                <div class=\"np-gold-border\">\n" +
+    "                    <svg  version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" viewBox=\"0 0 368 222\" xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
+    "                    <style type=\"text/css\">\n" +
+    "                        <![CDATA[\n" +
+    "                        .st0{fill:url(#SVGID_1_);}\n" +
+    "                        .st1{display:inline;}\n" +
+    "                        .st2{display:none;}\n" +
+    "                        ]]>\n" +
+    "                    </style>\n" +
+    "                    <g id=\"Layer_2\">\n" +
+    "                    <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"0.8359\" y1=\"0.9399\" x2=\"367.8515\" y2=\"221.4724\">\n" +
+    "                    <stop  offset=\"0\" style=\"stop-color:#CAA04C\"/>\n" +
+    "                    <stop  offset=\"0.3497\" style=\"stop-color:#F8E4AA\"/>\n" +
+    "                    <stop  offset=\"0.638\" style=\"stop-color:#CAA04D\"/>\n" +
+    "                    <stop  offset=\"0.9816\" style=\"stop-color:#F3DB7E\"/>\n" +
+    "                    </linearGradient>\n" +
+    "                    <rect fill=\"url(#MyGradient)\" stroke=\"url(#SVGID_1_)\" vector-effect=\"non-scaling-stroke\" stroke-width=\"3\" x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
+    "                    </g>\n" +
+    "                    </svg>\n" +
+    "                </div>\n" +
+    "                <div class=\"np-gold-pointer\">\n" +
+    "                    <svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n" +
+    "                         width=\"66.096px\" height=\"126.685px\" viewBox=\"308.824 1129.275 66.096 126.685\"\n" +
+    "                         style=\"enable-background:new 308.824 1129.275 66.096 126.685;\" xml:space=\"preserve\">\n" +
+    "                    <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"118.5967\" y1=\"-46.6729\" x2=\"105.6811\" y2=\"-62.1192\" gradientTransform=\"matrix(6.12 0 0 -6.12 -324.0952 866.6157)\">\n" +
+    "                    <stop  offset=\"0.2306\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                    <stop  offset=\"0.3901\" style=\"stop-color:#F8E4AB\"/>\n" +
+    "                    <stop  offset=\"0.4768\" style=\"stop-color:#E1C27C\"/>\n" +
+    "                    <stop  offset=\"0.5692\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                    <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
+    "                    </linearGradient>\n" +
+    "                    <polygon style=\"fill:url(#SVGID_1_);\" points=\"374.92,1129.275 374.92,1255.96 308.824,1191.7 \"/>\n" +
+    "                    </svg>\n" +
+    "                </div>\n" +
     "            </div>\n" +
     "        </div>\n" +
-    "        <div class=\"col-md-9 np_row\" np-component ng-if=\"subCmp\" ng-repeat=\"component in npTrivia.seenComponents\" idx=\"{{component.idx}}\" ng-hide=\"npTrivia.pageId !== component.data.id\"></div>\n" +
-    "\n" +
+    "        <div class=\"col-xs-10 np_row\" np-component ng-if=\"subCmp\" ng-repeat=\"component in npTrivia.seenComponents\" idx=\"{{component.idx}}\" ng-hide=\"npTrivia.pageId !== component.data.id\"></div>\n" +
     "        <div class=\"npTrivia-feedback\" ng-if=\"npTrivia.feedback\" ng-bind-html=\"npTrivia.feedback\"></div>\n" +
     "    </div>\n" +
     "</form>"

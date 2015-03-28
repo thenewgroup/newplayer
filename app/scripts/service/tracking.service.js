@@ -1,5 +1,5 @@
-/* jshint -W004 */
-(function() {
+/* jshint -W004, -W003, -W026, -W040 */
+(function () {
   'use strict';
 
   angular
@@ -13,24 +13,42 @@
 
   /** @ngInject */
   function TrackingService($log, $rootScope, ConfigService /*, $timeout, $http, $q */) {
-    $log.debug('\nTrackingService::Init\n');
+    $log.warn('\nTrackingService::Init\n');
 
-    var Service = function () {
-      var self = this;
-
-      this.trackPageView = function (pageId) {
-      	ConfigService.tracking('pageView', pageId);
-      };
-
-      this.trackExternalLinkClick = function (link) {
-      	ConfigService.tracking('externalLink', link);
-      };
-
-      this.trackApiCall = function (api) {
-      	ConfigService.tracking('apiCall', api);
-      };
+    var service = {
+      trackEvent: angular.noop,
+      setCallback: setCallback,
+      trackPageView: trackPageView,
+      trackExternalLinkClick: trackExternalLinkClick,
+      trackApiCall: trackApiCall
     };
+    return service;
 
-    return new Service();
+    function setCallback(fn) {
+      // FIXME: receiving the method in isolate scope is a call to scope to get the actual method
+      // so we invoke it here to get the method passed in. Is this necessary?
+      var func = fn();
+      if (func) {
+        this.trackEvent = func;
+      }
+    }
+
+    function trackPageView(pageId) {
+      dispatch.call(this, 'pageView', pageId);
+    }
+
+    function trackExternalLinkClick(link) {
+      dispatch.call(this, 'externalLink', link);
+    }
+
+    function trackApiCall(api) {
+      dispatch.call(this, 'apiCall', api);
+    }
+
+    function dispatch(event, data) {
+      this.trackEvent('newplayer.' + event, data);
+    }
+
+
   }
 })();

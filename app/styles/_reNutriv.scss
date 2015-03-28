@@ -15,11 +15,10 @@
     left: 0;
     right: 0;
     top: 0;
-    z-index: -10;
 }
 #np_reNutriv #background-image {
     position:fixed;
-    background-image: url('/assets/images/ESTL-005_ReNutriv_bg_img.jpg');
+    background-image: url('../assets/images/ESTL-005_ReNutriv_bg_img.jpg');
     background-position: right top;
     background-repeat: no-repeat;
     background-size:50%;
@@ -28,7 +27,7 @@
 }
 #np_reNutriv .renutriv-logo-image {
     position: relative;
-    background-image: url("/assets/images/ReNutrivLogoSm.png");
+    background-image: url("../assets/images/ReNutrivLogoSm.png");
     background-repeat: no-repeat;
     width: 133px;
     height: 35px;
@@ -58,7 +57,7 @@
 #np_reNutriv h1, h2, h3, h4, h5{
     color: $brand-primary-light;
 }
-#np_reNutriv p{
+#np_reNutriv p ul ol{
     color: $brand-primary-light;
 }
 #np_reNutriv small{
@@ -68,7 +67,8 @@
     color: $gray-dark;
 }
 #np_reNutriv .gold {
-    color: #9a7d46;
+    /*color: #9a7d46;*/
+    color: $gold;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player padding wrapper classes*/
@@ -113,7 +113,7 @@
 }
 #np_reNutriv .hotspotButtonImage{
     position: relative;
-    background-image: url("/assets/images/hotspot.png");
+    background-image: url("../assets/images/hotspot.png");
     background-repeat: no-repeat;
     width: 100px;
     height: 50px;
@@ -164,7 +164,6 @@
 #np_reNutriv .flash-cards-wrapper {
     white-space: nowrap;
     width: auto;
-
 }
 #np_reNutriv .flash-card-content-text {
     position: relative;
@@ -198,14 +197,211 @@
     /*background-color: #ff0000;*/
 }
 #np_reNutriv .flash-cards-object {
-    display: inline-block;
     position: relative;
+    display: inline-block;
 }
-
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player Quiz classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+#np_reNutriv .quiz-label{
+    font-family: $font-family-sans-serif;
+    color: $brand-primary-light;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    display: inline-block;
+}
+#np_reNutriv .btn-submit{
+    position: relative;
+    border-color: #9a7d46;
+    background-color: #000000;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    margin-left: 30px;
+}
+#np_reNutriv .btn-submit span{ 
+    font-family: $re-nu-serif;
+    color: $brand-primary-light;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+#np_reNutriv input{ 
+    font-family: $re-nu-serif;
+    size: $font-size-small;
+    color: #737373;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #313131;
+}
+#np_reNutriv .answer-text-input{ 
+    font-family: $re-nu-serif;
+    size: $font-size-small;
+    color: #737373;
+    letter-spacing: 2px;
+    border-color: $gold;
+    background-color: $gray-dark;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
+}
+#np_reNutriv .answer-text-checkbox { 
+    font-family: $re-nu-serif;
+    size: $font-size-small;
+    color: $brand-primary-light;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+#np_reNutriv .answer-text-radio { 
+    font-family: $re-nu-serif;
+    size: $font-size-small;
+    color: $brand-primary-light;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+#np_reNutriv .answer-text span{ 
+    font-family: $re-nu-serif;
+    size: $font-size-small;
+    color: $brand-primary-light;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player Quiz Answer classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+#np_reNutriv .answer-wrapper{ 
+    padding: 20px;
+}
+#np_reNutriv .answer-checkbox{ 
+    position: relative;
+    width: 20px;
+    height: 20px;
+    /*float: left;*/
+    /*margin-right: 20px;*/
+    /*border-color: $gold;*/
+    border-color: #9a7d46;
+    background-color: #000000;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
+}
+#np_reNutriv .answer-radio{ 
+    position: relative;
+    width: 20px;
+    height: 20px;
+    /*border-color: $gold;*/
+    border-color: #9a7d46;
+    background-color: #000000;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
+}
+#np_reNutriv .checkbox-box{ 
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    display: block;
+    margin: auto;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
+}
+#np_reNutriv .checkbox-box svg{ 
+    position: absolute;
+    top:0;
+    left:0;
+    display: block;
+    margin: auto;
+}
+#np_reNutriv .checkbox-x{ 
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    display: block;
+    margin: auto;
+}
+#np_reNutriv .checkbox-x svg{ 
+    position: absolute;
+    top:0;
+    left:0;
+    opacity: 0;
+    display: block;
+    margin: auto;
+}
+#np_reNutriv .answer-text{ 
+    font-family: $font-family-sans-serif;
+    /*float: left;*/
+    color: $brand-primary-light;
+    letter-spacing: 2px;
+    /*margin-right: 20px;*/
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player Quiz Questions classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+#np_reNutriv .question-text{ 
+    font-family: $re-nu-serif;
+    size: $font-size-h3;
+    color: $brand-primary-light;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+#np_reNutriv .question-feedback{ 
+    position: relative;
+    height: 160px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 30px;
+}
+#np_reNutriv .question-feedback-outline{ 
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+#np_reNutriv .question-feedback-text{ 
+    font-family: $font-family-sans-serif;
+    float: left;
+    color: $brand-primary-light;
+    letter-spacing: 2px;
+}
+#np_reNutriv .negative-feedback-icon{ 
+    width: 20px;
+    margin-right: 10px;
+    float: left;
+}
+#np_reNutriv .question-feedback-label{ 
+    font-family: $font-family-sans-serif;
+    size: $font-size-h3;
+    color: #737373;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 2px;
+    padding-top: 4.5%;
+}
+#np_reNutriv .question-feedback-wrapper{ 
+    position: absolute;
+    background-color: $gray-dark;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+}
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Trivia/Spinner classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-
+#np_reNutriv .btn-next{ 
+    position: absolute;
+    border-color: $gold;
+    width: auto;
+    /*bottom: 0;*/
+    right: 0;
+    padding-top: 5px;
+    padding-bottom: 3px;
+    margin: 0;
+    margin-top: 15px;
+    background-color: #000000;
+}
+#np_reNutriv .btn-next span{ 
+    font-family: $re-nu-serif;
+    color: $brand-primary-light;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+#np_reNutriv .btn-next span p{ 
+    padding: 0;
+}
 #np_reNutriv .np-spinner-wrapper {
     position: relative;
     overflow: hidden;
@@ -216,6 +412,14 @@
 }
 #np_reNutriv .np-spinner{
     color: $gold;
+    width: 155px;
+}
+#np_reNutriv .np-gold-pointer{
+    position: absolute;
+    top:0;
+    bottom:0;
+    right:0;
+    width:33px;
 }
 #np_reNutriv .method2 {
     -webkit-mask-image: -webkit-linear-gradient(top, rgba(248,248,170,1), rgba(202,160,78,.5) 50%, rgba(248,248,170,1));
@@ -233,6 +437,7 @@
     top: 0;
     width: 100%;
     height: 400px;
+    box-shadow: inset 0 0 50px 15px rgba(0, 0, 0, 0.95);
 }
 /*
 ////////////////////////////////////////////////////////////////////////////////
@@ -261,7 +466,7 @@
             width: 100%;
             height: 65px;
             z-index: 999;
-            background-color: $gray-dark;
+            background-color: #313131;
             border-bottom: solid 1px;
             border-bottom-color: $gold;
             outline: 1px solid transparent;
@@ -368,13 +573,14 @@
     height: 100%;
     background-color: #000000;
     opacity: 0.75;
-    z-index: -1;
+    /*z-index: -1;*/
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player List classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 #np_reNutriv .list-item{
-
+    color: $brand-primary-light;
+    letter-spacing: 2px;
 }
 #np_reNutriv .column-1{
     margin-bottom: 1.5%;
@@ -388,6 +594,11 @@
     background-color: #000000;
     opacity: 0.75;
     filter: url(styles/inset-shadow.svg#inset-shadow); 
+}
+#np_reNutriv .list-body-text{
+    color: $brand-primary-light;
+    letter-spacing: 2px;
+    font-size: $font-size-base;
 }
 
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -449,7 +660,7 @@
     left:0;
     bottom:0;
     right:0;
-    z-index: -1;
+    /*z-index: -1;*/
     background-color: #313131;
     box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
 }

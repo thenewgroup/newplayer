@@ -1,47 +1,102 @@
 <div class="debug">
     <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
 </div>
-
-<div ng-if="npQuestion.type === 'radio'" class="np-cmp-wrapper {{component.type}} radio" ng-controller="npAnswerController as npAnswer">
-
+<div ng-if="npQuestion.type === 'radio'" class="row np-cmp-wrapper {{component.type}} radio answer-wrapper" ng-controller="npAnswerController as npAnswer">
+    <div type="radio" class="col-sm-1 npAnswer-radio np-cmp-main answer-radio" name="radio" ng-model="npQuestion.answer" value="{{component.idx}}" id="{{npAnswer.id}}" ng-click="npQuestion.changed(npAnswer.id)">
+        <div class="checkbox-box">
+            <svg  version="1.2" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"xml:space="preserve" preserveAspectRatio="none">
+                <style type="text/css">
+                    <![CDATA[
+                    .st0{fill:url(#SVGID_1_);}
+                    .st1{display:inline;}
+                    .st2{display:none;}
+                    ]]>
+                </style>
+                <g id="Layer_2">
+                    <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="0.8359" y1="0.9399" x2="367.8515" y2="221.4724">
+                        <stop  offset="0" style="stop-color:#CAA04C"/>
+                        <stop  offset="0.3497" style="stop-color:#F8E4AA"/>
+                        <stop  offset="0.638" style="stop-color:#CAA04D"/>
+                        <stop  offset="0.9816" style="stop-color:#F3DB7E"/>
+                    </linearGradient>
+                    <rect fill="url(#MyGradient)" stroke="url(#SVGID_1_)" vector-effect="non-scaling-stroke" stroke-width="3" x="0" y="0" width="100%" height="100%"/>
+                </g>
+            </svg>
+        </div>
+        <div class="checkbox-x">
+            <svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="22.121px" height="22.121px" viewBox="796.393 809.141 22.121 22.121" style="enable-background:new 796.393 809.141 22.121 22.121;" xml:space="preserve">
+                <g>
+                    <line style="fill:none;stroke:#040A2B;stroke-width:3;stroke-miterlimit:10;" x1="797.453" y1="830.201" x2="817.453" y2="810.201"/>
+                    <line style="fill:none;stroke:#040A2B;stroke-width:3;stroke-miterlimit:10;" x1="817.453" y1="830.201" x2="797.453" y2="810.201"/>
+                </g>
+            </svg>
+        </div> 
+    </div>
+    <div class="col-sm-10">
+        <span class="npAnswer-label answer-text p" for="{{npAnswer.id}}_input" ng-bind-html="npAnswer.label"></span>
+    </div>
+    <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+</div>
+<!--<div ng-if="npQuestion.type === 'radio'" class="np-cmp-wrapper {{component.type}} radio" ng-controller="npAnswerController as npAnswer">
     <label>
         <input type="radio" class="npAnswer-radio np-cmp-main " name="radio" ng-model="npQuestion.answer" value="{{component.idx}}" id="{{npAnswer.id}}_input" ng-change="npQuestion.changed()" />
-        <span class="npAnswer-label" for="{{npAnswer.id}}_input" ng-bind-html="npAnswer.label" ></span>
-
+        <span class="npAnswer-label answer-text-radio" for="{{npAnswer.id}}_input" ng-bind-html="npAnswer.label" ></span>
     </label>
-
     <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
-
-</div>
-
-<div ng-if="npQuestion.type === 'checkbox'" class="np-cmp-wrapper {{component.type}} checkbox" ng-controller="npAnswerController as npAnswer">
-
-    <label>
-        <input type="checkbox" class="npAnswer-checkbox np-cmp-main " name="checkbox{{npAnswer.id}}" ng-model="npQuestion.answer[component.idx]" value="{{component.idx}}" id="{{npAnswer.id}}_input" ng-change="npQuestion.changed()" />
-        <span class="npAnswer-label" for="{{npAnswer.id}}_input" ng-bind-html="npAnswer.label"></span>
-    </label>
-
+</div>-->
+<div ng-if="npQuestion.type === 'checkbox'" ng-checked="false"class="row np-cmp-wrapper {{component.type}} checkbox answer-wrapper" ng-controller="npAnswerController as npAnswer">
+    <div type="checkbox" class="col-xs-1 npAnswer-checkbox np-cmp-main answer-checkbox" name="checkbox{{npAnswer.id}}" ng-model="npQuestion.answer[component.idx]" value="{{component.idx}}" id="{{npAnswer.id}}" ng-click="npQuestion.changed($event)">
+        <div class="checkbox-box">
+            <svg  version="1.2" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"xml:space="preserve" preserveAspectRatio="none">
+                <style type="text/css">
+                    <![CDATA[
+                    .st0{fill:url(#SVGID_1_);}
+                    .st1{display:inline;}
+                    .st2{display:none;}
+                    ]]>
+                </style>
+                <g id="Layer_2">
+                    <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="0.8359" y1="0.9399" x2="367.8515" y2="221.4724">
+                        <stop  offset="0" style="stop-color:#CAA04C"/>
+                        <stop  offset="0.3497" style="stop-color:#F8E4AA"/>
+                        <stop  offset="0.638" style="stop-color:#CAA04D"/>
+                        <stop  offset="0.9816" style="stop-color:#F3DB7E"/>
+                    </linearGradient>
+                    <rect fill="url(#MyGradient)" stroke="url(#SVGID_1_)" vector-effect="non-scaling-stroke" stroke-width="3" x="0" y="0" width="100%" height="100%"/>
+                </g>
+            </svg>
+        </div>
+        <div class="checkbox-x">
+            <svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="22.121px" height="22.121px" viewBox="796.393 809.141 22.121 22.121" style="enable-background:new 796.393 809.141 22.121 22.121;" xml:space="preserve">
+                <g>
+                    <line style="fill:none;stroke:#9a7d46;stroke-width:2;stroke-miterlimit:10;" x1="797.453" y1="830.201" x2="817.453" y2="810.201"/>
+                    <line style="fill:none;stroke:#9a7d46;stroke-width:2;stroke-miterlimit:10;" x1="817.453" y1="830.201" x2="797.453" y2="810.201"/>
+                </g>
+            </svg>
+        </div>
+    </div>
+    <div class="col-xs-9">
+        <span class="npAnswer-label answer-text" for="{{npAnswer.id}}_input" ng-bind-html="npAnswer.label"></span>
+    </div>
+    <!--    <div>
+            <label>
+                <input type="checkbox" class="npAnswer-checkbox np-cmp-main " name="checkbox{{npAnswer.id}}" ng-model="npQuestion.answer[component.idx]" value="{{component.idx}}" id="{{npAnswer.id}}_input" ng-change="npQuestion.changed()" />
+                <span class="npAnswer-label" for="{{npAnswer.id}}_input" ng-bind-html="npAnswer.label"></span>
+            </label>
+        </div>-->
     <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
-
 </div>
-
-
 <div ng-if="npQuestion.type === 'text'" class="np-cmp-wrapper {{component.type}} input-group" ng-controller="npAnswerController as npAnswer">
-
     <!--<label class="npAnswer-label " for="{{npAnswer.id}}_input" ng-bind-html="npAnswer.label"></label>-->
-    <span class="npAnswer-label input-group-addon" for="{{npAnswer.id}}_input" ng-bind-html="npAnswer.label"></span>
-    <input type="text" class="npAnswer-text np-cmp-main form-control" name="text{{npAnswer.id}}" ng-model="npQuestion.answer" value="" id="{{npAnswer.id}}_input" ng-change="npQuestion.changed()" />
-
+    <span class="npAnswer-label input-group-addon answer-text-input" for="{{npAnswer.id}}_input" ng-bind-html="npAnswer.label"></span>
+    <input type="text" class="npAnswer-text np-cmp-main form-control answer-text-input" name="text{{npAnswer.id}}" ng-model="npQuestion.answer" value="" id="{{npAnswer.id}}_input" ng-change="npQuestion.changed()" />
     <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
-
 </div>
-
 <div ng-if="npMatch" class="np-cmp-wrapper {{component.type}} matchbox" ng-controller="npAnswerController as npAnswer">
     <div class="slide-wrapper reveal-slide rsContent">
         <label>
             <span class="npAnswer-label" for="{{npAnswer.id}}_input" ng-bind-html="npAnswer.label"></span>
         </label>
-
         <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
     </div>
 </div>

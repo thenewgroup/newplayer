@@ -7136,6 +7136,8 @@ td.visible-print {
 
 .me-plugin {
 	position: absolute;
+	height: auto;
+	width: auto;
 }
 
 .mejs-embed, .mejs-embed body {
@@ -7325,7 +7327,7 @@ td.visible-print {
 	display: block;
 	height: 17px;
 	width: auto;
-	padding: 10px 3px 0 3px ;
+	padding: 8px 3px 0 3px ;
 	overflow: hidden;
 	text-align: center;
 	-moz-box-sizing: content-box;
@@ -7602,10 +7604,9 @@ td.visible-print {
 /* horizontal version */
 .mejs-controls a.mejs-horizontal-volume-slider {
 	height: 26px;
-	width: 56px;
+	width: 60px;
 	position: relative;
-    display: block;
-    float: left;
+    display: table-cell;
     vertical-align: middle;
 }
 
