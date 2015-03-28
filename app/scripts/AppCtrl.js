@@ -8,8 +8,12 @@
     .value('sliders', {});
 
   /** @ngInject */
-  function AppController($log, AssessmentService/*, ImagePreloadFactory, HomeService, $scope*/) {
+  function AppController($log, $scope, AssessmentService/*, ImagePreloadFactory, HomeService, $scope*/) {
     $log.debug('AppController::Init');
+    var vm = this;
+    vm.doTrack = function (event, data) {
+      $log.warn('AppController', event, data);
+    };
 
     //AssessmentService.setRequirements(10,5,0.8);
     //
