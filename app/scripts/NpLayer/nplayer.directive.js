@@ -19,7 +19,8 @@
                 overrideURL: '@npOverrideUrl',
                 overrideData: '@npOverrideData',
                 language: '@npLang',
-                manifestData: '=?'
+                manifestData: '=?',
+                onTrackService: '@onTrackService'
             },
             //compile: function (tElement, tAttrs, transclude, ConfigService)
             //{

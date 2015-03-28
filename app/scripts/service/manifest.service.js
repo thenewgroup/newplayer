@@ -337,6 +337,9 @@
       this.setPageId = function (pageId) {
         $log.debug('ManifestService, setPageId', pageId);
         // reset component index for reparsing new page
+        if (this.pageId === pageId) {
+          return;
+        }
         setComponentIdx(null);
 
         this.pageId = pageId;
