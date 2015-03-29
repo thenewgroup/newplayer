@@ -5,20 +5,25 @@
             /** @ngInject */
             .controller('npQuestionController',
                     function ($log, $scope, $rootScope, ManifestService, $sce, $element) {
-                        var cmpData = $scope.component.data;
+                      var vm = this,
+                          cmpData = $scope.component.data;
+
                         $log.debug('npQuestion::data', cmpData);
-                        this.id = cmpData.id;
-                        this.content = $sce.trustAsHtml(cmpData.content);
-                        this.type = cmpData.type;
-                        this.feedback = '';
-                        this.canContinue = false;
+                        vm.id = cmpData.id;
+                        vm.content = $sce.trustAsHtml(cmpData.content);
+                        vm.type = cmpData.type;
+                        vm.feedback = '';
+                        vm.canContinue = false;
+                        vm.answers = [];
+                        //vm.answer = [];
+
                         var feedback = cmpData.feedback;
                         var feedback_label = $element.find('.question-feedback-label');
                         var feedback_checkbox_x = $element.find('.checkbox-x');
                         var negativeFeedbackIcon = '';
 //                        console.log(
 //                                '\n::::::::::::::::::::::::::::::::::::::npQuestions::default:::::::::::::::::::::::::::::::::::::::::::::::::',
-//                                '\n:::', this,
+//                                '\n:::', vm,
 //                                '\n::type::', cmpData.type,
 //                                '\n::feedback::', feedback,
 //                                '\n::feedback_label::', feedback_label,
@@ -27,7 +32,7 @@
 //                                '\n::$element.find(".checkbox-x")::', $element.find(".checkbox-x"),
 //                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
 //                                );
-                        this.changed = function (event) {
+                        vm.answerChanged = function (changedAnswer) {
 //                            console.log(
 //                                    '\n::::::::::::::::::::::::::::::::::::::npQuestions::changed:::::::::::::::::::::::::::::::::::::::::::::::::',
 //                                    '\n::id::', event,
@@ -35,39 +40,52 @@
 //                                    '\n::id::', event.currentTarget,
 //                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
 //                                    );
-                            TweenMax.to(event.target, .25, {
-                                autoAlpha: 1,
-                                ease: Power3.easeOut
-                            });
-                            $log.debug('npQuestion::answer changed');
+
+                            $log.debug('npQuestion::answer changed', vm.answers);
+
+                          // if this is a radio, clear the other radios
+                            if( vm.type == 'radio' ) {
+                              vm.answers.forEach(function (answer, index, array) {
+                                if( answer !== changedAnswer ) {
+                                  answer.clear();
+                                }
+                              });
+                            }
+
+                          // TODO: Should this trigger a full evaluation on change or just for this element?
                             if (feedback.immediate) {
-                                this.feedback = '';
+                                vm.feedback = '';
                                 negativeFeedbackIcon = $element.find('.negative-feedback-icon');
                                 TweenMax.set(negativeFeedbackIcon, {opacity: 0, scale: 2.5, force3D: true});
                             }
                         };
-                        this.evaluate = function () {
+                        vm.registerAnswer = function(answer) {
+                          vm.answers[answer.idx] = answer;
+                        };
+                        vm.evaluate = function () {
                             var correct = true;
                             negativeFeedbackIcon = $element.find('.negative-feedback-icon');
-                            TweenMax.to(negativeFeedbackIcon, 0.75, {
-                                opacity: 1,
-                                scale: 1,
-                                force3D: true
-                            });
+
+                            // TODO: should this not be conditional?
+                            //TweenMax.to(negativeFeedbackIcon, 0.75, {
+                            //    opacity: 1,
+                            //    scale: 1,
+                            //    force3D: true
+                            //});
 //                            console.log(
 //                                    '\n::::::::::::::::::::::::::::::::::::::npQuestions::evaluate:::::::::::::::::::::::::::::::::::::::::::::::::',
-//                                    '\n::this::', this,
-//                                    '\n::this.answer::', this.answer,
+//                                    '\n::vm::', vm,
+//                                    '\n::vm.answer::', vm.answer,
 //                                    '\n::cmpData::', cmpData,
 //                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
 //                                    );
-                            $log.debug('npQuestion::evaluate:', this.answer);
-                            if (!!this.answer) {
-                                switch (this.type) {
+                            $log.debug('npQuestion::evaluate:', vm.answer, vm.answers);
+                            if (!!vm.answers) {
+                                switch (vm.type) {
                                     case 'radio':
-                                        var radAnswer = ManifestService.getComponent(this.answer);
+                                        var radAnswer = ManifestService.getComponent(vm.answers);
                                         if (angular.isString(radAnswer.data.feedback)) {
-                                            this.feedback = radAnswer.data.feedback;
+                                            vm.feedback = radAnswer.data.feedback;
                                         }
                                         correct = radAnswer.data.correct;
                                         break;
@@ -80,16 +98,16 @@
                                                         '\n::::::::::::::::::::::::::::::::::::::npQuestions::default:::::::::::::::::::::::::::::::::::::::::::::::::',
                                                         '\n::idx::', idx,
                                                         '\n::chkAnswers::', chkAnswers,
-                                                        '\n::this.answer[chkAnswers[idx].idx]::', this.answer[chkAnswers[idx].idx],
+                                                        '\n::vm.answer[chkAnswers[idx].idx]::', vm.answer[chkAnswers[idx].idx],
                                                         '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
                                                         );
                                                 // confirm all correct answers were checked
-                                                if (!this.answer[chkAnswers[idx].idx]) {
+                                                if (!vm.answer[chkAnswers[idx].idx]) {
                                                     correct = false;
                                                 }
                                             } else {
                                                 // confirm no incorrect answers were checked
-                                                if (this.answer[chkAnswers[idx].idx]) {
+                                                if (vm.answer[chkAnswers[idx].idx]) {
                                                     correct = false;
                                                 }
                                             }
@@ -108,15 +126,15 @@
                                             pat = '^(' + key.join('|') + ')$';
                                         }
                                         regExp = new RegExp(pat, mod);
-                                        if (!regExp.test(this.answer)) {
+                                        if (!regExp.test(vm.answer)) {
                                             if (angular.isObject(txtAnswer.data.feedback) && angular.isString(txtAnswer.data.feedback.incorrect)) {
-                                                this.feedback = txtAnswer.data.feedback.incorrect;
+                                                vm.feedback = txtAnswer.data.feedback.incorrect;
                                                 feedback_label.remove();
                                             }
                                             correct = false;
                                         } else {
                                             if (angular.isObject(txtAnswer.data.feedback) && angular.isString(txtAnswer.data.feedback.correct)) {
-                                                this.feedback = txtAnswer.data.feedback.correct;
+                                                vm.feedback = txtAnswer.data.feedback.correct;
                                                 feedback_label.remove();
                                             }
                                         }
@@ -127,20 +145,20 @@
                             }
                             $log.debug('npQuestion::evaluate:isCorrect', correct);
                             // set by ng-model of npAnswer's input's
-                            if (feedback.immediate && this.feedback === '') {
+                            if (feedback.immediate && vm.feedback === '') {
                                 feedback_label.remove();
                                 if (correct) {
-                                    this.feedback = feedback.correct;
-                                    this.canContinue = true;
+                                    vm.feedback = feedback.correct;
+                                    vm.canContinue = true;
                                 } else {
-                                    this.feedback = feedback.incorrect;
-                                    this.canContinue = false;
+                                    vm.feedback = feedback.incorrect;
+                                    vm.canContinue = false;
                                 }
                             }
                         };
-                        this.nextPage = function (evt) {
+                        vm.nextPage = function (evt) {
                             evt.preventDefault();
-                            if (this.canContinue) {
+                            if (vm.canContinue) {
                                 $rootScope.$emit('question.answered', true);
                             }
                         };

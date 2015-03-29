@@ -10,6 +10,19 @@
   /** @ngInject */
   function AppController($log, $scope, AssessmentService/*, ImagePreloadFactory, HomeService, $scope*/) {
     $log.debug('AppController::Init');
+
+
+    $scope.seePlayerConfigInAppCtrlJS = {
+      manifestId: 'sample',
+      manifestURL: '/sample.json',
+      overrideURL : '/sample-override.json',
+      overrideData: {},
+      language: 'en-us',
+      assessment: {
+        minPassing: 0.75
+      }
+	};
+
     var vm = this;
     vm.doTrack = function (event, data) {
       $log.warn('AppController', event, data);
