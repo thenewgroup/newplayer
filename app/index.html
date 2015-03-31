@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" ng-app="newplayer" ng-controller="AppController">
+<html class="no-js" ng-app="newplayer" ng-controller="AppController as vm">
     <head>
         <meta charset="utf-8">
         <title>{{PageTitle}}</title>
@@ -52,8 +52,7 @@
         <![endif]-->
         <div class="container">
             <div class="main" ng-class="{'cover':coverSupported}">
-                <!--<np-layer np-id="sample" np-url="../_dev_assets/sample.json" np-override-url=""></np-layer>-->
-                <!--<np-layer np-id="sample" np-url="../_dev_assets/productsTemplate.json" np-override-url=""></np-layer>-->
+                <!--<np-layer np-id="sample" np-url="../_dev_assets/productsTemplate.json" np-override-url="" np-analytics-service="vm.doTrack"></np-layer>-->
                 <!--<np-layer np-id="sample" np-url="../_dev_assets/reNutrivHotspotTemplate.json" np-override-url=""></np-layer>-->
                 <!--<np-layer np-id="sample" np-url="../_dev_assets/reNutrivDragAndDropMatchTemplate.json" np-override-url=""></np-layer>-->
                 <!--<np-layer np-id="sample" np-url="../_dev_assets/reNutrivDragAndDropMatchTemplate_1.json" np-override-url=""></np-layer>-->
@@ -96,6 +95,7 @@
         <script src="scripts/service/config.service.js"></script>
         <script src="scripts/service/manifest.service.js"></script>
         <script src="scripts/service/component.service.js"></script>
+        <script src="scripts/service/tracking.service.js"></script>
         <!-- components -->
         <script src="scripts/component/component.module.js"></script>
         <script src="scripts/component/Assessment/assessment.service.js"></script>

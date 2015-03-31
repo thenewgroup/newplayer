@@ -81,7 +81,7 @@
     .factory('ConfigService', ConfigService);
 
   /** @ngInject */
-  function ConfigService($log, APIService, ManifestService/*, $timeout, $q, $rootScope*/) {
+  function ConfigService($log, $rootScope, APIService, ManifestService/*, $timeout, $q, $rootScope*/) {
     $log.debug('configService::Init');
 
     var Service = function () {
@@ -138,6 +138,11 @@
 
         if( !!npConfig.overrideManifest ) {
           setOverride(npConfig.overrideManifest);
+        }
+
+        if (!!npConfig.onTrackService && _.isFunction(npConfig.onTrackService)) {
+          // run this when the page changes
+          self.tracking = npConfig.onTrackService;
         }
       }
 
@@ -537,6 +542,9 @@
       this.setPageId = function (pageId) {
         $log.debug('ManifestService, setPageId', pageId);
         // reset component index for reparsing new page
+        if (this.pageId === pageId) {
+          return;
+        }
         setComponentIdx(null);
 
         this.pageId = pageId;
@@ -822,6 +830,61 @@
 
     };
     return new Service();
+
+  }
+})();
+
+/* jshint -W004, -W003, -W026, -W040 */
+(function () {
+  'use strict';
+
+  angular
+    .module('newplayer.service')
+    .factory('TrackingService', TrackingService);
+
+  /*
+   * console:
+   * angular.element(document.body).injector().get('TrackingService')
+   */
+
+  /** @ngInject */
+  function TrackingService($log, $rootScope, ConfigService /*, $timeout, $http, $q */) {
+    $log.warn('\nTrackingService::Init\n');
+
+    var service = {
+      trackEvent: angular.noop,
+      setCallback: setCallback,
+      trackPageView: trackPageView,
+      trackExternalLinkClick: trackExternalLinkClick,
+      trackApiCall: trackApiCall
+    };
+    return service;
+
+    function setCallback(fn) {
+      // FIXME: receiving the method in isolate scope is a call to scope to get the actual method
+      // so we invoke it here to get the method passed in. Is this necessary?
+      var func = fn();
+      if (func) {
+        this.trackEvent = func;
+      }
+    }
+
+    function trackPageView(pageId) {
+      dispatch.call(this, 'pageView', pageId);
+    }
+
+    function trackExternalLinkClick(link) {
+      dispatch.call(this, 'externalLink', link);
+    }
+
+    function trackApiCall(api) {
+      dispatch.call(this, 'apiCall', api);
+    }
+
+    function dispatch(event, data) {
+      this.trackEvent('newplayer.' + event, data);
+    }
+
 
   }
 })();
@@ -1254,7 +1317,7 @@ function AssessmentService ( $log ) {
 
   /** @ngInject */
     .controller('npButtonController',
-    function ($log, $scope, $sce, $location, $element, ConfigService, ManifestService, APIService) {
+    function ($log, $scope, $sce, $location, $element, ConfigService, ManifestService, APIService, TrackingService) {
       var cmpData = $scope.component.data || {};
       $log.debug('npButton::data', cmpData);
 
@@ -1304,9 +1367,12 @@ function AssessmentService ( $log ) {
           if (this.apiLink) {
             //TODO: we may need a `method` property to know what to use here
             // i.e. GET, POST, PUT, DELETE
+            TrackingService.trackApiCall(btnLink);
             APIService.postData(btnLink);
             return;
           }
+
+          TrackingService.trackExternalLinkClick(btnLink);
           window.open(this.link, this.target);
         }
       };
@@ -2426,7 +2492,7 @@ function AssessmentService ( $log ) {
     .module('newplayer.component')
   /** @ngInject */
     .controller('npPageController',
-    function ($log, $scope, $rootScope, ManifestService) {
+    function ($log, $scope, $rootScope, ManifestService, TrackingService) {
       var cmpData = $scope.component.data || {};
       $log.debug('npPage::data', cmpData, $scope.contentTitle);
 
@@ -2464,6 +2530,7 @@ function AssessmentService ( $log ) {
           }
         } else {
           $scope.currentPage = false;
+          TrackingService.trackPageView(pageId);
         }
       }
     }
@@ -3540,8 +3607,12 @@ function AssessmentService ( $log ) {
     .value('sliders', {});
 
   /** @ngInject */
-  function AppController($log, AssessmentService/*, ImagePreloadFactory, HomeService, $scope*/) {
+  function AppController($log, $scope, AssessmentService/*, ImagePreloadFactory, HomeService, $scope*/) {
     $log.debug('AppController::Init');
+    var vm = this;
+    vm.doTrack = function (event, data) {
+      $log.warn('AppController', event, data);
+    };
 
     //AssessmentService.setRequirements(10,5,0.8);
     //
@@ -3992,7 +4063,8 @@ function AssessmentService ( $log ) {
                 overrideURL: '@npOverrideUrl',
                 overrideData: '@npOverrideData',
                 language: '@npLang',
-                manifestData: '=?'
+                manifestData: '=?',
+                onTrackService: '&npAnalyticsService'
             },
             //compile: function (tElement, tAttrs, transclude, ConfigService)
             //{
@@ -4017,7 +4089,7 @@ function AssessmentService ( $log ) {
 
     /** @ngInject */
     function NpLayerController($scope, $rootScope, $element, $attrs, $log, $compile,
-            APIService, ComponentService, ConfigService, ManifestService) {
+            APIService, ComponentService, ConfigService, ManifestService, TrackingService) {
         var vm = this;
         vm.manifestData = null;
         vm.overrideData = null;
@@ -4028,6 +4100,7 @@ function AssessmentService ( $log ) {
 
         ConfigService.setConfigData(vm);
         loadManifests();
+        TrackingService.setCallback(vm.onTrackService);
 
         //function npManifestChanged(event, toManifest, toPage) {
         //
