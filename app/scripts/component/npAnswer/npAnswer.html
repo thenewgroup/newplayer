@@ -44,7 +44,7 @@
     </label>
     <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
 </div>-->
-<div ng-if="npQuestion.type === 'checkbox'" ng-checked="false"class="row np-cmp-wrapper {{component.type}} checkbox answer-wrapper" ng-controller="npAnswerController as npAnswer" ng-init="npAnswer.setQuestion(npQuestion)">
+<div ng-if="npQuestion.type === 'checkbox'" ng-checked="false"class="row np-cmp-wrapper {{component.type}} checkbox answer-wrapper" ng-controller="npAnswerController as npAnswer" ng-init="npAnswer.setQuestion($index, npQuestion)">
     <div type="checkbox" class="col-xs-1 npAnswer-checkbox np-cmp-main answer-checkbox" name="checkbox{{npAnswer.id}}" ng-model="npQuestion.answer[component.idx]" value="{{component.idx}}" id="{{npAnswer.id}}" ng-click="npAnswer.clicked($event);">
         <div class="checkbox-box">
             <svg  version="1.2" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"xml:space="preserve" preserveAspectRatio="none">

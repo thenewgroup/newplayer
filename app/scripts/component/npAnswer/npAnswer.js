@@ -9,6 +9,8 @@
           checkmark = $element.find('svg#Layer_1'),
           cmpData = $scope.component.data || {};
 
+      vm.isCorrect = cmpData.correct;
+
 
       var updateCheck = function() {
         var tweenOptions = {ease: Power3.easeOut}
@@ -29,20 +31,21 @@
       vm.question = null;
       vm.checked = false;
 
-      vm.setQuestion = function(question) {
+      vm.setQuestion = function(idx, question) {
         vm.question = question;
-        question.registerAnswer(this);
+        question.registerAnswer(idx, this);
 
         $log.debug('npAnswer::setQuestion', vm.question );
       };
 
       vm.clicked = function($event) {
-        $log.debug('npAnswer clicked', $event);
+        $log.debug('npAnswer clicked', $event, cmpData);
 
-        if( vm.question.type == 'checkbox' ) {
+
+        if( vm.question.type === 'checkbox' ) {
           vm.checked = !vm.checked;
           vm.question.answerChanged(vm);
-        } else if( vm.question.type == 'radio' ) {
+        } else if( vm.question.type === 'radio' ) {
           vm.checked = true;
           vm.question.answerChanged(vm);
         }

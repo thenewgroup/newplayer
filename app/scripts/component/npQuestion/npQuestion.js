@@ -44,7 +44,7 @@
                             $log.debug('npQuestion::answer changed', vm.answers);
 
                           // if this is a radio, clear the other radios
-                            if( vm.type == 'radio' ) {
+                            if( vm.type === 'radio' ) {
                               vm.answers.forEach(function (answer, index, array) {
                                 if( answer !== changedAnswer ) {
                                   answer.clear();
@@ -59,19 +59,15 @@
                                 TweenMax.set(negativeFeedbackIcon, {opacity: 0, scale: 2.5, force3D: true});
                             }
                         };
-                        vm.registerAnswer = function(answer) {
-                          vm.answers[answer.idx] = answer;
+                        vm.registerAnswer = function(idx, answer) {
+                          vm.answers[idx] = answer;
+
+                          $log.debug('CHECKBOX registerAnswer: ', idx, answer, vm.answers);
                         };
                         vm.evaluate = function () {
-                            var correct = true;
+                            var i, isCorrectAnswer = true;
                             negativeFeedbackIcon = $element.find('.negative-feedback-icon');
 
-                            // TODO: should this not be conditional?
-                            //TweenMax.to(negativeFeedbackIcon, 0.75, {
-                            //    opacity: 1,
-                            //    scale: 1,
-                            //    force3D: true
-                            //});
 //                            console.log(
 //                                    '\n::::::::::::::::::::::::::::::::::::::npQuestions::evaluate:::::::::::::::::::::::::::::::::::::::::::::::::',
 //                                    '\n::vm::', vm,
@@ -83,35 +79,52 @@
                             if (!!vm.answers) {
                                 switch (vm.type) {
                                     case 'radio':
-                                        var radAnswer = ManifestService.getComponent(vm.answers);
-                                        if (angular.isString(radAnswer.data.feedback)) {
-                                            vm.feedback = radAnswer.data.feedback;
+                                        //var radAnswer = ManifestService.getComponent(vm.answers);
+                                        //if (angular.isString(radAnswer.data.feedback)) {
+                                        //    vm.feedback = radAnswer.data.feedback;
+                                        //}
+                                        //correct = radAnswer.data.correct;
+
+                                        for( i=0; i < vm.answers.length; i++ ) {
+                                          if( vm.answers[i].checked === false ) {
+                                            continue;
+                                          }
+
+                                          isCorrectAnswer = vm.answers[i].isCorrect;
                                         }
-                                        correct = radAnswer.data.correct;
+
                                         break;
                                     case 'checkbox':
-                                        var chkAnswers = ManifestService.getAll('npAnswer', $scope.cmpIdx);
-                                        var idx;
-                                        for (idx in chkAnswers) {
-                                            if (chkAnswers[idx].data.correct) {
-                                                console.log(
-                                                        '\n::::::::::::::::::::::::::::::::::::::npQuestions::default:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                                        '\n::idx::', idx,
-                                                        '\n::chkAnswers::', chkAnswers,
-                                                        '\n::vm.answer[chkAnswers[idx].idx]::', vm.answer[chkAnswers[idx].idx],
-                                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                                        );
-                                                // confirm all correct answers were checked
-                                                if (!vm.answer[chkAnswers[idx].idx]) {
-                                                    correct = false;
-                                                }
-                                            } else {
-                                                // confirm no incorrect answers were checked
-                                                if (vm.answer[chkAnswers[idx].idx]) {
-                                                    correct = false;
-                                                }
-                                            }
-                                        }
+
+                                      $log.debug('CHECKBOX TEST before!', vm.answers, vm.answers.length);
+                                      for( i=0; i < vm.answers.length; i++ ) {
+                                        $log.debug('CHECKBOX TEST', i, isCorrectAnswer, vm.answers[i].checked, vm.answers[i].isCorrect, vm.answers[i].checked === vm.answers[i].isCorrect);
+                                        isCorrectAnswer = isCorrectAnswer && vm.answers[i].checked === vm.answers[i].isCorrect;
+                                      }
+
+
+                                        //var chkAnswers = ManifestService.getAll('npAnswer', $scope.cmpIdx);
+                                        //var idx;
+                                        //for (idx in chkAnswers) {
+                                        //    if (chkAnswers[idx].data.correct) {
+                                        //        console.log(
+                                        //                '\n::::::::::::::::::::::::::::::::::::::npQuestions::default:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                        //                '\n::idx::', idx,
+                                        //                '\n::chkAnswers::', chkAnswers,
+                                        //                '\n::vm.answer[chkAnswers[idx].idx]::', vm.answer[chkAnswers[idx].idx],
+                                        //                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                        //                );
+                                        //        // confirm all correct answers were checked
+                                        //        if (!vm.answer[chkAnswers[idx].idx]) {
+                                        //            isCorrectAnswer = false;
+                                        //        }
+                                        //    } else {
+                                        //        // confirm no incorrect answers were checked
+                                        //        if (vm.answer[chkAnswers[idx].idx]) {
+                                        //            isCorrectAnswer = false;
+                                        //        }
+                                        //    }
+                                        //}
                                         break;
                                     case 'text':
                                         var txtAnswer = ManifestService.getFirst('npAnswer', $scope.cmpIdx);
@@ -131,7 +144,7 @@
                                                 vm.feedback = txtAnswer.data.feedback.incorrect;
                                                 feedback_label.remove();
                                             }
-                                            correct = false;
+                                            isCorrectAnswer = false;
                                         } else {
                                             if (angular.isObject(txtAnswer.data.feedback) && angular.isString(txtAnswer.data.feedback.correct)) {
                                                 vm.feedback = txtAnswer.data.feedback.correct;
@@ -141,19 +154,33 @@
                                         break;
                                 }
                             } else {
-                                correct = false;
+                                isCorrectAnswer = false;
                             }
-                            $log.debug('npQuestion::evaluate:isCorrect', correct);
-                            // set by ng-model of npAnswer's input's
+
+                            $log.debug('npQuestion::evaluate:isCorrect', isCorrectAnswer);
+
+
+                            // NOTE: feedback.correct/incorrect is set on the npQuestion's data, NOT npAnswer
                             if (feedback.immediate && vm.feedback === '') {
+                              var tweenOpts = {
+                                      opacity: 1,
+                                      scale: 1,
+                                      force3D: true
+                                  };
+
                                 feedback_label.remove();
-                                if (correct) {
+
+
+                                if (isCorrectAnswer) {
                                     vm.feedback = feedback.correct;
                                     vm.canContinue = true;
+                                  tweenOpts.opacity = 0;
                                 } else {
                                     vm.feedback = feedback.incorrect;
                                     vm.canContinue = false;
                                 }
+
+                              TweenMax.to(negativeFeedbackIcon, 0.75, tweenOpts);
                             }
                         };
                         vm.nextPage = function (evt) {
