@@ -79,8 +79,8 @@
                                 },
                                 "flashCards": [
                                     {
-                                        "contentFront": "<p class='h4 flash-card-text-heading'>Heading.0 contentFront.</p><p>Copy here contentFront.</p><p><img alt='' class='flash_card_image' height='auto' src='../_dev_assets/assets/images/saturn1.jpg' width='100%' /></p><p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p>",
-                                        "contentBack": "<p class='h4 flash-card-text-heading'>Heading.0 here contentBack.</p><p>Copy here contentBack.</p><p><img alt='' class='flash_card_image' height='auto' src='../_dev_assets/assets/images/saturn1.jpg' width='100%' /></p><p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p>"
+                                        "contentFront": "<span class='header-dark'>Heading.0 contentFront.</span><p>Copy here contentFront.</p><p><img alt='' class='img-responsive' src='../_dev_assets/assets/images/saturn1.jpg' /></p><p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p>",
+                                        "contentBack": "<p class='header-dark'>Heading.0 here contentBack.</p><p>Copy here contentBack.</p><p><img alt='' class='img-responsive' src='../_dev_assets/assets/images/saturn1.jpg' /></p><p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p>"
                                     },
                                     {
                                         "contentFront": "<p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p><p><img alt='' class='flash_card_image' height='auto' src='../_dev_assets/assets/images/OrionsHeart.jpg' width='100%' /></p><p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p>",
