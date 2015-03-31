@@ -315,7 +315,7 @@
                                         autoAlpha: 0,
                                         ease: Power4.easeOut
                                     });
-                                } else if (itemsOffsetCenter >= (windowCenter + 601)) {
+                                } else if (itemsOffsetCenter >= (windowCenter + (windowCenterOffsetTwo + 1))) {
                                     TweenMax.set(currentIteration, {
                                         zIndex: back
                                     });
@@ -340,7 +340,7 @@
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //drag and throw LEFT items animation
                                 //////////////////////////////////////////////////////////////////////////////////////
-                                if ((itemsOffsetCenter <= (windowCenter - 217)) && (itemsOffsetCenter >= (windowCenter - windowCenterOffsetTwo))) {
+                                if ((itemsOffsetCenter <= (windowCenter - (windowCenterOffsetOne + 1))) && (itemsOffsetCenter >= (windowCenter - windowCenterOffsetTwo))) {
                                     TweenMax.set(currentIteration, {
                                         zIndex: middle
                                     });
