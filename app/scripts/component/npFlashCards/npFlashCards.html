@@ -1,43 +1,30 @@
-<div npFlashCards id="{{npFlashCards.id}} " class="{{component.type}} np-cmp-wrapper np-flash-card" ng-controller="npFlashCardsController as npFlashCards">
+<div np-flash-cards id="{{npFlashCards.id}} " class="{{component.type}} np-cmp-wrapper np-flash-card" ng-controller="npFlashCardsController as npFlashCards">
     <div class="debug">
         <h3>{{component.type}} -- 
             <small>{{component.idx}}</small>
         </h3>
     </div>
     <!--::::::::::::  flash-card  ::::::::::::::::-->
-    <div id="flash-cards">
-        <div np-swipe-angular-draggable >
+    <div id="flash-cards" class="row">
+        <div np-swipe-angular-draggable  class="col-sm-12">
             <div id="flash-cards-swipe-container">
-                <div flash-card class="flash-cards-object" ng-repeat="flashCardComponent in npFlashCards.flashCardComponents">
-                    <!--<div class="flash-card-content-wrapper">-->
-                        <div class="flash-card-front-wrapper">
-                            <div class="flash-card-content-text">
-                                <div class="flash-card-background"></div>
-                                <p class="flash-card-content-front" ng-bind-html="flashCardComponent.contentFront"></p>
-                                <div class="flash-card-overlay"></div>
-                            </div>
-                        </div>
-                        <div class="flash-card-back-wrapper">
-                            <div class="flash-card-background"></div>
-                            <p class="flash-card-content-back" ng-bind-html="flashCardComponent.contentBack"></p>
-                            <div class="flash-card-overlay"></div>
-                        </div>
-                        <div class="flash-card-button" ng-click="npFlashCards.update(flashCard)">
-                            <p class='button-placeholder'>
-                                [X]
-                            </p>
-                            <!--                            <svg version="1.1" id="Layer_1" class='button-placeholder' xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="612px" height="792px" viewBox="0 0 612 792" style="enable-background:new 0 0 612 792;" xml:space="preserve">
-                                                            <style type="text/css">
-                                                                <![CDATA[
-                                                                .st0{fill:#D9D9D9;}
-                                                                ]]>
-                                                            </style>
-                                                            <g id="Your_Icon">
-                                                                <path id="refresh-3-icon" class="st0" d="M649.52,992.96l-14.075,14.075c-7.345-7.344-17.748-12.239-29.376-12.239 c-23.256,0-41.616,18.972-41.616,41.616l0,0h16.524l-25.704,25.703l-25.704-25.703h15.912l0,0c0-34.271,27.54-61.812,61.812-61.812  C622.592,974.6,637.893,981.332,649.52,992.96z M682.568,1033.964l-25.704-25.704l-25.704,25.704h16.523l0,0 c0,23.256-18.972,41.616-41.615,41.616c-11.628,0-22.032-4.896-29.376-12.24l-14.076,14.076 c11.016,11.016,26.315,17.748,43.452,17.748c34.271,0,61.812-27.54,61.812-61.812l0,0h14.688V1033.964z"/>
-                                                            </g>
-                            </svg>-->
-                        </div>
-                    <!--</div>-->
+                <div flash-card class="flash-cards-object " ng-repeat="flashCardComponent in npFlashCards.flashCardComponents">
+                    <div class="flash-card-front-wrapper">
+                        <div class="flash-card-background"></div>
+                        <p class="flash-card-content-front" ng-bind-html="flashCardComponent.contentFront"></p>
+                        <div class="flash-card-overlay"></div>
+                    </div>
+                    <div class="flash-card-back-wrapper">
+                        <div class="flash-card-background"></div>
+                        <p class="flash-card-content-back" ng-bind-html="flashCardComponent.contentBack"></p>
+                    </div>
+                    <div class="flash-card-button" ng-click="npFlashCards.update(flashCardComponent)">
+                        <svg version="1.0"  class='button-holder' xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="25px" height="19.7px" viewBox="343.2 692.6 25 19.7" xml:space="preserve">
+                            <g id="refresh-icon">
+                                <path id="refresh-icon-shape" d="M362.8,695.6l-2.3,2.301c-1.2-1.2-2.9-2-4.8-2c-3.8,0-6.8,3.1-6.8,6.8l0,0h2.699  l-4.199,4.2l-4.2-4.2h2.6l0,0c0-5.601,4.5-10.101,10.101-10.101C358.4,692.6,360.9,693.7,362.8,695.6z M368.2,702.3l-4.2-4.2  l-4.2,4.2h2.7l0,0c0,3.8-3.1,6.8-6.8,6.8c-1.9,0-3.601-0.8-4.8-2L348.6,709.4c1.801,1.8,4.301,2.899,7.101,2.899  c5.6,0,10.1-4.5,10.1-10.1l0,0h2.4V702.3z"/>
+                            </g>
+                        </svg>
+                    </div>
                 </div>
             </div>
         </div> 
