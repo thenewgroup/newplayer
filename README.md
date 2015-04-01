@@ -3,7 +3,6 @@ NewPlayer
 
 Responsive learning content player by [The New Group](http://www.thenewgroup.com)
 
-
 #### Dependencies
 
 - git (http://git-scm.com/downloads)
