@@ -1,0 +1,942 @@
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player page type wrapper classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*When setting this ID for New Player use: 'newplayer-background'*/
+#np_newplayer-background{
+    position: fixed;
+    background-color: $ANR-bg-color;
+    background-size: cover;
+    content: "";
+    width:100%;
+    height:auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+}
+#background-image {
+    position:fixed;
+    background-image: url('../assets/images/ESTL-005_ANR_bg_img.jpg');
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-size:100%;
+    width:100%;
+    height:100%;
+}
+.renutriv-logo-image {
+    position: relative;
+    background-image: url("../assets/images/AdvancedNightRepairLogoSm.png");
+    background-repeat: no-repeat;
+    width: 312px;
+    height: 19px;
+    padding-bottom: 11px;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*ReNutriv font classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.headline{
+    font-family: $font-family-serif;
+    font-size: $font-size-36;
+    color: $brand-primary-light;
+    letter-spacing: 2px;
+    padding-top: 10px;
+    padding-bottom: 0px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    display: inline-block;
+}
+.instructional{
+    font-family: $font-family-sans-serif;
+    font-size: $font-size-h5;
+    color: #000000;
+    letter-spacing: 1px;
+    padding-top: 0px;
+    padding-bottom: 20px;
+    margin-top: 0px;
+    /*margin-bottom: 0px;*/
+    display: inline-block;
+}
+h1, h2, h3, h4, h5{
+    color: $brand-primary;
+}
+p ul ol{
+    color: $brand-primary;
+}
+small{
+    color: $brand-primary;
+}
+.dark h1, h2, h3, h4, h5 {
+    color: $gray-dark;
+}
+.header-dark {
+    color: $gray-base;
+    font-size: $font-size-36;
+    font-family: $re-nu-serif;
+    letter-spacing: 2px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    display: inline-block;
+}
+.gold {
+    /*color: #9a7d46;*/
+    color: $gold;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player padding wrapper classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*When setting this ID for New Player use: content-background */
+/*.npHotspot-feedback p{
+    position: relative;
+    height: 100%;
+
+}*/
+.content-background{
+    /*    position: absolute;
+    left: 10px;
+    right: 20px;*/
+    background-color:hsla(0,100%,0%,0.5);
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player HotSpot classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.npHotspot{
+    top: 0;
+    left: 0;
+}
+.hotspotImage{
+    position: relative;
+    max-width: 575px;
+    margin-bottom: 10%;
+    /*overflow: hidden;*/
+}
+.content-area{
+    /*padding-left: 10px;*/
+}
+.hotspotButton{
+    position: absolute;
+    max-width:90px;
+    height: auto;
+    margin: 0;
+    margin-top: -.75rem;
+    margin-left: -3.25rem;
+    padding: 0;
+    cursor: pointer;
+}
+.hotspotButtonImage{
+    position: relative;
+    background-image: url("../assets/images/hotspot.png");
+    background-repeat: no-repeat;
+    width: 100px;
+    height: 50px;
+}
+.npHotspot-feedback{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding-top: 15px;
+    padding-bottom: 50px;
+    padding-left: 30px;
+    padding-right: 20px;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player Flash Cards classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.np-flash-card{  
+    position: fixed;
+    content: "";
+    width: 100%;
+    left: 0;
+    right: 0;
+}
+#flash-cards {
+    position: absolute;
+    left:0;
+}
+///////////////cards/////////////////
+.flash-cards-object {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    width: 560px;
+    height: 800px;
+}
+@media (max-width: $screen-sm) {
+    .flash-cards-object {
+        width: 280px;
+    }
+}
+.flash-card-overlay {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: #000000;
+}
+///////////////button/////////////////
+.flash-card-button {
+    position: absolute;
+    top: 25px;
+    right: 20px;
+    width: 65px;
+    height: auto;
+    cursor: pointer;
+}
+.button-holder{
+    position: relative;
+    fill: #d9d9d9;
+}
+///////////////front/////////////////
+.flash-card-front-wrapper {
+    position: absolute;
+    top:0;
+    width: 100%;
+    /*height:100%;*/
+    overflow: hidden;
+    height: 475px;
+}
+@media (max-width: $screen-sm) {
+    .flash-card-front-wrapper {
+        height: 235px;
+    }
+}
+.flash-card-content-front {
+    position: absolute;
+    padding: 2em;
+    left: 0;
+    right: 0;
+    top: 0;
+    background-color: #FFFFFF;
+}
+.flash-card-content-front p{
+    color: #000000;
+}
+///////////////back/////////////////
+.flash-card-back-wrapper {
+    position: absolute;
+    top:0;
+    width: 100%;
+    height:100%;
+}
+.flash-card-content-back {
+    position: absolute;
+    padding: 2em;
+    left: 0;
+    right: 0;
+    top: 0;
+    background-color: #FFFFFF;
+}
+.flash-card-content-back p{
+    color: #ff0000;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player Quiz classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.quiz-label{
+    font-family: $font-family-sans-serif;
+    color: $brand-primary-light;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    display: inline-block;
+}
+.btn-submit{
+    position: relative;
+    border-color: #9a7d46;
+    background-color: #000000;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    margin-left: 30px;
+}
+.btn-submit span{ 
+    font-family: $re-nu-serif;
+    color: $brand-primary-light;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+input{ 
+    font-family: $re-nu-serif;
+    size: $font-size-small;
+    color: #737373;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #313131;
+}
+.answer-text-input{ 
+    font-family: $re-nu-serif;
+    size: $font-size-small;
+    color: #737373;
+    letter-spacing: 2px;
+    border-color: $gold;
+    background-color: $gray-dark;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
+}
+.answer-text-checkbox { 
+    font-family: $re-nu-serif;
+    size: $font-size-small;
+    color: $brand-primary-light;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+.answer-text-radio { 
+    font-family: $re-nu-serif;
+    size: $font-size-small;
+    color: $brand-primary-light;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+.answer-text span{ 
+    font-family: $re-nu-serif;
+    size: $font-size-small;
+    color: $brand-primary-light;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player Quiz Answer classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.answer-wrapper{ 
+    padding: 20px;
+}
+.answer-checkbox{ 
+    position: relative;
+    width: 20px;
+    height: 20px;
+    /*float: left;*/
+    /*margin-right: 20px;*/
+    /*border-color: $gold;*/
+    border-color: #9a7d46;
+    background-color: #000000;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
+}
+.answer-radio{ 
+    position: relative;
+    width: 20px;
+    height: 20px;
+    /*border-color: $gold;*/
+    border-color: #9a7d46;
+    background-color: #000000;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
+}
+.checkbox-box{ 
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    display: block;
+    margin: auto;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
+}
+.checkbox-box svg{ 
+    position: absolute;
+    top:0;
+    left:0;
+    display: block;
+    margin: auto;
+}
+.checkbox-x{ 
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    display: block;
+    margin: auto;
+}
+.checkbox-x svg{ 
+    position: absolute;
+    top:0;
+    left:0;
+    opacity: 0;
+    display: block;
+    margin: auto;
+}
+.answer-text{ 
+    font-family: $font-family-sans-serif;
+    /*float: left;*/
+    color: $brand-primary-light;
+    letter-spacing: 2px;
+    /*margin-right: 20px;*/
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player Quiz Questions classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.question-text{ 
+    font-family: $re-nu-serif;
+    size: $font-size-h3;
+    color: $brand-primary-light;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+.question-feedback{ 
+    position: relative;
+    height: 160px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 30px;
+}
+.question-feedback-outline{ 
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+.question-feedback-text{ 
+    font-family: $font-family-sans-serif;
+    float: left;
+    color: $brand-primary-light;
+    letter-spacing: 2px;
+}
+.negative-feedback-icon{ 
+    width: 20px;
+    margin-right: 10px;
+    float: left;
+}
+.question-feedback-label{ 
+    font-family: $font-family-sans-serif;
+    size: $font-size-h3;
+    color: #737373;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 2px;
+    padding-top: 4.5%;
+}
+.question-feedback-wrapper{ 
+    position: absolute;
+    background-color: $gray-dark;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player Trivia/Spinner classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.btn-next{ 
+    position: absolute;
+    border-color: $gold;
+    width: auto;
+    /*bottom: 0;*/
+    right: 0;
+    padding-top: 5px;
+    padding-bottom: 3px;
+    margin: 0;
+    margin-top: 15px;
+    background-color: #000000;
+}
+.btn-next span{ 
+    font-family: $re-nu-serif;
+    color: $brand-primary-light;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+.btn-next span p{ 
+    padding: 0;
+}
+.np-spinner-wrapper {
+    position: relative;
+    overflow: hidden;
+    height: 400px;
+    background-color: $gray-dark;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
+    /*width: 135px;*/
+}
+.np-spinner{
+    color: $gold;
+    width: 155px;
+}
+.np-gold-pointer{
+    position: absolute;
+    top:0;
+    bottom:0;
+    right:0;
+    width:33px;
+}
+.method2 {
+    -webkit-mask-image: -webkit-linear-gradient(top, rgba(248,248,170,1), rgba(202,160,78,.5) 50%, rgba(248,248,170,1));
+    -webkit-mask-image: linear-gradient(top, rgba(248,248,170,1), rgba(202,160,78,.5) 50%, rgba(248,248,170,1));
+}
+.np-spinner div{
+    font-family: $re-nu-serif;
+    font-size: floor(($font-size-base * 2.5));
+    color: $gold-gradiant;
+    line-height: 2.1em;
+    text-align: center;
+}
+.np-gold-border {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 400px;
+    box-shadow: inset 0 0 50px 15px rgba(0, 0, 0, 0.95);
+}
+/*
+////////////////////////////////////////////////////////////////////////////////
+:::::::::::::                 Spinner classes                      :::::::::::::
+// FROM - http://codepen.io/Aldlevine/pen/yGLqd
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+*/
+.wheels {
+    position: relative;
+    top: 100px;
+    text-align: center;
+    width: 100%;
+    /*height: 600px;*/
+    /*clip the container for those not supporting csstransforms3d*/ 
+    .no-csstransforms3d & {
+        overflow: hidden;
+        height: 65px;
+    }
+    .wheel {
+        position: relative;
+        // width: 100%;
+        height: 600px;
+        top: 70px;
+        > div {
+            position: absolute;
+            width: 100%;
+            height: 65px;
+            z-index: 999;
+            background-color: #313131;
+            border-bottom: solid 1px;
+            border-bottom-color: $gold;
+            outline: 1px solid transparent;
+            backface-visibility:hidden;
+        }
+    }
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player Reveal classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.reveal-object {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 100%;
+    max-width: 770px;
+}
+.np-reveal {
+    position: relative;
+    width: 100%;
+    height: 600px;
+}
+.reveal-button {
+    cursor: pointer;
+}
+.reveal-navigation {
+    width: 100%;
+    height: 100px;
+}
+.reveal-button-image  {
+    position: absolute;
+    padding: 5.5%;
+    background-color:#FFFFFF;
+}
+/*
+////////////////////////////////////////////////////////////////////////////////
+::::::::::::: evenly ditribute navigation begin ::::::::::::::::::::::::::::::::
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+*/
+.reveal-button-container {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    /*border: 2px dashed #444;*/
+    max-width: 770px;
+}
+.reveal-button-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+.button-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #000000;
+    /*margin: auto;*/
+}
+#np_reNutriv, .reveal-button {
+    position: relative;
+    width: 4.46em;
+    height: 4.46em;
+    margin-left: 0.2em;
+    margin-right: 0.2em;
+}
+/*
+////////////////////////////////////////////////////////////////////////////////
+::::::::::::: evenly ditribute navigation end ::::::::::::::::::::::::::::::::::
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+*/
+.reveal-item-wrapper{
+    width:100%;
+}
+.reveal-item{
+    width:100%;
+}
+.reveal-content-wrapper{
+    position: relative;
+}
+.reveal-content-text{
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+.reveal-heading-text{
+    margin-top: -5px;
+    padding-top: 25px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.reveal-text-body{
+    padding-bottom: 15px;
+}
+
+.reveal-content-text{
+    padding-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.reveal-background{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    opacity: 0.75;
+    /*z-index: -1;*/
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player List classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.list-item{
+    color: $brand-primary;
+    letter-spacing: 2px;
+}
+.column-1{
+    margin-bottom: 1.5%;
+}
+.list-object video{
+    width: 100%;
+    height: auto;
+}
+.media-body{
+    padding: 5%;
+    background-color: #000000;
+    opacity: 0.75;
+    filter: url(styles/inset-shadow.svg#inset-shadow); 
+}
+.list-body-text{
+    color: $brand-primary;
+    letter-spacing: 2px;
+    font-size: $font-size-base;
+}
+
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player Drag and Drop Prioritize classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*p ul ol{
+    font-size: $font-size-17;
+    color: $brand-primary;
+}*/
+.button-prioritize-content{
+    position: relative;
+    display:block;
+}
+.hit-area-prioritize-content{
+    position: absolute;
+    float: right;
+    right: 43%;
+    top: 43%;
+}
+.hit-area-number{
+    font-size: 7em;
+    color: #000000;
+    opacity: .15;
+    text-align: center;
+    padding-left: 20px;
+}
+.button-completion-prioritize-content{
+    position: absolute;
+    float: right;
+    right: 50%;
+    top: 36%;
+}
+.centered-prioritize-content{
+    width: 100%;
+    height: 100%;
+    float: right;
+    right: -50%;
+    position: relative;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player Drag and Drop match classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.column-no-wrap {
+    float: none;
+}
+.boxElements {
+    position:relative;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    text-align: left;
+    color: $brand-primary;
+    margin-bottom: 1.5%;
+}
+.hit-area-background {
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    /*z-index: -1;*/
+    background-color: #FFFFFF;
+    box-shadow: inset 0 0 6px 3px rgba(0, 0, 0, 0.25);
+}
+.boxElements svg{
+    /*fill:#313131;*/
+}
+.completeCheck {
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    text-align: left;
+    color: $brand-primary;
+    margin-bottom: 2.5%;
+}
+foreignobject{
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+}
+.button-completion-content{
+    position: absolute;
+    float: right;
+    right: 50%;
+    top: 43%;
+}
+.centered-content{
+    width: 100%;
+    height: 100%;
+    float: right;
+    right: -50%;
+    position: relative;
+}
+.positive-feedback-image, .positive-feedback-content{
+    float: left;
+    line-height: 1em;
+    padding-left: 5%;
+}
+.positive-feedback-content{
+    font-family: akzidenz-grotesk_bqregular;
+    color: $brand-primary;
+    text-transform: uppercase;
+    width: auto;
+}
+.positive-feedback-image{
+    background-image: url("/assets/svgs/feedback-correct-icon-ReNutriv.svg");
+    background-repeat: no-repeat;
+    width:40px; 
+    height:40px; 
+    border: 0;
+    background-size: 100%; /* To fill the dimensions of container (button), or */
+    background-size: 40px auto; /* to specify dimensions explicitly */
+}
+.button-content{
+    position: relative;
+    padding: 5%;
+}
+.button-content p{
+    font-size: $font-size-17;
+    color: $brand-primary;
+}
+rect{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+}
+.button-content p{
+    padding: 0;
+    margin: 0;
+}
+.draggableButton{
+    cursor: pointer;
+}
+.draggableButtonsvg{
+    /*fill:#000000;*/
+}
+.hit-area{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.hit-area svg{
+    /*fill: #313131;*/
+}
+.hit-area rect{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    margin: 0;
+    padding: 0;
+    opacity: .90;
+}  
+svg rect{
+    fill: #FFFFFF;
+}
+svg rect{
+    stroke: #FFFFFF;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/* Hotspot Grid */
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*Hotspot button left position classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.posA{
+    left: 0%;
+}
+.posB{
+    left: 6.25%;
+}
+.posC{
+    left: 12.50%;
+}
+.posD{
+    left: 18.75%;
+}
+.posE{
+    left: 25%;
+}
+.posF{
+    left: 31.25%;
+}
+.posG{
+    left: 37.5%;
+}
+.posH{
+    left: 43.75%;
+}
+.posI{
+    left: 50%;
+}
+.posJ{
+    left: 56.25%;
+}
+.posK{
+    left: 62.5%;
+}
+.posL{
+    left: 68.75%;
+}
+.posM{
+    left: 75%;
+}
+.posN{
+    left: 81.25%;
+}
+.posO{
+    left: 87.5%;
+}
+.posP{
+    left: 93.75%;
+}
+.posQ{
+    left: 100%;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*Hotspot button top position classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.pos1{
+    top: 0%;
+}
+.pos2{
+    top: 5.26%;
+}
+.pos3{
+    top: 10.52%;
+}
+.pos4{
+    top: 15.78%;
+}
+.pos5{
+    top: 21.05%;
+}
+.pos6{
+    top: 26.31%;
+}
+.pos7{
+    top: 31.57%;
+}
+.pos8{
+    top: 36.84%;
+}
+.pos9{
+    top: 42.10%;
+}
+.pos10{
+    top: 47.36%;
+}
+.pos11{
+    top: 52.63%;
+}
+.pos12{
+    top: 57.89%;
+}
+.pos13{
+    top: 63.15%;
+}
+.pos14{
+    top: 68.42%;
+}
+.pos15{
+    top: 73.68%;
+}
+.pos16{
+    top: 78.94%;
+}
+.pos17{
+    top: 84.21%;
+}
+.pos18{
+    top: 89.47%;
+}
+.pos19{
+    top: 94.73%;
+}
+.pos20{
+    top: 100%;
+}
