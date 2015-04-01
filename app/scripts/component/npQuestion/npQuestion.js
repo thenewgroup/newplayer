@@ -94,11 +94,10 @@
                                         }
 
                                         break;
-                                    case 'checkbox':
+                                  case 'checkbox':
 
-                                      $log.debug('CHECKBOX TEST before!', vm.answers, vm.answers.length);
+                                      // Answers are only correct if all of their check states match their isCorrect state.
                                       for( i=0; i < vm.answers.length; i++ ) {
-                                        $log.debug('CHECKBOX TEST', i, isCorrectAnswer, vm.answers[i].checked, vm.answers[i].isCorrect, vm.answers[i].checked === vm.answers[i].isCorrect);
                                         isCorrectAnswer = isCorrectAnswer && vm.answers[i].checked === vm.answers[i].isCorrect;
                                       }
 

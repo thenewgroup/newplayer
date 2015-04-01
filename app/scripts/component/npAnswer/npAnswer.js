@@ -34,8 +34,6 @@
       vm.setQuestion = function(idx, question) {
         vm.question = question;
         question.registerAnswer(idx, this);
-
-        $log.debug('npAnswer::setQuestion', vm.question );
       };
 
       vm.clicked = function($event) {
