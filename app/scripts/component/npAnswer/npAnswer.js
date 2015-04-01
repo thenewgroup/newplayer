@@ -13,7 +13,7 @@
 
 
       var updateCheck = function() {
-        var tweenOptions = {ease: Power3.easeOut}
+        var tweenOptions = {ease: Power3.easeOut};
 
         if( vm.checked ) {
           tweenOptions.autoAlpha = 1;
@@ -22,7 +22,7 @@
         }
 
         $log.debug('updateCheck', checkmark, tweenOptions);
-        TweenMax.to(checkmark, .25, tweenOptions);
+        TweenMax.to(checkmark, 0.25, tweenOptions);
       };
 
       $log.debug('npAnswer::data', cmpData);
@@ -54,7 +54,7 @@
       vm.clear = function() {
         vm.checked = false;
         updateCheck();
-      }
+      };
 
     }
   )

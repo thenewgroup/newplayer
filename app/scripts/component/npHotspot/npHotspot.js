@@ -84,7 +84,7 @@
                             hotspotButton = $element.find('.hotspotButton');
                             function onPageLoadBuild() {
                                 hotspotButton = $('.hotspotButton');
-                                TweenMax.set(hotspotButton, {opacity: 0, scale: .25, force3D: true});
+                                TweenMax.set(hotspotButton, {opacity: 0, scale: 0.25, force3D: true});
                                 TweenMax.staggerTo(hotspotButton, 2, {scale: 1, opacity: 1, delay: 0.5, ease: Elastic.easeOut, force3D: true}, 0.2);
                             }
                             onPageLoadBuild();

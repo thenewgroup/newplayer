@@ -46,10 +46,10 @@
                 //////////////////////////////////////////////////////////////////////////////////////
                 // using clipping now :: no spin for you! //
                 //////////////////////////////////////////////////////////////////////////////////////
-                TweenMax.to($choice, .25, {
+                TweenMax.to($choice, 0.25, {
                     alpha: 0
                 });
-                TweenMax.to($wheel, .25, {
+                TweenMax.to($wheel, 0.25, {
                     alpha: 0
                 });
                 if (!Modernizr.csstransforms3d) {
@@ -72,7 +72,7 @@
 //                            '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
 //                            );
                     //////////////////////////////////////////////////////////////////////////////////////
-                    // adjust index amount (number in template) vs numberDisplayed to detirmine facete 
+                    // adjust index amount (number in template) vs numberDisplayed to detirmine facete
                     // number displayed.
                     //////////////////////////////////////////////////////////////////////////////////////
                     var numberDisplayed = 20;
@@ -83,7 +83,7 @@
                 });
                 //////////////////////////////////////////////////////////////////////////////////////
                 // test code for use in the console, select the
-                // s='10% 10% -100px';e='10% 10% -100px';wheel = $('.wheel');TweenMax.fromTo(wheel, 5, 
+                // s='10% 10% -100px';e='10% 10% -100px';wheel = $('.wheel');TweenMax.fromTo(wheel, 5,
                 // {rotationX:-360,transformOrigin:s}, {rotationX:0,transformOrigin:e})
                 //////////////////////////////////////////////////////////////////////////////////////
                 var transformOrigin = '0% 5% -200px';
@@ -97,7 +97,7 @@
                     transformOrigin: transformOrigin
 //                    ease: Elastic.easeOut.config(1, 0.3)
                 });
-                TweenMax.to($choice, .25, {
+                TweenMax.to($choice, 0.25, {
                     alpha: 1,
                     ease: Power3.easeOut
                 });

@@ -78,7 +78,7 @@
                                 autoAlpha: 0,
                                 ease: Power4.easeOut
                             });
-                           
+
 //                            console.log(
 //                                    '\n::::::::::::::::::::::::::::::::::::::npFlashCards::data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
 //                                    '\n:::', idx,
@@ -447,7 +447,8 @@
                             });
                         }
                         update();
-                        function NScrollSNAP(Array, val) {
+                      // TODO: Refactor this / the below, it's confusing
+                      function nScrollSNAP(Array, val) {
                             var SPoint, range = 400, i = 0;
                             for (i in Array) {
                                 var MResult = Math.abs(val - Array[i]);
@@ -458,6 +459,7 @@
                             }
                             return SPoint;
                         }
+                      // TODO: Refactor this / the above, it's confusing
                         function NScrollSnap() {
                             if (nativeSCrl) {
 //                                console.log(
@@ -465,7 +467,7 @@
 //                                        '\n::nativeSCrl:', nativeSCrl,
 //                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
 //                                        );
-                                var S = NScrollSNAP(flashCardsDraggable[0].vars.snap,
+                                var S = nScrollSNAP(flashCardsDraggable[0].vars.snap,
                                         flashCardsDraggable[0].scrollProxy.scrollTop());
                                 TweenMax.to(flashCardsDraggable[0].scrollProxy.element,
                                         0.5, {

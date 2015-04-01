@@ -18,8 +18,8 @@
                         //vm.answer = [];
 
                         var feedback = cmpData.feedback;
-                        var feedback_label = $element.find('.question-feedback-label');
-                        var feedback_checkbox_x = $element.find('.checkbox-x');
+                        var feedbackLabel = $element.find('.question-feedback-label');
+                        var feedbackCheckboxX = $element.find('.checkbox-x');
                         var negativeFeedbackIcon = '';
 //                        console.log(
 //                                '\n::::::::::::::::::::::::::::::::::::::npQuestions::default:::::::::::::::::::::::::::::::::::::::::::::::::',
@@ -140,13 +140,13 @@
                                         if (!regExp.test(vm.answer)) {
                                             if (angular.isObject(txtAnswer.data.feedback) && angular.isString(txtAnswer.data.feedback.incorrect)) {
                                                 vm.feedback = txtAnswer.data.feedback.incorrect;
-                                                feedback_label.remove();
+                                                feedbackLabel.remove();
                                             }
                                             isCorrectAnswer = false;
                                         } else {
                                             if (angular.isObject(txtAnswer.data.feedback) && angular.isString(txtAnswer.data.feedback.correct)) {
                                                 vm.feedback = txtAnswer.data.feedback.correct;
-                                                feedback_label.remove();
+                                                feedbackLabel.remove();
                                             }
                                         }
                                         break;
@@ -166,7 +166,7 @@
                                       force3D: true
                                   };
 
-                                feedback_label.remove();
+                                feedbackLabel.remove();
 
 
                                 if (isCorrectAnswer) {
