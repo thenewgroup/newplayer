@@ -53,8 +53,11 @@
 @import "_reNutriv.scss";
 @import "_collapse.scss";
 @import "_spinner.scss";
-#np_storyDefault{
+#np_storyDefault {
     @import "_story_default.scss";
+}
+#ANR {
+    @import "_ANR.scss";
 }
 
 //@import "_reveal.scss";
