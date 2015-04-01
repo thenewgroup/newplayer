@@ -1674,7 +1674,6 @@ function AssessmentService ( $log ) {
                             function onPageLoadBuild() {
                                 hotspotButton = $('.hotspotButton');
                                 TweenMax.set(hotspotButton, {opacity: 0, scale: .25, force3D: true});
-                                TweenMax.set(hotspotButton, {opacity: 0, scale: .25, force3D: true});
                                 TweenMax.staggerTo(hotspotButton, 2, {scale: 1, opacity: 1, delay: 0.5, ease: Elastic.easeOut, force3D: true}, 0.2);
                             }
                             onPageLoadBuild();
@@ -2892,31 +2891,69 @@ function AssessmentService ( $log ) {
                         //////////////////////////////////////////////////////////////////////////////////////
                         //get ready
                         //////////////////////////////////////////////////////////////////////////////////////
-                        var tid = setInterval(function () {
-                            if (document.readyState !== 'complete') {
-                                return;
-                            }
-                            clearInterval(tid);
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            //on ready set states
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            TweenMax.to($(".reveal-object"), 0, {
-                                autoAlpha: 0
+                        setTimeout(function () {
+                            $scope.$apply(function () {
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //on ready set states
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                setTimeout(function () {
+                                    var maxHeight = 0;
+                                    $(".reveal-wrapper").each(function () {
+//                                        console.log(
+//                                                '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                                '\n::maxHeight::', maxHeight,
+//                                                '\n::$(this).outerHeight()::', $(this).outerHeight(true),
+//                                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                                );
+                                        if ($(this).outerHeight() > maxHeight) {
+                                            maxHeight = ($(this).outerHeight() + 100);
+                                        }
+                                    });
+                                    $(".np-reveal").height(maxHeight);
+                                }, 1);
+                                TweenMax.to($(".reveal-object"), 0, {
+                                    opacity: 0
+                                });
+                                TweenMax.set($(".reveal-button"), {
+                                    opacity: 0,
+                                    scale: .25,
+                                    force3D: true
+                                });
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //build init state
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                TweenMax.to($(".button-screen"), 1.5, {
+                                    autoAlpha: 0.75,
+                                    ease: Power4.easeOut
+                                });
+                                TweenMax.staggerTo($(".reveal-button"), 2, {
+                                    scale: 1,
+                                    opacity: 1,
+                                    delay: 0.25,
+                                    ease: Power4.easeOut,
+                                    force3D: true
+                                }, 0.2);
+                                TweenMax.to($(".button-screen"), 1.5, {
+                                    autoAlpha: 0.75,
+                                    ease: Power4.easeOut
+                                });
+                                TweenMax.to($(".button-screen")[0], 1.75, {
+                                    autoAlpha: 0,
+                                    delay: 1.75,
+                                    ease: Power4.easeOut
+                                });
+                                TweenMax.to($(".reveal-object")[0], 1.75, {
+                                    autoAlpha: 1,
+                                    delay: 1.75,
+                                    ease: Power4.easeOut
+//                                    onComplete: function () {
+//
+//                                    }
+                                });
                             });
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            //finish ready check items
-                            //////////////////////////////////////////////////////////////////////////////////////
-                        }, 100);
+                        });
                         this.update = function (button) {
                             var idx = this.revealItems.indexOf(button);
-//                            console.log(
-//                                    '\n::::::::::::::::::::::::::::::::::::::reveal::array data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
-//                                    '\n:::', idx,
-//                                    '\n:::', button,
-//                                    '\n:::', $('video').length,
-//                                    '\n:::', revealItems[idx].components[0],
-//                                    '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-//                                    );
                             //////////////////////////////////////////////////////////////////////////////////////
                             //on navigation change stop and reset all video files
                             //////////////////////////////////////////////////////////////////////////////////////
@@ -2925,12 +2962,22 @@ function AssessmentService ( $log ) {
                                 this.currentTime = 0;
                                 this.load();
                             });
-                            //////////////////////
-                            TweenMax.to($(".reveal-object"), 0, {
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            //on navigation change cross fade items
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            TweenMax.to($(".button-screen"), 1.5, {
+                                autoAlpha: 0.75,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($(".button-screen")[idx], 1.75, {
                                 autoAlpha: 0,
                                 ease: Power4.easeOut
                             });
-                            TweenMax.to($(".reveal-object")[idx], 0.75, {
+                            TweenMax.to($(".reveal-object"), 1.5, {
+                                autoAlpha: 0,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($(".reveal-object")[idx], 1.75, {
                                 autoAlpha: 1,
                                 ease: Power4.easeOut
                             });
@@ -5220,7 +5267,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('scripts/component/npReveal/npReveal.html',
-    "<div npReveal id=\"{{npReveal.id}}\" class=\"{{component.type}} np-cmp-wrapper np-reveal\" ng-controller=\"npRevealController as npReveal\">\n" +
+    "<div npReveal np-reveal-build id=\"{{npReveal.id}}\" class=\"{{component.type}} np-cmp-wrapper np-reveal\" ng-controller=\"npRevealController as npReveal\">\n" +
     "    <div class=\"debug\">\n" +
     "        <h3>{{component.type}} -- \n" +
     "            <small>{{component.idx}}</small>\n" +
@@ -5228,11 +5275,12 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "    </div>\n" +
     "    <!--:::::::::::: buttons ::::::::::::::::--> \n" +
     "    <div class=\"reveal-navigation col-md-12\">\n" +
-    "        <div class=\" reveal-button-container\">\n" +
+    "        <div class=\" reveal-button-container center-block\">\n" +
     "            <div revealButton class=\"reveal-button\" ng-repeat=\"revealItem in npReveal.revealItems\" ng-click=\"npReveal.update(revealItem)\">\n" +
     "                <div class=\"reveal-button-wrap\">\n" +
     "                    <img class=\"reveal-button-image img-responsive\" ng-src=\"{{revealItem.buttonImage}}\" alt=\"{{revealItem.buttonAlt}}\" />\n" +
     "                </div>\n" +
+    "                <div class=\"button-screen\"></div>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "    </div>\n" +
