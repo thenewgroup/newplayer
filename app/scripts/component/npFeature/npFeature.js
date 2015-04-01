@@ -6,7 +6,7 @@
             .controller('npFeatureController',
                     function ($log, $scope/*, ManifestService*/, $element) {
                         var cmpData = $scope.component.data || {};
-                        $log.debug('npFeature::data', cmpData);
+                        //$log.debug('npFeature::data', cmpData);
                     }
             )
             .directive('newPlayerPageTop', function () {
@@ -52,7 +52,7 @@
             /** @ngInject */
             .run(
                     function ($log, $rootScope) {
-                        $log.debug('npFeature::component loaded!');
+                        //$log.debug('npFeature::component loaded!');
                     }
             );
 })();

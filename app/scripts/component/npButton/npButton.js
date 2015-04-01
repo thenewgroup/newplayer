@@ -8,7 +8,7 @@
     .controller('npButtonController',
     function ($log, $scope, $sce, $location, $element, ConfigService, ManifestService, APIService, TrackingService) {
       var cmpData = $scope.component.data || {};
-      $log.debug('npButton::data', cmpData);
+      //$log.debug('npButton::data', cmpData);
 
       this.content = '';
       var btnContent = cmpData.content;
@@ -45,7 +45,7 @@
             btnLink = '/' + ConfigService.getManifestId() + '/' + btnLink;
           }
         }
-        $log.debug('npButton::link', btnLink);
+        //$log.debug('npButton::link', btnLink);
         this.link = $sce.trustAsResourceUrl(btnLink);
       }
       this.go = function () {
@@ -71,7 +71,7 @@
   /** @ngInject */
     .run(
     function ($log, $rootScope) {
-      $log.debug('npButton::component loaded!');
+      //$log.debug('npButton::component loaded!');
     }
   );
 })();

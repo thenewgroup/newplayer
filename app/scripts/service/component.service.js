@@ -8,7 +8,7 @@
 
   /** @ngInject */
   function ComponentService($log, $templateCache, $http/*, $timeout, $http, $q, $rootScope*/) {
-    $log.debug('\nComponentService::Init\n');
+    //$log.debug('\nComponentService::Init\n');
 
     var Service = function () {
       var self = this;
@@ -25,7 +25,7 @@
 
 
       var initCmp = function (componentObj) {
-        //$log.debug( 'ComponentService::initCmp:', cmpType, COMPONENT_ROOT );
+        $log.debug( 'ComponentService::initCmp:', cmpType, COMPONENT_ROOT );
 
         // reset specific-component values
         setCmpDependencies([]);
@@ -126,7 +126,7 @@
               cmpTemplate = cmpData.template;
             }
             // TBD validate incoming data
-            $log.debug('ComponentService::load: parseTemplate', componentObj, cmpTemplate);
+            //$log.debug('ComponentService::load: parseTemplate', componentObj, cmpTemplate);
             template = cleanURL(cmpType, cmpTemplate);
           }
         }

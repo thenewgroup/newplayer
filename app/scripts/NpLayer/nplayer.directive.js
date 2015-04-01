@@ -9,7 +9,7 @@
 
     /** @ngInject */
     function NpLayer($log/*,  $timeout*/) {
-        $log.debug('NpLayer::Init\n');
+        $log.info('NpLayer::Init\n');
 
         var directive = {
             restrict: 'E',
@@ -126,10 +126,10 @@
             var cmp = ManifestService.getComponent($attributes.idx);
             var cmpIdx = cmp.idx || [0];
 
-            $log.debug('NpLayer::parseComponent', cmp, cmpIdx, $attributes);
+            //$log.debug('NpLayer::parseComponent', cmp, cmpIdx, $attributes);
             if (!!cmp) {
 
-                $log.debug('NpLayer::parseComponent then', cmp, cmpIdx);
+                //$log.debug('NpLayer::parseComponent then', cmp, cmpIdx);
                 // reset scope!!!
                 $scope.subCmp = false;
                 $scope.component = cmp;
@@ -170,13 +170,13 @@
                     }
                 }
                 if (!!cmp.components && cmp.components.length > 0) {
-                    $log.debug('NpLayer::parseComponent - HAS SUBS:', cmp);
+                    //$log.debug('NpLayer::parseComponent - HAS SUBS:', cmp);
                     $scope.subCmp = true;
                     $scope.components = cmp.components;
                 }
 
                 var templateData = ComponentService.getTemplate(cmp);
-                $log.debug('npComponent::parseComponent: template', templateData);
+                //$log.debug('npComponent::parseComponent: template', templateData);
 
                 // modify template before compiling!?
                 var tmpTemplate = document.createElement('div');

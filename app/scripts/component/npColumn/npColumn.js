@@ -17,7 +17,7 @@
 
 
       var cmpData = $scope.component.data || {};
-      $log.debug('npColumn::data', cmpData);
+      //$log.debug('npColumn::data', cmpData);
 
       var childCount = $scope.component.components.length;
       var columns = +cmpData.cols;
@@ -40,7 +40,7 @@
   /** @ngInject */
     .run(
     function ($log) {
-      $log.debug('npColumn::component loaded!');
+      //$log.debug('npColumn::component loaded!');
     }
   );
 
