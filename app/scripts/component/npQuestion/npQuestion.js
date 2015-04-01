@@ -188,7 +188,9 @@
                         vm.nextPage = function (evt) {
                             evt.preventDefault();
                             //if (vm.canContinue) {
-                              ManifestService.goToNextPage();
+                              if( ManifestService.goToNextPage() === false ) {
+                                // how to show
+                              }
                             //}
                         };
                     }

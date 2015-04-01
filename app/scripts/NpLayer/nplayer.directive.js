@@ -18,6 +18,7 @@
                 manifestURL: '@npUrl',
                 overrideURL: '@npOverrideUrl',
                 overrideData: '@npOverrideData',
+                minPassing: '@npMinPassing',
                 language: '@npLang',
                 manifestData: '=?',
                 onTrackService: '&npAnalyticsService'

@@ -60,7 +60,7 @@
                   "parentId": "",
                   "title": "How Much Do You Know About Re-Nutriv 1",
                   "inMenu": true,
-                  "required": true
+                  "required": false
                 },
                 "components": [
                   {
@@ -79,7 +79,7 @@
                   {
                     "type": "npQuestion",
                     "data": {
-                      "required": 0,
+                      "required": true,
                       "forced": true,
                       "type": "checkbox",
                       "difficulty": "1",
@@ -188,7 +188,7 @@
                     "type": "npQuestion",
                     "data": {
                       "class": "row",
-                      "required": false,
+                      "required": true,
                       "forced": false,
                       "type": "checkbox",
                       "difficulty": 2,
@@ -206,10 +206,6 @@
                           "label": "800000000",
                           "correct": false
                         },
-                        "feedback": {
-                          "correct": "correct",
-                          "incorrect": "No! ... incorrect!?"
-                        },
                         "components": [
                         ]
                       },
@@ -217,9 +213,7 @@
                         "type": "npAnswer",
                         "data": {
                           "label": "7,433.6",
-                          "correct": false,
-                          "correct": "Hey, that's right!",
-                          "incorrect": "No! ... What are you thinking!?"
+                          "correct": false
                         },
                         "components": [
                         ]
@@ -228,9 +222,7 @@
                         "type": "npAnswer",
                         "data": {
                           "label": "<img src=\"http://i.istockimg.com/file_thumbview_approve/33898764/2/stock-photo-33898764-isolated-chicken-with-egg.jpg\" height=\"50\" />",
-                          "correct": true,
-                          "correct": "Hey, that's right!",
-                          "incorrect": "No! ... What are you thinking!?"
+                          "correct": true
                         },
                         "components": [
                         ]
@@ -271,13 +263,13 @@
                     "type": "npQuestion",
                     "data": {
                       "class": "row",
-                      "required": false,
-                      "forced": false,
+                      "required": true,
+                      "forced": true,
                       "type": "text",
                       "difficulty": 3,
                       "content": "What is the greatest thing ever!? QUESTION 3",
                       "feedback": {
-                        "immediate": false,
+                        "immediate": true,
                         "correct": "Of course it is!",
                         "incorrect": "Hmmm... yeeeaaa... no!"
                       }
@@ -292,6 +284,21 @@
                         "components": []
                       }
                     ]
+                  }
+                ]
+              },
+              {
+                "type": "npPage",
+                "data": {
+                  "id": "How Much Do You Know About Re-Nutriv Summary",
+                  "parentId": "QuizIntro",
+                  "title": "How Much Do You Know About Re-Nutriv Summary",
+                  "inMenu": false,
+                  "required": false
+                },
+                "components": [
+                  {
+                    "type": "npQuizSummary"
                   }
                 ]
               }

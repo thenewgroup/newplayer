@@ -21,11 +21,10 @@
         },
         config = ConfigService.getConfig();
 
-        if( !!config && config.hasOwnProperty('assessment')) {
-          if( config.assessment.hasOwnProperty('minPassing')) {
-            setMinPassing(config.assessment.minPassing);
-          }
-        }
+      if( config.hasOwnProperty('minPassing')) {
+        setMinPassing(config.minPassing);
+      }
+
 
     /**
      * Initializes the assessment service for this page/session
@@ -33,8 +32,8 @@
      * @param ??
      */
     function setRequirements(requiredPages, requiredQuestions, minimumPassing) {
-      $log.info('Assessment:setRequirements | reqPages, reqQuestions, minPassing',
-                requiredPages, requiredQuestions, minimumPassing);
+      //$log.info('Assessment:setRequirements | reqPages, reqQuestions, minPassing',
+      //          requiredPages, requiredQuestions, minimumPassing);
 
       pages.required = requiredPages;
       questions.required = requiredQuestions;
@@ -47,7 +46,7 @@
 
     function setMinPassing(newMinPassing) {
       minPassing = newMinPassing;
-      $log.info('Assessment:setMinPassing', minPassing);
+      //$log.info('Assessment:setMinPassing', minPassing);
     }
 
 
@@ -58,7 +57,7 @@
      * @param pageIsRequired bool Whether the page was required so it can help user's score.
      */
     function addPage(pageName, pageIsRequired) {
-      $log.info('Assessment:addPage | name, required?', pageName, pageIsRequired);
+      //$log.info('Assessment:addPage | name, required?', pageName, pageIsRequired);
 
       // look in the inventory to see if this property already exists
       if( pages.inventory.hasOwnProperty(pageName)) {
@@ -81,7 +80,7 @@
      * @param pageIsRequired bool Whether the page was required so it can help user's score.
      */
     function addQuestion(questionName, questionIsRequired) {
-      $log.info('Assessment:addQuestion | name, required?', questionName, questionIsRequired);
+      //$log.info('Assessment:addQuestion | name, required?', questionName, questionIsRequired);
 
       // look in the inventory to see if this property already exists
       if( questions.inventory.hasOwnProperty(questionName)) {
@@ -138,7 +137,7 @@
      * @param pageIsRequired bool Whether the page was required so it can help user's score.
      */
     function pageViewed(pageId) {
-      $log.info('Assessment:pageViewed | ', pageId);
+      //$log.info('Assessment:pageViewed | ', pageId);
 
       if( pages.viewed.inventory[pageId] === false ) {
         pages.viewed.inventory[pageId] = new Date();
@@ -158,12 +157,12 @@
      * @param pageIsRequired bool Whether the page was required so it can help user's score.
      */
     function questionCorrectlyAnswered(questionId) {
-      $log.info('Assessment:questionCorrectlyAnswered | ', questionId);
+      //$log.info('Assessment:questionCorrectlyAnswered | ', questionId);
 
       if( questions.answered.inventory[questionId] === false ) {
         questions.answered.inventory[questionId] = new Date();
 
-        if( questions.inventory[questionId] === true ) {
+        if( questions.inventory[questionId] !== false ) {
           questions.answered.required++;
         }
       } else {

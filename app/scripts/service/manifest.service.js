@@ -336,7 +336,7 @@
         return this.pageId;
       };
       this.setPageId = function (pageId, componentIdx) {
-        $log.debug('ManifestService, setPageId', pageId);
+        //$log.debug('ManifestService, setPageId', pageId);
         // reset component index for reparsing new page
         if (this.pageId === pageId) {
           return;
@@ -363,34 +363,35 @@
         i++; // let's always start with the index after ours
 
 
-        $log.debug('ManifestService::goToNextPage | for pageId, componentIdx', thisPageId, componentIdx);
+        //$log.debug('ManifestService::goToNextPage | for pageId, componentIdx', thisPageId, componentIdx);
         pageParentComponent = this.getComponent(pageParentComponentIdx);
 
         for ( /* initialized above*/; i < pageParentComponent.components.length; i++) {
           var component = pageParentComponent.components[i];
-          $log.debug('ManifestService::goToNextPage | -- Evaluating component', component);
+          //$log.debug('ManifestService::goToNextPage | -- Evaluating component', component);
           if (component.type === 'npPage') {
-            $log.debug('ManifestService::goToNextPage | --> found npPage');
+            //$log.debug('ManifestService::goToNextPage | --> found npPage');
             if (component.data.id === thisPageId) {
-              $log.debug('ManifestService::goToNextPage | --> ignoring thisPage');
+              //$log.debug('ManifestService::goToNextPage | --> ignoring thisPage');
               continue;
             }
 
             nextPage = component.data.id;
             nextPageComponentIdx = component.idx;
-            $log.debug('ManifestService::goToNextPage | --> found nextPage, nextPageComponentIdx', nextPage, nextPageComponentIdx);
+            //$log.debug('ManifestService::goToNextPage | --> found nextPage, nextPageComponentIdx', nextPage, nextPageComponentIdx);
             break;
           }
         }
 
 
         if( !!nextPageComponentIdx ) {
-          $log.debug('ManifestService::goToNextPage | sending client to nextPage', nextPage);
-          this.setPageId(nextPage, nextPageComponentIdx, nextPageComponentIdx);
+          //$log.debug('ManifestService::goToNextPage | sending client to nextPage', nextPage);
+          this.setPageId(nextPage, nextPageComponentIdx);
+          return true;
         }
 
 
-        $log.debug('ManifestService::goToNextPage | no valid next page found, returning false');
+        //$log.debug('ManifestService::goToNextPage | no valid next page found, returning false');
         return false;
       };
 

@@ -18,6 +18,7 @@
       var overrideURL = null;
       var overrideData = null;
 
+
       this.setManifestId = function (id) {
         $log.debug('ConfigService::setManifestId', id);
         self.manifestId = id;
