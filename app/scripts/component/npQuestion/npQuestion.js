@@ -4,23 +4,27 @@
             .module('newplayer.component')
             /** @ngInject */
             .controller('npQuestionController',
-                    function ($log, $scope, $rootScope, ManifestService, $sce, $element) {
+                    function ($log, $scope, $rootScope, $sce, $element,
+                              ManifestService, AssessmentService) {
                       var vm = this,
                           cmpData = $scope.component.data;
 
-                        $log.debug('npQuestion::data', cmpData);
+                        //$log.debug('npQuestion::data', cmpData);
                         vm.id = cmpData.id;
                         vm.content = $sce.trustAsHtml(cmpData.content);
                         vm.type = cmpData.type;
                         vm.feedback = '';
                         vm.canContinue = false;
                         vm.answers = [];
+                        vm.questionHasEvaluated = false;
                         //vm.answer = [];
 
                         var feedback = cmpData.feedback;
                         var feedbackLabel = $element.find('.question-feedback-label');
                         var feedbackCheckboxX = $element.find('.checkbox-x');
                         var negativeFeedbackIcon = '';
+
+                      AssessmentService.addQuestion(vm.id, !!cmpData.required);
 //                        console.log(
 //                                '\n::::::::::::::::::::::::::::::::::::::npQuestions::default:::::::::::::::::::::::::::::::::::::::::::::::::',
 //                                '\n:::', vm,
@@ -41,7 +45,7 @@
 //                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
 //                                    );
 
-                            $log.debug('npQuestion::answer changed', vm.answers);
+                            //$log.debug('npQuestion::answer changed', vm.answers);
 
                           // if this is a radio, clear the other radios
                             if( vm.type === 'radio' ) {
@@ -61,8 +65,6 @@
                         };
                         vm.registerAnswer = function(idx, answer) {
                           vm.answers[idx] = answer;
-
-                          $log.debug('CHECKBOX registerAnswer: ', idx, answer, vm.answers);
                         };
                         vm.evaluate = function () {
                             var i, isCorrectAnswer = true;
@@ -75,7 +77,7 @@
 //                                    '\n::cmpData::', cmpData,
 //                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
 //                                    );
-                            $log.debug('npQuestion::evaluate:', vm.answer, vm.answers);
+                            //$log.debug('npQuestion::evaluate:', vm.answer, vm.answers);
                             if (!!vm.answers) {
                                 switch (vm.type) {
                                     case 'radio':
@@ -155,7 +157,7 @@
                                 isCorrectAnswer = false;
                             }
 
-                            $log.debug('npQuestion::evaluate:isCorrect', isCorrectAnswer);
+                            //$log.debug('npQuestion::evaluate:isCorrect', isCorrectAnswer);
 
 
                             // NOTE: feedback.correct/incorrect is set on the npQuestion's data, NOT npAnswer
@@ -172,6 +174,7 @@
                                 if (isCorrectAnswer) {
                                     vm.feedback = feedback.correct;
                                     vm.canContinue = true;
+                                  AssessmentService.questionCorrectlyAnswered(vm.id);
                                   tweenOpts.opacity = 0;
                                 } else {
                                     vm.feedback = feedback.incorrect;
@@ -180,12 +183,13 @@
 
                               TweenMax.to(negativeFeedbackIcon, 0.75, tweenOpts);
                             }
+                          vm.questionHasEvaluated = true;
                         };
                         vm.nextPage = function (evt) {
                             evt.preventDefault();
-                            if (vm.canContinue) {
-                                $rootScope.$emit('question.answered', true);
-                            }
+                            //if (vm.canContinue) {
+                              ManifestService.goToNextPage();
+                            //}
                         };
                     }
             )
@@ -209,7 +213,7 @@
             /** @ngInject */
             .run(
                     function ($log, $rootScope) {
-                        $log.debug('npQuestion::component loaded!');
+                        //$log.debug('npQuestion::component loaded!');
                     }
             );
 })();

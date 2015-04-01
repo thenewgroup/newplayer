@@ -9,11 +9,13 @@
     <p class="h5 quiz-label">answers:</p>
     <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
     <div class="row">
-        <button type="submit" class="btn-submit" ng-click="npQuestion.evaluate()">
+        <button type="submit" class="btn-submit" ng-click="npQuestion.evaluate()" ng-show="!npQuestion.questionHasEvaluated" ng-cloak>
             <span>Submit</span>
         </button>
+      <button class="btn-submit btn-npq-next" ng-click="npQuestion.nextPage($event)" ng-show="npQuestion.questionHasEvaluated" ng-cloak>
+        <span>Next</span>
+      </button>
     </div>
-    <!--<button id="next_button" class="btn-default" ng-click="npQuestion.nextPage($event)">Next</button>-->
     <!--    <div class="btn btn-default">
             <input type="submit" />
         </div>-->

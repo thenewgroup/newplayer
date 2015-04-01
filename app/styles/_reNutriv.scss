@@ -142,7 +142,7 @@ small{
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Flash Cards classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-.np-flash-card{  
+.np-flash-card{
     position: fixed;
     content: "";
     width: 100%;
@@ -252,13 +252,21 @@ small{
     margin-bottom: 25px;
     margin-left: 30px;
 }
-.btn-submit span{ 
+
+.btn-submit span{
+
+#np_reNutriv .btn-submit{
     font-family: $re-nu-serif;
     color: $brand-primary-light;
     text-transform: uppercase;
     letter-spacing: 2px;
 }
-input{ 
+
+          #np_reNutriv .btn-submit.btn-npq-next {
+            margin-left: 150px;
+          }
+
+input{
     font-family: $re-nu-serif;
     size: $font-size-small;
     color: #737373;
@@ -266,7 +274,8 @@ input{
     letter-spacing: 2px;
     color: #313131;
 }
-.answer-text-input{ 
+
+.answer-text-input{
     font-family: $re-nu-serif;
     size: $font-size-small;
     color: #737373;
@@ -275,21 +284,21 @@ input{
     background-color: $gray-dark;
     box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
 }
-.answer-text-checkbox { 
+.answer-text-checkbox {
     font-family: $re-nu-serif;
     size: $font-size-small;
     color: $brand-primary-light;
     text-transform: uppercase;
     letter-spacing: 2px;
 }
-.answer-text-radio { 
+.answer-text-radio {
     font-family: $re-nu-serif;
     size: $font-size-small;
     color: $brand-primary-light;
     text-transform: uppercase;
     letter-spacing: 2px;
 }
-.answer-text span{ 
+.answer-text span{
     font-family: $re-nu-serif;
     size: $font-size-small;
     color: $brand-primary-light;
@@ -299,10 +308,10 @@ input{
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Quiz Answer classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-.answer-wrapper{ 
+.answer-wrapper{
     padding: 20px;
 }
-.answer-checkbox{ 
+.answer-checkbox{
     position: relative;
     width: 20px;
     height: 20px;
@@ -313,7 +322,7 @@ input{
     background-color: #000000;
     box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
 }
-.answer-radio{ 
+.answer-radio{
     position: relative;
     width: 20px;
     height: 20px;
@@ -322,7 +331,8 @@ input{
     background-color: #000000;
     box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
 }
-.checkbox-box{ 
+
+.checkbox-box{
     position: absolute;
     width: 20px;
     height: 20px;
@@ -330,21 +340,23 @@ input{
     margin: auto;
     box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
 }
-.checkbox-box svg{ 
+
+.checkbox-box svg{
     position: absolute;
     top:0;
     left:0;
     display: block;
     margin: auto;
 }
-.checkbox-x{ 
+
+.checkbox-x{
     position: absolute;
     width: 20px;
     height: 20px;
     display: block;
     margin: auto;
 }
-.checkbox-x svg{ 
+.checkbox-x svg{
     position: absolute;
     top:0;
     left:0;
@@ -352,7 +364,7 @@ input{
     display: block;
     margin: auto;
 }
-.answer-text{ 
+.answer-text{
     font-family: $font-family-sans-serif;
     /*float: left;*/
     color: $brand-primary-light;
@@ -362,37 +374,37 @@ input{
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Quiz Questions classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-.question-text{ 
+.question-text{
     font-family: $re-nu-serif;
     size: $font-size-h3;
     color: $brand-primary-light;
     text-transform: uppercase;
     letter-spacing: 2px;
 }
-.question-feedback{ 
+.question-feedback{
     position: relative;
     height: 160px;
     margin-top: 10px;
     margin-bottom: 10px;
     margin-right: 30px;
 }
-.question-feedback-outline{ 
+.question-feedback-outline{
     position: absolute;
     width: 100%;
     height: 100%;
 }
-.question-feedback-text{ 
+.question-feedback-text{
     font-family: $font-family-sans-serif;
     float: left;
     color: $brand-primary-light;
     letter-spacing: 2px;
 }
-.negative-feedback-icon{ 
+.negative-feedback-icon{
     width: 20px;
     margin-right: 10px;
     float: left;
 }
-.question-feedback-label{ 
+.question-feedback-label{
     font-family: $font-family-sans-serif;
     size: $font-size-h3;
     color: #737373;
@@ -401,7 +413,7 @@ input{
     letter-spacing: 2px;
     padding-top: 4.5%;
 }
-.question-feedback-wrapper{ 
+.question-feedback-wrapper{
     position: absolute;
     background-color: $gray-dark;
     box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
@@ -413,13 +425,13 @@ input{
 /*New Player Matching Game classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 .matching-game-row{
-    display: inline-block; 
-    border: 2px solid black; 
-    /*width: 400px;*/ 
+    display: inline-block;
+    border: 2px solid black;
+    /*width: 400px;*/
     margin-right: 10px;
 }
 .rsDefault, .rsDefault .rsOverflow, .rsDefault .rsSlide, .rsDefault .rsVideoFrameHolder, .rsDefault .rsThumbs {
-    background: #FFFFFF;; 
+    background: #FFFFFF;;
     color: #333333;
 }
 .rsContent {
@@ -430,7 +442,7 @@ input{
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Trivia/Spinner classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-.btn-next{ 
+.btn-next{
     position: absolute;
     border-color: $gold;
     width: auto;
@@ -442,13 +454,13 @@ input{
     margin-top: 15px;
     background-color: #000000;
 }
-.btn-next span{ 
+.btn-next span{
     font-family: $re-nu-serif;
     color: $brand-primary-light;
     text-transform: uppercase;
     letter-spacing: 2px;
 }
-.btn-next span p{ 
+.btn-next span p{
     padding: 0;
 }
 .np-spinner-wrapper {
@@ -500,7 +512,7 @@ input{
     text-align: center;
     width: 100%;
     /*height: 600px;*/
-    /*clip the container for those not supporting csstransforms3d*/ 
+    /*clip the container for those not supporting csstransforms3d*/
     .no-csstransforms3d & {
         overflow: hidden;
         height: 65px;
@@ -652,7 +664,7 @@ input{
     padding: 5%;
     background-color: #000000;
     opacity: 0.75;
-    filter: url(styles/inset-shadow.svg#inset-shadow); 
+    filter: url(styles/inset-shadow.svg#inset-shadow);
 }
 .list-body-text{
     color: $brand-primary-light;
@@ -772,8 +784,8 @@ foreignobject{
 .positive-feedback-image{
     background-image: url("/assets/svgs/feedback-correct-icon-ReNutriv.svg");
     background-repeat: no-repeat;
-    width:40px; 
-    height:40px; 
+    width:40px;
+    height:40px;
     border: 0;
     background-size: 100%; /* To fill the dimensions of container (button), or */
     background-size: 40px auto; /* to specify dimensions explicitly */

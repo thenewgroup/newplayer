@@ -8,7 +8,7 @@
     .controller('npPageController',
     function ($log, $scope, $rootScope, ManifestService, TrackingService) {
       var cmpData = $scope.component.data || {};
-      $log.debug('npPage::data', cmpData, $scope.contentTitle);
+      //$log.debug('npPage::data', cmpData, $scope.contentTitle);
 
       this.title = cmpData.title;
       var parentIdx = $scope.component.idx.slice(0);
@@ -18,8 +18,8 @@
       if (!pageId) {
         var firstPageCmp = ManifestService.getFirst('npPage', parentIdx);
         pageId = firstPageCmp.data.id;
-        ManifestService.setPageId(pageId);
-        $log.debug('npPage::set page', pageId);
+        ManifestService.setPageId(pageId, firstPageCmp.idx);
+        //$log.debug('npPage::set page', pageId);
       }
 
       npPageIdChanged(null, pageId);
@@ -31,7 +31,7 @@
         pageId = newPageId;
 
         // check if current route is for this page
-        $log.debug('npPage::on current page?', pageId, cmpData.id);
+        //$log.debug('npPage::on current page?', pageId, cmpData.id);
         if (cmpData.id === pageId) {
           $scope.currentPage = true;
           $scope.npPage = $scope;
@@ -53,7 +53,7 @@
   /** @ngInject */
     .run(
     function ($log, $rootScope) {
-      $log.debug('npPage::component loaded!');
+      //$log.debug('npPage::component loaded!');
     }
   );
 })();

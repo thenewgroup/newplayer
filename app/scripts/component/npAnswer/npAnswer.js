@@ -21,11 +21,11 @@
           tweenOptions.autoAlpha = 0;
         }
 
-        $log.debug('updateCheck', checkmark, tweenOptions);
+        //$log.debug('updateCheck', checkmark, tweenOptions);
         TweenMax.to(checkmark, 0.25, tweenOptions);
       };
 
-      $log.debug('npAnswer::data', cmpData);
+      //$log.debug('npAnswer::data', cmpData);
       vm.id = cmpData.id;
       vm.label = $sce.trustAsHtml(cmpData.label);
       vm.question = null;
@@ -37,7 +37,7 @@
       };
 
       vm.clicked = function($event) {
-        $log.debug('npAnswer clicked', $event, cmpData);
+        //$log.debug('npAnswer clicked', $event, cmpData);
 
 
         if( vm.question.type === 'checkbox' ) {
@@ -61,7 +61,7 @@
   /** @ngInject */
     .run(
     function ($log, $rootScope) {
-      $log.debug('npAnswer::component loaded!');
+      //$log.debug('npAnswer::component loaded!');
     }
   );
 })();

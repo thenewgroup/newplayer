@@ -8,20 +8,8 @@
     .value('sliders', {});
 
   /** @ngInject */
-  function AppController($log, $scope, AssessmentService/*, ImagePreloadFactory, HomeService, $scope*/) {
+  function AppController($log, $scope/*, ImagePreloadFactory, HomeService, $scope*/) {
     $log.debug('AppController::Init');
-
-
-    $scope.seePlayerConfigInAppCtrlJS = {
-      manifestId: 'sample',
-      manifestURL: '/sample.json',
-      overrideURL : '/sample-override.json',
-      overrideData: {},
-      language: 'en-us',
-      assessment: {
-        minPassing: 0.75
-      }
-	};
 
     var vm = this;
     vm.doTrack = function (event, data) {
