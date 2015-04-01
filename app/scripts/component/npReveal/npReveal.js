@@ -37,44 +37,21 @@
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //on ready set states
                                 //////////////////////////////////////////////////////////////////////////////////////
-//                                var heightCompareElements = $(".reveal-object");
-//                                var t = 0; // the height of the highest element (after the function runs)
-//                                var t_elem;  // the highest element (after the function runs)
-//                                var $this = 0;
-//                                $("*", ".reveal-wrapper").each(function () {
-//                                    $this = $(this);
-//                                    if ($this.outerHeight() > t) {
-//                                        t_elem = this;
-//                                        t = $this.outerHeight();
-//                                    }
-//                                });    
-//                                $(window).load(function () {
-
                                 setTimeout(function () {
                                     var maxHeight = 0;
-
                                     $(".reveal-wrapper").each(function () {
-                                        console.log(
-                                                '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                                '\n::maxHeight::', maxHeight,
-                                                '\n::$(this).outerHeight()::', $(this).outerHeight(true),
-                                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                                );
+//                                        console.log(
+//                                                '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                                '\n::maxHeight::', maxHeight,
+//                                                '\n::$(this).outerHeight()::', $(this).outerHeight(true),
+//                                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                                );
                                         if ($(this).outerHeight() > maxHeight) {
                                             maxHeight = ($(this).outerHeight() + 100);
                                         }
                                     });
                                     $(".np-reveal").height(maxHeight);
                                 }, 1);
-
-//                                });
-//                                console.log(
-//                                        '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
-//                                        '\n::t::', t,
-//                                        '\n::t_elem::', t_elem,
-//                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-//                                        );
-
                                 TweenMax.to($(".reveal-object"), 0, {
                                     opacity: 0
                                 });
@@ -109,14 +86,13 @@
                                 TweenMax.to($(".reveal-object")[0], 1.75, {
                                     autoAlpha: 1,
                                     delay: 1.75,
-                                    ease: Power4.easeOut,
-                                    onComplete: function () {
-
-                                    }
+                                    ease: Power4.easeOut
+//                                    onComplete: function () {
+//
+//                                    }
                                 });
                             });
                         });
-
                         this.update = function (button) {
                             var idx = this.revealItems.indexOf(button);
                             //////////////////////////////////////////////////////////////////////////////////////
