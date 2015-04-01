@@ -6,7 +6,7 @@ Responsive learning content player by [The New Group](http://www.thenewgroup.com
 #### Dependencies
 
 - git (http://git-scm.com/downloads)
-- node / npm (http://nodejs.org/download/)
+- node / npm (http://nodejs.org/download)
 - bower (npm install -g bower)
 - grunt (npm install -g grunt-cli)
 
