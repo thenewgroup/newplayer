@@ -1,0 +1,201 @@
+[
+    {
+        "type": "npFeature",
+        "data": {
+            "id": "storyDefault",
+            "class": "storyTemplate",
+            "version": "0.0.1",
+            "timestamp": "2015-Mar-Wed_08:03:28"
+        },
+        "components": [
+            {
+                "type": "npContent",
+                "data": {
+                    "id": "content_en",
+                    "language": "en",
+                    "title": "Story-Template-Manifest",
+                    "description": "Manifest template for story pages. "
+                },
+                "components": [
+                    {
+                        "type": "npHTML",
+                        "data": {
+                            "id": "newplayer-background"
+                        },
+                        "components": [
+                        ]
+                    },
+                    {
+                        "type": "npHTML",
+                        "data": {
+                            "class": "background-brand-primary-light outside-padding"
+                        },
+                        "components": [
+                            {
+                                "type": "npImage",
+                                "data": {
+                                    "src": "../_dev_assets/assets/images/story-hero.jpg",
+                                    "id": "",
+                                    "class": "hero img-responsive center-block",
+                                    "alt": "hero image"
+                                },
+                                "components": [
+                                ]
+                            },
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "class": "h5 col-sm-12 sans-head center-block center-padding",
+                                    "content": "BEST OF THE BEST TIPS TO TRY"
+                                },
+                                "components": [
+                                ]
+                            },
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "class": "h1 header ",
+                                    "content": "Lorem ipsum dolor sit amet cons, ectetuer adipiscin"
+                                },
+                                "components": [
+                                ]
+                            },
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "",
+                                    "class": "body-copy center-padding",
+                                    "content": "<p>Nullam vulputate ut felis id porta. Nam congue eu justo vel tincidunt. Curabitur eget magna luctus, condimentum dui vel, elementum lectus. Donec sem purus, semper nec sodales eu, elementum sed risus. Phasellus mollis gravida condimentum. Etiam a lacinia libero, at tincidunt erat. Maecenas suscipit mi id turpis egestas cursus. Cras in diam ut tellus dignissim pretium. Sed purus metus, aliquam eget quam sed, pharetra venenatis nisi. Aenean ultrices eros.</p>"
+                                },
+                                "components": [
+                                ]
+                            },
+                            {
+                                "type": "npButton",
+                                "data": {
+                                    "link": "/api/favorites/product/Product-Manifest-Advanced-Night-Repair-Synchronized-Recovery-Complex-II",
+                                    "type": "",
+                                    "class": "col-sm-4 btn btn-favorite btn-open-favorites center-padding",
+                                    "content": "<span class='glyphicon glyphicon-heart-empty' aria-hidden='true'></span>  Favorite this"
+                                },
+                                "components": [
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "npHTML",
+                "data": {
+                    "class": "outside-padding"
+                },
+                "components": [
+                    {
+                        "type": "npColumn",
+                        "data": {
+                            "class": "row ",
+                            "cols": "2"
+                        },
+                        "components": [
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "class": "row"
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "class": "h5 sans-head-link col-sm-12",
+                                            "content": "SEE SIMILAR PRODUCTS:"
+                                        },
+                                        "components": [
+                                        ]
+                                    },
+                                    {
+                                        "type": "npImage",
+                                        "data": {
+                                            "src": "../_dev_assets/assets/images/earth.jpg",
+                                            "id": "",
+                                            "class": "col-sm-4 img-responsive serif-body-link",
+                                            "alt": "<a href='#/977'>Advanced Night Repair Eye-Synchronized Complex II</a>"
+                                        },
+                                        "components": [
+                                        ]
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "class": "col-sm-8 sans-small serif-body-link",
+                                            "content": "<a href='#/977'>Advanced Night Repair Eye-Synchronized Complex II</a>",
+                                            "link": "/api/products/name/Product-Manifest-Advanced-Night-Repair-Eye-Synchronized-Complex-II"
+                                        },
+                                        "components": [
+                                        ]
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "class": "col-sm-8 sans-small serif-date-link",
+                                            "content": "1 month"
+                                        },
+                                        "components": [
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "class": "row"
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "class": "h5 sans-head-link col-sm-12",
+                                            "content": "SUGGESTED FOR YOU:"
+                                        },
+                                        "components": [
+                                        ]
+                                    },
+                                    {
+                                        "type": "npImage",
+                                        "data": {
+                                            "src": "../_dev_assets/assets/images/earth.jpg",
+                                            "id": "",
+                                            "class": "col-sm-4 img-responsive serif-body-link",
+                                            "alt": "<a href='#/980'>Clear Difference-Advanced Blemish Collection</a>"
+                                        },
+                                        "components": [
+                                        ]
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "class": "col-sm-8 sans-small serif-body-link",
+                                            "content": "<a href='#/980'>Clear Difference-Advanced Blemish Collection</a>",
+                                            "link": "/api/products/name/Product-Manifest-Clear-Difference-Advanced-Blemish-Collection"
+                                        },
+                                        "components": [
+                                        ]
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "class": "col-sm-8 sans-small  serif-date-link",
+                                            "content": "1 month"
+                                        },
+                                        "components": [
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

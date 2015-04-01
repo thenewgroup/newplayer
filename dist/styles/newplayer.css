@@ -5133,93 +5133,87 @@ button.close {
 #np_homepage .np_homepage-video video {
   width: 100%; }
 
-/*$body-bg:               $brand-offwhite !default;*/
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/*page type background classes*/
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/*When setting this ID for New Player use: 'newplayer-background'*/
-#np_products #np_newplayer-background {
-  position: absolute;
-  background-color: #E6E9EE;
-  background-size: cover;
-  position: fixed;
-  content: "";
-  width: 100%;
-  height: auto;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  top: 0;
-  z-index: -1; }
-
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/*New Player background color wrapper classes*/
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/*When setting this class for New Player use: 'background-brand-primary-light'*/
-#np_products .np_background-brand-primary-light {
-  background-color: #FFFFFF; }
-
-/*When setting this class for New Player use: 'background-brand-offwhite' */
-#np_products .np_background-brand-offwhite {
-  background-color: #E6E9EE; }
-
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/*Sans font overrides*/
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-#np_products .sans-head {
-  font-family: "akzidenz-grotesk_bqbold";
-  text-transform: uppercase;
-  border-bottom: solid 1px;
-  border-bottom-color: #CCCCCC;
-  letter-spacing: 2px;
-  padding-top: 40px;
-  padding-bottom: 3px;
-  display: inline-block; }
-
-#np_products .np_inside-padding .sans-head {
-  border-bottom-color: #FFFFFF; }
-
-/*#background-image { 
+#np_products {
+  /*$body-bg:               $brand-offwhite !default;*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*page type background classes*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*When setting this ID for New Player use: 'newplayer-background'*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*New Player background color wrapper classes*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*When setting this class for New Player use: 'background-brand-primary-light'*/
+  /*When setting this class for New Player use: 'background-brand-offwhite' */
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*Sans font overrides*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*#background-image { 
+      position: absolute;
+      background: none;
+      content: "";
+      bottom: 0;
+      left: 0;
+      right: 0;
+      top: 0;
+      z-index: -1;
+  }*/
+  /*#products { 
+      position: absolute;
+      background-color: $brand-offwhite;
+      content: "";
+      bottom: 0;
+      left: 0;
+      right: 0;
+      top: 0;
+      z-index: -1;
+  }*/
+  /*$top-image: margin-left:-100px;*/
+  /*Q and A text outdent*/ }
+  #np_products #np_newplayer-background {
     position: absolute;
-    background: none;
+    background-color: #E6E9EE;
+    background-size: cover;
+    position: fixed;
     content: "";
+    width: 100%;
+    height: auto;
     bottom: 0;
     left: 0;
     right: 0;
     top: 0;
-    z-index: -1;
-}*/
-/*#products { 
-    position: absolute;
-    background-color: $brand-offwhite;
-    content: "";
-    bottom: 0;
-    left: 0;
-    right: 0;
-    top: 0;
-    z-index: -1;
-}*/
-/*$top-image: margin-left:-100px;*/
-#np_products .topImage {
-  margin-left: -75px; }
-
-@media (max-width: 768px) {
-  #np_products .topImage {
-    margin-left: 0; }
-
+    /*z-index: -1;*/ }
+  #np_products .np_background-brand-primary-light {
+    background-color: #FFFFFF; }
+  #np_products .np_background-brand-offwhite {
+    background-color: #E6E9EE; }
   #np_products .sans-head {
     font-family: "akzidenz-grotesk_bqbold";
     text-transform: uppercase;
-    border-bottom: none;
+    border-bottom: solid 1px;
+    border-bottom-color: #CCCCCC;
     letter-spacing: 2px;
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
-    margin-top: 0;
-    display: inline-block; } }
-/*Q and A text outdent*/
-.q-and-a-outdent {
-  text-indent: -28px;
-  margin-left: 28px; }
+    padding-top: 40px;
+    padding-bottom: 3px;
+    display: inline-block; }
+  #np_products .np_inside-padding .sans-head {
+    border-bottom-color: #FFFFFF; }
+  #np_products .topImage {
+    margin-left: -75px; }
+  @media (max-width: 768px) {
+    #np_products .topImage {
+      margin-left: 0; }
+    #np_products .sans-head {
+      font-family: "akzidenz-grotesk_bqbold";
+      text-transform: uppercase;
+      border-bottom: none;
+      letter-spacing: 2px;
+      padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
+      margin-top: 0;
+      display: inline-block; } }
+  #np_products .q-and-a-outdent {
+    text-indent: -28px;
+    margin-left: 28px; }
 
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player page type wrapper classes*/
@@ -6394,6 +6388,127 @@ button.close {
     }
   }
 }*/
+#np_storyDefault {
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*page type background classes*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*When setting this ID for New Player use: 'newplayer-background'*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*New Player background color wrapper classes*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*When setting this class for New Player use: 'background-brand-primary-light'*/
+  /*When setting this class for New Player use: 'background-brand-offwhite' */
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*font stuff*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*New Player button wrapper classes*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*When setting this class for New Player use: 'btn-favorite'*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*New Player button wrapper classes*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*@media (max-width: $screen-sm) {
+      .topImage{
+          margin-left:0;
+      }
+      .sans-head{
+          font-family: $font-family-sans-serif_head;
+          text-transform: uppercase;
+          border-bottom: none;
+          letter-spacing: 2px;
+          padding-top: 1.5rem;
+          padding-bottom: 1.5rem;
+          margin-top: 0;
+          display: inline-block;
+      }
+  }*/ }
+  #np_storyDefault #np_newplayer-background {
+    position: absolute;
+    background-color: #E6E9EE;
+    background-size: cover;
+    position: fixed;
+    content: "";
+    width: 100%;
+    height: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    /*z-index: -1;*/ }
+  #np_storyDefault .np_background-brand-primary-light {
+    background-color: #FFFFFF; }
+  #np_storyDefault .np_background-brand-offwhite {
+    background-color: #E6E9EE; }
+  #np_storyDefault .hero {
+    padding-top: 0px;
+    padding-bottom: 20px;
+    margin: 0 auto; }
+  #np_storyDefault .header {
+    font-family: "optimadisplaylightlight";
+    font-weight: 100;
+    line-height: 1.25;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding-top: 20px;
+    padding-bottom: 30px;
+    display: inline-block;
+    margin: 0 auto;
+    padding-left: 50px;
+    padding-right: 50px; }
+  #np_storyDefault .sans-head {
+    font-family: "akzidenz-grotesk_bqbold";
+    color: #040A2B;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 2px;
+    padding-top: 20px;
+    padding-bottom: 3px;
+    display: inline-block;
+    margin: 0 auto; }
+  #np_storyDefault .sans-head-link {
+    font-family: "akzidenz-grotesk_bqbold";
+    color: #040A2B;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: inline-block;
+    margin: 0 auto; }
+  #np_storyDefault .body-copy {
+    font-family: "akzidenz-grotesk_bqregular";
+    color: #040A2B;
+    text-align: justify;
+    font-size: 18px;
+    letter-spacing: 1px;
+    display: inline-block;
+    margin: 0 auto; }
+  #np_storyDefault .serif-body-link {
+    font-family: "optimadisplaylightlight";
+    color: #040A2B;
+    letter-spacing: 1px;
+    display: inline-block;
+    margin: 0 auto; }
+  #np_storyDefault .serif-date-link {
+    font-family: "optimadisplaylightlight";
+    font-style: italic;
+    color: #040A2B;
+    letter-spacing: 1px;
+    display: inline-block;
+    margin: 0 auto;
+    padding-top: 10px; }
+  #np_storyDefault .np_btn-favorite {
+    padding-top: 20px;
+    padding-bottom: 40px;
+    padding-left: 200px;
+    padding-right: 200px; }
+  #np_storyDefault .btn-open-favorites {
+    /*width: 7em;*/ }
+  #np_storyDefault .center-padding {
+    padding-left: 200px;
+    padding-right: 200px; }
+
 .modal-open {
   overflow: hidden; }
 
@@ -7182,7 +7297,12 @@ img.blur {
 
 .btn-favorite {
   margin-top: 5px;
-  margin-bottom: 10px; }
+  margin-bottom: 10px;
+  background-color: #040A2B;
+  color: #FFFFFF; }
+  .btn-favorite:hover, .btn-favorite:focus {
+    background-color: #020514;
+    color: #f2f2f2; }
 
 .np_btn-info {
   margin-top: 5px;
@@ -7190,7 +7310,7 @@ img.blur {
   display: none; }
 
 .glyphicon-heart-empty {
-  /*color: $brand-info;*/ }
+  color: #F05C72 !important; }
 
 .icon {
   background-image: url(../assets/svgs/heart-icon.svg);
@@ -7215,8 +7335,8 @@ img.blur {
 /*When setting this class for New Player use: 'inside-padding'*/
 .np_inside-padding {
   position: relative;
-  padding-left: 5%;
-  padding-right: 5%;
+  padding-left: 5% !important;
+  padding-right: 5% !important;
   padding-bottom: 35px; }
 
 /*When setting this class for New Player use: 'button-padding'*/

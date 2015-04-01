@@ -47,10 +47,16 @@
 
 //Custom Classes
 @import "_npHomepage.scss";
-@import "_products.scss";
+#np_products {
+    @import "_products.scss";
+}
 @import "_reNutriv.scss";
 @import "_collapse.scss";
 @import "_spinner.scss";
+#np_storyDefault{
+    @import "_story_default.scss";
+}
+
 //@import "_reveal.scss";
 // Components w/ JavaScript
 @import "../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/modals";
