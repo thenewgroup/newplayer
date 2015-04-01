@@ -1,7 +1,7 @@
 NewPlayer
 =========
 
-Responsive learning content player by [The New Group](http://www.thenewgroup.com)
+Responsive learning content player by [The New Group](http://www.thenewgroup.com).
 
 #### Dependencies
 
