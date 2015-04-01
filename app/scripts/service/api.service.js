@@ -1,3 +1,4 @@
+/* jshint -W003, -W117, -W004 */
 (function() {
   'use strict';
 
@@ -16,6 +17,24 @@
         $log.debug('APIService::getData: URL:', url);
         var aPromise =
           $http.get(
+            url,
+            {
+              cache: true
+            }
+          )
+            .then(
+            function (data) {
+              $log.debug('APIService::Received data from server ', data);
+              return data.data;
+            }
+          );
+        return aPromise;
+      };
+
+      this.postData = function (url) {
+        $log.debug('APIService::postData: URL:', url);
+        var aPromise =
+          $http.post(
             url,
             {
               cache: true

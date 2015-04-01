@@ -1,3 +1,4 @@
+/* jshint -W003, -W117 */
 (function () {
 
   'use strict';
@@ -5,12 +6,11 @@
     .module('newplayer.component')
   /** @ngInject */
     .controller('npPageController',
-    function ($log, $scope, $rootScope, ManifestService) {
+    function ($log, $scope, $rootScope, ManifestService, TrackingService) {
       var cmpData = $scope.component.data || {};
       $log.debug('npPage::data', cmpData, $scope.contentTitle);
 
       this.title = cmpData.title;
-
       var parentIdx = $scope.component.idx.slice(0);
       parentIdx.pop();
 
@@ -44,6 +44,7 @@
           }
         } else {
           $scope.currentPage = false;
+          TrackingService.trackPageView(pageId);
         }
       }
     }

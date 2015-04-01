@@ -1,3 +1,4 @@
+/* jshint -W003, -W038, -W004 */
 (function () {
     'use strict';
     angular

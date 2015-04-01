@@ -52,31 +52,8 @@ $brand-danger:          #DC3522 !default;
 /*::::Gradiant::::*/
 /*Gradiant points*/
 $brand-gradiant:        gold-linear-gradient(45deg, #caa04e 0%,#f8e4ab 33%,#caa04e 66%,#f3db7f 100%); 
-$gold-gradiant:        gold-linear-gradient(45deg, #caa04e 0%,#f8e4ab 33%,#caa04e 66%,#f3db7f 100%); 
-
-/*@mixin gradient-horizontal-four-colors($start-color: #00b3ee, $mid-color: #7a43b6, $color-stop: 33%, $mid-color-2: #abcdef, $color-stop-2: 66%, $end-color: #c3325f) {
-    background-image: -webkit-linear-gradient(left, $start-color, $mid-color $color-stop, $mid-color-2 $color-stop-2, $end-color);
-    background-image: -o-linear-gradient(left, $start-color, $mid-color $color-stop, $mid-color-2 $color-stop-2,$end-color);
-    background-image: linear-gradient(to right, $start-color, $mid-color $color-stop, $mid-color-2 $color-stop-2, $end-color);
-    background-repeat: no-repeat;
-    filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=1)",argb($start-color),argb($end-color))); // IE9 and down, gets no color-stop at all for proper fallback
-  }*/
-/*.example {
-    @include gradient-horizontal(#1834cc, #1dc937, 0%, 100%);
-}*/
-
-/*.horizontal-four-colors(@start-color: #00b3ee; @mid-color: #7a43b6; @color-stop: 33%; @mid-color-2: #abcdef; @color-stop-2: 66%; @end-color: #c3325f) {
-    background-image: -webkit-linear-gradient(left, @start-color, @mid-color @color-stop, @mid-color-2 @color-stop-2, @end-color);
-    background-image: -o-linear-gradient(left, @start-color, @mid-color @color-stop, @mid-color-2 @color-stop-2,@end-color);
-    background-image: linear-gradient(to right, @start-color, @mid-color @color-stop, @mid-color-2 @color-stop-2, @end-color);
-    background-repeat: no-repeat;
-    filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=1)",argb(@start-color),argb(@end-color))); // IE9 and down, gets no color-stop at all for proper fallback
-  }*/
-
-
-/*gradient.horizontal-four-colors(#ffffff; #f9f9f9; 33%; #bbb, 66%, #e7eaef);*/
-
-
+$gold:                  #9a7d46; 
+$gold-gradiant:         gold-linear-gradient(linear-gradient(top, rgba(248,248,170,1), rgba(202,160,78,.5) 50%, rgba(248,248,170,1))); 
 
 
 //== Scaffolding
@@ -108,10 +85,10 @@ $font-family-serif:       Georgia, "Times New Roman", Times, serif !default;*/
     font-family: 'optimadisplaylightlight';
     src: url('./fonts/OptimaDisplayLight/optimadisplay-light-webfont-webfont.eot');
     src: url('./fonts/OptimaDisplayLight/optimadisplay-light-webfont-webfont.eot?#iefix') format('embedded-opentype'),
-         url('./fonts/OptimaDisplayLight/optimadisplay-light-webfont-webfont.woff2') format('woff2'),
-         url('./fonts/OptimaDisplayLight/optimadisplay-light-webfont-webfont.woff') format('woff'),
-         url('./fonts/OptimaDisplayLight/optimadisplay-light-webfont-webfont.ttf') format('truetype'),
-         url('./fonts/OptimaDisplayLight/optimadisplay-light-webfont-webfont.svg#optimadisplaylightlight') format('svg');
+        url('./fonts/OptimaDisplayLight/optimadisplay-light-webfont-webfont.woff2') format('woff2'),
+        url('./fonts/OptimaDisplayLight/optimadisplay-light-webfont-webfont.woff') format('woff'),
+        url('./fonts/OptimaDisplayLight/optimadisplay-light-webfont-webfont.ttf') format('truetype'),
+        url('./fonts/OptimaDisplayLight/optimadisplay-light-webfont-webfont.svg#optimadisplaylightlight') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -119,10 +96,10 @@ $font-family-serif:       Georgia, "Times New Roman", Times, serif !default;*/
     font-family: 'akzidenz-grotesk_bqregular';
     src: url('./fonts/AGrotesk/akzidenzgrotesk-regular-webfont.eot');
     src: url('./fonts/AGrotesk/akzidenzgrotesk-regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('./fonts/AGrotesk/akzidenzgrotesk-regular-webfont.woff2') format('woff2'),
-         url('./fonts/AGrotesk/akzidenzgrotesk-regular-webfont.woff') format('woff'),
-         url('./fonts/AGrotesk/akzidenzgrotesk-regular-webfont.ttf') format('truetype'),
-         url('./fonts/AGrotesk/akzidenzgrotesk-regular-webfont.svg#akzidenz-grotesk_bqregular') format('svg');
+        url('./fonts/AGrotesk/akzidenzgrotesk-regular-webfont.woff2') format('woff2'),
+        url('./fonts/AGrotesk/akzidenzgrotesk-regular-webfont.woff') format('woff'),
+        url('./fonts/AGrotesk/akzidenzgrotesk-regular-webfont.ttf') format('truetype'),
+        url('./fonts/AGrotesk/akzidenzgrotesk-regular-webfont.svg#akzidenz-grotesk_bqregular') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -130,10 +107,10 @@ $font-family-serif:       Georgia, "Times New Roman", Times, serif !default;*/
     font-family: 'akzidenz-grotesk_bqbold';
     src: url('./fonts/AGroteskBold/akzidenzgrotesk-bold-webfont.eot');
     src: url('./fonts/AGroteskBold/akzidenzgrotesk-bold-webfont.eot?#iefix') format('embedded-opentype'),
-         url('./fonts/AGroteskBold/akzidenzgrotesk-bold-webfont.woff2') format('woff2'),
-         url('./fonts/AGroteskBold/akzidenzgrotesk-bold-webfont.woff') format('woff'),
-         url('./fonts/AGroteskBold/akzidenzgrotesk-bold-webfont.ttf') format('truetype'),
-         url('./fonts/AGroteskBold/akzidenzgrotesk-bold-webfont.svg#akzidenz-grotesk_bqbold') format('svg');
+        url('./fonts/AGroteskBold/akzidenzgrotesk-bold-webfont.woff2') format('woff2'),
+        url('./fonts/AGroteskBold/akzidenzgrotesk-bold-webfont.woff') format('woff'),
+        url('./fonts/AGroteskBold/akzidenzgrotesk-bold-webfont.ttf') format('truetype'),
+        url('./fonts/AGroteskBold/akzidenzgrotesk-bold-webfont.svg#akzidenz-grotesk_bqbold') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -141,10 +118,10 @@ $font-family-serif:       Georgia, "Times New Roman", Times, serif !default;*/
     font-family: 'BauerBodoniStd-Roman';
     src: url('./fonts/BauerBodoniRoman/BauerBodoniStd-Roman.eot');
     src: url('./fonts/BauerBodoniRoman/BauerBodoniStd-Roman.eot?#iefix') format('embedded-opentype'),
-         url('./fonts/BauerBodoniRoman/BauerBodoniStd-Roman.woff2') format('woff2'),
-         url('./fonts/BauerBodoniRoman/BauerBodoniStd-Roman.woff') format('woff'),
-         url('./fonts/BauerBodoniRoman/BauerBodoniStd-Roman.ttf') format('truetype'),
-         url('./fonts/BauerBodoniRoman/BauerBodoniStd-Roman.svg#BauerBodoniStd-Roman') format('svg');
+        url('./fonts/BauerBodoniRoman/BauerBodoniStd-Roman.woff2') format('woff2'),
+        url('./fonts/BauerBodoniRoman/BauerBodoniStd-Roman.woff') format('woff'),
+        url('./fonts/BauerBodoniRoman/BauerBodoniStd-Roman.ttf') format('truetype'),
+        url('./fonts/BauerBodoniRoman/BauerBodoniStd-Roman.svg#BauerBodoniStd-Roman') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -162,18 +139,20 @@ $font-family-base:        $font-family-sans-serif !default;
 
 $font-size-base:          14px !default;
 $font-size-large:         ceil(($font-size-base * 1.25)) !default; // ~18px
-$font-size-small:         ceil(($font-size-base * 1.1)) !default; // ~16px
+$font-size-small:         ceil(($font-size-base * 1.15)) !default; // ~17px
 
 
 /*Headline*/
 $font-size-h1:            floor(($font-size-base * 3.6)) !default;    // ~50px
-//$font-size-h1:            floor(($font-size-base * 2.6)) !default;  // ~36px
+/*$font-size-h1:            floor(($font-size-base * 2.6)) !default;    // ~36px*/
+$font-size-36:            floor(($font-size-base * 2.6)) !default;    // ~36px
 /*Secondary Headline*/
 $font-size-h2:            floor(($font-size-base * 2.05)) !default;   // ~28px
 //$font-size-h2:            floor(($font-size-base * 2.15)) !default; // ~30px
 /*Subheads*/
 $font-size-h3:            ceil(($font-size-base * 1.6)) !default;     // ~23px
 $font-size-h4:            ceil(($font-size-base * 1.4)) !default;     // ~20px
+$font-size-18:            ceil(($font-size-base * 1.25)) !default;     // ~18px
 $font-size-h5:            $font-size-base !default;                   // ~14px
 $font-size-h6:            ceil(($font-size-base * 0.85)) !default;    // ~12px
 
@@ -215,10 +194,10 @@ $icon-font-path: if($bootstrap-sass-asset-helper, "bootstrap/", "./fonts/bootstr
     font-family: 'elx-icons';
     src: url('./fonts/elx_icons/elx-icons.eot');
     src: url('./fonts/elx_icons/elx-icons.eot?#iefix') format('embedded-opentype'),
-         url('./fonts/elx_icons/elx-icons.woff2') format('woff2'),
-         url('./fonts/elx_icons/elx-icons.woff') format('woff'),
-         url('./fonts/elx_icons/elx-icons.ttf') format('truetype'),
-         url('./fonts/elx_icons/elx-icons.svg#elx-icons') format('svg');
+        url('./fonts/elx_icons/elx-icons.woff2') format('woff2'),
+        url('./fonts/elx_icons/elx-icons.woff') format('woff'),
+        url('./fonts/elx_icons/elx-icons.ttf') format('truetype'),
+        url('./fonts/elx_icons/elx-icons.svg#elx-icons') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -287,7 +266,7 @@ $table-border-color:            #ddd !default;
 //== Buttons
 //
 //## For each of Bootstrap's buttons, define text, background and border color.
-                          
+
 
 $btn-font-weight:                normal !default;
 
@@ -352,6 +331,9 @@ $input-height-base:              ($line-height-computed + ($padding-base-vertica
 $input-height-large:             (ceil($font-size-large * $line-height-large) + ($padding-large-vertical * 2) + 2) !default;
 //::::Small `.form-control` height
 $input-height-small:             (floor($font-size-small * $line-height-small) + ($padding-small-vertical * 2) + 2) !default;
+
+//::::`.form-group` margin
+$form-group-margin-bottom:       15px !default;
 
 $legend-color:                   $gray-dark !default;
 $legend-border-color:            #e5e5e5 !default;
@@ -450,7 +432,8 @@ $zindex-dropdown:          1000 !default;
 $zindex-popover:           1060 !default;
 $zindex-tooltip:           1070 !default;
 $zindex-navbar-fixed:      1030 !default;
-$zindex-modal:             1040 !default;
+$zindex-modal-background:  1040 !default;
+$zindex-modal:             1050 !default;
 
 
 //== Media queries breakpoints
@@ -490,7 +473,6 @@ $screen-lg-desktop:          $screen-lg-min !default;
 $screen-xs-max:              ($screen-sm-min - 1) !default;
 $screen-sm-max:              ($screen-md-min - 1) !default;
 $screen-md-max:              ($screen-lg-min - 1) !default;
-
 
 //== Grid system
 //
@@ -645,7 +627,7 @@ $pagination-disabled-border:           #ddd !default;
 
 $pager-bg:                             $pagination-bg !default;
 $pager-border:                         $pagination-border !default;
-$pager-border-radius:                  15px !default;
+$pager-border-radius:                  $border-radius-base !default;
 
 $pager-hover-bg:                       $pagination-hover-bg !default;
 
@@ -785,9 +767,9 @@ $modal-header-border-color:   #e5e5e5 !default;
 //::::Modal footer border color
 $modal-footer-border-color:   $modal-header-border-color !default;
 
-$modal-lg:                    900px !default;
-$modal-md:                    600px !default;
-$modal-sm:                    300px !default;
+$modal-lg:                    $screen-lg;
+$modal-md:                    $screen-md;
+$modal-sm:                    $screen-xs;
 
 
 //== Alerts

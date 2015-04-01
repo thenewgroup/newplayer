@@ -1,0 +1,465 @@
+[  
+   {  
+      "type":"npFeature",
+      "data":{  
+         "id":"products",
+         "class":"productTemplate",
+         "version":"0.0.1",
+         "timestamp":"2015-Mar-Wed_08:03:28"
+      },
+      "components":[  
+         {  
+            "type":"npContent",
+            "data":{  
+               "id":"content_en",
+               "language":"en",
+               "title":"Product-Manifest-Advanced-Night-Repair-Synchronized-Recovery-Complex-II",
+               "description":"Manifest for product page. "
+            },
+            "components":[  
+               {  
+                  "type":"npHTML",
+                  "data":{  
+                     "id":"newplayer-background"
+                  },
+                  "components":[  
+
+                  ]
+               },
+               {  
+                  "type":"npHTML",
+                  "data":{  
+                     "class":"background-brand-primary-light outside-padding"
+                  },
+                  "components":[  
+                     {  
+                        "type":"npHTML",
+                        "data":{  
+                           "class":"h1",
+                           "content":"Advanced Night Repair"
+                        },
+                        "components":[  
+                        ]
+                     },
+                     {  
+                        "type":"npHTML",
+                        "data":{  
+                           "class":"h2",
+                           "content":"Synchronized Recovery Complex II"
+                        },
+                        "components":[  
+                        ]
+                     },
+                     {  
+                        "type":"npColumn",
+                        "data":{  
+                           "class":"",
+                           "cols":"2"
+                        },
+                        "components":[  
+                           {  
+                              "type":"npImage",
+                              "data":{  
+                                 "src":"../_dev_assets/assets/images/earth.jpg",
+                                 "id":"",
+                                 "class":"topImage img-responsive",
+                                 "alt":"Advanced-Night-Repair-Synchronized-Recovery-Complex-II"
+                              },
+                              "components":[  
+                              ]
+                           },
+                           {  
+                              "type":"npHTML",
+                              "data":{  
+                                 "class":"background-brand-offwhite inside-padding"
+                              },
+                              "components":[  
+                                 {  
+                                    "type":"npHTML",
+                                    "data":{  
+                                       "class":"h3 sans-head",
+                                       "content":"Why there's only one"
+                                    },
+                                    "components":[  
+                                       {  
+                                          "type":"npHTML",
+                                          "data":{  
+                                             "class":"h4 sans-normal",
+                                             "content":"<p>Our #1 &mdash; for everyone. Advanced Night Repair is our #1 bestselling repair serum that addresses the look of every key sign of aging, with over 25 patents*.</p><p><small>*Patents and patents pending worldwide</small></p>"
+                                          },
+                                          "components":[  
+                                          ]
+                                       }
+                                    ]
+                                 }
+                              ]
+                           }
+                        ]
+                     },
+                     {  
+                        "type":"npHTML",
+                        "data":{  
+                           "id":"",
+                           "class":"h3 sans-head collapse-toggle",
+                           "data-ng:click":"isCollapsed = !isCollapsed",
+                           "xplugin":"np-expandable",
+                           "content":"Demonstration"
+                        },
+                        "components":[  
+                           {  
+                              "type":"npHTML",
+                              "data":{  
+                                 "id":"",
+                                 "class":"h4 sans-normal collapse-element",
+                                 "data-collapse":"isCollapsed",
+                                 "content":"<p>Apply 1 dropper to the back of one hand and massage into skin.</p><p>&nbsp;</p><p>Lightly spray the backs of both hands with water, then compare hands. Tell your customer to pretend the water is a moisturizer.</p><p>Ask her to notice how the skin treated with Advanced Night Repair holds moisture, while the untreated skin experiences moisture loss (the water quickly rolls off).</p>"
+                              },
+                              "components":[  
+
+                              ]
+                           }
+                        ]
+                     },
+                     {  
+                        "type":"npHTML",
+                        "data":{  
+                           "id":"",
+                           "class":"h3 sans-head collapse-toggle",
+                           "data-ng:click":"isCollapsed = !isCollapsed",
+                           "xplugin":"np-expandable",
+                           "content":"Benefits"
+                        },
+                        "components":[  
+                           {  
+                              "type":"npHTML",
+                              "data":{  
+                                 "id":"",
+                                 "class":"h4 sans-normal collapse-element",
+                                 "data-collapse":"isCollapsed",
+                                 "content":"<p>1.Repair EVERY night&mdash;while you sleep, it helps maximize skin&rsquo;s natural nightly renewal.</p><p>2. Prevent and hydrate EVERY day&mdash;during the day, it helps protect skin from environmental assaults.</p><p>3. Addresses the look of EVERY key sign of aging&mdash;use it every day for a dramatic reduction in the look of every major sign of aging.</p>"
+                              },
+                              "components":[  
+
+                              ]
+                           }
+                        ]
+                     },
+                     {  
+                        "type":"npHTML",
+                        "data":{  
+                           "id":"",
+                           "class":"h3 sans-head collapse-toggle",
+                           "data-ng:click":"isCollapsed = !isCollapsed",
+                           "xplugin":"np-expandable",
+                           "content":"If she asks, share"
+                        },
+                        "components":[  
+                           {  
+                              "type":"npHTML",
+                              "data":{  
+                                 "id":"",
+                                 "class":"h4 sans-normal collapse-element",
+                                 "data-collapse":"isCollapsed",
+                                 "content":"<p>Our powerful Chronolux CB&trade; Technology helps support skin cells&#39; natural purification and synchronization processes for our most comprehensive repair serum.&nbsp;</p><p>PURIFICATION&mdash;A natural repair process that helps remove cellular debris that can accelerate premature signs of aging.</p><p>SYNCHRONIZATION&mdash; A natural repair process that ensures cellular renewal happens at the right time.</p><p>A powerful blend of anti-oxidants help neutralize free radicals to help prevent future damage. High levels of Hyaluronic Acid help lock in moisture to create the perfect environment for skin&#39;s natural renewal.</p><p>Tested and Proven. Lines and wrinkles look significantly reduced. Skin feels smoother, hydrated and stronger. Looks younger, radiant, more translucent and even toned.</p>"
+                              },
+                              "components":[  
+
+                              ]
+                           }
+                        ]
+                     },
+                     {  
+                        "type":"npHTML",
+                        "data":{  
+                           "class":"h3 sans-head collapse-toggle",
+                           "data-ng:click":"isCollapsed = !isCollapsed",
+                           "xplugin":"np-expandable",
+                           "content":"Perfect partners text"
+                        },
+                        "components":[  
+                           {  
+                              "type":"npHTML",
+                              "data":{  
+                                 "class":"collapse-element",
+                                 "data-collapse":"isCollapsed"
+                              },
+                              "components":[  
+                                 {  
+                                    "type":"npColumn",
+                                    "data":{  
+                                       "class":"row",
+                                       "cols":"2"
+                                    },
+                                    "components":[  
+                                       {  
+                                          "type":"npHTML",
+                                          "data":{  
+                                             "class":"row"
+                                          },
+                                          "components":[  
+                                             {  
+                                                "type":"npImage",
+                                                "data":{  
+                                 "src":"../_dev_assets/assets/images/earth.jpg",
+                                                   "id":"",
+                                                   "class":"col-sm-4",
+                                                   "alt":"<a href='#/983'>Enlighten-Skintone Correcting Collection</a>"
+                                                },
+                                                "components":[  
+
+                                                ]
+                                             },
+                                             {  
+                                                "type":"npHTML",
+                                                "data":{  
+                                                   "class":"col-sm-8 sans-small",
+                                                   "content":"<a href='#/983'>Enlighten-Skintone Correcting Collection</a>",
+                                                   "link":"/api/products/name/Product-Manifest-Enlighten-Skintone-Correcting-Collection"
+                                                },
+                                                "components":[  
+
+                                                ]
+                                             },
+                                             {  
+                                                "type":"npHTML",
+                                                "data":{  
+                                                   "class":"col-sm-8 sans-small",
+                                                   "content":"1 month"
+                                                },
+                                                "components":[  
+
+                                                ]
+                                             }
+                                          ]
+                                       },
+                                       {  
+                                          "type":"npHTML",
+                                          "data":{  
+                                             "class":"row"
+                                          },
+                                          "components":[  
+
+                                          ]
+                                       }
+                                    ]
+                                 },
+                                 {  
+                                    "type":"npHTML",
+                                    "data":{  
+                                       "class":"row"
+                                    },
+                                    "components":[  
+                                       {  
+                                          "type":"npHTML",
+                                          "data":{  
+                                             "class":"h4 sans-normal",
+                                             "content":"<p><strong>Need a phrase to help you link? Try one of these:</strong></p><p>&quot;Because you told me you&#39;re concerned with ___, I want to also show you ___.&quot;</p><p>&quot;Because you love ___, I also want to show you ___.&quot;</p>"
+                                          },
+                                          "components":[  
+
+                                          ]
+                                       }
+                                    ]
+                                 }
+                              ]
+                           }
+                        ]
+                     },
+                     {  
+                        "type":"npHTML",
+                        "data":{  
+                           "id":"",
+                           "class":"h3 sans-head collapse-toggle",
+                           "data-ng:click":"isCollapsed = !isCollapsed",
+                           "xplugin":"np-expandable",
+                           "content":"Story"
+                        },
+                        "components":[  
+                           {  
+                              "type":"npHTML",
+                              "data":{  
+                                 "id":"",
+                                 "class":"h4 sans-normal collapse-element",
+                                 "data-collapse":"isCollapsed",
+                                 "content":"<p>Here&rsquo;s the truth: Damage happens. Whether you&#39;re 21 or 81, it&#39;s an inevitable fact of life. But, like anything else in life, it&#39;s not what happens, but how you handle it, that matters. That&#39;s where Advanced Night Repair comes in. It takes care of what your skin can&#39;t do alone. It&#39;s the power behind skin&#39;s ability to repair itself night after night and wake up refreshed, ready to take on the day. So as you sleep, tucked safely into bed, rest assured&mdash;Advanced Night Repair is working all night long, protecting and renewing your skin. Let the night move you&mdash;and wake up to more beautiful skin.</p>"
+                              },
+                              "components":[  
+
+                              ]
+                           }
+                        ]
+                     },
+                     {  
+                        "type":"npHTML",
+                        "data":{  
+                           "id":"",
+                           "class":"h3 sans-head collapse-toggle",
+                           "data-ng:click":"isCollapsed = !isCollapsed",
+                           "xplugin":"np-expandable",
+                           "content":"Perfect partners text"
+                        },
+                        "components":[  
+                           {  
+                              "type":"npHTML",
+                              "data":{  
+                                 "id":"",
+                                 "class":"h4 sans-normal collapse-element",
+                                 "data-collapse":"isCollapsed",
+                                 "content":"<p><strong>&quot;What results will I see?&quot;</strong></p><p>Advanced Night Repair has instant and long-term results. Customers can expect to feel instantly hydrated skin and will see a dramatic reduction in the look of every key sign of aging&mdash; lines, wrinkles, uneven skintone, and dehydration.&nbsp;</p><p>&nbsp;</p><p><strong>&quot;Is it better than other serums on the market?&quot;</strong></p><p>Some customers are skeptical. They see a lot of different serums on the market and will want to know why Advanced Night Repair is better. This is your opportunity to be proud. Tell her Advanced Night Repair was the first repair serum on the market, and today it represents more than 30 years of innovative scientific research and 25+ patents. It&rsquo;s exclusive to Estée Lauder and there is nothing else like it available today. But don&rsquo;t just tell her about it&mdash;show her the Water Demonstration. It&rsquo;s guaranteed to wow every time.</p><p>&nbsp;</p><p>&nbsp;</p><p><strong>&quot;How do I use it?&quot;</strong></p><p>Apply 5 drops over cleansed face and throat using Heart Ritual. Follow with Estée Lauder moisturizer.</p>"
+                              },
+                              "components":[  
+
+                              ]
+                           }
+                        ]
+                     },
+                     {  
+                        "type":"npColumn",
+                        "data":{  
+                           "class":"row button-padding",
+                           "cols":"2"
+                        },
+                        "components":[  
+                           {  
+                              "type":"npButton",
+                              "data":{  
+                                 "link":"/api/favorites/product/Product-Manifest-Advanced-Night-Repair-Synchronized-Recovery-Complex-II",
+                                 "type":"",
+                                 "class":"btn-open-favorites",
+                                 "content":"<span class='glyphicon glyphicon-heart-empty' aria-hidden='true'></span>  Favorite this"
+                              },
+                              "components":[  
+
+                              ]
+                           },
+                           {  
+                              "type":"npButton",
+                              "data":{  
+                                 "link":"Question1",
+                                 "type":"",
+                                 "class":"btn btn-info btn-sm",
+                                 "content":"GET THE FULL FACT SHEET"
+                              },
+                              "components":[  
+                              ]
+                           }
+                        ]
+                     }
+                  ]
+               }
+            ]
+         },
+         {  
+            "type":"npHTML",
+            "data":{  
+               "class":"outside-padding"
+            },
+            "components":[  
+               {  
+                  "type":"npColumn",
+                  "data":{  
+                     "class":"row ",
+                     "cols":"2"
+                  },
+                  "components":[  
+                     {  
+                        "type":"npHTML",
+                        "data":{  
+                           "class":"row"
+                        },
+                        "components":[  
+                           {  
+                              "type":"npHTML",
+                              "data":{  
+                                 "class":"h5 sans-head-sub col-sm-12",
+                                 "content":"SEE SIMILAR PRODUCTS:"
+                              },
+                              "components":[  
+                              ]
+                           },
+                           {  
+                              "type":"npImage",
+                              "data":{  
+                                 "src":"../_dev_assets/assets/images/earth.jpg",
+                                 "id":"",
+                                 "class":"col-sm-4 img-responsive",
+                                 "alt":"<a href='#/977'>Advanced Night Repair Eye-Synchronized Complex II</a>"
+                              },
+                              "components":[  
+                              ]
+                           },
+                           {  
+                              "type":"npHTML",
+                              "data":{  
+                                 "class":"col-sm-8 sans-small",
+                                 "content":"<a href='#/977'>Advanced Night Repair Eye-Synchronized Complex II</a>",
+                                 "link":"/api/products/name/Product-Manifest-Advanced-Night-Repair-Eye-Synchronized-Complex-II"
+                              },
+                              "components":[  
+                              ]
+                           },
+                           {  
+                              "type":"npHTML",
+                              "data":{  
+                                 "class":"col-sm-8 sans-small",
+                                 "content":"1 month"
+                              },
+                              "components":[  
+                              ]
+                           }
+                        ]
+                     },
+                     {  
+                        "type":"npHTML",
+                        "data":{  
+                           "class":"row"
+                        },
+                        "components":[  
+                           {  
+                              "type":"npHTML",
+                              "data":{  
+                                 "class":"h5 sans-head-sub col-sm-12",
+                                 "content":"SUGGESTED FOR YOU"
+                              },
+                              "components":[  
+                              ]
+                           },
+                           {  
+                              "type":"npImage",
+                              "data":{  
+                                 "src":"../_dev_assets/assets/images/earth.jpg",
+                                 "id":"",
+                                 "class":"col-sm-4 img-responsive",
+                                 "alt":"<a href='#/980'>Clear Difference-Advanced Blemish Collection</a>"
+                              },
+                              "components":[  
+                              ]
+                           },
+                           {  
+                              "type":"npHTML",
+                              "data":{  
+                                 "class":"col-sm-8 sans-small",
+                                 "content":"<a href='#/980'>Clear Difference-Advanced Blemish Collection</a>",
+                                 "link":"/api/products/name/Product-Manifest-Clear-Difference-Advanced-Blemish-Collection"
+                              },
+                              "components":[  
+                              ]
+                           },
+                           {  
+                              "type":"npHTML",
+                              "data":{  
+                                 "class":"col-sm-8 sans-small",
+                                 "content":"1 month"
+                              },
+                              "components":[  
+                              ]
+                           }
+                        ]
+                     }
+                  ]
+               }
+            ]
+         }
+      ]
+   }
+]

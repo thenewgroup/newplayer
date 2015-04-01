@@ -82,14 +82,14 @@
                                         "id": "reveal-0",
                                         "heading": "Reveal heading Item #0",
                                         "content": "Reveal Item #0 content content content content content content content content content content content content content content!!",
-                                        "buttonImage": "/assets/images/comet-sml.jpg",
+                                        "buttonImage": "../_dev_assets/assets/images/comet-sml.jpg",
                                         "buttonAltText": "thumb",
                                         "components": [
                                             {
                                                 "type": "npImage",
                                                 "data": {
                                                     "id": "reveal-1-image",
-                                                    "src": "/assets/images/comet-lrg.jpg",
+                                                    "src": "../_dev_assets/assets/images/comet-lrg.jpg",
                                                     "alt": "choice"
                                                 },
                                                 "components": []
@@ -100,15 +100,15 @@
                                         "id": "reveal-1",
                                         "heading": "Reveal heading Item #1",
                                         "content": "Reveal Item #1 more content content content content content content content content content content content content content!!",
-                                        "buttonImage": "/assets/images/ELX_Welcome_70x70.png",
+                                        "buttonImage": "../_dev_assets/assets/images/ELX_Welcome_70x70.png",
                                         "buttonAltText": "thumb",
                                         "components": [
                                             {
                                                 "type": "npVideo",
                                                 "data": {
                                                     "id": "reveal-1-vid",
-                                                    "poster": "/assets/images/ELX_Welcome_640x360_ENG.png",
-                                                    "baseURL": "/assets/video/ELX_Welcome_640x360_ENG.mp4",
+                                                    "poster": "../_dev_assets/assets/images/ELX_Welcome_640x360_ENG.png",
+                                                    "baseURL": "../_dev_assets/assets/video/ELX_Welcome_640x360_ENG.mp4",
                                                     "types": ["mp4"]
                                                 },
                                                 "components": []
@@ -119,14 +119,14 @@
                                         "id": "reveal-2",
                                         "heading": "Reveal heading Item #2",
                                         "content": "Reveal Item #2 content content content content content content content content content content content content content content!!",
-                                        "buttonImage": "/assets/images/earth.jpg",
+                                        "buttonImage": "../_dev_assets/assets/images/earth.jpg",
                                         "buttonAltText": "thumb",
                                         "components": [
                                             {
                                                 "type": "npImage",
                                                 "data": {
                                                     "id": "reveal-1-image",
-                                                    "src": "/assets/images/earth.jpg",
+                                                    "src": "../_dev_assets/assets/images/earth.jpg",
                                                     "alt": "choice"
                                                 },
                                                 "components": []
@@ -137,15 +137,15 @@
                                         "id": "reveal-1",
                                         "heading": "Reveal heading Item #1",
                                         "content": "Reveal Item #1 more content content content content content content content content content content content content content!!",
-                                        "buttonImage": "/assets/images/ELX_Welcome_70x70.png",
+                                        "buttonImage": "../_dev_assets/assets/images/ELX_Welcome_70x70.png",
                                         "buttonAltText": "thumb",
                                         "components": [
                                             {
                                                 "type": "npVideo",
                                                 "data": {
                                                     "id": "reveal-1-vid",
-                                                    "poster": "/assets/images/ELX_Welcome_640x360_ENG.png",
-                                                    "baseURL": "/assets/video/ELX_Welcome_640x360_ENG.mp4",
+                                                    "poster": "../_dev_assets/assets/images/ELX_Welcome_640x360_ENG.png",
+                                                    "baseURL": "../_dev_assets/assets/video/ELX_Welcome_640x360_ENG.mp4",
                                                     "types": ["mp4"]
                                                 },
                                                 "components": []
@@ -156,14 +156,14 @@
                                         "id": "reveal-2",
                                         "heading": "Reveal heading Item #2",
                                         "content": "Reveal Item #2 content content content content content content content content content content content content content content!!",
-                                        "buttonImage": "/assets/images/thesun.jpg",
+                                        "buttonImage": "../_dev_assets/assets/images/thesun.jpg",
                                         "buttonAltText": "thumb",
                                         "components": [
                                             {
                                                 "type": "npImage",
                                                 "data": {
                                                     "id": "reveal-1-image",
-                                                    "src": "/assets/images/thesun.jpg",
+                                                    "src": "../_dev_assets/assets/images/thesun.jpg",
                                                     "alt": "choice"
                                                 },
                                                 "components": []

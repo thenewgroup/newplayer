@@ -6,7 +6,7 @@
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
 /*When setting this ID for New Player use: 'newplayer-background'*/
-#np_products #np_newplayer-background{
+#np_newplayer-background{
     position: absolute;
     background-color: $brand-offwhite;
     background-size: cover;
@@ -18,23 +18,23 @@
     left: 0;
     right: 0;
     top: 0;
-    z-index: -1;
+    /*z-index: -1;*/
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player background color wrapper classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*When setting this class for New Player use: 'background-brand-primary-light'*/
-#np_products .np_background-brand-primary-light{
+.np_background-brand-primary-light{
     background-color: $brand-primary-light;
 }
 /*When setting this class for New Player use: 'background-brand-offwhite' */
-#np_products .np_background-brand-offwhite{
+.np_background-brand-offwhite{
     background-color: $brand-offwhite;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*Sans font overrides*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-#np_products .sans-head{
+.sans-head{
     font-family: $font-family-sans-serif_head;
     text-transform: uppercase;
     border-bottom: solid 1px;
@@ -44,7 +44,7 @@
     padding-bottom: 3px;
     display: inline-block;
 }
-#np_products .np_inside-padding .sans-head{
+.np_inside-padding .sans-head{
     border-bottom-color: $brand-primary-light;
 }
 /*#background-image { 
@@ -69,14 +69,14 @@
 }*/
 
 /*$top-image: margin-left:-100px;*/
-#np_products .topImage{
+.topImage{
     margin-left:-75px;
 }
 @media (max-width: $screen-sm) {
-    #np_products .topImage{
+    .topImage{
         margin-left:0;
     }
-    #np_products .sans-head{
+    .sans-head{
         font-family: $font-family-sans-serif_head;
         text-transform: uppercase;
         border-bottom: none;
@@ -86,4 +86,9 @@
         margin-top: 0;
         display: inline-block;
     }
+}
+/*Q and A text outdent*/
+.q-and-a-outdent{
+    text-indent:-28px;
+    margin-left:28px
 }

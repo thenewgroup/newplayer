@@ -30,7 +30,7 @@
                             {
                                 "type": "npHTML",
                                 "data": {
-                                    "id": "renutriv-background-image",
+                                    "id": "background-image",
                                     "class": ""
                                 },
                                 "components": []
@@ -75,7 +75,7 @@
                                     {
                                         "type": "npImage",
                                         "data": {
-                                            "src": "assets/images/saturn1.jpg",
+                                            "src": "../_dev_assets/assets/images/saturn1.jpg",
                                             "alt": "saturn 1"
                                         },
                                         "components": []
@@ -95,7 +95,7 @@
                                     {
                                         "type": "npImage",
                                         "data": {
-                                            "src": "assets/images/saturn2.jpg",
+                                            "src": "../_dev_assets/assets/images/saturn2.jpg",
                                             "alt": "saturn 2"
                                         },
                                         "components": []
@@ -115,7 +115,7 @@
                                     {
                                         "type": "npImage",
                                         "data": {
-                                            "src": "assets/images/thesun.jpg",
+                                            "src": "../_dev_assets/assets/images/thesun.jpg",
                                             "alt": "the sun"
                                         },
                                         "components": []
@@ -158,7 +158,7 @@
                                         "type": "npAudio",
                                         "data": {
                                             "id": "audioMain",
-                                            "baseURL": "assets/audio/01CircadianCyclemix0",
+                                            "baseURL": "../_dev_assets/assets/audio/01CircadianCyclemix0",
                                             "types": ["mp3"]
                                         },
                                         "components": []

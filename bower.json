@@ -1,7 +1,44 @@
 {
   "name": "newplayer",
-  "version": "0.3.5",
-  "main": "dist/scripts/newplayer.js",
+  "version": "0.4.5",
+  "main": [
+    "./dist/scripts/newplayer.js",
+    "./dist/scripts/vendor.js",
+    "./dist/styles/newplayer.css",
+    "./dist/styles/vendor.css",
+    "./dist/styles/fonts/AGrotesk/akzidenzgrotesk-regular-webfont.eot",
+    "./dist/styles/fonts/AGrotesk/akzidenzgrotesk-regular-webfont.svg",
+    "./dist/styles/fonts/AGrotesk/akzidenzgrotesk-regular-webfont.ttf",
+    "./dist/styles/fonts/AGrotesk/akzidenzgrotesk-regular-webfont.woff",
+    "./dist/styles/fonts/AGrotesk/akzidenzgrotesk-regular-webfont.woff2",
+    "./dist/styles/fonts/AGroteskBold/akzidenzgrotesk-bold-webfont.eot",
+    "./dist/styles/fonts/AGroteskBold/akzidenzgrotesk-bold-webfont.svg",
+    "./dist/styles/fonts/AGroteskBold/akzidenzgrotesk-bold-webfont.ttf",
+    "./dist/styles/fonts/AGroteskBold/akzidenzgrotesk-bold-webfont.woff",
+    "./dist/styles/fonts/AGroteskBold/akzidenzgrotesk-bold-webfont.woff2",
+    "./dist/styles/fonts/BauerBodoniRoman/BauerBodoniStd-Roman.eot",
+    "./dist/styles/fonts/BauerBodoniRoman/BauerBodoniStd-Roman.svg",
+    "./dist/styles/fonts/BauerBodoniRoman/BauerBodoniStd-Roman.ttf",
+    "./dist/styles/fonts/BauerBodoniRoman/BauerBodoniStd-Roman.woff",
+    "./dist/styles/fonts/BauerBodoniRoman/BauerBodoniStd-Roman.woff2",
+    "./dist/styles/fonts/bootstrap/glyphicons-halflings-regular.eot",
+    "./dist/styles/fonts/bootstrap/glyphicons-halflings-regular.svg",
+    "./dist/styles/fonts/bootstrap/glyphicons-halflings-regular.ttf",
+    "./dist/styles/fonts/bootstrap/glyphicons-halflings-regular.woff",
+    "./dist/styles/fonts/bootstrap/glyphicons-halflings-regular.woff2",
+    "./dist/styles/fonts/elx_icons/elx-icons.eot",
+    "./dist/styles/fonts/elx_icons/elx-icons.svg",
+    "./dist/styles/fonts/elx_icons/elx-icons.ttf",
+    "./dist/styles/fonts/elx_icons/elx-icons.woff",
+    "./dist/styles/fonts/elx_icons/elx-icons.woff2",
+    "./dist/styles/fonts/OptimaDisplayLight/generator_config.txt",
+    "./dist/styles/fonts/OptimaDisplayLight/optimadisplay-light-webfont-webfont.eot",
+    "./dist/styles/fonts/OptimaDisplayLight/optimadisplay-light-webfont-webfont.svg",
+    "./dist/styles/fonts/OptimaDisplayLight/optimadisplay-light-webfont-webfont.ttf",
+    "./dist/styles/fonts/OptimaDisplayLight/optimadisplay-light-webfont-webfont.woff",
+    "./dist/styles/fonts/OptimaDisplayLight/optimadisplay-light-webfont-webfont.woff2",
+    "./dist/styles/fonts/OptimaDisplayLight/stylesheet.css"
+  ],
   "ignore": [
     "bower_components",
     "bower.json",
@@ -22,20 +59,20 @@
     "angular-bootstrap": "~0.12.0",
     "angular-common": "~1.1.0",
     "lodash": "~3.1.0",
-    "gsap": "~1.15.1"
+    "gsap": "~1.16.0",
+    "bootstrap-sass-official": "3.3.2",
+    "modernizer": "~2.8.2"
   },
   "resolutions": {
-    "gsap": "~1.15.1",
+    "gsap": "~1.16.0",
     "angular": "~1.3.13",
     "mediaelement": "~2.16.2",
-    "bootstrap": "~3.3.1",
-    "moment": "~2.8.0"
+    "moment": "~2.9.0",
+    "lodash": "~3.1.0"
   },
   "devDependencies": {
     "modernizr": "~2.8.2",
     "Font-Awesome": "~4.2.0",
-    "mediaelement": "~2.16.2",
-    "bootstrap": "~3.3.1",
-    "bootstrap-sass": "~3.3.1"
+    "mediaelement": "~2.16.2"
   }
 }

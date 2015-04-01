@@ -1,3 +1,4 @@
+/* jshint -W004 */
 (function() {
   'use strict';
 
@@ -336,10 +337,34 @@
       this.setPageId = function (pageId) {
         $log.debug('ManifestService, setPageId', pageId);
         // reset component index for reparsing new page
+        if (this.pageId === pageId) {
+          return;
+        }
         setComponentIdx(null);
 
         this.pageId = pageId;
         $rootScope.$broadcast('npPageIdChanged', pageId);
+      };
+
+      this.goToNextPage = function () {
+        var thisPage = this.getPageId();
+        var nextPage, i;
+        if (!thisPage) {
+          return;
+        }
+
+        var parent = this.getComponent(this.getPageId());
+        for (i = 0; i < parent.components.length; i++) {
+          var component = parent.components[i];
+          if (component.type === 'npPage') {
+            if (component.data.id === thisPage) {
+              continue;
+            }
+            nextPage = component.data.id;
+            break;
+          }
+        }
+        this.setPageId(nextPage);
       };
 
       this.initialize = function (data, overrides) {

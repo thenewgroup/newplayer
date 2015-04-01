@@ -4,6 +4,7 @@
   angular.module('newplayer.service', []);
 })();
 
+/* jshint -W003, -W117, -W004 */
 (function() {
   'use strict';
 
@@ -36,6 +37,24 @@
         return aPromise;
       };
 
+      this.postData = function (url) {
+        $log.debug('APIService::postData: URL:', url);
+        var aPromise =
+          $http.post(
+            url,
+            {
+              cache: true
+            }
+          )
+            .then(
+            function (data) {
+              $log.debug('APIService::Received data from server ', data);
+              return data.data;
+            }
+          );
+        return aPromise;
+      };
+
       /*,
        sendData:function(data){
        $log.debug('APIService::Sending data to '+baseUrl+'/npAPI/',data);
@@ -53,6 +72,7 @@
 
 })();
 
+/* jshint -W003, -W117, -W004 */
 (function() {
   'use strict';
 
@@ -61,7 +81,7 @@
     .factory('ConfigService', ConfigService);
 
   /** @ngInject */
-  function ConfigService($log, APIService, ManifestService/*, $timeout, $q, $rootScope*/) {
+  function ConfigService($log, $rootScope, APIService, ManifestService/*, $timeout, $q, $rootScope*/) {
     $log.debug('configService::Init');
 
     var Service = function () {
@@ -118,6 +138,11 @@
 
         if( !!npConfig.overrideManifest ) {
           setOverride(npConfig.overrideManifest);
+        }
+
+        if (!!npConfig.onTrackService && _.isFunction(npConfig.onTrackService)) {
+          // run this when the page changes
+          self.tracking = npConfig.onTrackService;
         }
       }
 
@@ -178,6 +203,7 @@
   }
 })();
 
+/* jshint -W004 */
 (function() {
   'use strict';
 
@@ -201,7 +227,6 @@
       var overrides;
 
       var componentIdx;
-
       // if these are not defined by the route
       // the manifest components will teach this service
       // what the values should be
@@ -517,10 +542,34 @@
       this.setPageId = function (pageId) {
         $log.debug('ManifestService, setPageId', pageId);
         // reset component index for reparsing new page
+        if (this.pageId === pageId) {
+          return;
+        }
         setComponentIdx(null);
 
         this.pageId = pageId;
         $rootScope.$broadcast('npPageIdChanged', pageId);
+      };
+
+      this.goToNextPage = function () {
+        var thisPage = this.getPageId();
+        var nextPage, i;
+        if (!thisPage) {
+          return;
+        }
+
+        var parent = this.getComponent(this.getPageId());
+        for (i = 0; i < parent.components.length; i++) {
+          var component = parent.components[i];
+          if (component.type === 'npPage') {
+            if (component.data.id === thisPage) {
+              continue;
+            }
+            nextPage = component.data.id;
+            break;
+          }
+        }
+        this.setPageId(nextPage);
       };
 
       this.initialize = function (data, overrides) {
@@ -553,6 +602,7 @@
   }
 })();
 
+/* jshint -W003, -W117, -W004 */
 (function() {
   'use strict';
 
@@ -742,10 +792,10 @@
       this.getTemplate = function (componentObj) {
         var templateURL = getTemplateURL(componentObj);
 
-        $log.info('ComponentService::getTemplate: cmp,templateURL:', componentObj, templateURL);
+//        $log.info('ComponentService::getTemplate: cmp,templateURL:', componentObj, templateURL);
         if (!!templateURL) {
           var templateData = $templateCache.get(templateURL);
-          $log.info('templateCache', templateData);
+//          $log.info('templateCache', templateData);
           return templateData;
         }
       };
@@ -780,6 +830,61 @@
 
     };
     return new Service();
+
+  }
+})();
+
+/* jshint -W004, -W003, -W026, -W040 */
+(function () {
+  'use strict';
+
+  angular
+    .module('newplayer.service')
+    .factory('TrackingService', TrackingService);
+
+  /*
+   * console:
+   * angular.element(document.body).injector().get('TrackingService')
+   */
+
+  /** @ngInject */
+  function TrackingService($log, $rootScope, ConfigService /*, $timeout, $http, $q */) {
+    $log.warn('\nTrackingService::Init\n');
+
+    var service = {
+      trackEvent: angular.noop,
+      setCallback: setCallback,
+      trackPageView: trackPageView,
+      trackExternalLinkClick: trackExternalLinkClick,
+      trackApiCall: trackApiCall
+    };
+    return service;
+
+    function setCallback(fn) {
+      // FIXME: receiving the method in isolate scope is a call to scope to get the actual method
+      // so we invoke it here to get the method passed in. Is this necessary?
+      var func = fn();
+      if (func) {
+        this.trackEvent = func;
+      }
+    }
+
+    function trackPageView(pageId) {
+      dispatch.call(this, 'pageView', pageId);
+    }
+
+    function trackExternalLinkClick(link) {
+      dispatch.call(this, 'externalLink', link);
+    }
+
+    function trackApiCall(api) {
+      dispatch.call(this, 'apiCall', api);
+    }
+
+    function dispatch(event, data) {
+      this.trackEvent('newplayer.' + event, data);
+    }
+
 
   }
 })();
@@ -905,23 +1010,160 @@ function AssessmentService ( $log ) {
   return service;
 }
 
+/* jshint -W003, -W038, -W004 */
 (function () {
+    'use strict';
+    angular
+            .module('newplayer.component')
+            .directive('npComponent', ComponentDirective);
+    /** @ngInject */
+    function ComponentDirective($log, ManifestService, ComponentService, $compile/*, $timeout*/) {
+        $log.debug('\nnpComponent::Init\n');
+        var Directive = function () {
+            var vm = this;
+            this.restrict = 'EA';
+            this.scope = true;
+            /** @ngInject */
+            this.controller =
+                    function ($scope, $element, $attrs) {
+                        $log.debug('npComponent::controller', $element, $attrs);
+                        /*
+                         var $attributes = $element[0].attributes;
+                         */
+                        //parseComponent( $scope, $element, $attrs );
+                    };
+            this.controllerAs = 'vm';
+            this.compile = function (tElement, tAttrs, transclude) {
+                /** @ngInject */
+                return function ($scope, $element, $attributes) {
+                    $log.debug('npComponent::compile!');
+                    parseComponent($scope, $element, $attributes);
+                };
+            };
+            function compileTemplate(html, $scope, $element) {
+                var compiled = $compile(html);
+                compiled($scope, function (clone) {
+                    $element.append(clone);
+                });
+                /*
+                 // if moving back up to parent
+                 if ( !!cmp.components && cmp.components.length > 0 )
+                 {} else {
+                 compiled = $compile( '<np-component>appended to ' + cmp.type + '</np-component>' );
+                 linked = compiled($scope);
+                 $element.append( linked );
+                 }
+                 */
+            }
+            /*
+             * parses a component pulled in from the manifest service
+             */
+            function parseComponent($scope, $element, $attributes) {
+                var cmp = ManifestService.getComponent($attributes.idx);
+                var cmpIdx = cmp.idx || [0];
+                $log.debug('npComponent::parseComponent', cmp, cmpIdx, $attributes);
+                if (!!cmp) {
+                    //ComponentService.load(
+                    //  cmp
+                    //)
+                    //  .then(
+                    //  function () {
+                    $log.debug('npComponent::parseComponent then', cmp, cmpIdx);
+                    // reset scope!!!
+                    $scope.subCmp = false;
+                    $scope.component = cmp;
+                    $scope.components = null;
+                    $scope.cmpIdx = cmpIdx.toString();
+                    $element.attr('data-cmpType', cmp.type);
+                    $element.addClass('np-cmp-sub');
+                    if (!!cmp.data) {
+                        // set known data values
+                        var attrId = cmp.data.id;
+                        if (!attrId) {
+                            attrId = cmp.type + ':' + cmpIdx.toString();
+                        }
+                        // id must start with letter (according to HTML4 spec)
+                        if (/^[^a-zA-Z]/.test(attrId)) {
+                            attrId = 'np' + attrId;
+                        }
+                        // replace invalid id characters (according to HTML4 spec)
+                        attrId = attrId.replace(/[^\w\-.:]/g, '_');
+                        //$element.attr( 'id', attrId );
+                        if (!cmp.data.id) {
+                            cmp.data.id = attrId;
+                        }
+                        $element.attr('id', 'np_' + attrId);
+                        var attrClass = cmp.data['class'];
+                        if (angular.isString(attrClass)) {
+                            attrClass = attrClass.replace(/[^\w\- .:]/g, '_');
+                            var classArraySpace = attrClass.split(' ');
+                            for (var ii in classArraySpace) {
+                                $element.addClass('np_' + classArraySpace[ii]);
+                            }
+                        }
+                        var attrPlugin = cmp.data.plugin;
+                        if (angular.isString(attrPlugin)) {
+                            attrPlugin = attrPlugin.replace(/[^\w\-.:]/g, '_');
+                        }
+                    }
+                    if (!!cmp.components && cmp.components.length > 0) {
+                        $log.debug('npComponent::parseComponent - HAS SUBS:', cmp);
+                        $scope.subCmp = true;
+                        $scope.components = cmp.components;
+                    }
+                    var templateData = ComponentService.getTemplate(cmp);
+                    $log.debug('npComponent::parseComponent: template', templateData);
+                    // modify template before compiling!?
+                    var tmpTemplate = document.createElement('div');
+                    tmpTemplate.innerHTML = templateData;
+                    var ngWrapperEl, ngMainEl, ngSubEl;
+                    ngWrapperEl = angular.element(tmpTemplate.querySelectorAll('.np-cmp-wrapper'));
+                    ngMainEl = angular.element(tmpTemplate.querySelectorAll('.np-cmp-main'));
+                    ngSubEl = angular.element(tmpTemplate.querySelectorAll('.np-cmp-sub'));
+                    if (ngWrapperEl.length) {
+                        ngWrapperEl.attr('id', attrId);
+                        ngWrapperEl.addClass(attrPlugin);
+                        // pass all "data-*" attributes into element
+                        angular.forEach(cmp.data, function (val, key) {
+                            if (angular.isString(key) && key.indexOf('data-') === 0) {
+                                ngWrapperEl.attr(key, val);
+                            }
+                        });
+                    }
+                    if (ngMainEl.length) {
+                        if (!ngWrapperEl.length) {
+                            ngMainEl.attr('id', attrId);
+                            ngMainEl.addClass(attrPlugin);
+                            // pass all "data-*" attributes into element
+                            angular.forEach(cmp.data, function (val, key) {
+                                if (angular.isString(key) && key.indexOf('data-') === 0) {
+                                    ngMainEl.attr(key, val);
+                                }
+                            });
+                        }
+                        ngMainEl.addClass(attrClass);
+                    }
+                    compileTemplate(tmpTemplate.innerHTML, $scope, $element);
+                }
+            }
+        };
+        return new Directive();
+    }
+})();
 
+(function () {
   'use strict';
   angular
     .module('newplayer.component')
-
   /** @ngInject */
     .controller('npAnswerController',
     function ($log, $scope, $sce) {
       var cmpData = $scope.component.data || {};
       $log.debug('npAnswer::data', cmpData);
-
       this.id = cmpData.id;
       this.label = $sce.trustAsHtml(cmpData.label);
     }
   )
-
   /** @ngInject */
     .run(
     function ($log, $rootScope) {
@@ -930,73 +1172,142 @@ function AssessmentService ( $log ) {
   );
 })();
 
-(function () {
+//(function () {
+//  'use strict';
+//  angular
+//    .module('newplayer.component')
+//  /** @ngInject */
+//    .controller('npAudioController', function ($log, $scope, $sce, $element) {
+//      var cmpData = $scope.component.data;
+//      $log.debug('npAudio::data', cmpData, $element);
+//      this.id = cmpData.id;
+//      this.baseURL = cmpData.baseURL;
+//      if (cmpData.poster){
+//        $scope.poster = cmpData.poster;
+//      }
+//      // audio source elements need to be static BEFORE mediaElement is initiated
+//      // binding the attributes to the model was not working
+//      // alternatively, fire the mediaelement after the source attributes are bound?
+//      var types = cmpData.types;
+//      if (angular.isArray(types) && types.length > 0){
+//        $log.debug('npAudio::data:types', types);
+//        var sources = '';
+//        for (var typeIdx in types){
+//          var type = types[typeIdx];
+//          $log.debug('npAudio::data:types:type', typeIdx, type);
+//          sources += '<source type="audio/' + type + '" src="' + this.baseURL + '.' + type + '" />';
+//          $scope[type] = this.baseURL + '.' + type;
+//        }
+//        $scope.sources = sources;
+//      }
+//    }
+//  )
+//    .directive('mediaelement', npMediaElementDirective)
+//  /** @ngInject */
+//    .run(
+//    function ($log, $rootScope)
+//    {
+//      $log.debug('npAudio::component loaded!');
+//    }
+//  );
+//  /** @ngInject */
+//  function npMediaElementDirective($log) {
+//    $log.debug('\nmediaelementDirective::Init\n');
+//    var Directive = function () {
+//      this.restrict = 'A';
+//      this.link = function (scope, element, attrs, controller) {
+//        jQuery(element).attr('poster', scope.poster);
+//        jQuery(element).attr('src', scope.mp4);
+//        jQuery(element).prepend(scope.sources);
+//        attrs.$observe('src', function () {
+//          $log.debug('mediaelementDirective::element', element);
+//          jQuery(element).mediaelementplayer();
+//        });
+//      };
+//    };
+//    return new Directive();
+//  }
+//})();
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/* jshint -W003 */
 
+(function () {
   'use strict';
   angular
     .module('newplayer.component')
   /** @ngInject */
-    .controller('npAudioController', function ($log, $scope, $sce, $element) {
-      var cmpData = $scope.component.data;
-      $log.debug('npAudio::data', cmpData, $element);
-
-      this.id = cmpData.id;
-      this.baseURL = cmpData.baseURL;
-
-      if (cmpData.poster)
-      {
-        $scope.poster = cmpData.poster;
-      }
-
-      // audio source elements need to be static BEFORE mediaElement is initiated
-      // binding the attributes to the model was not working
-      // alternatively, fire the mediaelement after the source attributes are bound?
-      var types = cmpData.types;
-      if (angular.isArray(types) && types.length > 0)
-      {
-        $log.debug('npAudio::data:types', types);
-        var sources = '';
-        for (var typeIdx in types)
-        {
-          var type = types[typeIdx];
-          $log.debug('npAudio::data:types:type', typeIdx, type);
-          sources += '<source type="audio/' + type + '" src="' + this.baseURL + '.' + type + '" />';
-          $scope[type] = this.baseURL + '.' + type;
-        }
-        $scope.sources = sources;
-      }
-    }
-  )
-
-    .directive('mediaelement', npMediaElementDirective)
-
+    .directive('npAudio', NpAudioDirective);
   /** @ngInject */
-    .run(
-    function ($log, $rootScope)
-    {
-      $log.debug('npAudio::component loaded!');
-    }
-  );
-
-  /** @ngInject */
-  function npMediaElementDirective($log) {
-    $log.debug('\nmediaelementDirective::Init\n');
-    var Directive = function () {
-      this.restrict = 'A';
-      this.link = function (scope, element, attrs, controller) {
-        jQuery(element).attr('poster', scope.poster);
-        jQuery(element).attr('src', scope.mp4);
-        jQuery(element).prepend(scope.sources);
-        attrs.$observe('src', function () {
-          $log.debug('mediaelementDirective::element', element);
-          jQuery(element).mediaelementplayer();
-        });
-      };
+  function NpAudioDirective($log) {
+    $log.info('DEBUG | \npAudio::Init\n');
+    return {
+      restrict: 'EA',
+      controller: NpAudioController,
+      controllerAs: 'npAudio',
+      bindToController: true
     };
-    return new Directive();
   }
-
+  /** @ngInject */
+  function NpAudioController($log, $scope, $sce) {
+    var vm = this,
+        types = $scope.component.data.types;
+    if (angular.isArray(types) && types.length > 0) {
+      var sources = [];
+      for (var typeIdx in types) {
+        var type = types[typeIdx];
+        sources.push({
+          type: type,
+          mime: 'audio/' + type,
+          src: $sce.trustAsResourceUrl($scope.component.data.baseURL + '.' + type)
+        });
+      }
+      $scope.npAudio = {
+        sources: sources
+      };
+    }
+  }
 })();
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+//(function () {
+//  'use strict';
+//  angular
+//    .module('newplayer.component')
+//  /** @ngInject */
+//    .directive('npVideo', NpVideoDirective);
+//  /** @ngInject */
+//  function NpVideoDirective($log) {
+//    $log.info('DEBUG | \npVideo::Init\n');
+//    return {
+//      restrict: 'EA',
+//      controller: NpVideoController,
+//      controllerAs: 'npVideo',
+//      bindToController: true
+//    };
+//  }
+//  /** @ngInject */
+//  function NpVideoController($log, $scope, $sce) {
+//    var vm = this,
+//        types = $scope.component.data.types;
+//    if (angular.isArray(types) && types.length > 0) {
+//      var sources = [];
+//      for (var typeIdx in types) {
+//        var type = types[typeIdx];
+//        sources.push({
+//          type: type,
+//          mime: 'video/' + type,
+//          src: $sce.trustAsResourceUrl($scope.component.data.baseURL + '.' + type)
+//        });
+//      }
+//      $scope.npVideo = {
+//        sources: sources
+//      };
+//    }
+//  }
+//})();
 
 (function () {
 
@@ -1006,7 +1317,7 @@ function AssessmentService ( $log ) {
 
   /** @ngInject */
     .controller('npButtonController',
-    function ($log, $scope, $sce, $location, $element, ConfigService, ManifestService) {
+    function ($log, $scope, $sce, $location, $element, ConfigService, ManifestService, APIService, TrackingService) {
       var cmpData = $scope.component.data || {};
       $log.debug('npButton::data', cmpData);
 
@@ -1020,13 +1331,19 @@ function AssessmentService ( $log ) {
       this.link = '';
       this.target = cmpData.target;
       this.linkInternal = true;
+      this.apiLink = false;
       var btnLink = cmpData.link;
       if (angular.isString(btnLink)) {
         if (btnLink.indexOf('/') === 0) {
-          if (!this.target) {
-            this.target = '_top';
+          if (/^\/api\//.test(btnLink)) {
+            this.apiLink = true;
+            this.linkInternal = false;
+          } else {
+            if (!this.target) {
+              this.target = '_top';
+            }
+            this.linkInternal = false;
           }
-          this.linkInternal = false;
         } else if (/^([a-zA-Z]{1,10}:)?\/\//.test(btnLink)) {
           if (!this.target) {
             this.target = '_blank';
@@ -1047,6 +1364,15 @@ function AssessmentService ( $log ) {
           //$location.url(this.link);
           ManifestService.setPageId(cmpData.link);
         } else {
+          if (this.apiLink) {
+            //TODO: we may need a `method` property to know what to use here
+            // i.e. GET, POST, PUT, DELETE
+            TrackingService.trackApiCall(btnLink);
+            APIService.postData(btnLink);
+            return;
+          }
+
+          TrackingService.trackExternalLinkClick(btnLink);
           window.open(this.link, this.target);
         }
       };
@@ -1111,168 +1437,6 @@ function AssessmentService ( $log ) {
 
 (function () {
 
-    'use strict';
-    angular
-            .module('newplayer.component')
-            .directive('npComponent', ComponentDirective);
-
-    /** @ngInject */
-    function ComponentDirective($log, ManifestService, ComponentService, $compile/*, $timeout*/) {
-        $log.debug('\nnpComponent::Init\n');
-
-        var Directive = function () {
-            var vm = this;
-            this.restrict = 'EA';
-            this.scope = true;
-            /** @ngInject */
-            this.controller =
-                    function ($scope, $element, $attrs) {
-                        $log.debug('npComponent::controller', $element, $attrs);
-                        /*
-                         var $attributes = $element[0].attributes;
-                         */
-                        //parseComponent( $scope, $element, $attrs );
-                    };
-            this.controllerAs = 'vm';
-            this.compile = function (tElement, tAttrs, transclude) {
-                /** @ngInject */
-                return function ($scope, $element, $attributes) {
-                    $log.debug('npComponent::compile!');
-
-                    parseComponent($scope, $element, $attributes);
-                };
-            };
-
-
-            function compileTemplate(html, $scope, $element) {
-                var compiled = $compile(html);
-                compiled($scope, function (clone) {
-                    $element.append(clone);
-                });
-                /*
-                 // if moving back up to parent
-                 if ( !!cmp.components && cmp.components.length > 0 )
-                 {} else {
-                 compiled = $compile( '<np-component>appended to ' + cmp.type + '</np-component>' );
-                 linked = compiled($scope);
-                 $element.append( linked );
-                 }
-                 */
-            }
-
-            /*
-             * parses a component pulled in from the manifest service
-             */
-            function parseComponent($scope, $element, $attributes) {
-                var cmp = ManifestService.getComponent($attributes.idx);
-                var cmpIdx = cmp.idx || [0];
-
-                $log.debug('npComponent::parseComponent', cmp, cmpIdx, $attributes);
-                if (!!cmp) {
-                    //ComponentService.load(
-                    //  cmp
-                    //)
-                    //  .then(
-                    //  function () {
-                    $log.debug('npComponent::parseComponent then', cmp, cmpIdx);
-                    // reset scope!!!
-                    $scope.subCmp = false;
-                    $scope.component = cmp;
-                    $scope.components = null;
-
-                    $scope.cmpIdx = cmpIdx.toString();
-
-                    $element.attr('data-cmpType', cmp.type);
-                    $element.addClass('np-cmp-sub');
-
-                    if (!!cmp.data) {
-                        // set known data values
-                        var attrId = cmp.data.id;
-                        if (!attrId) {
-                            attrId = cmp.type + ':' + cmpIdx.toString();
-                        }
-                        // id must start with letter (according to HTML4 spec)
-                        if (/^[^a-zA-Z]/.test(attrId)) {
-                            attrId = 'np' + attrId;
-                        }
-                        // replace invalid id characters (according to HTML4 spec)
-                        attrId = attrId.replace(/[^\w\-.:]/g, '_');
-                        //$element.attr( 'id', attrId );
-                        if (!cmp.data.id) {
-                            cmp.data.id = attrId;
-                        }
-                        $element.attr('id', 'np_' + attrId);
-
-                        var attrClass = cmp.data['class'];
-                        if (angular.isString(attrClass)) {
-                            attrClass = attrClass.replace(/[^\w\- .:]/g, '_');
-//                            $element.addClass('np_' + attrClass);
-                            var classArraySpace = attrClass.split(' ');
-                            for (var ii in classArraySpace) {
-                                $element.addClass('np_' + classArraySpace[ii]);
-                            }
-                        }
-
-                        var attrPlugin = cmp.data.plugin;
-                        if (angular.isString(attrPlugin)) {
-                            attrPlugin = attrPlugin.replace(/[^\w\-.:]/g, '_');
-                        }
-                    }
-                    if (!!cmp.components && cmp.components.length > 0) {
-                        $log.debug('npComponent::parseComponent - HAS SUBS:', cmp);
-                        $scope.subCmp = true;
-                        $scope.components = cmp.components;
-                    }
-
-                    var templateData = ComponentService.getTemplate(cmp)
-                    $log.debug('npComponent::parseComponent: template', templateData);
-
-                    // modify template before compiling!?
-                    var tmpTemplate = document.createElement('div');
-                    tmpTemplate.innerHTML = templateData;
-
-                    var ngWrapperEl, ngMainEl, ngSubEl;
-                    ngWrapperEl = angular.element(tmpTemplate.querySelectorAll('.np-cmp-wrapper'));
-                    ngMainEl = angular.element(tmpTemplate.querySelectorAll('.np-cmp-main'));
-                    ngSubEl = angular.element(tmpTemplate.querySelectorAll('.np-cmp-sub'));
-                    if (ngWrapperEl.length) {
-                        ngWrapperEl.attr('id', attrId);
-                        ngWrapperEl.addClass(attrPlugin);
-
-                        // pass all "data-*" attributes into element
-                        angular.forEach(cmp.data, function (val, key) {
-                            if (angular.isString(key) && key.indexOf('data-') === 0) {
-                                ngWrapperEl.attr(key, val);
-                            }
-                        });
-                    }
-                    if (ngMainEl.length) {
-                        if (!ngWrapperEl.length) {
-                            ngMainEl.attr('id', attrId);
-                            ngMainEl.addClass(attrPlugin);
-
-                            // pass all "data-*" attributes into element
-                            angular.forEach(cmp.data, function (val, key) {
-                                if (angular.isString(key) && key.indexOf('data-') === 0) {
-                                    ngMainEl.attr(key, val);
-                                }
-                            });
-                        }
-                        ngMainEl.addClass(attrClass);
-                    }
-
-                    compileTemplate(tmpTemplate.innerHTML, $scope, $element);
-                    //  }
-                    //);
-                }
-            }
-        };
-        return new Directive();
-    }
-})();
-
-(function () {
-
   'use strict';
   angular
     .module('newplayer.component')
@@ -1319,25 +1483,62 @@ function AssessmentService ( $log ) {
 
 
 (function () {
-
-  'use strict';
-  angular
-    .module('newplayer.component')
-
-  /** @ngInject */
-    .controller('npFeatureController',
-    function ($log, $scope/*, ManifestService*/) {
-      var cmpData = $scope.component.data || {};
-      $log.debug('npFeature::data', cmpData);
-    }
-  )
-
-  /** @ngInject */
-    .run(
-    function ($log, $rootScope) {
-      $log.debug('npFeature::component loaded!');
-    }
-  );
+    'use strict';
+    angular
+            .module('newplayer.component')
+            /** @ngInject */
+            .controller('npFeatureController',
+                    function ($log, $scope/*, ManifestService*/, $element) {
+                        var cmpData = $scope.component.data || {};
+                        $log.debug('npFeature::data', cmpData);
+                    }
+            )
+            .directive('newPlayerPageTop', function () {
+                return function ($scope, $element, attrs) {
+                    setTimeout(function () {
+                        $scope.$apply(function () {
+//                            var np_wrapper = $element.find('.np_outside-padding');
+//                            var hotspotImage = $element.find('.hotspotImage');
+//                            var page_container = $element.find('.modal-open');
+//                            var page_container = $('.modal-open');
+//                            TweenMax.to(np_wrapper, 0.25, {
+//                                autoAlpha: 0.25,
+//                                ease: Power2.easeOut
+//                            });
+//                            function scroller() {
+//                                console.log(
+//                                        '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                        '\n::page_container::', page_container,
+//                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                        );
+//                                TweenMax.to(page_container, .75, {
+//                                    scrollTo: {y: 0},
+//                                    ease: Power2.easeInOut,
+//                                    onComplete: atTop
+//                                });
+//                            }
+//                            function atTop() {
+//                                console.log(
+//                                        '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                        '\n::page_container::', page_container,
+//                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                        );
+//                                TweenMax.to(np_wrapper, 0.5, {
+//                                    autoAlpha: 1,
+//                                    ease: Power2.easeOut
+//                                });
+//                            }
+//                            scroller();
+                        });
+                    });
+                };
+            })
+            /** @ngInject */
+            .run(
+                    function ($log, $rootScope) {
+                        $log.debug('npFeature::component loaded!');
+                    }
+            );
 })();
 
 
@@ -1386,104 +1587,734 @@ function AssessmentService ( $log ) {
   );
 })();
 
+/* jshint -W003, -W117 */
 (function () {
-  'use strict';
-  angular
-    .module('newplayer.component')
-    .controller('npHotspotController',
-    function ($log, $scope, $sce, $element) {
-      var cmpData = $scope.component.data;
-      var buttonData = $scope.feedback || {};
-      var contentAreaHeight;
-      $log.debug('npHotspot::data', cmpData, buttonData);
-      var hotspotButtons = '';
-      this.hotspotButtons = cmpData.hotspotButtons;
-      this.id = cmpData.id;
-      this.baseURL = cmpData.baseURL;
-      this.src = cmpData.image;
-        //////////////////////
-      $scope.feedback = this.feedback = cmpData.feedback;
-      $scope.image = this.image = cmpData.image;
-        //////////////////////
-      this.update = function (button) {
-        this.feedback = button.feedback;
-        var idx = this.hotspotButtons.indexOf(button);
-        //////////////////////
-        $scope.$watch('npHotspot.feedback', function (newValue, oldValue) {
-          $('.npHotspot-feedback p').each(function (index, totalArea) {
-            var contentAreaHeight = $(this).outerHeight(true) + 50;
-            TweenMax.to($('.content-background'), 1, {
-              height: contentAreaHeight,
-              ease: Power4.easeOut
-            });
-            TweenMax.to($('.npHotspot-feedback'), 0.1, {
-              opacity: 0,
-              ease: Power4.easeOut
-            });
-            TweenMax.to($('.npHotspot-feedback'), 0.5, {
-              delay: 0.5,
-              opacity: 1,
-              ease: Power4.easeOut
-            });
-          });
-        });
-        //////////////////////
-      };
+    'use strict';
+    angular
+            .module('newplayer.component')
+            .controller('npHotspotController',
+                    function ($log, $scope, $sce, $element) {
+                        var cmpData = $scope.component.data;
+                        var buttonData = $scope.feedback || {};
+                        var contentAreaHeight;
+                        $log.debug('npHotspot::data', cmpData, buttonData);
+                        var hotspotButtons = '';
+                        this.hotspotButtons = cmpData.hotspotButtons;
+                        this.id = cmpData.id;
+                        this.baseURL = cmpData.baseURL;
+                        this.src = cmpData.image;
+                        //////////////////////
+                        var contentArea = '';
+                        setTimeout(function () {
+                            $scope.$apply(function () {
+                                contentArea = $element.find('.content-area');
+                                function onPageLoadSet() {
+//                                    hotspotButton = $('.hotspotButton');
+                                    TweenMax.set(contentArea, {opacity: 0, force3D: true});
+                                }
+                                onPageLoadSet();
+                            });
+                        });
+                        $scope.feedback = this.feedback = cmpData.feedback;
+                        $scope.image = this.image = cmpData.image;
+                        //////////////////////
+                        this.update = function (button) {
+                            this.feedback = button.feedback;
+                            var idx = this.hotspotButtons.indexOf(button);
+                            //////////////////////
+                            console.log(
+                                    '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                    '\n::button::', button,
+                                    '\n::idx::', idx,
+                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                    );
+                            $scope.$watch('npHotspot.feedback', function (newValue, oldValue) {
+                                contentAreaHeight = 0;
+                                TweenMax.to(contentArea, 1, {
+                                    opacity: 1,
+                                    ease: Power4.easeOut
+                                });
+                                $('.npHotspot-feedback p').each(function (index, totalArea) {
+                                    contentAreaHeight = contentAreaHeight + $(this).outerHeight(true);
+                                    TweenMax.to($('.content-background'), 1, {
+                                        height: contentAreaHeight + 25,
+                                        ease: Power4.easeOut
+                                    });
+                                    TweenMax.to($('.npHotspot-feedback'), 0.1, {
+                                        opacity: 0,
+                                        ease: Power4.easeOut
+                                    });
+                                    TweenMax.to($('.npHotspot-feedback'), 0.5, {
+                                        delay: 0.5,
+                                        opacity: 1,
+                                        ease: Power4.easeOut
+                                    });
+                                });
+                            });
+                            $('.hotspotButton').each(function (index, totalArea) {
+                                contentAreaHeight = contentAreaHeight + $(this).outerHeight(true);
+                                TweenMax.to($(this), 1, {
+                                    rotation: 0,
+                                    ease: Power4.easeOut
+                                });
+                            });
+                            TweenMax.to($('.hotspotButton')[idx], 1, {
+                                rotation: -45,
+                                ease: Power4.easeOut
+                            });
+                        };
+                    }
+            )
+            .directive('hotspotButtonBuild', function () {
+                return function ($scope, $element, attrs) {
+                    var hotspotButton = '';
+                    setTimeout(function () {
+                        $scope.$apply(function () {
+                            hotspotButton = $element.find('.hotspotButton');
+                            function onPageLoadBuild() {
+                                hotspotButton = $('.hotspotButton');
+                                TweenMax.set(hotspotButton, {opacity: 0, scale: .25, force3D: true});
+                                TweenMax.set(hotspotButton, {opacity: 0, scale: .25, force3D: true});
+                                TweenMax.staggerTo(hotspotButton, 2, {scale: 1, opacity: 1, delay: 0.5, ease: Elastic.easeOut, force3D: true}, 0.2);
+                            }
+                            onPageLoadBuild();
+                        });
+                    });
+                };
+            })
+            .directive('mediaelement', npMediaElementDirective)
+            /** @ngInject */
+            .run(
+                    function ($log, $rootScope) {
+                        $log.debug('npHotspot::component loaded!');
+                    }
+            );
+    /** @ngInject */
+    function npMediaElementDirective($log) {
+        $log.debug('\nnpHotspot mediaelementDirective::Init\n');
+        var Directive = function () {
+            this.restrict = 'A';
+            this.link = function (scope, element, attrs, controller) {
+            };
+        };
+        return new Directive();
     }
-  )
-    .directive('mediaelement', npMediaElementDirective)
-  /** @ngInject */
-    .run(
-    function ($log, $rootScope) {
-      $log.debug('npHotspot::component loaded!');
-    }
-  );
-  /** @ngInject */
-  function npMediaElementDirective($log) {
-    $log.debug('\nnpHotspot mediaelementDirective::Init\n');
-    var Directive = function () {
-      this.restrict = 'A';
-      this.link = function (scope, element, attrs, controller) {
-      };
-    };
-    return new Directive();
-  }
 })();
+
+/* jshint -W003, -W117 */
 (function () {
-
-  'use strict';
-  angular
-    .module('newplayer.component')
-
-  /** @ngInject */
-    .controller('npHTMLController',
-    function ($log, $scope, $rootScope) {
-      var vm = this,
-        cmpData = $scope.component.data,
-        content = null;
-      $log.debug('npHTML::data', cmpData);
-
-      if (cmpData.link) {
-        this.link = cmpData.link;
-      }
-
-      this.content = cmpData.content;
-      $log.info('npHTML::content', $scope.content, this.content, cmpData.link);
-
-      this.handleLink = function() {
-        $log.info('npHTML:handleLink | link is a manifest');
-        $rootScope.$broadcast('npReplaceManifest', cmpData.link);
-      }
+    'use strict';
+    angular
+            .module('newplayer.component')
+            .controller('npDragAndDropMatchController',
+                    function ($log, $scope, $sce, $element) {
+                        var cmpData = $scope.component.data;
+                        var buttonData = $scope.feedback || {};
+                        $log.debug('npDragAndDropMatch::data', cmpData, buttonData);
+                        var draggableButtons = '';
+                        this.draggableButtons = cmpData.draggableButtons;
+                        this.id = cmpData.id;
+                        this.positiveFeedback = cmpData.positiveFeedback;
+                        this.baseURL = cmpData.baseURL;
+                        this.src = cmpData.image;
+                        $scope.positiveFeedback = this.positiveFeedback = cmpData.positiveFeedback;
+                        $scope.image = this.image = cmpData.image;
+                        $scope.content = cmpData.content;
+                        $scope.ID = cmpData.id;
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //set drag and drag end event handlers
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        $scope.onDrag = function (value) {
+                            $scope.currentRotation = value;
+                        };
+                        $scope.onDragEnd = function (value) {
+                            $scope.currentRotation = value;
+                        };
+                    }
+            )
+            .directive('mediaelement', npMediaElementDirective)
+            /** @ngInject */
+            .run(
+                    function ($log, $rootScope) {
+                        $log.debug('npDragAndDropMatch::component loaded!');
+                    }
+            )
+//////////////////////////////////////////////////////////////////////////////////////
+//GSAP draggable Angular directive
+//////////////////////////////////////////////////////////////////////////////////////
+            .directive("dragButton", function () {
+//            'use strict';
+                return {
+                    restrict: "A",
+                    scope: {
+                        onDragEnd: "&",
+                        onDrag: "&"
+                    },
+                    link: function (scope, element, attrs) {
+                        var droppables = document.getElementsByClassName('hit-area');
+                        var hitAreaWrapper = document.getElementById('draggableContainer');
+                        var draggables = document.getElementsByClassName('draggableButton');
+                        var currentTarget;
+                        var currentElement;
+                        console.log(':::::::::::DraggableAngular:::::::::::::');
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //set states
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        TweenMax.to($('#draggableContainer'), 0, {
+                            autoAlpha: 0
+                        });
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //get ready
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        var tid = setInterval(function () {
+                            if (document.readyState !== 'complete') {
+                                return;
+                            }
+                            clearInterval(tid);
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            //on ready set states
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            TweenMax.to($('.hit-area'), 0, {
+                                strokeOpacity: 0
+                            });
+                            TweenMax.to($(droppables).find('.button-completion-content'), 0.5, {
+                                autoAlpha: 0,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($('#draggableContainer'), 1.75, {
+                                autoAlpha: 1,
+                                ease: Power4.easeOut
+                            });
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            //shuffle that shit
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            function shuffle() {
+                                $("#draggableButtons").each(function () {
+                                    var divs = $(this).find('.draggableButton');
+                                    for (var k = 0; k < divs.length; k++) {
+                                        $(divs[k]).remove();
+                                    }
+                                    //the fisher yates algorithm, from http://stackoverflow.com/questions/2450954/how-to-randomize-a-javascript-array
+                                    var l = divs.length;
+                                    if (l === 0) {
+                                        return false;
+                                    }
+                                    while (--l) {
+                                        var j = Math.floor(Math.random() * (l + 1));
+                                        var tempi = divs[l];
+                                        var tempj = divs[j];
+                                        divs[l] = tempj;
+                                        divs[j] = tempi;
+                                    }
+                                    for (var m = 0; m < divs.length; m++) {
+                                        $(divs[m]).appendTo(this);
+                                    }
+                                });
+                            }
+                            shuffle();
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            //get actuall height
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            $.each($('.boxElements'), function () {
+                                var currentHeight = $(this).find('.button-content').outerHeight();
+                                $(this).height(currentHeight);
+                            });
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            //finish ready check items
+                            //////////////////////////////////////////////////////////////////////////////////////
+                        }, 100);
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //offset method
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        function getOffsetRect(elem) {
+                            var box = elem.getBoundingClientRect();
+                            var body = document.body;
+                            var docElem = document.documentElement;
+                            var scrollTop = window.pageYOffset || docElem.scrollTop || body.scrollTop;
+                            var scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft;
+                            var clientTop = docElem.clientTop || body.clientTop || 0;
+                            var clientLeft = docElem.clientLeft || body.clientLeft || 0;
+                            var top = box.top + scrollTop - clientTop;
+                            var left = box.left + scrollLeft - clientLeft;
+                            return {top: Math.round(top), left: Math.round(left)};
+                        }
+                        var hitAreaPosition = getOffsetRect(hitAreaWrapper);
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //on drag offset method
+                        //////////////////////////////////////////////////////////////////////////////////////
+//                    var boolean;
+//                    function setElementPositions(dragging) {
+//                        if (boolean = !boolean) {
+//                            $('.draggableButton').each(function () {
+//                                draggablePositionTop.push($(this).offset());
+//                                console.log(':::::::::::::::::::::::::::::::::::::::', $(this).offset(), ':::', $(this).position(), ':::', Math.round(draggablePositionTop[0].top));
+//                            });
+//                        }
+//                    }
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //create draggable, set vars
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        Draggable.create(element, {
+                            type: "x,y",
+                            edgeResistance: 0.65,
+                            bounds: "#draggableContainer",
+                            throwProps: true,
+                            overlapThreshold: '50%',
+                            onDrag: function (e) {
+                                scope.$apply(function () {
+                                    scope.onDrag();
+//                                setElementPositions(true);
+                                });
+                            },
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            //on drag method/vars
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            onDragEnd: function (e) {
+                                scope.$apply(function () {
+                                    scope.onDragEnd();
+//                                setElementPositions(false);
+                                    var targetNumber = droppables.length;
+                                    var droppablesPosition;
+                                    for (var i = 0; i < targetNumber; i++) {
+                                        currentTarget = 'id' + i;
+                                        currentElement = element.attr("id");
+                                        if (Draggable.hitTest(droppables[i], e) && (currentElement === currentTarget)) {
+                                            droppablesPosition = getOffsetRect(droppables[i]);
+                                            var positionX = (droppablesPosition.left - hitAreaPosition.left);
+//                                        var positionY = (droppablesPosition.top - hitAreaPosition.top) - (Math.round(draggablePositionTop[i].top) - hitAreaPosition.top);
+//                                        console.log('inside this droppablesPosition.top: ', droppablesPosition.top, 'positionY: ', positionY);
+                                            //////////////////////////////////////////////////////////////////////////////////////
+                                            //on drag match set match position/states
+                                            //////////////////////////////////////////////////////////////////////////////////////
+                                            TweenMax.to(element, 0.15, {
+                                                autoAlpha: 0,
+                                                x: positionX,
+//                                            y: positionY,
+                                                ease: Power4.easeOut
+                                            });
+                                            TweenMax.to(droppables[i], 0.5, {
+                                                autoAlpha: 0.95,
+//                                            fill: '#313131',
+                                                strokeOpacity: 1,
+                                                ease: Power4.easeOut
+                                            });
+                                            TweenMax.to($(droppables[i]).find('.button-content'), 0.5, {
+                                                autoAlpha: 0,
+                                                ease: Power4.easeOut
+                                            });
+                                            TweenMax.to($(droppables[i]).find('.button-completion-content'), 0.5, {
+                                                autoAlpha: 1,
+                                                ease: Power4.easeOut
+                                            });
+                                            return;
+                                        } else {
+                                            //////////////////////////////////////////////////////////////////////////////////////
+                                            //on drag no match set state
+                                            //////////////////////////////////////////////////////////////////////////////////////
+                                            TweenMax.to(element, 1, {
+                                                x: "0px",
+                                                y: '0px',
+                                                ease: Power4.easeOut
+                                            });
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    }
+                };
+            });
+    /** @ngInject */
+    function npMediaElementDirective($log) {
+        $log.debug('\nnpDragAndDropMatch mediaelementDirective::Init\n');
+        var Directive = function () {
+            this.restrict = 'A';
+            this.link = function (scope, element, attrs, controller) {
+            };
+        };
+        return new Directive();
     }
-  )
+})();
 
-  /** @ngInject */
-    .run(
-    function ($log, $rootScope) {
-      $log.debug('npHTML::component loaded!');
+/* jshint -W003, -W117 */
+(function () {
+    'use strict';
+    angular
+            .module('newplayer.component')
+            .controller('npDragAndDropPrioritizeController',
+                    function ($log, $scope, $sce, $element) {
+                        var cmpData = $scope.component.data;
+                        var buttonData = $scope.feedback || {};
+                        $log.debug('npDragAndDropPrioritize::data', cmpData, buttonData);
+                        var draggableButtons = '';
+                        this.draggableButtons = cmpData.draggableButtons;
+                        this.id = cmpData.id;
+                        this.positiveFeedback = cmpData.positiveFeedback;
+                        this.baseURL = cmpData.baseURL;
+                        this.src = cmpData.image;
+                        $scope.positiveFeedback = this.positiveFeedback = cmpData.positiveFeedback;
+                        $scope.image = this.image = cmpData.image;
+                        $scope.content = cmpData.content;
+                        $scope.ID = cmpData.id;
+//////////////////////////////////////////////////////////////////////////////////////
+//set drag and drag end event handlers
+//////////////////////////////////////////////////////////////////////////////////////
+                        $scope.onDrag = function (value) {
+                            $scope.currentRotation = value;
+                        };
+                        $scope.onDragEnd = function (value) {
+                            $scope.currentRotation = value;
+                        };
+                    }
+            )
+            .directive('mediaelement', npMediaElementDirective)
+            /** @ngInject */
+            .run(
+                    function ($log, $rootScope) {
+                        $log.debug('npDragAndDropPrioritize::component loaded!');
+                    }
+            )
+//////////////////////////////////////////////////////////////////////////////////////
+//GSAP draggable Angular directive
+//////////////////////////////////////////////////////////////////////////////////////
+            .directive("dragButtonPrioritize", function () {
+//            'use strict';
+            return {
+                restrict: "A",
+                scope: {
+                    onDragEnd: "&",
+                    onDrag: "&"
+                },
+                link: function (scope, element, attrs) {
+                    var droppables = document.getElementsByClassName('hit-area');
+                    var hitAreaWrapper = document.getElementById('draggableContainer');
+                    var draggables = document.getElementsByClassName('draggableButton');
+                    var currentTarget;
+                    var currentElement;
+                    //////////////////////////////////////////////////////////////////////////////////////
+                    //set states
+                    //////////////////////////////////////////////////////////////////////////////////////
+                    TweenMax.to($('#draggableContainer'), 0, {
+                        autoAlpha: 0
+                    });
+                    //////////////////////////////////////////////////////////////////////////////////////
+                    //get ready
+                    //////////////////////////////////////////////////////////////////////////////////////
+                    var tid = setInterval(function () {
+                        if (document.readyState !== 'complete') {
+                            return;
+                        }
+                        clearInterval(tid);
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //on ready set states
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        TweenMax.to($('.hit-area'), 0, {
+                            strokeOpacity: 0
+                        });
+                        TweenMax.to($(droppables).find('.button-completion-prioritize-content'), 0.5, {
+                            autoAlpha: 0,
+                            ease: Power4.easeOut
+                        });
+                        TweenMax.to($('#draggableContainer'), 1.75, {
+                            autoAlpha: 1,
+                            ease: Power4.easeOut
+                        });
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //shuffle that shit
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        function shuffle() {
+                            $("#draggableButtons").each(function () {
+                                var divs = $(this).find('.draggableButton');
+                                for (var k = 0; k < divs.length; k++) {
+                                    $(divs[k]).remove();
+                                }
+                                //the fisher yates algorithm, from http://stackoverflow.com/questions/2450954/how-to-randomize-a-javascript-array
+                                var l = divs.length;
+                                if (l === 0) {
+                                    return false;
+                                }
+                                while (--l) {
+                                    var j = Math.floor(Math.random() * (l + 1));
+                                    var tempi = divs[l];
+                                    var tempj = divs[j];
+                                    divs[l] = tempj;
+                                    divs[j] = tempi;
+                                }
+                                for (var m = 0; m < divs.length; m++) {
+                                    $(divs[m]).appendTo(this);
+                                }
+                            });
+                        }
+                        shuffle();
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //get actuall height
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        $.each($('.boxElements'), function () {
+                            var currentHeight = $(this).find('.button-content').outerHeight();
+                            $(this).height(currentHeight);
+                        });
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //finish ready check items
+                        //////////////////////////////////////////////////////////////////////////////////////
+                    }, 100);
+                    //////////////////////////////////////////////////////////////////////////////////////
+                    //offset method
+                    //////////////////////////////////////////////////////////////////////////////////////
+                    function getOffsetRect(elem) {
+                        var box = elem.getBoundingClientRect();
+                        var body = document.body;
+                        var docElem = document.documentElement;
+                        var scrollTop = window.pageYOffset || docElem.scrollTop || body.scrollTop;
+                        var scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft;
+                        var clientTop = docElem.clientTop || body.clientTop || 0;
+                        var clientLeft = docElem.clientLeft || body.clientLeft || 0;
+                        var top = box.top + scrollTop - clientTop;
+                        var left = box.left + scrollLeft - clientLeft;
+                        return {top: Math.round(top), left: Math.round(left)};
+                    }
+                    var hitAreaPosition = getOffsetRect(hitAreaWrapper);
+                    //////////////////////////////////////////////////////////////////////////////////////
+                    //on drag offset method
+                    //////////////////////////////////////////////////////////////////////////////////////
+//                    var boolean;
+//                    function setElementPositions(dragging) {
+//                        if (boolean = !boolean) {
+//                            $('.draggableButton').each(function () {
+//                                draggablePositionTop.push($(this).offset());
+//                                console.log(':::::::::::::::::::::::::::::::::::::::', $(this).offset(), ':::', $(this).position(), ':::', Math.round(draggablePositionTop[0].top));
+//                            });
+//                        }
+//                    }
+                    //////////////////////////////////////////////////////////////////////////////////////
+                    //create draggable, set vars
+                    //////////////////////////////////////////////////////////////////////////////////////
+                    Draggable.create(element, {
+                        type: "x,y",
+                        edgeResistance: 0.65,
+                        bounds: "#draggableContainer",
+                        throwProps: true,
+                        overlapThreshold: '50%',
+                        onDrag: function (e) {
+                            scope.$apply(function () {
+                                scope.onDrag();
+//                                setElementPositions(true);
+                            });
+                        },
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //on drag method/vars
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        onDragEnd: function (e) {
+                            scope.$apply(function () {
+                                scope.onDragEnd();
+//                                setElementPositions(false);
+                                var targetNumber = droppables.length;
+                                var droppablesPosition;
+                                for (var i = 0; i < targetNumber; i++) {
+                                    currentTarget = 'id' + i;
+                                    currentElement = element.attr("id");
+                                    if (Draggable.hitTest(droppables[i], e) && (currentElement === currentTarget)) {
+                                        droppablesPosition = getOffsetRect(droppables[i]);
+                                        var positionX = (droppablesPosition.left - hitAreaPosition.left);
+//                                        var positionY = (droppablesPosition.top - hitAreaPosition.top) - (Math.round(draggablePositionTop[i].top) - hitAreaPosition.top);
+//                                        console.log('inside this droppablesPosition.top: ', droppablesPosition.top, 'positionY: ', positionY);
+                                        //////////////////////////////////////////////////////////////////////////////////////
+                                        //on drag match set match position/states
+                                        //////////////////////////////////////////////////////////////////////////////////////
+                                        TweenMax.to(element, 0.15, {
+                                            autoAlpha: 0,
+                                            x: positionX,
+//                                            y: positionY,
+                                            ease: Power4.easeOut
+                                        });
+                                        TweenMax.to(droppables[i], 0.5, {
+                                            autoAlpha: 0.95,
+//                                            fill: '#313131',
+                                            strokeOpacity: 1,
+                                            ease: Power4.easeOut
+                                        });
+                                        TweenMax.to($(droppables[i]).find('.hit-area-number'), 0.5, {
+                                            autoAlpha: 0,
+                                            ease: Power4.easeOut
+                                        });
+                                        TweenMax.to($(droppables[i]).find('.button-completion-prioritize-content'), 0.5, {
+                                            autoAlpha: 1,
+                                            ease: Power4.easeOut
+                                        });
+                                        return;
+                                    } else {
+                                        //////////////////////////////////////////////////////////////////////////////////////
+                                        //on drag no match set state
+                                        //////////////////////////////////////////////////////////////////////////////////////
+                                        TweenMax.to(element, 1, {
+                                            x: "0px",
+                                            y: '0px',
+                                            ease: Power4.easeOut
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+            };
+        });
+    /** @ngInject */
+    function npMediaElementDirective($log) {
+        $log.debug('\nnpDragAndDropPrioritize mediaelementDirective::Init\n');
+        var Directive = function () {
+            this.restrict = 'A';
+            this.link = function (scope, element, attrs, controller) {
+            };
+        };
+        return new Directive();
     }
-  );
+})();
 
+(function () {
+    'use strict';
+    angular
+            .module('newplayer.component')
+            /** @ngInject */
+            .controller('npListController',
+                    function ($log, $scope, $rootScope) {
+                        var vm = this,
+                                cmpData = $scope.component.data,
+                                content = null;
+                        $log.debug('npList::data', cmpData);
+                        if (cmpData.link) {
+                            this.link = cmpData.link;
+                        }
+                        this.heading = cmpData.heading;
+                        this.content = cmpData.content;
+                        this.wrap = cmpData.wrap;
+                        $log.info('npList::content', $scope.content, this.content, cmpData.link, 'this.wrap: ', this.wrap);
+                        this.handleLink = function () {
+                            $log.info('npList:handleLink | link is a manifest');
+                            $rootScope.$broadcast('npReplaceManifest', cmpData.link);
+                        };
+                        var bodyWidth;
+                        $scope.$watch(function () {
+                            bodyWidth = window.innerWidth;
+                        });
+                        var columnWrap = 'true';
+                        $(".np-cmp-wrapper").each(function () {
+                            columnWrap = $(this).attr("data-ng:wrap");
+                            if ($(this).attr("data-ng:wrap") === 'true') {
+                                $(this).find('.column-1').removeClass('col-md-4');
+                                $(this).find('.column-1').addClass('col-md-12');
+                                $(this).find('.column-2').removeClass('col-md-8');
+                                $(this).find('.column-2').addClass('col-md-12');
+                            }
+                            if (window.innerWidth < 992) {
+                                $(this).find('.list-row').removeClass('vertical-align');
+                            } else if ((window.innerWidth > 992) && ($(this).attr("data-ng:wrap") === 'false')) {
+                                $(this).find('.list-row').addClass('vertical-align');
+                            }
+                        });
+                    }
+            )
+            /** @ngInject */
+            .run(
+                    function ($log, $rootScope) {
+                        $log.debug('npList::component loaded!');
+                    }
+            );
+})();
+
+/* jshint -W003, -W117 */
+(function () {
+    'use strict';
+    angular
+            .module('newplayer.component')
+            /** @ngInject */
+            .controller('npHTMLController',
+                    function ($log, $scope, $rootScope) {
+                        var vm = this,
+                                cmpData = $scope.component.data,
+                                content = null;
+                        $log.debug('npHTML::data', cmpData);
+//                        console.log(':: cmpData :: ', cmpData);
+
+                        if (cmpData.link) {
+                            this.link = cmpData.link;
+                        }
+                        this.content = cmpData.content;
+                        $log.info('npHTML::content', $scope.content, this.content, cmpData.link);
+                        this.handleLink = function () {
+                            $log.info('npHTML:handleLink | link is a manifest');
+                            $rootScope.$broadcast('npReplaceManifest', cmpData.link);
+                        };
+                        ////////////////////////////////////////////////////////////
+                        ////////////////////////////////////////////////////////////
+                        var isCollapsed = false;
+                        var eleHeight;
+                        var bodyWidth;
+                        $scope.$watch(function () {
+                            return window.innerWidth;
+                        }, function (value) {
+//                            console.log('innerWidth:',value);
+                            bodyWidth = value;
+                        });
+                        $scope.selectLink = function (MyTarget) {
+//                            var ele = document.getElementById(MyTarget);
+//                            var icon = document.getElementById('caretSVG');
+//                            console.log('bodyWidth: ' + bodyWidth);
+                            if (bodyWidth < 450) {
+                                eleHeight = '2150px';
+                            } else if (bodyWidth < 650) {
+                                eleHeight = '1650px';
+                            } else if (bodyWidth < 750) {
+                                eleHeight = '1050px';
+                            } else if (bodyWidth < 1250) {
+                                eleHeight = '950px';
+                            } else {
+                                eleHeight = '850px';
+                            }
+//                            console.log('eleHeight: ' + eleHeight);
+                            if (isCollapsed) {
+                                TweenMax.to(icon, 0.75, {
+                                    css: {
+                                        transformOrigin: "50% 50%",
+                                        rotation: 0
+                                    },
+                                    ease: Cubic.easeOut
+                                });
+                                TweenMax.to(ele, 0.75, {
+                                    css: {
+                                        autoAlpha: 0,
+                                        height: "10px"
+                                    },
+                                    ease: Cubic.easeOut
+                                });
+                                isCollapsed = !isCollapsed;
+                            } else if (!isCollapsed) {
+                                TweenMax.to(icon, 0.75, {
+                                    css: {
+                                        transformOrigin: "50% 50%",
+                                        rotation: 90
+                                    },
+                                    ease: Cubic.easeOut
+                                });
+                                TweenMax.to(ele, 1.25, {
+                                    css: {
+                                        autoAlpha: 1,
+                                        height: eleHeight
+                                    },
+                                    ease: Cubic.easeOut
+                                });
+                                isCollapsed = !isCollapsed;
+                            }
+                        };
+                        ////////////////////////////////////////////////////////////
+                        ////////////////////////////////////////////////////////////
+                    }
+            )
+            /** @ngInject */
+            .run(
+                    function ($log, $rootScope) {
+                        $log.debug('npHTML::component loaded!');
+                    }
+            );
 })();
 
 (function () {
@@ -1514,6 +2345,7 @@ function AssessmentService ( $log ) {
 })();
 
 
+/* jshint -W003, -W117, -W026, -W040 */
 (function () {
 
   'use strict';
@@ -1646,12 +2478,13 @@ function AssessmentService ( $log ) {
       vm.changePageId = function (toPage) {
         $log.info('changePageId', toPage);
         ManifestService.setPageId(toPage);
-      }
-    };
+      };
+    }
   }
 
 })();
 
+/* jshint -W003, -W117 */
 (function () {
 
   'use strict';
@@ -1659,12 +2492,11 @@ function AssessmentService ( $log ) {
     .module('newplayer.component')
   /** @ngInject */
     .controller('npPageController',
-    function ($log, $scope, $rootScope, ManifestService) {
+    function ($log, $scope, $rootScope, ManifestService, TrackingService) {
       var cmpData = $scope.component.data || {};
       $log.debug('npPage::data', cmpData, $scope.contentTitle);
 
       this.title = cmpData.title;
-
       var parentIdx = $scope.component.idx.slice(0);
       parentIdx.pop();
 
@@ -1698,6 +2530,7 @@ function AssessmentService ( $log ) {
           }
         } else {
           $scope.currentPage = false;
+          TrackingService.trackPageView(pageId);
         }
       }
     }
@@ -1712,111 +2545,177 @@ function AssessmentService ( $log ) {
 })();
 
 (function () {
-
-  'use strict';
-  angular
-    .module('newplayer.component')
-  /** @ngInject */
-    .controller('npQuestionController',
-    function ($log, $scope, ManifestService, $sce) {
-      var cmpData = $scope.component.data;
-      $log.debug('npQuestion::data', cmpData);
-
-      this.id = cmpData.id;
-      this.content = $sce.trustAsHtml(cmpData.content);
-      this.type = cmpData.type;
-      this.feedback = '';
-
-      var feedback = cmpData.feedback;
-
-      this.changed = function () {
-        $log.debug('npQuestion::answer changed');
-        if (feedback.immediate) {
-          this.feedback = '';
-        }
-      };
-
-      this.evaluate = function () {
-        $log.debug('npQuestion::evaluate:', this.answer);
-        var correct = true;
-
-        if (!!this.answer) {
-          switch (this.type) {
-            case 'radio':
-              var radAnswer = ManifestService.getComponent(this.answer);
-              if (angular.isString(radAnswer.data.feedback)) {
-                this.feedback = radAnswer.data.feedback;
-              }
-              correct = radAnswer.data.correct;
-              break;
-            case 'checkbox':
-              var chkAnswers = ManifestService.getAll('npAnswer', $scope.cmpIdx);
-              var idx;
-              for (idx in chkAnswers) {
-                if (chkAnswers[idx].data.correct) {
-                  // confirm all correct answers were checked
-                  if (!this.answer[chkAnswers[idx].idx]) {
-                    correct = false;
-                  }
-                } else {
-                  // confirm no incorrect answers were checked
-                  if (this.answer[chkAnswers[idx].idx]) {
-                    correct = false;
-                  }
-                }
-              }
-              break;
-            case 'text':
-              var txtAnswer = ManifestService.getFirst('npAnswer', $scope.cmpIdx);
-              var key = txtAnswer.data.correct;
-              var regExp, pat, mod = 'i';
-              if (angular.isString(key)) {
-                if (key.indexOf('/') === 0) {
-                  pat = key.substring(1, key.lastIndexOf('/'));
-                  mod = key.substring(key.lastIndexOf('/') + 1);
-                }
-              } else if (angular.isArray(key)) {
-                pat = '^(' + key.join('|') + ')$';
-              }
-              regExp = new RegExp(pat, mod);
-              if (!regExp.test(this.answer)) {
-                if (angular.isObject(txtAnswer.data.feedback) && angular.isString(txtAnswer.data.feedback.incorrect)) {
-                  this.feedback = txtAnswer.data.feedback.incorrect;
-                }
-                correct = false;
-              } else {
-                if (angular.isObject(txtAnswer.data.feedback) && angular.isString(txtAnswer.data.feedback.correct)) {
-                  this.feedback = txtAnswer.data.feedback.correct;
-                }
-              }
-              break;
-          }
-        } else {
-          correct = false;
-        }
-        $log.debug('npQuestion::evaluate:isCorrect', correct);
-
-        // set by ng-model of npAnswer's input's
-        if (feedback.immediate && this.feedback === '') {
-          if (correct) {
-            this.feedback = feedback.correct;
-          } else {
-            this.feedback = feedback.incorrect;
-          }
-        }
-      };
-    }
-  )
-
-  /** @ngInject */
-    .run(
-    function ($log, $rootScope) {
-      $log.debug('npQuestion::component loaded!');
-    }
-  );
+    'use strict';
+    angular
+            .module('newplayer.component')
+            /** @ngInject */
+            .controller('npQuestionController',
+                    function ($log, $scope, $rootScope, ManifestService, $sce, $element) {
+                        var cmpData = $scope.component.data;
+                        $log.debug('npQuestion::data', cmpData);
+                        this.id = cmpData.id;
+                        this.content = $sce.trustAsHtml(cmpData.content);
+                        this.type = cmpData.type;
+                        this.feedback = '';
+                        this.canContinue = false;
+                        var feedback = cmpData.feedback;
+                        var feedback_label = $element.find('.question-feedback-label');
+                        var feedback_checkbox_x = $element.find('.checkbox-x');
+                        var negativeFeedbackIcon = '';
+//                        console.log(
+//                                '\n::::::::::::::::::::::::::::::::::::::npQuestions::default:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                '\n:::', this,
+//                                '\n::type::', cmpData.type,
+//                                '\n::feedback::', feedback,
+//                                '\n::feedback_label::', feedback_label,
+//                                '\n::$element::', $element,
+//                                '\n::feedback_checkbox_x::', feedback_checkbox_x,
+//                                '\n::$element.find(".checkbox-x")::', $element.find(".checkbox-x"),
+//                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                );
+                        this.changed = function (event) {
+//                            console.log(
+//                                    '\n::::::::::::::::::::::::::::::::::::::npQuestions::changed:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                    '\n::id::', event,
+//                                    '\n::id::', event.target,
+//                                    '\n::id::', event.currentTarget,
+//                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                    );
+                            TweenMax.to(event.target, .25, {
+                                autoAlpha: 1,
+                                ease: Power3.easeOut
+                            });
+                            $log.debug('npQuestion::answer changed');
+                            if (feedback.immediate) {
+                                this.feedback = '';
+                                negativeFeedbackIcon = $element.find('.negative-feedback-icon');
+                                TweenMax.set(negativeFeedbackIcon, {opacity: 0, scale: 2.5, force3D: true});
+                            }
+                        };
+                        this.evaluate = function () {
+                            var correct = true;
+                            negativeFeedbackIcon = $element.find('.negative-feedback-icon');
+                            TweenMax.to(negativeFeedbackIcon, 0.75, {
+                                opacity: 1,
+                                scale: 1,
+                                force3D: true
+                            });
+//                            console.log(
+//                                    '\n::::::::::::::::::::::::::::::::::::::npQuestions::evaluate:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                    '\n::this::', this,
+//                                    '\n::this.answer::', this.answer,
+//                                    '\n::cmpData::', cmpData,
+//                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                    );
+                            $log.debug('npQuestion::evaluate:', this.answer);
+                            if (!!this.answer) {
+                                switch (this.type) {
+                                    case 'radio':
+                                        var radAnswer = ManifestService.getComponent(this.answer);
+                                        if (angular.isString(radAnswer.data.feedback)) {
+                                            this.feedback = radAnswer.data.feedback;
+                                        }
+                                        correct = radAnswer.data.correct;
+                                        break;
+                                    case 'checkbox':
+                                        var chkAnswers = ManifestService.getAll('npAnswer', $scope.cmpIdx);
+                                        var idx;
+                                        for (idx in chkAnswers) {
+                                            if (chkAnswers[idx].data.correct) {
+                                                console.log(
+                                                        '\n::::::::::::::::::::::::::::::::::::::npQuestions::default:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                                        '\n::idx::', idx,
+                                                        '\n::chkAnswers::', chkAnswers,
+                                                        '\n::this.answer[chkAnswers[idx].idx]::', this.answer[chkAnswers[idx].idx],
+                                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                                        );
+                                                // confirm all correct answers were checked
+                                                if (!this.answer[chkAnswers[idx].idx]) {
+                                                    correct = false;
+                                                }
+                                            } else {
+                                                // confirm no incorrect answers were checked
+                                                if (this.answer[chkAnswers[idx].idx]) {
+                                                    correct = false;
+                                                }
+                                            }
+                                        }
+                                        break;
+                                    case 'text':
+                                        var txtAnswer = ManifestService.getFirst('npAnswer', $scope.cmpIdx);
+                                        var key = txtAnswer.data.correct;
+                                        var regExp, pat, mod = 'i';
+                                        if (angular.isString(key)) {
+                                            if (key.indexOf('/') === 0) {
+                                                pat = key.substring(1, key.lastIndexOf('/'));
+                                                mod = key.substring(key.lastIndexOf('/') + 1);
+                                            }
+                                        } else if (angular.isArray(key)) {
+                                            pat = '^(' + key.join('|') + ')$';
+                                        }
+                                        regExp = new RegExp(pat, mod);
+                                        if (!regExp.test(this.answer)) {
+                                            if (angular.isObject(txtAnswer.data.feedback) && angular.isString(txtAnswer.data.feedback.incorrect)) {
+                                                this.feedback = txtAnswer.data.feedback.incorrect;
+                                                feedback_label.remove();
+                                            }
+                                            correct = false;
+                                        } else {
+                                            if (angular.isObject(txtAnswer.data.feedback) && angular.isString(txtAnswer.data.feedback.correct)) {
+                                                this.feedback = txtAnswer.data.feedback.correct;
+                                                feedback_label.remove();
+                                            }
+                                        }
+                                        break;
+                                }
+                            } else {
+                                correct = false;
+                            }
+                            $log.debug('npQuestion::evaluate:isCorrect', correct);
+                            // set by ng-model of npAnswer's input's
+                            if (feedback.immediate && this.feedback === '') {
+                                feedback_label.remove();
+                                if (correct) {
+                                    this.feedback = feedback.correct;
+                                    this.canContinue = true;
+                                } else {
+                                    this.feedback = feedback.incorrect;
+                                    this.canContinue = false;
+                                }
+                            }
+                        };
+                        this.nextPage = function (evt) {
+                            evt.preventDefault();
+                            if (this.canContinue) {
+                                $rootScope.$emit('question.answered', true);
+                            }
+                        };
+                    }
+            )
+            .directive('questionFeedbackBuild', function () {
+                return function ($scope, $element, attrs) {
+                    var negativeFeedbackIcon = '';
+                    setTimeout(function () {
+                        $scope.$apply(function () {
+                            negativeFeedbackIcon = $element.find('.hotspotButton');
+                            function onPageLoadBuild() {
+                                negativeFeedbackIcon = $('.negative-feedback-icon');
+                                TweenMax.set(negativeFeedbackIcon, {opacity: 0, scale: 2.5, force3D: true});
+//                                TweenMax.set(hotspotButton, {opacity: 0, scale: .25, force3D: true});
+//                                TweenMax.staggerTo(hotspotButton, 2, {scale: 1, opacity: 1, delay: 0.5, ease: Elastic.easeOut, force3D: true}, 0.2);
+                            }
+                            onPageLoadBuild();
+                        });
+                    });
+                };
+            })
+            /** @ngInject */
+            .run(
+                    function ($log, $rootScope) {
+                        $log.debug('npQuestion::component loaded!');
+                    }
+            );
 })();
-
-
 (function () {
 
   'use strict';
@@ -1915,6 +2814,7 @@ function AssessmentService ( $log ) {
 
 })();
 
+/* jshint -W003, -W117 */
 (function () {
   'use strict';
 
@@ -1958,6 +2858,757 @@ function AssessmentService ( $log ) {
 
 })();
 
+(function () {
+    'use strict';
+    /** @ngInject */
+    function npMediaElementDirective($log) {
+        $log.debug('\nnpReveal mediaelementDirective::Init\n');
+        var Directive = function () {
+            this.restrict = 'A';
+            this.link = function (scope, element, attrs, controller) {
+            };
+        };
+        return new Directive();
+    }
+    angular
+            .module('newplayer.component')
+            .controller('npRevealController',
+                    function ($log, $scope, $sce, $element) {
+                        var cmpData = $scope.component.data,
+                                revealItems = $scope.component.revealItems,
+                                revealItemsIndex = $scope.component.idx,
+                                revealItemsButtonImage = $scope.component.revealItems.buttonImage;
+                        var buttonData = $scope.feedback || {};
+                        this.revealItems = $scope.component.revealItems;
+                        this.revealItemComponent = $scope.component.revealItems[0];
+                        this.revealItemComponents = $scope.component.revealItems;
+                        this.revealItemVideoType = $scope.component.baseURL;
+                        this.id = cmpData.id;
+                        this.baseURL = cmpData.baseURL;
+                        this.src = cmpData.image;
+                        $scope.feedback = this.feedback = cmpData.feedback;
+                        $scope.image = this.image = cmpData.image;
+                        $log.debug('npReveal::data', cmpData, buttonData);
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //get ready
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        var tid = setInterval(function () {
+                            if (document.readyState !== 'complete') {
+                                return;
+                            }
+                            clearInterval(tid);
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            //on ready set states
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            TweenMax.to($(".reveal-object"), 0, {
+                                autoAlpha: 0
+                            });
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            //finish ready check items
+                            //////////////////////////////////////////////////////////////////////////////////////
+                        }, 100);
+                        this.update = function (button) {
+                            var idx = this.revealItems.indexOf(button);
+//                            console.log(
+//                                    '\n::::::::::::::::::::::::::::::::::::::reveal::array data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                    '\n:::', idx,
+//                                    '\n:::', button,
+//                                    '\n:::', $('video').length,
+//                                    '\n:::', revealItems[idx].components[0],
+//                                    '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                    );
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            //on navigation change stop and reset all video files
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            $('video').each(function () {
+                                this.pause();
+                                this.currentTime = 0;
+                                this.load();
+                            });
+                            //////////////////////
+                            TweenMax.to($(".reveal-object"), 0, {
+                                autoAlpha: 0,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($(".reveal-object")[idx], 0.75, {
+                                autoAlpha: 1,
+                                ease: Power4.easeOut
+                            });
+                        };
+                    }
+            )
+            .directive('mediaelement', npMediaElementDirective)
+            /** @ngInject */
+            .run(
+                    function ($log, $rootScope) {
+                        $log.debug('npReveal::component loaded!');
+                    }
+            );
+})();
+/* jshint -W003, -W117, -W004 */
+(function () {
+    'use strict';
+    /** @ngInject */
+    function npMediaElementDirective($log) {
+        $log.debug('\nnpFlashCards mediaelementDirective::Init\n');
+        var Directive = function () {
+            this.restrict = 'A';
+            this.link = function (scope, element, attrs, controller) {
+            };
+        };
+        return new Directive();
+    }
+    angular
+            .module('newplayer.component')
+            .controller('npFlashCardsController',
+                    function ($log, $scope, $sce, $element) {
+                        var cmpData = $scope.component.data,
+                                flashCards = $scope.component.flashCards;
+//                                flashCardsIndex = $scope.component.idx;
+//                                flashCardsButtonImage = $scope.component.flashCards.buttonImage;
+//
+//                        console.log(
+//                                '\n::::::::::::::::::::::::::::::::::::::npFlashCards::data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                '\n::flashCards::', flashCards,
+//                                '\n::flashCardsIndex::', flashCardsIndex,
+//                                '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                );
+                        var buttonData = $scope.feedback || {};
+//                        var hotspotButtons = '';
+//                        this.hotspotButtons = cmpData.hotspotButtons;
+//                        this.flashCards = $scope.component.flashCards;
+                        this.flashCardComponent = $scope.component.flashCards[0];
+                        this.flashCardComponents = $scope.component.flashCards;
+                        this.flashCardVideoType = $scope.component.baseURL;
+                        this.id = cmpData.id;
+                        this.baseURL = cmpData.baseURL;
+                        this.src = cmpData.image;
+                        $scope.feedback = this.feedback = cmpData.feedback;
+                        $scope.image = this.image = cmpData.image;
+                        $log.debug('npFlashCards::data', cmpData, buttonData);
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //on button click do these things
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        this.update = function (flashCardButton) {
+                            var idx = flashCards.indexOf(flashCardButton);
+                            var clickedFlashCard = $(".flash-cards-object")[idx];
+//                            var clickedFlashCardBackHeight = clickedFlashCard.prop('height');
+//                            console.log(
+//                                    '\n::::::::::::::::::::::::::::::::::::::npFlashCards::data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                    '\n::flashCardButton::', flashCardButton,
+//                                    '\n::idx::', idx,
+//                                    '\n::$(.flash-cards-object)[idx]::', $(".flash-cards-object")[idx],
+//                                    '\n::clickedFlashCard.find(.flash-card-back-wrapper)::', clickedFlashCard.getElementsByClassName('flash-card-back-wrapper').height,
+//                                    '\n::clickedFlashCard::', clickedFlashCard,
+//                                    '\n::flashCards::', flashCards,
+//                                    '\n::flashCardsIndex::', flashCardsIndex,
+//                                    '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                    );
+//                            TweenMax.to($(".flash-cards-object"), 1, {
+//                                        top: 0,
+//                                top: '-325px',
+//                                ease: Power4.easeOut
+//                            });
+                            TweenMax.to(clickedFlashCard, 1, {
+                                rotationY: 180,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to(clickedFlashCard.getElementsByClassName('flash-card-back-wrapper'), 1, {
+                                autoAlpha: 1,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to(clickedFlashCard.getElementsByClassName('flash-card-front-wrapper'), 1, {
+                                autoAlpha: 0,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($('.flash-card-button'), 1, {
+                                autoAlpha: 0,
+                                ease: Power4.easeOut
+                            });
+                           
+//                            console.log(
+//                                    '\n::::::::::::::::::::::::::::::::::::::npFlashCards::data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                    '\n:::', idx,
+//                                    '\n:::', this.windowsCenter,
+//                                    '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                    );
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            //on navigation change stop and reset all video files
+                            //////////////////////////////////////////////////////////////////////////////////////
+//                            $('video').each(function () {
+//                                this.pause();
+//                                this.currentTime = 0;
+//                                this.load();
+//                            });
+                        };
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //set drag and drag end event handlers
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        $scope.onDrag = function (value) {
+                            $scope.currentRotation = value;
+                        };
+                        $scope.onDragEnd = function (value) {
+                            $scope.currentRotation = value;
+                        };
+                    }
+            )
+            ////////////////////////////////////////////////////////////////////////////////////////
+            //GSAP Swipeable/Snapable Angular directive!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            ////////////////////////////////////////////////////////////////////////////////////////
+            .directive("npSwipeAngularDraggable", function () {
+                return {
+                    restrict: "A",
+                    scope: {
+                        onDragEnd: "&",
+                        onDrag: "&"
+//                        elementWrapper: 0
+                    },
+                    link: function ($scope, $element, attrs) {
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //set states
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        setTimeout(function () {
+                            $scope.$apply(function () {
+                                TweenMax.to($('#draggableContainer'), 1.75, {
+                                    autoAlpha: 1,
+                                    ease: Power4.easeOut
+                                });
+                                TweenMax.set($('.flash-card-front-wrapper'), {
+                                    autoAlpha: 1
+                                });
+                                TweenMax.set($('.flash-card-back-wrapper'), {
+                                    autoAlpha: 0
+                                });
+                                TweenMax.set($('.flash-card-button'), {
+                                    autoAlpha: 0
+                                });
+                                TweenMax.set($('.flash-card-back-wrapper'), {
+                                    rotationY: -180
+                                });
+//                                TweenMax.set($('.flash-card-back-wrapper'), {
+//                                    backfaceVisibility: "hidden"
+//                                });
+                                TweenMax.set([$('.flash-card-content-back'), $('.flash-card-content-front')], {
+                                    backfaceVisibility: "hidden"
+                                });
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //get actuall height
+                                //////////////////////////////////////////////////////////////////////////////////////
+//                                $.each($('.flash-cards-object'), function () {
+//                                    var currentHeight = $(this).find('.flash-card-back-wrapper p').innerHeight();
+//                                    $(this).height(currentHeight);
+//                                    console.log(
+//                                            '\n::::::::::::::::::::::::::::::::::::::npFlashCards::data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                            '\n::currentHeight:', currentHeight,
+//                                            '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                            );
+//                                });
+//                                var maxHeight = Math.max.apply(null, $('.flash-card-content-back').map(function () {
+//                                    return $(this).outerHeight();
+//                                }).get());
+//                                var maxHeight = 800;
+//                                TweenMax.to($('.flash-cards-object'), 0.75, {
+//                                    force3D: true,
+//                                    height: maxHeight,
+//                                    ease: Power4.easeOut
+//                                });
+//                                var outerHeight = 0;
+//                                $('.flash-card-content-back').each(function () {
+//                                    outerHeight = $(this).outerHeight();
+//                                });
+//                                console.log(
+//                                        '\n::::::::::::::::::::::::::::::::::::::npFlashCards::data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                        '\n::maxHeight:', maxHeight,
+//                                        '\n::$(.flash-card-content-back):', $('.flash-card-content-back').height(),
+//                                        '\n::outerHeight:', outerHeight,
+//                                        '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                        );
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //finish ready check items
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                var winWidth = 0;
+                                setContainerDims();
+                                function setContainerDims() {
+                                    winWidth = parseInt($(window).width());
+                                    $("#flash-cards").css({
+                                        "width": winWidth
+                                    });
+                                }
+                                $(window).resize(function () {
+                                    setContainerDims();
+                                });
+                                TweenMax.to($('#draggableContainer'), 5, {
+                                    autoAlpha: 0
+                                });
+                            });
+                        });
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //offset method
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        function getOffsetRect(elem) {
+                            var box = elem.getBoundingClientRect();
+                            var body = document.body;
+                            var docElem = document.documentElement;
+                            var scrollTop = window.pageYOffset || docElem.scrollTop || body.scrollTop;
+                            var scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft;
+                            var clientTop = docElem.clientTop || body.clientTop || 0;
+                            var clientLeft = docElem.clientLeft || body.clientLeft || 0;
+                            var top = box.top + scrollTop - clientTop;
+                            var left = box.left + scrollLeft - clientLeft;
+                            return {top: Math.round(top), left: Math.round(left)};
+                        }
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //drag and throw vars
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        var front = '12003';
+                        var middle = '12002';
+                        var back = '12001';
+                        var flashCardsDraggable;
+                        var windowWidth;
+                        var maxScroll;
+                        var elementWrapper;
+                        var elementIteration;
+                        var sections;
+                        var elementWidth;
+                        var dragAreaWidth;
+                        var dragAreaLeftPadding;
+                        var nativeSCrl = true;
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //drag and throw conditionals & animation
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        function updateAnimation() {
+                            var windowCenter = $(window).width() / 2;
+                            for (var i = elementIteration.length - 1; i >= 0; i--) {
+                                TweenMax.set(elementIteration, {
+                                    transformPerspective: "900"
+                                });
+                                var currentIteration = elementIteration[i];
+                                var currentIterationWidth = currentIteration.offsetWidth;
+                                var currentIterationCenterWidth = (currentIterationWidth / 2);
+                                var itemsOffset = getOffsetRect(currentIteration);
+                                var itemsOffsetLeft = itemsOffset.left;
+                                var itemsOffsetCenter = (itemsOffsetLeft + currentIterationCenterWidth);
+                                var windowCenterOffsetOne = ($(".flash-cards-object").width() / 3);
+                                var windowCenterOffsetTwo = $(".flash-cards-object").width();
+                                console.log(
+                                        '\n::::::::::::::::::::::::::::::::::::::npFlashCards::data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                        '\n::windowCenterOffsetOne:', windowCenterOffsetOne,
+                                        '\n::windowCenterOffsetTwo:', windowCenterOffsetTwo,
+                                        '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                        );
+//                                var defaultHeight = '475px';
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //drag and throw CENTER item animation
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                if ((itemsOffsetCenter <= (windowCenter + windowCenterOffsetOne)) && (itemsOffsetCenter >= (windowCenter - windowCenterOffsetTwo))) {
+                                    TweenMax.to(currentIteration, 1.75, {
+                                        force3D: true,
+                                        top: 0,
+                                        marginLeft: '0em',
+                                        marginRight: '0em',
+                                        scale: 1,
+                                        z: '0',
+                                        ease: Power4.easeOut
+                                    });
+                                    TweenMax.to($(currentIteration).find('.flash-card-content-front'), 1.75, {
+                                        force3D: true,
+                                        marginLeft: 0,
+                                        marginRight: 0,
+                                        ease: Power4.easeOut
+                                    });
+                                    TweenMax.to($(currentIteration).find('.flash-card-overlay'), 1.75, {
+                                        force3D: true,
+                                        opacity: 0,
+                                        ease: Power4.easeOut
+                                    });
+                                    TweenMax.to($(currentIteration).find('.flash-card-button'), 1.75, {
+                                        autoAlpha: 1,
+                                        ease: Power4.easeOut
+                                    });
+                                    TweenMax.set(currentIteration, {
+                                        zIndex: front
+                                    });
+                                }
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //drag and throw RIGHT items animation
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                if ((itemsOffsetCenter >= (windowCenter + (windowCenterOffsetOne + 1))) && (itemsOffsetCenter <= (windowCenter + windowCenterOffsetTwo))) {
+                                    TweenMax.set(currentIteration, {
+                                        zIndex: middle
+                                    });
+                                    TweenMax.to(currentIteration, 1.75, {
+                                        force3D: true,
+                                        rotationY: 0,
+                                        marginLeft: '-7em',
+                                        marginRight: '7em',
+                                        scale: 0.9,
+                                        z: '-35',
+                                        ease: Power4.easeOut
+                                    });
+                                    TweenMax.to($(currentIteration).find('.flash-card-overlay'), 1.75, {
+                                        force3D: true,
+                                        opacity: 0.5,
+                                        ease: Power4.easeOut
+                                    });
+                                    TweenMax.to($(currentIteration).find('.flash-card-button'), 1.75, {
+                                        autoAlpha: 0,
+                                        ease: Power4.easeOut
+                                    });
+                                    TweenMax.to($(currentIteration).find('.flash-card-front-wrapper'), 1.75, {
+                                        autoAlpha: 1,
+                                        ease: Power4.easeOut
+                                    });
+                                    TweenMax.to($(currentIteration).find('.flash-card-back-wrapper'), 1.75, {
+                                        autoAlpha: 0,
+                                        ease: Power4.easeOut
+                                    });
+                                } else if (itemsOffsetCenter >= (windowCenter + (windowCenterOffsetTwo + 1))) {
+                                    TweenMax.set(currentIteration, {
+                                        zIndex: back
+                                    });
+                                    TweenMax.to(currentIteration, 1.75, {
+                                        force3D: true,
+                                        marginLeft: '-20em',
+                                        marginRight: '20em',
+                                        scale: 0.75,
+                                        z: '-70',
+                                        ease: Power4.easeOut
+                                    });
+                                    TweenMax.to($(currentIteration).find('.flash-card-overlay'), 1.75, {
+                                        force3D: true,
+                                        opacity: 0.75,
+                                        ease: Power4.easeOut
+                                    });
+                                    TweenMax.to($(currentIteration).find('.flash-card-button'), 1.75, {
+                                        autoAlpha: 0,
+                                        ease: Power4.easeOut
+                                    });
+                                }
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //drag and throw LEFT items animation
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                if ((itemsOffsetCenter <= (windowCenter - (windowCenterOffsetOne + 1))) && (itemsOffsetCenter >= (windowCenter - windowCenterOffsetTwo))) {
+                                    TweenMax.set(currentIteration, {
+                                        zIndex: middle
+                                    });
+                                    TweenMax.to(currentIteration, 1.75, {
+                                        force3D: true,
+                                        rotationY: 0,
+                                        marginRight: '-7em',
+                                        marginLeft: '7em',
+                                        scale: 0.9,
+                                        z: '-50',
+                                        ease: Power4.easeOut
+                                    });
+                                    TweenMax.to($(currentIteration).find('.flash-card-overlay'), 1.75, {
+                                        force3D: true,
+                                        opacity: 0.5,
+                                        ease: Power4.easeOut
+                                    });
+                                    TweenMax.to($(currentIteration).find('.flash-card-button'), 1.75, {
+                                        autoAlpha: 0,
+                                        ease: Power4.easeOut
+                                    });
+                                    TweenMax.to($(currentIteration).find('.flash-card-front-wrapper'), 1.75, {
+                                        autoAlpha: 1,
+                                        ease: Power4.easeOut
+                                    });
+                                    TweenMax.to($(currentIteration).find('.flash-card-back-wrapper'), 1.75, {
+                                        autoAlpha: 0,
+                                        ease: Power4.easeOut
+                                    });
+                                } else if (itemsOffsetCenter <= (windowCenter - (windowCenterOffsetTwo + 1))) {
+                                    TweenMax.set(currentIteration, {
+                                        zIndex: middle
+                                    });
+                                    TweenMax.to(currentIteration, 1.75, {
+                                        force3D: true,
+                                        z: '-70',
+                                        marginRight: '-20em',
+                                        marginLeft: '20em',
+                                        scale: 0.75,
+                                        ease: Power4.easeOut
+                                    });
+                                    TweenMax.to($(currentIteration).find('.flash-card-overlay'), 1.75, {
+                                        force3D: true,
+                                        opacity: 0.75,
+                                        ease: Power4.easeOut
+                                    });
+                                    TweenMax.to($(currentIteration).find('.flash-card-button'), 1.75, {
+                                        autoAlpha: 0,
+                                        ease: Power4.easeOut
+                                    });
+                                }
+                            }
+                        }
+                        function update() {
+                            var content;
+                            var dragContent;
+                            setTimeout(function () {
+                                $scope.$apply(function () {
+                                    windowWidth = window.innerWidth;
+                                    content = document.getElementById("flash-cards");
+                                    elementWrapper = document.getElementById("flash-cards-swipe-container");
+                                    elementIteration = document.getElementsByClassName("flash-cards-object");
+                                    sections = elementIteration.length;
+                                    maxScroll = content.scrollWidth - (content.offsetWidth / 2);
+                                    elementWidth = elementIteration[0].offsetWidth;
+                                    sections = elementIteration.length;
+                                    dragAreaLeftPadding = (windowWidth / 2) - (elementWidth / 2);
+                                    dragAreaWidth = (elementWidth * sections) + (dragAreaLeftPadding * 2);
+                                    TweenMax.set(elementWrapper, {
+                                        width: dragAreaWidth,
+                                        paddingLeft: dragAreaLeftPadding
+                                    });
+                                    dragContent = Draggable.get(content);
+                                    updateAnimation();
+                                });
+                            });
+                            elementWrapper = document.getElementById("flash-cards-swipe-container");
+                            content = document.getElementById("flash-cards");
+                            var dragContent = Draggable.get(content);
+                            function killTweens() {
+                                TweenMax.killTweensOf([dragContent.scrollProxy]);
+                            }
+                            content.addEventListener("DOMMouseScroll", killTweens);
+                            flashCardsDraggable = Draggable.create(content, {
+                                type: "scrollLeft",
+                                edgeResistance: 0.5,
+                                throwProps: true,
+                                snap: function (endValue) {
+                                    var step = elementWidth;
+                                    return Math.round(endValue / step) * -step;
+                                },
+                                onDrag: function (e) {
+                                    updateAnimation();
+                                    $scope.onDrag();
+                                    nativeSCrl = false;
+                                },
+                                onThrowUpdate: function (e) {
+                                    updateAnimation();
+                                    nativeSCrl = true;
+                                },
+                                onThrowComplete: function () {
+                                    nativeSCrl = true;
+                                }
+                            });
+                        }
+                        update();
+                        function NScrollSNAP(Array, val) {
+                            var SPoint, range = 400, i = 0;
+                            for (i in Array) {
+                                var MResult = Math.abs(val - Array[i]);
+                                if (MResult < range) {
+                                    range = MResult;
+                                    SPoint = Array[i];
+                                }
+                            }
+                            return SPoint;
+                        }
+                        function NScrollSnap() {
+                            if (nativeSCrl) {
+//                                console.log(
+//                                        '\n::::::::::::::::::::::::::::::::::::::npFlashCards::NScrollSnap:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                        '\n::nativeSCrl:', nativeSCrl,
+//                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                        );
+                                var S = NScrollSNAP(flashCardsDraggable[0].vars.snap,
+                                        flashCardsDraggable[0].scrollProxy.scrollTop());
+                                TweenMax.to(flashCardsDraggable[0].scrollProxy.element,
+                                        0.5, {
+                                            scrollTo: {x: S}
+                                        });
+                            }
+                        }
+                        document.getElementById("flash-cards").onscroll = function () {
+                            TweenMax.killDelayedCallsTo(NScrollSnap);
+                            TweenMax.delayedCall(0.35, NScrollSnap);
+                        };
+                    }
+                };
+            })
+            .directive('mediaelement', npMediaElementDirective)
+            /** @ngInject */
+            .run(
+                    function ($log, $rootScope) {
+                        $log.debug('npFlashCards::component loaded!');
+                    }
+            );
+})();
+
+/* jshint -W003, -W117 */
+(function () {
+
+  'use strict';
+  angular
+    .module('newplayer.component')
+  /** @ngInject */
+    .controller('npMatchController',
+    function ($log, $scope, $rootScope, $timeout, ManifestService, $sce, sliders) {
+      var cmpData = $scope.component.data;
+      $log.debug('npQuestion::data', cmpData);
+
+      this.id = cmpData.id;
+      this.content = $sce.trustAsHtml(cmpData.content);
+      this.type = cmpData.type;
+      this.feedback = '';
+      this.canContinue = false;
+      var self = this;
+
+      var feedback = cmpData.feedback;
+
+      this.changed = function () {
+        $log.debug('npQuestion::answer changed');
+        if (feedback.immediate) {
+          this.feedback = '';
+        }
+      };
+
+      this.evaluate = function () {
+        var correct = true;
+        var allCorrect = true;
+        $log.debug('npQuestion::evaluate:', this.answer);
+        var answer;
+        _.each(sliders, function (slide) {
+          var s = slide.currSlide.holder;
+          var cmp = ManifestService.getComponent(s.children().attr('idx'));
+          var cmpData  = cmp.data;
+          if (!answer) {
+            answer = cmpData.correct;
+            return;
+          } else {
+            if (cmpData.correct === answer) {
+              return;
+            }
+           correct = false;
+          }
+        });
+
+        $log.debug('npMatch::evaluate:isCorrect', correct);
+
+        // set by ng-model of npAnswer's input's
+        if (feedback.immediate) {
+          if (correct) {
+            $rootScope.$emit('slider-disable-wrong');
+            this.feedback = feedback.correct;
+          } else {
+            this.feedback = feedback.incorrect;
+          }
+        }
+
+        // timeout and wait for dom manipulation to finish
+        $timeout(function () {
+          // check that alll are matched
+          _.each(sliders[0].slidesJQ, function (slide) {
+            if (!slide.data('correct')) {
+              allCorrect = false;
+              return false;
+            }
+          });
+
+          if (allCorrect) {
+              self.canContinue = true;
+          }
+        });
+      };
+
+      this.nextPage = function (evt) {
+        // TODO - have a better way to go to the next page in the manifest service
+        // si: I'd like to see a next page and previous page methods
+        ManifestService.goToNextPage();
+        evt.preventDefault();
+      };
+    }
+  )
+
+  /** @ngInject */
+    .run(
+    function ($log, $rootScope) {
+      $log.debug('npQuestion::component loaded!');
+    }
+  );
+})();
+
+/* jshint -W003, -W117 */
+(function () {
+
+  'use strict';
+  angular
+    .module('newplayer.component')
+
+  /** @ngInject */
+    .controller('npMatchRowController',
+    function ($log, $scope, $sce) {
+      var cmpData = $scope.component.data || {};
+      $log.debug('npMatchRow::data', cmpData);
+
+      this.id = cmpData.id;
+      this.label = $sce.trustAsHtml(cmpData.label);
+      // shuffle em up
+      $scope.components = _.shuffle($scope.components);
+    }
+  )
+
+  /** @ngInject */
+    .run(
+    function ($log, $rootScope) {
+      $log.debug('npMatchRow::component loaded!');
+    }
+  );
+})();
+
+/* jshint -W003, -W117, -W064 */
+(function () {
+    'use strict';
+    angular
+            .module('newplayer.component')
+            /** @ngInject */
+            .controller('npTriviaController',
+                    function ($log, $scope, $rootScope, $timeout, ManifestService, $sce) {
+                        var vm = this;
+                        var cmpData = $scope.component.data;
+                        var pagesLen = $scope.components.length;
+                        $log.debug('npTrivia::data', cmpData);
+                        vm.id = cmpData.id;
+                        vm.content = $sce.trustAsHtml(cmpData.content);
+                        vm.type = cmpData.type;
+                        vm.currentPage = 0;
+                        vm.feedback = '';
+                        vm.assment = AssessmentService();
+                        vm.assment.setRequirements(pagesLen, pagesLen, null);
+                        vm.seenComponents = _.shuffle($scope.components);
+                        vm.pageId = vm.seenComponents[0].data.id;
+                        vm.difficulty = vm.seenComponents[0].components[0].data.difficulty || 0;
+                        // go to the first page, since pages were shuffled
+                        $timeout(function () {
+                            ManifestService.setPageId(vm.pageId);
+                        });
+                        $rootScope.$on('question.answered', function (evt, correct) {
+                            if (correct) {
+                                vm.assment.pageViewed();
+                                vm.currentPage = vm.assment.getPageStats().viewed.total;
+                                vm.pageId = vm.seenComponents[vm.currentPage] ? vm.seenComponents[vm.currentPage].data.id : '';
+                                ManifestService.setPageId(vm.pageId);
+                                $rootScope.$emit('spin-to-win');
+                                // end of the trivia questions
+                                // TODO - add this message the template and set the two values
+                                // here in the controller
+                                // NOTE: This text should come from the app
+                                if (!vm.pageId) {
+                                    vm.feedback = 'Good job, you scored 5,000 points out of 7,500 possible.';
+                                }
+                            }
+                        });
+                    }
+            )
+            /** @ngInject */
+            .run(
+                    function ($log, $rootScope) {
+                        $log.debug('npTrivia::component loaded!');
+                    }
+            );
+})();
+
 (function() {
   'use strict';
 
@@ -1981,16 +3632,22 @@ function AssessmentService ( $log ) {
     });
 })();
 
+/* jshint -W004 */
 (function () {
 
   'use strict';
   angular
     .module('newplayer')
-    .controller('AppController', AppController);
+    .controller('AppController', AppController)
+    .value('sliders', {});
 
   /** @ngInject */
-  function AppController($log, AssessmentService/*, ImagePreloadFactory, HomeService, $scope*/) {
+  function AppController($log, $scope, AssessmentService/*, ImagePreloadFactory, HomeService, $scope*/) {
     $log.debug('AppController::Init');
+    var vm = this;
+    vm.doTrack = function (event, data) {
+      $log.warn('AppController', event, data);
+    };
 
     //AssessmentService.setRequirements(10,5,0.8);
     //
@@ -2420,226 +4077,355 @@ function AssessmentService ( $log ) {
   }
 })();
 
+/* jshint -W003,-W004, -W038, -W117 */
+
 (function () {
 
-  'use strict';
-  angular
-    .module('newplayer')
-    .directive('npLayer', NpLayer);
+    'use strict';
+    angular
+            .module('newplayer')
+            .directive('npLayer', NpLayer);
 
-  /** @ngInject */
-  function NpLayer($log/*,  $timeout*/) {
-    $log.debug('NpLayer::Init\n');
+    /** @ngInject */
+    function NpLayer($log/*,  $timeout*/) {
+        $log.debug('NpLayer::Init\n');
 
-    var directive = {
-      restrict: 'E',
-      scope: {
-        manifestId: '@npId',
-        manifestURL: '@npUrl',
-        overrideURL: '@npOverrideUrl',
-        overrideData: '@npOverrideData',
-        language: '@npLang'
-      },
-      //compile: function (tElement, tAttrs, transclude, ConfigService)
-      //{
-      //  /** @ngInject */
-      //  return function ($scope, $element, $attributes)
-      //  {
-      //    $log.info('ComponentDirective::compile!', $attributes);
-      //    var vm = $scope.vm;
-      //
-      //
-      //
-      //    parseComponent( $scope, $element, $attributes );
-      //  };
-      //},
-      controller: NpLayerController,
-      controllerAs: 'vm',
-      bindToController: true
-    };
+        var directive = {
+            restrict: 'E',
+            scope: {
+                manifestId: '@npId',
+                manifestURL: '@npUrl',
+                overrideURL: '@npOverrideUrl',
+                overrideData: '@npOverrideData',
+                language: '@npLang',
+                manifestData: '=?',
+                onTrackService: '&npAnalyticsService'
+            },
+            //compile: function (tElement, tAttrs, transclude, ConfigService)
+            //{
+            //  /** @ngInject */
+            //  return function ($scope, $element, $attributes)
+            //  {
+            //    $log.info('ComponentDirective::compile!', $attributes);
+            //    var vm = $scope.vm;
+            //
+            //
+            //
+            //    parseComponent( $scope, $element, $attributes );
+            //  };
+            //},
+            controller: NpLayerController,
+            controllerAs: 'vm',
+            bindToController: true
+        };
 
-    return directive;
-  }
-
-  /** @ngInject */
-  function NpLayerController($scope, $rootScope, $element, $attrs, $log, $compile,
-                             APIService, ComponentService, ConfigService, ManifestService) {
-    var vm = this;
-    vm.manifestData = null;
-    vm.overrideData = null;
-
-    // $rootScope.$on('npLangChanged', npLangChanged);
-    // $rootScope.$on('npPageWantsChange', npPageChanged);
-    //.on('npManifestChanged', npManifestChanged)
-
-    ConfigService.setConfigData(vm);
-    loadManifests();
-
-    //function npManifestChanged(event, toManifest, toPage) {
-    //
-    //}
-    function npLangChanged(event, toLang) {
-      $log.info('npLangChanged', event, toLang);
-      if (!!toLang) {
-        ManifestService.setLang(toLang);
-        parseComponent($scope, $element, $attrs, $compile);
-      }
+        return directive;
     }
 
-    function npPageWantsChange(event, toPage) {
-      $log.info('npPageWantsChange', event, toPage);
-      if (!!toPage) {
-        ManifestService.setPageId(toPage);
-        //$element.empty();
-        //parseComponent($scope, $element, $attrs, $compile);
-      }
-    }
+    /** @ngInject */
+    function NpLayerController($scope, $rootScope, $element, $attrs, $log, $compile,
+            APIService, ComponentService, ConfigService, ManifestService, TrackingService) {
+        var vm = this;
+        vm.manifestData = null;
+        vm.overrideData = null;
 
-    //$log.info('NpLayer ConfigService:', ConfigService);
+        // $rootScope.$on('npLangChanged', npLangChanged);
+        // $rootScope.$on('npPageWantsChange', npPageChanged);
+        //.on('npManifestChanged', npManifestChanged)
 
-    /*
-     * ---------------- supporting functions INSIDE function to keep scope
-     */
+        ConfigService.setConfigData(vm);
+        loadManifests();
+        TrackingService.setCallback(vm.onTrackService);
 
-    function loadManifests() {
-      var manifestURL = ConfigService.getManifestURL();
-      APIService.getData(manifestURL).then(function (md) {
-        vm.manifestData = md;
-
-        var overrideURL = ConfigService.getOverrideURL();
-
-        if( !!vm.language ) {
-          ManifestService.setLang(lang);
-        }
-
-        if (!!overrideURL) {
-          $log.info('NpLayer: getting override data from:', overrideURL);
-          ConfigService.getOverrideData(overrideURL).then(function (od) {
-            vm.overrideData = od;
-            renderComponent(vm, $scope, $element, $attrs, $compile);
-          });
-
-        } else {
-          $log.info('NpLayer: init manifest', vm.manifestData);
-          renderComponent(vm, $scope, $element, $attrs, $compile);
-        }
-      });
-    }
-
-    $rootScope.$on('npReplaceManifest', function(obj, newManifest) {
-      $log.info('NpLayer:changeManifestTo | ', newManifest);
-      ConfigService.setManifestURL(newManifest);
-      loadManifests();
-    });
-
-
-    function renderComponent(vm, $scope, $element, $attrs, $compile) {
-      $element.empty();
-      ManifestService.initialize(vm.manifestData, vm.overrideData);
-      parseComponent($scope, $element, $attrs, $compile);
-    }
-
-    function parseComponent($scope, $element, $attributes, $compile) {
-      var cmp = ManifestService.getComponent($attributes.idx);
-      var cmpIdx = cmp.idx || [0];
-
-      $log.debug('NpLayer::parseComponent', cmp, cmpIdx, $attributes);
-      if (!!cmp) {
-
-        $log.debug('NpLayer::parseComponent then', cmp, cmpIdx);
-        // reset scope!!!
-        $scope.subCmp = false;
-        $scope.component = cmp;
-        $scope.components = null;
-
-        $scope.cmpIdx = cmpIdx.toString();
-
-        $element.attr('data-cmpType', cmp.type);
-        $element.addClass('np-cmp-sub');
-
-        if (!!cmp.data) {
-          // set known data values
-          var attrId = cmp.data.id;
-          if (!attrId) {
-            attrId = cmp.type + ':' + cmpIdx.toString();
-          }
-          // id must start with letter (according to HTML4 spec)
-          if (/^[^a-zA-Z]/.test(attrId)) {
-            attrId = 'np' + attrId;
-          }
-          // replace invalid id characters (according to HTML4 spec)
-          attrId = attrId.replace(/[^\w\-.:]/g, '_');
-          //$element.attr( 'id', attrId );
-          if (!cmp.data.id) {
-            cmp.data.id = attrId;
-          }
-          $element.attr('id', 'np_' + attrId);
-
-          var attrClass = cmp.data['class'];
-          if (angular.isString(attrClass)) {
-            attrClass = attrClass.replace(/[^\w\-.:]/g, '_');
-            $element.addClass('np_' + attrClass);
-          }
-
-          var attrPlugin = cmp.data.plugin;
-          if (angular.isString(attrPlugin)) {
-            attrPlugin = attrPlugin.replace(/[^\w\-.:]/g, '_');
-          }
-        }
-        if (!!cmp.components && cmp.components.length > 0) {
-          $log.debug('NpLayer::parseComponent - HAS SUBS:', cmp);
-          $scope.subCmp = true;
-          $scope.components = cmp.components;
-        }
-
-        var templateData = ComponentService.getTemplate(cmp)
-        $log.debug('npComponent::parseComponent: template', templateData);
-
-        // modify template before compiling!?
-        var tmpTemplate = document.createElement('div');
-        tmpTemplate.innerHTML = templateData;
-
-        var ngWrapperEl, ngMainEl, ngSubEl;
-        ngWrapperEl = angular.element(tmpTemplate.querySelectorAll('.np-cmp-wrapper'));
-        ngMainEl = angular.element(tmpTemplate.querySelectorAll('.np-cmp-main'));
-        ngSubEl = angular.element(tmpTemplate.querySelectorAll('.np-cmp-sub'));
-        if (ngWrapperEl.length) {
-          ngWrapperEl.attr('id', attrId);
-          ngWrapperEl.addClass(attrPlugin);
-
-          // pass all "data-*" attributes into element
-          angular.forEach(cmp.data, function (val, key) {
-            if (angular.isString(key) && key.indexOf('data-') === 0) {
-              ngWrapperEl.attr(key, val);
+        //function npManifestChanged(event, toManifest, toPage) {
+        //
+        //}
+        function npLangChanged(event, toLang) {
+            $log.info('npLangChanged', event, toLang);
+            if (!!toLang) {
+                ManifestService.setLang(toLang);
+                parseComponent($scope, $element, $attrs, $compile);
             }
-          });
         }
-        if (ngMainEl.length) {
-          if (!ngWrapperEl.length) {
-            ngMainEl.attr('id', attrId);
-            ngMainEl.addClass(attrPlugin);
 
-            // pass all "data-*" attributes into element
-            angular.forEach(cmp.data, function (val, key) {
-              if (angular.isString(key) && key.indexOf('data-') === 0) {
-                ngMainEl.attr(key, val);
-              }
+        function npPageWantsChange(event, toPage) {
+            $log.info('npPageWantsChange', event, toPage);
+            if (!!toPage) {
+                ManifestService.setPageId(toPage);
+                //$element.empty();
+                //parseComponent($scope, $element, $attrs, $compile);
+            }
+        }
+
+        //$log.info('NpLayer ConfigService:', ConfigService);
+
+        /*
+         * ---------------- supporting functions INSIDE function to keep scope
+         */
+
+        function loadManifests() {
+            var manifestURL = ConfigService.getManifestURL();
+            APIService.getData(manifestURL).then(function (md) {
+                vm.manifestData = md;
+
+                var overrideURL = ConfigService.getOverrideURL();
+
+                if (!!vm.language) {
+                    ManifestService.setLang(lang);
+                }
+
+                if (!!overrideURL) {
+                    $log.info('NpLayer: getting override data from:', overrideURL);
+                    ConfigService.getOverrideData(overrideURL).then(function (od) {
+                        vm.overrideData = od;
+                        renderComponent(vm, $scope, $element, $attrs, $compile);
+                    });
+
+                } else {
+                    $log.info('NpLayer: init manifest', vm.manifestData);
+                    renderComponent(vm, $scope, $element, $attrs, $compile);
+                }
             });
-          }
-          ngMainEl.addClass(attrClass);
         }
 
-        var compiledTemplate = $compile(tmpTemplate.innerHTML);
-        compiledTemplate($scope, function (clone) {
-          $element.append(clone);
+        $rootScope.$on('npReplaceManifest', function (obj, newManifest) {
+            $log.info('NpLayer:changeManifestTo | ', newManifest);
+            ConfigService.setManifestURL(newManifest);
+            loadManifests();
         });
 
-        //  }
-        //);
-      }
-    }
-  }
 
+        function renderComponent(vm, $scope, $element, $attrs, $compile) {
+            $element.empty();
+            ManifestService.initialize(vm.manifestData, vm.overrideData);
+            parseComponent($scope, $element, $attrs, $compile);
+        }
+
+        function parseComponent($scope, $element, $attributes, $compile) {
+            var cmp = ManifestService.getComponent($attributes.idx);
+            var cmpIdx = cmp.idx || [0];
+
+            $log.debug('NpLayer::parseComponent', cmp, cmpIdx, $attributes);
+            if (!!cmp) {
+
+                $log.debug('NpLayer::parseComponent then', cmp, cmpIdx);
+                // reset scope!!!
+                $scope.subCmp = false;
+                $scope.component = cmp;
+                $scope.components = null;
+
+                $scope.cmpIdx = cmpIdx.toString();
+
+                $element.attr('data-cmpType', cmp.type);
+                $element.addClass('np-cmp-sub');
+
+                if (!!cmp.data) {
+                    // set known data values
+                    var attrId = cmp.data.id;
+                    if (!attrId) {
+                        attrId = cmp.type + ':' + cmpIdx.toString();
+                    }
+                    // id must start with letter (according to HTML4 spec)
+                    if (/^[^a-zA-Z]/.test(attrId)) {
+                        attrId = 'np' + attrId;
+                    }
+                    // replace invalid id characters (according to HTML4 spec)
+                    attrId = attrId.replace(/[^\w\-.:]/g, '_');
+                    //$element.attr( 'id', attrId );
+                    if (!cmp.data.id) {
+                        cmp.data.id = attrId;
+                    }
+                    $element.attr('id', 'np_' + attrId);
+
+                    var attrClass = cmp.data['class'];
+                    if (angular.isString(attrClass)) {
+                        attrClass = attrClass.replace(/[^\w\-.:]/g, '_');
+                        $element.addClass('np_' + attrClass);
+                    }
+
+                    var attrPlugin = cmp.data.plugin;
+                    if (angular.isString(attrPlugin)) {
+                        attrPlugin = attrPlugin.replace(/[^\w\-.:]/g, '_');
+                    }
+                }
+                if (!!cmp.components && cmp.components.length > 0) {
+                    $log.debug('NpLayer::parseComponent - HAS SUBS:', cmp);
+                    $scope.subCmp = true;
+                    $scope.components = cmp.components;
+                }
+
+                var templateData = ComponentService.getTemplate(cmp);
+                $log.debug('npComponent::parseComponent: template', templateData);
+
+                // modify template before compiling!?
+                var tmpTemplate = document.createElement('div');
+                tmpTemplate.innerHTML = templateData;
+
+                var ngWrapperEl, ngMainEl, ngSubEl;
+                ngWrapperEl = angular.element(tmpTemplate.querySelectorAll('.np-cmp-wrapper'));
+                ngMainEl = angular.element(tmpTemplate.querySelectorAll('.np-cmp-main'));
+                ngSubEl = angular.element(tmpTemplate.querySelectorAll('.np-cmp-sub'));
+                if (ngWrapperEl.length) {
+                    ngWrapperEl.attr('id', attrId);
+                    ngWrapperEl.addClass(attrPlugin);
+
+                    // pass all "data-*" attributes into element
+                    angular.forEach(cmp.data, function (val, key) {
+                        if (angular.isString(key) && key.indexOf('data-') === 0) {
+                            ngWrapperEl.attr(key, val);
+                        }
+                    });
+                }
+                if (ngMainEl.length) {
+                    if (!ngWrapperEl.length) {
+                        ngMainEl.attr('id', attrId);
+                        ngMainEl.addClass(attrPlugin);
+
+                        // pass all "data-*" attributes into element
+                        angular.forEach(cmp.data, function (val, key) {
+                            if (angular.isString(key) && key.indexOf('data-') === 0) {
+                                ngMainEl.attr(key, val);
+                            }
+                        });
+                    }
+                    ngMainEl.addClass(attrClass);
+                }
+
+                var compiledTemplate = $compile(tmpTemplate.innerHTML);
+                compiledTemplate($scope, function (clone) {
+                    $element.append(clone);
+                });
+
+                //  }
+                //);
+            }
+        }
+    }
+
+})();
+
+/* jshint -W003,-W004, -W038, -W117, -W106, -W026, -W040 */
+(function () {
+    'use strict';
+    angular
+            .module('newplayer')
+            .directive('npPriceIsRightSpinner', npPriceIsRightSpinner);
+    /** @ngInject */
+    function npPriceIsRightSpinner($log, $timeout, $rootScope) {
+        $log.debug('npPriceIsRightSpinner::Init\n');
+        var directive = {
+            restrict: 'E',
+            scope: {
+                spinTime: '@',
+                delayTime: '@',
+                shuffleSpaces: '@'
+            },
+            link: link,
+            controller: npPriceIsRightSpinnerController,
+            controllerAs: 'vm',
+            transclude: true,
+            replace: true,
+            template: '<div class="wheels"><div class="wheel" ng-transclude></div></div>'
+        };
+        return directive;
+        function link(scope, element, attrs) {
+            var spin_time = attrs.spintime || 2000,
+                    delay_time = attrs.delaytime || 1000,
+                    shuffle_spaces = attrs.shufflespaces || true;
+            var $wheel = element.find('.wheel');
+            var $wheel_div = element.find('.wheel div');
+            TweenMax.set($wheel, {
+                alpha: 0
+            });
+            function shuffle() {
+                element.find('.wheel div[data-pick="true"]').removeAttr('data-pick');
+                var difficulty = element.data('difficulty');
+                element.find('.wheel div:eq(' + difficulty + ')').attr('data-pick', 'true');
+                if (shuffle_spaces) {
+                    var spaces = element.find('.wheel div').detach();
+                    element.find('.wheel').append(_.shuffle(spaces));
+                }
+            }
+            function spin() {
+                var $choice = element.find('.wheel div[data-pick="true"]').remove();
+                element.find('.wheel').append($choice);
+                //////////////////////////////////////////////////////////////////////////////////////
+                // using clipping now :: no spin for you! //
+                //////////////////////////////////////////////////////////////////////////////////////
+                TweenMax.to($choice, .25, {
+                    alpha: 0
+                });
+                TweenMax.to($wheel, .25, {
+                    alpha: 0
+                });
+                if (!Modernizr.csstransforms3d) {
+                    element.find('.wheel').append(element.find('.wheel div').clone());
+                    element.find('.wheel div').css({
+                        'position': 'relative',
+                        'margin-bottom': '0px'
+                    });
+                    element.find('.wheel').animate({"top": "-=1250px"}, 5000);
+                    return;
+                }
+                TweenMax.set($wheel, {
+                    transformStyle: 'preserve-3d',
+                    alpha: 0
+                });
+                _.each(element.find('.wheel div'), function (elem, index) {
+//                    console.log(
+//                            '\n::::::::::::::::::::::::::::::::::::::npSpinner::data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                            '\n::index::', index,
+//                            '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                            );
+                    //////////////////////////////////////////////////////////////////////////////////////
+                    // adjust index amount (number in template) vs numberDisplayed to detirmine facete 
+                    // number displayed.
+                    //////////////////////////////////////////////////////////////////////////////////////
+                    var numberDisplayed = 20;
+                    TweenMax.to(elem, 0, {
+                        rotationX: (numberDisplayed * index),
+                        transformOrigin: '0 10 -200px'
+                    });
+                });
+                //////////////////////////////////////////////////////////////////////////////////////
+                // test code for use in the console, select the
+                // s='10% 10% -100px';e='10% 10% -100px';wheel = $('.wheel');TweenMax.fromTo(wheel, 5, 
+                // {rotationX:-360,transformOrigin:s}, {rotationX:0,transformOrigin:e})
+                //////////////////////////////////////////////////////////////////////////////////////
+                var transformOrigin = '0% 5% -200px';
+                TweenMax.fromTo($wheel, 5, {
+                    alpha: 0,
+                    rotationX: 900,
+                    transformOrigin: transformOrigin
+                }, {
+                    alpha: 1,
+                    rotationX: 0,
+                    transformOrigin: transformOrigin
+//                    ease: Elastic.easeOut.config(1, 0.3)
+                });
+                TweenMax.to($choice, .25, {
+                    alpha: 1,
+                    ease: Power3.easeOut
+                });
+            }
+            $timeout(function () {
+                shuffle();
+                spin();
+            }, delay_time);
+            function spinAgain() {
+                shuffle();
+                spin();
+            }
+            $rootScope.$on('spin-to-win', spinAgain);
+        }
+    }
+    /** @ngInject */
+    function npPriceIsRightSpinnerController($scope, $rootScope) {
+        var vm = this;
+        init();
+        function init() {
+        }
+    }
 })();
 
 angular.module('newplayer').run(['$templateCache', function($templateCache) {
@@ -2667,88 +4453,216 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "<div class=\"debug\">\n" +
     "    <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
     "</div>\n" +
-    "\n" +
-    "<div ng-if=\"npQuestion.type === 'radio'\" class=\"np-cmp-wrapper {{component.type}} radio\" ng-controller=\"npAnswerController as npAnswer\">\n" +
-    "\n" +
+    "<div ng-if=\"npQuestion.type === 'radio'\" class=\"row np-cmp-wrapper {{component.type}} radio answer-wrapper\" ng-controller=\"npAnswerController as npAnswer\">\n" +
+    "    <div type=\"radio\" class=\"col-sm-1 npAnswer-radio np-cmp-main answer-radio\" name=\"radio\" ng-model=\"npQuestion.answer\" value=\"{{component.idx}}\" id=\"{{npAnswer.id}}\" ng-click=\"npQuestion.changed(npAnswer.id)\">\n" +
+    "        <div class=\"checkbox-box\">\n" +
+    "            <svg  version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
+    "                <style type=\"text/css\">\n" +
+    "                    <![CDATA[\n" +
+    "                    .st0{fill:url(#SVGID_1_);}\n" +
+    "                    .st1{display:inline;}\n" +
+    "                    .st2{display:none;}\n" +
+    "                    ]]>\n" +
+    "                </style>\n" +
+    "                <g id=\"Layer_2\">\n" +
+    "                    <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"0.8359\" y1=\"0.9399\" x2=\"367.8515\" y2=\"221.4724\">\n" +
+    "                        <stop  offset=\"0\" style=\"stop-color:#CAA04C\"/>\n" +
+    "                        <stop  offset=\"0.3497\" style=\"stop-color:#F8E4AA\"/>\n" +
+    "                        <stop  offset=\"0.638\" style=\"stop-color:#CAA04D\"/>\n" +
+    "                        <stop  offset=\"0.9816\" style=\"stop-color:#F3DB7E\"/>\n" +
+    "                    </linearGradient>\n" +
+    "                    <rect fill=\"url(#MyGradient)\" stroke=\"url(#SVGID_1_)\" vector-effect=\"non-scaling-stroke\" stroke-width=\"3\" x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
+    "                </g>\n" +
+    "            </svg>\n" +
+    "        </div>\n" +
+    "        <div class=\"checkbox-x\">\n" +
+    "            <svg version=\"1.0\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"22.121px\" height=\"22.121px\" viewBox=\"796.393 809.141 22.121 22.121\" style=\"enable-background:new 796.393 809.141 22.121 22.121;\" xml:space=\"preserve\">\n" +
+    "                <g>\n" +
+    "                    <line style=\"fill:none;stroke:#040A2B;stroke-width:3;stroke-miterlimit:10;\" x1=\"797.453\" y1=\"830.201\" x2=\"817.453\" y2=\"810.201\"/>\n" +
+    "                    <line style=\"fill:none;stroke:#040A2B;stroke-width:3;stroke-miterlimit:10;\" x1=\"817.453\" y1=\"830.201\" x2=\"797.453\" y2=\"810.201\"/>\n" +
+    "                </g>\n" +
+    "            </svg>\n" +
+    "        </div> \n" +
+    "    </div>\n" +
+    "    <div class=\"col-sm-10\">\n" +
+    "        <span class=\"npAnswer-label answer-text p\" for=\"{{npAnswer.id}}_input\" ng-bind-html=\"npAnswer.label\"></span>\n" +
+    "    </div>\n" +
+    "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "</div>\n" +
+    "<!--<div ng-if=\"npQuestion.type === 'radio'\" class=\"np-cmp-wrapper {{component.type}} radio\" ng-controller=\"npAnswerController as npAnswer\">\n" +
     "    <label>\n" +
     "        <input type=\"radio\" class=\"npAnswer-radio np-cmp-main \" name=\"radio\" ng-model=\"npQuestion.answer\" value=\"{{component.idx}}\" id=\"{{npAnswer.id}}_input\" ng-change=\"npQuestion.changed()\" />\n" +
-    "        <span class=\"npAnswer-label\" for=\"{{npAnswer.id}}_input\" ng-bind-html=\"npAnswer.label\" ></span>\n" +
-    "\n" +
+    "        <span class=\"npAnswer-label answer-text-radio\" for=\"{{npAnswer.id}}_input\" ng-bind-html=\"npAnswer.label\" ></span>\n" +
     "    </label>\n" +
-    "\n" +
     "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
-    "\n" +
-    "</div>\n" +
-    "\n" +
-    "<div ng-if=\"npQuestion.type === 'checkbox'\" class=\"np-cmp-wrapper {{component.type}} checkbox\" ng-controller=\"npAnswerController as npAnswer\">\n" +
-    "\n" +
-    "    <label>\n" +
-    "        <input type=\"checkbox\" class=\"npAnswer-checkbox np-cmp-main \" name=\"checkbox{{npAnswer.id}}\" ng-model=\"npQuestion.answer[component.idx]\" value=\"{{component.idx}}\" id=\"{{npAnswer.id}}_input\" ng-change=\"npQuestion.changed()\" />\n" +
-    "        <span class=\"npAnswer-label\" for=\"{{npAnswer.id}}_input\" ng-bind-html=\"npAnswer.label\"></span>\n" +
-    "    </label>\n" +
-    "\n" +
-    "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
-    "\n" +
-    "</div>\n" +
-    "\n" +
-    "\n" +
-    "<div ng-if=\"npQuestion.type === 'text'\" class=\"np-cmp-wrapper {{component.type}} input-group\" ng-controller=\"npAnswerController as npAnswer\">\n" +
-    "\n" +
-    "    <!--<label class=\"npAnswer-label \" for=\"{{npAnswer.id}}_input\" ng-bind-html=\"npAnswer.label\"></label>-->\n" +
-    "    <span class=\"npAnswer-label input-group-addon\" for=\"{{npAnswer.id}}_input\" ng-bind-html=\"npAnswer.label\"></span>\n" +
-    "    <input type=\"text\" class=\"npAnswer-text np-cmp-main form-control\" name=\"text{{npAnswer.id}}\" ng-model=\"npQuestion.answer\" value=\"\" id=\"{{npAnswer.id}}_input\" ng-change=\"npQuestion.changed()\" />\n" +
-    "\n" +
-    "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
-    "\n" +
-    "</div>\n" +
-    "\n"
-  );
-
-
-  $templateCache.put('scripts/component/npAudio/npAudio.html',
-    "<div class=\"{{component.type}}\" ng-controller=\"npAudioController as npAudio\" id=\"{{npAudio.id}}\">\n" +
-    "\n" +
-    "    <div class=\"debug\">\n" +
-    "        <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
+    "</div>-->\n" +
+    "<div ng-if=\"npQuestion.type === 'checkbox'\" ng-checked=\"false\"class=\"row np-cmp-wrapper {{component.type}} checkbox answer-wrapper\" ng-controller=\"npAnswerController as npAnswer\">\n" +
+    "    <div type=\"checkbox\" class=\"col-xs-1 npAnswer-checkbox np-cmp-main answer-checkbox\" name=\"checkbox{{npAnswer.id}}\" ng-model=\"npQuestion.answer[component.idx]\" value=\"{{component.idx}}\" id=\"{{npAnswer.id}}\" ng-click=\"npQuestion.changed($event)\">\n" +
+    "        <div class=\"checkbox-box\">\n" +
+    "            <svg  version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
+    "                <style type=\"text/css\">\n" +
+    "                    <![CDATA[\n" +
+    "                    .st0{fill:url(#SVGID_1_);}\n" +
+    "                    .st1{display:inline;}\n" +
+    "                    .st2{display:none;}\n" +
+    "                    ]]>\n" +
+    "                </style>\n" +
+    "                <g id=\"Layer_2\">\n" +
+    "                    <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"0.8359\" y1=\"0.9399\" x2=\"367.8515\" y2=\"221.4724\">\n" +
+    "                        <stop  offset=\"0\" style=\"stop-color:#CAA04C\"/>\n" +
+    "                        <stop  offset=\"0.3497\" style=\"stop-color:#F8E4AA\"/>\n" +
+    "                        <stop  offset=\"0.638\" style=\"stop-color:#CAA04D\"/>\n" +
+    "                        <stop  offset=\"0.9816\" style=\"stop-color:#F3DB7E\"/>\n" +
+    "                    </linearGradient>\n" +
+    "                    <rect fill=\"url(#MyGradient)\" stroke=\"url(#SVGID_1_)\" vector-effect=\"non-scaling-stroke\" stroke-width=\"3\" x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
+    "                </g>\n" +
+    "            </svg>\n" +
+    "        </div>\n" +
+    "        <div class=\"checkbox-x\">\n" +
+    "            <svg version=\"1.0\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"22.121px\" height=\"22.121px\" viewBox=\"796.393 809.141 22.121 22.121\" style=\"enable-background:new 796.393 809.141 22.121 22.121;\" xml:space=\"preserve\">\n" +
+    "                <g>\n" +
+    "                    <line style=\"fill:none;stroke:#9a7d46;stroke-width:2;stroke-miterlimit:10;\" x1=\"797.453\" y1=\"830.201\" x2=\"817.453\" y2=\"810.201\"/>\n" +
+    "                    <line style=\"fill:none;stroke:#9a7d46;stroke-width:2;stroke-miterlimit:10;\" x1=\"817.453\" y1=\"830.201\" x2=\"797.453\" y2=\"810.201\"/>\n" +
+    "                </g>\n" +
+    "            </svg>\n" +
+    "        </div>\n" +
     "    </div>\n" +
-    "    <!--\n" +
-    "    <videogular vg-theme=\"npAudio.config.theme.url\">\n" +
-    "            <vg-video vg-src=\"npAudio.config.sources\" vg-native-controls=\"true\"></vg-video>\n" +
-    "    </videogular>\n" +
-    "    -->\n" +
-    "    <audio\n" +
-    "        width=\"100%\"\n" +
-    "        preload=\"auto\"\n" +
-    "        mediaelement>\n" +
-    "        <!--\n" +
-    "                        <source type=\"video/{{npAudio.types[0]}}\" src=\"{{npAudio.baseURL}}.{{npAudio.types[0]}}\" />\n" +
-    "                        <source ng-repeat=\"type in npAudio.types\" type=\"video/{{type}}\" src=\"{{npAudio.baseURL}}.{{type}}\" />\n" +
-    "        -->\n" +
-    "        <object width=\"100%\"  type=\"application/x-shockwave-flash\" data=\"scripts/component/npAudio/mediaelement/flashmediaelement.swf\">\n" +
-    "            <param name=\"movie\" value=\"scripts/component/npAudio/mediaelement/flashmediaelement.swf\" />\n" +
-    "            <param name=\"flashvars\" value=\"controls=true&file={{npAudio.baseURL}}.mp3\" />\n" +
-    "            <!-- Image as a last resort -->\n" +
-    "            <!--<img src=\"myvideo.jpg\" width=\"320\" height=\"240\" title=\"No video playback capabilities\" />-->\n" +
-    "        </object>\n" +
-    "    </audio>\n" +
-    "\n" +
+    "    <div class=\"col-xs-9\">\n" +
+    "        <span class=\"npAnswer-label answer-text\" for=\"{{npAnswer.id}}_input\" ng-bind-html=\"npAnswer.label\"></span>\n" +
+    "    </div>\n" +
+    "    <!--    <div>\n" +
+    "            <label>\n" +
+    "                <input type=\"checkbox\" class=\"npAnswer-checkbox np-cmp-main \" name=\"checkbox{{npAnswer.id}}\" ng-model=\"npQuestion.answer[component.idx]\" value=\"{{component.idx}}\" id=\"{{npAnswer.id}}_input\" ng-change=\"npQuestion.changed()\" />\n" +
+    "                <span class=\"npAnswer-label\" for=\"{{npAnswer.id}}_input\" ng-bind-html=\"npAnswer.label\"></span>\n" +
+    "            </label>\n" +
+    "        </div>-->\n" +
     "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "</div>\n" +
+    "<div ng-if=\"npQuestion.type === 'text'\" class=\"np-cmp-wrapper {{component.type}} input-group\" ng-controller=\"npAnswerController as npAnswer\">\n" +
+    "    <!--<label class=\"npAnswer-label \" for=\"{{npAnswer.id}}_input\" ng-bind-html=\"npAnswer.label\"></label>-->\n" +
+    "    <span class=\"npAnswer-label input-group-addon answer-text-input\" for=\"{{npAnswer.id}}_input\" ng-bind-html=\"npAnswer.label\"></span>\n" +
+    "    <input type=\"text\" class=\"npAnswer-text np-cmp-main form-control answer-text-input\" name=\"text{{npAnswer.id}}\" ng-model=\"npQuestion.answer\" value=\"\" id=\"{{npAnswer.id}}_input\" ng-change=\"npQuestion.changed()\" />\n" +
+    "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "</div>\n" +
+    "<div ng-if=\"npMatch\" class=\"np-cmp-wrapper {{component.type}} matchbox\" ng-controller=\"npAnswerController as npAnswer\">\n" +
+    "    <div class=\"slide-wrapper reveal-slide rsContent\">\n" +
+    "        <label>\n" +
+    "            <span class=\"npAnswer-label\" for=\"{{npAnswer.id}}_input\" ng-bind-html=\"npAnswer.label\"></span>\n" +
+    "        </label>\n" +
+    "        <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "    </div>\n" +
     "</div>\n"
   );
 
 
-  $templateCache.put('scripts/component/npButton/npButton.html',
-    "<button class=\"{{component.type}} {{npButton.type}} np-cmp-main btn\"  ng-controller=\"npButtonController as npButton\" ng-click=\"npButton.go()\">\n" +
+  $templateCache.put('scripts/component/npAudio/npAudio.html',
+    "<!--<div class=\"{{component.type}}\" ng-controller=\"npAudioController as npAudio\" id=\"{{npAudio.id}}\">\n" +
     "\n" +
     "    <div class=\"debug\">\n" +
     "        <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
     "    </div>\n" +
-    "\n" +
-    "    <span ng-bind-html=\"npButton.content\"></span>\n" +
+    "    \n" +
+    "    <videogular vg-theme=\"npAudio.config.theme.url\">\n" +
+    "            <vg-video vg-src=\"npAudio.config.sources\" vg-native-controls=\"true\"></vg-video>\n" +
+    "    </videogular>\n" +
+    "    \n" +
+    "    <audio\n" +
+    "        width=\"100%\"\n" +
+    "        preload=\"auto\"\n" +
+    "        mediaelement>\n" +
+    "        \n" +
+    "                        <source type=\"video/{{npAudio.types[0]}}\" src=\"{{npAudio.baseURL}}.{{npAudio.types[0]}}\" />\n" +
+    "                        <source ng-repeat=\"type in npAudio.types\" type=\"video/{{type}}\" src=\"{{npAudio.baseURL}}.{{type}}\" />\n" +
+    "        \n" +
+    "        <object width=\"100%\"  type=\"application/x-shockwave-flash\" data=\"scripts/component/npAudio/mediaelement/flashmediaelement.swf\">\n" +
+    "            <param name=\"movie\" value=\"scripts/component/npAudio/mediaelement/flashmediaelement.swf\" />\n" +
+    "            <param name=\"flashvars\" value=\"controls=true&file={{npAudio.baseURL}}.mp3\" />\n" +
+    "             Image as a last resort \n" +
+    "            <img src=\"myvideo.jpg\" width=\"320\" height=\"240\" title=\"No video playback capabilities\" />\n" +
+    "        </object>\n" +
+    "    </audio>\n" +
     "\n" +
     "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "</div>-->\n" +
     "\n" +
-    "</button>\n"
+    "<!--////////////////////////////////////////////////////////////////////////////////-->\n" +
+    "<!--////////////////////////////////////////////////////////////////////////////////-->\n" +
+    "<!--////////////////////////////////////////////////////////////////////////////////-->\n" +
+    "\n" +
+    "<np-audio component=\"component\" class=\"{{component.type}}\" id=\"{{component.data.id}}\">\n" +
+    "\n" +
+    "  <div class=\"debug\">\n" +
+    "    <h3>{{component.type}} --\n" +
+    "      <small>{{component.idx}}</small>\n" +
+    "    </h3>\n" +
+    "  </div>\n" +
+    "\n" +
+    "  <audio\n" +
+    "    width=\"{{component.data.width}}\"\n" +
+    "    preload=\"{{component.data.preload}}\"\n" +
+    "    ng-src=\"{{component.data.src}}\"\n" +
+    "    controls=\"controls\"\n" +
+    "    mediaelelement>\n" +
+    "\n" +
+    "    <source ng-repeat=\"source in npAudio.sources\" type=\"audio/{{source.type}}\" ng-src=\"{{source.src}}\" />\n" +
+    "\n" +
+    "    <object width=\"{{component.data.width}}\" height=\"{{component.data.height}}\" type=\"application/x-shockwave-flash\"\n" +
+    "            data=\"scripts/component/npAudio/mediaelement/flashmediaelement.swf\">\n" +
+    "      <param name=\"movie\" value=\"scripts/component/npAudio/mediaelement/flashmediaelement.swf\"/>\n" +
+    "      <param name=\"flashvars\" value=\"controls=true&file={{component.data.baseURL}}.mp3\"/>\n" +
+    "      <!--<param name=\"allowfullscreen\" value=\"false\"/>-->\n" +
+    "    </object>\n" +
+    "  </audio>\n" +
+    "\n" +
+    "  <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "</np-audio>\n" +
+    "\n" +
+    "<!--////////////////////////////////////////////////////////////////////////////////-->\n" +
+    "<!--////////////////////////////////////////////////////////////////////////////////-->\n" +
+    "<!--////////////////////////////////////////////////////////////////////////////////-->\n" +
+    "\n" +
+    "<!--<np-video component=\"component\" class=\"{{component.type}}\" id=\"{{component.data.id}}\">\n" +
+    "\n" +
+    "  <div class=\"debug\">\n" +
+    "    <h3>{{component.type}} --\n" +
+    "      <small>{{component.idx}}</small>\n" +
+    "    </h3>\n" +
+    "  </div>\n" +
+    "\n" +
+    "  <video\n" +
+    "    height=\"{{component.data.height}}\"\n" +
+    "    width=\"{{component.data.width}}\"\n" +
+    "    poster=\"{{component.data.poster}}\"\n" +
+    "    preload=\"{{component.data.preload}}\"\n" +
+    "    ng-src=\"{{component.data.src}}\"\n" +
+    "    controls=\"controls\"\n" +
+    "    mediaelelement>\n" +
+    "\n" +
+    "    <source ng-repeat=\"source in npVideo.sources\" type=\"video/{{source.type}}\" ng-src=\"{{source.src}}\" />\n" +
+    "\n" +
+    "    <object width=\"{{component.data.width}}\" height=\"{{component.data.height}}\" type=\"application/x-shockwave-flash\"\n" +
+    "            data=\"scripts/component/npVideo/mediaelement/flashmediaelement.swf\">\n" +
+    "      <param name=\"movie\" value=\"scripts/component/npVideo/mediaelement/flashmediaelement.swf\"/>\n" +
+    "      <param name=\"flashvars\" value=\"controls=true&file={{component.data.baseURL}}.mp4\"/>\n" +
+    "      <param name=\"allowfullscreen\" value=\"false\"/>\n" +
+    "    </object>\n" +
+    "  </video>\n" +
+    "\n" +
+    "  <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "</np-video>-->\n"
+  );
+
+
+  $templateCache.put('scripts/component/npButton/npButton.html',
+    "<!--<div class=\"{{component.type}} {{npButton.type}} np-cmp-main btn\"  ng-controller=\"npButtonController as npButton\" ng-click=\"npButton.go()\">-->\n" +
+    "<button class=\"{{component.type}} {{npButton.type}} np-cmp-main btn\"  ng-controller=\"npButtonController as npButton\" ng-click=\"npButton.go()\">\n" +
+    "    <span class=\"debug\">\n" +
+    "        <span class=\"h3\">{{component.type}} -- <small>{{component.idx}}</small></span>\n" +
+    "    </span>\n" +
+    "    <span ng-bind-html=\"npButton.content\"></span>\n" +
+    "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "</button>\n" +
+    "<!--</div>-->"
   );
 
 
@@ -2797,40 +4711,160 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
   );
 
 
-  $templateCache.put('scripts/component/npDragAndDrop/npDragAndDrop.html',
-    "<div class=\"{{component.type}} npDragAndDrop\" ng-controller=\"npDragAndDropController as npDragAndDrop\" id=\"{{npDragAndDrop.id}}\">\n" +
+  $templateCache.put('scripts/component/npDragAndDropMatch/npDragAndDropMatch.html',
+    "<div class=\"{{component.type}} npDragAndDropMatch\" ng-controller=\"npDragAndDropMatchController as npDragAndDropMatch\" id=\"{{npDragAndDropMatch.id}}\">\n" +
     "    <div id=\"draggableContainer\">\n" +
     "        <div class=\"row\">\n" +
-    "            <div class=\"col-sm-6 \">\n" +
-    "                <div class=\"debug\">\n" +
-    "                    <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
-    "                </div>\n" +
-    "                <div drag-button ng-repeat=\"draggableButton in npDragAndDrop.draggableButtons\" id={{'id'+$index}} class=\"draggableButton box boxElements\">\n" +
-    "                    <div id=\"{{draggableButton.id}}\" class=\"{{draggableButton.class}}\">\n" +
-    "                        <img class=\"draggableButtonImage\" ng-src=\"{{draggableButton.image}}\" alt=\"{{draggableButton.alt}}\" />\n" +
-    "                        <div class=\"draggableButtonContent\" ng-bind-html=\"draggableButton.content\" ></div>\n" +
-    "                    </div>\n" +
+    "            <div class=\"debug\">\n" +
+    "                <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
+    "            </div>\n" +
+    "            <div id=\"draggableButtons\" class=\"col-xs-6\">\n" +
+    "                <div drag-button ng-repeat=\"draggableButton in npDragAndDropMatch.draggableButtons\" data-reference=\"{{$index}}\"  id=\"id{{$index}}\" ng-click=\"npDragAndDropMatch.update(draggableButton)\" class=\"draggableButton box boxElements\">\n" +
+    "                    <svg class=\"completeCheck\" version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
+    "                        <style type=\"text/css\">\n" +
+    "                            <![CDATA[\n" +
+    "                            .st0{fill:url(#SVGID_1_);}\n" +
+    "                            .st1{display:inline;}\n" +
+    "                            .st2{display:none;}\n" +
+    "                            ]]>\n" +
+    "                        </style>\n" +
+    "                        <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"0\" y1=\"0\" x2=\"400\" y2=\"200\">\n" +
+    "                            <stop  offset=\"0\" style=\"stop-color:#CAA04C\"/>\n" +
+    "                            <stop  offset=\"0.3497\" style=\"stop-color:#F8E4AA\"/>\n" +
+    "                            <stop  offset=\"0.638\" style=\"stop-color:#CAA04D\"/>\n" +
+    "                            <stop  offset=\"0.9816\" style=\"stop-color:#F3DB7E\"/>\n" +
+    "                        </linearGradient>\n" +
+    "                        <rect fill=\"\" stroke=\"url(#SVGID_1_)\" stroke-width=\"3\" vector-effect=\"non-scaling-stroke\"  x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
+    "                        <foreignObject x=\"5%\" y=\"0\" width=\"100%\" height=\"100%\">\n" +
+    "                            <div class=\"{{draggableButton.class}} button-content\">\n" +
+    "                                <img class=\"draggableButtonImage\" ng-src=\"{{draggableButton.image}}\" alt=\"{{draggableButton.alt}}\" />\n" +
+    "                                <div class=\"draggableButtonContent\" ng-bind-html=\"draggableButton.content\" ></div>\n" +
+    "                            </div>\n" +
+    "                        </foreignObject>\n" +
+    "                    </svg>\n" +
     "                </div>\n" +
     "            </div>\n" +
-    "            <div class=\"col-sm-6 \">\n" +
-    "                <div class=\"hitArea\">\n" +
-    "                    <div ng-repeat=\"draggableButton in npDragAndDrop.draggableButtons\">\n" +
-    "                        <div id=\"{{hitArea.id}}\" class=\"{{hitArea.class}} hit-area boxElements\" >\n" +
-    "                            <img class=\"hitAreaImage\" ng-src=\"{{draggableButton.matchingImage}}\" alt=\"{{hitArea.alt}}\" />\n" +
-    "                            <div class=\"hitAreaContent\" ng-bind-html=\"draggableButton.matchingContent\" ></div>\n" +
-    "                        </div>\n" +
+    "            <!--<div class=\"col-two\">-->\n" +
+    "            <div class=\"col-xs-6\">\n" +
+    "                <div id=\"hitAreaWrapper\">                    \n" +
+    "                    <div ng-repeat=\"draggableButton in npDragAndDropMatch.draggableButtons\" class=\"{{hitArea.class}} hit-area boxElements\">\n" +
+    "                        <div class=\"hit-area-background\"></div>\n" +
+    "                        <svg class=\"complete-background\" version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
+    "                            <g class=\"complete-background-Layer_1\">\n" +
+    "                                <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"486.5701\" y1=\"836.5667\" x2=\"474.7614\" y2=\"851.428\" gradientTransform=\"matrix(0.9984 5.588965e-02 -5.588965e-02 0.9984 48.0441 -25.572)\">\n" +
+    "                                    <stop  offset=\"0.1882\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                    <stop  offset=\"0.3683\" style=\"stop-color:#FFEBC3\"/>\n" +
+    "                                    <stop  offset=\"0.3952\" style=\"stop-color:#F7DFB1\"/>\n" +
+    "                                    <stop  offset=\"0.5063\" style=\"stop-color:#D7B26A\"/>\n" +
+    "                                    <stop  offset=\"0.5581\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                    <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
+    "                                <defs>\n" +
+    "                                </defs>\n" +
+    "                            </g>\n" +
+    "                            <g id=\"complete-background-Layer_2\">\n" +
+    "                                <rect stroke=\"url(#SVGID_1_)\" stroke-width=\"3\" vector-effect=\"non-scaling-stroke\" fill=\"none\"  x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
+    "                            </g>\n" +
+    "                            <g id=\"complete-background-Layer_4\">\n" +
+    "                                <foreignObject  x=\"0\" y=\"0\" width=\"100%\" height=\"100%\" >\n" +
+    "                                    <div class=\"button-content\">\n" +
+    "                                        <img class=\"hitAreaImage\" ng-src=\"{{draggableButton.matchingImage}}\" alt=\"{{hitArea.alt}}\" />\n" +
+    "                                        <div class=\"hitAreaContent\" ng-bind-html=\"draggableButton.matchingContent\" ></div>\n" +
+    "                                    </div>\n" +
+    "                                    <div class=\"button-completion-content\">\n" +
+    "                                        <div class=\"centered-content\" >\n" +
+    "                                            <div class=\"positive-feedback-image \"></div>\n" +
+    "                                            <div class=\"positive-feedback-content h4\" ng-bind-html=\"positiveFeedback\"></div>\n" +
+    "                                        </div>\n" +
+    "                                    </div>\n" +
+    "                                </foreignObject>\n" +
+    "                            </g>\n" +
+    "                        </svg>\n" +
     "                    </div>\n" +
     "                </div>\n" +
     "            </div> \n" +
     "        </div>\n" +
-    "   </div>\n" +
+    "    </div>\n" +
+    "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "</div>"
+  );
+
+
+  $templateCache.put('scripts/component/npDragAndDropPrioritize/npDragAndDropPrioritize.html',
+    "<div class=\"{{component.type}} npDragAndDropPrioritize\" ng-controller=\"npDragAndDropPrioritizeController as npDragAndDropPrioritize\" id=\"{{npDragAndDropPrioritize.id}}\">\n" +
+    "    <div id=\"draggableContainer\">\n" +
+    "        <div class=\"row\">\n" +
+    "            <div class=\"debug\">\n" +
+    "                <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
+    "            </div>\n" +
+    "            <div id=\"draggableButtons\" class=\"col-xs-6\">\n" +
+    "                <div drag-button-prioritize ng-repeat=\"draggableButton in npDragAndDropPrioritize.draggableButtons\" data-reference=\"{{$index}}\"  id=\"id{{$index}}\" ng-click=\"npDragAndDropPrioritize.update(draggableButton)\" class=\"draggableButton box boxElements\">\n" +
+    "                    <svg class=\"completeCheck\" version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
+    "                        <style type=\"text/css\">\n" +
+    "                            <![CDATA[\n" +
+    "                            .st0{fill:url(#SVGID_1_);}\n" +
+    "                            .st1{display:inline;}\n" +
+    "                            .st2{display:none;}\n" +
+    "                            ]]>\n" +
+    "                        </style>\n" +
+    "                        <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"0\" y1=\"0\" x2=\"400\" y2=\"200\">\n" +
+    "                            <stop  offset=\"0\" style=\"stop-color:#CAA04C\"/>\n" +
+    "                            <stop  offset=\"0.3497\" style=\"stop-color:#F8E4AA\"/>\n" +
+    "                            <stop  offset=\"0.638\" style=\"stop-color:#CAA04D\"/>\n" +
+    "                            <stop  offset=\"0.9816\" style=\"stop-color:#F3DB7E\"/>\n" +
+    "                        </linearGradient>\n" +
+    "                        <rect fill=\"\" stroke=\"url(#SVGID_1_)\" stroke-width=\"3\" vector-effect=\"non-scaling-stroke\"  x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
+    "                        <foreignObject x=\"5%\" y=\"0\" width=\"100%\" height=\"100%\">\n" +
+    "                            <div class=\"{{draggableButton.class}} button-content\">\n" +
+    "                                <img class=\"draggableButtonImage\" ng-src=\"{{draggableButton.image}}\" alt=\"{{draggableButton.alt}}\" />\n" +
+    "                                <div class=\"draggableButtonContent\" ng-bind-html=\"draggableButton.content\" ></div>\n" +
+    "                            </div>\n" +
+    "                        </foreignObject>\n" +
+    "                    </svg>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"col-xs-6\">\n" +
+    "                <div id=\"hitAreaWrapper\">                    \n" +
+    "                    <div ng-repeat=\"draggableButton in npDragAndDropPrioritize.draggableButtons\" class=\"{{hitArea.class}} hit-area boxElements\">\n" +
+    "                        <svg class=\"complete-background\" version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
+    "                            <g class=\"complete-background-Layer_1\">\n" +
+    "                                <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"486.5701\" y1=\"836.5667\" x2=\"474.7614\" y2=\"851.428\" gradientTransform=\"matrix(0.9984 5.588965e-02 -5.588965e-02 0.9984 48.0441 -25.572)\">\n" +
+    "                                    <stop  offset=\"0.1882\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                    <stop  offset=\"0.3683\" style=\"stop-color:#FFEBC3\"/>\n" +
+    "                                    <stop  offset=\"0.3952\" style=\"stop-color:#F7DFB1\"/>\n" +
+    "                                    <stop  offset=\"0.5063\" style=\"stop-color:#D7B26A\"/>\n" +
+    "                                    <stop  offset=\"0.5581\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                    <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
+    "                            </g>\n" +
+    "                            <g id=\"complete-background-Layer_2\">\n" +
+    "                                <rect stroke=\"url(#SVGID_1_)\" stroke-width=\"3\" vector-effect=\"non-scaling-stroke\" fill=\"none\" x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
+    "                            </g>\n" +
+    "                            <g id=\"complete-background-Layer_4\">\n" +
+    "                                <foreignObject  x=\"0\" y=\"0\" width=\"100%\" height=\"100%\" >\n" +
+    "                                    <div class=\"button-prioritize-content\">\n" +
+    "                                        <div class=\"hit-area-prioritize-content hit-area-number\">{{$index + 1}}</div>\n" +
+    "                                    </div>\n" +
+    "                                    <div class=\"button-completion-prioritize-content\">\n" +
+    "                                        <div class=\"centered-prioritize-content\" >\n" +
+    "                                            <div class=\"positive-feedback-image \"></div>\n" +
+    "                                            <div class=\"positive-feedback-content h4\" ng-bind-html=\"positiveFeedback\"></div>\n" +
+    "                                        </div>\n" +
+    "                                    </div>\n" +
+    "                                </foreignObject>\n" +
+    "                            </g>\n" +
+    "                        </svg>\n" +
+    "                        <div class=\"hit-area-background\"></div>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div> \n" +
+    "        </div>\n" +
+    "    </div>\n" +
     "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
     "</div>"
   );
 
 
   $templateCache.put('scripts/component/npFeature/npFeature.html',
-    "<div class=\"np-cmp-wrapper {{component.type}}\" ng-controller=\"npFeatureController as npFeature\">\n" +
+    "<div new-player-page-top class=\"np-cmp-wrapper {{component.type}}\" ng-controller=\"npFeatureController as npFeature\">\n" +
     "\n" +
     "\t<div class=\"debug\">\n" +
     "\t\t<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
@@ -2839,6 +4873,44 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "\t<div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
     "\n" +
     "</div>\n"
+  );
+
+
+  $templateCache.put('scripts/component/npFlashCards/npFlashCards.html',
+    "<div np-flash-cards id=\"{{npFlashCards.id}} \" class=\"{{component.type}} np-cmp-wrapper np-flash-card\" ng-controller=\"npFlashCardsController as npFlashCards\">\n" +
+    "    <div class=\"debug\">\n" +
+    "        <h3>{{component.type}} -- \n" +
+    "            <small>{{component.idx}}</small>\n" +
+    "        </h3>\n" +
+    "    </div>\n" +
+    "    <!--::::::::::::  flash-card  ::::::::::::::::-->\n" +
+    "    <div id=\"flash-cards\" class=\"row\">\n" +
+    "        <div np-swipe-angular-draggable  class=\"col-sm-12\">\n" +
+    "            <div id=\"flash-cards-swipe-container\">\n" +
+    "                <div flash-card class=\"flash-cards-object \" ng-repeat=\"flashCardComponent in npFlashCards.flashCardComponents\">\n" +
+    "                    <div class=\"flash-card-front-wrapper\">\n" +
+    "                        <div class=\"flash-card-background\"></div>\n" +
+    "                        <p class=\"flash-card-content-front\" ng-bind-html=\"flashCardComponent.contentFront\"></p>\n" +
+    "                        <div class=\"flash-card-overlay\"></div>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"flash-card-back-wrapper\">\n" +
+    "                        <div class=\"flash-card-background\"></div>\n" +
+    "                        <p class=\"flash-card-content-back\" ng-bind-html=\"flashCardComponent.contentBack\"></p>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"flash-card-button\" ng-click=\"npFlashCards.update(flashCardComponent)\">\n" +
+    "                        <svg version=\"1.0\"  class='button-holder' xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"25px\" height=\"19.7px\" viewBox=\"343.2 692.6 25 19.7\" xml:space=\"preserve\">\n" +
+    "                            <g id=\"refresh-icon\">\n" +
+    "                                <path id=\"refresh-icon-shape\" d=\"M362.8,695.6l-2.3,2.301c-1.2-1.2-2.9-2-4.8-2c-3.8,0-6.8,3.1-6.8,6.8l0,0h2.699  l-4.199,4.2l-4.2-4.2h2.6l0,0c0-5.601,4.5-10.101,10.101-10.101C358.4,692.6,360.9,693.7,362.8,695.6z M368.2,702.3l-4.2-4.2  l-4.2,4.2h2.7l0,0c0,3.8-3.1,6.8-6.8,6.8c-1.9,0-3.601-0.8-4.8-2L348.6,709.4c1.801,1.8,4.301,2.899,7.101,2.899  c5.6,0,10.1-4.5,10.1-10.1l0,0h2.4V702.3z\"/>\n" +
+    "                            </g>\n" +
+    "                        </svg>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div> \n" +
+    "    </div> \n" +
+    "</div> \n" +
+    "<!--::::::::::::  flash-card  ::::::::::::::::-->\n" +
+    "<div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>"
   );
 
 
@@ -2858,20 +4930,16 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('scripts/component/npHTML/npHTML.html',
     "<section class=\"{{component.type}} np-cmp-wrapper\" ng-controller=\"npHTMLController as npHTML\">\n" +
-    "\n" +
     "  <div class=\"debug\">\n" +
     "    <h3>{{component.type}} --\n" +
     "      <small>{{component.idx}}</small>\n" +
     "    </h3>\n" +
     "  </div>\n" +
-    "\n" +
     "  <div class=\"np-cmp-main\" ng-if=\"!!npHTML.link\">\n" +
     "    <a ng-click=\"npHTML.handleLink(); $event.stopPropagation();\" ng-bind-html=\"npHTML.content\"></a>\n" +
     "  </div>\n" +
     "  <div ng-bind-html=\"npHTML.content\" class=\"np-cmp-main\" ng-if=\"!npHTML.link\"></div>\n" +
-    "\n" +
     "  <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
-    "\n" +
     "</section>\n"
   );
 
@@ -2901,43 +4969,42 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                    <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
     "                </div>\n" +
     "                <img class=\"{{component.type}} np-cmp-main img-responsive\" ng-controller=\"npHotspotController as npHotspot\" ng-src=\"{{npHotspot.src}}\" alt=\"{{npHotspot.alt}}\" />\n" +
-    "                <div ng-repeat=\"hotspotButton in npHotspot.hotspotButtons\">\n" +
+    "                <div hotspot-button-build ng-repeat=\"hotspotButton in npHotspot.hotspotButtons\">\n" +
     "                    <div class=\"{{hotspotButton.class}} hotspotButton\" ng-click=\"npHotspot.update(hotspotButton)\">\n" +
     "                        <!--<img class=\"hotspotButtonImage\" ng-src=\"{{hotspotButton.image}}\" alt=\"{{npHotspot.alt}}\" />-->\n" +
     "                        <div class=\"hotspotButtonImage\" ></div>\n" +
+    "                    </div>\n" +
     "                </div>\n" +
     "            </div>\n" +
     "        </div>\n" +
-    "    </div>\n" +
-    "    <div class=\"col-md-5\">\n" +
-    "        <div class=\"content-area\">\n" +
-    "            <div class=\"content-background\">\n" +
-    "                <svg version=\"1.0\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" viewBox=\"0 0 368 222\" xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
-    "                    <style type=\"text/css\">\n" +
-    "                        <![CDATA[\n" +
-    "                        .st0{fill:url(#SVGID_1_);}\n" +
-    "                        .st1{display:inline;}\n" +
-    "                        .st2{display:none;}\n" +
-    "                        ]]>\n" +
-    "                    </style>\n" +
-    "                    <g id=\"Layer_2\">\n" +
-    "                        <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"0.8359\" y1=\"0.9399\" x2=\"367.8515\" y2=\"221.4724\">\n" +
-    "                            <stop  offset=\"0\" style=\"stop-color:#CAA04C\"/>\n" +
-    "                            <stop  offset=\"0.3497\" style=\"stop-color:#F8E4AA\"/>\n" +
-    "                            <stop  offset=\"0.638\" style=\"stop-color:#CAA04D\"/>\n" +
-    "                            <stop  offset=\"0.9816\" style=\"stop-color:#F3DB7E\"/>\n" +
-    "                        </linearGradient>\n" +
-    "                        <path class=\"st0\" d=\"M369.5,223.5h-371v-225h371V223.5z M1.5,220.5h365V1.5H1.5V220.5z\"/>\n" +
-    "                    </g>\n" +
-    "                </svg>\n" +
+    "        <div class=\"col-md-5\">\n" +
+    "            <div class=\"content-area\">\n" +
+    "                <div class=\"content-background\">\n" +
+    "                    <svg  version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" viewBox=\"0 0 368 222\" xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
+    "                        <style type=\"text/css\">\n" +
+    "                            <![CDATA[\n" +
+    "                            .st0{fill:url(#SVGID_1_);}\n" +
+    "                            .st1{display:inline;}\n" +
+    "                            .st2{display:none;}\n" +
+    "                            ]]>\n" +
+    "                        </style>\n" +
+    "                        <g id=\"Layer_2\">\n" +
+    "                            <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"0.8359\" y1=\"0.9399\" x2=\"367.8515\" y2=\"221.4724\">\n" +
+    "                                <stop  offset=\"0\" style=\"stop-color:#CAA04C\"/>\n" +
+    "                                <stop  offset=\"0.3497\" style=\"stop-color:#F8E4AA\"/>\n" +
+    "                                <stop  offset=\"0.638\" style=\"stop-color:#CAA04D\"/>\n" +
+    "                                <stop  offset=\"0.9816\" style=\"stop-color:#F3DB7E\"/>\n" +
+    "                            </linearGradient>\n" +
+    "                            <rect fill=\"url(#MyGradient)\" stroke=\"url(#SVGID_1_)\" vector-effect=\"non-scaling-stroke\" stroke-width=\"3\" x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
+    "                        </g>\n" +
+    "                    </svg>\n" +
+    "                </div>\n" +
+    "                <div class=\"npHotspot-feedback\" ng-bind-html=\"npHotspot.feedback\"></div>\n" +
     "            </div>\n" +
-    "            <div class=\"npHotspot-feedback\" ng-bind-html=\"npHotspot.feedback\"></div>\n" +
     "        </div>\n" +
     "    </div>\n" +
     "</div>\n" +
-    "</div>\n" +
-    "<div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
-    "</div>"
+    "<div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>"
   );
 
 
@@ -2955,6 +5022,66 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "    />\n" +
     "\n" +
     "<div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>"
+  );
+
+
+  $templateCache.put('scripts/component/npList/npList.html',
+    "\n" +
+    "<div class=\"{{component.type}} np-cmp-wrapper\" ng-controller=\"npListController as npList\">\n" +
+    "    <div class=\"debug\">\n" +
+    "        <h3>{{component.type}} --\n" +
+    "            <small>{{component.idx}}</small>\n" +
+    "        </h3>\n" +
+    "    </div>\n" +
+    "    <div class=\"row media list-row\">\n" +
+    "        <div class=\"column-1 col-md-4\">\n" +
+    "            <div class=\"media-left media-middle\">\n" +
+    "                <div np-component class=\"media-object list-object\" ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"column-2 col-md-8\">\n" +
+    "            <div class=\"media-body\">\n" +
+    "                <div ng-bind-html=\"npList.heading\" class=\"media-heading h4\"></div>\n" +
+    "                <div ng-bind-html=\"npList.content\" class=\"np-cmp-main list-body-text\" ng-if=\"!npList.link\"></div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>"
+  );
+
+
+  $templateCache.put('scripts/component/npMatch/npMatch.html',
+    "<form class=\"np-cmp-wrapper {{component.type}} \" ng-controller=\"npMatchController as npMatch\" ng-submit=\"npMatch.evaluate()\">\n" +
+    "\n" +
+    "    <div class=\"debug\">\n" +
+    "        <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
+    "    </div>\n" +
+    "\n" +
+    "    <h5 class=\"dark text-uppercase\">question:</h5>\n" +
+    "    <div class=\"npMatch-content\" ng-bind-html=\"npMatch.content\"></div>\n" +
+    "\n" +
+    "\t<h5 class=\"dark text-uppercase\">answers:</h5>\n" +
+    "    <div np-component ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "\n" +
+    "    <button type=\"submit\" class=\"col-xs-3 btn-primary\">Submit</button> &nbsp;\n" +
+    "    <button id=\"next_button\" class=\"btn-default\" ng-click=\"npMatch.nextPage($event)\" ng-show=\"npMatch.canContinue\">Next</button>\n" +
+    "<!--    <div class=\"btn btn-default\">\n" +
+    "        <input type=\"submit\" />\n" +
+    "    </div>-->\n" +
+    "\n" +
+    "    <div class=\"npMatch-feedback\" ng-if=\"npMatch.feedback\" ng-bind-html=\"npMatch.feedback\"></div>\n" +
+    "</form>"
+  );
+
+
+  $templateCache.put('scripts/component/npMatchRow/npMatchRow.html',
+    "<div class=\"debug\">\n" +
+    "    <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
+    "</div>\n" +
+    "\n" +
+    "<div class=\"np-cmp-wrapper {{component.type}} rsDefault visibleNearby\" royalslider data-match=\"true\">\n" +
+    "    <div np-component ng-repeat=\"component in components | orderBy:random\" idx=\"{{component.idx}}\" style=\"display: inline-block; border: 2px solid black; width: 200px; margin-right: 10px;\"></div>\n" +
+    "</div>"
   );
 
 
@@ -2998,24 +5125,78 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('scripts/component/npQuestion/npQuestion.html',
-    "<form class=\"np-cmp-wrapper {{component.type}} \" ng-controller=\"npQuestionController as npQuestion\" ng-submit=\"npQuestion.evaluate()\">\n" +
-    "\n" +
+    "<div class=\"np-cmp-wrapper {{component.type}} \" ng-controller=\"npQuestionController as npQuestion\" ng-submit=\"npQuestion.evaluate()\">\n" +
+    "    <!--<form class=\"np-cmp-wrapper {{component.type}} \" ng-controller=\"npQuestionController as npQuestion\" ng-submit=\"npQuestion.evaluate()\">-->\n" +
     "    <div class=\"debug\">\n" +
     "        <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
     "    </div>\n" +
-    "\n" +
-    "    <div class=\"npQuestion-content\" ng-bind-html=\"npQuestion.content\"></div>\n" +
-    "\n" +
+    "    <p class=\"h5 quiz-label\">question:</p>\n" +
+    "    <!--<h5 class=\"dark text-uppercase\">question:</h5>-->\n" +
+    "    <div class=\"npQuestion-content question-text h4\" ng-bind-html=\"npQuestion.content\"></div>\n" +
+    "    <p class=\"h5 quiz-label\">answers:</p>\n" +
     "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
-    "    \n" +
-    "  <button type=\"submit\" class=\"btn btn-primary\">Submit</button>\n" +
-    "<!--    <div class=\"btn btn-default\">\n" +
-    "        <input type=\"submit\" />\n" +
-    "    </div>-->\n" +
-    "\n" +
-    "    <div class=\"npQuestion-feedback\" ng-if=\"npQuestion.feedback\" ng-bind-html=\"npQuestion.feedback\"></div>\n" +
-    "\n" +
-    "</form>"
+    "    <div class=\"row\">\n" +
+    "        <button type=\"submit\" class=\"btn-submit\" ng-click=\"npQuestion.evaluate()\">\n" +
+    "            <span>Submit</span>\n" +
+    "        </button>\n" +
+    "    </div>\n" +
+    "    <!--<button id=\"next_button\" class=\"btn-default\" ng-click=\"npQuestion.nextPage($event)\">Next</button>-->\n" +
+    "    <!--    <div class=\"btn btn-default\">\n" +
+    "            <input type=\"submit\" />\n" +
+    "        </div>-->\n" +
+    "    <div question-feedback-build class=\"row\">\n" +
+    "        <div  class=\"col-sm-7 question-feedback\">\n" +
+    "            <div class=\"question-feedback-wrapper\">\n" +
+    "                <div class=\"negative-feedback-icon\">\n" +
+    "                    <svg version=\"1.0\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"22.8px\" height=\"22.801px\" viewBox=\"599.8 837.1 22.8 22.801\" enable-background=\"new 599.8 837.1 22.8 22.801\" xml:space=\"preserve\">\n" +
+    "                        <path fill=\"#9A7D46\" d=\"M611.2,859.9c-6.3,0-11.4-5.101-11.4-11.4s5.101-11.4,11.4-11.4S622.6,842.2,622.6,848.5 S617.5,859.9,611.2,859.9z M611.2,838.1c-5.7,0-10.4,4.7-10.4,10.4s4.7,10.4,10.4,10.4s10.399-4.7,10.399-10.4 S616.9,838.1,611.2,838.1z\"/>\n" +
+    "                        <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"874.293\" y1=\"-1086.3877\" x2=\"861.2496\" y2=\"-1099.811\" gradientTransform=\"matrix(1 0 0 -1 -256 -245)\">\n" +
+    "                            <stop  offset=\"0.1642\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                            <stop  offset=\"0.1698\" style=\"stop-color:#CCA352\"/>\n" +
+    "                            <stop  offset=\"0.2532\" style=\"stop-color:#E4C682\"/>\n" +
+    "                            <stop  offset=\"0.3167\" style=\"stop-color:#F2DCA0\"/>\n" +
+    "                            <stop  offset=\"0.3527\" style=\"stop-color:#F8E4AB\"/>\n" +
+    "                            <stop  offset=\"0.4062\" style=\"stop-color:#EBD191\"/>\n" +
+    "                            <stop  offset=\"0.48\" style=\"stop-color:#DDBC74\"/>\n" +
+    "                            <stop  offset=\"0.5532\" style=\"stop-color:#D2AC5F\"/>\n" +
+    "                            <stop  offset=\"0.6249\" style=\"stop-color:#CCA352\"/>\n" +
+    "                            <stop  offset=\"0.6933\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                            <stop  offset=\"0.7957\" style=\"stop-color:#D5B05B\"/>\n" +
+    "                            <stop  offset=\"0.9955\" style=\"stop-color:#F2DA7E\"/>\n" +
+    "                            <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
+    "                        </linearGradient>\n" +
+    "                        <polygon fill=\"url(#SVGID_1_)\" points=\"605.8,856.5 611.2,851.2 616.5,856.5 619,854 613.7,848.7 619,843.4 616.5,840.8 611.2,846.1 605.9,840.8 603.4,843.4 608.7,848.7 603.3,854 \"/>\n" +
+    "                    </svg>\n" +
+    "                </div>\n" +
+    "                <div class=\"npQuestion-feedback question-feedback-text\" ng-if=\"npQuestion.feedback\" ng-bind-html=\"npQuestion.feedback\"></div>\n" +
+    "                <div class=\"question-feedback-label\">Feedback area</div>\n" +
+    "            </div>\n" +
+    "            <!--            <div  class=\"question-feedback-outline\">\n" +
+    "                            <svg  version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
+    "                                <style type=\"text/css\">\n" +
+    "                                    <![CDATA[\n" +
+    "                                    .st0{fill:url(#SVGID_1_);}\n" +
+    "                                    .st1{display:inline;}\n" +
+    "                                    .st2{display:none;}\n" +
+    "                                    ]]>\n" +
+    "                                </style>\n" +
+    "                                <g id=\"Layer_2\">\n" +
+    "                                    <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"0.8359\" y1=\"0.9399\" x2=\"367.8515\" y2=\"221.4724\">\n" +
+    "                                        <stop  offset=\"0\" style=\"stop-color:#CAA04C\"/>\n" +
+    "                                        <stop  offset=\"0.3497\" style=\"stop-color:#F8E4AA\"/>\n" +
+    "                                        <stop  offset=\"0.638\" style=\"stop-color:#CAA04D\"/>\n" +
+    "                                        <stop  offset=\"0.9816\" style=\"stop-color:#F3DB7E\"/>\n" +
+    "                                    </linearGradient>\n" +
+    "                                    <rect fill=\"url(#MyGradient)\" stroke=\"url(#SVGID_1_)\" vector-effect=\"non-scaling-stroke\" stroke-width=\"3\" x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
+    "                                </g>\n" +
+    "                            </svg>\n" +
+    "                        </div>-->\n" +
+    "        </div>\n" +
+    "        <div  class=\"col-sm-5\">\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <!--</form>-->\n" +
+    "</div>"
   );
 
 
@@ -3039,51 +5220,123 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('scripts/component/npReveal/npReveal.html',
-    "<div class=\"np-cmp-wrapper {{ component.type }}\" ngController=\"npRevealController as npReveal\">\n" +
-    "  <div class=\"debug\">\n" +
-    "    <h3>{{ component.type }} -- <small>{{ component.idx }}</small></h3>\n" +
-    "  </div>\n" +
-    "\n" +
-    "  <h1>{{ component.data.name }}</h1>\n" +
-    "  <h2>slider</h2>\n" +
-    "\n" +
-    "  <div class=\"np-reveal-slider rsDefault\" royalslider>\n" +
-    "    <div ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\">\n" +
-    "      <div class=\"slide-wrapper reveal-slide rsContent\">\n" +
-    "        <div class=\"rsTmb\" np-component idx=\"{{ component.components[0].idx }}\"></div>\n" +
-    "        <div class=\"rsContent\" np-component idx=\"{{ component.components[1].idx }}\"></div>\n" +
-    "      </div>\n" +
+    "<div npReveal id=\"{{npReveal.id}}\" class=\"{{component.type}} np-cmp-wrapper np-reveal\" ng-controller=\"npRevealController as npReveal\">\n" +
+    "    <div class=\"debug\">\n" +
+    "        <h3>{{component.type}} -- \n" +
+    "            <small>{{component.idx}}</small>\n" +
+    "        </h3>\n" +
     "    </div>\n" +
-    "  </div>\n" +
+    "    <!--:::::::::::: buttons ::::::::::::::::--> \n" +
+    "    <div class=\"reveal-navigation col-md-12\">\n" +
+    "        <div class=\" reveal-button-container\">\n" +
+    "            <div revealButton class=\"reveal-button\" ng-repeat=\"revealItem in npReveal.revealItems\" ng-click=\"npReveal.update(revealItem)\">\n" +
+    "                <div class=\"reveal-button-wrap\">\n" +
+    "                    <img class=\"reveal-button-image img-responsive\" ng-src=\"{{revealItem.buttonImage}}\" alt=\"{{revealItem.buttonAlt}}\" />\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <!--:::::::::::: buttons ::::::::::::::::-->\n" +
     "\n" +
-    "</div>\n"
+    "    <!--::::::::::::  reveal  ::::::::::::::::-->\n" +
+    "    <div class=\"col-md-12\">\n" +
+    "        <div class=\"reveal-object\" ng-repeat=\"revealItemComponent in npReveal.revealItemComponents\">\n" +
+    "            <div class=\"reveal-wrapper\">\n" +
+    "                <div class=\"reveal-item-wrapper\">\n" +
+    "                    <img ng-if=\"revealItemComponent.components[0].type == 'npImage'\" class=\"reveal-item reveal-image img-responsive\" ng-src=\"{{revealItemComponent.components[0].data.src}}\" alt=\"{{component.alt}}\" />\n" +
+    "                    <video controls ng-if=\"revealItemComponent.components[0].type == 'npVideo'\" class=\"reveal-item reveal-video\" poster=\"{{revealItemComponent.components[0].data.poster}}\">\n" +
+    "                        <source ng-src=\"{{revealItemComponent.components[0].data.baseURL}}\"/>\n" +
+    "                    </video>\n" +
+    "                </div>\n" +
+    "                <div class=\"reveal-content-wrapper\">\n" +
+    "                    <div class=\"reveal-background\"></div>\n" +
+    "                    <div class=\"reveal-content-text\">\n" +
+    "                        <p class=\"h4 reveal-text-heading\" ng-bind-html=\"revealItemComponent.heading\"></p>\n" +
+    "                        <p class=\" reveal-text-body\" ng-bind-html=\"revealItemComponent.content\"></p>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div> \n" +
+    "    </div> \n" +
+    "    <!--::::::::::::  reveal  ::::::::::::::::-->\n" +
+    "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "</div>"
   );
 
 
-  $templateCache.put('scripts/component/npRevealItem/npRevealItem.html',
-    "<div class=\"np-cmp-wrapper {{ component.type }}\" ngController=\"npRevealItemController as npRevealItem\">\n" +
-    "  <div class=\"debug\">\n" +
-    "    <h3>{{ component.type }} -- <small>{{ component.idx }}</small></h3>\n" +
-    "  </div>\n" +
-    "  <p>component.data: {{ component.data | json }}</p>\n" +
-    "  <h3>{{ component.type }} -- <small>{{ component.idx }}</small></h3>\n" +
-    "\n" +
-    "  <p>content: {{ content }}</p>\n" +
-    "  <p>id: {{ component.data.id }}</p>\n" +
-    "  <p>caption: {{ component.data.caption }}</p>\n" +
-    "\n" +
-    "  <div class=\"reveal-item-media\">\n" +
-    "    <div class=\"reveal-item-image\" ng-if=\"component.data.kind=='image'\">\n" +
-    "      <p>image</p>\n" +
+  $templateCache.put('scripts/component/npTrivia/npTrivia.html',
+    "<form class=\"np-cmp-wrapper {{component.type}}\" ng-controller=\"npTriviaController as npTrivia\" ng-submit=\"npTrivia.evaluate()\">\n" +
+    "    <div class=\"debug\">\n" +
+    "        <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
     "    </div>\n" +
-    "    <div class=\"reveal-item-video\" ng-if=\"component.data.kind=='video'\">\n" +
-    "      <p>video</p>\n" +
+    "    <!--    <div class=\"row\">\n" +
+    "            <div class=\"npTrivia-content h4 col-xs-12\" ng-bind-html=\"npTrivia.content\"></div>\n" +
+    "        </div>-->\n" +
+    "    <div class=\"row\">\n" +
+    "        <div class=\"col-sm-2 np-spinner\">\n" +
+    "            <div class=\"np-spinner-wrapper\">\n" +
+    "                <np-price-is-right-spinner class=\"np-spinner\" spinTime=\"2000\" ng-hide=\"!npTrivia.pageId\" data-difficulty=\"{{npTrivia.difficulty}}\">\n" +
+    "                    <div>0</div>\n" +
+    "                    <div>100</div>\n" +
+    "                    <div>200</div>\n" +
+    "                    <div>300</div>\n" +
+    "                    <div>400</div>\n" +
+    "                    <div>500</div>\n" +
+    "                    <div>600</div>\n" +
+    "                    <div>700</div>\n" +
+    "                    <div>800</div>\n" +
+    "                    <div>0</div>\n" +
+    "                    <div>100</div>\n" +
+    "                    <div>200</div>\n" +
+    "                    <div>300</div>\n" +
+    "                    <div>400</div>\n" +
+    "                    <div>500</div>\n" +
+    "                    <div>600</div>\n" +
+    "                    <div>700</div>\n" +
+    "                    <div>800</div>\n" +
+    "                    <div>900</div>\n" +
+    "                    <div>1000</div>\n" +
+    "                </np-price-is-right-spinner>\n" +
+    "                <div class=\"np-gold-border\">\n" +
+    "                    <svg  version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" viewBox=\"0 0 368 222\" xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
+    "                    <style type=\"text/css\">\n" +
+    "                        <![CDATA[\n" +
+    "                        .st0{fill:url(#SVGID_1_);}\n" +
+    "                        .st1{display:inline;}\n" +
+    "                        .st2{display:none;}\n" +
+    "                        ]]>\n" +
+    "                    </style>\n" +
+    "                    <g id=\"Layer_2\">\n" +
+    "                    <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"0.8359\" y1=\"0.9399\" x2=\"367.8515\" y2=\"221.4724\">\n" +
+    "                    <stop  offset=\"0\" style=\"stop-color:#CAA04C\"/>\n" +
+    "                    <stop  offset=\"0.3497\" style=\"stop-color:#F8E4AA\"/>\n" +
+    "                    <stop  offset=\"0.638\" style=\"stop-color:#CAA04D\"/>\n" +
+    "                    <stop  offset=\"0.9816\" style=\"stop-color:#F3DB7E\"/>\n" +
+    "                    </linearGradient>\n" +
+    "                    <rect fill=\"url(#MyGradient)\" stroke=\"url(#SVGID_1_)\" vector-effect=\"non-scaling-stroke\" stroke-width=\"3\" x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
+    "                    </g>\n" +
+    "                    </svg>\n" +
+    "                </div>\n" +
+    "                <div class=\"np-gold-pointer\">\n" +
+    "                    <svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n" +
+    "                         width=\"66.096px\" height=\"126.685px\" viewBox=\"308.824 1129.275 66.096 126.685\"\n" +
+    "                         style=\"enable-background:new 308.824 1129.275 66.096 126.685;\" xml:space=\"preserve\">\n" +
+    "                    <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"118.5967\" y1=\"-46.6729\" x2=\"105.6811\" y2=\"-62.1192\" gradientTransform=\"matrix(6.12 0 0 -6.12 -324.0952 866.6157)\">\n" +
+    "                    <stop  offset=\"0.2306\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                    <stop  offset=\"0.3901\" style=\"stop-color:#F8E4AB\"/>\n" +
+    "                    <stop  offset=\"0.4768\" style=\"stop-color:#E1C27C\"/>\n" +
+    "                    <stop  offset=\"0.5692\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                    <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
+    "                    </linearGradient>\n" +
+    "                    <polygon style=\"fill:url(#SVGID_1_);\" points=\"374.92,1129.275 374.92,1255.96 308.824,1191.7 \"/>\n" +
+    "                    </svg>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"col-xs-10 np_row\" np-component ng-if=\"subCmp\" ng-repeat=\"component in npTrivia.seenComponents\" idx=\"{{component.idx}}\" ng-hide=\"npTrivia.pageId !== component.data.id\"></div>\n" +
+    "        <div class=\"npTrivia-feedback\" ng-if=\"npTrivia.feedback\" ng-bind-html=\"npTrivia.feedback\"></div>\n" +
     "    </div>\n" +
-    "  </div>\n" +
-    "\n" +
-    "  <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
-    "\n" +
-    "</div>\n"
+    "</form>"
   );
 
 

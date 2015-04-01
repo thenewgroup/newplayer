@@ -1,0 +1,12 @@
+[{
+	"comment": "Sample NewPlayer configuration file!",
+	"manifestURL": "./{manifestId}.json",
+	"Content":
+	{
+		"lang": "en-US"
+	},
+	"Page":
+	{
+		"pageId": ""
+	}
+}]
