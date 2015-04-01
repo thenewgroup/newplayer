@@ -32,31 +32,69 @@
                         //////////////////////////////////////////////////////////////////////////////////////
                         //get ready
                         //////////////////////////////////////////////////////////////////////////////////////
-                        var tid = setInterval(function () {
-                            if (document.readyState !== 'complete') {
-                                return;
-                            }
-                            clearInterval(tid);
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            //on ready set states
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            TweenMax.to($(".reveal-object"), 0, {
-                                autoAlpha: 0
+                        setTimeout(function () {
+                            $scope.$apply(function () {
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //on ready set states
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                setTimeout(function () {
+                                    var maxHeight = 0;
+                                    $(".reveal-wrapper").each(function () {
+//                                        console.log(
+//                                                '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                                '\n::maxHeight::', maxHeight,
+//                                                '\n::$(this).outerHeight()::', $(this).outerHeight(true),
+//                                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                                );
+                                        if ($(this).outerHeight() > maxHeight) {
+                                            maxHeight = ($(this).outerHeight() + 100);
+                                        }
+                                    });
+                                    $(".np-reveal").height(maxHeight);
+                                }, 1);
+                                TweenMax.to($(".reveal-object"), 0, {
+                                    opacity: 0
+                                });
+                                TweenMax.set($(".reveal-button"), {
+                                    opacity: 0,
+                                    scale: .25,
+                                    force3D: true
+                                });
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //build init state
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                TweenMax.to($(".button-screen"), 1.5, {
+                                    autoAlpha: 0.75,
+                                    ease: Power4.easeOut
+                                });
+                                TweenMax.staggerTo($(".reveal-button"), 2, {
+                                    scale: 1,
+                                    opacity: 1,
+                                    delay: 0.25,
+                                    ease: Power4.easeOut,
+                                    force3D: true
+                                }, 0.2);
+                                TweenMax.to($(".button-screen"), 1.5, {
+                                    autoAlpha: 0.75,
+                                    ease: Power4.easeOut
+                                });
+                                TweenMax.to($(".button-screen")[0], 1.75, {
+                                    autoAlpha: 0,
+                                    delay: 1.75,
+                                    ease: Power4.easeOut
+                                });
+                                TweenMax.to($(".reveal-object")[0], 1.75, {
+                                    autoAlpha: 1,
+                                    delay: 1.75,
+                                    ease: Power4.easeOut
+//                                    onComplete: function () {
+//
+//                                    }
+                                });
                             });
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            //finish ready check items
-                            //////////////////////////////////////////////////////////////////////////////////////
-                        }, 100);
+                        });
                         this.update = function (button) {
                             var idx = this.revealItems.indexOf(button);
-//                            console.log(
-//                                    '\n::::::::::::::::::::::::::::::::::::::reveal::array data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
-//                                    '\n:::', idx,
-//                                    '\n:::', button,
-//                                    '\n:::', $('video').length,
-//                                    '\n:::', revealItems[idx].components[0],
-//                                    '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-//                                    );
                             //////////////////////////////////////////////////////////////////////////////////////
                             //on navigation change stop and reset all video files
                             //////////////////////////////////////////////////////////////////////////////////////
@@ -65,12 +103,22 @@
                                 this.currentTime = 0;
                                 this.load();
                             });
-                            //////////////////////
-                            TweenMax.to($(".reveal-object"), 0, {
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            //on navigation change cross fade items
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            TweenMax.to($(".button-screen"), 1.5, {
+                                autoAlpha: 0.75,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($(".button-screen")[idx], 1.75, {
                                 autoAlpha: 0,
                                 ease: Power4.easeOut
                             });
-                            TweenMax.to($(".reveal-object")[idx], 0.75, {
+                            TweenMax.to($(".reveal-object"), 1.5, {
+                                autoAlpha: 0,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($(".reveal-object")[idx], 1.75, {
                                 autoAlpha: 1,
                                 ease: Power4.easeOut
                             });

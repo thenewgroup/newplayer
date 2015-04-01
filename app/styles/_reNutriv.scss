@@ -543,6 +543,7 @@
     display: flex;
     justify-content: space-between;
     /*border: 2px dashed #444;*/
+    max-width: 770px;
 }
 #np_reNutriv .reveal-button-wrap {
     position: absolute;
@@ -551,6 +552,15 @@
     right: 0;
     bottom: 0;
     margin: auto;
+}
+#np_reNutriv .button-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #000000;
+    /*margin: auto;*/
 }
 #np_reNutriv, .reveal-button {
     position: relative;
