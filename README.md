@@ -25,5 +25,6 @@ From repository root folder:
 
 #### Documentation
 
+
 - [Application Overview](app/)
 - [Components Overview](app/scripts/component/)
