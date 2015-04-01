@@ -3,10 +3,10 @@
 
   angular
     .module('newplayer.service')
-    .service('npAssessment', NpAssessment);
+    .service('AssessmentService', AssessmentService);
 
   /** @ngInject */
-  function NpAssessment($log, $rootScope, ConfigService) {
+  function AssessmentService($log, $rootScope, ConfigService) {
     var minPassing = 0,
         vm = this,
         pages = {

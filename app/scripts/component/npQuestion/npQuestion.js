@@ -93,10 +93,9 @@
                                           isCorrectAnswer = vm.answers[i].isCorrect;
                                         }
 
-                                        break;
-                                  case 'checkbox':
+                                        break; case 'checkbox':
 
-                                      // Answers are only correct if all of their check states match their isCorrect state.
+                                    // Answers are only correct if all of their check states match their isCorrect state.
                                       for( i=0; i < vm.answers.length; i++ ) {
                                         isCorrectAnswer = isCorrectAnswer && vm.answers[i].checked === vm.answers[i].isCorrect;
                                       }
