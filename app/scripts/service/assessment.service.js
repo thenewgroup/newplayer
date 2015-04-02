@@ -7,7 +7,7 @@
     .service('AssessmentService', AssessmentService);
 
   /** @ngInject */
-  function AssessmentService($log, $rootScope, ConfigService) {
+  function AssessmentService($log, $rootScope, ConfigService, AssessmentIO) {
     var minPassing = 0,
         vm = this,
         pages = {
@@ -19,12 +19,24 @@
           required: 0, total: 0, inventory: {},
           answered: {required: 0, inventory: {}}
         },
+        assessmentIO = AssessmentIO,              // This is the I/O module for saving/restoring assessment stuff
         config = ConfigService.getConfig();
 
       if( config.hasOwnProperty('minPassing')) {
         setMinPassing(config.minPassing);
       }
 
+      if( config.hasOwnProperty('assessmentIO')) {
+        setAssessmentIO(config.assessmentIO);
+      }
+
+    /**
+     *
+     */
+    function setAssessmentIO(newAssessmentIO) {
+      // at some point this may change to validating the plugin
+      assessmentIO = newAssessmentIO;
+    }
 
     /**
      * Initializes the assessment service for this page/session
