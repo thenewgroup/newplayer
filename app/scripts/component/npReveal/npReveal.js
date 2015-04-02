@@ -47,7 +47,7 @@
 //                                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
 //                                                );
                                         if ($(this).outerHeight() > maxHeight) {
-                                            maxHeight = ($(this).outerHeight() + 100);
+                                            maxHeight = ($(this).outerHeight() + 500);
                                         }
                                     });
                                     $(".np-reveal").height(maxHeight);
