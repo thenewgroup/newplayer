@@ -23,5 +23,7 @@
         } else {
           vm.badgeEarned = false;
         }
+
+        AssessmentService.finalize();
     });
 })();

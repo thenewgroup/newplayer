@@ -4,22 +4,26 @@
 
   angular
     .module('newplayer.service')
-    .service('AssessmentIO', AssessmentIO);
+    .service('AssessmentIOService', AssessmentIO);
 
   /** @ngInject */
   function AssessmentIO($log) {
     var vm = this;
 
-    vm.updateQuestion = function(questionID, pagesState, questionsState) {
-      $log.debug('AssessmentIO::updateQuestion function stub', questionID, pagesState, questionsState);
-    }
+    vm.updateQuestion = function(questionID, assessment) {
+      $log.debug('AssessmentIO::updateQuestion function stub', questionID, assessment);
+    };
 
-    vm.updatePage = function(pageID, pagesState, questionsState) {
-      $log.debug('AssessmentIO::updatePage function stub', questionID, pagesState, questionsState);
-    }
+    vm.updatePage = function(pageID, assessment) {
+      $log.debug('AssessmentIO::updatePage function stub', pageID, assessment);
+    };
+
+    vm.updateFinal = function(assessment) {
+      $log.debug('AssessmentIO::updateFinal function stub', assessment);
+    };
 
     vm.retrieve = function() {
       $log.debug('AssessmentIO.log::retrieve function stub');
-    }
+    };
   }
-});
+})();

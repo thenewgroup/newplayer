@@ -7,7 +7,7 @@
     .service('AssessmentService', AssessmentService);
 
   /** @ngInject */
-  function AssessmentService($log, $rootScope, ConfigService, AssessmentIO) {
+  function AssessmentService($log, $rootScope, ConfigService, AssessmentIOService) {
     var minPassing = 0,
         vm = this,
         pages = {
@@ -17,9 +17,9 @@
 
         questions = {
           required: 0, total: 0, inventory: {},
-          answered: {required: 0, inventory: {}}
+          answered: {requiredCorrect: 0, inventory: {}}
         },
-        assessmentIO = AssessmentIO,              // This is the I/O module for saving/restoring assessment stuff
+        io = AssessmentIOService,              // This is the I/O module for saving/restoring assessment stuff
         config = ConfigService.getConfig();
 
       if( config.hasOwnProperty('minPassing')) {
@@ -27,15 +27,15 @@
       }
 
       if( config.hasOwnProperty('assessmentIO')) {
-        setAssessmentIO(config.assessmentIO);
+        setIO(config.assessmentIO);
       }
 
     /**
      *
      */
-    function setAssessmentIO(newAssessmentIO) {
+    function setIO(newAssessmentIO) {
       // at some point this may change to validating the plugin
-      assessmentIO = newAssessmentIO;
+      io = newAssessmentIO;
     }
 
     /**
@@ -69,7 +69,7 @@
      * @param pageIsRequired bool Whether the page was required so it can help user's score.
      */
     function addPage(pageName, pageIsRequired) {
-      //$log.info('Assessment:addPage | name, required?', pageName, pageIsRequired);
+    $log.info('Assessment:addPage | name, required?', pageName, pageIsRequired);
 
       // look in the inventory to see if this property already exists
       if( pages.inventory.hasOwnProperty(pageName)) {
@@ -92,7 +92,7 @@
      * @param pageIsRequired bool Whether the page was required so it can help user's score.
      */
     function addQuestion(questionName, questionIsRequired) {
-      //$log.info('Assessment:addQuestion | name, required?', questionName, questionIsRequired);
+      $log.info('Assessment:addQuestion | name, required?', questionName, questionIsRequired);
 
       // look in the inventory to see if this property already exists
       if( questions.inventory.hasOwnProperty(questionName)) {
@@ -100,7 +100,11 @@
       } else {
         questions.total++;
         questions.inventory[questionName] = questionIsRequired;
-        questions.answered.inventory[questionName] = false;
+        questions.answered.inventory[questionName] = {
+          isCorrect: null,
+          isRequired: questionIsRequired,
+          answered: false
+        };
 
         if( questionIsRequired ) {
           questions.required++;
@@ -126,7 +130,7 @@
         return 1;
       }
 
-      return Math.min(( pages.viewed.required + questions.answered.required ) / totalRequired, 1);
+      return Math.min(( pages.viewed.required + questions.answered.requiredCorrect ) / totalRequired, 1);
     }
 
     /**
@@ -156,6 +160,7 @@
 
         if( pages.inventory[pageId] === true ) {
           pages.viewed.required++;
+          io.updatePage(pageId, getAssessment());
         }
       } else {
         $log.warning('Assessment:pageViewed | page already viewed, ', pageId);
@@ -166,20 +171,30 @@
      * Record that a question was correctly answered and whether it was required
      *
      * @param pageNamed string The name or ID of the page (we'll keep a stack of it)
-     * @param pageIsRequired bool Whether the page was required so it can help user's score.
+     * @param isCorrect bool Whether the answer provided is correct
      */
-    function questionCorrectlyAnswered(questionId) {
-      //$log.info('Assessment:questionCorrectlyAnswered | ', questionId);
+    function questionAnswered(questionId, isCorrect) {
+      $log.info('Assessment:questionAnswered | ', questionId, isCorrect);
 
-      if( questions.answered.inventory[questionId] === false ) {
-        questions.answered.inventory[questionId] = new Date();
+      if( questions.answered.inventory[questionId].answered === false ) {
+        questions.answered.inventory[questionId].answered = new Date();
+        questions.answered.inventory[questionId].isCorrect = !!isCorrect;
 
-        if( questions.inventory[questionId] !== false ) {
-          questions.answered.required++;
+        if( isCorrect && questions.answered.inventory[questionId].isRequired ) {
+          questions.answered.requiredCorrect++;
         }
+
+        io.updateQuestion(questionId, getAssessment());
       } else {
-        $log.warning('Assessment:questionCorrectlyAnswered | question already answered, ', questionId);
+        $log.warning('Assessment:questionAnswered | question already answered, ', questionId);
       }
+    }
+
+    /**
+     * Mark assessment as complete, whatever that will mean to the end system
+     */
+    function finalize() {
+      io.updateFinal(getAssessment());
     }
 
     /**
@@ -200,29 +215,37 @@
       return questions;
     }
 
+    function getAssessment() {
+      return {
+        isPassing: isPassing(),
+        minPassing: minPassing,
+        pages: pages,
+        questions: questions,
+        score: getScore()
+      };
+    }
+
     /**
      * DEBUG ONLY
      */
     function dumpState() {
-      $log.info('Assessment:dumpState | score', getScore());
-      $log.info('Assessment:dumpState | isPassing', isPassing());
-      $log.info('Assessment:dumpState | pages', pages);
-      $log.info('Assessment:dumpState | questions', questions);
-      $log.info('Assessment:dumpState | minPassing', minPassing);
+      $log.info('Assessment:dumpState | ', getAssessment());
     }
 
     var service = {
-      getMinPassing: getMinPassing,
-      setMinPassing: setMinPassing,
-      getScore: getScore,
-      isPassing: isPassing,
-      setRequirements: setRequirements,
       addPage: addPage,
       addQuestion: addQuestion,
-      pageViewed: pageViewed,
-      questionCorrectlyAnswered: questionCorrectlyAnswered,
+      finalize: finalize,
+      getAssessment: getAssessment,
+      getMinPassing: getMinPassing,
       getPageStats: getPageStats,
       getQuestionStats: getQuestionStats,
+      getScore: getScore,
+      isPassing: isPassing,
+      pageViewed: pageViewed,
+      questionAnswered: questionAnswered,
+      setMinPassing: setMinPassing,
+      setRequirements: setRequirements,
 
       // DEBUG
       dumpState: dumpState

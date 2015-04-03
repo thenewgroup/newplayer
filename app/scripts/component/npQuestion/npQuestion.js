@@ -171,10 +171,10 @@
                                 feedbackLabel.remove();
 
 
+                              AssessmentService.questionAnswered(vm.id, isCorrectAnswer);
                                 if (isCorrectAnswer) {
                                     vm.feedback = feedback.correct;
                                     vm.canContinue = true;
-                                  AssessmentService.questionCorrectlyAnswered(vm.id);
                                   tweenOpts.opacity = 0;
                                 } else {
                                     vm.feedback = feedback.incorrect;
