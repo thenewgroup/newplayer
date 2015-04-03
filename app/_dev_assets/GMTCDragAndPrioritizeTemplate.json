@@ -2,7 +2,7 @@
     {
         "type": "npFeature",
         "data": {
-            "id": "ANR",
+            "id": "GMTC",
             "class": " ",
             "req": [],
             "version": "0.0.1",
@@ -72,41 +72,35 @@
                                 "components": []
                             },
                             {
-                                "type": "npDragAndDropMatch",
+                                "type": "npDragAndDropPrioritize",
                                 "data": {
                                     "id": "container",
                                     "positiveFeedback": "<p>That's it!</p>",
                                     "negativeFeedback": "<p>ehh?!?!</p>",
-                                    "image": "",
-                                    "req": [
-                                        "mediaelement/GreenSock/TweenMax.min.js",
-                                        "mediaelement/GreenSock/utils/Draggable.min.js",
-                                        "mediaelement/jquery-1.11.1.min.js"
-                                    ],
                                     "draggableButtons": [
                                         {
                                             "content": "<p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
                                             "image": "/assets/images/hotspot.png",
-                                            "matchingContent": "<p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
-                                            "matchingImage": "/assets/images/hotspot.png"
+                                            "matchingContent": "",
+                                            "matchingImage": ""
                                         },
                                         {
-                                            "content": "<p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
+                                            "content": "<p>this is the content2!</p>",
                                             "image": "/assets/images/hotspot.png",
-                                            "matchingContent": "<p>this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
-                                            "matchingImage": "/assets/images/hotspot.png"
+                                            "matchingContent": "",
+                                            "matchingImage": ""
                                         },
                                         {
                                             "content": "<p>this is the content3!</p>",
                                             "image": "/assets/images/hotspot.png",
-                                            "matchingContent": "<p>this is the matching content3!</p>",
-                                            "matchingImage": "/assets/images/hotspot.png"
+                                            "matchingContent": "",
+                                            "matchingImage": ""
                                         },
                                         {
                                             "content": "<p>this is the content4!</p>",
                                             "image": "/assets/images/hotspot.png",
-                                            "matchingContent": "<p>this is the matching content4!</p>",
-                                            "matchingImage": "/assets/images/hotspot.png"
+                                            "matchingContent": "",
+                                            "matchingImage": ""
                                         }
                                     ]
                                 },

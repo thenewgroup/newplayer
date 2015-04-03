@@ -46,21 +46,22 @@
 @import "../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/close";
 
 //Custom Classes
-@import "_npHomepage.scss";
 #np_products {
     @import "_products.scss";
 }
-@import "_reNutriv.scss";
-@import "_collapse.scss";
-@import "_spinner.scss";
+#np_reNutriv{
+    @import "_reNutriv.scss";
+}
 #np_storyDefault {
     @import "_story_default.scss";
 }
 #ANR {
     @import "_ANR.scss";
 }
+#GMTC {
+    @import "_GMTC.scss";
+}
 
-//@import "_reveal.scss";
 // Components w/ JavaScript
 @import "../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/modals";
 @import "../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/tooltip";

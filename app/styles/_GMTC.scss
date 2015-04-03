@@ -4,8 +4,10 @@
 /*When setting this ID for New Player use: 'newplayer-background'*/
 #np_newplayer-background{
     position: fixed;
-    background-color: $ANR-bg-color;
-    background-size: cover;
+    background-color: #FFFFFF;
+    /*background-size: cover;*/
+    background-image: url('../assets/images/GMTC_pattern.png');
+    background-repeat: repeat;
     content: "";
     width:100%;
     height:auto;
@@ -14,21 +16,29 @@
     right: 0;
     top: 0;
 }
+/*When setting this ID for New Player use: 'outside-padding'*/
+.np_outside-padding{
+    /*background-color: #FFFFFF;*/
+    /*box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.5);*/
+    /*height: 1200px*/
+
+}
 #background-image {
     position:fixed;
-    background-image: url('../assets/images/ESTL-005_ANR_bg_img.jpg');
-    background-position: bottom;
+    background-image: url('../assets/images/GMTC_bg.png');
+    background-position: top;
     background-repeat: no-repeat;
-    background-size:100%;
+    /*background-size:100%;*/
     width:100%;
     height:100%;
+    /*box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.5);*/
 }
 .renutriv-logo-image {
     position: relative;
-    background-image: url("../assets/images/AdvancedNightRepairLogoSm.png");
+    background-image: url("../assets/images/GMTC_logo.png");
     background-repeat: no-repeat;
-    width: 312px;
-    height: 19px;
+    width: 377px;
+    height: 22px;
     padding-bottom: 11px;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -37,7 +47,7 @@
 .headline{
     font-family: $font-family-serif;
     font-size: $font-size-36;
-    color: $brand-primary-light; 
+    color: $brand-primary; 
     letter-spacing: 2px;
     padding-top: 10px;
     padding-bottom: 0px;
@@ -161,6 +171,7 @@ small{
     overflow: hidden;
     width: 560px;
     height: 800px;
+    /*box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.5);*/
 }
 @media (max-width: $screen-sm) {
     .flash-cards-object {
@@ -197,6 +208,8 @@ small{
     /*height:100%;*/
     overflow: hidden;
     height: 475px;
+    border: 1px solid $brand-primary;
+    box-shadow: 0 0 0 1px $brand-primary inset;
 }
 @media (max-width: $screen-sm) {
     .flash-card-front-wrapper {
@@ -220,6 +233,8 @@ small{
     top:0;
     width: 100%;
     height:100%;
+    border: 1px solid $brand-primary;
+    box-shadow: 0 0 0 1px $brand-primary inset;
 }
 .flash-card-content-back {
     position: absolute;
@@ -534,6 +549,7 @@ input{
     position: absolute;
     padding: 5.5%;
     background-color:#FFFFFF;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
 }
 /*
 ////////////////////////////////////////////////////////////////////////////////
@@ -613,6 +629,7 @@ input{
     height: 100%;
     background-color: #FFFFFF;
     opacity: 0.75;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
     /*z-index: -1;*/
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -816,7 +833,7 @@ svg rect{
     opacity: 0.75;
 }
 svg rect{
-    stroke: #FFFFFF;
+    /*stroke: $brand-primary;*/
     stroke-width: 3;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
