@@ -4,7 +4,7 @@
 /*New Player page type wrapper classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*When setting this ID for New Player use: 'newplayer-background'*/
-#np_reNutriv #np_newplayer-background{
+#np_newplayer-background{
     position: fixed;
     background-color: #000000;
     background-size: cover;
@@ -16,7 +16,7 @@
     right: 0;
     top: 0;
 }
-#np_reNutriv #background-image {
+#background-image {
     position:fixed;
     background-image: url('../assets/images/ESTL-005_ReNutriv_bg_img.jpg');
     background-position: right top;
@@ -25,7 +25,7 @@
     width:100%;
     height:100%;
 }
-#np_reNutriv .renutriv-logo-image {
+.renutriv-logo-image {
     position: relative;
     background-image: url("../assets/images/ReNutrivLogoSm.png");
     background-repeat: no-repeat;
@@ -36,7 +36,7 @@
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*ReNutriv font classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-#np_reNutriv .headline{
+.headline{
     font-family: $re-nu-serif;
     color: $brand-primary-light;
     letter-spacing: 2px;
@@ -46,7 +46,7 @@
     margin-bottom: 0px;
     display: inline-block;
 }
-#np_reNutriv .instructional{
+.instructional{
     letter-spacing: 1px;
     padding-top: 0px;
     padding-bottom: 20px;
@@ -54,19 +54,19 @@
     /*margin-bottom: 0px;*/
     display: inline-block;
 }
-#np_reNutriv h1, h2, h3, h4, h5{
+h1, h2, h3, h4, h5{
     color: $brand-primary-light;
 }
-#np_reNutriv p ul ol{
+p ul ol{
     color: $brand-primary-light;
 }
-#np_reNutriv small{
+small{
     color: $brand-primary-light;
 }
-#np_reNutriv .dark h1, h2, h3, h4, h5 {
+.dark h1, h2, h3, h4, h5 {
     color: $gray-dark;
 }
-#np_reNutriv .header-dark {
+.header-dark {
     color: $gray-base;
     font-size: $font-size-36;
     font-family: $re-nu-serif;
@@ -75,7 +75,7 @@
     padding-bottom: 0px;
     display: inline-block;
 }
-#np_reNutriv .gold {
+.gold {
     /*color: #9a7d46;*/
     color: $gold;
 }
@@ -83,12 +83,12 @@
 /*New Player padding wrapper classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*When setting this ID for New Player use: content-background */
-/*#np_reNutriv .npHotspot-feedback p{
+/*.npHotspot-feedback p{
     position: relative;
     height: 100%;
 
 }*/
-#np_reNutriv .content-background{
+.content-background{
     /*    position: absolute;
     left: 10px;
     right: 20px;*/
@@ -97,20 +97,20 @@
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player HotSpot classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-#np_reNutriv .npHotspot{
+.npHotspot{
     top: 0;
     left: 0;
 }
-#np_reNutriv .hotspotImage{
+.hotspotImage{
     position: relative;
     max-width: 575px;
     margin-bottom: 10%;
     /*overflow: hidden;*/
 }
-#np_reNutriv .content-area{
+.content-area{
     /*padding-left: 10px;*/
 }
-#np_reNutriv .hotspotButton{
+.hotspotButton{
     position: absolute;
     max-width:90px;
     height: auto;
@@ -120,14 +120,14 @@
     padding: 0;
     cursor: pointer;
 }
-#np_reNutriv .hotspotButtonImage{
+.hotspotButtonImage{
     position: relative;
     background-image: url("../assets/images/hotspot.png");
     background-repeat: no-repeat;
     width: 100px;
     height: 50px;
 }
-#np_reNutriv .npHotspot-feedback{
+.npHotspot-feedback{
     position: absolute;
     top: 0;
     left: 0;
@@ -141,19 +141,19 @@
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Flash Cards classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-#np_reNutriv .np-flash-card{  
+.np-flash-card{  
     position: fixed;
     content: "";
     width: 100%;
     left: 0;
     right: 0;
 }
-#np_reNutriv #flash-cards {
+#flash-cards {
     position: absolute;
     left:0;
 }
 ///////////////cards/////////////////
-#np_reNutriv .flash-cards-object {
+.flash-cards-object {
     position: relative;
     display: inline-block;
     overflow: hidden;
@@ -161,11 +161,11 @@
     height: 800px;
 }
 @media (max-width: $screen-sm) {
-    #np_reNutriv .flash-cards-object {
+    .flash-cards-object {
         width: 280px;
     }
 }
-#np_reNutriv .flash-card-overlay {
+.flash-card-overlay {
     position: absolute;
     width: 100%;
     left: 0;
@@ -175,7 +175,7 @@
     background-color: #000000;
 }
 ///////////////button/////////////////
-#np_reNutriv .flash-card-button {
+.flash-card-button {
     position: absolute;
     top: 25px;
     right: 20px;
@@ -183,12 +183,12 @@
     height: auto;
     cursor: pointer;
 }
-#np_reNutriv .button-holder{
+.button-holder{
     position: relative;
     fill: #d9d9d9;
 }
 ///////////////front/////////////////
-#np_reNutriv .flash-card-front-wrapper {
+.flash-card-front-wrapper {
     position: absolute;
     top:0;
     width: 100%;
@@ -197,11 +197,11 @@
     height: 475px;
 }
 @media (max-width: $screen-sm) {
-    #np_reNutriv .flash-card-front-wrapper {
+    .flash-card-front-wrapper {
         height: 235px;
     }
 }
-#np_reNutriv .flash-card-content-front {
+.flash-card-content-front {
     position: absolute;
     padding: 2em;
     left: 0;
@@ -209,17 +209,17 @@
     top: 0;
     background-color: #FFFFFF;
 }
-#np_reNutriv .flash-card-content-front p{
+.flash-card-content-front p{
     color: #000000;
 }
 ///////////////back/////////////////
-#np_reNutriv .flash-card-back-wrapper {
+.flash-card-back-wrapper {
     position: absolute;
     top:0;
     width: 100%;
     height:100%;
 }
-#np_reNutriv .flash-card-content-back {
+.flash-card-content-back {
     position: absolute;
     padding: 2em;
     left: 0;
@@ -227,20 +227,20 @@
     top: 0;
     background-color: #FFFFFF;
 }
-#np_reNutriv .flash-card-content-back p{
+.flash-card-content-back p{
     color: #000000;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Quiz classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-#np_reNutriv .quiz-label{
+.quiz-label{
     font-family: $font-family-sans-serif;
     color: $brand-primary-light;
     text-transform: uppercase;
     letter-spacing: 2px;
     display: inline-block;
 }
-#np_reNutriv .btn-submit{
+.btn-submit{
     position: relative;
     border-color: #9a7d46;
     background-color: #000000;
@@ -251,13 +251,13 @@
     margin-bottom: 25px;
     margin-left: 30px;
 }
-#np_reNutriv .btn-submit span{ 
+.btn-submit span{ 
     font-family: $re-nu-serif;
     color: $brand-primary-light;
     text-transform: uppercase;
     letter-spacing: 2px;
 }
-#np_reNutriv input{ 
+input{ 
     font-family: $re-nu-serif;
     size: $font-size-small;
     color: #737373;
@@ -265,7 +265,7 @@
     letter-spacing: 2px;
     color: #313131;
 }
-#np_reNutriv .answer-text-input{ 
+.answer-text-input{ 
     font-family: $re-nu-serif;
     size: $font-size-small;
     color: #737373;
@@ -274,21 +274,21 @@
     background-color: $gray-dark;
     box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
 }
-#np_reNutriv .answer-text-checkbox { 
+.answer-text-checkbox { 
     font-family: $re-nu-serif;
     size: $font-size-small;
     color: $brand-primary-light;
     text-transform: uppercase;
     letter-spacing: 2px;
 }
-#np_reNutriv .answer-text-radio { 
+.answer-text-radio { 
     font-family: $re-nu-serif;
     size: $font-size-small;
     color: $brand-primary-light;
     text-transform: uppercase;
     letter-spacing: 2px;
 }
-#np_reNutriv .answer-text span{ 
+.answer-text span{ 
     font-family: $re-nu-serif;
     size: $font-size-small;
     color: $brand-primary-light;
@@ -298,10 +298,10 @@
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Quiz Answer classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-#np_reNutriv .answer-wrapper{ 
+.answer-wrapper{ 
     padding: 20px;
 }
-#np_reNutriv .answer-checkbox{ 
+.answer-checkbox{ 
     position: relative;
     width: 20px;
     height: 20px;
@@ -312,7 +312,7 @@
     background-color: #000000;
     box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
 }
-#np_reNutriv .answer-radio{ 
+.answer-radio{ 
     position: relative;
     width: 20px;
     height: 20px;
@@ -321,7 +321,7 @@
     background-color: #000000;
     box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
 }
-#np_reNutriv .checkbox-box{ 
+.checkbox-box{ 
     position: absolute;
     width: 20px;
     height: 20px;
@@ -329,21 +329,21 @@
     margin: auto;
     box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
 }
-#np_reNutriv .checkbox-box svg{ 
+.checkbox-box svg{ 
     position: absolute;
     top:0;
     left:0;
     display: block;
     margin: auto;
 }
-#np_reNutriv .checkbox-x{ 
+.checkbox-x{ 
     position: absolute;
     width: 20px;
     height: 20px;
     display: block;
     margin: auto;
 }
-#np_reNutriv .checkbox-x svg{ 
+.checkbox-x svg{ 
     position: absolute;
     top:0;
     left:0;
@@ -351,7 +351,7 @@
     display: block;
     margin: auto;
 }
-#np_reNutriv .answer-text{ 
+.answer-text{ 
     font-family: $font-family-sans-serif;
     /*float: left;*/
     color: $brand-primary-light;
@@ -361,37 +361,37 @@
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Quiz Questions classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-#np_reNutriv .question-text{ 
+.question-text{ 
     font-family: $re-nu-serif;
     size: $font-size-h3;
     color: $brand-primary-light;
     text-transform: uppercase;
     letter-spacing: 2px;
 }
-#np_reNutriv .question-feedback{ 
+.question-feedback{ 
     position: relative;
     height: 160px;
     margin-top: 10px;
     margin-bottom: 10px;
     margin-right: 30px;
 }
-#np_reNutriv .question-feedback-outline{ 
+.question-feedback-outline{ 
     position: absolute;
     width: 100%;
     height: 100%;
 }
-#np_reNutriv .question-feedback-text{ 
+.question-feedback-text{ 
     font-family: $font-family-sans-serif;
     float: left;
     color: $brand-primary-light;
     letter-spacing: 2px;
 }
-#np_reNutriv .negative-feedback-icon{ 
+.negative-feedback-icon{ 
     width: 20px;
     margin-right: 10px;
     float: left;
 }
-#np_reNutriv .question-feedback-label{ 
+.question-feedback-label{ 
     font-family: $font-family-sans-serif;
     size: $font-size-h3;
     color: #737373;
@@ -400,7 +400,7 @@
     letter-spacing: 2px;
     padding-top: 4.5%;
 }
-#np_reNutriv .question-feedback-wrapper{ 
+.question-feedback-wrapper{ 
     position: absolute;
     background-color: $gray-dark;
     box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
@@ -411,7 +411,7 @@
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Trivia/Spinner classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-#np_reNutriv .btn-next{ 
+.btn-next{ 
     position: absolute;
     border-color: $gold;
     width: auto;
@@ -423,16 +423,16 @@
     margin-top: 15px;
     background-color: #000000;
 }
-#np_reNutriv .btn-next span{ 
+.btn-next span{ 
     font-family: $re-nu-serif;
     color: $brand-primary-light;
     text-transform: uppercase;
     letter-spacing: 2px;
 }
-#np_reNutriv .btn-next span p{ 
+.btn-next span p{ 
     padding: 0;
 }
-#np_reNutriv .np-spinner-wrapper {
+.np-spinner-wrapper {
     position: relative;
     overflow: hidden;
     height: 400px;
@@ -440,29 +440,29 @@
     box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
     /*width: 135px;*/
 }
-#np_reNutriv .np-spinner{
+.np-spinner{
     color: $gold;
     width: 155px;
 }
-#np_reNutriv .np-gold-pointer{
+.np-gold-pointer{
     position: absolute;
     top:0;
     bottom:0;
     right:0;
     width:33px;
 }
-#np_reNutriv .method2 {
+.method2 {
     -webkit-mask-image: -webkit-linear-gradient(top, rgba(248,248,170,1), rgba(202,160,78,.5) 50%, rgba(248,248,170,1));
     -webkit-mask-image: linear-gradient(top, rgba(248,248,170,1), rgba(202,160,78,.5) 50%, rgba(248,248,170,1));
 }
-#np_reNutriv .np-spinner div{
+.np-spinner div{
     font-family: $re-nu-serif;
     font-size: floor(($font-size-base * 2.5));
     color: $gold-gradiant;
     line-height: 2.1em;
     text-align: center;
 }
-#np_reNutriv .np-gold-border {
+.np-gold-border {
     position: absolute;
     top: 0;
     width: 100%;
@@ -475,7 +475,7 @@
 // FROM - http://codepen.io/Aldlevine/pen/yGLqd
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 */
-#np_reNutriv .wheels {
+.wheels {
     position: relative;
     top: 100px;
     text-align: center;
@@ -507,7 +507,7 @@
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Reveal classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-#np_reNutriv .reveal-object {
+.reveal-object {
     position: absolute;
     top: 0px;
     left: 0;
@@ -516,19 +516,19 @@
     width: 100%;
     max-width: 770px;
 }
-#np_reNutriv .np-reveal {
+.np-reveal {
     position: relative;
     width: 100%;
     height: 600px;
 }
-#np_reNutriv .reveal-button {
+.reveal-button {
     cursor: pointer;
 }
-#np_reNutriv .reveal-navigation {
+.reveal-navigation {
     width: 100%;
     height: 100px;
 }
-#np_reNutriv .reveal-button-image  {
+.reveal-button-image  {
     position: absolute;
     padding: 5.5%;
     background-color:#FFFFFF;
@@ -538,14 +538,14 @@
 ::::::::::::: evenly ditribute navigation begin ::::::::::::::::::::::::::::::::
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 */
-#np_reNutriv .reveal-button-container {
+.reveal-button-container {
     position: relative;
     display: flex;
     justify-content: space-between;
     /*border: 2px dashed #444;*/
     max-width: 770px;
 }
-#np_reNutriv .reveal-button-wrap {
+.reveal-button-wrap {
     position: absolute;
     top: 0;
     left: 0;
@@ -553,7 +553,7 @@
     bottom: 0;
     margin: auto;
 }
-#np_reNutriv .button-screen {
+.button-screen {
     position: absolute;
     top: 0;
     left: 0;
@@ -574,38 +574,38 @@
 ::::::::::::: evenly ditribute navigation end ::::::::::::::::::::::::::::::::::
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 */
-#np_reNutriv .reveal-item-wrapper{
+.reveal-item-wrapper{
     width:100%;
 }
-#np_reNutriv .reveal-item{
+.reveal-item{
     width:100%;
 }
-#np_reNutriv .reveal-content-wrapper{
+.reveal-content-wrapper{
     position: relative;
 }
-#np_reNutriv .reveal-content-text{
+.reveal-content-text{
     position: relative;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
 }
-#np_reNutriv .reveal-heading-text{
+.reveal-heading-text{
     margin-top: -5px;
     padding-top: 25px;
     padding-left: 15px;
     padding-right: 15px;
 }
-#np_reNutriv .reveal-text-body{
+.reveal-text-body{
     padding-bottom: 15px;
 }
 
-#np_reNutriv .reveal-content-text{
+.reveal-content-text{
     padding-top: 15px;
     padding-left: 15px;
     padding-right: 15px;
 }
-#np_reNutriv .reveal-background{
+.reveal-background{
     position: absolute;
     top: 0;
     left: 0;
@@ -618,24 +618,24 @@
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player List classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-#np_reNutriv .list-item{
+.list-item{
     color: $brand-primary-light;
     letter-spacing: 2px;
 }
-#np_reNutriv .column-1{
+.column-1{
     margin-bottom: 1.5%;
 }
-#np_reNutriv .list-object video{
+.list-object video{
     width: 100%;
     height: auto;
 }
-#np_reNutriv .media-body{
+.media-body{
     padding: 5%;
     background-color: #000000;
     opacity: 0.75;
     filter: url(styles/inset-shadow.svg#inset-shadow); 
 }
-#np_reNutriv .list-body-text{
+.list-body-text{
     color: $brand-primary-light;
     letter-spacing: 2px;
     font-size: $font-size-base;
@@ -644,30 +644,30 @@
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Drag and Drop Prioritize classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-#np_reNutriv .button-prioritize-content{
+.button-prioritize-content{
     position: relative;
     display:block;
 }
-#np_reNutriv .hit-area-prioritize-content{
+.hit-area-prioritize-content{
     position: absolute;
     float: right;
     right: 43%;
     top: 43%;
 }
-#np_reNutriv .hit-area-number{
+.hit-area-number{
     font-size: 7em;
     color: #000000;
     opacity: .15;
     text-align: center;
     padding-left: 20px;
 }
-#np_reNutriv .button-completion-prioritize-content{
+.button-completion-prioritize-content{
     position: absolute;
     float: right;
     right: 50%;
     top: 36%;
 }
-#np_reNutriv .centered-prioritize-content{
+.centered-prioritize-content{
     width: 100%;
     height: 100%;
     float: right;
@@ -677,10 +677,10 @@
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Drag and Drop match classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-#np_reNutriv .column-no-wrap {
+.column-no-wrap {
     float: none;
 }
-#np_reNutriv .boxElements {
+.boxElements {
     position:relative;
     width:100%;
     height:100%;
@@ -692,7 +692,7 @@
     color: white;
     margin-bottom: 1.5%;
 }
-#np_reNutriv .hit-area-background {
+.hit-area-background {
     position:absolute;
     width:100%;
     height:100%;
@@ -704,10 +704,10 @@
     background-color: #313131;
     box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
 }
-#np_reNutriv .boxElements svg{
+.boxElements svg{
     /*fill:#313131;*/
 }
-#np_reNutriv .completeCheck {
+.completeCheck {
     position:absolute;
     width:100%;
     height:100%;
@@ -719,7 +719,7 @@
     color: white;
     margin-bottom: 2.5%;
 }
-#np_reNutriv foreignobject{
+foreignobject{
     position:fixed;
     width:100%;
     height:100%;
@@ -728,13 +728,13 @@
     bottom:0;
     right:0;
 }
-#np_reNutriv .button-completion-content{
+.button-completion-content{
     position: absolute;
     float: right;
     right: 50%;
     top: 43%;
 }
-#np_reNutriv .centered-content{
+.centered-content{
     width: 100%;
     height: 100%;
     float: right;
@@ -746,10 +746,10 @@
     line-height: 1em;
     padding-left: 5%;
 }
-#np_reNutriv .positive-feedback-content{
+.positive-feedback-content{
     width: auto;
 }
-#np_reNutriv .positive-feedback-image{
+.positive-feedback-image{
     background-image: url("/assets/svgs/feedback-correct-icon-ReNutriv.svg");
     background-repeat: no-repeat;
     width:40px; 
@@ -758,11 +758,11 @@
     background-size: 100%; /* To fill the dimensions of container (button), or */
     background-size: 40px auto; /* to specify dimensions explicitly */
 }
-#np_reNutriv .button-content{
+.button-content{
     position: relative;
     padding: 5%;
 }
-#np_reNutriv rect{
+rect{
     position: fixed;
     width: 100%;
     height: 100%;
@@ -771,25 +771,25 @@
     bottom:0;
     right:0;
 }
-#np_reNutriv .button-content p{
+.button-content p{
     padding: 0;
     margin: 0;
 }
-#np_reNutriv .draggableButton{
+.draggableButton{
     cursor: pointer;
 }
-#np_reNutriv .draggableButtonsvg{
+.draggableButtonsvg{
     /*fill:#000000;*/
 }
-#np_reNutriv .hit-area{
+.hit-area{
     position: relative;
     width: 100%;
     height: 100%;
 }
-#np_reNutriv .hit-area svg{
+.hit-area svg{
     /*fill: #313131;*/
 }
-#np_reNutriv .hit-area rect{
+.hit-area rect{
     position: relative;
     width: 100%;
     height: 100%;
