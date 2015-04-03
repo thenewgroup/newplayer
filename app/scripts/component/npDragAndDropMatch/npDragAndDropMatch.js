@@ -48,7 +48,7 @@
                         onDrag: "&"
                     },
                     link: function (scope, element, attrs) {
-                        var droppables = document.getElementsByClassName('hit-area');
+                        var droppables = undefined;
                         var hitAreaWrapper = document.getElementById('draggableContainer');
                         var draggables = document.getElementsByClassName('draggableButton');
                         var currentTarget;
@@ -71,6 +71,7 @@
                             //////////////////////////////////////////////////////////////////////////////////////
                             //on ready set states
                             //////////////////////////////////////////////////////////////////////////////////////
+                            droppables = document.getElementsByClassName('hit-area');
                             TweenMax.to($('.hit-area'), 0, {
                                 strokeOpacity: 0
                             });
@@ -135,7 +136,11 @@
                             var left = box.left + scrollLeft - clientLeft;
                             return {top: Math.round(top), left: Math.round(left)};
                         }
-                        var hitAreaPosition = getOffsetRect(hitAreaWrapper);
+                        var hitAreaPosition = 'undefined';
+                        var window_offset;
+                        $(window).scroll(function () {
+                            window_offset = $(window).scrollTop();
+                        });
                         //////////////////////////////////////////////////////////////////////////////////////
                         //on drag offset method
                         //////////////////////////////////////////////////////////////////////////////////////
@@ -160,6 +165,7 @@
                             onDrag: function (e) {
                                 scope.$apply(function () {
                                     scope.onDrag();
+                                    droppables = document.getElementsByClassName('hit-area');
 //                                setElementPositions(true);
                                 });
                             },
@@ -172,13 +178,22 @@
 //                                setElementPositions(false);
                                     var targetNumber = droppables.length;
                                     var droppablesPosition;
+                                    droppables = document.getElementsByClassName('hit-area');
                                     for (var i = 0; i < targetNumber; i++) {
                                         currentTarget = 'id' + i;
                                         currentElement = element.attr("id");
-                                        if (Draggable.hitTest(droppables[i], e) && (currentElement === currentTarget)) {
-                                            droppablesPosition = getOffsetRect(droppables[i]);
+                                        droppablesPosition = getOffsetRect(droppables[i]);
+                                        if (Draggable.hitTest(droppablesPosition, e) && (currentElement === currentTarget)) {
+                                            hitAreaPosition = getOffsetRect(hitAreaWrapper);
                                             var positionX = (droppablesPosition.left - hitAreaPosition.left);
-//                                        var positionY = (droppablesPosition.top - hitAreaPosition.top) - (Math.round(draggablePositionTop[i].top) - hitAreaPosition.top);
+//                                          var positionY = (droppablesPosition.top - hitAreaPosition.top) - (Math.round(draggablePositionTop[i].top) - hitAreaPosition.top);
+                                            var postionTopOffset = Math.round(window_offset + droppablesPosition.top);
+                                            console.log(
+                                                    '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                                    '\n::droppablesPosition.top::', droppablesPosition.top,
+                                                    '\n::postionTopOffset::', postionTopOffset,
+                                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                                    );
 //                                        console.log('inside this droppablesPosition.top: ', droppablesPosition.top, 'positionY: ', positionY);
                                             //////////////////////////////////////////////////////////////////////////////////////
                                             //on drag match set match position/states
