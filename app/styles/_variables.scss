@@ -54,34 +54,6 @@ $brand-danger:          #DC3522 !default;
 $brand-gradiant:        gold-linear-gradient(45deg, #caa04e 0%,#f8e4ab 33%,#caa04e 66%,#f3db7f 100%); 
 $gold:                  #9a7d46; 
 $gold-gradiant:         gold-linear-gradient(linear-gradient(top, rgba(248,248,170,1), rgba(202,160,78,.5) 50%, rgba(248,248,170,1))); 
-/*h1.method2 {
-	-webkit-mask-image: -webkit-linear-gradient(top, rgba(248,248,170,1), rgba(202,160,78,.5) 50%, rgba(248,248,170,1));
-	-webkit-mask-image: linear-gradient(top, rgba(248,248,170,1), rgba(202,160,78,.5) 50%, rgba(248,248,170,1));
-}*/
-
-/*@mixin gradient-horizontal-four-colors($start-color: #00b3ee, $mid-color: #7a43b6, $color-stop: 33%, $mid-color-2: #abcdef, $color-stop-2: 66%, $end-color: #c3325f) {
-    background-image: -webkit-linear-gradient(left, $start-color, $mid-color $color-stop, $mid-color-2 $color-stop-2, $end-color);
-    background-image: -o-linear-gradient(left, $start-color, $mid-color $color-stop, $mid-color-2 $color-stop-2,$end-color);
-    background-image: linear-gradient(to right, $start-color, $mid-color $color-stop, $mid-color-2 $color-stop-2, $end-color);
-    background-repeat: no-repeat;
-    filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=1)",argb($start-color),argb($end-color))); // IE9 and down, gets no color-stop at all for proper fallback
-  }*/
-/*.example {
-    @include gradient-horizontal(#1834cc, #1dc937, 0%, 100%);
-}*/
-
-/*.horizontal-four-colors(@start-color: #00b3ee; @mid-color: #7a43b6; @color-stop: 33%; @mid-color-2: #abcdef; @color-stop-2: 66%; @end-color: #c3325f) {
-    background-image: -webkit-linear-gradient(left, @start-color, @mid-color @color-stop, @mid-color-2 @color-stop-2, @end-color);
-    background-image: -o-linear-gradient(left, @start-color, @mid-color @color-stop, @mid-color-2 @color-stop-2,@end-color);
-    background-image: linear-gradient(to right, @start-color, @mid-color @color-stop, @mid-color-2 @color-stop-2, @end-color);
-    background-repeat: no-repeat;
-    filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=1)",argb(@start-color),argb(@end-color))); // IE9 and down, gets no color-stop at all for proper fallback
-  }*/
-
-
-/*gradient.horizontal-four-colors(#ffffff; #f9f9f9; 33%; #bbb, 66%, #e7eaef);*/
-
-
 
 
 //== Scaffolding
@@ -157,7 +129,7 @@ $font-family-serif:       Georgia, "Times New Roman", Times, serif !default;*/
 //## Font, line-height, and color for body text, headings, and more.
 $font-family-sans-serif_head:  "akzidenz-grotesk_bqbold";
 $font-family-sans-serif:  "akzidenz-grotesk_bqregular";
-$re-nu-serif:  "BauerBodoniStd-Roman";
+$re-nu-serif:             "BauerBodoniStd-Roman";
 /*$font-family-sans-serif_head;*/
 
 $font-family-serif:       "optimadisplaylightlight";
@@ -172,13 +144,16 @@ $font-size-small:         ceil(($font-size-base * 1.15)) !default; // ~17px
 
 /*Headline*/
 $font-size-h1:            floor(($font-size-base * 3.6)) !default;    // ~50px
-//$font-size-h1:            floor(($font-size-base * 2.6)) !default;  // ~36px
+/*$font-size-h1:            floor(($font-size-base * 2.6)) !default;    // ~36px*/
+$font-size-36:            floor(($font-size-base * 2.6)) !default;    // ~36px
 /*Secondary Headline*/
 $font-size-h2:            floor(($font-size-base * 2.05)) !default;   // ~28px
 //$font-size-h2:            floor(($font-size-base * 2.15)) !default; // ~30px
 /*Subheads*/
 $font-size-h3:            ceil(($font-size-base * 1.6)) !default;     // ~23px
 $font-size-h4:            ceil(($font-size-base * 1.4)) !default;     // ~20px
+$font-size-18:            ceil(($font-size-base * 1.25)) !default;     // ~18px
+$font-size-17:            ceil(($font-size-base * 1.2)) !default;     // ~17px
 $font-size-h5:            $font-size-base !default;                   // ~14px
 $font-size-h6:            ceil(($font-size-base * 0.85)) !default;    // ~12px
 
@@ -287,6 +262,7 @@ $table-bg-active:               $table-bg-hover !default;
 
 //::::Border color for table and cell borders.
 $table-border-color:            #ddd !default;
+$ANR-bg-color:                  #014c95 !default;
 
 
 //== Buttons

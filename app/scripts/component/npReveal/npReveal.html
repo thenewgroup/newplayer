@@ -1,4 +1,4 @@
-<div npReveal id="{{npReveal.id}}" class="{{component.type}} np-cmp-wrapper np-reveal" ng-controller="npRevealController as npReveal">
+<div npReveal np-reveal-build id="{{npReveal.id}}" class="{{component.type}} np-cmp-wrapper np-reveal" ng-controller="npRevealController as npReveal">
     <div class="debug">
         <h3>{{component.type}} -- 
             <small>{{component.idx}}</small>
@@ -6,11 +6,12 @@
     </div>
     <!--:::::::::::: buttons ::::::::::::::::--> 
     <div class="reveal-navigation col-md-12">
-        <div class=" reveal-button-container">
+        <div class=" reveal-button-container center-block">
             <div revealButton class="reveal-button" ng-repeat="revealItem in npReveal.revealItems" ng-click="npReveal.update(revealItem)">
                 <div class="reveal-button-wrap">
                     <img class="reveal-button-image img-responsive" ng-src="{{revealItem.buttonImage}}" alt="{{revealItem.buttonAlt}}" />
                 </div>
+                <div class="button-screen"></div>
             </div>
         </div>
     </div>

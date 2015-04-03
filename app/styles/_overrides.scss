@@ -46,7 +46,7 @@ img.blur {
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*Button overrides*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-.btn {     
+.btn {
     text-transform: uppercase;
     letter-spacing: 2px;
     margin-top: 5px; 
@@ -57,7 +57,13 @@ img.blur {
 .btn-favorite { 
     margin-top: 5px; 
     margin-bottom: 10px;
-
+    background-color: $brand-primary;
+    color: #FFFFFF;
+    &:hover,
+        &:focus {
+        background-color: darken($brand-primary, 5%);
+        color: darken(#FFFFFF, 5%);
+    }
 }
 .np_btn-info { 
     margin-top: 5px; 
@@ -65,7 +71,7 @@ img.blur {
     display: none;
 }
 .glyphicon-heart-empty{
-    /*color: $brand-info;*/
+    color: $brand-info !important;
 }
 .icon {
     background-image: url(../assets/svgs/heart-icon.svg);
@@ -90,8 +96,8 @@ img.blur {
 /*When setting this class for New Player use: 'inside-padding'*/
 .np_inside-padding{
     position: relative;
-    padding-left: 5%;
-    padding-right: 5%;
+    padding-left: 5% !important;
+    padding-right: 5% !important;
     padding-bottom: 35px;
 }
 /*When setting this class for New Player use: 'button-padding'*/
