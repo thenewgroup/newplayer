@@ -1,6 +1,6 @@
 {
   "name": "newplayer",
-  "version": "0.4.8",
+  "version": "0.4.9",
   "main": [
     "./dist/scripts/newplayer.js",
     "./dist/scripts/vendor.js",
