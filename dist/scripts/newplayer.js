@@ -1910,7 +1910,7 @@ function AssessmentService ( $log ) {
                                                 TweenMax.to(element, 0.15, {
                                                     autoAlpha: 0,
                                                     x: positionX,
-//                                            y: positionY,
+//                                                  y: positionY,
                                                     ease: Power4.easeOut
                                                 });
                                                 TweenMax.to(droppables[i], 0.5, {
