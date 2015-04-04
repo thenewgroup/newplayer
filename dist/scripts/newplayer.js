@@ -1855,88 +1855,106 @@ function AssessmentService ( $log ) {
 //                            });
 //                        }
 //                    }
-                        //////////////////////////////////////////////////////////////////////////////////////
-                        //create draggable, set vars
-                        //////////////////////////////////////////////////////////////////////////////////////
-                        Draggable.create(element, {
-                            type: "x,y",
-                            edgeResistance: 0.65,
-                            bounds: "#draggableContainer",
-                            throwProps: true,
-                            overlapThreshold: '50%',
-                            onDrag: function (e) {
-                                scope.$apply(function () {
-                                    scope.onDrag();
-                                    droppables = document.getElementsByClassName('hit-area');
+                        function update() {
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            //create draggable, set vars
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            Draggable.create(element, {
+                                type: "x,y",
+                                edgeResistance: 0.65,
+                                autoScroll: 1,
+                                bounds: "#draggableContainer",
+                                throwProps: true,
+                                overlapThreshold: '50%',
+                                onDrag: function (e) {
+                                    scope.$apply(function () {
+                                        scope.onDrag();
+                                        droppables = document.getElementsByClassName('hit-area');
 //                                setElementPositions(true);
-                                });
-                            },
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            //on drag method/vars
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            onDragEnd: function (e) {
-                                scope.$apply(function () {
-                                    scope.onDragEnd();
+                                    });
+                                },
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //on drag method/vars
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                onDragEnd: function (e) {
+                                    scope.$apply(function () {
+                                        scope.onDragEnd();
 //                                setElementPositions(false);
-                                    var targetNumber = droppables.length;
-                                    var droppablesPosition;
-                                    droppables = document.getElementsByClassName('hit-area');
-                                    for (var i = 0; i < targetNumber; i++) {
-                                        currentTarget = 'id' + i;
-                                        currentElement = element.attr("id");
-                                        droppablesPosition = getOffsetRect(droppables[i]);
-                                        if (Draggable.hitTest(droppablesPosition, e) && (currentElement === currentTarget)) {
-                                            hitAreaPosition = getOffsetRect(hitAreaWrapper);
-                                            var positionX = (droppablesPosition.left - hitAreaPosition.left);
+                                        var targetNumber = droppables.length;
+                                        var droppablesPosition;
+//                                        $(window).scroll(function () {
+//                                            clearTimeout($.data(this, 'scrollTimer'));
+//                                            $.data(this, 'scrollTimer', setTimeout(function () {
+//                                                // do something
+//                                                console.log("Haven't scrolled in 250ms!");
+//                                                droppables = document.getElementsByClassName('hit-area');
+//                                            }, 250));
+//                                        });
+                                        droppables = document.getElementsByClassName('hit-area');
+                                        for (var i = 0; i < targetNumber; i++) {
+                                            currentTarget = 'id' + i;
+                                            currentElement = element.attr("id");
+                                            droppablesPosition = getOffsetRect(droppables[i]);
+//                                        if (Draggable.hitTest(droppablesPosition, e) && (currentElement === currentTarget)) {
+                                            if (Draggable.hitTest(droppables[i], e) && (currentElement === currentTarget)) {
+                                                hitAreaPosition = getOffsetRect(hitAreaWrapper);
+                                                var positionX = (droppablesPosition.left - hitAreaPosition.left);
 //                                          var positionY = (droppablesPosition.top - hitAreaPosition.top) - (Math.round(draggablePositionTop[i].top) - hitAreaPosition.top);
-                                            var postionTopOffset = Math.round(window_offset + droppablesPosition.top);
-                                            console.log(
-                                                    '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                                    '\n::droppablesPosition.top::', droppablesPosition.top,
-                                                    '\n::postionTopOffset::', postionTopOffset,
-                                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                                    );
+                                                var postionTopOffset = Math.round(window_offset + droppablesPosition.top);
+                                                console.log(
+                                                        '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                                        '\n::droppablesPosition.top::', droppablesPosition.top,
+                                                        '\n::droppablesPosition.top::', droppablesPosition.top,
+                                                        '\n::postionTopOffset::', postionTopOffset,
+                                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                                        );
 //                                        console.log('inside this droppablesPosition.top: ', droppablesPosition.top, 'positionY: ', positionY);
-                                            //////////////////////////////////////////////////////////////////////////////////////
-                                            //on drag match set match position/states
-                                            //////////////////////////////////////////////////////////////////////////////////////
-                                            TweenMax.to(element, 0.15, {
-                                                autoAlpha: 0,
-                                                x: positionX,
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                //on drag match set match position/states
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                TweenMax.to(element, 0.15, {
+                                                    autoAlpha: 0,
+                                                    x: positionX,
 //                                            y: positionY,
-                                                ease: Power4.easeOut
-                                            });
-                                            TweenMax.to(droppables[i], 0.5, {
-                                                autoAlpha: 0.95,
+                                                    ease: Power4.easeOut
+                                                });
+                                                TweenMax.to(droppables[i], 0.5, {
+                                                    autoAlpha: 0.95,
 //                                            fill: '#313131',
-                                                strokeOpacity: 1,
-                                                ease: Power4.easeOut
-                                            });
-                                            TweenMax.to($(droppables[i]).find('.button-content'), 0.5, {
-                                                autoAlpha: 0,
-                                                ease: Power4.easeOut
-                                            });
-                                            TweenMax.to($(droppables[i]).find('.button-completion-content'), 0.5, {
-                                                autoAlpha: 1,
-                                                ease: Power4.easeOut
-                                            });
-                                            return;
-                                        } else {
-                                            //////////////////////////////////////////////////////////////////////////////////////
-                                            //on drag no match set state
-                                            //////////////////////////////////////////////////////////////////////////////////////
-                                            TweenMax.to(element, 1, {
-                                                x: "0px",
-                                                y: '0px',
-                                                ease: Power4.easeOut
-                                            });
+                                                    strokeOpacity: 1,
+                                                    ease: Power4.easeOut
+                                                });
+                                                TweenMax.to($(droppables[i]).find('.button-content'), 0.5, {
+                                                    autoAlpha: 0,
+                                                    ease: Power4.easeOut
+                                                });
+                                                TweenMax.to($(droppables[i]).find('.button-completion-content'), 0.5, {
+                                                    autoAlpha: 1,
+                                                    ease: Power4.easeOut
+                                                });
+                                                return;
+                                            } else {
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                //on drag no match set state
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                TweenMax.to(element, 1, {
+                                                    x: "0px",
+                                                    y: '0px',
+                                                    ease: Power4.easeOut
+                                                });
+                                            }
                                         }
-                                    }
-                                });
-                            }
+                                    });
+                                }
+                            });
+                        }
+                        $(window).scroll(function () {
+                            update();
                         });
+                        update();
                     }
                 };
+
             });
     /** @ngInject */
     function npMediaElementDirective($log) {
@@ -4820,8 +4838,8 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                                    <stop  offset=\"0.5063\" style=\"stop-color:#D7B26A\"/>\n" +
     "                                    <stop  offset=\"0.5581\" style=\"stop-color:#CAA04E\"/>\n" +
     "                                    <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
-    "                                <defs>\n" +
-    "                                </defs>\n" +
+    "                                    <defs>\n" +
+    "                                    </defs>\n" +
     "                            </g>\n" +
     "                            <g id=\"complete-background-Layer_2\">\n" +
     "                                <rect stroke=\"url(#SVGID_1_)\" stroke-width=\"3\" vector-effect=\"non-scaling-stroke\" fill=\"none\"  x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
@@ -4834,8 +4852,10 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                                    </div>\n" +
     "                                    <div class=\"button-completion-content\">\n" +
     "                                        <div class=\"centered-content\" >\n" +
-    "                                            <div class=\"positive-feedback-image \"></div>\n" +
-    "                                            <div class=\"positive-feedback-content h4\" ng-bind-html=\"positiveFeedback\"></div>\n" +
+    "                                            <div class=\"row \" >\n" +
+    "                                                <div class=\"positive-feedback-image col-xs-6 \"></div>\n" +
+    "                                                <div class=\"positive-feedback-content h4 col-xs-6 \" ng-bind-html=\"positiveFeedback\"></div>\n" +
+    "                                            </div>\n" +
     "                                        </div>\n" +
     "                                    </div>\n" +
     "                                </foreignObject>\n" +
@@ -5119,13 +5139,13 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "        <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
     "    </div>\n" +
     "\n" +
-    "    <h5 class=\"dark text-uppercase\">question:</h5>\n" +
+    "<!--    <h5 class=\"dark text-uppercase\">question:</h5>\n" +
     "    <div class=\"npMatch-content\" ng-bind-html=\"npMatch.content\"></div>\n" +
     "\n" +
-    "\t<h5 class=\"dark text-uppercase\">answers:</h5>\n" +
+    "\t<h5 class=\"dark text-uppercase\">answers:</h5>-->\n" +
     "    <div np-component ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
     "\n" +
-    "    <button type=\"submit\" class=\"col-xs-3 btn-primary\">Submit</button> &nbsp;\n" +
+    "    <button type=\"submit\" class=\"col-xs-3 btn-primary\">Submit</button>\n" +
     "    <button id=\"next_button\" class=\"btn-default\" ng-click=\"npMatch.nextPage($event)\" ng-show=\"npMatch.canContinue\">Next</button>\n" +
     "<!--    <div class=\"btn btn-default\">\n" +
     "        <input type=\"submit\" />\n" +
@@ -5142,7 +5162,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "</div>\n" +
     "\n" +
     "<div class=\"np-cmp-wrapper {{component.type}} rsDefault visibleNearby\" royalslider data-match=\"true\">\n" +
-    "    <div np-component ng-repeat=\"component in components | orderBy:random\" idx=\"{{component.idx}}\" style=\"display: inline-block; border: 2px solid black; width: 200px; margin-right: 10px;\"></div>\n" +
+    "    <div np-component ng-repeat=\"component in components | orderBy:random\" idx=\"{{component.idx}}\"  class=\"matching-game-row\"></div>\n" +
     "</div>"
   );
 

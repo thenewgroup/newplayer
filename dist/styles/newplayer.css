@@ -5144,6 +5144,9 @@ button.close {
   /*New Player Quiz Questions classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*New Player Matching Game classes*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*New Player Trivia/Spinner classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*
@@ -5223,6 +5226,7 @@ button.close {
     padding-top: 0px;
     padding-bottom: 20px;
     margin-top: 0px;
+    color: #FFFFFF;
     /*margin-bottom: 0px;*/
     display: inline-block; }
   #np_reNutriv h1, #np_reNutriv h2, #np_reNutriv h3, #np_reNutriv h4, #np_reNutriv h5 {
@@ -5499,6 +5503,18 @@ button.close {
     padding: 20px;
     width: 100%;
     height: 100%; }
+  #np_reNutriv .matching-game-row {
+    display: inline-block;
+    border: 2px solid black;
+    /*width: 400px;*/
+    margin-right: 10px; }
+  #np_reNutriv .rsDefault, #np_reNutriv .rsDefault .rsOverflow, #np_reNutriv .rsDefault .rsSlide, #np_reNutriv .rsDefault .rsVideoFrameHolder, #np_reNutriv .rsDefault .rsThumbs {
+    background: #FFFFFF;
+    color: #333333; }
+  #np_reNutriv .rsContent {
+    width: 100%;
+    height: 300px;
+    position: relative; }
   #np_reNutriv .btn-next {
     position: absolute;
     border-color: #9a7d46;
@@ -5759,7 +5775,8 @@ button.close {
     right: -50%;
     position: relative; }
   #np_reNutriv .positive-feedback-image, #np_reNutriv .positive-feedback-content {
-    float: left;
+    float: none;
+    /*float: left;*/
     line-height: 1em;
     padding-left: 5%; }
   #np_reNutriv .positive-feedback-content {
@@ -7407,6 +7424,8 @@ button.close {
     float: right;
     right: -50%;
     position: relative; }
+  #GMTC .draggableContainer {
+    overflow: hidden; }
   #GMTC .column-no-wrap {
     float: none; }
   #GMTC .boxElements {
@@ -7453,34 +7472,52 @@ button.close {
     right: 0; }
   #GMTC .button-completion-content {
     position: absolute;
-    float: right;
-    right: 50%;
-    top: 43%; }
+    right: 0;
+    left: 0;
+    /*margin: auto;*/
+    /*    margin-left: auto;
+        margin-*/
+    top: 0;
+    bottom: 0;
+    /*    position: absolute;
+        float: right;
+        right: 50%;
+        top: 43%;*/ }
   #GMTC .centered-content {
-    width: 100%;
-    height: 100%;
-    float: right;
-    right: -50%;
-    position: relative; }
+    padding-top: 3em;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    resize: vertical; }
   #GMTC .positive-feedback-image, #GMTC .positive-feedback-content {
-    float: left;
+    white-space: nowrap;
+    /*float: none;*/
+    /*float: left;*/
     line-height: 1em;
-    padding-left: 5%; }
+    /*padding-left: 5%;*/ }
   #GMTC .positive-feedback-content {
     font-family: akzidenz-grotesk_bqregular;
     color: #040A2B;
     text-transform: uppercase;
-    width: auto; }
+    /*width: auto;*/ }
   #GMTC .positive-feedback-image {
     background-image: url("/assets/svgs/feedback-correct-icon-ANR.svg");
     background-repeat: no-repeat;
-    width: 40px;
+    background-position: right;
+    /* width: 40px; */
     height: 40px;
     border: 0;
-    background-size: 100%;
-    /* To fill the dimensions of container (button), or */
-    background-size: 40px auto;
-    /* to specify dimensions explicitly */ }
+    background-size: 40px auto; }
   #GMTC .button-content {
     position: relative;
     padding: 5%; }
