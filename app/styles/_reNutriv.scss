@@ -51,6 +51,7 @@
     padding-top: 0px;
     padding-bottom: 20px;
     margin-top: 0px;
+    color: $brand-primary-light;
     /*margin-bottom: 0px;*/
     display: inline-block;
 }
@@ -409,6 +410,24 @@ input{
     height: 100%;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player Matching Game classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.matching-game-row{
+    display: inline-block; 
+    border: 2px solid black; 
+    /*width: 400px;*/ 
+    margin-right: 10px;
+}
+.rsDefault, .rsDefault .rsOverflow, .rsDefault .rsSlide, .rsDefault .rsVideoFrameHolder, .rsDefault .rsThumbs {
+    background: #FFFFFF;; 
+    color: #333333;
+}
+.rsContent {
+    width: 100%;
+    height: 300px;
+    position: relative;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Trivia/Spinner classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 .btn-next{ 
@@ -742,7 +761,8 @@ foreignobject{
     position: relative;
 }
 .positive-feedback-image, .positive-feedback-content{
-    float: left;
+    float: none;
+    /*float: left;*/
     line-height: 1em;
     padding-left: 5%;
 }
