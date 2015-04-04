@@ -153,88 +153,106 @@
 //                            });
 //                        }
 //                    }
-                        //////////////////////////////////////////////////////////////////////////////////////
-                        //create draggable, set vars
-                        //////////////////////////////////////////////////////////////////////////////////////
-                        Draggable.create(element, {
-                            type: "x,y",
-                            edgeResistance: 0.65,
-                            bounds: "#draggableContainer",
-                            throwProps: true,
-                            overlapThreshold: '50%',
-                            onDrag: function (e) {
-                                scope.$apply(function () {
-                                    scope.onDrag();
-                                    droppables = document.getElementsByClassName('hit-area');
+                        function update() {
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            //create draggable, set vars
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            Draggable.create(element, {
+                                type: "x,y",
+                                edgeResistance: 0.65,
+                                autoScroll: 1,
+                                bounds: "#draggableContainer",
+                                throwProps: true,
+                                overlapThreshold: '50%',
+                                onDrag: function (e) {
+                                    scope.$apply(function () {
+                                        scope.onDrag();
+                                        droppables = document.getElementsByClassName('hit-area');
 //                                setElementPositions(true);
-                                });
-                            },
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            //on drag method/vars
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            onDragEnd: function (e) {
-                                scope.$apply(function () {
-                                    scope.onDragEnd();
+                                    });
+                                },
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //on drag method/vars
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                onDragEnd: function (e) {
+                                    scope.$apply(function () {
+                                        scope.onDragEnd();
 //                                setElementPositions(false);
-                                    var targetNumber = droppables.length;
-                                    var droppablesPosition;
-                                    droppables = document.getElementsByClassName('hit-area');
-                                    for (var i = 0; i < targetNumber; i++) {
-                                        currentTarget = 'id' + i;
-                                        currentElement = element.attr("id");
-                                        droppablesPosition = getOffsetRect(droppables[i]);
-                                        if (Draggable.hitTest(droppablesPosition, e) && (currentElement === currentTarget)) {
-                                            hitAreaPosition = getOffsetRect(hitAreaWrapper);
-                                            var positionX = (droppablesPosition.left - hitAreaPosition.left);
+                                        var targetNumber = droppables.length;
+                                        var droppablesPosition;
+//                                        $(window).scroll(function () {
+//                                            clearTimeout($.data(this, 'scrollTimer'));
+//                                            $.data(this, 'scrollTimer', setTimeout(function () {
+//                                                // do something
+//                                                console.log("Haven't scrolled in 250ms!");
+//                                                droppables = document.getElementsByClassName('hit-area');
+//                                            }, 250));
+//                                        });
+                                        droppables = document.getElementsByClassName('hit-area');
+                                        for (var i = 0; i < targetNumber; i++) {
+                                            currentTarget = 'id' + i;
+                                            currentElement = element.attr("id");
+                                            droppablesPosition = getOffsetRect(droppables[i]);
+//                                        if (Draggable.hitTest(droppablesPosition, e) && (currentElement === currentTarget)) {
+                                            if (Draggable.hitTest(droppables[i], e) && (currentElement === currentTarget)) {
+                                                hitAreaPosition = getOffsetRect(hitAreaWrapper);
+                                                var positionX = (droppablesPosition.left - hitAreaPosition.left);
 //                                          var positionY = (droppablesPosition.top - hitAreaPosition.top) - (Math.round(draggablePositionTop[i].top) - hitAreaPosition.top);
-                                            var postionTopOffset = Math.round(window_offset + droppablesPosition.top);
-                                            console.log(
-                                                    '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                                    '\n::droppablesPosition.top::', droppablesPosition.top,
-                                                    '\n::postionTopOffset::', postionTopOffset,
-                                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                                    );
+                                                var postionTopOffset = Math.round(window_offset + droppablesPosition.top);
+                                                console.log(
+                                                        '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                                        '\n::droppablesPosition.top::', droppablesPosition.top,
+                                                        '\n::droppablesPosition.top::', droppablesPosition.top,
+                                                        '\n::postionTopOffset::', postionTopOffset,
+                                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                                        );
 //                                        console.log('inside this droppablesPosition.top: ', droppablesPosition.top, 'positionY: ', positionY);
-                                            //////////////////////////////////////////////////////////////////////////////////////
-                                            //on drag match set match position/states
-                                            //////////////////////////////////////////////////////////////////////////////////////
-                                            TweenMax.to(element, 0.15, {
-                                                autoAlpha: 0,
-                                                x: positionX,
-//                                            y: positionY,
-                                                ease: Power4.easeOut
-                                            });
-                                            TweenMax.to(droppables[i], 0.5, {
-                                                autoAlpha: 0.95,
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                //on drag match set match position/states
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                TweenMax.to(element, 0.15, {
+                                                    autoAlpha: 0,
+                                                    x: positionX,
+//                                                  y: positionY,
+                                                    ease: Power4.easeOut
+                                                });
+                                                TweenMax.to(droppables[i], 0.5, {
+                                                    autoAlpha: 0.95,
 //                                            fill: '#313131',
-                                                strokeOpacity: 1,
-                                                ease: Power4.easeOut
-                                            });
-                                            TweenMax.to($(droppables[i]).find('.button-content'), 0.5, {
-                                                autoAlpha: 0,
-                                                ease: Power4.easeOut
-                                            });
-                                            TweenMax.to($(droppables[i]).find('.button-completion-content'), 0.5, {
-                                                autoAlpha: 1,
-                                                ease: Power4.easeOut
-                                            });
-                                            return;
-                                        } else {
-                                            //////////////////////////////////////////////////////////////////////////////////////
-                                            //on drag no match set state
-                                            //////////////////////////////////////////////////////////////////////////////////////
-                                            TweenMax.to(element, 1, {
-                                                x: "0px",
-                                                y: '0px',
-                                                ease: Power4.easeOut
-                                            });
+                                                    strokeOpacity: 1,
+                                                    ease: Power4.easeOut
+                                                });
+                                                TweenMax.to($(droppables[i]).find('.button-content'), 0.5, {
+                                                    autoAlpha: 0,
+                                                    ease: Power4.easeOut
+                                                });
+                                                TweenMax.to($(droppables[i]).find('.button-completion-content'), 0.5, {
+                                                    autoAlpha: 1,
+                                                    ease: Power4.easeOut
+                                                });
+                                                return;
+                                            } else {
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                //on drag no match set state
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                TweenMax.to(element, 1, {
+                                                    x: "0px",
+                                                    y: '0px',
+                                                    ease: Power4.easeOut
+                                                });
+                                            }
                                         }
-                                    }
-                                });
-                            }
+                                    });
+                                }
+                            });
+                        }
+                        $(window).scroll(function () {
+                            update();
                         });
+                        update();
                     }
                 };
+
             });
     /** @ngInject */
     function npMediaElementDirective($log) {

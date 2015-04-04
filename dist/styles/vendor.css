@@ -10096,6 +10096,7 @@ div.mejs-speed-button {
 .royalSlider {
 	width: 600px;
 	height: 400px;
+	/*height: 100%;*/
 	position: relative;
 	direction: ltr;
 }
