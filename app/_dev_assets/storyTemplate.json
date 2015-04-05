@@ -71,6 +71,16 @@
                                 ]
                             },
                             {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "",
+                                    "class": "beths-signature center-padding",
+                                    "content": ""
+                                },
+                                "components": [
+                                ]
+                            },
+                            {
                                 "type": "npButton",
                                 "data": {
                                     "link": "/api/favorites/product/Product-Manifest-Advanced-Night-Repair-Synchronized-Recovery-Complex-II",

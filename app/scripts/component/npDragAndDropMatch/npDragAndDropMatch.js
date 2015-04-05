@@ -48,7 +48,7 @@
                         onDrag: "&"
                     },
                     link: function (scope, element, attrs) {
-                        var droppables = undefined;
+                        var hitArea = undefined;
                         var hitAreaWrapper = document.getElementById('draggableContainer');
                         var draggables = document.getElementsByClassName('draggableButton');
                         var currentTarget;
@@ -71,11 +71,11 @@
                             //////////////////////////////////////////////////////////////////////////////////////
                             //on ready set states
                             //////////////////////////////////////////////////////////////////////////////////////
-                            droppables = document.getElementsByClassName('hit-area');
+                            hitArea = document.getElementsByClassName('hit-area');
                             TweenMax.to($('.hit-area'), 0, {
                                 strokeOpacity: 0
                             });
-                            TweenMax.to($(droppables).find('.button-completion-content'), 0.5, {
+                            TweenMax.to($(hitArea).find('.button-completion-content'), 0.5, {
                                 autoAlpha: 0,
                                 ease: Power4.easeOut
                             });
@@ -167,7 +167,7 @@
                                 onDrag: function (e) {
                                     scope.$apply(function () {
                                         scope.onDrag();
-                                        droppables = document.getElementsByClassName('hit-area');
+//                                        hitArea = document.getElementsByClassName('hit-area');
 //                                setElementPositions(true);
                                     });
                                 },
@@ -178,55 +178,58 @@
                                     scope.$apply(function () {
                                         scope.onDragEnd();
 //                                setElementPositions(false);
-                                        var targetNumber = droppables.length;
-                                        var droppablesPosition;
+                                        var targetNumber = hitArea.length;
+                                        var hitAreaPosition;
+                                        var rect;
 //                                        $(window).scroll(function () {
 //                                            clearTimeout($.data(this, 'scrollTimer'));
 //                                            $.data(this, 'scrollTimer', setTimeout(function () {
 //                                                // do something
 //                                                console.log("Haven't scrolled in 250ms!");
-//                                                droppables = document.getElementsByClassName('hit-area');
+//                                                hitArea = document.getElementsByClassName('hit-area');
 //                                            }, 250));
 //                                        });
-                                        droppables = document.getElementsByClassName('hit-area');
                                         for (var i = 0; i < targetNumber; i++) {
+                                            hitArea = document.getElementsByClassName('hit-area');
                                             currentTarget = 'id' + i;
                                             currentElement = element.attr("id");
-                                            droppablesPosition = getOffsetRect(droppables[i]);
-//                                        if (Draggable.hitTest(droppablesPosition, e) && (currentElement === currentTarget)) {
-                                            if (Draggable.hitTest(droppables[i], e) && (currentElement === currentTarget)) {
+//                                            hitAreaPosition = getOffsetRect(hitArea[i]);
+                                            hitAreaPosition = hitArea[i].getBoundingClientRect();
+                                            if (Draggable.hitTest(hitAreaPosition, e) && (currentElement === currentTarget)) {
+//                                            if (Draggable.hitTest(hitAreaPosition, e) && (currentElement === currentTarget)) {
+//                                            if (Draggable.hitTest(hitArea[i], e) && (currentElement === currentTarget)) {
                                                 hitAreaPosition = getOffsetRect(hitAreaWrapper);
-                                                var positionX = (droppablesPosition.left - hitAreaPosition.left);
-//                                          var positionY = (droppablesPosition.top - hitAreaPosition.top) - (Math.round(draggablePositionTop[i].top) - hitAreaPosition.top);
-                                                var postionTopOffset = Math.round(window_offset + droppablesPosition.top);
+                                                var positionX = (hitAreaPosition.left - hitAreaPosition.left);
+//                                          var positionY = (hitAreaPosition.top - hitAreaPosition.top) - (Math.round(draggablePositionTop[i].top) - hitAreaPosition.top);
+                                                var postionTopOffset = Math.round(window_offset + hitAreaPosition.top);
                                                 console.log(
                                                         '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                                        '\n::droppablesPosition.top::', droppablesPosition.top,
-                                                        '\n::droppablesPosition.top::', droppablesPosition.top,
+                                                        '\n::hitAreaPosition.top::', hitAreaPosition.top,
+                                                        '\n::hitAreaPosition.top::', hitAreaPosition.top,
                                                         '\n::postionTopOffset::', postionTopOffset,
                                                         '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
                                                         );
-//                                        console.log('inside this droppablesPosition.top: ', droppablesPosition.top, 'positionY: ', positionY);
+//                                        console.log('inside this hitAreaPosition.top: ', hitAreaPosition.top, 'positionY: ', positionY);
                                                 //////////////////////////////////////////////////////////////////////////////////////
                                                 //on drag match set match position/states
                                                 //////////////////////////////////////////////////////////////////////////////////////
                                                 TweenMax.to(element, 0.15, {
                                                     autoAlpha: 0,
                                                     x: positionX,
-//                                                  y: positionY,
+//                                            y: positionY,
                                                     ease: Power4.easeOut
                                                 });
-                                                TweenMax.to(droppables[i], 0.5, {
+                                                TweenMax.to(hitArea[i], 0.5, {
                                                     autoAlpha: 0.95,
 //                                            fill: '#313131',
                                                     strokeOpacity: 1,
                                                     ease: Power4.easeOut
                                                 });
-                                                TweenMax.to($(droppables[i]).find('.button-content'), 0.5, {
+                                                TweenMax.to($(hitArea[i]).find('.button-content'), 0.5, {
                                                     autoAlpha: 0,
                                                     ease: Power4.easeOut
                                                 });
-                                                TweenMax.to($(droppables[i]).find('.button-completion-content'), 0.5, {
+                                                TweenMax.to($(hitArea[i]).find('.button-completion-content'), 0.5, {
                                                     autoAlpha: 1,
                                                     ease: Power4.easeOut
                                                 });
