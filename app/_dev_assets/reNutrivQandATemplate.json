@@ -56,9 +56,10 @@
               {
                 "type": "npQuiz",
                 "data": {
-                  "id": 12345,
-                  "assessed": true,
-                  "questions": 3
+                  "id":"",
+                  "assessed":"1",
+                  "questions":"5",
+                  "percentage":"80"
                 },
                 "components": [
                   {
