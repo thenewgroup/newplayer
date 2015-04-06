@@ -59,7 +59,7 @@ h1, h2, h3, h4, h5{
     color: $brand-primary-light;
 }
 p ul ol{
-    color: $brand-primary-light;
+    color: $brand-primary-light !important;
 }
 small{
     color: $brand-primary-light;
