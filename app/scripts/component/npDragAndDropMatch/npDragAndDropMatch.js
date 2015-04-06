@@ -193,8 +193,8 @@
                                             hitArea = document.getElementsByClassName('hit-area');
                                             currentTarget = 'id' + i;
                                             currentElement = element.attr("id");
-//                                            hitAreaPosition = getOffsetRect(hitArea[i]);
-                                            hitAreaPosition = hitArea[i].getBoundingClientRect();
+                                            hitAreaPosition = getOffsetRect(hitArea[i]);
+//                                            hitAreaPosition = hitArea[i].getBoundingClientRect();
                                             if (Draggable.hitTest(hitAreaPosition, e) && (currentElement === currentTarget)) {
 //                                            if (Draggable.hitTest(hitAreaPosition, e) && (currentElement === currentTarget)) {
 //                                            if (Draggable.hitTest(hitArea[i], e) && (currentElement === currentTarget)) {
