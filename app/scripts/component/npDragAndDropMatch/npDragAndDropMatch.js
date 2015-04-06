@@ -48,7 +48,7 @@
                         onDrag: "&"
                     },
                     link: function (scope, element, attrs) {
-                        var hitArea = undefined;
+                        var hitArea;
                         var hitAreaWrapper = document.getElementById('draggableContainer');
                         var draggables = document.getElementsByClassName('draggableButton');
                         var currentTarget;
@@ -137,9 +137,9 @@
                             return {top: Math.round(top), left: Math.round(left)};
                         }
                         var hitAreaPosition = 'undefined';
-                        var window_offset;
+                        var windowOffset;
                         $(window).scroll(function () {
-                            window_offset = $(window).scrollTop();
+                            windowOffset = $(window).scrollTop();
                         });
                         //////////////////////////////////////////////////////////////////////////////////////
                         //on drag offset method
@@ -201,7 +201,7 @@
                                                 hitAreaPosition = getOffsetRect(hitAreaWrapper);
                                                 var positionX = (hitAreaPosition.left - hitAreaPosition.left);
 //                                          var positionY = (hitAreaPosition.top - hitAreaPosition.top) - (Math.round(draggablePositionTop[i].top) - hitAreaPosition.top);
-                                                var postionTopOffset = Math.round(window_offset + hitAreaPosition.top);
+                                                var postionTopOffset = Math.round(windowOffset + hitAreaPosition.top);
                                                 console.log(
                                                         '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
                                                         '\n::hitAreaPosition.top::', hitAreaPosition.top,
