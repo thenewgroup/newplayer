@@ -16,7 +16,7 @@
                         vm.currentPage = 0;
                         vm.feedback = '';
                         vm.assment = AssessmentService();
-                        vm.assment.setRequirements(pagesLen, pagesLen, null);
+                        vm.assment.setRequiredPages(pagesLen);
                         vm.seenComponents = _.shuffle($scope.components);
                         vm.pageId = vm.seenComponents[0].data.id;
                         vm.difficulty = vm.seenComponents[0].components[0].data.difficulty || 0;
@@ -27,7 +27,7 @@
                         $rootScope.$on('question.answered', function (evt, correct) {
                             if (correct) {
                                 vm.assment.pageViewed();
-                                vm.currentPage = vm.assment.getPageStats().viewed.total;
+                                vm.currentPage = vm.assment.getPageviewsCount();
                                 vm.pageId = vm.seenComponents[vm.currentPage] ? vm.seenComponents[vm.currentPage].data.id : '';
                                 ManifestService.setPageId(vm.pageId);
                                 $rootScope.$emit('spin-to-win');
