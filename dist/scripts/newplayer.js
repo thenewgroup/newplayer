@@ -2002,22 +2002,15 @@ function AssessmentService ( $log ) {
                         this.draggableButtons = cmpData.draggableButtons;
                         this.id = cmpData.id;
                         this.positiveFeedback = cmpData.positiveFeedback;
+                        this.negativeFeedback = cmpData.negativeFeedback;
                         this.baseURL = cmpData.baseURL;
                         this.src = cmpData.image;
                         $scope.positiveFeedback = this.positiveFeedback = cmpData.positiveFeedback;
+                        $scope.negativeFeedback = this.negativeFeedback = cmpData.negativeFeedback;
                         $scope.image = this.image = cmpData.image;
                         $scope.content = cmpData.content;
                         $scope.ID = cmpData.id;
                         $scope.select = cmpData.select;
-                        console.log(
-                                '\n::::::::::::::::::::::::::::::::::::::getOffsetRect:::::::::::::::::::::::::::::::::::::::::::::::::::::::::',
-                                '\n::$scope.ID::', $scope.ID,
-                                '\n::cmpData.draggableButtons::', cmpData.draggableButtons,
-                                '\n::cmpData.draggableButtons.select::', cmpData.draggableButtons[0].select,
-                                '\n::$scope.select::', $scope.select,
-                                '\n::cmpData.select::', cmpData.select,
-                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                );
                         //////////////////////////////////////////////////////////////////////////////////////
                         //set drag and drag end event handlers
                         //////////////////////////////////////////////////////////////////////////////////////
@@ -2043,63 +2036,64 @@ function AssessmentService ( $log ) {
                 return {
                     restrict: 'A',
                     link: function ($scope, $element, $attrs) {
-                        var hitAreaBoolean = false;
-                        var hitAreaSelected = '';
-                        var draggButtonBoolean = false;
-
-                        $scope.evaluate = function () {
-                            $('.hit-area').each(function () {
-                                hitAreaBoolean = $(this).data('match');
-                                hitAreaSelected = $(this).attr('selected');
-
-                                if ((Boolean(hitAreaBoolean) === false) && (typeof hitAreaSelected !== typeof undefined && hitAreaSelected !== false)) {
-                                    console.log(
-                                            '\n::::::::::::::::::::::::::::::::::::::true::hitAreaBoolean:::::::::::::::::::::::::::::::::::::::::::::::::::::::',
-                                            '\n::$attrs::', $(this).data('match'),
-                                            '\n::selected::', $(this).data('selected'),
-                                            '\n::hitAreaBoolean::', hitAreaBoolean,
-                                            '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                            );
-                                }
-                            });
-
-                            $('.draggableButton').each(function () {
-                                draggButtonBoolean = $(this).data('match');
-                                if (Boolean(draggButtonBoolean) === true) {
-                                    console.log(
-                                            '\n::::::::::::::::::::::::::::::::::::::true::fail:::::::::::::::::::::::::::::::::::::::::::::::::::::::',
-                                            '\n::$attrs::', $(this).attr('data-match'),
-                                            '\n::draggButtonBoolean::', draggButtonBoolean,
-                                            '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                            );
-//                                    return false;
-                                } else {
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //get ready
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        setTimeout(function () {
+                            $scope.$apply(function () {
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //on ready set states
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                TweenMax.set($('.select-response-correct'), {
+                                    scale: .25,
+                                    autoAlpha: 0
+                                });
+                                TweenMax.set($('.select-response-incorrect'), {
+                                    scale: .25,
+                                    autoAlpha: 0
+                                });
+                                var hitAreaLength = 0;
+                                var hitAreaSelectedLength = '';
+                                var hitAreaSelectedIncorrect = '';
+                                hitAreaLength = $("[data-match=true]").length;
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //evaluate interaction
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                $scope.evaluate = function () {
+                                    hitAreaSelectedLength = $("[data-match=selected]").length;
+                                    hitAreaSelectedIncorrect = $("[data-match=skeletor]").length;
                                     $('.hit-area').each(function () {
-                                        hitAreaBoolean = $(this).data('match');
-                                        hitAreaSelected = $(this).attr('selected');
-                                        if ((Boolean(hitAreaBoolean) === false) && (typeof hitAreaSelected !== typeof undefined && hitAreaSelected !== false)) {
-                                            console.log(
-                                                    '\n::::::::::::::::::::::::::::::::::::::true::fail 2:::::::::::::::::::::::::::::::::::::::::::::::::::::::',
-                                                    '\n::$attrs::', $(this).data('match'),
-                                                    '\n::selected::', $(this).data('selected'),
-                                                    '\n::hitAreaBoolean::', hitAreaBoolean,
-                                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                                    );
-                                            return false;
-                                        } else if ((Boolean(hitAreaBoolean) === true) && (typeof hitAreaSelected !== typeof undefined && hitAreaSelected !== false)) {
-                                            console.log(
-                                                    '\n::::::::::::::::::::::::::::::::::::::true::winner:::::::::::::::::::::::::::::::::::::::::::::::::::::::',
-                                                    '\n::$attrs::', $(this).data('match'),
-                                                    '\n::selected::', $(this).data('selected'),
-                                                    '\n::hitAreaBoolean::', hitAreaBoolean,
-                                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                                    );
+                                        if (Number(hitAreaLength) === Number(hitAreaSelectedLength) && (hitAreaSelectedIncorrect === 0)) {
+                                            TweenMax.to($('.select-response-correct'), .75, {
+                                                autoAlpha: 1,
+                                                scale: 1,
+                                                ease: Power4.easeOut
+                                            });
+                                            TweenMax.to($('.select-response-incorrect'), .75, {
+                                                autoAlpha: 0,
+                                                scale: .25,
+                                                ease: Power4.easeOut
+                                            });
+                                        } else {
+                                            TweenMax.to($('.select-response-correct'), .75, {
+                                                autoAlpha: 0,
+                                                scale: .25,
+                                                ease: Power4.easeOut
+                                            });
+                                            TweenMax.to($('.select-response-incorrect'), .75, {
+                                                autoAlpha: 1,
+                                                scale: 1,
+                                                ease: Power4.easeOut
+                                            });
                                         }
                                     });
-                                }
+
+                                };
+
                             });
-                        };
+                        });
                     }
+
                 };
             })
             //////////////////////////////////////////////////////////////////////////////////////
@@ -2136,6 +2130,9 @@ function AssessmentService ( $log ) {
                                 TweenMax.to($('.hit-area'), 0, {
                                     strokeOpacity: 0
                                 });
+                                TweenMax.set($('.boxElements'), {
+                                    autoAlpha: 0
+                                });
                                 TweenMax.to($(hitArea).find('.button-completion-content'), 0.5, {
                                     autoAlpha: 0,
                                     ease: Power4.easeOut
@@ -2148,12 +2145,9 @@ function AssessmentService ( $log ) {
                                     autoAlpha: 0,
                                     ease: Power4.easeOut
                                 });
-                                TweenMax.to($('#draggableContainer'), 1.75, {
-                                    autoAlpha: 1,
-                                    ease: Power4.easeOut
-                                });
+
                                 //////////////////////////////////////////////////////////////////////////////////////
-                                //shuffle that shit
+                                //shuffle that 
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 function shuffle() {
                                     $("#draggableButtons").each(function () {
@@ -2178,7 +2172,21 @@ function AssessmentService ( $log ) {
                                         }
                                     });
                                 }
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //build that 
+                                //////////////////////////////////////////////////////////////////////////////////////
                                 shuffle();
+                                TweenMax.to($('#draggableContainer'), .75, {
+                                    autoAlpha: 1,
+                                    ease: Power4.easeOut
+                                });
+                                TweenMax.staggerTo($(".boxElements"), 2, {
+                                    scale: 1,
+                                    autoAlpha: 1,
+                                    delay: 0.75,
+                                    ease: Power4.easeOut,
+                                    force3D: true
+                                }, 0.2);
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //get actuall height
                                 //////////////////////////////////////////////////////////////////////////////////////
@@ -2207,14 +2215,6 @@ function AssessmentService ( $log ) {
                             var top = box.top + scrollTop - clientTop;
                             var left = box.left + scrollLeft - clientLeft;
                             var height = box.top + scrollTop - clientHeight;
-//                            var height = clientHeight;
-                            console.log(
-                                    '\n::::::::::::::::::::::::::::::::::::::getOffsetRect:::::::::::::::::::::::::::::::::::::::::::::::::::::::::',
-                                    '\n::elem.clientHeight::', elem.clientHeight,
-                                    '\n::box.clientHeight::', box.clientHeight,
-                                    '\n::height::', height,
-                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                    );
                             return {top: Math.round(top), left: Math.round(left), height: Math.round(height)};
                         }
                         function update() {
@@ -2243,6 +2243,7 @@ function AssessmentService ( $log ) {
                                         var hitAreaPosition;
                                         var hitAreaPositionSelectId;
                                         var hitAreaPositionSelect;
+                                        var hitAreaBoolean;
                                         for (var i = 0; i < targetNumber; i++) {
                                             hitArea = document.getElementsByClassName('hit-area');
                                             currentTarget = 'id' + i;
@@ -2250,24 +2251,22 @@ function AssessmentService ( $log ) {
                                             hitAreaPosition = getOffsetRect(hitArea[i]);
                                             hitAreaPositionSelectId = document.getElementById('select-hit-area-background');
                                             hitAreaPositionSelect = getOffsetRect(hitAreaPositionSelectId);
-                                            var position = $(hitArea[i]).position();
-                                            console.log(
-                                                    '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                                    '\n::hitArea[i]::', hitArea[i],
-                                                    '\n::position.top::', position.top,
-                                                    '\n::position.left::', position.left,
-                                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                                    );
                                             if (Draggable.hitTest(hitAreaPositionSelect, e) && (currentElement === currentTarget)) {
-//                                            if (Draggable.hitTest(hitAreaPosition, e) && (currentElement === currentTarget)) {
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                //on drag match set match state
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                hitAreaBoolean = $(hitArea[i]).data('match');
+                                                if (Boolean(hitAreaBoolean) === true) {
+                                                    $(hitArea[i]).attr('data-match', 'selected');
+                                                }
+                                                if (Boolean(hitAreaBoolean) === false) {
+                                                    $(hitArea[i]).attr('data-match', 'skeletor');
+                                                }
                                                 hitAreaPosition = getOffsetRect(hitAreaWrapper);
                                                 var positionX = (hitAreaPosition.left - hitAreaPosition.left);
                                                 //////////////////////////////////////////////////////////////////////////////////////
                                                 //on drag match set match position/states
                                                 //////////////////////////////////////////////////////////////////////////////////////
-
-                                                $(hitArea[i]).attr('selected', 'matched');
-
                                                 TweenMax.to(element, 0.15, {
                                                     autoAlpha: 0,
                                                     x: positionX,
@@ -5315,7 +5314,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
     "            </div>\n" +
     "            <div id=\"draggableButtons\" class=\"col-xs-6\">\n" +
-    "                <div drag-button-select ng-repeat=\"draggableButton in npDragAndDropSelect.draggableButtons\" data-reference=\"{{$index}}\" data-match=\"{{draggableButton.select}}\" id=\"id{{$index}}\" ng-click=\"npDragAndDropSelect.update(draggableButton)\" class=\"draggableButton box boxElements\">\n" +
+    "                <div drag-button-select ng-repeat=\"draggableButton in npDragAndDropSelect.draggableButtons\" data-reference=\"{{$index}}\" id=\"id{{$index}}\" ng-click=\"npDragAndDropSelect.update(draggableButton)\" class=\"draggableButton box boxElements\">\n" +
     "                    <svg class=\"completeCheck\" version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
     "                        <style type=\"text/css\">\n" +
     "                            <![CDATA[\n" +
@@ -5378,9 +5377,60 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                <div class=\"col-xs-6\"></div>\n" +
     "                <div class=\"col-xs-6\">\n" +
     "                    <div class=\"select-button-wrapper\">\n" +
-    "                        <button class=\"btn-submit\" is-clickable=\"true\" ng-click=\"evaluate()\">\n" +
+    "                        <button class=\"btn-select-submit\" is-clickable=\"true\" ng-click=\"evaluate()\">\n" +
     "                            <span>SUBMIT</span>\n" +
     "                        </button>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"select-response-wrapper\">\n" +
+    "                        <div class=\"select-response-correct row\">\n" +
+    "                            <div class=\"select-response-background\"></div>\n" +
+    "                            <div class=\"col-xs-5 left-column-select\">              \n" +
+    "                                <div class=\"response-icon-wrapper\">             \n" +
+    "                                    <svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"22.8px\" height=\"22.801px\" viewBox=\"58.368 58.368 22.8 22.801\" enable-background=\"new 58.368 58.368 22.8 22.801\" xml:space=\"preserve\">\n" +
+    "                                        <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"425.3076\" y1=\"46.0552\" x2=\"423.378\" y2=\"48.4836\" gradientTransform=\"matrix(6.1102 0.342 -0.342 6.1102 -2507.3147 -365.3418)\">\n" +
+    "                                            <stop  offset=\"0.1882\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                            <stop  offset=\"0.3683\" style=\"stop-color:#FFEBC3\"/>\n" +
+    "                                            <stop  offset=\"0.3952\" style=\"stop-color:#F7DFB1\"/>\n" +
+    "                                            <stop  offset=\"0.5063\" style=\"stop-color:#D7B26A\"/>\n" +
+    "                                            <stop  offset=\"0.5581\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                            <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
+    "                                        </linearGradient>\n" +
+    "                                        <polygon fill=\"url(#SVGID_1_)\" points=\"77.768,65.868 75.168,63.568 67.667,72.369 63.167,68.568 60.867,71.168 67.968,77.168 \"/>\n" +
+    "                                        <path fill=\"#9A7D46\" d=\"M69.768,81.168c-6.3,0-11.4-5.1-11.4-11.4c0-6.3,5.1-11.4,11.4-11.4s11.4,5.101,11.4,11.4 C81.168,76.069,76.067,81.168,69.768,81.168z M69.768,59.368c-5.7,0-10.4,4.7-10.4,10.4c0,5.7,4.7,10.4,10.4,10.4  c5.7,0,10.4-4.7,10.4-10.4C80.168,64.068,75.468,59.368,69.768,59.368z\"/>\n" +
+    "                                    </svg>\n" +
+    "                                </div>\n" +
+    "                            </div>\n" +
+    "                            <div class=\"col-xs-7 right-column-select\" ng-bind-html=\"npDragAndDropSelect.positiveFeedback\" >\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "                        <div class=\"select-response-incorrect row\">\n" +
+    "                            <div class=\"select-response-background\"></div>\n" +
+    "                            <div class=\"col-xs-5 left-column-select\">\n" +
+    "                                <div class=\"response-icon-wrapper\">\n" +
+    "                                    <svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"22.8px\" height=\"22.801px\" viewBox=\"0 0 22.8 22.801\" style=\"enable-background:new 0 0 22.8 22.801;\" xml:space=\"preserve\">\n" +
+    "                                        <path style=\"fill:#9A7D46;\" d=\"M11.4,22.801C5.101,22.801,0,17.7,0,11.4S5.101,0,11.4,0S22.8,5.101,22.8,11.4  S17.7,22.801,11.4,22.801z M11.4,1C5.7,1,1,5.7,1,11.4s4.7,10.4,10.4,10.4S21.8,17.101,21.8,11.4S17.101,1,11.4,1z\"/>\n" +
+    "                                        <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"274.4922\" y1=\"-249.2896\" x2=\"261.4488\" y2=\"-262.713\" gradientTransform=\"matrix(1 0 0 -1 -256 -245)\">\n" +
+    "                                            <stop  offset=\"0.1642\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                            <stop  offset=\"0.1698\" style=\"stop-color:#CCA352\"/>\n" +
+    "                                            <stop  offset=\"0.2532\" style=\"stop-color:#E4C682\"/>\n" +
+    "                                            <stop  offset=\"0.3167\" style=\"stop-color:#F2DCA0\"/>\n" +
+    "                                            <stop  offset=\"0.3527\" style=\"stop-color:#F8E4AB\"/>\n" +
+    "                                            <stop  offset=\"0.4062\" style=\"stop-color:#EBD191\"/>\n" +
+    "                                            <stop  offset=\"0.48\" style=\"stop-color:#DDBC74\"/>\n" +
+    "                                            <stop  offset=\"0.5532\" style=\"stop-color:#D2AC5F\"/>\n" +
+    "                                            <stop  offset=\"0.6249\" style=\"stop-color:#CCA352\"/>\n" +
+    "                                            <stop  offset=\"0.6933\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                            <stop  offset=\"0.7957\" style=\"stop-color:#D5B05B\"/>\n" +
+    "                                            <stop  offset=\"0.9955\" style=\"stop-color:#F2DA7E\"/>\n" +
+    "                                            <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
+    "                                        </linearGradient>\n" +
+    "                                        <polygon style=\"fill:url(#SVGID_1_);\" points=\"6,19.4 11.4,14.101 16.7,19.4 19.2,16.9 13.9,11.601 19.2,6.301 16.7,3.7 11.4,9 6.101,3.7 3.601,6.301 8.9,11.601 3.5,16.9 \"/>\n" +
+    "                                    </svg>\n" +
+    "                                </div>\n" +
+    "                            </div>\n" +
+    "                            <div class=\"col-xs-7 right-column-select\" ng-bind-html=\"npDragAndDropSelect.negativeFeedback\" >\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
     "                    </div>\n" +
     "                </div>\n" +
     "            </div>\n" +
