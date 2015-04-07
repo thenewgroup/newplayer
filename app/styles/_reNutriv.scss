@@ -55,13 +55,13 @@
     /*margin-bottom: 0px;*/
     display: inline-block;
 }
-h1, h2, h3, h4, h5{
+#np_reNutriv h1, h2, h3, h4, h5{
     color: $brand-primary-light;
 }
-p ul ol{
+#np_reNutriv p{
     color: $brand-primary-light;
 }
-small{
+#np_reNutriv small{
     color: $brand-primary-light;
 }
 .dark h1, h2, h3, h4, h5 {
@@ -677,53 +677,86 @@ input{
     right:0;
     background-color: #313131;
     box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
-    /*max-height: 500px;*/
 }
 .select-button-wrapper{
-    
     width: 100%;
     height: 100%;
+    text-align: center;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.btn-select-submit{
+    position: relative;
+    border-color: #9a7d46;
+    background-color: #000000;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.btn-select-submit span{ 
+    font-family: $re-nu-serif;
+    color: $brand-primary-light;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 .select-button-completion-content{
     padding-top: 15px;
     padding-bottom: 15px;
     padding-left: 25px;
     padding-right: 25px;
-    /*    position: absolute;
-        float: right;
-        right: 50%;
-        top: 43%;*/
 }
-/*.button-prioritize-content{
-    position: relative;
-    display:block;
-}
-.hit-area-prioritize-content{
-    position: absolute;
-    float: right;
-    right: 43%;
-    top: 43%;
-}
-.hit-area-number{
-    font-size: 7em;
-    color: #000000;
-    opacity: .15;
-    text-align: center;
-    padding-left: 20px;
-}
-.button-completion-prioritize-content{
-    position: absolute;
-    float: right;
-    right: 50%;
-    top: 36%;
-}
-.centered-prioritize-content{
+/*.select-response-wrapper{
     width: 100%;
     height: 100%;
-    float: right;
-    right: -50%;
-    position: relative;
+    text-align: center;
 }*/
+.select-response-wrapper{
+    position: absolute;
+    right: 0;
+    left: 0;
+    margin: auto;
+    width: 60%;
+}
+.select-response-wrapper p, h2{
+    color: $brand-primary-light;
+}
+.select-response-background {
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    background-color: #313131;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
+}
+.select-response-correct{
+    position: absolute;
+    right: 0;
+    left: 0;
+    padding: 10px;
+}
+.select-response-incorrect{
+    position: absolute;
+    right: 0;
+    left: 0;
+    padding: 10px;
+}
+.left-column-select{
+    text-align: right;
+}
+.right-column-select{
+    text-align: left;
+    margin-top: 3px;
+}
+.response-icon-wrapper{
+    position: absolute;
+    right: 0;
+    width: 35px;
+    margin-top: -3px;
+}
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Drag and Drop Prioritize classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
