@@ -40,7 +40,7 @@
             addActiveClass: false,
             arrowsNav: false,
             autoScaleSlider: true,
-            autoScaleSliderWidth: 200,
+            autoScaleSliderWidth: 600,
             autoScaleSliderHeight: 100,
             imageAlignCenter: false,
             imageScaleMode: 'fit-if-small',
