@@ -59,7 +59,7 @@
                   "id":"",
                   "assessed":"1",
                   "questions":"3",
-                  "percentage":"66"
+                  "percentage":"80"
                 },
                 "components": [
                   {
@@ -312,22 +312,24 @@
                     "components": [
                       {
                         "type": "npQuizSummary",
-                        "feedback": {
-                          "pass": "Congratulations, you scored :USERSCORE:",
-                          "fail": "Sorry, you scored :USERSCORE: and you needed to score :MINSCORE: to pass. Try it again!"
-                        },
-                        "achievements": [
-                          {
-                            "score": 0.8,
-                            "compare": "gte",
-                            "content": "In addition, you a grip of points!"
+                        "data": {
+                          "feedback": {
+                            "pass": "Congratulations, you scored :USERSCORE:% and have passed this module.",
+                            "fail": "Sorry, you scored :USERSCORE:% and you needed to score :MINSCORE:% to pass. Try it again!"
                           },
-                          {
-                            "score": 1,
-                            "compare": "eq",
-                            "content": "In addition, you get this badge and a grip of points!"
-                          }
-                        ]
+                          "achievements": [
+                            {
+                              "score": 0.8,
+                              "compare": "gte",
+                              "content": "In addition, you a grip of points!"
+                            },
+                            {
+                              "score": 1,
+                              "compare": "eq",
+                              "content": "In addition, you get this badge and a grip of points!"
+                            }
+                          ]
+                        }
                       },
                       {
                         "type": "npHTML",
