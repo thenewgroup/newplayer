@@ -4,10 +4,10 @@
         <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
     </div>
 
-<!--    <h5 class="dark text-uppercase">question:</h5>
+    <!--<h5 class="text-uppercase">question:</h5>-->
     <div class="npMatch-content" ng-bind-html="npMatch.content"></div>
 
-	<h5 class="dark text-uppercase">answers:</h5>-->
+	<!--<h5 class="text-uppercase">answers:</h5>-->
     <div np-component ng-repeat="component in components" idx="{{component.idx}}"></div>
 
     <button type="submit" class="col-xs-3 btn-primary">Submit</button>

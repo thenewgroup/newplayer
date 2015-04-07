@@ -16,6 +16,10 @@
     right: 0;
     top: 0;
 }
+#np_reNutriv #np_newplayer-matchgame {
+    color: #fff;
+    background: #000;
+  }
 #background-image {
     position:fixed;
     background-image: url('../assets/images/ESTL-005_ReNutriv_bg_img.jpg');
@@ -64,7 +68,7 @@ p ul ol{
 small{
     color: $brand-primary-light;
 }
-.dark h1, h2, h3, h4, h5 {
+.dark h1 {
     color: $gray-dark;
 }
 .header-dark {
