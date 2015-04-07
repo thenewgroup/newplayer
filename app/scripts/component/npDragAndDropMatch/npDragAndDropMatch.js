@@ -132,15 +132,34 @@
                             var scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft;
                             var clientTop = docElem.clientTop || body.clientTop || 0;
                             var clientLeft = docElem.clientLeft || body.clientLeft || 0;
+                            var clientHeight = elem.clientHeight || 0;
+                            var offsetHeight = elem.offsetHeight || 0;
+                            var scrollHeight = elem.scrollHeight || 0;
                             var top = box.top + scrollTop - clientTop;
                             var left = box.left + scrollLeft - clientLeft;
-                            return {top: Math.round(top), left: Math.round(left)};
+                            var height = box.height - scrollTop;
+                            var bottom = top + (box.bottom - box.top);
+                            var right = left + (box.right - box.left);
+//                            var height = clientHeight;
+                            console.log(
+                                    '\n::::::::::::::::::::::::::::::::::::::getOffsetRect:::::::::::::::::::::::::::::::::::::::::::::::::::::::::',
+                                    '\n::elem.clientHeight::', elem.clientHeight,
+                                    '\n::box.height::', box.height,
+                                    '\n::box.bottom::', box.bottom,
+                                    '\n::clientHeight::', clientHeight,
+                                    '\n::offsetHeight::', offsetHeight,
+                                    '\n::scrollHeight::', scrollHeight,
+                                    '\n::scrollTop::', scrollTop,
+                                    '\n::clientTop::', clientTop,
+                                    '\n::height::', height,
+                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                    );
+                            return {top: Math.round(top),
+                                left: Math.round(left),
+                                bottom: Math.round(bottom),
+                                right: Math.round(right)
+                            };
                         }
-                        var hitAreaPosition = 'undefined';
-                        var window_offset;
-                        $(window).scroll(function () {
-                            window_offset = $(window).scrollTop();
-                        });
                         //////////////////////////////////////////////////////////////////////////////////////
                         //on drag offset method
                         //////////////////////////////////////////////////////////////////////////////////////
@@ -160,7 +179,7 @@
                             Draggable.create(element, {
                                 type: "x,y",
                                 edgeResistance: 0.65,
-                                autoScroll: 1,
+//                                autoScroll: 1,
                                 bounds: "#draggableContainer",
                                 throwProps: true,
                                 overlapThreshold: '50%',
@@ -189,12 +208,15 @@
 //                                                hitArea = document.getElementsByClassName('hit-area');
 //                                            }, 250));
 //                                        });
+//                                        
+//                                        document.getElementsByClassName('post-taglist')[0].children[0].getClientRects()[0]
+
                                         for (var i = 0; i < targetNumber; i++) {
                                             hitArea = document.getElementsByClassName('hit-area');
                                             currentTarget = 'id' + i;
                                             currentElement = element.attr("id");
-//                                            hitAreaPosition = getOffsetRect(hitArea[i]);
-                                            hitAreaPosition = hitArea[i].getBoundingClientRect();
+                                            hitAreaPosition = getOffsetRect(hitArea[i]);
+//                                            hitAreaPosition = hitArea[i].getBoundingClientRect();
                                             if (Draggable.hitTest(hitAreaPosition, e) && (currentElement === currentTarget)) {
 //                                            if (Draggable.hitTest(hitAreaPosition, e) && (currentElement === currentTarget)) {
 //                                            if (Draggable.hitTest(hitArea[i], e) && (currentElement === currentTarget)) {
@@ -205,7 +227,7 @@
                                                 console.log(
                                                         '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
                                                         '\n::hitAreaPosition.top::', hitAreaPosition.top,
-                                                        '\n::hitAreaPosition.top::', hitAreaPosition.top,
+                                                        '\n::hitAreaPosition.height::', hitAreaPosition.height,
                                                         '\n::postionTopOffset::', postionTopOffset,
                                                         '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
                                                         );
