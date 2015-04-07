@@ -4062,7 +4062,8 @@ function AssessmentService ( $log ) {
       'ngSanitize',
       'newplayer.service',
       'newplayer.component',
-      'angular-royalslider'
+      'angular-royalslider',
+      'matchMedia'
     ]
   )
 
@@ -5585,10 +5586,10 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "        <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
     "    </div>\n" +
     "\n" +
-    "<!--    <h5 class=\"dark text-uppercase\">question:</h5>\n" +
+    "    <!--<h5 class=\"text-uppercase\">question:</h5>-->\n" +
     "    <div class=\"npMatch-content\" ng-bind-html=\"npMatch.content\"></div>\n" +
     "\n" +
-    "\t<h5 class=\"dark text-uppercase\">answers:</h5>-->\n" +
+    "\t<!--<h5 class=\"text-uppercase\">answers:</h5>-->\n" +
     "    <div np-component ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
     "\n" +
     "    <button type=\"submit\" class=\"col-xs-3 btn-primary\">Submit</button>\n" +
@@ -5598,7 +5599,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "    </div>-->\n" +
     "\n" +
     "    <div class=\"npMatch-feedback\" ng-if=\"npMatch.feedback\" ng-bind-html=\"npMatch.feedback\"></div>\n" +
-    "</form>"
+    "</form>\n"
   );
 
 
@@ -5609,7 +5610,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "\n" +
     "<div class=\"np-cmp-wrapper {{component.type}} rsDefault visibleNearby\" royalslider data-match=\"true\">\n" +
     "    <div np-component ng-repeat=\"component in components | orderBy:random\" idx=\"{{component.idx}}\"  class=\"matching-game-row\"></div>\n" +
-    "</div>"
+    "</div>\n"
   );
 
 
