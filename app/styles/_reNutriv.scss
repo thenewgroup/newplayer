@@ -59,7 +59,7 @@ h1, h2, h3, h4, h5{
     color: $brand-primary-light;
 }
 p ul ol{
-    color: $brand-primary-light !important;
+    color: $brand-primary-light;
 }
 small{
     color: $brand-primary-light;
@@ -660,6 +660,70 @@ input{
     font-size: $font-size-base;
 }
 
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player Drag and Drop Select classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+#hit-area-wrapper{
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+#select-hit-area-background {
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    background-color: #313131;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
+    /*max-height: 500px;*/
+}
+.select-button-wrapper{
+    
+    width: 100%;
+    height: 100%;
+}
+.select-button-completion-content{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 25px;
+    padding-right: 25px;
+    /*    position: absolute;
+        float: right;
+        right: 50%;
+        top: 43%;*/
+}
+/*.button-prioritize-content{
+    position: relative;
+    display:block;
+}
+.hit-area-prioritize-content{
+    position: absolute;
+    float: right;
+    right: 43%;
+    top: 43%;
+}
+.hit-area-number{
+    font-size: 7em;
+    color: #000000;
+    opacity: .15;
+    text-align: center;
+    padding-left: 20px;
+}
+.button-completion-prioritize-content{
+    position: absolute;
+    float: right;
+    right: 50%;
+    top: 36%;
+}
+.centered-prioritize-content{
+    width: 100%;
+    height: 100%;
+    float: right;
+    right: -50%;
+    position: relative;
+}*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Drag and Drop Prioritize classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
