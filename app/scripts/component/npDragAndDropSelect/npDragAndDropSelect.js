@@ -12,22 +12,15 @@
                         this.draggableButtons = cmpData.draggableButtons;
                         this.id = cmpData.id;
                         this.positiveFeedback = cmpData.positiveFeedback;
+                        this.negativeFeedback = cmpData.negativeFeedback;
                         this.baseURL = cmpData.baseURL;
                         this.src = cmpData.image;
                         $scope.positiveFeedback = this.positiveFeedback = cmpData.positiveFeedback;
+                        $scope.negativeFeedback = this.negativeFeedback = cmpData.negativeFeedback;
                         $scope.image = this.image = cmpData.image;
                         $scope.content = cmpData.content;
                         $scope.ID = cmpData.id;
                         $scope.select = cmpData.select;
-                        console.log(
-                                '\n::::::::::::::::::::::::::::::::::::::getOffsetRect:::::::::::::::::::::::::::::::::::::::::::::::::::::::::',
-                                '\n::$scope.ID::', $scope.ID,
-                                '\n::cmpData.draggableButtons::', cmpData.draggableButtons,
-                                '\n::cmpData.draggableButtons.select::', cmpData.draggableButtons[0].select,
-                                '\n::$scope.select::', $scope.select,
-                                '\n::cmpData.select::', cmpData.select,
-                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                );
                         //////////////////////////////////////////////////////////////////////////////////////
                         //set drag and drag end event handlers
                         //////////////////////////////////////////////////////////////////////////////////////
@@ -53,63 +46,64 @@
                 return {
                     restrict: 'A',
                     link: function ($scope, $element, $attrs) {
-                        var hitAreaBoolean = false;
-                        var hitAreaSelected = '';
-                        var draggButtonBoolean = false;
-
-                        $scope.evaluate = function () {
-                            $('.hit-area').each(function () {
-                                hitAreaBoolean = $(this).data('match');
-                                hitAreaSelected = $(this).attr('selected');
-
-                                if ((Boolean(hitAreaBoolean) === false) && (typeof hitAreaSelected !== typeof undefined && hitAreaSelected !== false)) {
-                                    console.log(
-                                            '\n::::::::::::::::::::::::::::::::::::::true::hitAreaBoolean:::::::::::::::::::::::::::::::::::::::::::::::::::::::',
-                                            '\n::$attrs::', $(this).data('match'),
-                                            '\n::selected::', $(this).data('selected'),
-                                            '\n::hitAreaBoolean::', hitAreaBoolean,
-                                            '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                            );
-                                }
-                            });
-
-                            $('.draggableButton').each(function () {
-                                draggButtonBoolean = $(this).data('match');
-                                if (Boolean(draggButtonBoolean) === true) {
-                                    console.log(
-                                            '\n::::::::::::::::::::::::::::::::::::::true::fail:::::::::::::::::::::::::::::::::::::::::::::::::::::::',
-                                            '\n::$attrs::', $(this).attr('data-match'),
-                                            '\n::draggButtonBoolean::', draggButtonBoolean,
-                                            '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                            );
-//                                    return false;
-                                } else {
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //get ready
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        setTimeout(function () {
+                            $scope.$apply(function () {
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //on ready set states
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                TweenMax.set($('.select-response-correct'), {
+                                    scale: .25,
+                                    autoAlpha: 0
+                                });
+                                TweenMax.set($('.select-response-incorrect'), {
+                                    scale: .25,
+                                    autoAlpha: 0
+                                });
+                                var hitAreaLength = 0;
+                                var hitAreaSelectedLength = '';
+                                var hitAreaSelectedIncorrect = '';
+                                hitAreaLength = $("[data-match=true]").length;
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //evaluate interaction
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                $scope.evaluate = function () {
+                                    hitAreaSelectedLength = $("[data-match=selected]").length;
+                                    hitAreaSelectedIncorrect = $("[data-match=skeletor]").length;
                                     $('.hit-area').each(function () {
-                                        hitAreaBoolean = $(this).data('match');
-                                        hitAreaSelected = $(this).attr('selected');
-                                        if ((Boolean(hitAreaBoolean) === false) && (typeof hitAreaSelected !== typeof undefined && hitAreaSelected !== false)) {
-                                            console.log(
-                                                    '\n::::::::::::::::::::::::::::::::::::::true::fail 2:::::::::::::::::::::::::::::::::::::::::::::::::::::::',
-                                                    '\n::$attrs::', $(this).data('match'),
-                                                    '\n::selected::', $(this).data('selected'),
-                                                    '\n::hitAreaBoolean::', hitAreaBoolean,
-                                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                                    );
-                                            return false;
-                                        } else if ((Boolean(hitAreaBoolean) === true) && (typeof hitAreaSelected !== typeof undefined && hitAreaSelected !== false)) {
-                                            console.log(
-                                                    '\n::::::::::::::::::::::::::::::::::::::true::winner:::::::::::::::::::::::::::::::::::::::::::::::::::::::',
-                                                    '\n::$attrs::', $(this).data('match'),
-                                                    '\n::selected::', $(this).data('selected'),
-                                                    '\n::hitAreaBoolean::', hitAreaBoolean,
-                                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                                    );
+                                        if (Number(hitAreaLength) === Number(hitAreaSelectedLength) && (hitAreaSelectedIncorrect === 0)) {
+                                            TweenMax.to($('.select-response-correct'), .75, {
+                                                autoAlpha: 1,
+                                                scale: 1,
+                                                ease: Power4.easeOut
+                                            });
+                                            TweenMax.to($('.select-response-incorrect'), .75, {
+                                                autoAlpha: 0,
+                                                scale: .25,
+                                                ease: Power4.easeOut
+                                            });
+                                        } else {
+                                            TweenMax.to($('.select-response-correct'), .75, {
+                                                autoAlpha: 0,
+                                                scale: .25,
+                                                ease: Power4.easeOut
+                                            });
+                                            TweenMax.to($('.select-response-incorrect'), .75, {
+                                                autoAlpha: 1,
+                                                scale: 1,
+                                                ease: Power4.easeOut
+                                            });
                                         }
                                     });
-                                }
+
+                                };
+
                             });
-                        };
+                        });
                     }
+
                 };
             })
             //////////////////////////////////////////////////////////////////////////////////////
@@ -146,6 +140,9 @@
                                 TweenMax.to($('.hit-area'), 0, {
                                     strokeOpacity: 0
                                 });
+                                TweenMax.set($('.boxElements'), {
+                                    autoAlpha: 0
+                                });
                                 TweenMax.to($(hitArea).find('.button-completion-content'), 0.5, {
                                     autoAlpha: 0,
                                     ease: Power4.easeOut
@@ -158,12 +155,9 @@
                                     autoAlpha: 0,
                                     ease: Power4.easeOut
                                 });
-                                TweenMax.to($('#draggableContainer'), 1.75, {
-                                    autoAlpha: 1,
-                                    ease: Power4.easeOut
-                                });
+
                                 //////////////////////////////////////////////////////////////////////////////////////
-                                //shuffle that shit
+                                //shuffle that 
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 function shuffle() {
                                     $("#draggableButtons").each(function () {
@@ -188,7 +182,21 @@
                                         }
                                     });
                                 }
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //build that 
+                                //////////////////////////////////////////////////////////////////////////////////////
                                 shuffle();
+                                TweenMax.to($('#draggableContainer'), .75, {
+                                    autoAlpha: 1,
+                                    ease: Power4.easeOut
+                                });
+                                TweenMax.staggerTo($(".boxElements"), 2, {
+                                    scale: 1,
+                                    autoAlpha: 1,
+                                    delay: 0.75,
+                                    ease: Power4.easeOut,
+                                    force3D: true
+                                }, 0.2);
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //get actuall height
                                 //////////////////////////////////////////////////////////////////////////////////////
@@ -217,14 +225,6 @@
                             var top = box.top + scrollTop - clientTop;
                             var left = box.left + scrollLeft - clientLeft;
                             var height = box.top + scrollTop - clientHeight;
-//                            var height = clientHeight;
-                            console.log(
-                                    '\n::::::::::::::::::::::::::::::::::::::getOffsetRect:::::::::::::::::::::::::::::::::::::::::::::::::::::::::',
-                                    '\n::elem.clientHeight::', elem.clientHeight,
-                                    '\n::box.clientHeight::', box.clientHeight,
-                                    '\n::height::', height,
-                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                    );
                             return {top: Math.round(top), left: Math.round(left), height: Math.round(height)};
                         }
                         function update() {
@@ -253,6 +253,7 @@
                                         var hitAreaPosition;
                                         var hitAreaPositionSelectId;
                                         var hitAreaPositionSelect;
+                                        var hitAreaBoolean;
                                         for (var i = 0; i < targetNumber; i++) {
                                             hitArea = document.getElementsByClassName('hit-area');
                                             currentTarget = 'id' + i;
@@ -260,24 +261,22 @@
                                             hitAreaPosition = getOffsetRect(hitArea[i]);
                                             hitAreaPositionSelectId = document.getElementById('select-hit-area-background');
                                             hitAreaPositionSelect = getOffsetRect(hitAreaPositionSelectId);
-                                            var position = $(hitArea[i]).position();
-                                            console.log(
-                                                    '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                                    '\n::hitArea[i]::', hitArea[i],
-                                                    '\n::position.top::', position.top,
-                                                    '\n::position.left::', position.left,
-                                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                                    );
                                             if (Draggable.hitTest(hitAreaPositionSelect, e) && (currentElement === currentTarget)) {
-//                                            if (Draggable.hitTest(hitAreaPosition, e) && (currentElement === currentTarget)) {
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                //on drag match set match state
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                hitAreaBoolean = $(hitArea[i]).data('match');
+                                                if (Boolean(hitAreaBoolean) === true) {
+                                                    $(hitArea[i]).attr('data-match', 'selected');
+                                                }
+                                                if (Boolean(hitAreaBoolean) === false) {
+                                                    $(hitArea[i]).attr('data-match', 'skeletor');
+                                                }
                                                 hitAreaPosition = getOffsetRect(hitAreaWrapper);
                                                 var positionX = (hitAreaPosition.left - hitAreaPosition.left);
                                                 //////////////////////////////////////////////////////////////////////////////////////
                                                 //on drag match set match position/states
                                                 //////////////////////////////////////////////////////////////////////////////////////
-
-                                                $(hitArea[i]).attr('selected', 'matched');
-
                                                 TweenMax.to(element, 0.15, {
                                                     autoAlpha: 0,
                                                     x: positionX,
