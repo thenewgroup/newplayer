@@ -6,7 +6,7 @@
     .module('newplayer.component')
   /** @ngInject */
     .controller('npPageController',
-    function ($log, $scope, $rootScope, ManifestService) {
+    function ($log, $scope, $rootScope, ManifestService, TrackingService) {
       var cmpData = $scope.component.data || {};
       $log.debug('npPage::data', cmpData, $scope.contentTitle);
 
@@ -44,6 +44,7 @@
           }
         } else {
           $scope.currentPage = false;
+          TrackingService.trackPageView(pageId);
         }
       }
     }

@@ -1,0 +1,50 @@
+[
+    {
+        "type": "npFeature",
+        "data": {
+            "id": "np_homepage",
+            "class": "productTemplate",
+            "version": "0.0.1",
+            "timestamp": "2015-Mar-Wed_08:03:28"
+        },
+        "components": [
+            {
+                "type": "npContent",
+                "data": {
+                    "id": "content_en",
+                    "language": "en",
+                    "title": "ELX Welcome Video",
+                    "description": "ELX Welcome Video"
+                },
+                "components": [
+                    {
+                        "type": "npHTML",
+                        "data": {
+                            "id": "newplayer-background"
+                        },
+                        "components": [
+                        ]
+                    },
+                    {
+                        "type": "npHTML",
+                        "data": {
+                            "class": "homepage-video"
+                        },
+                        "components": [
+                            {
+                                "type": "npVideo",
+                                "data": {
+                                    "id": "reveal-1-vid",
+                                    "poster": "../assets/images/ELX_Welcome_640x360_ENG.png",
+                                    "baseURL": "../assets/video/ELX_Welcome_640x360_ENG",
+                                    "types": ["mp4"]
+                                },
+                                "components": []
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

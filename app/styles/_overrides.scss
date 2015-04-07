@@ -26,11 +26,6 @@ img.blur {
     /*    -webkit-filter: blur(3px); 
         filter: blur(3px); */
 }
-/*.vcenter {
-    display: inline-block;
-    vertical-align: middle;
-    float: none;
-}*/
 .vertical-align {
     display: flex;
     flex-direction: row;
@@ -51,7 +46,7 @@ img.blur {
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*Button overrides*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-.btn {     
+.btn {
     text-transform: uppercase;
     letter-spacing: 2px;
     margin-top: 5px; 
@@ -62,7 +57,13 @@ img.blur {
 .btn-favorite { 
     margin-top: 5px; 
     margin-bottom: 10px;
-
+    background-color: $brand-primary;
+    color: #FFFFFF;
+    &:hover,
+        &:focus {
+        background-color: darken($brand-primary, 5%);
+        color: darken(#FFFFFF, 5%);
+    }
 }
 .np_btn-info { 
     margin-top: 5px; 
@@ -70,7 +71,7 @@ img.blur {
     display: none;
 }
 .glyphicon-heart-empty{
-    /*color: $brand-info;*/
+    color: $brand-info !important;
 }
 .icon {
     background-image: url(../assets/svgs/heart-icon.svg);
@@ -94,12 +95,14 @@ img.blur {
 }
 /*When setting this class for New Player use: 'inside-padding'*/
 .np_inside-padding{
-    padding-left: 5%;
-    padding-right: 5%;
+    position: relative;
+    padding-left: 5% !important;
+    padding-right: 5% !important;
     padding-bottom: 35px;
 }
 /*When setting this class for New Player use: 'button-padding'*/
 .np_button-padding{
+    position: relative;
     padding-top: 30px;
     padding-left: 15%;
     padding-right: 15%;
@@ -121,7 +124,7 @@ img.blur {
     top: 0;*/
 /*z-index: -2;*/
 /*}*/
-/*@media (max-width: $screen-sm) {
+@media (max-width: $screen-sm) {
     .np_outside-padding{
         padding: 0px;
     }
@@ -131,7 +134,7 @@ img.blur {
     .np_button-padding{
         padding: 5%;
     }
-}*/
+}
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*Sans font overrides*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -197,7 +200,7 @@ img.blur {
         padding-bottom: 10px;
     }
 }*/
-/*@media (max-width: $screen-sm) {
+@media (max-width: $screen-sm) {
     .sans-normal{
         padding-right: 7px;
         padding-left: 7px;
@@ -206,7 +209,7 @@ img.blur {
         padding-right: 7px;
         padding-left: 7px;
     }
-}*/
+}
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player background color wrapper classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/

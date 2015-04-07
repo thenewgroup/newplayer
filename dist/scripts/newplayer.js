@@ -81,7 +81,7 @@
     .factory('ConfigService', ConfigService);
 
   /** @ngInject */
-  function ConfigService($log, APIService, ManifestService/*, $timeout, $q, $rootScope*/) {
+  function ConfigService($log, $rootScope, APIService, ManifestService/*, $timeout, $q, $rootScope*/) {
     $log.debug('configService::Init');
 
     var Service = function () {
@@ -537,6 +537,9 @@
       this.setPageId = function (pageId) {
         $log.debug('ManifestService, setPageId', pageId);
         // reset component index for reparsing new page
+        if (this.pageId === pageId) {
+          return;
+        }
         setComponentIdx(null);
 
         this.pageId = pageId;
@@ -822,6 +825,61 @@
 
     };
     return new Service();
+
+  }
+})();
+
+/* jshint -W004, -W003, -W026, -W040 */
+(function () {
+  'use strict';
+
+  angular
+    .module('newplayer.service')
+    .factory('TrackingService', TrackingService);
+
+  /*
+   * console:
+   * angular.element(document.body).injector().get('TrackingService')
+   */
+
+  /** @ngInject */
+  function TrackingService($log, $rootScope, ConfigService /*, $timeout, $http, $q */) {
+    $log.warn('\nTrackingService::Init\n');
+
+    var service = {
+      trackEvent: angular.noop,
+      setCallback: setCallback,
+      trackPageView: trackPageView,
+      trackExternalLinkClick: trackExternalLinkClick,
+      trackApiCall: trackApiCall
+    };
+    return service;
+
+    function setCallback(fn) {
+      // FIXME: receiving the method in isolate scope is a call to scope to get the actual method
+      // so we invoke it here to get the method passed in. Is this necessary?
+      var func = fn();
+      if (func) {
+        this.trackEvent = func;
+      }
+    }
+
+    function trackPageView(pageId) {
+      dispatch.call(this, 'pageView', pageId);
+    }
+
+    function trackExternalLinkClick(link) {
+      dispatch.call(this, 'externalLink', link);
+    }
+
+    function trackApiCall(api) {
+      dispatch.call(this, 'apiCall', api);
+    }
+
+    function dispatch(event, data) {
+      this.trackEvent('newplayer.' + event, data);
+    }
+
 
   }
 })();
@@ -1254,7 +1312,7 @@ function AssessmentService ( $log ) {
 
   /** @ngInject */
     .controller('npButtonController',
-    function ($log, $scope, $sce, $location, $element, ConfigService, ManifestService, APIService) {
+    function ($log, $scope, $sce, $location, $element, ConfigService, ManifestService, APIService, TrackingService) {
       var cmpData = $scope.component.data || {};
       $log.debug('npButton::data', cmpData);
 
@@ -1304,9 +1362,12 @@ function AssessmentService ( $log ) {
           if (this.apiLink) {
             //TODO: we may need a `method` property to know what to use here
             // i.e. GET, POST, PUT, DELETE
+            TrackingService.trackApiCall(btnLink);
             APIService.postData(btnLink);
             return;
           }
+
+          TrackingService.trackExternalLinkClick(btnLink);
           window.open(this.link, this.target);
         }
       };
@@ -1417,25 +1478,62 @@ function AssessmentService ( $log ) {
 
 
 (function () {
-
-  'use strict';
-  angular
-    .module('newplayer.component')
-
-  /** @ngInject */
-    .controller('npFeatureController',
-    function ($log, $scope/*, ManifestService*/) {
-      var cmpData = $scope.component.data || {};
-      $log.debug('npFeature::data', cmpData);
-    }
-  )
-
-  /** @ngInject */
-    .run(
-    function ($log, $rootScope) {
-      $log.debug('npFeature::component loaded!');
-    }
-  );
+    'use strict';
+    angular
+            .module('newplayer.component')
+            /** @ngInject */
+            .controller('npFeatureController',
+                    function ($log, $scope/*, ManifestService*/, $element) {
+                        var cmpData = $scope.component.data || {};
+                        $log.debug('npFeature::data', cmpData);
+                    }
+            )
+            .directive('newPlayerPageTop', function () {
+                return function ($scope, $element, attrs) {
+                    setTimeout(function () {
+                        $scope.$apply(function () {
+//                            var np_wrapper = $element.find('.np_outside-padding');
+//                            var hotspotImage = $element.find('.hotspotImage');
+//                            var page_container = $element.find('.modal-open');
+//                            var page_container = $('.modal-open');
+//                            TweenMax.to(np_wrapper, 0.25, {
+//                                autoAlpha: 0.25,
+//                                ease: Power2.easeOut
+//                            });
+//                            function scroller() {
+//                                console.log(
+//                                        '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                        '\n::page_container::', page_container,
+//                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                        );
+//                                TweenMax.to(page_container, .75, {
+//                                    scrollTo: {y: 0},
+//                                    ease: Power2.easeInOut,
+//                                    onComplete: atTop
+//                                });
+//                            }
+//                            function atTop() {
+//                                console.log(
+//                                        '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                        '\n::page_container::', page_container,
+//                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                        );
+//                                TweenMax.to(np_wrapper, 0.5, {
+//                                    autoAlpha: 1,
+//                                    ease: Power2.easeOut
+//                                });
+//                            }
+//                            scroller();
+                        });
+                    });
+                };
+            })
+            /** @ngInject */
+            .run(
+                    function ($log, $rootScope) {
+                        $log.debug('npFeature::component loaded!');
+                    }
+            );
 })();
 
 
@@ -1501,6 +1599,17 @@ function AssessmentService ( $log ) {
                         this.baseURL = cmpData.baseURL;
                         this.src = cmpData.image;
                         //////////////////////
+                        var contentArea = '';
+                        setTimeout(function () {
+                            $scope.$apply(function () {
+                                contentArea = $element.find('.content-area');
+                                function onPageLoadSet() {
+//                                    hotspotButton = $('.hotspotButton');
+                                    TweenMax.set(contentArea, {opacity: 0, force3D: true});
+                                }
+                                onPageLoadSet();
+                            });
+                        });
                         $scope.feedback = this.feedback = cmpData.feedback;
                         $scope.image = this.image = cmpData.image;
                         //////////////////////
@@ -1508,11 +1617,22 @@ function AssessmentService ( $log ) {
                             this.feedback = button.feedback;
                             var idx = this.hotspotButtons.indexOf(button);
                             //////////////////////
+                            console.log(
+                                    '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                    '\n::button::', button,
+                                    '\n::idx::', idx,
+                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                    );
                             $scope.$watch('npHotspot.feedback', function (newValue, oldValue) {
+                                contentAreaHeight = 0;
+                                TweenMax.to(contentArea, 1, {
+                                    opacity: 1,
+                                    ease: Power4.easeOut
+                                });
                                 $('.npHotspot-feedback p').each(function (index, totalArea) {
-                                    var contentAreaHeight = $(this).outerHeight(true) + 50;
+                                    contentAreaHeight = contentAreaHeight + $(this).outerHeight(true);
                                     TweenMax.to($('.content-background'), 1, {
-                                        height: contentAreaHeight,
+                                        height: contentAreaHeight + 25,
                                         ease: Power4.easeOut
                                     });
                                     TweenMax.to($('.npHotspot-feedback'), 0.1, {
@@ -1526,9 +1646,36 @@ function AssessmentService ( $log ) {
                                     });
                                 });
                             });
+                            $('.hotspotButton').each(function (index, totalArea) {
+                                contentAreaHeight = contentAreaHeight + $(this).outerHeight(true);
+                                TweenMax.to($(this), 1, {
+                                    rotation: 0,
+                                    ease: Power4.easeOut
+                                });
+                            });
+                            TweenMax.to($('.hotspotButton')[idx], 1, {
+                                rotation: -45,
+                                ease: Power4.easeOut
+                            });
                         };
                     }
             )
+            .directive('hotspotButtonBuild', function () {
+                return function ($scope, $element, attrs) {
+                    var hotspotButton = '';
+                    setTimeout(function () {
+                        $scope.$apply(function () {
+                            hotspotButton = $element.find('.hotspotButton');
+                            function onPageLoadBuild() {
+                                hotspotButton = $('.hotspotButton');
+                                TweenMax.set(hotspotButton, {opacity: 0, scale: .25, force3D: true});
+                                TweenMax.staggerTo(hotspotButton, 2, {scale: 1, opacity: 1, delay: 0.5, ease: Elastic.easeOut, force3D: true}, 0.2);
+                            }
+                            onPageLoadBuild();
+                        });
+                    });
+                };
+            })
             .directive('mediaelement', npMediaElementDirective)
             /** @ngInject */
             .run(
@@ -1598,7 +1745,7 @@ function AssessmentService ( $log ) {
                         onDrag: "&"
                     },
                     link: function (scope, element, attrs) {
-                        var droppables = document.getElementsByClassName('hit-area');
+                        var hitArea = undefined;
                         var hitAreaWrapper = document.getElementById('draggableContainer');
                         var draggables = document.getElementsByClassName('draggableButton');
                         var currentTarget;
@@ -1621,10 +1768,11 @@ function AssessmentService ( $log ) {
                             //////////////////////////////////////////////////////////////////////////////////////
                             //on ready set states
                             //////////////////////////////////////////////////////////////////////////////////////
+                            hitArea = document.getElementsByClassName('hit-area');
                             TweenMax.to($('.hit-area'), 0, {
                                 strokeOpacity: 0
                             });
-                            TweenMax.to($(droppables).find('.button-completion-content'), 0.5, {
+                            TweenMax.to($(hitArea).find('.button-completion-content'), 0.5, {
                                 autoAlpha: 0,
                                 ease: Power4.easeOut
                             });
@@ -1681,11 +1829,34 @@ function AssessmentService ( $log ) {
                             var scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft;
                             var clientTop = docElem.clientTop || body.clientTop || 0;
                             var clientLeft = docElem.clientLeft || body.clientLeft || 0;
+                            var clientHeight = elem.clientHeight || 0;
+                            var offsetHeight = elem.offsetHeight || 0;
+                            var scrollHeight = elem.scrollHeight || 0;
                             var top = box.top + scrollTop - clientTop;
                             var left = box.left + scrollLeft - clientLeft;
-                            return {top: Math.round(top), left: Math.round(left)};
+                            var height = box.height - scrollTop;
+                            var bottom = top + (box.bottom - box.top);
+                            var right = left + (box.right - box.left);
+//                            var height = clientHeight;
+                            console.log(
+                                    '\n::::::::::::::::::::::::::::::::::::::getOffsetRect:::::::::::::::::::::::::::::::::::::::::::::::::::::::::',
+                                    '\n::elem.clientHeight::', elem.clientHeight,
+                                    '\n::box.height::', box.height,
+                                    '\n::box.bottom::', box.bottom,
+                                    '\n::clientHeight::', clientHeight,
+                                    '\n::offsetHeight::', offsetHeight,
+                                    '\n::scrollHeight::', scrollHeight,
+                                    '\n::scrollTop::', scrollTop,
+                                    '\n::clientTop::', clientTop,
+                                    '\n::height::', height,
+                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                    );
+                            return {top: Math.round(top),
+                                left: Math.round(left),
+                                bottom: Math.round(bottom),
+                                right: Math.round(right)
+                            };
                         }
-                        var hitAreaPosition = getOffsetRect(hitAreaWrapper);
                         //////////////////////////////////////////////////////////////////////////////////////
                         //on drag offset method
                         //////////////////////////////////////////////////////////////////////////////////////
@@ -1698,82 +1869,457 @@ function AssessmentService ( $log ) {
 //                            });
 //                        }
 //                    }
-                        //////////////////////////////////////////////////////////////////////////////////////
-                        //create draggable, set vars
-                        //////////////////////////////////////////////////////////////////////////////////////
-                        Draggable.create(element, {
-                            type: "x,y",
-                            edgeResistance: 0.65,
-                            bounds: "#draggableContainer",
-                            throwProps: true,
-                            overlapThreshold: '50%',
-                            onDrag: function (e) {
-                                scope.$apply(function () {
-                                    scope.onDrag();
+                        function update() {
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            //create draggable, set vars
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            Draggable.create(element, {
+                                type: "x,y",
+                                edgeResistance: 0.65,
+//                                autoScroll: 1,
+                                bounds: "#draggableContainer",
+                                throwProps: true,
+                                overlapThreshold: '50%',
+                                onDrag: function (e) {
+                                    scope.$apply(function () {
+                                        scope.onDrag();
+//                                        hitArea = document.getElementsByClassName('hit-area');
 //                                setElementPositions(true);
-                                });
-                            },
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            //on drag method/vars
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            onDragEnd: function (e) {
-                                scope.$apply(function () {
-                                    scope.onDragEnd();
+                                    });
+                                },
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //on drag method/vars
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                onDragEnd: function (e) {
+                                    scope.$apply(function () {
+                                        scope.onDragEnd();
 //                                setElementPositions(false);
-                                    var targetNumber = droppables.length;
-                                    var droppablesPosition;
-                                    for (var i = 0; i < targetNumber; i++) {
-                                        currentTarget = 'id' + i;
-                                        currentElement = element.attr("id");
-                                        if (Draggable.hitTest(droppables[i], e) && (currentElement === currentTarget)) {
-                                            droppablesPosition = getOffsetRect(droppables[i]);
-                                            var positionX = (droppablesPosition.left - hitAreaPosition.left);
-//                                        var positionY = (droppablesPosition.top - hitAreaPosition.top) - (Math.round(draggablePositionTop[i].top) - hitAreaPosition.top);
-//                                        console.log('inside this droppablesPosition.top: ', droppablesPosition.top, 'positionY: ', positionY);
-                                            //////////////////////////////////////////////////////////////////////////////////////
-                                            //on drag match set match position/states
-                                            //////////////////////////////////////////////////////////////////////////////////////
-                                            TweenMax.to(element, 0.15, {
-                                                autoAlpha: 0,
-                                                x: positionX,
+                                        var targetNumber = hitArea.length;
+                                        var hitAreaPosition;
+                                        var rect;
+//                                        $(window).scroll(function () {
+//                                            clearTimeout($.data(this, 'scrollTimer'));
+//                                            $.data(this, 'scrollTimer', setTimeout(function () {
+//                                                // do something
+//                                                console.log("Haven't scrolled in 250ms!");
+//                                                hitArea = document.getElementsByClassName('hit-area');
+//                                            }, 250));
+//                                        });
+//                                        
+//                                        document.getElementsByClassName('post-taglist')[0].children[0].getClientRects()[0]
+
+                                        for (var i = 0; i < targetNumber; i++) {
+                                            hitArea = document.getElementsByClassName('hit-area');
+                                            currentTarget = 'id' + i;
+                                            currentElement = element.attr("id");
+                                            hitAreaPosition = getOffsetRect(hitArea[i]);
+//                                            hitAreaPosition = hitArea[i].getBoundingClientRect();
+                                            if (Draggable.hitTest(hitAreaPosition, e) && (currentElement === currentTarget)) {
+//                                            if (Draggable.hitTest(hitAreaPosition, e) && (currentElement === currentTarget)) {
+//                                            if (Draggable.hitTest(hitArea[i], e) && (currentElement === currentTarget)) {
+                                                hitAreaPosition = getOffsetRect(hitAreaWrapper);
+                                                var positionX = (hitAreaPosition.left - hitAreaPosition.left);
+//                                          var positionY = (hitAreaPosition.top - hitAreaPosition.top) - (Math.round(draggablePositionTop[i].top) - hitAreaPosition.top);
+                                                var postionTopOffset = Math.round(window_offset + hitAreaPosition.top);
+                                                console.log(
+                                                        '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                                        '\n::hitAreaPosition.top::', hitAreaPosition.top,
+                                                        '\n::hitAreaPosition.height::', hitAreaPosition.height,
+                                                        '\n::postionTopOffset::', postionTopOffset,
+                                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                                        );
+//                                        console.log('inside this hitAreaPosition.top: ', hitAreaPosition.top, 'positionY: ', positionY);
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                //on drag match set match position/states
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                TweenMax.to(element, 0.15, {
+                                                    autoAlpha: 0,
+                                                    x: positionX,
 //                                            y: positionY,
-                                                ease: Power4.easeOut
-                                            });
-                                            TweenMax.to(droppables[i], 0.5, {
-                                                autoAlpha: 0.95,
+                                                    ease: Power4.easeOut
+                                                });
+                                                TweenMax.to(hitArea[i], 0.5, {
+                                                    autoAlpha: 0.95,
 //                                            fill: '#313131',
-                                                strokeOpacity: 1,
-                                                ease: Power4.easeOut
-                                            });
-                                            TweenMax.to($(droppables[i]).find('.button-content'), 0.5, {
-                                                autoAlpha: 0,
-                                                ease: Power4.easeOut
-                                            });
-                                            TweenMax.to($(droppables[i]).find('.button-completion-content'), 0.5, {
-                                                autoAlpha: 1,
-                                                ease: Power4.easeOut
-                                            });
-                                            return;
-                                        } else {
-                                            //////////////////////////////////////////////////////////////////////////////////////
-                                            //on drag no match set state
-                                            //////////////////////////////////////////////////////////////////////////////////////
-                                            TweenMax.to(element, 1, {
-                                                x: "0px",
-                                                y: '0px',
-                                                ease: Power4.easeOut
-                                            });
+                                                    strokeOpacity: 1,
+                                                    ease: Power4.easeOut
+                                                });
+                                                TweenMax.to($(hitArea[i]).find('.button-content'), 0.5, {
+                                                    autoAlpha: 0,
+                                                    ease: Power4.easeOut
+                                                });
+                                                TweenMax.to($(hitArea[i]).find('.button-completion-content'), 0.5, {
+                                                    autoAlpha: 1,
+                                                    ease: Power4.easeOut
+                                                });
+                                                return;
+                                            } else {
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                //on drag no match set state
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                TweenMax.to(element, 1, {
+                                                    x: "0px",
+                                                    y: '0px',
+                                                    ease: Power4.easeOut
+                                                });
+                                            }
                                         }
-                                    }
-                                });
-                            }
+                                    });
+                                }
+                            });
+                        }
+                        $(window).scroll(function () {
+                            update();
                         });
+                        update();
                     }
                 };
+
             });
     /** @ngInject */
     function npMediaElementDirective($log) {
         $log.debug('\nnpDragAndDropMatch mediaelementDirective::Init\n');
+        var Directive = function () {
+            this.restrict = 'A';
+            this.link = function (scope, element, attrs, controller) {
+            };
+        };
+        return new Directive();
+    }
+})();
+
+/* jshint -W003, -W117 */
+(function () {
+    'use strict';
+    angular
+            .module('newplayer.component')
+            .controller('npDragAndDropSelectController',
+                    function ($log, $scope, $sce, $element) {
+                        var cmpData = $scope.component.data;
+                        var buttonData = $scope.feedback || {};
+                        $log.debug('npDragAndDropSelect::data', cmpData, buttonData);
+                        var draggableButtons = '';
+                        this.draggableButtons = cmpData.draggableButtons;
+                        this.id = cmpData.id;
+                        this.positiveFeedback = cmpData.positiveFeedback;
+                        this.negativeFeedback = cmpData.negativeFeedback;
+                        this.baseURL = cmpData.baseURL;
+                        this.src = cmpData.image;
+                        $scope.positiveFeedback = this.positiveFeedback = cmpData.positiveFeedback;
+                        $scope.negativeFeedback = this.negativeFeedback = cmpData.negativeFeedback;
+                        $scope.image = this.image = cmpData.image;
+                        $scope.content = cmpData.content;
+                        $scope.ID = cmpData.id;
+                        $scope.select = cmpData.select;
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //set drag and drag end event handlers
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        $scope.onDrag = function (value) {
+                            $scope.currentRotation = value;
+                        };
+                        $scope.onDragEnd = function (value) {
+                            $scope.currentRotation = value;
+                        };
+                    }
+            )
+            .directive('mediaelement', npMediaElementDirective)
+            /** @ngInject */
+            .run(
+                    function ($log, $rootScope) {
+                        $log.debug('npDragAndDropSelect::component loaded!');
+                    }
+            )
+            //////////////////////////////////////////////////////////////////////////////////////
+            //set evaluate button logic
+            //////////////////////////////////////////////////////////////////////////////////////
+            .directive('npDragAndDropSelectEvaluate', function () {
+                return {
+                    restrict: 'A',
+                    link: function ($scope, $element, $attrs) {
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //get ready
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        setTimeout(function () {
+                            $scope.$apply(function () {
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //on ready set states
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                TweenMax.set($('.select-response-correct'), {
+                                    scale: .25,
+                                    autoAlpha: 0
+                                });
+                                TweenMax.set($('.select-response-incorrect'), {
+                                    scale: .25,
+                                    autoAlpha: 0
+                                });
+                                var hitAreaLength = 0;
+                                var hitAreaSelectedLength = '';
+                                var hitAreaSelectedIncorrect = '';
+                                hitAreaLength = $("[data-match=true]").length;
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //evaluate interaction
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                $scope.evaluate = function () {
+                                    hitAreaSelectedLength = $("[data-match=selected]").length;
+                                    hitAreaSelectedIncorrect = $("[data-match=skeletor]").length;
+                                    $('.hit-area').each(function () {
+                                        if (Number(hitAreaLength) === Number(hitAreaSelectedLength) && (hitAreaSelectedIncorrect === 0)) {
+                                            TweenMax.to($('.select-response-correct'), .75, {
+                                                autoAlpha: 1,
+                                                scale: 1,
+                                                ease: Power4.easeOut
+                                            });
+                                            TweenMax.to($('.select-response-incorrect'), .75, {
+                                                autoAlpha: 0,
+                                                scale: .25,
+                                                ease: Power4.easeOut
+                                            });
+                                        } else {
+                                            TweenMax.to($('.select-response-correct'), .75, {
+                                                autoAlpha: 0,
+                                                scale: .25,
+                                                ease: Power4.easeOut
+                                            });
+                                            TweenMax.to($('.select-response-incorrect'), .75, {
+                                                autoAlpha: 1,
+                                                scale: 1,
+                                                ease: Power4.easeOut
+                                            });
+                                        }
+                                    });
+
+                                };
+
+                            });
+                        });
+                    }
+
+                };
+            })
+            //////////////////////////////////////////////////////////////////////////////////////
+            //GSAP Draggable Angular directive
+            //////////////////////////////////////////////////////////////////////////////////////
+            .directive("dragButtonSelect", function () {
+                return {
+                    restrict: "A",
+                    scope: {
+                        onDragEnd: "&",
+                        onDrag: "&"
+                    },
+                    link: function (scope, element, attrs) {
+                        var hitArea = undefined;
+                        var hitAreaWrapper = document.getElementById('draggableContainer');
+                        var draggables = document.getElementsByClassName('draggableButton');
+                        var currentTarget;
+                        var currentElement;
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //set states
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        TweenMax.to($('#draggableContainer'), 0, {
+                            autoAlpha: 0
+                        });
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //get ready
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        setTimeout(function () {
+                            scope.$apply(function () {
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //on ready set states
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                hitArea = document.getElementsByClassName('hit-area');
+                                TweenMax.to($('.hit-area'), 0, {
+                                    strokeOpacity: 0
+                                });
+                                TweenMax.set($('.boxElements'), {
+                                    autoAlpha: 0
+                                });
+                                TweenMax.to($(hitArea).find('.button-completion-content'), 0.5, {
+                                    autoAlpha: 0,
+                                    ease: Power4.easeOut
+                                });
+                                TweenMax.to($(hitArea).find('.feedback-draggable-button-image'), 0.5, {
+                                    autoAlpha: 0,
+                                    ease: Power4.easeOut
+                                });
+                                TweenMax.to($(hitArea).find('.feedback-draggable-button-content'), 0.5, {
+                                    autoAlpha: 0,
+                                    ease: Power4.easeOut
+                                });
+
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //shuffle that 
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                function shuffle() {
+                                    $("#draggableButtons").each(function () {
+                                        var divs = $(this).find('.draggableButton');
+                                        for (var k = 0; k < divs.length; k++) {
+                                            $(divs[k]).remove();
+                                        }
+                                        //the fisher yates algorithm, from http://stackoverflow.com/questions/2450954/how-to-randomize-a-javascript-array
+                                        var l = divs.length;
+                                        if (l === 0) {
+                                            return false;
+                                        }
+                                        while (--l) {
+                                            var j = Math.floor(Math.random() * (l + 1));
+                                            var tempi = divs[l];
+                                            var tempj = divs[j];
+                                            divs[l] = tempj;
+                                            divs[j] = tempi;
+                                        }
+                                        for (var m = 0; m < divs.length; m++) {
+                                            $(divs[m]).appendTo(this);
+                                        }
+                                    });
+                                }
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //build that 
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                shuffle();
+                                TweenMax.to($('#draggableContainer'), .75, {
+                                    autoAlpha: 1,
+                                    ease: Power4.easeOut
+                                });
+                                TweenMax.staggerTo($(".boxElements"), 2, {
+                                    scale: 1,
+                                    autoAlpha: 1,
+                                    delay: 0.75,
+                                    ease: Power4.easeOut,
+                                    force3D: true
+                                }, 0.2);
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //get actuall height
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                $.each($('.boxElements'), function () {
+                                    var currentHeight = $(this).find('.button-content').outerHeight();
+                                    $(this).height(currentHeight);
+                                });
+                                $.each($('.boxElements'), function () {
+                                    var currentHeight = $(this).find('.select-button-completion-content').outerHeight();
+                                    $(this).height(currentHeight);
+                                });
+                            });
+                        });
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //offset method
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        function getOffsetRect(elem) {
+                            var box = elem.getBoundingClientRect();
+                            var body = document.body;
+                            var docElem = document.documentElement;
+                            var scrollTop = window.pageYOffset || docElem.scrollTop || body.scrollTop;
+                            var scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft;
+                            var clientTop = docElem.clientTop || body.clientTop || 0;
+                            var clientLeft = docElem.clientLeft || body.clientLeft || 0;
+                            var clientHeight = docElem.clientHeight || body.clientHeight || 0;
+                            var top = box.top + scrollTop - clientTop;
+                            var left = box.left + scrollLeft - clientLeft;
+                            var height = box.top + scrollTop - clientHeight;
+                            return {top: Math.round(top), left: Math.round(left), height: Math.round(height)};
+                        }
+                        function update() {
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            //create draggable, set vars
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            Draggable.create(element, {
+                                type: "x,y",
+                                edgeResistance: 0.65,
+                                autoScroll: 1,
+                                bounds: "#draggableContainer",
+                                throwProps: true,
+                                overlapThreshold: '50%',
+                                onDrag: function (e) {
+                                    scope.$apply(function () {
+                                        scope.onDrag();
+                                    });
+                                },
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //on drag method/vars
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                onDragEnd: function (e) {
+                                    scope.$apply(function () {
+                                        scope.onDragEnd();
+                                        var targetNumber = hitArea.length;
+                                        var hitAreaPosition;
+                                        var hitAreaPositionSelectId;
+                                        var hitAreaPositionSelect;
+                                        var hitAreaBoolean;
+                                        for (var i = 0; i < targetNumber; i++) {
+                                            hitArea = document.getElementsByClassName('hit-area');
+                                            currentTarget = 'id' + i;
+                                            currentElement = element.attr("id");
+                                            hitAreaPosition = getOffsetRect(hitArea[i]);
+                                            hitAreaPositionSelectId = document.getElementById('select-hit-area-background');
+                                            hitAreaPositionSelect = getOffsetRect(hitAreaPositionSelectId);
+                                            if (Draggable.hitTest(hitAreaPositionSelect, e) && (currentElement === currentTarget)) {
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                //on drag match set match state
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                hitAreaBoolean = $(hitArea[i]).data('match');
+                                                if (Boolean(hitAreaBoolean) === true) {
+                                                    $(hitArea[i]).attr('data-match', 'selected');
+                                                }
+                                                if (Boolean(hitAreaBoolean) === false) {
+                                                    $(hitArea[i]).attr('data-match', 'skeletor');
+                                                }
+                                                hitAreaPosition = getOffsetRect(hitAreaWrapper);
+                                                var positionX = (hitAreaPosition.left - hitAreaPosition.left);
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                //on drag match set match position/states
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                TweenMax.to(element, 0.15, {
+                                                    autoAlpha: 0,
+                                                    x: positionX,
+                                                    ease: Power4.easeOut
+                                                });
+                                                TweenMax.to(hitArea[i], 0.5, {
+                                                    autoAlpha: 0.95,
+                                                    strokeOpacity: 1,
+                                                    ease: Power4.easeOut
+                                                });
+                                                TweenMax.to($(hitArea[i]).find('.button-content'), 0.5, {
+                                                    autoAlpha: 0,
+                                                    ease: Power4.easeOut
+                                                });
+                                                TweenMax.to($(hitArea[i]).find('.button-completion-content'), 0.5, {
+                                                    autoAlpha: 1,
+                                                    ease: Power4.easeOut
+                                                });
+                                                TweenMax.to($(hitArea[i]).find('.feedback-draggable-button-image'), 0.5, {
+                                                    autoAlpha: 1,
+                                                    ease: Power4.easeOut
+                                                });
+                                                TweenMax.to($(hitArea[i]).find('.feedback-draggable-button-content'), 0.5, {
+                                                    autoAlpha: 1,
+                                                    ease: Power4.easeOut
+                                                });
+                                                return;
+                                            } else {
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                //on drag no match set state
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                TweenMax.to(element, 1, {
+                                                    x: "0px",
+                                                    y: '0px',
+                                                    ease: Power4.easeOut
+                                                });
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                        $(window).scroll(function () {
+                            update();
+                        });
+                        update();
+                    }
+                };
+
+            });
+    /** @ngInject */
+    function npMediaElementDirective($log) {
+        $log.debug('\nnpDragAndDropSelect mediaelementDirective::Init\n');
         var Directive = function () {
             this.restrict = 'A';
             this.link = function (scope, element, attrs, controller) {
@@ -2339,7 +2885,7 @@ function AssessmentService ( $log ) {
     .module('newplayer.component')
   /** @ngInject */
     .controller('npPageController',
-    function ($log, $scope, $rootScope, ManifestService) {
+    function ($log, $scope, $rootScope, ManifestService, TrackingService) {
       var cmpData = $scope.component.data || {};
       $log.debug('npPage::data', cmpData, $scope.contentTitle);
 
@@ -2377,6 +2923,7 @@ function AssessmentService ( $log ) {
           }
         } else {
           $scope.currentPage = false;
+          TrackingService.trackPageView(pageId);
         }
       }
     }
@@ -2407,6 +2954,7 @@ function AssessmentService ( $log ) {
                         var feedback = cmpData.feedback;
                         var feedback_label = $element.find('.question-feedback-label');
                         var feedback_checkbox_x = $element.find('.checkbox-x');
+                        var negativeFeedbackIcon = '';
 //                        console.log(
 //                                '\n::::::::::::::::::::::::::::::::::::::npQuestions::default:::::::::::::::::::::::::::::::::::::::::::::::::',
 //                                '\n:::', this,
@@ -2433,10 +2981,18 @@ function AssessmentService ( $log ) {
                             $log.debug('npQuestion::answer changed');
                             if (feedback.immediate) {
                                 this.feedback = '';
+                                negativeFeedbackIcon = $element.find('.negative-feedback-icon');
+                                TweenMax.set(negativeFeedbackIcon, {opacity: 0, scale: 2.5, force3D: true});
                             }
                         };
                         this.evaluate = function () {
                             var correct = true;
+                            negativeFeedbackIcon = $element.find('.negative-feedback-icon');
+                            TweenMax.to(negativeFeedbackIcon, 0.75, {
+                                opacity: 1,
+                                scale: 1,
+                                force3D: true
+                            });
 //                            console.log(
 //                                    '\n::::::::::::::::::::::::::::::::::::::npQuestions::evaluate:::::::::::::::::::::::::::::::::::::::::::::::::',
 //                                    '\n::this::', this,
@@ -2459,13 +3015,13 @@ function AssessmentService ( $log ) {
                                         var idx;
                                         for (idx in chkAnswers) {
                                             if (chkAnswers[idx].data.correct) {
-                                        console.log(
-                                                '\n::::::::::::::::::::::::::::::::::::::npQuestions::default:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                                '\n::idx::', idx,
-                                                '\n::chkAnswers::', chkAnswers,
-                                                '\n::this.answer[chkAnswers[idx].idx]::', this.answer[chkAnswers[idx].idx],
-                                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                                );
+                                                console.log(
+                                                        '\n::::::::::::::::::::::::::::::::::::::npQuestions::default:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                                        '\n::idx::', idx,
+                                                        '\n::chkAnswers::', chkAnswers,
+                                                        '\n::this.answer[chkAnswers[idx].idx]::', this.answer[chkAnswers[idx].idx],
+                                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                                        );
                                                 // confirm all correct answers were checked
                                                 if (!this.answer[chkAnswers[idx].idx]) {
                                                     correct = false;
@@ -2509,7 +3065,6 @@ function AssessmentService ( $log ) {
                                 correct = false;
                             }
                             $log.debug('npQuestion::evaluate:isCorrect', correct);
-
                             // set by ng-model of npAnswer's input's
                             if (feedback.immediate && this.feedback === '') {
                                 feedback_label.remove();
@@ -2522,7 +3077,6 @@ function AssessmentService ( $log ) {
                                 }
                             }
                         };
-
                         this.nextPage = function (evt) {
                             evt.preventDefault();
                             if (this.canContinue) {
@@ -2531,7 +3085,23 @@ function AssessmentService ( $log ) {
                         };
                     }
             )
-
+            .directive('questionFeedbackBuild', function () {
+                return function ($scope, $element, attrs) {
+                    var negativeFeedbackIcon = '';
+                    setTimeout(function () {
+                        $scope.$apply(function () {
+                            negativeFeedbackIcon = $element.find('.hotspotButton');
+                            function onPageLoadBuild() {
+                                negativeFeedbackIcon = $('.negative-feedback-icon');
+                                TweenMax.set(negativeFeedbackIcon, {opacity: 0, scale: 2.5, force3D: true});
+//                                TweenMax.set(hotspotButton, {opacity: 0, scale: .25, force3D: true});
+//                                TweenMax.staggerTo(hotspotButton, 2, {scale: 1, opacity: 1, delay: 0.5, ease: Elastic.easeOut, force3D: true}, 0.2);
+                            }
+                            onPageLoadBuild();
+                        });
+                    });
+                };
+            })
             /** @ngInject */
             .run(
                     function ($log, $rootScope) {
@@ -2715,31 +3285,69 @@ function AssessmentService ( $log ) {
                         //////////////////////////////////////////////////////////////////////////////////////
                         //get ready
                         //////////////////////////////////////////////////////////////////////////////////////
-                        var tid = setInterval(function () {
-                            if (document.readyState !== 'complete') {
-                                return;
-                            }
-                            clearInterval(tid);
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            //on ready set states
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            TweenMax.to($(".reveal-object"), 0, {
-                                autoAlpha: 0
+                        setTimeout(function () {
+                            $scope.$apply(function () {
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //on ready set states
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                setTimeout(function () {
+                                    var maxHeight = 0;
+                                    $(".reveal-wrapper").each(function () {
+//                                        console.log(
+//                                                '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                                '\n::maxHeight::', maxHeight,
+//                                                '\n::$(this).outerHeight()::', $(this).outerHeight(true),
+//                                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                                );
+                                        if ($(this).outerHeight() > maxHeight) {
+                                            maxHeight = ($(this).outerHeight() + 500);
+                                        }
+                                    });
+                                    $(".np-reveal").height(maxHeight);
+                                }, 1);
+                                TweenMax.to($(".reveal-object"), 0, {
+                                    opacity: 0
+                                });
+                                TweenMax.set($(".reveal-button"), {
+                                    opacity: 0,
+                                    scale: .25,
+                                    force3D: true
+                                });
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //build init state
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                TweenMax.to($(".button-screen"), 1.5, {
+                                    autoAlpha: 0.75,
+                                    ease: Power4.easeOut
+                                });
+                                TweenMax.staggerTo($(".reveal-button"), 2, {
+                                    scale: 1,
+                                    opacity: 1,
+                                    delay: 0.25,
+                                    ease: Power4.easeOut,
+                                    force3D: true
+                                }, 0.2);
+                                TweenMax.to($(".button-screen"), 1.5, {
+                                    autoAlpha: 0.75,
+                                    ease: Power4.easeOut
+                                });
+                                TweenMax.to($(".button-screen")[0], 1.75, {
+                                    autoAlpha: 0,
+                                    delay: 1.75,
+                                    ease: Power4.easeOut
+                                });
+                                TweenMax.to($(".reveal-object")[0], 1.75, {
+                                    autoAlpha: 1,
+                                    delay: 1.75,
+                                    ease: Power4.easeOut
+//                                    onComplete: function () {
+//
+//                                    }
+                                });
                             });
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            //finish ready check items
-                            //////////////////////////////////////////////////////////////////////////////////////
-                        }, 100);
+                        });
                         this.update = function (button) {
                             var idx = this.revealItems.indexOf(button);
-//                            console.log(
-//                                    '\n::::::::::::::::::::::::::::::::::::::reveal::array data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
-//                                    '\n:::', idx,
-//                                    '\n:::', button,
-//                                    '\n:::', $('video').length,
-//                                    '\n:::', revealItems[idx].components[0],
-//                                    '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-//                                    );
                             //////////////////////////////////////////////////////////////////////////////////////
                             //on navigation change stop and reset all video files
                             //////////////////////////////////////////////////////////////////////////////////////
@@ -2748,12 +3356,22 @@ function AssessmentService ( $log ) {
                                 this.currentTime = 0;
                                 this.load();
                             });
-                            //////////////////////
-                            TweenMax.to($(".reveal-object"), 0, {
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            //on navigation change cross fade items
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            TweenMax.to($(".button-screen"), 1.5, {
+                                autoAlpha: 0.75,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($(".button-screen")[idx], 1.75, {
                                 autoAlpha: 0,
                                 ease: Power4.easeOut
                             });
-                            TweenMax.to($(".reveal-object")[idx], 0.75, {
+                            TweenMax.to($(".reveal-object"), 1.5, {
+                                autoAlpha: 0,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($(".reveal-object")[idx], 1.75, {
                                 autoAlpha: 1,
                                 ease: Power4.easeOut
                             });
@@ -2786,11 +3404,20 @@ function AssessmentService ( $log ) {
             .controller('npFlashCardsController',
                     function ($log, $scope, $sce, $element) {
                         var cmpData = $scope.component.data,
-                                flashCards = $scope.component.flashCards,
-                                flashCardsIndex = $scope.component.idx,
-                                flashCardsButtonImage = $scope.component.flashCards.buttonImage;
+                                flashCards = $scope.component.flashCards;
+//                                flashCardsIndex = $scope.component.idx;
+//                                flashCardsButtonImage = $scope.component.flashCards.buttonImage;
+//
+//                        console.log(
+//                                '\n::::::::::::::::::::::::::::::::::::::npFlashCards::data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                '\n::flashCards::', flashCards,
+//                                '\n::flashCardsIndex::', flashCardsIndex,
+//                                '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                );
                         var buttonData = $scope.feedback || {};
-                        this.flashCards = $scope.component.flashCards;
+//                        var hotspotButtons = '';
+//                        this.hotspotButtons = cmpData.hotspotButtons;
+//                        this.flashCards = $scope.component.flashCards;
                         this.flashCardComponent = $scope.component.flashCards[0];
                         this.flashCardComponents = $scope.component.flashCards;
                         this.flashCardVideoType = $scope.component.baseURL;
@@ -2801,60 +3428,58 @@ function AssessmentService ( $log ) {
                         $scope.image = this.image = cmpData.image;
                         $log.debug('npFlashCards::data', cmpData, buttonData);
                         //////////////////////////////////////////////////////////////////////////////////////
-                        //get ready
+                        //on button click do these things
                         //////////////////////////////////////////////////////////////////////////////////////
-                        var tid = setInterval(function () {
-                            if (document.readyState !== 'complete') {
-                                return;
-                            }
-                            clearInterval(tid);
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            //on ready set states
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            this.windowsCenter = $(window).width() / 2;
-                            TweenMax.to($(".flash-card-content-back"), 0, {
-                                autoAlpha: 0
-                            });
+                        this.update = function (flashCardButton) {
+                            var idx = flashCards.indexOf(flashCardButton);
+                            var clickedFlashCard = $(".flash-cards-object")[idx];
+//                            var clickedFlashCardBackHeight = clickedFlashCard.prop('height');
 //                            console.log(
 //                                    '\n::::::::::::::::::::::::::::::::::::::npFlashCards::data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                    '\n::flashCardButton::', flashCardButton,
+//                                    '\n::idx::', idx,
+//                                    '\n::$(.flash-cards-object)[idx]::', $(".flash-cards-object")[idx],
+//                                    '\n::clickedFlashCard.find(.flash-card-back-wrapper)::', clickedFlashCard.getElementsByClassName('flash-card-back-wrapper').height,
+//                                    '\n::clickedFlashCard::', clickedFlashCard,
+//                                    '\n::flashCards::', flashCards,
+//                                    '\n::flashCardsIndex::', flashCardsIndex,
+//                                    '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                    );
+//                            TweenMax.to($(".flash-cards-object"), 1, {
+//                                        top: 0,
+//                                top: '-325px',
+//                                ease: Power4.easeOut
+//                            });
+                            TweenMax.to(clickedFlashCard, 1, {
+                                rotationY: 180,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to(clickedFlashCard.getElementsByClassName('flash-card-back-wrapper'), 1, {
+                                autoAlpha: 1,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to(clickedFlashCard.getElementsByClassName('flash-card-front-wrapper'), 1, {
+                                autoAlpha: 0,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($('.flash-card-button'), 1, {
+                                autoAlpha: 0,
+                                ease: Power4.easeOut
+                            });
+                           
+//                            console.log(
+//                                    '\n::::::::::::::::::::::::::::::::::::::npFlashCards::data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                    '\n:::', idx,
 //                                    '\n:::', this.windowsCenter,
 //                                    '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
 //                                    );
                             //////////////////////////////////////////////////////////////////////////////////////
-                            //finish ready check items
-                            //////////////////////////////////////////////////////////////////////////////////////
-                        }, 100);
-                        this.update = function (button) {
-                            var idx = this.flashCards.indexOf(button);
-                             TweenMax.set($('.flash-card-front-wrapper'),{
-                                autoAlpha: 0
-                            });
-                            TweenMax.set($('.flash-card-back-wrapper'),{
-                                autoAlpha: 1
-                            });
-                            console.log(
-                                    '\n::::::::::::::::::::::::::::::::::::::npFlashCards::data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                    '\n:::', idx,
-                                    '\n:::', button,
-                                    '\n:::', this.windowsCenter,
-                                    '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                    );
-                            //////////////////////////////////////////////////////////////////////////////////////
                             //on navigation change stop and reset all video files
                             //////////////////////////////////////////////////////////////////////////////////////
-                            $('video').each(function () {
-                                this.pause();
-                                this.currentTime = 0;
-                                this.load();
-                            });
-                            //////////////////////
-//                            TweenMax.to($(".reveal-object"), 0, {
-//                                autoAlpha: 0,
-//                                ease: Power4.easeOut
-//                            });
-//                            TweenMax.to($(".reveal-object")[idx], 0.75, {
-//                                autoAlpha: 1,
-//                                ease: Power4.easeOut
+//                            $('video').each(function () {
+//                                this.pause();
+//                                this.currentTime = 0;
+//                                this.load();
 //                            });
                         };
                         //////////////////////////////////////////////////////////////////////////////////////
@@ -2879,52 +3504,70 @@ function AssessmentService ( $log ) {
                         onDrag: "&"
 //                        elementWrapper: 0
                     },
-                    link: function (scope, element, attrs) {
-//                        var hitAreaWrapper = document.getElementById('draggableContainer');
-//                        var currentTarget;
-//                        var currentElement;
-//                        var windowsCenter = $(window).width() / 2;
-//                        var elementPosition;
-//                        scopeelementWrapper = document.getElementsByClassName("flash-cards-wrapper");
+                    link: function ($scope, $element, attrs) {
                         //////////////////////////////////////////////////////////////////////////////////////
                         //set states
                         //////////////////////////////////////////////////////////////////////////////////////
-                        TweenMax.to($('#draggableContainer'), 0, {
-                            autoAlpha: 0
-                        });
-                        //////////////////////////////////////////////////////////////////////////////////////
-                        //get ready
-                        //////////////////////////////////////////////////////////////////////////////////////
-                        var tid = setInterval(function () {
-                            if (document.readyState !== 'complete') {
-                                return;
-                            }
-                            clearInterval(tid);
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            //on ready set states
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            TweenMax.to($('#draggableContainer'), 1.75, {
-                                autoAlpha: 1,
-                                ease: Power4.easeOut
-                            });
-                            TweenMax.set($('.flash-card-front-wrapper'),{
-                                autoAlpha: 1
-                            });
-                            TweenMax.set($('.flash-card-back-wrapper'),{
-                                autoAlpha: 0
-                            });
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            //get actuall height
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            $.each($('.boxElements'), function () {
-                                var currentHeight = $(this).find('.button-content').outerHeight();
-                                $(this).height(currentHeight);
-                            });
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            //finish ready check items
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            var winWidth = 0;
-                            $(document).ready(function () {
+                        setTimeout(function () {
+                            $scope.$apply(function () {
+                                TweenMax.to($('#draggableContainer'), 1.75, {
+                                    autoAlpha: 1,
+                                    ease: Power4.easeOut
+                                });
+                                TweenMax.set($('.flash-card-front-wrapper'), {
+                                    autoAlpha: 1
+                                });
+                                TweenMax.set($('.flash-card-back-wrapper'), {
+                                    autoAlpha: 0
+                                });
+                                TweenMax.set($('.flash-card-button'), {
+                                    autoAlpha: 0
+                                });
+                                TweenMax.set($('.flash-card-back-wrapper'), {
+                                    rotationY: -180
+                                });
+//                                TweenMax.set($('.flash-card-back-wrapper'), {
+//                                    backfaceVisibility: "hidden"
+//                                });
+                                TweenMax.set([$('.flash-card-content-back'), $('.flash-card-content-front')], {
+                                    backfaceVisibility: "hidden"
+                                });
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //get actuall height
+                                //////////////////////////////////////////////////////////////////////////////////////
+//                                $.each($('.flash-cards-object'), function () {
+//                                    var currentHeight = $(this).find('.flash-card-back-wrapper p').innerHeight();
+//                                    $(this).height(currentHeight);
+//                                    console.log(
+//                                            '\n::::::::::::::::::::::::::::::::::::::npFlashCards::data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                            '\n::currentHeight:', currentHeight,
+//                                            '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                            );
+//                                });
+//                                var maxHeight = Math.max.apply(null, $('.flash-card-content-back').map(function () {
+//                                    return $(this).outerHeight();
+//                                }).get());
+//                                var maxHeight = 800;
+//                                TweenMax.to($('.flash-cards-object'), 0.75, {
+//                                    force3D: true,
+//                                    height: maxHeight,
+//                                    ease: Power4.easeOut
+//                                });
+//                                var outerHeight = 0;
+//                                $('.flash-card-content-back').each(function () {
+//                                    outerHeight = $(this).outerHeight();
+//                                });
+//                                console.log(
+//                                        '\n::::::::::::::::::::::::::::::::::::::npFlashCards::data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                        '\n::maxHeight:', maxHeight,
+//                                        '\n::$(.flash-card-content-back):', $('.flash-card-content-back').height(),
+//                                        '\n::outerHeight:', outerHeight,
+//                                        '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                        );
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //finish ready check items
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                var winWidth = 0;
                                 setContainerDims();
                                 function setContainerDims() {
                                     winWidth = parseInt($(window).width());
@@ -2935,11 +3578,11 @@ function AssessmentService ( $log ) {
                                 $(window).resize(function () {
                                     setContainerDims();
                                 });
+                                TweenMax.to($('#draggableContainer'), 5, {
+                                    autoAlpha: 0
+                                });
                             });
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            //finish ready check items
-                            //////////////////////////////////////////////////////////////////////////////////////
-                        }, 100);
+                        });
                         //////////////////////////////////////////////////////////////////////////////////////
                         //offset method
                         //////////////////////////////////////////////////////////////////////////////////////
@@ -2958,9 +3601,9 @@ function AssessmentService ( $log ) {
                         //////////////////////////////////////////////////////////////////////////////////////
                         //drag and throw vars
                         //////////////////////////////////////////////////////////////////////////////////////
-                        var front = '2003';
-                        var middle = '2002';
-                        var back = '2001';
+                        var front = '12003';
+                        var middle = '12002';
+                        var back = '12001';
                         var flashCardsDraggable;
                         var windowWidth;
                         var maxScroll;
@@ -2970,6 +3613,7 @@ function AssessmentService ( $log ) {
                         var elementWidth;
                         var dragAreaWidth;
                         var dragAreaLeftPadding;
+                        var nativeSCrl = true;
                         //////////////////////////////////////////////////////////////////////////////////////
                         //drag and throw conditionals & animation
                         //////////////////////////////////////////////////////////////////////////////////////
@@ -2977,7 +3621,7 @@ function AssessmentService ( $log ) {
                             var windowCenter = $(window).width() / 2;
                             for (var i = elementIteration.length - 1; i >= 0; i--) {
                                 TweenMax.set(elementIteration, {
-                                    transformPerspective: "140"
+                                    transformPerspective: "900"
                                 });
                                 var currentIteration = elementIteration[i];
                                 var currentIterationWidth = currentIteration.offsetWidth;
@@ -2985,23 +3629,25 @@ function AssessmentService ( $log ) {
                                 var itemsOffset = getOffsetRect(currentIteration);
                                 var itemsOffsetLeft = itemsOffset.left;
                                 var itemsOffsetCenter = (itemsOffsetLeft + currentIterationCenterWidth);
-//                                console.log(
-//                                        '\n::::::::::::::::::::::::::::::::::::::npFlashCards::data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
-//                                        '\n::i:', i,
-//                                        '\n::currentIteration:', currentIteration,
-//                                        '\n::windowCenter:', windowCenter,
-//                                        '\n::(windowCenter - 150):', (windowCenter - 150),
-//                                        '\n::itemsOffsetCenter:', itemsOffsetCenter,
-//                                        '\n::(windowCenter + 150):', (windowCenter + 150),
-////                                                '\n::elementWrapper:', elementWrapper,
-//                                        '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-//                                        );
+                                var windowCenterOffsetOne = ($(".flash-cards-object").width() / 3);
+                                var windowCenterOffsetTwo = $(".flash-cards-object").width();
+                                console.log(
+                                        '\n::::::::::::::::::::::::::::::::::::::npFlashCards::data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                        '\n::windowCenterOffsetOne:', windowCenterOffsetOne,
+                                        '\n::windowCenterOffsetTwo:', windowCenterOffsetTwo,
+                                        '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                        );
+//                                var defaultHeight = '475px';
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //drag and throw CENTER item animation
                                 //////////////////////////////////////////////////////////////////////////////////////
-                                if ((itemsOffsetCenter <= (windowCenter + 200)) && (itemsOffsetCenter >= (windowCenter - 200))) {
+                                if ((itemsOffsetCenter <= (windowCenter + windowCenterOffsetOne)) && (itemsOffsetCenter >= (windowCenter - windowCenterOffsetTwo))) {
                                     TweenMax.to(currentIteration, 1.75, {
                                         force3D: true,
+                                        top: 0,
+                                        marginLeft: '0em',
+                                        marginRight: '0em',
+                                        scale: 1,
                                         z: '0',
                                         ease: Power4.easeOut
                                     });
@@ -3012,7 +3658,12 @@ function AssessmentService ( $log ) {
                                         ease: Power4.easeOut
                                     });
                                     TweenMax.to($(currentIteration).find('.flash-card-overlay'), 1.75, {
+                                        force3D: true,
                                         opacity: 0,
+                                        ease: Power4.easeOut
+                                    });
+                                    TweenMax.to($(currentIteration).find('.flash-card-button'), 1.75, {
+                                        autoAlpha: 1,
                                         ease: Power4.easeOut
                                     });
                                     TweenMax.set(currentIteration, {
@@ -3022,196 +3673,198 @@ function AssessmentService ( $log ) {
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //drag and throw RIGHT items animation
                                 //////////////////////////////////////////////////////////////////////////////////////
-                                if ((itemsOffsetCenter >= (windowCenter + 201)) && (itemsOffsetCenter <= (windowCenter + 600))) {
+                                if ((itemsOffsetCenter >= (windowCenter + (windowCenterOffsetOne + 1))) && (itemsOffsetCenter <= (windowCenter + windowCenterOffsetTwo))) {
                                     TweenMax.set(currentIteration, {
                                         zIndex: middle
                                     });
                                     TweenMax.to(currentIteration, 1.75, {
                                         force3D: true,
-                                        z: '-50',
+                                        rotationY: 0,
+                                        marginLeft: '-7em',
+                                        marginRight: '7em',
+                                        scale: 0.9,
+                                        z: '-35',
                                         ease: Power4.easeOut
                                     });
                                     TweenMax.to($(currentIteration).find('.flash-card-overlay'), 1.75, {
+                                        force3D: true,
                                         opacity: 0.5,
                                         ease: Power4.easeOut
                                     });
-                                    TweenMax.to($(currentIteration).find('.flash-card-content-front'), 1.75, {
-                                        force3D: true,
-//                                        marginLeft: '-7em',
+                                    TweenMax.to($(currentIteration).find('.flash-card-button'), 1.75, {
+                                        autoAlpha: 0,
                                         ease: Power4.easeOut
                                     });
-                                } else if (itemsOffsetCenter >= (windowCenter + 601)) {
+                                    TweenMax.to($(currentIteration).find('.flash-card-front-wrapper'), 1.75, {
+                                        autoAlpha: 1,
+                                        ease: Power4.easeOut
+                                    });
+                                    TweenMax.to($(currentIteration).find('.flash-card-back-wrapper'), 1.75, {
+                                        autoAlpha: 0,
+                                        ease: Power4.easeOut
+                                    });
+                                } else if (itemsOffsetCenter >= (windowCenter + (windowCenterOffsetTwo + 1))) {
                                     TweenMax.set(currentIteration, {
                                         zIndex: back
                                     });
                                     TweenMax.to(currentIteration, 1.75, {
                                         force3D: true,
+                                        marginLeft: '-20em',
+                                        marginRight: '20em',
+                                        scale: 0.75,
                                         z: '-70',
                                         ease: Power4.easeOut
                                     });
                                     TweenMax.to($(currentIteration).find('.flash-card-overlay'), 1.75, {
+                                        force3D: true,
                                         opacity: 0.75,
                                         ease: Power4.easeOut
                                     });
-                                    TweenMax.to($(currentIteration).find('.flash-card-content-front'), 1.75, {
-                                        force3D: true,
-//                                        marginLeft: '-30em',
+                                    TweenMax.to($(currentIteration).find('.flash-card-button'), 1.75, {
+                                        autoAlpha: 0,
                                         ease: Power4.easeOut
                                     });
                                 }
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //drag and throw LEFT items animation
                                 //////////////////////////////////////////////////////////////////////////////////////
-                                if ((itemsOffsetCenter <= (windowCenter - 201)) && (itemsOffsetCenter >= (windowCenter - 600))) {
+                                if ((itemsOffsetCenter <= (windowCenter - (windowCenterOffsetOne + 1))) && (itemsOffsetCenter >= (windowCenter - windowCenterOffsetTwo))) {
                                     TweenMax.set(currentIteration, {
                                         zIndex: middle
                                     });
                                     TweenMax.to(currentIteration, 1.75, {
                                         force3D: true,
+                                        rotationY: 0,
+                                        marginRight: '-7em',
+                                        marginLeft: '7em',
+                                        scale: 0.9,
                                         z: '-50',
                                         ease: Power4.easeOut
                                     });
                                     TweenMax.to($(currentIteration).find('.flash-card-overlay'), 1.75, {
+                                        force3D: true,
                                         opacity: 0.5,
                                         ease: Power4.easeOut
                                     });
-                                    TweenMax.to($(currentIteration).find('.flash-card-content-front'), 1.75, {
-                                        force3D: true,
-//                                        marginLeft: '7em',
+                                    TweenMax.to($(currentIteration).find('.flash-card-button'), 1.75, {
+                                        autoAlpha: 0,
                                         ease: Power4.easeOut
                                     });
-                                } else if (itemsOffsetCenter <= (windowCenter - 601)) {
+                                    TweenMax.to($(currentIteration).find('.flash-card-front-wrapper'), 1.75, {
+                                        autoAlpha: 1,
+                                        ease: Power4.easeOut
+                                    });
+                                    TweenMax.to($(currentIteration).find('.flash-card-back-wrapper'), 1.75, {
+                                        autoAlpha: 0,
+                                        ease: Power4.easeOut
+                                    });
+                                } else if (itemsOffsetCenter <= (windowCenter - (windowCenterOffsetTwo + 1))) {
                                     TweenMax.set(currentIteration, {
                                         zIndex: middle
                                     });
                                     TweenMax.to(currentIteration, 1.75, {
                                         force3D: true,
                                         z: '-70',
+                                        marginRight: '-20em',
+                                        marginLeft: '20em',
+                                        scale: 0.75,
                                         ease: Power4.easeOut
                                     });
                                     TweenMax.to($(currentIteration).find('.flash-card-overlay'), 1.75, {
+                                        force3D: true,
                                         opacity: 0.75,
                                         ease: Power4.easeOut
                                     });
-                                    TweenMax.to($(currentIteration).find('.flash-card-content-front'), 1.75, {
-                                        force3D: true,
-//                                        marginLeft: 30em',
+                                    TweenMax.to($(currentIteration).find('.flash-card-button'), 1.75, {
+                                        autoAlpha: 0,
                                         ease: Power4.easeOut
                                     });
                                 }
                             }
                         }
-//                                    Draggable.addEventListener("dragend", yourFunc);
-//                                    document.getElementById("flash-cards").onscroll = function () {
-//                                        updateAnimation();
-//                                        Draggable.snap();
-//                                    };
-
-                        document.getElementById("flash-cards").onscroll = function () {
-                            updateAnimation();
-//                            flashCardsDraggable.snap();
-                        };
-
                         function update() {
                             var content;
                             var dragContent;
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            //get ready
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            var tid = setInterval(function () {
-                                if (document.readyState !== 'complete') {
-                                    return;
-                                }
-                                clearInterval(tid);
-                                //////////////////////////////////////////////////////////////////////////////////////
-                                //on ready set states
-                                //////////////////////////////////////////////////////////////////////////////////////
-                                windowWidth = window.innerWidth;
-                                content = document.getElementById("flash-cards");
-                                elementWrapper = document.getElementById("flash-cards-swipe-container");
-                                elementIteration = document.getElementsByClassName("flash-cards-object");
-                                sections = elementIteration.length;
-
-                                maxScroll = content.scrollWidth - (content.offsetWidth / 2);
-                                elementWidth = elementIteration[0].offsetWidth;
-                                sections = elementIteration.length;
-                                dragAreaLeftPadding = (windowWidth / 2) - (elementWidth / 2);
-                                dragAreaWidth = (elementWidth * sections) + (dragAreaLeftPadding * 2);
-
-                                TweenMax.set(elementWrapper, {
-                                    width: dragAreaWidth,
-                                    paddingLeft: dragAreaLeftPadding
+                            setTimeout(function () {
+                                $scope.$apply(function () {
+                                    windowWidth = window.innerWidth;
+                                    content = document.getElementById("flash-cards");
+                                    elementWrapper = document.getElementById("flash-cards-swipe-container");
+                                    elementIteration = document.getElementsByClassName("flash-cards-object");
+                                    sections = elementIteration.length;
+                                    maxScroll = content.scrollWidth - (content.offsetWidth / 2);
+                                    elementWidth = elementIteration[0].offsetWidth;
+                                    sections = elementIteration.length;
+                                    dragAreaLeftPadding = (windowWidth / 2) - (elementWidth / 2);
+                                    dragAreaWidth = (elementWidth * sections) + (dragAreaLeftPadding * 2);
+                                    TweenMax.set(elementWrapper, {
+                                        width: dragAreaWidth,
+                                        paddingLeft: dragAreaLeftPadding
+                                    });
+                                    dragContent = Draggable.get(content);
+                                    updateAnimation();
                                 });
-
-                                dragContent = Draggable.get(content);
-
-                                console.log(
-                                        '\n::::::::::::::::::::::::::::::::::::::npFlashCards::inside iteration::tests:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                        '\n::sections:', sections,
-                                        '\n:::', content.offsetWidth,
-                                        '\n:::', content.scrollWidth,
-                                        '\n:::', maxScroll,
-                                        '\n::elementWidth:', elementWidth,
-                                        '\n::dragAreaLeftPadding:', dragAreaLeftPadding,
-                                        '\n::dragAreaWidth:', dragAreaWidth,
-                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                        );
-                                updateAnimation();
-                                //////////////////////////////////////////////////////////////////////////////////////
-                                //finish ready check items
-                                //////////////////////////////////////////////////////////////////////////////////////
-                            }, 100);
+                            });
                             elementWrapper = document.getElementById("flash-cards-swipe-container");
                             content = document.getElementById("flash-cards");
                             var dragContent = Draggable.get(content);
                             function killTweens() {
                                 TweenMax.killTweensOf([dragContent.scrollProxy]);
                             }
-                            content.addEventListener("mousewheel", killTweens);
                             content.addEventListener("DOMMouseScroll", killTweens);
-
                             flashCardsDraggable = Draggable.create(content, {
                                 type: "scrollLeft",
                                 edgeResistance: 0.5,
                                 throwProps: true,
-//                                onDragStart: killTweens,
                                 snap: function (endValue) {
-//                                    var step = maxScroll / sections;
                                     var step = elementWidth;
-                                    console.log(
-                                            '\n::::::::::::::::::::::::::::::::::::::npFlashCards::Snap Numbers:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                            '\n::step:', step,
-                                            '\n::sections:', sections,
-                                            '\n::maxScroll:', maxScroll,
-                                            '\n::dragAreaWidth:', dragAreaWidth,
-                                            '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                            );
                                     return Math.round(endValue / step) * -step;
                                 },
                                 onDrag: function (e) {
                                     updateAnimation();
-                                    scope.onDrag();
-                                    document.getElementById("flash-cards-swipe-container").onscroll = function () {
-                                        updateAnimation();
-//                                        console.log(
-//                                                '\n::::::::::::::::::::::::::::::::::::::npFlashCards::onDrag:::::::::::::::::::::::::::::::::::::::::::::::::',
-//                                                '\n::updateAnimation:', e,
-//                                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-//                                                );
-                                    };
+                                    $scope.onDrag();
+                                    nativeSCrl = false;
                                 },
                                 onThrowUpdate: function (e) {
                                     updateAnimation();
-                                    console.log(
-                                            '\n::::::::::::::::::::::::::::::::::::::npFlashCards::onThrowUpdate:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                            '\n::updateAnimation:', e,
-                                            '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                            );
+                                    nativeSCrl = true;
+                                },
+                                onThrowComplete: function () {
+                                    nativeSCrl = true;
                                 }
-
                             });
                         }
                         update();
+                        function NScrollSNAP(Array, val) {
+                            var SPoint, range = 400, i = 0;
+                            for (i in Array) {
+                                var MResult = Math.abs(val - Array[i]);
+                                if (MResult < range) {
+                                    range = MResult;
+                                    SPoint = Array[i];
+                                }
+                            }
+                            return SPoint;
+                        }
+                        function NScrollSnap() {
+                            if (nativeSCrl) {
+//                                console.log(
+//                                        '\n::::::::::::::::::::::::::::::::::::::npFlashCards::NScrollSnap:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                        '\n::nativeSCrl:', nativeSCrl,
+//                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                        );
+                                var S = NScrollSNAP(flashCardsDraggable[0].vars.snap,
+                                        flashCardsDraggable[0].scrollProxy.scrollTop());
+                                TweenMax.to(flashCardsDraggable[0].scrollProxy.element,
+                                        0.5, {
+                                            scrollTo: {x: S}
+                                        });
+                            }
+                        }
+                        document.getElementById("flash-cards").onscroll = function () {
+                            TweenMax.killDelayedCallsTo(NScrollSnap);
+                            TweenMax.delayedCall(0.35, NScrollSnap);
+                        };
                     }
                 };
             })
@@ -3430,8 +4083,12 @@ function AssessmentService ( $log ) {
     .value('sliders', {});
 
   /** @ngInject */
-  function AppController($log, AssessmentService/*, ImagePreloadFactory, HomeService, $scope*/) {
+  function AppController($log, $scope, AssessmentService/*, ImagePreloadFactory, HomeService, $scope*/) {
     $log.debug('AppController::Init');
+    var vm = this;
+    vm.doTrack = function (event, data) {
+      $log.warn('AppController', event, data);
+    };
 
     //AssessmentService.setRequirements(10,5,0.8);
     //
@@ -3881,7 +4538,9 @@ function AssessmentService ( $log ) {
                 manifestURL: '@npUrl',
                 overrideURL: '@npOverrideUrl',
                 overrideData: '@npOverrideData',
-                language: '@npLang'
+                language: '@npLang',
+                manifestData: '=?',
+                onTrackService: '&npAnalyticsService'
             },
             //compile: function (tElement, tAttrs, transclude, ConfigService)
             //{
@@ -3906,7 +4565,7 @@ function AssessmentService ( $log ) {
 
     /** @ngInject */
     function NpLayerController($scope, $rootScope, $element, $attrs, $log, $compile,
-            APIService, ComponentService, ConfigService, ManifestService) {
+            APIService, ComponentService, ConfigService, ManifestService, TrackingService) {
         var vm = this;
         vm.manifestData = null;
         vm.overrideData = null;
@@ -3917,6 +4576,7 @@ function AssessmentService ( $log ) {
 
         ConfigService.setConfigData(vm);
         loadManifests();
+        TrackingService.setCallback(vm.onTrackService);
 
         //function npManifestChanged(event, toManifest, toPage) {
         //
@@ -4234,8 +4894,8 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "<div class=\"debug\">\n" +
     "    <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
     "</div>\n" +
-    "<div ng-if=\"npQuestion.type === 'radio'\" class=\"np-cmp-wrapper {{component.type}} radio answer-wrapper\" ng-controller=\"npAnswerController as npAnswer\">\n" +
-    "    <div type=\"radio\" class=\"npAnswer-radio np-cmp-main answer-radio\" name=\"radio\" ng-model=\"npQuestion.answer\" value=\"{{component.idx}}\" id=\"{{npAnswer.id}}\" ng-click=\"npQuestion.changed(npAnswer.id)\">\n" +
+    "<div ng-if=\"npQuestion.type === 'radio'\" class=\"row np-cmp-wrapper {{component.type}} radio answer-wrapper\" ng-controller=\"npAnswerController as npAnswer\">\n" +
+    "    <div type=\"radio\" class=\"col-sm-1 npAnswer-radio np-cmp-main answer-radio\" name=\"radio\" ng-model=\"npQuestion.answer\" value=\"{{component.idx}}\" id=\"{{npAnswer.id}}\" ng-click=\"npQuestion.changed(npAnswer.id)\">\n" +
     "        <div class=\"checkbox-box\">\n" +
     "            <svg  version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
     "                <style type=\"text/css\">\n" +
@@ -4257,12 +4917,17 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "            </svg>\n" +
     "        </div>\n" +
     "        <div class=\"checkbox-x\">\n" +
-    "            <svg version=\"1.2\" baseProfile=\"tiny\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"152.99px\" height=\"152.99px\" viewBox=\"-305.5 396.5 152.99 152.99\" overflow=\"inherit\" xml:space=\"preserve\">\n" +
-    "                <polygon fill=\"#FFFFFF\" points=\"-152.51,397.705 -153.715,396.5 -229.005,471.79 -304.295,396.5 -305.5,397.705 -230.21,472.995 -305.5,548.285 -304.295,549.49 -229.005,474.2 -153.715,549.49 -152.51,548.285 -227.799,472.995 \"/>\n" +
+    "            <svg version=\"1.0\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"22.121px\" height=\"22.121px\" viewBox=\"796.393 809.141 22.121 22.121\" style=\"enable-background:new 796.393 809.141 22.121 22.121;\" xml:space=\"preserve\">\n" +
+    "                <g>\n" +
+    "                    <line style=\"fill:none;stroke:#040A2B;stroke-width:3;stroke-miterlimit:10;\" x1=\"797.453\" y1=\"830.201\" x2=\"817.453\" y2=\"810.201\"/>\n" +
+    "                    <line style=\"fill:none;stroke:#040A2B;stroke-width:3;stroke-miterlimit:10;\" x1=\"817.453\" y1=\"830.201\" x2=\"797.453\" y2=\"810.201\"/>\n" +
+    "                </g>\n" +
     "            </svg>\n" +
-    "        </div>\n" +
+    "        </div> \n" +
     "    </div>\n" +
-    "    <span class=\"npAnswer-label answer-text p\" for=\"{{npAnswer.id}}_input\" ng-bind-html=\"npAnswer.label\"></span>\n" +
+    "    <div class=\"col-sm-10\">\n" +
+    "        <span class=\"npAnswer-label answer-text p\" for=\"{{npAnswer.id}}_input\" ng-bind-html=\"npAnswer.label\"></span>\n" +
+    "    </div>\n" +
     "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
     "</div>\n" +
     "<!--<div ng-if=\"npQuestion.type === 'radio'\" class=\"np-cmp-wrapper {{component.type}} radio\" ng-controller=\"npAnswerController as npAnswer\">\n" +
@@ -4272,8 +4937,8 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "    </label>\n" +
     "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
     "</div>-->\n" +
-    "<div ng-if=\"npQuestion.type === 'checkbox'\" ng-checked=\"false\"class=\"np-cmp-wrapper {{component.type}} checkbox answer-wrapper\" ng-controller=\"npAnswerController as npAnswer\">\n" +
-    "    <div type=\"checkbox\" class=\"npAnswer-checkbox np-cmp-main answer-checkbox\" name=\"checkbox{{npAnswer.id}}\" ng-model=\"npQuestion.answer[component.idx]\" value=\"{{component.idx}}\" id=\"{{npAnswer.id}}\" ng-click=\"npQuestion.changed($event)\">\n" +
+    "<div ng-if=\"npQuestion.type === 'checkbox'\" ng-checked=\"false\"class=\"row np-cmp-wrapper {{component.type}} checkbox answer-wrapper\" ng-controller=\"npAnswerController as npAnswer\">\n" +
+    "    <div type=\"checkbox\" class=\"col-xs-1 npAnswer-checkbox np-cmp-main answer-checkbox\" name=\"checkbox{{npAnswer.id}}\" ng-model=\"npQuestion.answer[component.idx]\" value=\"{{component.idx}}\" id=\"{{npAnswer.id}}\" ng-click=\"npQuestion.changed($event)\">\n" +
     "        <div class=\"checkbox-box\">\n" +
     "            <svg  version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
     "                <style type=\"text/css\">\n" +
@@ -4295,13 +4960,17 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "            </svg>\n" +
     "        </div>\n" +
     "        <div class=\"checkbox-x\">\n" +
-    "            <svg version=\"1.2\" baseProfile=\"tiny\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"152.99px\" height=\"152.99px\" viewBox=\"-305.5 396.5 152.99 152.99\" overflow=\"inherit\" xml:space=\"preserve\">\n" +
-    "                <polygon fill=\"#FFFFFF\" points=\"-152.51,397.705 -153.715,396.5 -229.005,471.79 -304.295,396.5 -305.5,397.705 -230.21,472.995 -305.5,548.285 -304.295,549.49 -229.005,474.2 -153.715,549.49 -152.51,548.285 -227.799,472.995 \"/>\n" +
+    "            <svg version=\"1.0\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"22.121px\" height=\"22.121px\" viewBox=\"796.393 809.141 22.121 22.121\" style=\"enable-background:new 796.393 809.141 22.121 22.121;\" xml:space=\"preserve\">\n" +
+    "                <g>\n" +
+    "                    <line style=\"fill:none;stroke:#9a7d46;stroke-width:2;stroke-miterlimit:10;\" x1=\"797.453\" y1=\"830.201\" x2=\"817.453\" y2=\"810.201\"/>\n" +
+    "                    <line style=\"fill:none;stroke:#9a7d46;stroke-width:2;stroke-miterlimit:10;\" x1=\"817.453\" y1=\"830.201\" x2=\"797.453\" y2=\"810.201\"/>\n" +
+    "                </g>\n" +
     "            </svg>\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "    <span class=\"npAnswer-label answer-text\" for=\"{{npAnswer.id}}_input\" ng-bind-html=\"npAnswer.label\"></span>\n" +
-    "\n" +
+    "    <div class=\"col-xs-9\">\n" +
+    "        <span class=\"npAnswer-label answer-text\" for=\"{{npAnswer.id}}_input\" ng-bind-html=\"npAnswer.label\"></span>\n" +
+    "    </div>\n" +
     "    <!--    <div>\n" +
     "            <label>\n" +
     "                <input type=\"checkbox\" class=\"npAnswer-checkbox np-cmp-main \" name=\"checkbox{{npAnswer.id}}\" ng-model=\"npQuestion.answer[component.idx]\" value=\"{{component.idx}}\" id=\"{{npAnswer.id}}_input\" ng-change=\"npQuestion.changed()\" />\n" +
@@ -4500,7 +5169,6 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                            .st2{display:none;}\n" +
     "                            ]]>\n" +
     "                        </style>\n" +
-    "                        <!--<g id=\"Layer_2\">-->\n" +
     "                        <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"0\" y1=\"0\" x2=\"400\" y2=\"200\">\n" +
     "                            <stop  offset=\"0\" style=\"stop-color:#CAA04C\"/>\n" +
     "                            <stop  offset=\"0.3497\" style=\"stop-color:#F8E4AA\"/>\n" +
@@ -4508,15 +5176,12 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                            <stop  offset=\"0.9816\" style=\"stop-color:#F3DB7E\"/>\n" +
     "                        </linearGradient>\n" +
     "                        <rect fill=\"\" stroke=\"url(#SVGID_1_)\" stroke-width=\"3\" vector-effect=\"non-scaling-stroke\"  x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
-    "                        <!--                        </g>\n" +
-    "                                                <g id=\"Layer_3\">-->\n" +
     "                        <foreignObject x=\"5%\" y=\"0\" width=\"100%\" height=\"100%\">\n" +
     "                            <div class=\"{{draggableButton.class}} button-content\">\n" +
     "                                <img class=\"draggableButtonImage\" ng-src=\"{{draggableButton.image}}\" alt=\"{{draggableButton.alt}}\" />\n" +
     "                                <div class=\"draggableButtonContent\" ng-bind-html=\"draggableButton.content\" ></div>\n" +
     "                            </div>\n" +
     "                        </foreignObject>\n" +
-    "                        <!--</g>-->\n" +
     "                    </svg>\n" +
     "                </div>\n" +
     "            </div>\n" +
@@ -4524,6 +5189,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "            <div class=\"col-xs-6\">\n" +
     "                <div id=\"hitAreaWrapper\">                    \n" +
     "                    <div ng-repeat=\"draggableButton in npDragAndDropMatch.draggableButtons\" class=\"{{hitArea.class}} hit-area boxElements\">\n" +
+    "                        <div class=\"hit-area-background\"></div>\n" +
     "                        <svg class=\"complete-background\" version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
     "                            <g class=\"complete-background-Layer_1\">\n" +
     "                                <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"486.5701\" y1=\"836.5667\" x2=\"474.7614\" y2=\"851.428\" gradientTransform=\"matrix(0.9984 5.588965e-02 -5.588965e-02 0.9984 48.0441 -25.572)\">\n" +
@@ -4533,8 +5199,8 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                                    <stop  offset=\"0.5063\" style=\"stop-color:#D7B26A\"/>\n" +
     "                                    <stop  offset=\"0.5581\" style=\"stop-color:#CAA04E\"/>\n" +
     "                                    <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
-    "                                <defs>\n" +
-    "                                </defs>\n" +
+    "                                    <defs>\n" +
+    "                                    </defs>\n" +
     "                            </g>\n" +
     "                            <g id=\"complete-background-Layer_2\">\n" +
     "                                <rect stroke=\"url(#SVGID_1_)\" stroke-width=\"3\" vector-effect=\"non-scaling-stroke\" fill=\"none\"  x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
@@ -4547,14 +5213,15 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                                    </div>\n" +
     "                                    <div class=\"button-completion-content\">\n" +
     "                                        <div class=\"centered-content\" >\n" +
-    "                                            <div class=\"positive-feedback-image \"></div>\n" +
-    "                                            <div class=\"positive-feedback-content h4\" ng-bind-html=\"positiveFeedback\"></div>\n" +
+    "                                            <div class=\"row \" >\n" +
+    "                                                <div class=\"positive-feedback-image col-xs-6 \"></div>\n" +
+    "                                                <div class=\"positive-feedback-content h4 col-xs-6 \" ng-bind-html=\"positiveFeedback\"></div>\n" +
+    "                                            </div>\n" +
     "                                        </div>\n" +
     "                                    </div>\n" +
     "                                </foreignObject>\n" +
     "                            </g>\n" +
     "                        </svg>\n" +
-    "                        <div class=\"hit-area-background\"></div>\n" +
     "                    </div>\n" +
     "                </div>\n" +
     "            </div> \n" +
@@ -4639,8 +5306,143 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
   );
 
 
+  $templateCache.put('scripts/component/npDragAndDropSelect/npDragAndDropSelect.html',
+    "<div class=\"{{component.type}} npDragAndDropSelect\" ng-controller=\"npDragAndDropSelectController as npDragAndDropSelect\" id=\"{{npDragAndDropSelect.id}}\">\n" +
+    "    <div id=\"draggableContainer\">\n" +
+    "        <div class=\"row\">\n" +
+    "            <div class=\"debug\">\n" +
+    "                <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
+    "            </div>\n" +
+    "            <div id=\"draggableButtons\" class=\"col-xs-6\">\n" +
+    "                <div drag-button-select ng-repeat=\"draggableButton in npDragAndDropSelect.draggableButtons\" data-reference=\"{{$index}}\" id=\"id{{$index}}\" ng-click=\"npDragAndDropSelect.update(draggableButton)\" class=\"draggableButton box boxElements\">\n" +
+    "                    <svg class=\"completeCheck\" version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
+    "                        <style type=\"text/css\">\n" +
+    "                            <![CDATA[\n" +
+    "                            .st0{fill:url(#SVGID_1_);}\n" +
+    "                            .st1{display:inline;}\n" +
+    "                            .st2{display:none;}\n" +
+    "                            ]]>\n" +
+    "                        </style>\n" +
+    "                        <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"0\" y1=\"0\" x2=\"400\" y2=\"200\">\n" +
+    "                            <stop  offset=\"0\" style=\"stop-color:#CAA04C\"/>\n" +
+    "                            <stop  offset=\"0.3497\" style=\"stop-color:#F8E4AA\"/>\n" +
+    "                            <stop  offset=\"0.638\" style=\"stop-color:#CAA04D\"/>\n" +
+    "                            <stop  offset=\"0.9816\" style=\"stop-color:#F3DB7E\"/>\n" +
+    "                        </linearGradient>\n" +
+    "                        <rect fill=\"\" stroke=\"url(#SVGID_1_)\" stroke-width=\"3\" vector-effect=\"non-scaling-stroke\" x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
+    "                        <foreignObject x=\"5%\" y=\"0\" width=\"100%\" height=\"100%\">\n" +
+    "                            <div class=\"{{draggableButton.class}} button-content\">\n" +
+    "                                <img class=\"draggableButtonImage\" ng-src=\"{{draggableButton.image}}\" alt=\"{{draggableButton.alt}}\" />\n" +
+    "                                <div class=\"draggableButtonContent\" ng-bind-html=\"draggableButton.content\" ></div>\n" +
+    "                            </div>\n" +
+    "                        </foreignObject>\n" +
+    "                    </svg>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <!--<div class=\"col-two\">-->\n" +
+    "            <div class=\"col-xs-6\">\n" +
+    "                <div id=\"hit-area-wrapper\">        \n" +
+    "                    <div id=\"select-hit-area-background\"></div>            \n" +
+    "                    <div ng-repeat=\"draggableButton in npDragAndDropSelect.draggableButtons\" data-match=\"{{draggableButton.select}}\" class=\"{{hitArea.class}} hit-area boxElements\">\n" +
+    "                        <svg class=\"complete-background\" version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
+    "                            <g class=\"complete-background-Layer_1\">\n" +
+    "                                <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"486.5701\" y1=\"836.5667\" x2=\"474.7614\" y2=\"851.428\" gradientTransform=\"matrix(0.9984 5.588965e-02 -5.588965e-02 0.9984 48.0441 -25.572)\">\n" +
+    "                                    <stop  offset=\"0.1882\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                    <stop  offset=\"0.3683\" style=\"stop-color:#FFEBC3\"/>\n" +
+    "                                    <stop  offset=\"0.3952\" style=\"stop-color:#F7DFB1\"/>\n" +
+    "                                    <stop  offset=\"0.5063\" style=\"stop-color:#D7B26A\"/>\n" +
+    "                                    <stop  offset=\"0.5581\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                    <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
+    "                                    <defs>\n" +
+    "                                    </defs>\n" +
+    "                            </g>\n" +
+    "                            <g id=\"complete-background-Layer_2\">\n" +
+    "                                <rect stroke=\"url(#SVGID_1_)\" stroke-width=\"3\" vector-effect=\"non-scaling-stroke\" fill=\"none\"  x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
+    "                            </g>\n" +
+    "                            <g id=\"complete-background-Layer_4\">\n" +
+    "                                <foreignObject  x=\"0\" y=\"0\" width=\"100%\" height=\"100%\" >\n" +
+    "                                    <div class=\"select-button-completion-content\">\n" +
+    "                                        <div class=\"row\" >\n" +
+    "                                            <img class=\"feedback-draggable-button-image\" ng-src=\"{{draggableButton.image}}\" alt=\"{{draggableButton.alt}}\" />\n" +
+    "                                            <div class=\"feedback-draggable-button-content\" ng-bind-html=\"draggableButton.content\" ></div>\n" +
+    "                                        </div>\n" +
+    "                                    </div>\n" +
+    "                                </foreignObject>\n" +
+    "                            </g>\n" +
+    "                        </svg>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div> \n" +
+    "            <div np-drag-and-drop-select-evaluate class=\"row\">\n" +
+    "                <div class=\"col-xs-6\"></div>\n" +
+    "                <div class=\"col-xs-6\">\n" +
+    "                    <div class=\"select-button-wrapper\">\n" +
+    "                        <button class=\"btn-select-submit\" is-clickable=\"true\" ng-click=\"evaluate()\">\n" +
+    "                            <span>SUBMIT</span>\n" +
+    "                        </button>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"select-response-wrapper\">\n" +
+    "                        <div class=\"select-response-correct row\">\n" +
+    "                            <div class=\"select-response-background\"></div>\n" +
+    "                            <div class=\"col-xs-5 left-column-select\">              \n" +
+    "                                <div class=\"response-icon-wrapper\">             \n" +
+    "                                    <svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"22.8px\" height=\"22.801px\" viewBox=\"58.368 58.368 22.8 22.801\" enable-background=\"new 58.368 58.368 22.8 22.801\" xml:space=\"preserve\">\n" +
+    "                                        <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"425.3076\" y1=\"46.0552\" x2=\"423.378\" y2=\"48.4836\" gradientTransform=\"matrix(6.1102 0.342 -0.342 6.1102 -2507.3147 -365.3418)\">\n" +
+    "                                            <stop  offset=\"0.1882\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                            <stop  offset=\"0.3683\" style=\"stop-color:#FFEBC3\"/>\n" +
+    "                                            <stop  offset=\"0.3952\" style=\"stop-color:#F7DFB1\"/>\n" +
+    "                                            <stop  offset=\"0.5063\" style=\"stop-color:#D7B26A\"/>\n" +
+    "                                            <stop  offset=\"0.5581\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                            <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
+    "                                        </linearGradient>\n" +
+    "                                        <polygon fill=\"url(#SVGID_1_)\" points=\"77.768,65.868 75.168,63.568 67.667,72.369 63.167,68.568 60.867,71.168 67.968,77.168 \"/>\n" +
+    "                                        <path fill=\"#9A7D46\" d=\"M69.768,81.168c-6.3,0-11.4-5.1-11.4-11.4c0-6.3,5.1-11.4,11.4-11.4s11.4,5.101,11.4,11.4 C81.168,76.069,76.067,81.168,69.768,81.168z M69.768,59.368c-5.7,0-10.4,4.7-10.4,10.4c0,5.7,4.7,10.4,10.4,10.4  c5.7,0,10.4-4.7,10.4-10.4C80.168,64.068,75.468,59.368,69.768,59.368z\"/>\n" +
+    "                                    </svg>\n" +
+    "                                </div>\n" +
+    "                            </div>\n" +
+    "                            <div class=\"col-xs-7 right-column-select\" ng-bind-html=\"npDragAndDropSelect.positiveFeedback\" >\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "                        <div class=\"select-response-incorrect row\">\n" +
+    "                            <div class=\"select-response-background\"></div>\n" +
+    "                            <div class=\"col-xs-5 left-column-select\">\n" +
+    "                                <div class=\"response-icon-wrapper\">\n" +
+    "                                    <svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"22.8px\" height=\"22.801px\" viewBox=\"0 0 22.8 22.801\" style=\"enable-background:new 0 0 22.8 22.801;\" xml:space=\"preserve\">\n" +
+    "                                        <path style=\"fill:#9A7D46;\" d=\"M11.4,22.801C5.101,22.801,0,17.7,0,11.4S5.101,0,11.4,0S22.8,5.101,22.8,11.4  S17.7,22.801,11.4,22.801z M11.4,1C5.7,1,1,5.7,1,11.4s4.7,10.4,10.4,10.4S21.8,17.101,21.8,11.4S17.101,1,11.4,1z\"/>\n" +
+    "                                        <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"274.4922\" y1=\"-249.2896\" x2=\"261.4488\" y2=\"-262.713\" gradientTransform=\"matrix(1 0 0 -1 -256 -245)\">\n" +
+    "                                            <stop  offset=\"0.1642\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                            <stop  offset=\"0.1698\" style=\"stop-color:#CCA352\"/>\n" +
+    "                                            <stop  offset=\"0.2532\" style=\"stop-color:#E4C682\"/>\n" +
+    "                                            <stop  offset=\"0.3167\" style=\"stop-color:#F2DCA0\"/>\n" +
+    "                                            <stop  offset=\"0.3527\" style=\"stop-color:#F8E4AB\"/>\n" +
+    "                                            <stop  offset=\"0.4062\" style=\"stop-color:#EBD191\"/>\n" +
+    "                                            <stop  offset=\"0.48\" style=\"stop-color:#DDBC74\"/>\n" +
+    "                                            <stop  offset=\"0.5532\" style=\"stop-color:#D2AC5F\"/>\n" +
+    "                                            <stop  offset=\"0.6249\" style=\"stop-color:#CCA352\"/>\n" +
+    "                                            <stop  offset=\"0.6933\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                            <stop  offset=\"0.7957\" style=\"stop-color:#D5B05B\"/>\n" +
+    "                                            <stop  offset=\"0.9955\" style=\"stop-color:#F2DA7E\"/>\n" +
+    "                                            <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
+    "                                        </linearGradient>\n" +
+    "                                        <polygon style=\"fill:url(#SVGID_1_);\" points=\"6,19.4 11.4,14.101 16.7,19.4 19.2,16.9 13.9,11.601 19.2,6.301 16.7,3.7 11.4,9 6.101,3.7 3.601,6.301 8.9,11.601 3.5,16.9 \"/>\n" +
+    "                                    </svg>\n" +
+    "                                </div>\n" +
+    "                            </div>\n" +
+    "                            <div class=\"col-xs-7 right-column-select\" ng-bind-html=\"npDragAndDropSelect.negativeFeedback\" >\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "</div>"
+  );
+
+
   $templateCache.put('scripts/component/npFeature/npFeature.html',
-    "<div class=\"np-cmp-wrapper {{component.type}}\" ng-controller=\"npFeatureController as npFeature\">\n" +
+    "<div new-player-page-top class=\"np-cmp-wrapper {{component.type}}\" ng-controller=\"npFeatureController as npFeature\">\n" +
     "\n" +
     "\t<div class=\"debug\">\n" +
     "\t\t<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
@@ -4653,65 +5455,32 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('scripts/component/npFlashCards/npFlashCards.html',
-    "<div npFlashCards id=\"{{npFlashCards.id}} \" class=\"{{component.type}} np-cmp-wrapper np-flash-card\" ng-controller=\"npFlashCardsController as npFlashCards\">\n" +
+    "<div np-flash-cards id=\"{{npFlashCards.id}} \" class=\"{{component.type}} np-cmp-wrapper np-flash-card\" ng-controller=\"npFlashCardsController as npFlashCards\">\n" +
     "    <div class=\"debug\">\n" +
     "        <h3>{{component.type}} -- \n" +
     "            <small>{{component.idx}}</small>\n" +
     "        </h3>\n" +
     "    </div>\n" +
     "    <!--::::::::::::  flash-card  ::::::::::::::::-->\n" +
-    "    <div id=\"flash-cards\">\n" +
-    "        <div np-swipe-angular-draggable >\n" +
+    "    <div id=\"flash-cards\" class=\"row\">\n" +
+    "        <div np-swipe-angular-draggable  class=\"col-sm-12\">\n" +
     "            <div id=\"flash-cards-swipe-container\">\n" +
-    "                <div flash-card class=\"flash-cards-object\" ng-repeat=\"flashCardComponent in npFlashCards.flashCardComponents\">\n" +
-    "                    <div class=\"flash-card-content-wrapper\">\n" +
-    "                        <div class=\"flash-card-front-wrapper\">\n" +
-    "                            <div class=\"flash-card-content-text\">\n" +
-    "                                <div class=\"flash-card-background\"></div>\n" +
-    "                                <p class=\"flash-card-content-front\" ng-bind-html=\"flashCardComponent.contentFront\"></p>\n" +
-    "<!--                                <div class=\"flash-card-button\" ng-click=\"npFlashCards.update(flashCard)\"><p>[X]</p>\n" +
-    "                                    <svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n" +
-    "                                         width=\"612px\" height=\"792px\" viewBox=\"0 0 612 792\" style=\"enable-background:new 0 0 612 792;\" xml:space=\"preserve\">\n" +
-    "                                        <style type=\"text/css\">\n" +
-    "                                            <![CDATA[\n" +
-    "                                            .st0{fill:#D9D9D9;}\n" +
-    "                                            ]]>\n" +
-    "                                        </style>\n" +
-    "                                        <g id=\"Your_Icon\">\n" +
-    "                                            <path id=\"refresh-3-icon\" class=\"st0\" d=\"M649.52,992.96l-14.075,14.075c-7.345-7.344-17.748-12.239-29.376-12.239\n" +
-    "                                                  c-23.256,0-41.616,18.972-41.616,41.616l0,0h16.524l-25.704,25.703l-25.704-25.703h15.912l0,0c0-34.271,27.54-61.812,61.812-61.812\n" +
-    "                                                  C622.592,974.6,637.893,981.332,649.52,992.96z M682.568,1033.964l-25.704-25.704l-25.704,25.704h16.523l0,0\n" +
-    "                                                  c0,23.256-18.972,41.616-41.615,41.616c-11.628,0-22.032-4.896-29.376-12.24l-14.076,14.076\n" +
-    "                                                  c11.016,11.016,26.315,17.748,43.452,17.748c34.271,0,61.812-27.54,61.812-61.812l0,0h14.688V1033.964z\"/>\n" +
-    "                                        </g>\n" +
-    "                                    </svg>\n" +
-    "                                </div>-->\n" +
-    "                                <div class=\"flash-card-overlay\"></div>\n" +
-    "                            </div>\n" +
-    "                        </div>\n" +
-    "                        <div class=\"flash-card-back-wrapper\">\n" +
-    "                            <div class=\"flash-card-background\"></div>\n" +
-    "                            <p class=\"flash-card-content-back\" ng-bind-html=\"flashCardComponent.contentBack\"></p>\n" +
-    "<!--                                <div class=\"flash-card-button\" ng-click=\"npFlashCards.update(flashCard)\">[X]\n" +
-    "                                    <svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n" +
-    "                                         width=\"612px\" height=\"792px\" viewBox=\"0 0 612 792\" style=\"enable-background:new 0 0 612 792;\" xml:space=\"preserve\">\n" +
-    "                                        <style type=\"text/css\">\n" +
-    "                                            <![CDATA[\n" +
-    "                                            .st0{fill:#D9D9D9;}\n" +
-    "                                            ]]>\n" +
-    "                                        </style>\n" +
-    "                                        <g id=\"Your_Icon\">\n" +
-    "                                            <path id=\"refresh-3-icon\" class=\"st0\" d=\"M649.52,992.96l-14.075,14.075c-7.345-7.344-17.748-12.239-29.376-12.239\n" +
-    "                                                  c-23.256,0-41.616,18.972-41.616,41.616l0,0h16.524l-25.704,25.703l-25.704-25.703h15.912l0,0c0-34.271,27.54-61.812,61.812-61.812\n" +
-    "                                                  C622.592,974.6,637.893,981.332,649.52,992.96z M682.568,1033.964l-25.704-25.704l-25.704,25.704h16.523l0,0\n" +
-    "                                                  c0,23.256-18.972,41.616-41.615,41.616c-11.628,0-22.032-4.896-29.376-12.24l-14.076,14.076\n" +
-    "                                                  c11.016,11.016,26.315,17.748,43.452,17.748c34.271,0,61.812-27.54,61.812-61.812l0,0h14.688V1033.964z\"/>\n" +
-    "                                        </g>\n" +
-    "                                    </svg>\n" +
-    "                                </div>-->\n" +
-    "                            <div class=\"flash-card-overlay\"></div>\n" +
-    "                        </div>\n" +
-    "\n" +
+    "                <div flash-card class=\"flash-cards-object \" ng-repeat=\"flashCardComponent in npFlashCards.flashCardComponents\">\n" +
+    "                    <div class=\"flash-card-front-wrapper\">\n" +
+    "                        <div class=\"flash-card-background\"></div>\n" +
+    "                        <p class=\"flash-card-content-front\" ng-bind-html=\"flashCardComponent.contentFront\"></p>\n" +
+    "                        <div class=\"flash-card-overlay\"></div>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"flash-card-back-wrapper\">\n" +
+    "                        <div class=\"flash-card-background\"></div>\n" +
+    "                        <p class=\"flash-card-content-back\" ng-bind-html=\"flashCardComponent.contentBack\"></p>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"flash-card-button\" ng-click=\"npFlashCards.update(flashCardComponent)\">\n" +
+    "                        <svg version=\"1.0\"  class='button-holder' xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"25px\" height=\"19.7px\" viewBox=\"343.2 692.6 25 19.7\" xml:space=\"preserve\">\n" +
+    "                            <g id=\"refresh-icon\">\n" +
+    "                                <path id=\"refresh-icon-shape\" d=\"M362.8,695.6l-2.3,2.301c-1.2-1.2-2.9-2-4.8-2c-3.8,0-6.8,3.1-6.8,6.8l0,0h2.699  l-4.199,4.2l-4.2-4.2h2.6l0,0c0-5.601,4.5-10.101,10.101-10.101C358.4,692.6,360.9,693.7,362.8,695.6z M368.2,702.3l-4.2-4.2  l-4.2,4.2h2.7l0,0c0,3.8-3.1,6.8-6.8,6.8c-1.9,0-3.601-0.8-4.8-2L348.6,709.4c1.801,1.8,4.301,2.899,7.101,2.899  c5.6,0,10.1-4.5,10.1-10.1l0,0h2.4V702.3z\"/>\n" +
+    "                            </g>\n" +
+    "                        </svg>\n" +
     "                    </div>\n" +
     "                </div>\n" +
     "            </div>\n" +
@@ -4778,7 +5547,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                    <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
     "                </div>\n" +
     "                <img class=\"{{component.type}} np-cmp-main img-responsive\" ng-controller=\"npHotspotController as npHotspot\" ng-src=\"{{npHotspot.src}}\" alt=\"{{npHotspot.alt}}\" />\n" +
-    "                <div ng-repeat=\"hotspotButton in npHotspot.hotspotButtons\">\n" +
+    "                <div hotspot-button-build ng-repeat=\"hotspotButton in npHotspot.hotspotButtons\">\n" +
     "                    <div class=\"{{hotspotButton.class}} hotspotButton\" ng-click=\"npHotspot.update(hotspotButton)\">\n" +
     "                        <!--<img class=\"hotspotButtonImage\" ng-src=\"{{hotspotButton.image}}\" alt=\"{{npHotspot.alt}}\" />-->\n" +
     "                        <div class=\"hotspotButtonImage\" ></div>\n" +
@@ -4850,8 +5619,8 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "        </div>\n" +
     "        <div class=\"column-2 col-md-8\">\n" +
     "            <div class=\"media-body\">\n" +
-    "                <h4 ng-bind-html=\"npList.heading\" class=\"media-heading\"></h4>\n" +
-    "                <div ng-bind-html=\"npList.content\" class=\"np-cmp-main\" ng-if=\"!npList.link\"></div>\n" +
+    "                <div ng-bind-html=\"npList.heading\" class=\"media-heading h4\"></div>\n" +
+    "                <div ng-bind-html=\"npList.content\" class=\"np-cmp-main list-body-text\" ng-if=\"!npList.link\"></div>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "    </div>\n" +
@@ -4866,13 +5635,13 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "        <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
     "    </div>\n" +
     "\n" +
-    "    <h5 class=\"dark text-uppercase\">question:</h5>\n" +
+    "<!--    <h5 class=\"dark text-uppercase\">question:</h5>\n" +
     "    <div class=\"npMatch-content\" ng-bind-html=\"npMatch.content\"></div>\n" +
     "\n" +
-    "\t<h5 class=\"dark text-uppercase\">answers:</h5>\n" +
+    "\t<h5 class=\"dark text-uppercase\">answers:</h5>-->\n" +
     "    <div np-component ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
     "\n" +
-    "    <button type=\"submit\" class=\"col-xs-3 btn-primary\">Submit</button> &nbsp;\n" +
+    "    <button type=\"submit\" class=\"col-xs-3 btn-primary\">Submit</button>\n" +
     "    <button id=\"next_button\" class=\"btn-default\" ng-click=\"npMatch.nextPage($event)\" ng-show=\"npMatch.canContinue\">Next</button>\n" +
     "<!--    <div class=\"btn btn-default\">\n" +
     "        <input type=\"submit\" />\n" +
@@ -4889,7 +5658,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "</div>\n" +
     "\n" +
     "<div class=\"np-cmp-wrapper {{component.type}} rsDefault visibleNearby\" royalslider data-match=\"true\">\n" +
-    "    <div np-component ng-repeat=\"component in components | orderBy:random\" idx=\"{{component.idx}}\" style=\"display: inline-block; border: 2px solid black; width: 200px; margin-right: 10px;\"></div>\n" +
+    "    <div np-component ng-repeat=\"component in components | orderBy:random\" idx=\"{{component.idx}}\"  class=\"matching-game-row\"></div>\n" +
     "</div>"
   );
 
@@ -4953,32 +5722,53 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "    <!--    <div class=\"btn btn-default\">\n" +
     "            <input type=\"submit\" />\n" +
     "        </div>-->\n" +
-    "    <div class=\"row\">\n" +
+    "    <div question-feedback-build class=\"row\">\n" +
     "        <div  class=\"col-sm-7 question-feedback\">\n" +
     "            <div class=\"question-feedback-wrapper\">\n" +
+    "                <div class=\"negative-feedback-icon\">\n" +
+    "                    <svg version=\"1.0\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"22.8px\" height=\"22.801px\" viewBox=\"599.8 837.1 22.8 22.801\" enable-background=\"new 599.8 837.1 22.8 22.801\" xml:space=\"preserve\">\n" +
+    "                        <path fill=\"#9A7D46\" d=\"M611.2,859.9c-6.3,0-11.4-5.101-11.4-11.4s5.101-11.4,11.4-11.4S622.6,842.2,622.6,848.5 S617.5,859.9,611.2,859.9z M611.2,838.1c-5.7,0-10.4,4.7-10.4,10.4s4.7,10.4,10.4,10.4s10.399-4.7,10.399-10.4 S616.9,838.1,611.2,838.1z\"/>\n" +
+    "                        <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"874.293\" y1=\"-1086.3877\" x2=\"861.2496\" y2=\"-1099.811\" gradientTransform=\"matrix(1 0 0 -1 -256 -245)\">\n" +
+    "                            <stop  offset=\"0.1642\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                            <stop  offset=\"0.1698\" style=\"stop-color:#CCA352\"/>\n" +
+    "                            <stop  offset=\"0.2532\" style=\"stop-color:#E4C682\"/>\n" +
+    "                            <stop  offset=\"0.3167\" style=\"stop-color:#F2DCA0\"/>\n" +
+    "                            <stop  offset=\"0.3527\" style=\"stop-color:#F8E4AB\"/>\n" +
+    "                            <stop  offset=\"0.4062\" style=\"stop-color:#EBD191\"/>\n" +
+    "                            <stop  offset=\"0.48\" style=\"stop-color:#DDBC74\"/>\n" +
+    "                            <stop  offset=\"0.5532\" style=\"stop-color:#D2AC5F\"/>\n" +
+    "                            <stop  offset=\"0.6249\" style=\"stop-color:#CCA352\"/>\n" +
+    "                            <stop  offset=\"0.6933\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                            <stop  offset=\"0.7957\" style=\"stop-color:#D5B05B\"/>\n" +
+    "                            <stop  offset=\"0.9955\" style=\"stop-color:#F2DA7E\"/>\n" +
+    "                            <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
+    "                        </linearGradient>\n" +
+    "                        <polygon fill=\"url(#SVGID_1_)\" points=\"605.8,856.5 611.2,851.2 616.5,856.5 619,854 613.7,848.7 619,843.4 616.5,840.8 611.2,846.1 605.9,840.8 603.4,843.4 608.7,848.7 603.3,854 \"/>\n" +
+    "                    </svg>\n" +
+    "                </div>\n" +
     "                <div class=\"npQuestion-feedback question-feedback-text\" ng-if=\"npQuestion.feedback\" ng-bind-html=\"npQuestion.feedback\"></div>\n" +
     "                <div class=\"question-feedback-label\">Feedback area</div>\n" +
     "            </div>\n" +
-    "            <div  class=\"question-feedback-outline\">\n" +
-    "                <svg  version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
-    "                    <style type=\"text/css\">\n" +
-    "                        <![CDATA[\n" +
-    "                        .st0{fill:url(#SVGID_1_);}\n" +
-    "                        .st1{display:inline;}\n" +
-    "                        .st2{display:none;}\n" +
-    "                        ]]>\n" +
-    "                    </style>\n" +
-    "                    <g id=\"Layer_2\">\n" +
-    "                        <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"0.8359\" y1=\"0.9399\" x2=\"367.8515\" y2=\"221.4724\">\n" +
-    "                            <stop  offset=\"0\" style=\"stop-color:#CAA04C\"/>\n" +
-    "                            <stop  offset=\"0.3497\" style=\"stop-color:#F8E4AA\"/>\n" +
-    "                            <stop  offset=\"0.638\" style=\"stop-color:#CAA04D\"/>\n" +
-    "                            <stop  offset=\"0.9816\" style=\"stop-color:#F3DB7E\"/>\n" +
-    "                        </linearGradient>\n" +
-    "                        <rect fill=\"url(#MyGradient)\" stroke=\"url(#SVGID_1_)\" vector-effect=\"non-scaling-stroke\" stroke-width=\"3\" x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
-    "                    </g>\n" +
-    "                </svg>\n" +
-    "            </div>\n" +
+    "            <!--            <div  class=\"question-feedback-outline\">\n" +
+    "                            <svg  version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
+    "                                <style type=\"text/css\">\n" +
+    "                                    <![CDATA[\n" +
+    "                                    .st0{fill:url(#SVGID_1_);}\n" +
+    "                                    .st1{display:inline;}\n" +
+    "                                    .st2{display:none;}\n" +
+    "                                    ]]>\n" +
+    "                                </style>\n" +
+    "                                <g id=\"Layer_2\">\n" +
+    "                                    <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"0.8359\" y1=\"0.9399\" x2=\"367.8515\" y2=\"221.4724\">\n" +
+    "                                        <stop  offset=\"0\" style=\"stop-color:#CAA04C\"/>\n" +
+    "                                        <stop  offset=\"0.3497\" style=\"stop-color:#F8E4AA\"/>\n" +
+    "                                        <stop  offset=\"0.638\" style=\"stop-color:#CAA04D\"/>\n" +
+    "                                        <stop  offset=\"0.9816\" style=\"stop-color:#F3DB7E\"/>\n" +
+    "                                    </linearGradient>\n" +
+    "                                    <rect fill=\"url(#MyGradient)\" stroke=\"url(#SVGID_1_)\" vector-effect=\"non-scaling-stroke\" stroke-width=\"3\" x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
+    "                                </g>\n" +
+    "                            </svg>\n" +
+    "                        </div>-->\n" +
     "        </div>\n" +
     "        <div  class=\"col-sm-5\">\n" +
     "        </div>\n" +
@@ -5008,7 +5798,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('scripts/component/npReveal/npReveal.html',
-    "<div npReveal id=\"{{npReveal.id}}\" class=\"{{component.type}} np-cmp-wrapper np-reveal\" ng-controller=\"npRevealController as npReveal\">\n" +
+    "<div npReveal np-reveal-build id=\"{{npReveal.id}}\" class=\"{{component.type}} np-cmp-wrapper np-reveal\" ng-controller=\"npRevealController as npReveal\">\n" +
     "    <div class=\"debug\">\n" +
     "        <h3>{{component.type}} -- \n" +
     "            <small>{{component.idx}}</small>\n" +
@@ -5016,11 +5806,12 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "    </div>\n" +
     "    <!--:::::::::::: buttons ::::::::::::::::--> \n" +
     "    <div class=\"reveal-navigation col-md-12\">\n" +
-    "        <div class=\" reveal-button-container\">\n" +
+    "        <div class=\" reveal-button-container center-block\">\n" +
     "            <div revealButton class=\"reveal-button\" ng-repeat=\"revealItem in npReveal.revealItems\" ng-click=\"npReveal.update(revealItem)\">\n" +
     "                <div class=\"reveal-button-wrap\">\n" +
     "                    <img class=\"reveal-button-image img-responsive\" ng-src=\"{{revealItem.buttonImage}}\" alt=\"{{revealItem.buttonAlt}}\" />\n" +
     "                </div>\n" +
+    "                <div class=\"button-screen\"></div>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "    </div>\n" +

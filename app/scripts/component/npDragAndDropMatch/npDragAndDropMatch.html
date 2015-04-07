@@ -14,7 +14,6 @@
                             .st2{display:none;}
                             ]]>
                         </style>
-                        <!--<g id="Layer_2">-->
                         <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="400" y2="200">
                             <stop  offset="0" style="stop-color:#CAA04C"/>
                             <stop  offset="0.3497" style="stop-color:#F8E4AA"/>
@@ -22,15 +21,12 @@
                             <stop  offset="0.9816" style="stop-color:#F3DB7E"/>
                         </linearGradient>
                         <rect fill="" stroke="url(#SVGID_1_)" stroke-width="3" vector-effect="non-scaling-stroke"  x="0" y="0" width="100%" height="100%"/>
-                        <!--                        </g>
-                                                <g id="Layer_3">-->
                         <foreignObject x="5%" y="0" width="100%" height="100%">
                             <div class="{{draggableButton.class}} button-content">
                                 <img class="draggableButtonImage" ng-src="{{draggableButton.image}}" alt="{{draggableButton.alt}}" />
                                 <div class="draggableButtonContent" ng-bind-html="draggableButton.content" ></div>
                             </div>
                         </foreignObject>
-                        <!--</g>-->
                     </svg>
                 </div>
             </div>
@@ -38,6 +34,7 @@
             <div class="col-xs-6">
                 <div id="hitAreaWrapper">                    
                     <div ng-repeat="draggableButton in npDragAndDropMatch.draggableButtons" class="{{hitArea.class}} hit-area boxElements">
+                        <div class="hit-area-background"></div>
                         <svg class="complete-background" version="1.2" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" preserveAspectRatio="none">
                             <g class="complete-background-Layer_1">
                                 <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="486.5701" y1="836.5667" x2="474.7614" y2="851.428" gradientTransform="matrix(0.9984 5.588965e-02 -5.588965e-02 0.9984 48.0441 -25.572)">
@@ -47,8 +44,8 @@
                                     <stop  offset="0.5063" style="stop-color:#D7B26A"/>
                                     <stop  offset="0.5581" style="stop-color:#CAA04E"/>
                                     <stop  offset="1" style="stop-color:#F3DB7F"/>
-                                <defs>
-                                </defs>
+                                    <defs>
+                                    </defs>
                             </g>
                             <g id="complete-background-Layer_2">
                                 <rect stroke="url(#SVGID_1_)" stroke-width="3" vector-effect="non-scaling-stroke" fill="none"  x="0" y="0" width="100%" height="100%"/>
@@ -61,14 +58,15 @@
                                     </div>
                                     <div class="button-completion-content">
                                         <div class="centered-content" >
-                                            <div class="positive-feedback-image "></div>
-                                            <div class="positive-feedback-content h4" ng-bind-html="positiveFeedback"></div>
+                                            <div class="row " >
+                                                <div class="positive-feedback-image col-xs-6 "></div>
+                                                <div class="positive-feedback-content h4 col-xs-6 " ng-bind-html="positiveFeedback"></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </foreignObject>
                             </g>
                         </svg>
-                        <div class="hit-area-background"></div>
                     </div>
                 </div>
             </div> 

@@ -18,7 +18,9 @@
                 manifestURL: '@npUrl',
                 overrideURL: '@npOverrideUrl',
                 overrideData: '@npOverrideData',
-                language: '@npLang'
+                language: '@npLang',
+                manifestData: '=?',
+                onTrackService: '&npAnalyticsService'
             },
             //compile: function (tElement, tAttrs, transclude, ConfigService)
             //{
@@ -43,7 +45,7 @@
 
     /** @ngInject */
     function NpLayerController($scope, $rootScope, $element, $attrs, $log, $compile,
-            APIService, ComponentService, ConfigService, ManifestService) {
+            APIService, ComponentService, ConfigService, ManifestService, TrackingService) {
         var vm = this;
         vm.manifestData = null;
         vm.overrideData = null;
@@ -54,6 +56,7 @@
 
         ConfigService.setConfigData(vm);
         loadManifests();
+        TrackingService.setCallback(vm.onTrackService);
 
         //function npManifestChanged(event, toManifest, toPage) {
         //

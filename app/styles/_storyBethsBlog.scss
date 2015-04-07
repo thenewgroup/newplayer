@@ -1,0 +1,173 @@
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*page type background classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*When setting this ID for New Player use: 'newplayer-background'*/
+#np_newplayer-background{
+    position: absolute;
+    background-color: $brand-offwhite;
+    background-size: cover;
+    position:fixed;
+    content: "";
+    width:100%;
+    height:auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    /*z-index: -1;*/
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player background color wrapper classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*When setting this class for New Player use: 'background-brand-primary-light'*/
+.np_background-brand-primary-light{
+    background-color: $brand-primary-light;
+}
+/*When setting this class for New Player use: 'background-brand-offwhite' */
+.np_background-brand-offwhite{
+    background-color: $brand-offwhite;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*font stuff*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.hero{
+    padding-top: 0px;
+    padding-bottom: 20px;
+    margin: 0 auto;
+    max-width: 550px;
+    width: 100%;
+}
+.header{
+    font-family: "optimadisplaylightlight";
+    font-weight: 100;
+    line-height: 1.25;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding-top: 20px;
+    padding-bottom: 30px;
+    display: inline-block;
+    width: 100%;
+    margin: 0 auto;
+    padding-left: 50px;
+    padding-right:50px;
+}
+.sans-head{
+    font-family: $font-family-sans-serif_head;
+    color: $brand-primary;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 2px;
+    padding-top: 20px;
+    padding-bottom: 3px;
+    display: inline-block;
+    margin: 0 auto;
+}
+.sans-head-link{
+    font-family: $font-family-sans-serif_head;
+    color: $brand-primary;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: inline-block;
+    margin: 0 auto;
+}
+.body-copy {
+    font-family: $font-family-sans-serif;
+    color: $brand-primary;
+    text-align: justify;
+    font-size: $font-size-18;
+    letter-spacing: 1px;
+    display: inline-block;
+    margin: 0 auto;
+}
+.serif-body-link {
+    font-family: $font-family-serif;
+    color: $brand-primary;
+    letter-spacing: 1px;
+    display: inline-block;
+    margin: 0 auto;
+}
+.serif-date-link {
+    font-family: $font-family-serif;
+    font-style: italic;
+    color: $brand-primary;
+    letter-spacing: 1px;
+    display: inline-block;
+    margin: 0 auto;
+    padding-top: 10px;
+}
+.beths-signature {
+    background-image:  url('../assets/svgs/signatureBethZurn.svg');
+    background-repeat: no-repeat;
+    background-position-x: 85%;
+    max-width:296px;
+    width:100%;
+    height:121px;
+    padding-left: 70px;
+    padding-right: 70px;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player button wrapper classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*When setting this class for New Player use: 'btn-favorite'*/
+.np_btn-favorite{
+    padding-top: 20px;
+    padding-bottom: 40px;
+    padding-left: 200px;
+    padding-right: 200px;
+}
+.btn-open-favorites{
+    /*width: 7em;*/
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player button wrapper classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.center-padding{
+    padding-left: 200px;
+    padding-right: 200px;
+    width: 100%;
+}
+@media (max-width: $screen-lg) {
+    .center-padding{
+        padding-left: 100px;
+        padding-right: 100px;
+    }
+}
+@media (max-width: $screen-md) {
+    .center-padding{
+        padding-left: 70px;
+        padding-right: 70px;
+    }
+    .outside-padding{
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+    .np_btn-favorite{
+        padding-top: 10px;
+        padding-bottom: 20px;
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+    .header{
+        padding-top: 10px;
+        padding-bottom: 15px;
+        padding-left: 5px;
+        padding-right:5px;
+    }
+    .sans-head{
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+}
+@media (max-width: $screen-sm) {
+    .center-padding{
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .outside-padding{
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+}
