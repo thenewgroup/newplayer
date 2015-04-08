@@ -121,7 +121,7 @@
                                     {
                                         "type": "npButton",
                                         "data": {
-                                            "link": "Page2",
+                                            "link": "[0,0,1,2]",
                                             "class": "btn-next",
                                             "content": "NEXT"
                                         },
@@ -172,9 +172,7 @@
                                                 "type": "npAnswer",
                                                 "data": {
                                                     "label": "7,433.6",
-                                                    "correct": false,
-                                                    "correct": "Hey, that's right!",
-                                                    "incorrect": "No! ... What are you thinking!?"
+                                                    "correct": false
                                                 },
                                                 "components": [
                                                 ]
@@ -183,9 +181,7 @@
                                                 "type": "npAnswer",
                                                 "data": {
                                                     "label": "<img src=\"http://i.istockimg.com/file_thumbview_approve/33898764/2/stock-photo-33898764-isolated-chicken-with-egg.jpg\" height=\"50\" />",
-                                                    "correct": true,
-                                                    "correct": "Hey, that's right!",
-                                                    "incorrect": "No! ... What are you thinking!?"
+                                                    "correct": true
                                                 },
                                                 "components": [
                                                 ]

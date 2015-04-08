@@ -160,6 +160,11 @@
                                 right: Math.round(right)
                             };
                         }
+                        var hitAreaPosition = 'undefined';
+                        var window_offset;
+                        $(window).scroll(function () {
+                            window_offset = $(window).scrollTop();
+                        });
                         //////////////////////////////////////////////////////////////////////////////////////
                         //on drag offset method
                         //////////////////////////////////////////////////////////////////////////////////////
