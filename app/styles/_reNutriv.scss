@@ -55,10 +55,10 @@
     /*margin-bottom: 0px;*/
     display: inline-block;
 }
-#np_reNutriv h1, h2, h3, h4, h5{
+.h1, .h2, .h3, .h4, .h5{
     color: $brand-primary-light;
 }
-#np_reNutriv p{
+#np_reNutriv .p{
     color: $brand-primary-light;
 }
 #np_reNutriv small{
@@ -353,6 +353,7 @@ input{
     position: relative;
     width: 20px;
     height: 20px;
+    cursor: pointer;
     /*float: left;*/
     /*margin-right: 20px;*/
     /*border-color: $gold;*/
@@ -395,7 +396,7 @@ input{
     position: absolute;
     top:0;
     left:0;
-    opacity: 0;
+    /*opacity: 0;*/
     display: block;
     margin: auto;
 }
