@@ -4,7 +4,10 @@
             .module('newplayer.component')
             /** @ngInject */
             .controller('npQuestionController',
-                    function ($log, $scope, $rootScope, ManifestService, $sce, $element) {
+                    function ($log, $scope, $attrs, $rootScope, ManifestService, $sce, $element) {
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //set that 
+                        //////////////////////////////////////////////////////////////////////////////////////
                         var cmpData = $scope.component.data;
                         $log.debug('npQuestion::data', cmpData);
                         this.id = cmpData.id;
@@ -14,31 +17,18 @@
                         this.canContinue = false;
                         var feedback = cmpData.feedback;
                         var feedback_label = $element.find('.question-feedback-label');
-                        var feedback_checkbox_x = $element.find('.checkbox-x');
                         var negativeFeedbackIcon = '';
-//                        console.log(
-//                                '\n::::::::::::::::::::::::::::::::::::::npQuestions::default:::::::::::::::::::::::::::::::::::::::::::::::::',
-//                                '\n:::', this,
-//                                '\n::type::', cmpData.type,
-//                                '\n::feedback::', feedback,
-//                                '\n::feedback_label::', feedback_label,
-//                                '\n::$element::', $element,
-//                                '\n::feedback_checkbox_x::', feedback_checkbox_x,
-//                                '\n::$element.find(".checkbox-x")::', $element.find(".checkbox-x"),
-//                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-//                                );
-                        this.changed = function (event) {
-//                            console.log(
-//                                    '\n::::::::::::::::::::::::::::::::::::::npQuestions::changed:::::::::::::::::::::::::::::::::::::::::::::::::',
-//                                    '\n::id::', event,
-//                                    '\n::id::', event.target,
-//                                    '\n::id::', event.currentTarget,
-//                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-//                                    );
-                            TweenMax.to(event.target, .25, {
-                                autoAlpha: 1,
-                                ease: Power3.easeOut
-                            });
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //build that 
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        TweenMax.staggerTo($(".boxElements"), 2, {
+                            scale: 1,
+                            autoAlpha: 1,
+                            delay: 0.75,
+                            ease: Power4.easeOut,
+                            force3D: true
+                        }, 0.2);
+                        this.update = function (event) {
                             $log.debug('npQuestion::answer changed');
                             if (feedback.immediate) {
                                 this.feedback = '';
@@ -48,48 +38,35 @@
                         };
                         this.evaluate = function () {
                             var correct = true;
+                            var $checkbox = false;
+                            var $checked = false;
                             negativeFeedbackIcon = $element.find('.negative-feedback-icon');
                             TweenMax.to(negativeFeedbackIcon, 0.75, {
                                 opacity: 1,
                                 scale: 1,
                                 force3D: true
                             });
-//                            console.log(
-//                                    '\n::::::::::::::::::::::::::::::::::::::npQuestions::evaluate:::::::::::::::::::::::::::::::::::::::::::::::::',
-//                                    '\n::this::', this,
-//                                    '\n::this.answer::', this.answer,
-//                                    '\n::cmpData::', cmpData,
-//                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-//                                    );
+                            var chkAnswers = ManifestService.getAll('npAnswer', $scope.cmpIdx);
+                            $checkbox = $element.find('.checkbox-x');
+                            $checked = $element.find('.checkbox-x[checked]');
                             $log.debug('npQuestion::evaluate:', this.answer);
-                            if (!!this.answer) {
+//                            if (!!this.answer) {
+                            if (!!$checked === true) {
                                 switch (this.type) {
-                                    case 'radio':
-                                        var radAnswer = ManifestService.getComponent(this.answer);
-                                        if (angular.isString(radAnswer.data.feedback)) {
-                                            this.feedback = radAnswer.data.feedback;
-                                        }
-                                        correct = radAnswer.data.correct;
-                                        break;
                                     case 'checkbox':
                                         var chkAnswers = ManifestService.getAll('npAnswer', $scope.cmpIdx);
                                         var idx;
+                                        var $currentCheckbox;
                                         for (idx in chkAnswers) {
+                                            $currentCheckbox = $($checkbox[idx]);
                                             if (chkAnswers[idx].data.correct) {
-                                                console.log(
-                                                        '\n::::::::::::::::::::::::::::::::::::::npQuestions::default:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                                        '\n::idx::', idx,
-                                                        '\n::chkAnswers::', chkAnswers,
-                                                        '\n::this.answer[chkAnswers[idx].idx]::', this.answer[chkAnswers[idx].idx],
-                                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                                        );
                                                 // confirm all correct answers were checked
-                                                if (!this.answer[chkAnswers[idx].idx]) {
+                                                if ((!!$currentCheckbox.attr('checked')) !== true) {
                                                     correct = false;
                                                 }
                                             } else {
                                                 // confirm no incorrect answers were checked
-                                                if (this.answer[chkAnswers[idx].idx]) {
+                                                if ((!!$currentCheckbox.attr('checked')) === true) {
                                                     correct = false;
                                                 }
                                             }
@@ -127,16 +104,16 @@
                             }
                             $log.debug('npQuestion::evaluate:isCorrect', correct);
                             // set by ng-model of npAnswer's input's
-                            if (feedback.immediate && this.feedback === '') {
-                                feedback_label.remove();
-                                if (correct) {
-                                    this.feedback = feedback.correct;
-                                    this.canContinue = true;
-                                } else {
-                                    this.feedback = feedback.incorrect;
-                                    this.canContinue = false;
-                                }
+//                            if (feedback.immediate && this.feedback === '') {
+                            feedback_label.remove();
+                            if (correct) {
+                                this.feedback = feedback.correct;
+                                this.canContinue = true;
+                            } else {
+                                this.feedback = feedback.incorrect;
+                                this.canContinue = false;
                             }
+//                            }
                         };
                         this.nextPage = function (evt) {
                             evt.preventDefault();
@@ -151,12 +128,10 @@
                     var negativeFeedbackIcon = '';
                     setTimeout(function () {
                         $scope.$apply(function () {
-                            negativeFeedbackIcon = $element.find('.hotspotButton');
+//                            negativeFeedbackIcon = $element.find('.hotspotButton');
                             function onPageLoadBuild() {
                                 negativeFeedbackIcon = $('.negative-feedback-icon');
                                 TweenMax.set(negativeFeedbackIcon, {opacity: 0, scale: 2.5, force3D: true});
-//                                TweenMax.set(hotspotButton, {opacity: 0, scale: .25, force3D: true});
-//                                TweenMax.staggerTo(hotspotButton, 2, {scale: 1, opacity: 1, delay: 0.5, ease: Elastic.easeOut, force3D: true}, 0.2);
                             }
                             onPageLoadBuild();
                         });
