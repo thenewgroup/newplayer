@@ -15,7 +15,7 @@
       io = AssessmentIOService,              // This is the I/O module for saving/restoring assessment stuff
       config = ConfigService.getConfig();
 
-    if (config.hasOwnProperty('assessmentIO')) {
+    if (config.hasOwnProperty('assessmentIO') && config.assessmentIO.hasOwnProperty('updateFinal')) {
       setIO(config.assessmentIO);
     }
 

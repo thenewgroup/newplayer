@@ -8,12 +8,12 @@
     <div class="npQuestion-content question-text h4" ng-bind-html="npQuestion.content"></div>
     <p class="h5 quiz-label">answers:</p>
     <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
-    <div class="row">
+    <div class="row" ng-if="npQuestion.buttons" ng-cloak>
         <button type="submit" class="btn-submit" ng-click="npQuestion.evaluate()" ng-show="!npQuestion.questionHasEvaluated" ng-cloak>
-            <span>Submit</span>
+            <span>{{npQuestion.buttons.submit}}</span>
         </button>
       <button class="btn-submit btn-npq-next" ng-click="npQuestion.nextPage($event)" ng-show="npQuestion.questionHasEvaluated" ng-cloak>
-        <span>Next</span>
+        <span>{{npQuestion.buttons.next}}</span>
       </button>
     </div>
     <!--    <div class="btn btn-default">

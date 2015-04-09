@@ -94,6 +94,10 @@
                           "type": "checkbox",
                           "difficulty": "1",
                           "content": "How do you identify a Re-Nutriv customer?",
+                          "buttons": {
+                            "submit": "m.Submit",
+                            "next": "m.next"
+                          },
                           "feedback": {
                             "immediate": true,
                             "correct": "That's it! Explain that we have two skincare lines, and share the benefits of each one.",
@@ -204,6 +208,10 @@
                           "type": "checkbox",
                           "difficulty": 2,
                           "content": "What number am I thinking of? QUESTION 2",
+                          "buttons": {
+                              "submit": "m.Submit",
+                              "next": "m.next"
+                          },
                           "feedback": {
                             "immediate": true,
                             "correct": "Hey, that's right!",
@@ -248,15 +256,6 @@
                             ]
                           }
                         ]
-                      },
-                      {
-                        "type": "npButton",
-                        "data": {
-                          "link": "Page2",
-                          "class": "btn-next",
-                          "content": "NEXT"
-                        },
-                        "components": []
                       }
                     ]
                   },
@@ -279,6 +278,10 @@
                           "type": "text",
                           "difficulty": 3,
                           "content": "What is the greatest thing ever!? QUESTION 3",
+                          "buttons": {
+                            "submit": "m.Submit",
+                            "next": "m.next"
+                          },
                           "feedback": {
                             "immediate": true,
                             "correct": "Of course it is!",

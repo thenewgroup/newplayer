@@ -17,6 +17,7 @@
                         vm.canContinue = false;
                         vm.answers = [];
                         vm.questionHasEvaluated = false;
+                        vm.buttons = cmpData.buttons;
                         //vm.answer = [];
 
                         var feedback = cmpData.feedback;

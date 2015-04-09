@@ -21,7 +21,8 @@
                 minPassing: '@npMinPassing',
                 language: '@npLang',
                 manifestData: '=?',
-                onTrackService: '&npAnalyticsService'
+                onTrackService: '&npAnalyticsService',
+                assessmentIO: '&assessmentIO'
             },
             //compile: function (tElement, tAttrs, transclude, ConfigService)
             //{
