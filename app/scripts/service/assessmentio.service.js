@@ -9,6 +9,7 @@
   /** @ngInject */
   function AssessmentIO($log) {
     var vm = this;
+      vm.type = 'AssessmentIO (default)';
 
     vm.updateQuestion = function(questionID, assessment) {
       $log.debug('AssessmentIO::updateQuestion function stub', questionID, assessment);

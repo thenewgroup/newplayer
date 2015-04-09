@@ -22,7 +22,7 @@
                 language: '@npLang',
                 manifestData: '=?',
                 onTrackService: '&npAnalyticsService',
-                assessmentIO: '&assessmentIO'
+                assessmentIO: '=assessmentIo'
             },
             //compile: function (tElement, tAttrs, transclude, ConfigService)
             //{

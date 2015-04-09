@@ -16,7 +16,10 @@
       config = ConfigService.getConfig();
 
     if (config.hasOwnProperty('assessmentIO') && config.assessmentIO.hasOwnProperty('updateFinal')) {
+      $log.debug('using assessmentIO from config');
       setIO(config.assessmentIO);
+    } else {
+      $log.debug('using default assessmentIO');
     }
 
     // NOTE: this function is run below to initialize this service
