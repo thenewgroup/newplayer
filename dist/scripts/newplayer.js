@@ -3933,8 +3933,10 @@ function AssessmentService ( $log ) {
           if (correct) {
             $rootScope.$emit('slider-disable-wrong');
             this.feedback = feedback.correct;
+            this.feedbackBad = false;
           } else {
             this.feedback = feedback.incorrect;
+            this.feedbackBad = true;
           }
         }
 
@@ -5580,7 +5582,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('scripts/component/npMatch/npMatch.html',
-    "<section id=\"background-image\"> \n" +
+    "<section id=\"np_matchgame\" class=\"col-xs-12\"> \n" +
     "    <form class=\"np-cmp-wrapper {{component.type}} \" ng-controller=\"npMatchController as npMatch\" ng-submit=\"npMatch.evaluate()\">\n" +
     "\n" +
     "        <div class=\"debug\">\n" +
@@ -5590,18 +5592,51 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "        <!--<h5 class=\"text-uppercase\">question:</h5>-->\n" +
     "        <div class=\"npMatch-content\" ng-bind-html=\"npMatch.content\"></div>\n" +
     "\n" +
-    "    \t<!--<h5 class=\"text-uppercase\">answers:</h5>-->\n" +
+    "        <!--<h5 class=\"text-uppercase\">answers:</h5>-->\n" +
     "        <div np-component ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
     "\n" +
-    "        <button type=\"submit\" class=\"col-xs-3 btn-primary\">Submit</button>\n" +
-    "        <button id=\"next_button\" class=\"btn-default\" ng-click=\"npMatch.nextPage($event)\" ng-show=\"npMatch.canContinue\">Next</button>\n" +
+    "        <div class=\"col-xs-12\">\n" +
+    "            <button type=\"submit\" class=\"col-xs-offset-6 btn-primary\">Submit</button>        \n" +
+    "            <button id=\"next_button\" class=\"btn-default\" ng-click=\"npMatch.nextPage($event)\" ng-show=\"npMatch.canContinue\">Next</button>\n" +
+    "        </div>\n" +
     "    <!--    <div class=\"btn btn-default\">\n" +
     "            <input type=\"submit\" />\n" +
     "        </div>-->\n" +
     "\n" +
-    "        <div class=\"npMatch-feedback\" ng-if=\"npMatch.feedback\" ng-bind-html=\"npMatch.feedback\"></div>\n" +
+    "        <!-- <div class=\"npMatch-feedback question-feedback col-xs-offset-5\" ng-bind-html=\"npMatch.feedback\"></div> -->\n" +
+    "\n" +
+    "        <div question-feedback-build class=\"row\">\n" +
+    "            <div  class=\"col-xs-12 col-md-4 col-md-offset-4 question-feedback\">\n" +
+    "                <div class=\"question-feedback-wrapper\">\n" +
+    "                    <div class=\"negative-feedback-icon\" ng-class=\"{'bad-feedback' : npMatch.feedbackBad}\">\n" +
+    "                        <svg version=\"1.0\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"22.8px\" height=\"22.801px\" viewBox=\"599.8 837.1 22.8 22.801\" enable-background=\"new 599.8 837.1 22.8 22.801\" xml:space=\"preserve\">\n" +
+    "                            <path fill=\"#9A7D46\" d=\"M611.2,859.9c-6.3,0-11.4-5.101-11.4-11.4s5.101-11.4,11.4-11.4S622.6,842.2,622.6,848.5 S617.5,859.9,611.2,859.9z M611.2,838.1c-5.7,0-10.4,4.7-10.4,10.4s4.7,10.4,10.4,10.4s10.399-4.7,10.399-10.4 S616.9,838.1,611.2,838.1z\"/>\n" +
+    "                            <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"874.293\" y1=\"-1086.3877\" x2=\"861.2496\" y2=\"-1099.811\" gradientTransform=\"matrix(1 0 0 -1 -256 -245)\">\n" +
+    "                                <stop  offset=\"0.1642\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                <stop  offset=\"0.1698\" style=\"stop-color:#CCA352\"/>\n" +
+    "                                <stop  offset=\"0.2532\" style=\"stop-color:#E4C682\"/>\n" +
+    "                                <stop  offset=\"0.3167\" style=\"stop-color:#F2DCA0\"/>\n" +
+    "                                <stop  offset=\"0.3527\" style=\"stop-color:#F8E4AB\"/>\n" +
+    "                                <stop  offset=\"0.4062\" style=\"stop-color:#EBD191\"/>\n" +
+    "                                <stop  offset=\"0.48\" style=\"stop-color:#DDBC74\"/>\n" +
+    "                                <stop  offset=\"0.5532\" style=\"stop-color:#D2AC5F\"/>\n" +
+    "                                <stop  offset=\"0.6249\" style=\"stop-color:#CCA352\"/>\n" +
+    "                                <stop  offset=\"0.6933\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                <stop  offset=\"0.7957\" style=\"stop-color:#D5B05B\"/>\n" +
+    "                                <stop  offset=\"0.9955\" style=\"stop-color:#F2DA7E\"/>\n" +
+    "                                <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
+    "                            </linearGradient>\n" +
+    "                            <polygon fill=\"url(#SVGID_1_)\" points=\"605.8,856.5 611.2,851.2 616.5,856.5 619,854 613.7,848.7 619,843.4 616.5,840.8 611.2,846.1 605.9,840.8 603.4,843.4 608.7,848.7 603.3,854 \"/>\n" +
+    "                        </svg>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"question-feedback-label\" ng-bind-html=\"npMatch.feedback\">Feedback area</div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
     "    </form>\n" +
-    "</section>"
+    "</section>\n" +
+    "\n" +
+    "<br/><br/><br/>"
   );
 
 

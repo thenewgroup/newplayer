@@ -43,7 +43,7 @@
             autoScaleSliderWidth: 600,
             autoScaleSliderHeight: 100,
             imageAlignCenter: false,
-            imageScaleMode: 'fit-if-small',
+            imageScaleMode: 'fit',
             controlNavigation: 'none',
             autoHeight: true,
             loop: true,

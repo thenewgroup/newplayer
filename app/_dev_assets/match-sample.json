@@ -21,7 +21,7 @@
                         "type": "npMatch",
                         "data": {
                             "class": "row",
-                            "id": "np_newplayer-matchgame",
+                            "id": "",
                             "required": true,
                             "forced": true,
                             "type": "radio",
@@ -285,20 +285,11 @@
                     ]
             },
             {
-                "type": "npFooter",
+                "type": "npHTML",
                 "data": {
-                    "id": "globalFooter"
-                },
-                "components": [
-                    {
-                        "type": "npHTML",
-                        "data": {
-                            "id": "globalFooter",
-                            "content": "GLOBAL FOOTER"
-                        },
-                        "components": []
-                    }
-                ]
+                    "id": "",
+                    "content": "&nbsp;<br><br>"
+                }
             }
         ]
     }]
