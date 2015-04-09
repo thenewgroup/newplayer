@@ -5256,6 +5256,11 @@ button.close {
       text-align: center;
       letter-spacing: 2px;
       padding-top: 12.5%; }
+    #np_reNutriv #np_matchgame .correct {
+      font-size: 100px;
+      top: 20%;
+      left: 30%;
+      position: absolute; }
   #np_reNutriv #background-image {
     position: fixed;
     background-image: url("../assets/images/ESTL-005_ReNutriv_bg_img.jpg");

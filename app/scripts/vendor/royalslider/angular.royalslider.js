@@ -93,6 +93,7 @@
           var $correct = $(element).data('royalSlider').currSlide.holder;
           $correct.css('opacity', '0.5');
           $correct.data('correct', 'true');
+          $correct.find('.slide-wrapper').append('<i class="fa fa-check-circle correct"/>');
         });
 
         $rootScope.$on('slider-enable-all', function () {
