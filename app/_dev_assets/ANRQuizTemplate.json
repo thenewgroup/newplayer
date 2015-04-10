@@ -1,0 +1,485 @@
+[
+    {
+        "type": "npFeature",
+        "data": {
+            "id": "ANR",
+            "class": "",
+            "version": "0.0.1",
+            "timestamp": "2015-Apr-Sat_06:04:24"
+        },
+        "components": [
+            {
+                "type": "npContent",
+                "data": {
+                    "id": "content_en",
+                    "language": "en",
+                    "title": "Learning-Content-Pop-QuizRe-Nutriv-2.2-Re-Nutriv-Heritage-Quiz",
+                    "description": "This manifest creates a Story or Learning Object content object . "
+                },
+                "components": [
+                    {
+                        "type": "npHTML",
+                        "data": {
+                            "id": "newplayer-background"
+                        },
+                        "components": [
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "background-image"
+                                },
+                                "components": [
+                                ]
+                            },
+                            {
+                                "type": "npQuiz",
+                                "data": {
+                                    "id": "",
+                                    "assessed": "1",
+                                    "questions": "5",
+                                    "percentage": ""
+                                },
+                                "components": [
+                                ]
+                            },
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "class": "outside-padding"
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "class": "renutriv-logo-image"
+                                        },
+                                        "components": [
+                                        ]
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "class": "h3 headline",
+                                            "content": "Re-Nutriv Heritage Quiz"
+                                        },
+                                        "components": [
+                                        ]
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "class": "h6 instructional",
+                                            "content": "<p>Read each question, select the best choice and then select</p>"
+                                        },
+                                        "components": [
+                                        ]
+                                    },
+                                    {
+                                        "type": "npPage",
+                                        "data": {
+                                            "id": "Re-Nutriv-Heritage-Quiz---1",
+                                            "parentId": "",
+                                            "title": "Re-Nutriv-Heritage-Quiz---1",
+                                            "inMenu": true,
+                                            "required": true
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npQuestion",
+                                                "data": {
+                                                    "required": 0,
+                                                    "forced": true,
+                                                    "type": "checkbox",
+                                                    "difficulty": "",
+                                                    "content": "During which year did Estée Lauder create Re-Nutriv?",
+                                                    "feedback": {
+                                                        "immediate": "true",
+                                                        "correct": "You got it! In 1956, she created the world's first luxury skincare line and called it Re-Nutriv, based on the promise to renew.",
+                                                        "incorrect": "That's not it. In 1956, she created the world's first luxury skincare line and called it Re-Nutriv, based on the promise to renew."
+                                                    }
+                                                },
+                                                "components": [
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "1936",
+                                                            "correct": false,
+                                                            "feedback": {
+                                                                "incorrect": "That's not it. In 1956, she created the world's first luxury skincare line and called it Re-Nutriv, based on the promise to renew."
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "1956",
+                                                            "correct": true,
+                                                            "feedback": {
+                                                                "correct": "You got it! In 1956, she created the world's first luxury skincare line and called it Re-Nutriv, based on the promise to renew."
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "1965",
+                                                            "correct": false,
+                                                            "feedback": {
+                                                                "incorrect": "That's not it. In 1956, she created the world's first luxury skincare line and called it Re-Nutriv, based on the promise to renew."
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "1973",
+                                                            "correct": false,
+                                                            "feedback": {
+                                                                "incorrect": "That's not it. In 1956, she created the world's first luxury skincare line and called it Re-Nutriv, based on the promise to renew."
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "",
+                                                    "type": "btn-next",
+                                                    "class": "",
+                                                    "content": "Next"
+                                                },
+                                                "components": [
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npPage",
+                                        "data": {
+                                            "id": "Re-Nutriv-Heritage-Quiz---2",
+                                            "parentId": "",
+                                            "title": "Re-Nutriv-Heritage-Quiz---2",
+                                            "inMenu": true,
+                                            "required": true
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npQuestion",
+                                                "data": {
+                                                    "required": 0,
+                                                    "forced": true,
+                                                    "type": "checkbox",
+                                                    "difficulty": "",
+                                                    "content": "Where was the Re-Nutriv recipe kept when it was first developed?",
+                                                    "feedback": {
+                                                        "immediate": "true",
+                                                        "correct": "That's right! The skincare creme was so precious and exclusive, the recipe was kept in a secret family vault for decades.",
+                                                        "incorrect": "That's not it. The skincare creme was so precious and exclusive, the recipe was kept in a secret family vault for decades."
+                                                    }
+                                                },
+                                                "components": [
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "In a special refrigerated compartment",
+                                                            "correct": false,
+                                                            "feedback": {
+                                                                "incorrect": "That's not it. The skincare creme was so precious and exclusive, the recipe was kept in a secret family vault for decades."
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "In a safe at the bank",
+                                                            "correct": false,
+                                                            "feedback": {
+                                                                "incorrect": "That's not it. The skincare creme was so precious and exclusive, the recipe was kept in a secret family vault for decades."
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "In a secret family vault",
+                                                            "correct": true,
+                                                            "feedback": {
+                                                                "correct": "That's right! The skincare creme was so precious and exclusive, the recipe was kept in a secret family vault for decades."
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "In a laboratory in France",
+                                                            "correct": false,
+                                                            "feedback": {
+                                                                "incorrect": "That's not it. The skincare creme was so precious and exclusive, the recipe was kept in a secret family vault for decades."
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "",
+                                                    "type": "btn-next",
+                                                    "class": "",
+                                                    "content": "Next"
+                                                },
+                                                "components": [
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npPage",
+                                        "data": {
+                                            "id": "Re-Nutriv-Heritage-Quiz---3",
+                                            "parentId": "",
+                                            "title": "Re-Nutriv-Heritage-Quiz---3",
+                                            "inMenu": true,
+                                            "required": true
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npQuestion",
+                                                "data": {
+                                                    "required": 0,
+                                                    "forced": true,
+                                                    "type": "checkbox",
+                                                    "difficulty": "",
+                                                    "content": "What is Re-Nutriv based on?",
+                                                    "feedback": {
+                                                        "immediate": "true",
+                                                        "correct": "That's it! Re-Nutriv is based on the promise to renew.",
+                                                        "incorrect": "That's not right. Re-Nutriv is based on the promise to renew."
+                                                    }
+                                                },
+                                                "components": [
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "The promise to renew",
+                                                            "correct": true,
+                                                            "feedback": {
+                                                                "correct": "That's it! Re-Nutriv is based on the promise to renew."
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "The quest for everlasting love",
+                                                            "correct": false,
+                                                            "feedback": {
+                                                                "incorrect": "That's not right. Re-Nutriv is based on the promise to renew."
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "Moisturizing at any age",
+                                                            "correct": false,
+                                                            "feedback": {
+                                                                "incorrect": "That's not right. Re-Nutriv is based on the promise to renew."
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "The journey for eternal energy",
+                                                            "correct": false,
+                                                            "feedback": {
+                                                                "incorrect": "That's not right. Re-Nutriv is based on the promise to renew."
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "",
+                                                    "type": "btn-next",
+                                                    "class": "",
+                                                    "content": "Next"
+                                                },
+                                                "components": [
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npPage",
+                                        "data": {
+                                            "id": "Re-Nutriv-Heritage-Quiz---4",
+                                            "parentId": "",
+                                            "title": "Re-Nutriv-Heritage-Quiz---4",
+                                            "inMenu": true,
+                                            "required": true
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npQuestion",
+                                                "data": {
+                                                    "required": 0,
+                                                    "forced": true,
+                                                    "type": "checkbox",
+                                                    "difficulty": "",
+                                                    "content": "Where does Estée Lauder search for rare and precious Re-Nutriv ingredients?",
+                                                    "feedback": {
+                                                        "immediate": "true",
+                                                        "correct": "Exactly. Estée Lauder searches the world for rare and precious ingredients.",
+                                                        "incorrect": "That's not it. Actually, Estée Lauder searches the whole world for rare and precious ingredients."
+                                                    }
+                                                },
+                                                "components": [
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "North America",
+                                                            "correct": false,
+                                                            "feedback": {
+                                                                "incorrect": "That's not it. Actually, Estée Lauder searches the whole world for rare and precious ingredients."
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "South America",
+                                                            "correct": false,
+                                                            "feedback": {
+                                                                "incorrect": "That's not it. Actually, Estée Lauder searches the whole world for rare and precious ingredients."
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "France",
+                                                            "correct": false,
+                                                            "feedback": {
+                                                                "incorrect": "That's not it. Actually, Estée Lauder searches the whole world for rare and precious ingredients."
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "The world",
+                                                            "correct": true,
+                                                            "feedback": {
+                                                                "correct": "Exactly. Estée Lauder searches the world for rare and precious ingredients."
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "",
+                                                    "type": "btn-next",
+                                                    "class": "",
+                                                    "content": "Next"
+                                                },
+                                                "components": [
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npPage",
+                                        "data": {
+                                            "id": "Re-Nutriv-Heritage-Quiz---5",
+                                            "parentId": "",
+                                            "title": "Re-Nutriv-Heritage-Quiz---5",
+                                            "inMenu": true,
+                                            "required": true
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npQuestion",
+                                                "data": {
+                                                    "required": 0,
+                                                    "forced": true,
+                                                    "type": "checkbox",
+                                                    "difficulty": "",
+                                                    "content": "The ongoing quest for the best in both nature and ________ makes Re-Nutriv one of a kind.",
+                                                    "feedback": {
+                                                        "immediate": "true",
+                                                        "correct": "You got it. Re-Nutriv is a unique result of both nature and scientific advances.",
+                                                        "incorrect": "That's not right. Actually, Re-Nutriv is a unique result of both nature and scientific advances."
+                                                    }
+                                                },
+                                                "components": [
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "Art",
+                                                            "correct": false,
+                                                            "feedback": {
+                                                                "incorrect": "That's not right. Actually, Re-Nutriv is a unique result of both nature and scientific advances."
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "Beauty",
+                                                            "correct": false,
+                                                            "feedback": {
+                                                                "incorrect": "That's not right. Actually, Re-Nutriv is a unique result of both nature and scientific advances."
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "Youth",
+                                                            "correct": false,
+                                                            "feedback": {
+                                                                "incorrect": "That's not right. Actually, Re-Nutriv is a unique result of both nature and scientific advances."
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "The world",
+                                                            "correct": true,
+                                                            "feedback": {
+                                                                "correct": "You got it. Re-Nutriv is a unique result of both nature and scientific advances."
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "",
+                                                    "type": "btn-next",
+                                                    "class": "",
+                                                    "content": "Next"
+                                                },
+                                                "components": [
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]
