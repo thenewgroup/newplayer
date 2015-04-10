@@ -1,103 +1,97 @@
-[  
-  {  
-      "type":"npFeature",
-      "data":{  
-        "id":"storyDefault",
-        "class":"",
-        "version":"0.0.1",
-        "timestamp":"2015-Apr-Mon_06:04:47"
-      },
-      "components":[  
-        {  
-            "type":"npContent",
-            "data":{  
-              "id":"content_en",
-              "language":"en",
-              "title":"Story-Best-of-the-Best-Tips-to-TryBest-of-the-Best-Tips-to-Try:--Listen-more,-sell-more",
-              "description":"This manifest creates a Story or Learning Object content object . "
-            },
-            "components":[  
-              {  
-                  "type":"npHTML",
-                  "data":{  
-                    "id":"newplayer-background"
-                  },
-                  "components":[  
-                    {  
-                        "type":"npHTML",
-                        "data":{  
-                          "id":"background-image"
+[{
+        "type": "npFeature",
+        "data": {
+            "id": "GMTC",
+            "class": "",
+            "version": "0.0.1",
+            "timestamp": "2015-Apr-Fri_02:04:20"
+        },
+        "components": [{
+                "type": "npContent",
+                "data": {
+                    "id": "content_en",
+                    "language": "en",
+                    "title": "Learning-Content-GMTC-4.0-Meet-List-1",
+                    "description": "This manifest creates a Story or Learning Object content object . "
+                },
+                "components": [{
+                        "type": "npHTML",
+                        "data": {
+                            "id": "newplayer-background"
                         },
-                        "components":[  
-
-                        ]
-                    }
-                  ]
-              },
-              {  
-                  "type":"npHTML",
-                  "data":{  
-                    "class":"background-brand-primary-light outside-padding"
-                  },
-                  "components":[  
-                    {  
-                        "type":"npImage",
-                        "data":{  
-                          "src":"assets/styles/story_hero/public/BOTB-930x622.jpeg",
-                          "id":"",
-                          "class":"hero img-responsive center-block",
-                          "alt":""
+                        "components": [{
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "background-image"
+                                },
+                                "components": []
+                            }]
+                    }, {
+                        "type": "npHTML",
+                        "data": {
+                            "class": "outside-padding"
                         },
-                        "components":[  
-
-                        ]
-                    },
-                    {  
-                        "type":"npHTML",
-                        "data":{  
-                          "class":"h5 col-sm-12 sans-head center-block center-padding",
-                          "content":"Best of the Best Tips to Try"
-                        },
-                        "components":[  
-
-                        ]
-                    },
-                    {  
-                        "type":"npHTML",
-                        "data":{  
-                          "class":"h1 header",
-                          "content":"Listen more, sell more"
-                        },
-                        "components":[  
-
-                        ]
-                    },
-                    {  
-                        "type":"npHTML",
-                        "data":{  
-                          "class":"body-copy center-padding",
-                          "content":"<p>&ldquo;Always be a detective and find out what your customer is interested in, so you can create a personalized experience for her. For example, you can say: &lsquo;You mentioned to me earlier that you loved my eye look&mdash;I&#39;d love to teach you one of our 3 Minute Beauty looks so you can do it at home!&rsquo;&rdquo;</p><p>&mdash;Rachel Leckey, Northern Ireland, 2013 Best of the Best Winner</p>"
-                        },
-                        "components":[  
-
-                        ]
-                    },
-                    {  
-                        "type":"npButton",
-                        "data":{  
-                          "link":"/api/favorites/story/Story-Manifest-Best-of-the-Best-Tips-to-Try:--Listen-more,-sell-more",
-                          "type":"",
-                          "class":"col-sm-4 btn btn-favorite btn-open-favorites center-padding",
-                          "content":"<span class='glyphicon glyphicon-heart-empty' aria-hidden='true'></span> Favorite this"
-                        },
-                        "components":[  
-
-                        ]
-                    }
-                  ]
-              }
-            ]
-        }
-      ]
-  }
-]
+                        "components": [{
+                                "type": "npHTML",
+                                "data": {
+                                    "class": "renutriv-logo-image"
+                                },
+                                "components": []
+                            }, {
+                                "type": "npHTML",
+                                "data": {
+                                    "class": "h3 headline",
+                                    "content": "Meet"
+                                },
+                                "components": []
+                            }, {
+                                "type": "npHTML",
+                                "data": {
+                                    "class": "h6 instructional",
+                                    "content": "<p>After making a connection with your customer, what questions can you ask to find out what she needs? How does taking the time to properly meet your customer&rsquo;s needs make a difference?</p>"
+                                },
+                                "components": []
+                            }, {
+                                "type": "npList",
+                                "data": {
+                                    "class": "h6 instructional",
+                                    "data-ng:wrap": "true",
+                                    "content": " <p>After making a connection with your customer, what questions can you ask to find out what she needs?</p><p>How does taking the time to properly meet your customer&rsquo;s needs make a difference?</p>"
+                                },
+                                "components": [
+                                    {
+                                        "type": "npVideo",
+                                        "data": {
+                                            "id": "vidMain",
+                                            "poster": "//ia700505.us.archive.org/3/items/Windows7WildlifeSampleVideo/Windows7WildlifeSampleVideo.thumbs/Wildlife_000001.jpg",
+                                            "baseUrl": "../assets/video/ELX_Welcome_640x360_ENG",
+                                            "types": ["mp4"]
+                                        },
+                                        "components": []
+                                    },
+                                    
+                                    {
+                                        "type": "npVideo",
+                                        "data": {
+                                            "id": "vidMain",
+                                            "poster": "//ia700505.us.archive.org/3/items/Windows7WildlifeSampleVideo/Windows7WildlifeSampleVideo.thumbs/Wildlife_000001.jpg",
+                                            "baseUrl": "../assets/video/ELX_Welcome_640x360_ENG",
+                                            "types": ["mp4"]
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npVideo",
+                                        "data": {
+                                            "id": "vidMain",
+                                            "poster": "//ia700505.us.archive.org/3/items/Windows7WildlifeSampleVideo/Windows7WildlifeSampleVideo.thumbs/Wildlife_000001.jpg",
+                                            "baseURL": "//archive.org/download/Windows7WildlifeSampleVideo/Wildlife_512kb",
+                                            "types": ["mp4"]
+                                        },
+                                        "components": []
+                                    }
+                                    ]
+                            }]
+                    }]
+            }]
+    }]
