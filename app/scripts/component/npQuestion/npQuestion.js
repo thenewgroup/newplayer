@@ -18,6 +18,7 @@
                         var feedback = cmpData.feedback;
                         var feedback_label = $element.find('.question-feedback-label');
                         var negativeFeedbackIcon = '';
+                        var positiveFeedbackIcon = '';
                         //////////////////////////////////////////////////////////////////////////////////////
                         //build that 
                         //////////////////////////////////////////////////////////////////////////////////////
@@ -33,7 +34,17 @@
                             if (feedback.immediate) {
                                 this.feedback = '';
                                 negativeFeedbackIcon = $element.find('.negative-feedback-icon');
-                                TweenMax.set(negativeFeedbackIcon, {opacity: 0, scale: 2.5, force3D: true});
+                                positiveFeedbackIcon = $element.find('.positive-feedback-icon');
+                                TweenMax.set(negativeFeedbackIcon, {
+                                    opacity: 0,
+                                    scale: 2.5,
+                                    force3D: true
+                                });
+                                TweenMax.set(positiveFeedbackIcon, {
+                                    opacity: 0,
+                                    scale: 2.5,
+                                    force3D: true
+                                });
                             }
                         };
                         this.evaluate = function () {
@@ -41,9 +52,15 @@
                             var $checkbox = false;
                             var $checked = false;
                             negativeFeedbackIcon = $element.find('.negative-feedback-icon');
-                            TweenMax.to(negativeFeedbackIcon, 0.75, {
-                                opacity: 1,
-                                scale: 1,
+                            positiveFeedbackIcon = $element.find('.positive-feedback-icon');
+                            TweenMax.to(negativeFeedbackIcon, 0.25, {
+                                opacity: 0,
+                                scale: 2.5,
+                                force3D: true
+                            });
+                            TweenMax.to(positiveFeedbackIcon, 0.25, {
+                                opacity: 0,
+                                scale: 2.5,
                                 force3D: true
                             });
                             var chkAnswers = ManifestService.getAll('npAnswer', $scope.cmpIdx);
@@ -109,9 +126,19 @@
                             if (correct) {
                                 this.feedback = feedback.correct;
                                 this.canContinue = true;
+                                TweenMax.to(positiveFeedbackIcon, 0.75, {
+                                    opacity: 1,
+                                    scale: 1,
+                                    force3D: true
+                                });
                             } else {
                                 this.feedback = feedback.incorrect;
                                 this.canContinue = false;
+                                TweenMax.to(negativeFeedbackIcon, 0.75, {
+                                    opacity: 1,
+                                    scale: 1,
+                                    force3D: true
+                                });
                             }
 //                            }
                         };
@@ -126,12 +153,15 @@
             .directive('questionFeedbackBuild', function () {
                 return function ($scope, $element, attrs) {
                     var negativeFeedbackIcon = '';
+                    var postiveFeedbackIcon = '';
                     setTimeout(function () {
                         $scope.$apply(function () {
 //                            negativeFeedbackIcon = $element.find('.hotspotButton');
                             function onPageLoadBuild() {
                                 negativeFeedbackIcon = $('.negative-feedback-icon');
+                                postiveFeedbackIcon = $('.positive-feedback-icon');
                                 TweenMax.set(negativeFeedbackIcon, {opacity: 0, scale: 2.5, force3D: true});
+                                TweenMax.set(postiveFeedbackIcon, {opacity: 0, scale: 2.5, force3D: true});
                             }
                             onPageLoadBuild();
                         });
