@@ -4131,7 +4131,6 @@ function AssessmentService ( $log ) {
 
   /** @ngInject */
     .factory('AssessmentService', AssessmentService)
-
     .config( /** @ngInject */ function ($logProvider) {
       $logProvider.debugEnabled(false);
     });
