@@ -9,7 +9,8 @@
       'ngSanitize',
       'newplayer.service',
       'newplayer.component',
-      'angular-royalslider'
+      'angular-royalslider',
+      'matchMedia'
     ]
   )
     .config( /** @ngInject */ function ($logProvider) {

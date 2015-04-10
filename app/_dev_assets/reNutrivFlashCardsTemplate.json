@@ -84,7 +84,7 @@
                                     },
                                     {
                                         "contentFront": "<p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p><p><img alt='' class='flash_card_image' height='auto' src='../_dev_assets/assets/images/OrionsHeart.jpg' width='100%' /></p><p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p>",
-                                        "contentBack": "<p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p><p><img alt='' class='flash_card_image' height='auto' src='../_dev_assets/assets/images/OrionsHeart.jpg' width='100%' /></p><p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p>"
+                                        "contentBack": "<p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p>"
                                     },
                                     {
                                         "contentFront": "<p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p><p><img alt='' class='flash_card_image' height='auto' src='../_dev_assets/assets/images/earth.jpg' width='100%' /></p><p class='h4 flash-card-text-heading'>Heading.0 here.</p><p>Copy here.</p>",

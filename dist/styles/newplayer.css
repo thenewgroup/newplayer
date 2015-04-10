@@ -5119,6 +5119,7 @@ button.close {
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*ReNutriv font classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*#np_reNutriv p{*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*New Player padding wrapper classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -5143,6 +5144,13 @@ button.close {
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*New Player Quiz Answer classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*.checkbox-box svg{
+      position: absolute;
+      top:0;
+      left:0;
+      display: block;
+      margin: auto;
+  }*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*New Player Quiz Questions classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -5245,17 +5253,38 @@ button.close {
     display: inline-block; }
   #np_reNutriv .h1, #np_reNutriv .h2, #np_reNutriv .h3, #np_reNutriv .h4, #np_reNutriv .h5 {
     color: #FFFFFF; }
-  #np_reNutriv #np_reNutriv .p {
-    color: #FFFFFF; }
+  #np_reNutriv .subhead-copy {
+    color: #FFFFFF;
+    font-family: "akzidenz-grotesk_bqregular";
+    font-size: 18px;
+    letter-spacing: 2px;
+    text-transform: uppercase; }
+  #np_reNutriv .body-copy-strong {
+    color: #FFFFFF;
+    font-family: "akzidenz-grotesk_bqregular";
+    font-size: 18px;
+    letter-spacing: 2px; }
+  @media (max-width: 992px) {
+    #np_reNutriv .subhead-copy {
+      font-size: 17px;
+      letter-spacing: 1px; }
+    #np_reNutriv .body-copy-strong {
+      font-size: 17px;
+      letter-spacing: 1px; } }
+  #np_reNutriv .body-copy {
+    color: #FFFFFF;
+    font-family: "akzidenz-grotesk_bqregular";
+    font-size: 17px;
+    letter-spacing: 2px;
+    line-height: 1.35; }
+  @media (max-width: 992px) {
+    #np_reNutriv .body-copy {
+      font-size: 14px;
+      letter-spacing: 1px;
+      line-height: 0.6; } }
   #np_reNutriv #np_reNutriv small {
     color: #FFFFFF; }
-  #np_reNutriv h1, #np_reNutriv h2, #np_reNutriv h3, #np_reNutriv h4, #np_reNutriv h5 {
-    color: #FFFFFF; }
-  #np_reNutriv p ul ol {
-    color: #FFFFFF; }
-  #np_reNutriv small {
-    color: #FFFFFF; }
-  #np_reNutriv .dark h1, #np_reNutriv h2, #np_reNutriv h3, #np_reNutriv h4, #np_reNutriv h5 {
+  #np_reNutriv .dark h1 {
     color: #333333; }
   #np_reNutriv .header-dark {
     color: #000000;
@@ -5360,7 +5389,8 @@ button.close {
     left: 0;
     right: 0;
     top: 0;
-    background-color: #FFFFFF; }
+    background-color: #FFFFFF;
+    min-height: 475px; }
   #np_reNutriv .flash-card-content-front p {
     color: #000000; }
   #np_reNutriv .flash-card-back-wrapper {
@@ -5374,7 +5404,8 @@ button.close {
     left: 0;
     right: 0;
     top: 0;
-    background-color: #FFFFFF; }
+    background-color: #FFFFFF;
+    min-height: 475px; }
   #np_reNutriv .flash-card-content-back p {
     color: #000000; }
   #np_reNutriv #np_reNutriv .matching-game {
@@ -5497,12 +5528,6 @@ button.close {
     display: block;
     margin: auto;
     box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65); }
-  #np_reNutriv .checkbox-box svg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
-    margin: auto; }
   #np_reNutriv .checkbox-x {
     position: absolute;
     width: 20px;
@@ -5596,16 +5621,62 @@ button.close {
     color: #737373; }
   #np_reNutriv .matching-game-row {
     display: inline-block;
-    border: 2px solid black;
-    /*width: 400px;*/
-    margin-right: 10px; }
-  #np_reNutriv .rsDefault, #np_reNutriv .rsDefault .rsOverflow, #np_reNutriv .rsDefault .rsSlide, #np_reNutriv .rsDefault .rsVideoFrameHolder, #np_reNutriv .rsDefault .rsThumbs {
-    background: #FFFFFF;
-    color: #333333; }
-  #np_reNutriv .rsContent {
+    /*width: 400px;*/ }
+  #np_reNutriv #np_matchgame {
+    color: #fff;
+    background: #000;
+    position: relative;
+    background-image: url("../assets/images/ESTL-005_ReNutriv_bg_img.jpg");
+    background-position: right;
+    background-repeat: no-repeat;
+    background-size: 50%;
     width: 100%;
-    height: 300px;
-    position: relative; }
+    height: 100%;
+    margin-bottom: 10rem;
+    z-index: 9999; }
+    #np_reNutriv #np_matchgame .npMatchRow {
+      background-color: transparent; }
+    #np_reNutriv #np_matchgame .matchbox {
+      background-color: #fff;
+      color: #000; }
+    #np_reNutriv #np_matchgame #np_matchgame .npMatch-content {
+      text-align: center;
+      padding: 50px; }
+    #np_reNutriv #np_matchgame .npMatch-content {
+      text-align: center; }
+    #np_reNutriv #np_matchgame button {
+      margin-top: 10px;
+      background-color: #000;
+      border: 2px solid #9a7d46; }
+    #np_reNutriv #np_matchgame .question-feedback {
+      position: relative;
+      height: 160px;
+      width: 100%;
+      margin-top: 50px;
+      margin-bottom: 10px;
+      margin-right: 30px; }
+    #np_reNutriv #np_matchgame .question-feedback-wrapper {
+      width: 300px; }
+    #np_reNutriv #np_matchgame .negative-feedback-icon {
+      width: 20px;
+      margin-right: 10px;
+      float: left;
+      margin-top: 45px; }
+      #np_reNutriv #np_matchgame .negative-feedback-icon.bad-feedback {
+        opacity: 1 !important; }
+    #np_reNutriv #np_matchgame .question-feedback-label {
+      font-family: "akzidenz-grotesk_bqregular";
+      size: 23px;
+      color: #737373;
+      text-transform: uppercase;
+      text-align: center;
+      letter-spacing: 2px;
+      padding-top: 12.5%; }
+    #np_reNutriv #np_matchgame .correct {
+      font-size: 100px;
+      top: 20%;
+      left: 30%;
+      position: absolute; }
   #np_reNutriv .btn-next {
     position: absolute;
     border-color: #9a7d46;
@@ -5700,7 +5771,8 @@ button.close {
   #np_reNutriv .reveal-button-image {
     position: absolute;
     padding: 5.5%;
-    background-color: #FFFFFF; }
+    background-color: #FFFFFF;
+    overflow: hidden; }
   #np_reNutriv .reveal-button-container {
     position: relative;
     display: -webkit-box;
@@ -5930,32 +6002,56 @@ button.close {
     right: 0; }
   #np_reNutriv .button-completion-content {
     position: absolute;
-    float: right;
-    right: 50%;
-    top: 43%; }
+    right: 0;
+    left: 0;
+    top: 10%;
+    bottom: 0;
+    margin: auto; }
+  #np_reNutriv .button-completion-content {
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 10%;
+    bottom: 0;
+    margin: auto; }
   #np_reNutriv .centered-content {
-    width: 100%;
-    height: 100%;
-    float: right;
-    right: -50%;
-    position: relative; }
+    padding-top: 3em;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    resize: vertical; }
   #np_reNutriv .positive-feedback-image, #np_reNutriv .positive-feedback-content {
-    float: none;
-    /*float: left;*/
-    line-height: 1em;
-    padding-left: 5%; }
+    white-space: nowrap; }
   #np_reNutriv .positive-feedback-content {
-    width: auto; }
+    /*    font-family: akzidenz-grotesk_bqregular;
+        color: $brand-primary;*/
+    /*text-transform: uppercase;*/
+    padding-top: 10px;
+    /*width: auto;*/ }
   #np_reNutriv .positive-feedback-image {
     background-image: url("/assets/svgs/feedback-correct-icon-ReNutriv.svg");
     background-repeat: no-repeat;
-    width: 40px;
+    background-position: right;
+    /* width: 40px; */
     height: 40px;
     border: 0;
-    background-size: 100%;
-    /* To fill the dimensions of container (button), or */
-    background-size: 40px auto;
-    /* to specify dimensions explicitly */ }
+    background-size: 40px auto; }
+  #np_reNutriv .button-content {
+    position: relative;
+    padding: 5%; }
+  #np_reNutriv .button-content p {
+    padding: 0;
+    margin: 0; }
   #np_reNutriv .button-content {
     position: relative;
     padding: 5%; }
@@ -6367,6 +6463,7 @@ button.close {
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*ReNutriv font classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*#np_reNutriv p{*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*New Player padding wrapper classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -6383,6 +6480,9 @@ button.close {
   /*New Player Flash Cards classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*New Player Matching Game classes*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*New Player Quiz classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -6390,6 +6490,9 @@ button.close {
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*New Player Quiz Questions classes*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*New Player Matching Game classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*New Player Trivia/Spinner classes*/
@@ -6416,6 +6519,14 @@ button.close {
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*New Player List classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*New Player Drag and Drop Select classes*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*.select-response-wrapper{
+      width: 100%;
+      height: 100%;
+      text-align: center;
+  }*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*New Player Drag and Drop Prioritize classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -6481,14 +6592,41 @@ button.close {
     margin-top: 0px;
     /*margin-bottom: 0px;*/
     display: inline-block; }
-  #ANR h1, #ANR h2, #ANR h3, #ANR h4, #ANR h5 {
-    color: #040A2B; }
-  #ANR p ul ol {
-    color: #040A2B; }
+  #ANR .h1, #ANR .h2, #ANR .h3, #ANR .h4, #ANR .h5 {
+    color: #FFFFFF; }
+  #ANR .subhead-copy {
+    color: #040A2B;
+    font-family: "akzidenz-grotesk_bqregular";
+    font-size: 18px;
+    letter-spacing: 2px;
+    text-transform: uppercase; }
+  #ANR .body-copy-strong {
+    color: #040A2B;
+    font-family: "akzidenz-grotesk_bqregular";
+    font-size: 18px;
+    letter-spacing: 2px; }
+  @media (max-width: 992px) {
+    #ANR .subhead-copy {
+      font-size: 17px;
+      letter-spacing: 1px; }
+    #ANR .body-copy-strong {
+      font-size: 17px;
+      letter-spacing: 1px; } }
+  #ANR .body-copy {
+    color: #040A2B;
+    font-family: "akzidenz-grotesk_bqregular";
+    font-size: 17px;
+    letter-spacing: 2px;
+    line-height: 1.35; }
+  @media (max-width: 992px) {
+    #ANR .body-copy {
+      font-size: 14px;
+      letter-spacing: 1px;
+      line-height: 0.6; } }
   #ANR small {
     color: #040A2B; }
-  #ANR .dark h1, #ANR h2, #ANR h3, #ANR h4, #ANR h5 {
-    color: #333333; }
+  #ANR .dark .h1, #ANR .h2, #ANR .h3, #ANR .h4, #ANR .h5 {
+    /*color: $gray-dark;*/ }
   #ANR .header-dark {
     color: #000000;
     font-size: 36px;
@@ -6565,7 +6703,7 @@ button.close {
     right: 0;
     top: 0;
     bottom: 0;
-    background-color: #FFFFFF; }
+    background-color: #00518F; }
   #ANR .flash-card-button {
     position: absolute;
     top: 25px;
@@ -6592,7 +6730,8 @@ button.close {
     left: 0;
     right: 0;
     top: 0;
-    background-color: #FFFFFF; }
+    background-color: #FFFFFF;
+    min-height: 475px; }
   #ANR .flash-card-content-front p {
     color: #040A2B; }
   #ANR .flash-card-back-wrapper {
@@ -6606,9 +6745,47 @@ button.close {
     left: 0;
     right: 0;
     top: 0;
-    background-color: #FFFFFF; }
+    background-color: #FFFFFF;
+    min-height: 475px; }
   #ANR .flash-card-content-back p {
     color: #040A2B; }
+  #ANR #np_reNutriv .matching-game {
+    height: 450px; }
+  #ANR #np_reNutriv .question-match {
+    position: relative;
+    height: auto;
+    float: left;
+    width: 100%; }
+  #ANR #np_reNutriv .question-match-outline {
+    position: absolute;
+    height: 360px;
+    right: 39%;
+    left: 39%;
+    margin-top: -20px;
+    margin-bottom: 20px;
+    box-shadow: 10px 10px 105px 50px rgba(0, 0, 0, 0.5); }
+  #ANR #np_reNutriv .question-match-outline-inner {
+    height: 100%; }
+  #ANR #np_reNutriv .question-match-set {
+    position: absolute;
+    height: 100%;
+    right: 0;
+    left: 0; }
+  #ANR #np_reNutriv .btn-match-submit-wrapper {
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0; }
+  #ANR #np_reNutriv .btn-match-submit {
+    font-family: "BauerBodoniStd-Roman";
+    color: #FFFFFF;
+    border-color: #9a7d46;
+    background-color: #000000;
+    text-transform: uppercase;
+    padding-top: 5px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    margin-left: 33%; }
   #ANR .quiz-label {
     font-family: "akzidenz-grotesk_bqregular";
     color: #FFFFFF;
@@ -6635,7 +6812,8 @@ button.close {
     size: 17px;
     color: #040A2B;
     text-transform: uppercase;
-    letter-spacing: 2px; }
+    letter-spacing: 2px;
+    color: #313131; }
   #ANR .answer-text-input {
     font-family: "optimadisplaylightlight";
     size: 17px;
@@ -6668,11 +6846,11 @@ button.close {
     position: relative;
     width: 20px;
     height: 20px;
+    cursor: pointer;
     /*float: left;*/
     /*margin-right: 20px;*/
     /*border-color: $gold;*/
     border-color: #FFFFFF;
-    border-width: 3px;
     background-color: #FFFFFF;
     box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65); }
   #ANR .answer-radio {
@@ -6755,6 +6933,64 @@ button.close {
     padding: 20px;
     width: 100%;
     height: 100%; }
+  #ANR .matching-game-row {
+    display: inline-block;
+    /*width: 400px;*/ }
+  #ANR #np_matchgame {
+    color: #fff;
+    background: #000;
+    position: relative;
+    background-image: url("../assets/images/ESTL-005_ReNutriv_bg_img.jpg");
+    background-position: right;
+    background-repeat: no-repeat;
+    background-size: 50%;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 10rem;
+    z-index: 9999; }
+    #ANR #np_matchgame .npMatchRow {
+      background-color: transparent; }
+    #ANR #np_matchgame .matchbox {
+      background-color: #fff;
+      color: #000; }
+    #ANR #np_matchgame #np_matchgame .npMatch-content {
+      text-align: center;
+      padding: 50px; }
+    #ANR #np_matchgame .npMatch-content {
+      text-align: center; }
+    #ANR #np_matchgame button {
+      margin-top: 10px;
+      background-color: #000;
+      border: 2px solid #9a7d46; }
+    #ANR #np_matchgame .question-feedback {
+      position: relative;
+      height: 160px;
+      width: 100%;
+      margin-top: 50px;
+      margin-bottom: 10px;
+      margin-right: 30px; }
+    #ANR #np_matchgame .question-feedback-wrapper {
+      width: 300px; }
+    #ANR #np_matchgame .negative-feedback-icon {
+      width: 20px;
+      margin-right: 10px;
+      float: left;
+      margin-top: 45px; }
+      #ANR #np_matchgame .negative-feedback-icon.bad-feedback {
+        opacity: 1 !important; }
+    #ANR #np_matchgame .question-feedback-label {
+      font-family: "akzidenz-grotesk_bqregular";
+      size: 23px;
+      color: #737373;
+      text-transform: uppercase;
+      text-align: center;
+      letter-spacing: 2px;
+      padding-top: 12.5%; }
+    #ANR #np_matchgame .correct {
+      font-size: 100px;
+      top: 20%;
+      left: 30%;
+      position: absolute; }
   #ANR .btn-next {
     position: absolute;
     border-color: #9a7d46;
@@ -6849,7 +7085,8 @@ button.close {
   #ANR .reveal-button-image {
     position: absolute;
     padding: 5.5%;
-    background-color: #FFFFFF; }
+    background-color: #FFFFFF;
+    overflow: hidden; }
   #ANR .reveal-button-container {
     position: relative;
     display: -webkit-box;
@@ -6874,7 +7111,7 @@ button.close {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #FFFFFF; }
+    background-color: #00518F; }
   #ANR #np_reNutriv, #ANR .reveal-button {
     position: relative;
     width: 4.46em;
@@ -6931,6 +7168,80 @@ button.close {
     color: #040A2B;
     letter-spacing: 2px;
     font-size: 14px; }
+  #ANR #hit-area-wrapper {
+    padding-top: 15px;
+    padding-bottom: 15px; }
+  #ANR #select-hit-area-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #313131;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65); }
+  #ANR .select-button-wrapper {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    margin-top: 1em;
+    margin-bottom: 1em; }
+  #ANR .btn-select-submit {
+    position: relative;
+    border-color: #9a7d46;
+    background-color: #000000;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px; }
+  #ANR .btn-select-submit span {
+    font-family: "BauerBodoniStd-Roman";
+    color: #FFFFFF;
+    text-transform: uppercase;
+    letter-spacing: 2px; }
+  #ANR .select-button-completion-content {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 25px;
+    padding-right: 25px; }
+  #ANR .select-response-wrapper {
+    position: absolute;
+    right: 0;
+    left: 0;
+    margin: auto;
+    width: 60%; }
+  #ANR .select-response-wrapper p, #ANR h2 {
+    color: #FFFFFF; }
+  #ANR .select-response-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #313131;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65); }
+  #ANR .select-response-correct {
+    position: absolute;
+    right: 0;
+    left: 0;
+    padding: 10px; }
+  #ANR .select-response-incorrect {
+    position: absolute;
+    right: 0;
+    left: 0;
+    padding: 10px; }
+  #ANR .left-column-select {
+    text-align: right; }
+  #ANR .right-column-select {
+    text-align: left;
+    margin-top: 3px; }
+  #ANR .response-icon-wrapper {
+    position: absolute;
+    right: 0;
+    width: 35px;
+    margin-top: -3px; }
   #ANR .button-prioritize-content {
     position: relative;
     display: block; }
@@ -7002,40 +7313,46 @@ button.close {
     right: 0; }
   #ANR .button-completion-content {
     position: absolute;
-    float: right;
-    right: 50%;
-    top: 43%; }
+    right: 0;
+    left: 0;
+    top: 10%;
+    bottom: 0;
+    margin: auto; }
   #ANR .centered-content {
-    width: 100%;
-    height: 100%;
-    float: right;
-    right: -50%;
-    position: relative; }
+    padding-top: 3em;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    resize: vertical; }
   #ANR .positive-feedback-image, #ANR .positive-feedback-content {
-    float: left;
-    line-height: 1em;
-    padding-left: 5%; }
+    white-space: nowrap; }
   #ANR .positive-feedback-content {
     font-family: akzidenz-grotesk_bqregular;
     color: #040A2B;
     text-transform: uppercase;
-    width: auto; }
+    padding-top: 10px;
+    /*width: auto;*/ }
   #ANR .positive-feedback-image {
     background-image: url("/assets/svgs/feedback-correct-icon-ANR.svg");
     background-repeat: no-repeat;
-    width: 40px;
+    background-position: right;
+    /* width: 40px; */
     height: 40px;
     border: 0;
-    background-size: 100%;
-    /* To fill the dimensions of container (button), or */
-    background-size: 40px auto;
-    /* to specify dimensions explicitly */ }
+    background-size: 40px auto; }
   #ANR .button-content {
     position: relative;
     padding: 5%; }
-  #ANR .button-content p {
-    font-size: 17px;
-    color: #040A2B; }
   #ANR rect {
     position: fixed;
     width: 100%;
@@ -7049,8 +7366,9 @@ button.close {
     margin: 0; }
   #ANR .draggableButton {
     cursor: pointer; }
-  #ANR .draggableButtonsvg {
-    /*fill:#000000;*/ }
+  #ANR .draggableButton rect {
+    stroke: #040A2B;
+    stroke-width: 1.5px; }
   #ANR .hit-area {
     position: relative;
     width: 100%;
@@ -7154,10 +7472,10 @@ button.close {
   /*New Player page type wrapper classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*When setting this ID for New Player use: 'newplayer-background'*/
-  /*When setting this ID for New Player use: 'outside-padding'*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*ReNutriv font classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*#np_reNutriv p{*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*New Player padding wrapper classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -7174,6 +7492,9 @@ button.close {
   /*New Player Flash Cards classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*New Player Matching Game classes*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*New Player Quiz classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -7181,6 +7502,9 @@ button.close {
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*New Player Quiz Questions classes*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*New Player Matching Game classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*New Player Trivia/Spinner classes*/
@@ -7207,6 +7531,14 @@ button.close {
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*New Player List classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*New Player Drag and Drop Select classes*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*.select-response-wrapper{
+      width: 100%;
+      height: 100%;
+      text-align: center;
+  }*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*New Player Drag and Drop Prioritize classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -7239,10 +7571,6 @@ button.close {
     left: 0;
     right: 0;
     top: 0; }
-  #GMTC .np_outside-padding {
-    /*background-color: #FFFFFF;*/
-    /*box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.5);*/
-    /*height: 1200px*/ }
   #GMTC #background-image {
     position: fixed;
     background-image: url("../assets/images/GMTC_bg.png");
@@ -7279,12 +7607,37 @@ button.close {
     margin-top: 0px;
     /*margin-bottom: 0px;*/
     display: inline-block; }
-  #GMTC h1, #GMTC h2, #GMTC h3, #GMTC h4, #GMTC h5 {
+  #GMTC .h1, #GMTC .h2, #GMTC .h3, #GMTC .h4, #GMTC .h5 {
     color: #040A2B; }
-  #GMTC p ul ol {
-    color: #040A2B; }
-  #GMTC small {
-    color: #040A2B; }
+  #GMTC .subhead-copy {
+    color: #040A2B;
+    font-family: "akzidenz-grotesk_bqregular";
+    font-size: 18px;
+    letter-spacing: 2px;
+    text-transform: uppercase; }
+  #GMTC .body-copy-strong {
+    color: #040A2B;
+    font-family: "akzidenz-grotesk_bqregular";
+    font-size: 18px;
+    letter-spacing: 2px; }
+  @media (max-width: 992px) {
+    #GMTC .subhead-copy {
+      font-size: 17px;
+      letter-spacing: 1px; }
+    #GMTC .body-copy-strong {
+      font-size: 17px;
+      letter-spacing: 1px; } }
+  #GMTC .body-copy {
+    color: #040A2B;
+    font-family: "akzidenz-grotesk_bqregular";
+    font-size: 17px;
+    letter-spacing: 2px;
+    line-height: 1.35; }
+  @media (max-width: 992px) {
+    #GMTC .body-copy {
+      font-size: 14px;
+      letter-spacing: 1px;
+      line-height: 0.6; } }
   #GMTC .dark h1, #GMTC h2, #GMTC h3, #GMTC h4, #GMTC h5 {
     color: #333333; }
   #GMTC .header-dark {
@@ -7299,10 +7652,8 @@ button.close {
     /*color: #9a7d46;*/
     color: #9a7d46; }
   #GMTC .content-background {
-    /*    position: absolute;
-    left: 10px;
-    right: 20px;*/
-    background-color: rgba(0, 0, 0, 0.5); }
+    /*background-color:hsla(0,100%,0%,0.5);*/
+    background-color: white; }
   #GMTC .npHotspot {
     top: 0;
     left: 0; }
@@ -7393,7 +7744,8 @@ button.close {
     left: 0;
     right: 0;
     top: 0;
-    background-color: #FFFFFF; }
+    background-color: #FFFFFF;
+    min-height: 475px; }
   #GMTC .flash-card-content-front p {
     color: #040A2B; }
   #GMTC .flash-card-back-wrapper {
@@ -7409,9 +7761,47 @@ button.close {
     left: 0;
     right: 0;
     top: 0;
-    background-color: #FFFFFF; }
+    background-color: #FFFFFF;
+    min-height: 475px; }
   #GMTC .flash-card-content-back p {
     color: #040A2B; }
+  #GMTC #np_reNutriv .matching-game {
+    height: 450px; }
+  #GMTC #np_reNutriv .question-match {
+    position: relative;
+    height: auto;
+    float: left;
+    width: 100%; }
+  #GMTC #np_reNutriv .question-match-outline {
+    position: absolute;
+    height: 360px;
+    right: 39%;
+    left: 39%;
+    margin-top: -20px;
+    margin-bottom: 20px;
+    box-shadow: 10px 10px 105px 50px rgba(0, 0, 0, 0.5); }
+  #GMTC #np_reNutriv .question-match-outline-inner {
+    height: 100%; }
+  #GMTC #np_reNutriv .question-match-set {
+    position: absolute;
+    height: 100%;
+    right: 0;
+    left: 0; }
+  #GMTC #np_reNutriv .btn-match-submit-wrapper {
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0; }
+  #GMTC #np_reNutriv .btn-match-submit {
+    font-family: "BauerBodoniStd-Roman";
+    color: #FFFFFF;
+    border-color: #9a7d46;
+    background-color: #000000;
+    text-transform: uppercase;
+    padding-top: 5px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    margin-left: 33%; }
   #GMTC .quiz-label {
     font-family: "akzidenz-grotesk_bqregular";
     color: #FFFFFF;
@@ -7471,6 +7861,7 @@ button.close {
     position: relative;
     width: 20px;
     height: 20px;
+    cursor: pointer;
     /*float: left;*/
     /*margin-right: 20px;*/
     /*border-color: $gold;*/
@@ -7558,6 +7949,64 @@ button.close {
     padding: 20px;
     width: 100%;
     height: 100%; }
+  #GMTC .matching-game-row {
+    display: inline-block;
+    /*width: 400px;*/ }
+  #GMTC #np_matchgame {
+    color: #fff;
+    background: #000;
+    position: relative;
+    background-image: url("../assets/images/ESTL-005_ReNutriv_bg_img.jpg");
+    background-position: right;
+    background-repeat: no-repeat;
+    background-size: 50%;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 10rem;
+    z-index: 9999; }
+    #GMTC #np_matchgame .npMatchRow {
+      background-color: transparent; }
+    #GMTC #np_matchgame .matchbox {
+      background-color: #fff;
+      color: #000; }
+    #GMTC #np_matchgame #np_matchgame .npMatch-content {
+      text-align: center;
+      padding: 50px; }
+    #GMTC #np_matchgame .npMatch-content {
+      text-align: center; }
+    #GMTC #np_matchgame button {
+      margin-top: 10px;
+      background-color: #000;
+      border: 2px solid #9a7d46; }
+    #GMTC #np_matchgame .question-feedback {
+      position: relative;
+      height: 160px;
+      width: 100%;
+      margin-top: 50px;
+      margin-bottom: 10px;
+      margin-right: 30px; }
+    #GMTC #np_matchgame .question-feedback-wrapper {
+      width: 300px; }
+    #GMTC #np_matchgame .negative-feedback-icon {
+      width: 20px;
+      margin-right: 10px;
+      float: left;
+      margin-top: 45px; }
+      #GMTC #np_matchgame .negative-feedback-icon.bad-feedback {
+        opacity: 1 !important; }
+    #GMTC #np_matchgame .question-feedback-label {
+      font-family: "akzidenz-grotesk_bqregular";
+      size: 23px;
+      color: #737373;
+      text-transform: uppercase;
+      text-align: center;
+      letter-spacing: 2px;
+      padding-top: 12.5%; }
+    #GMTC #np_matchgame .correct {
+      font-size: 100px;
+      top: 20%;
+      left: 30%;
+      position: absolute; }
   #GMTC .btn-next {
     position: absolute;
     border-color: #9a7d46;
@@ -7736,6 +8185,80 @@ button.close {
     color: #040A2B;
     letter-spacing: 2px;
     font-size: 14px; }
+  #GMTC #hit-area-wrapper {
+    padding-top: 15px;
+    padding-bottom: 15px; }
+  #GMTC #select-hit-area-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #313131;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65); }
+  #GMTC .select-button-wrapper {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    margin-top: 1em;
+    margin-bottom: 1em; }
+  #GMTC .btn-select-submit {
+    position: relative;
+    border-color: #9a7d46;
+    background-color: #000000;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px; }
+  #GMTC .btn-select-submit span {
+    font-family: "BauerBodoniStd-Roman";
+    color: #FFFFFF;
+    text-transform: uppercase;
+    letter-spacing: 2px; }
+  #GMTC .select-button-completion-content {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 25px;
+    padding-right: 25px; }
+  #GMTC .select-response-wrapper {
+    position: absolute;
+    right: 0;
+    left: 0;
+    margin: auto;
+    width: 60%; }
+  #GMTC .select-response-wrapper p, #GMTC h2 {
+    color: #FFFFFF; }
+  #GMTC .select-response-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #313131;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65); }
+  #GMTC .select-response-correct {
+    position: absolute;
+    right: 0;
+    left: 0;
+    padding: 10px; }
+  #GMTC .select-response-incorrect {
+    position: absolute;
+    right: 0;
+    left: 0;
+    padding: 10px; }
+  #GMTC .left-column-select {
+    text-align: right; }
+  #GMTC .right-column-select {
+    text-align: left;
+    margin-top: 3px; }
+  #GMTC .response-icon-wrapper {
+    position: absolute;
+    right: 0;
+    width: 35px;
+    margin-top: -3px; }
   #GMTC .button-prioritize-content {
     position: relative;
     display: block; }
@@ -7811,15 +8334,9 @@ button.close {
     position: absolute;
     right: 0;
     left: 0;
-    /*margin: auto;*/
-    /*    margin-left: auto;
-        margin-*/
-    top: 0;
+    top: 10%;
     bottom: 0;
-    /*    position: absolute;
-        float: right;
-        right: 50%;
-        top: 43%;*/ }
+    margin: auto; }
   #GMTC .centered-content {
     padding-top: 3em;
     display: -webkit-box;
@@ -7837,15 +8354,12 @@ button.close {
             justify-content: center;
     resize: vertical; }
   #GMTC .positive-feedback-image, #GMTC .positive-feedback-content {
-    white-space: nowrap;
-    /*float: none;*/
-    /*float: left;*/
-    line-height: 1em;
-    /*padding-left: 5%;*/ }
+    white-space: nowrap; }
   #GMTC .positive-feedback-content {
     font-family: akzidenz-grotesk_bqregular;
     color: #040A2B;
     text-transform: uppercase;
+    padding-top: 10px;
     /*width: auto;*/ }
   #GMTC .positive-feedback-image {
     background-image: url("/assets/svgs/feedback-correct-icon-ANR.svg");
@@ -7874,6 +8388,9 @@ button.close {
     margin: 0; }
   #GMTC .draggableButton {
     cursor: pointer; }
+  #GMTC .draggableButton rect {
+    stroke: #040A2B;
+    stroke-width: 1px; }
   #GMTC .draggableButtonsvg {
     /*fill:#000000;*/ }
   #GMTC .hit-area {
@@ -8714,6 +9231,81 @@ img.blur {
           filter: url(styles/inset-shadow.svg#inset-shadow);
   /*    -webkit-filter: blur(3px); 
       filter: blur(3px); */ }
+
+.vertical-centered {
+  min-height: 100%;
+  /* Fallback for vh unit */
+  min-height: 100vh;
+                   /* You might also want to use
+                      'height' property instead.
+                      
+                      Note that for percentage values of
+                      'height' or 'min-height' properties,
+                      the 'height' of the parent element
+                      should be specified explicitly.
+
+                      In this case the parent of '.vertical-center'
+                      is the <body> element */
+  /* Make it a flex container */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  /* Align the bootstrap's container vertically */
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  /* In legacy web browsers such as Firefox 9
+     we need to specify the width of the flex container */
+  width: 100%;
+  /* Also 'margin: 0 auto' doesn't have any effect on flex items in such web browsers
+     hence the bootstrap's container won't be aligned to the center anymore.
+  
+     Therefore, we should use the following declarations to get it centered again */
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center; }
+
+.vertical-alignment {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center; }
+
+.vertically-center-container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 10%;
+  bottom: 0;
+  margin: auto; }
+
+.center-container {
+  position: relative; }
+
+.absolute-center {
+  width: 50%;
+  height: 50%;
+  overflow: auto;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0; }
+
+.vertical-center {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%); }
 
 .vertical-align {
   display: -webkit-box;

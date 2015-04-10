@@ -3849,7 +3849,7 @@
                                     force3D: true
                                 }, 0.2);
                                 TweenMax.to($(".button-screen"), 1.5, {
-                                    autoAlpha: 0.75,
+                                    autoAlpha: 0.65,
                                     ease: Power4.easeOut
                                 });
                                 TweenMax.to($(".button-screen")[0], 1.75, {
@@ -4456,8 +4456,10 @@
           if (correct) {
             $rootScope.$emit('slider-disable-wrong');
             this.feedback = feedback.correct;
+            this.feedbackBad = false;
           } else {
             this.feedback = feedback.incorrect;
+            this.feedbackBad = true;
           }
         }
 
@@ -4585,7 +4587,8 @@
       'ngSanitize',
       'newplayer.service',
       'newplayer.component',
-      'angular-royalslider'
+      'angular-royalslider',
+      'matchMedia'
     ]
   )
     .config( /** @ngInject */ function ($logProvider) {
@@ -5506,7 +5509,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "        </div>\n" +
     "    </div>\n" +
     "    <div class=\"col-xs-9\">\n" +
-    "        <span class=\"npAnswer-label answer-text\" for=\"{{npAnswer.id}}_input\" ng-bind-html=\"npAnswer.label\"></span>\n" +
+    "        <span class=\"npAnswer-label body-copy\" for=\"{{npAnswer.id}}_input\" ng-bind-html=\"npAnswer.label\"></span>\n" +
     "    </div>\n" +
     "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
     "</div>\n" +
@@ -5706,11 +5709,11 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                            <stop  offset=\"0.638\" style=\"stop-color:#CAA04D\"/>\n" +
     "                            <stop  offset=\"0.9816\" style=\"stop-color:#F3DB7E\"/>\n" +
     "                        </linearGradient>\n" +
-    "                        <rect fill=\"\" stroke=\"url(#SVGID_1_)\" stroke-width=\"3\" vector-effect=\"non-scaling-stroke\"  x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
+    "                        <rect fill=\"\" stroke=\"url(#SVGID_1_)\" stroke-width=\"3\" vector-effect=\"non-scaling-stroke\"  x=\"0\" y=\"0\" width=\"99%\" height=\"99%\"/>\n" +
     "                        <foreignObject x=\"5%\" y=\"0\" width=\"100%\" height=\"100%\">\n" +
     "                            <div class=\"{{draggableButton.class}} button-content\">\n" +
     "                                <img class=\"draggableButtonImage\" ng-src=\"{{draggableButton.image}}\" alt=\"{{draggableButton.alt}}\" />\n" +
-    "                                <div class=\"draggableButtonContent\" ng-bind-html=\"draggableButton.content\" ></div>\n" +
+    "                                <div class=\"draggableButtonContent body-copy-strong\" ng-bind-html=\"draggableButton.content\" ></div>\n" +
     "                            </div>\n" +
     "                        </foreignObject>\n" +
     "                    </svg>\n" +
@@ -5740,13 +5743,15 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                                <foreignObject  x=\"0\" y=\"0\" width=\"100%\" height=\"100%\" >\n" +
     "                                    <div class=\"button-content\">\n" +
     "                                        <img class=\"hitAreaImage\" ng-src=\"{{draggableButton.matchingImage}}\" alt=\"{{hitArea.alt}}\" />\n" +
-    "                                        <div class=\"hitAreaContent\" ng-bind-html=\"draggableButton.matchingContent\" ></div>\n" +
+    "                                        <div class=\"hitAreaContent body-copy\" ng-bind-html=\"draggableButton.matchingContent\" ></div>\n" +
     "                                    </div>\n" +
-    "                                    <div class=\"button-completion-content\">\n" +
-    "                                        <div class=\"centered-content\" >\n" +
-    "                                            <div class=\"row \" >\n" +
-    "                                                <div class=\"positive-feedback-image col-xs-6 \"></div>\n" +
-    "                                                <div class=\"positive-feedback-content h4 col-xs-6 \" ng-bind-html=\"positiveFeedback\"></div>\n" +
+    "                                    <div class=\"button-completion-content vertical-centered\">\n" +
+    "                                        <div class=\"row \" >\n" +
+    "                                            <div class=\" col-xs-6 \" >\n" +
+    "                                                <div class=\"positive-feedback-image\"></div>\n" +
+    "                                            </div>\n" +
+    "                                            <div class=\" col-xs-6 \" >\n" +
+    "                                                <div class=\"positive-feedback-content body-copy \" ng-bind-html=\"positiveFeedback\"></div>\n" +
     "                                            </div>\n" +
     "                                        </div>\n" +
     "                                    </div>\n" +
@@ -5864,7 +5869,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                        <foreignObject x=\"5%\" y=\"0\" width=\"100%\" height=\"100%\">\n" +
     "                            <div class=\"{{draggableButton.class}} button-content\">\n" +
     "                                <img class=\"draggableButtonImage\" ng-src=\"{{draggableButton.image}}\" alt=\"{{draggableButton.alt}}\" />\n" +
-    "                                <div class=\"draggableButtonContent\" ng-bind-html=\"draggableButton.content\" ></div>\n" +
+    "                                <div class=\"draggableButtonContent subhead-copy\" ng-bind-html=\"draggableButton.content\" ></div>\n" +
     "                            </div>\n" +
     "                        </foreignObject>\n" +
     "                    </svg>\n" +
@@ -5895,7 +5900,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                                    <div class=\"select-button-completion-content\">\n" +
     "                                        <div class=\"row\" >\n" +
     "                                            <img class=\"feedback-draggable-button-image\" ng-src=\"{{draggableButton.image}}\" alt=\"{{draggableButton.alt}}\" />\n" +
-    "                                            <div class=\"feedback-draggable-button-content\" ng-bind-html=\"draggableButton.content\" ></div>\n" +
+    "                                            <div class=\"feedback-draggable-button-content body-copy\" ng-bind-html=\"draggableButton.content\" ></div>\n" +
     "                                        </div>\n" +
     "                                    </div>\n" +
     "                                </foreignObject>\n" +
@@ -5999,7 +6004,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                <div flash-card class=\"flash-cards-object \" ng-repeat=\"flashCardComponent in npFlashCards.flashCardComponents\">\n" +
     "                    <div class=\"flash-card-front-wrapper\">\n" +
     "                        <div class=\"flash-card-background\"></div>\n" +
-    "                        <p class=\"flash-card-content-front\" ng-bind-html=\"flashCardComponent.contentFront\"></p>\n" +
+    "                        <p class=\"body-copy flash-card-content-front\" ng-bind-html=\"flashCardComponent.contentFront\"></p>\n" +
     "                        <div class=\"flash-card-overlay\"></div>\n" +
     "                    </div>\n" +
     "                    <div class=\"flash-card-back-wrapper\">\n" +
@@ -6104,11 +6109,11 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                                <stop  offset=\"0.638\" style=\"stop-color:#CAA04D\"/>\n" +
     "                                <stop  offset=\"0.9816\" style=\"stop-color:#F3DB7E\"/>\n" +
     "                            </linearGradient>\n" +
-    "                            <rect fill=\"url(#MyGradient)\" stroke=\"url(#SVGID_1_)\" vector-effect=\"non-scaling-stroke\" stroke-width=\"3\" x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
+    "                            <rect fill=\"url(#MyGradient)\" stroke=\"url(#SVGID_1_)\" vector-effect=\"non-scaling-stroke\" stroke-width=\"3\" x=\"0\" y=\"0\" width=\"99%\" height=\"99%\"/>\n" +
     "                        </g>\n" +
     "                    </svg>\n" +
     "                </div>\n" +
-    "                <div class=\"npHotspot-feedback\" ng-bind-html=\"npHotspot.feedback\"></div>\n" +
+    "                <div class=\"npHotspot-feedback body-copy\" ng-bind-html=\"npHotspot.feedback\"></div>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "    </div>\n" +
@@ -6150,8 +6155,8 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "        </div>\n" +
     "        <div class=\"column-2 col-md-8\">\n" +
     "            <div class=\"media-body\">\n" +
-    "                <div ng-bind-html=\"npList.heading\" class=\"media-heading h4\"></div>\n" +
-    "                <div ng-bind-html=\"npList.content\" class=\"np-cmp-main list-body-text\" ng-if=\"!npList.link\"></div>\n" +
+    "                <div ng-bind-html=\"npList.heading\" class=\"media-heading subhead-copy\"></div>\n" +
+    "                <div ng-bind-html=\"npList.content\" class=\"np-cmp-main body-copy\" ng-if=\"!npList.link\"></div>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "    </div>\n" +
@@ -6160,72 +6165,61 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('scripts/component/npMatch/npMatch.html',
-    "<form class=\"np-cmp-wrapper {{component.type}} matching-game\" ng-controller=\"npMatchController as npMatch\" ng-submit=\"npMatch.evaluate()\">\n" +
+    "<section id=\"np_matchgame\" class=\"col-xs-12\"> \n" +
+    "    <form class=\"np-cmp-wrapper {{component.type}} \" ng-controller=\"npMatchController as npMatch\" ng-submit=\"npMatch.evaluate()\">\n" +
     "\n" +
-    "    <div class=\"debug\">\n" +
-    "        <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
-    "    </div>\n" +
+    "        <div class=\"debug\">\n" +
+    "            <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
+    "        </div>\n" +
     "\n" +
-    "    <!--    <h5 class=\"dark text-uppercase\">question:</h5>\n" +
+    "        <!--<h5 class=\"text-uppercase\">question:</h5>-->\n" +
     "        <div class=\"npMatch-content\" ng-bind-html=\"npMatch.content\"></div>\n" +
-    "    \n" +
-    "        <h5 class=\"dark text-uppercase\">answers:</h5>-->\n" +
     "\n" +
-    "    <div  class=\"question-match row\">\n" +
-    "        <div  class=\"question-match-set col-sm-12\">\n" +
-    "            <div np-component ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "        <!--<h5 class=\"text-uppercase\">answers:</h5>-->\n" +
+    "        <div np-component ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "\n" +
+    "        <div class=\"col-xs-12\">\n" +
+    "            <button type=\"submit\" class=\"col-xs-offset-6 btn-primary\">Submit</button>        \n" +
+    "            <button id=\"next_button\" class=\"btn-default\" ng-click=\"npMatch.nextPage($event)\" ng-show=\"npMatch.canContinue\">Next</button>\n" +
     "        </div>\n" +
-    "        <div  class=\"question-match-outline\">\n" +
-    "            <div  class=\"question-match-outline-inner\">\n" +
-    "                <svg  version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
-    "                    <style type=\"text/css\">\n" +
-    "                        <![CDATA[\n" +
-    "                        .st0{fill:url(#SVGID_1_);}\n" +
-    "                        .st1{display:inline;}\n" +
-    "                        .st2{display:none;}\n" +
-    "                        ]]>\n" +
-    "                    </style>\n" +
-    "                    <g id=\"Layer_2\">\n" +
-    "                        <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"0.8359\" y1=\"0.9399\" x2=\"367.8515\" y2=\"221.4724\">\n" +
-    "                            <stop  offset=\"0\" style=\"stop-color:#CAA04C\"/>\n" +
-    "                            <stop  offset=\"0.3497\" style=\"stop-color:#F8E4AA\"/>\n" +
-    "                            <stop  offset=\"0.638\" style=\"stop-color:#CAA04D\"/>\n" +
-    "                            <stop  offset=\"0.9816\" style=\"stop-color:#F3DB7E\"/>\n" +
-    "                        </linearGradient>\n" +
-    "                        <rect fill=\"url(#MyGradient)\" stroke=\"url(#SVGID_1_)\" vector-effect=\"non-scaling-stroke\" stroke-width=\"10\" x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
-    "                    </g>\n" +
-    "                </svg>\n" +
-    "            </div>\n" +
-    "            <div class=\"btn-match-submit-wrapper\">\n" +
-    "                <!--<div class=\" col-sm-12\">-->\n" +
-    "                    <button type=\"submit\" class=\"btn-match-submit\" ng-click=\"npQuestion.evaluate()\">\n" +
-    "                        <span>Submit</span>\n" +
-    "                    </button>\n" +
-    "                <!--</div>-->    \n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "    </div>\n" +
-    "\n" +
-    "\n" +
-    "    <!--<button type=\"submit\" class=\"col-xs-3 btn-primary\">Submit</button>-->\n" +
-    "    <!--    <div class=\"row btn-match-submit-wrapper\">\n" +
-    "            <div class=\" col-sm-12\">\n" +
-    "                <button type=\"submit\" class=\"btn-match-submit\" ng-click=\"npQuestion.evaluate()\">\n" +
-    "                    <span>Submit</span>\n" +
-    "                </button>\n" +
-    "            </div>    \n" +
-    "        </div>    -->\n" +
-    "    <!--    <button id=\"next_button\" class=\"btn-next\" ng-click=\"npMatch.nextPage($event)\" ng-show=\"npMatch.canContinue\">\n" +
-    "            <span>\n" +
-    "                NEXT\n" +
-    "            </span>\n" +
-    "        </button>-->\n" +
     "    <!--    <div class=\"btn btn-default\">\n" +
     "            <input type=\"submit\" />\n" +
     "        </div>-->\n" +
     "\n" +
-    "    <div class=\"npMatch-feedback\" ng-if=\"npMatch.feedback\" ng-bind-html=\"npMatch.feedback\"></div>\n" +
-    "</form>\n"
+    "        <!-- <div class=\"npMatch-feedback question-feedback col-xs-offset-5\" ng-bind-html=\"npMatch.feedback\"></div> -->\n" +
+    "\n" +
+    "        <div question-feedback-build class=\"row\">\n" +
+    "            <div  class=\"col-xs-12 col-md-4 col-md-offset-4 question-feedback\">\n" +
+    "                <div class=\"question-feedback-wrapper\">\n" +
+    "                    <div class=\"negative-feedback-icon\" ng-class=\"{'bad-feedback' : npMatch.feedbackBad}\">\n" +
+    "                        <svg version=\"1.0\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"22.8px\" height=\"22.801px\" viewBox=\"599.8 837.1 22.8 22.801\" enable-background=\"new 599.8 837.1 22.8 22.801\" xml:space=\"preserve\">\n" +
+    "                            <path fill=\"#9A7D46\" d=\"M611.2,859.9c-6.3,0-11.4-5.101-11.4-11.4s5.101-11.4,11.4-11.4S622.6,842.2,622.6,848.5 S617.5,859.9,611.2,859.9z M611.2,838.1c-5.7,0-10.4,4.7-10.4,10.4s4.7,10.4,10.4,10.4s10.399-4.7,10.399-10.4 S616.9,838.1,611.2,838.1z\"/>\n" +
+    "                            <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"874.293\" y1=\"-1086.3877\" x2=\"861.2496\" y2=\"-1099.811\" gradientTransform=\"matrix(1 0 0 -1 -256 -245)\">\n" +
+    "                                <stop  offset=\"0.1642\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                <stop  offset=\"0.1698\" style=\"stop-color:#CCA352\"/>\n" +
+    "                                <stop  offset=\"0.2532\" style=\"stop-color:#E4C682\"/>\n" +
+    "                                <stop  offset=\"0.3167\" style=\"stop-color:#F2DCA0\"/>\n" +
+    "                                <stop  offset=\"0.3527\" style=\"stop-color:#F8E4AB\"/>\n" +
+    "                                <stop  offset=\"0.4062\" style=\"stop-color:#EBD191\"/>\n" +
+    "                                <stop  offset=\"0.48\" style=\"stop-color:#DDBC74\"/>\n" +
+    "                                <stop  offset=\"0.5532\" style=\"stop-color:#D2AC5F\"/>\n" +
+    "                                <stop  offset=\"0.6249\" style=\"stop-color:#CCA352\"/>\n" +
+    "                                <stop  offset=\"0.6933\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                <stop  offset=\"0.7957\" style=\"stop-color:#D5B05B\"/>\n" +
+    "                                <stop  offset=\"0.9955\" style=\"stop-color:#F2DA7E\"/>\n" +
+    "                                <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
+    "                            </linearGradient>\n" +
+    "                            <polygon fill=\"url(#SVGID_1_)\" points=\"605.8,856.5 611.2,851.2 616.5,856.5 619,854 613.7,848.7 619,843.4 616.5,840.8 611.2,846.1 605.9,840.8 603.4,843.4 608.7,848.7 603.3,854 \"/>\n" +
+    "                        </svg>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"question-feedback-label\" ng-bind-html=\"npMatch.feedback\">Feedback area</div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </form>\n" +
+    "</section>\n" +
+    "\n" +
+    "<br/><br/><br/>\n"
   );
 
 
@@ -6236,7 +6230,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "\n" +
     "<div class=\"np-cmp-wrapper {{component.type}} rsDefault visibleNearby\" royalslider data-match=\"true\">\n" +
     "    <div np-component ng-repeat=\"component in components | orderBy:random\" idx=\"{{component.idx}}\"  class=\"matching-game-row\"></div>\n" +
-    "</div>"
+    "</div>\n"
   );
 
 
@@ -6396,8 +6390,8 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                <div class=\"reveal-content-wrapper\">\n" +
     "                    <div class=\"reveal-background\"></div>\n" +
     "                    <div class=\"reveal-content-text\">\n" +
-    "                        <p class=\"h4 reveal-text-heading\" ng-bind-html=\"revealItemComponent.heading\"></p>\n" +
-    "                        <p class=\" reveal-text-body\" ng-bind-html=\"revealItemComponent.content\"></p>\n" +
+    "                        <p class=\"subhead-copy\" ng-bind-html=\"revealItemComponent.heading\"></p>\n" +
+    "                        <p class=\"body-copy reveal-text-body\" ng-bind-html=\"revealItemComponent.content\"></p>\n" +
     "                    </div>\n" +
     "                </div>\n" +
     "            </div>\n" +
