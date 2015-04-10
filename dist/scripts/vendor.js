@@ -54195,12 +54195,10 @@ a._i7:a.slider}),a.ev.on("rsAfterSizePropSet",function(){var b,c=a.st.visibleNea
           $correct.css('opacity', '0.5');
           $correct.data('correct', 'true');
           $correct.find('.slide-wrapper').append('<i class="fa fa-check-circle correct"/>');
-          debugger;
         });
 
         $rootScope.$on('slider-enable-all', function () {
           $(element).find('.rsSlide').css('opacity', '').data('correct', 'false');
-          debugger;
         });
 
         var slider = $(element).data('royalSlider');
