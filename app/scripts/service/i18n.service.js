@@ -8,18 +8,25 @@
 
   /** @ngInject */
   function i18nService($log) {
-    var vm = this;
-    var dict = {
-      submit: 'Submit',
-      next: 'Next',
-      pass: 'Congratulations, you scored :USERSCORE:% and have passed this module.',
-      fail: 'Sorry, you scored :USERSCORE:% and you needed to score :MINSCORE:% to pass. Try it again!'
-    };
+    var key,
+      vm = this,
+      dict = {
+        submit: 'Submit',
+        next: 'Next',
+        pass: 'Congratulations, you scored :USERSCORE:% and have passed this module.',
+        fail: 'Sorry, you scored :USERSCORE:% and you needed to score :MINSCORE:% to pass. Try it again!'
+      };
 
     $log.debug('i18n | init');
 
-    function initWithDict(dict) {
-      $log.debug('i18n | initWithDict', dict);
+    function initWithDict(newDict) {
+      $log.debug('i18n | initWithDict', newDict);
+
+      for(key in newDict) {
+        dict[key] = newDict[key];
+      }
+
+      $log.debug('i18n | initWithDict internal dict updated', dict);
     }
 
     function get(forKey) {
