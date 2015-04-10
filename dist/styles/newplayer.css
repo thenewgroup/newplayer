@@ -5147,6 +5147,9 @@ button.close {
   /*New Player Quiz Questions classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*New Player Quiz Summary classes*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*New Player Matching Game classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -5245,6 +5248,12 @@ button.close {
   #np_reNutriv #np_reNutriv .p {
     color: #FFFFFF; }
   #np_reNutriv #np_reNutriv small {
+    color: #FFFFFF; }
+  #np_reNutriv h1, #np_reNutriv h2, #np_reNutriv h3, #np_reNutriv h4, #np_reNutriv h5 {
+    color: #FFFFFF; }
+  #np_reNutriv p ul ol {
+    color: #FFFFFF; }
+  #np_reNutriv small {
     color: #FFFFFF; }
   #np_reNutriv .dark h1, #np_reNutriv h2, #np_reNutriv h3, #np_reNutriv h4, #np_reNutriv h5 {
     color: #333333; }
@@ -5426,6 +5435,8 @@ button.close {
     color: #FFFFFF;
     text-transform: uppercase;
     letter-spacing: 2px; }
+  #np_reNutriv .btn-submit.btn-npq-next {
+    margin-left: 150px; }
   #np_reNutriv input {
     font-family: "BauerBodoniStd-Roman";
     size: 17px;
@@ -5465,7 +5476,6 @@ button.close {
     position: relative;
     width: 20px;
     height: 20px;
-    cursor: pointer;
     /*float: left;*/
     /*margin-right: 20px;*/
     /*border-color: $gold;*/
@@ -5504,6 +5514,31 @@ button.close {
     top: 0;
     left: 0;
     /*opacity: 0;*/
+    display: block;
+    margin: auto; }
+  #np_reNutriv .answer-text {
+    font-family: "akzidenz-grotesk_bqregular";
+    /*float: left;*/
+    color: #FFFFFF;
+    letter-spacing: 2px;
+    /*margin-right: 20px;*/ }
+  #np_reNutriv .checkbox-box svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    margin: auto; }
+  #np_reNutriv .checkbox-x {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    display: block;
+    margin: auto; }
+  #np_reNutriv .checkbox-x svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
     display: block;
     margin: auto; }
   #np_reNutriv .answer-text {
@@ -5552,6 +5587,13 @@ button.close {
     padding: 20px;
     width: 100%;
     height: 100%; }
+  #np_reNutriv #np_reNutriv .npQuizSummary {
+    color: white; }
+  #np_reNutriv #np_reNutriv .npQuizSummary .next_stuff {
+    margin-top: 1em;
+    padding: 1em 10px;
+    border: 1px solid #737373;
+    color: #737373; }
   #np_reNutriv .matching-game-row {
     display: inline-block;
     border: 2px solid black;
