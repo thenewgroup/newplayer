@@ -240,7 +240,7 @@
 
     return service;
   }
-})()
+})();
 
 /* jshint -W004 */
 (function() {
