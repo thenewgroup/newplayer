@@ -15,7 +15,9 @@
       io = AssessmentIOService,              // This is the I/O module for saving/restoring assessment stuff
       config = ConfigService.getConfig();
 
-    if (config.hasOwnProperty('assessmentIO') && config.assessmentIO.hasOwnProperty('updateFinal')) {
+    if (config.hasOwnProperty('assessmentIO')
+        && typeof config.assessmentIO === 'object'
+        && config.assessmentIO.hasOwnProperty('updateFinal')) {
       $log.debug('using assessmentIO from config');
       setIO(config.assessmentIO);
     } else {
