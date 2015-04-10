@@ -5,7 +5,7 @@
             /** @ngInject */
             .controller('npQuestionController',
                     function ($log, $scope, $rootScope, $sce, $element,
-                              ManifestService, AssessmentService) {
+                              i18nService, ManifestService, AssessmentService) {
                       var vm = this,
                           cmpData = $scope.component.data;
 
@@ -17,7 +17,11 @@
                         vm.canContinue = false;
                         vm.answers = [];
                         vm.questionHasEvaluated = false;
-                        vm.buttons = cmpData.buttons;
+                        // vm.buttons = cmpData.buttons; // if this ever moves into the manifest
+                        vm.buttons = {
+                          submit: i18nService.get('submit'),
+                          next: i18nService.get('next')
+                        };
                         //vm.answer = [];
 
                         var feedback = cmpData.feedback;

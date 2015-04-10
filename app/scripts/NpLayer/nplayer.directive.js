@@ -20,9 +20,10 @@
                 overrideData: '@npOverrideData',
                 minPassing: '@npMinPassing',
                 language: '@npLang',
-                manifestData: '=?',
                 onTrackService: '&npAnalyticsService',
-                assessmentIO: '=assessmentIo'
+                assessmentIO: '=assessmentIo',
+                manifestData: '=?',
+                i18n: '=?'
             },
             //compile: function (tElement, tAttrs, transclude, ConfigService)
             //{
@@ -47,7 +48,7 @@
 
     /** @ngInject */
     function NpLayerController($scope, $rootScope, $element, $attrs, $log, $compile,
-            APIService, ComponentService, ConfigService, ManifestService, TrackingService) {
+            APIService, ComponentService, ConfigService, i18nService, ManifestService, TrackingService) {
         var vm = this;
         vm.manifestData = null;
         vm.overrideData = null;
@@ -59,6 +60,10 @@
         ConfigService.setConfigData(vm);
         loadManifests();
         TrackingService.setCallback(vm.onTrackService);
+
+        if( typeof vm.i18n === 'object' ) {
+          i18nService.initWithDict(vm.i18n);
+        }
 
         //function npManifestChanged(event, toManifest, toPage) {
         //

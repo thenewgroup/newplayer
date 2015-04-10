@@ -5,7 +5,7 @@
   /** @ngInject */
     .controller('npQuizSummaryController',
     function ($log, $scope, $rootScope, $sce, $element, $filter,
-              ManifestService, AssessmentService) {
+              i18nService, ManifestService, AssessmentService) {
       var i,
           vm = this,
           cmpData = $scope.component.data;
@@ -19,9 +19,11 @@
       vm.summaryText = '';
 
       if(  vm.isPassing ) {
-        vm.summaryText = cmpData.feedback.pass;
+        //vm.summaryText = cmpData.feedback.pass;
+        vm.summaryText = i18nService.get('pass');
       } else {
-        vm.summaryText = cmpData.feedback.fail;
+        //vm.summaryText = cmpData.feedback.fail;
+        vm.summaryText = i18nService.get('fail');
       }
 
       // replace tokens in the string as we go
