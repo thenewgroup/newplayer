@@ -59,7 +59,7 @@
 .h1, .h2, .h3, .h4, .h5{
     color: $brand-primary-light;
 }
-/*#np_reNutriv p{*/
+/*p{*/
 .subhead-copy{
     color: $brand-primary;
     font-family: $font-family-sans-serif;
@@ -115,6 +115,30 @@ small{
 .gold {
     /*color: #9a7d46;*/
     color: $gold;
+}
+.btn span{ 
+    font-family: $font-family-sans-serif;
+    color: $brand-primary-light;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+.btn{ 
+    position: absolute;
+    border-color: $brand-primary-light;
+    width: auto;
+    /*bottom: 0;*/
+    right: 0;
+    padding-top: 5px;
+    padding-bottom: 3px;
+    margin: 0;
+    margin-top: 15px;
+    background-color: $brand-primary;
+}
+.btn span{ 
+    font-family: $font-family-sans-serif;
+    color: $brand-primary-light;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player padding wrapper classes*/
@@ -272,16 +296,16 @@ small{
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Matching Game classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-#np_reNutriv .matching-game{
+/*.matching-game{
     height:450px;
 }
-#np_reNutriv .question-match{
+.question-match{
     position: relative;
     height:auto;
     float: left;
     width: 100%;
 }
-#np_reNutriv .question-match-outline{
+.question-match-outline{
     position: absolute;
     height: 360px;
     right: 39%;
@@ -290,22 +314,22 @@ small{
     margin-bottom: 20px;
     box-shadow: 10px 10px 105px 50px rgba(0,0,0,0.5);
 }
-#np_reNutriv .question-match-outline-inner{
+.question-match-outline-inner{
     height:100%;
 }
-#np_reNutriv .question-match-set{
+.question-match-set{
     position: absolute;
     height:100%;
     right: 0;
     left: 0;
 }
-#np_reNutriv .btn-match-submit-wrapper{
+.btn-match-submit-wrapper{
     position: absolute;
     margin: auto;
     left: 0;
     right:0;
 }
-#np_reNutriv .btn-match-submit{
+.btn-match-submit{
     font-family: $re-nu-serif;
     color: $brand-primary-light;
     border-color: #9a7d46;
@@ -315,7 +339,7 @@ small{
     margin-top: 25px;
     margin-bottom: 25px;
     margin-left: 33%;
-}
+}*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Quiz classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -328,7 +352,7 @@ small{
 }
 .btn-submit{
     position: relative;
-    border-color: #FFFFFF;
+    border-color: $brand-primary-light;
     background-color: $brand-primary;
     padding-top: 5px;
     padding-left: 10px;
@@ -338,44 +362,44 @@ small{
     margin-left: 30px;
 }
 .btn-submit span{ 
-    font-family: $font-family-serif;
+    font-family: $font-family-sans-serif;
     color: $brand-primary-light;
     text-transform: uppercase;
     letter-spacing: 2px;
 }
 input{ 
-    font-family: $font-family-serif;
+    font-family: $re-nu-serif;
     size: $font-size-small;
-    color: $brand-primary;
+    color: #737373;
     text-transform: uppercase;
     letter-spacing: 2px;
     color: #313131;
 }
 .answer-text-input{ 
-    font-family: $font-family-serif;
+    font-family: $re-nu-serif;
     size: $font-size-small;
-    color: $brand-primary;
+    color: #737373;
     letter-spacing: 2px;
     border-color: $gold;
     background-color: $gray-dark;
     box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
 }
 .answer-text-checkbox { 
-    font-family: $font-family-serif;
+    font-family: $re-nu-serif;
     size: $font-size-small;
     color: $brand-primary-light;
     text-transform: uppercase;
     letter-spacing: 2px;
 }
 .answer-text-radio { 
-    font-family: $font-family-serif;
+    font-family: $re-nu-serif;
     size: $font-size-small;
     color: $brand-primary-light;
     text-transform: uppercase;
     letter-spacing: 2px;
 }
 .answer-text span{ 
-    font-family: $font-family-serif;
+    font-family: $re-nu-serif;
     size: $font-size-small;
     color: $brand-primary-light;
     text-transform: uppercase;
@@ -395,19 +419,19 @@ input{
     /*float: left;*/
     /*margin-right: 20px;*/
     /*border-color: $gold;*/
-    border-color: #FFFFFF ;
-    background-color: #FFFFFF;
-    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
+    /*border-color: #9a7d46;*/
+    /*    background-color: #000000;
+        box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);*/
 }
-.answer-radio{ 
+/*.answer-radio{ 
     position: relative;
     width: 20px;
     height: 20px;
-    /*border-color: $gold;*/
-    border-color: #FFFFFF;
-    background-color: #FFFFFF;
+    border-color: $gold;
+    border-color: #9a7d46;
+    background-color: #000000;
     box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
-}
+}*/
 .checkbox-box{ 
     position: absolute;
     width: 20px;
@@ -416,13 +440,19 @@ input{
     margin: auto;
     box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
 }
-.checkbox-box svg{ 
+.checkbox-box svg rect{
+    fill: $brand-primary;
+    opacity: 0.75;
+    stroke: #FFFFFF;
+    stroke-width: 3;
+}
+/*.checkbox-box svg{ 
     position: absolute;
     top:0;
     left:0;
     display: block;
     margin: auto;
-}
+}*/
 .checkbox-x{ 
     position: absolute;
     width: 20px;
@@ -434,14 +464,23 @@ input{
     position: absolute;
     top:0;
     left:0;
-    opacity: 0;
+    /*opacity: 0;*/
     display: block;
     margin: auto;
+}
+.checkbox-x svg line{ 
+    stroke: $brand-primary-light !important;
+}
+.answer-content-wrapper { 
+    padding: 6px;
+    opacity: .75;
+    background-color: #FFFFFF;
+    margin-left: 20px;
 }
 .answer-text{ 
     font-family: $font-family-sans-serif;
     /*float: left;*/
-    color: $brand-primary;
+    color: $brand-primary-light;
     letter-spacing: 2px;
     /*margin-right: 20px;*/
 }
@@ -451,7 +490,7 @@ input{
 .question-text{ 
     font-family: $font-family-serif;
     size: $font-size-h3;
-    color: $brand-primary;
+    color: $brand-primary-light;
     text-transform: uppercase;
     letter-spacing: 2px;
 }
@@ -478,6 +517,11 @@ input{
     margin-right: 10px;
     float: left;
 }
+.positive-feedback-icon{ 
+    width: 20px;
+    margin-right: 10px;
+    float: left;
+}
 .question-feedback-label{ 
     font-family: $font-family-sans-serif;
     size: $font-size-h3;
@@ -485,15 +529,21 @@ input{
     text-transform: uppercase;
     text-align: center;
     letter-spacing: 2px;
-    padding-top: 4.5%;
 }
 .question-feedback-wrapper{ 
     position: absolute;
-    background-color: $gray-dark;
-    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
+    background-color: #FFFFFF;
+    box-shadow: inset 0 0 5px 3px rgba(0, 0, 0, 0.25);
     padding: 20px;
     width: 100%;
     height: 100%;
+    min-height: 100%;
+}
+.question-feedback-wrapper svg polygon{ 
+    fill: $brand-primary;
+}
+.question-feedback-wrapper svg path{ 
+    fill: $brand-primary;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Matching Game classes*/
@@ -581,7 +631,7 @@ input{
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 .btn-next{ 
     position: absolute;
-    border-color: $gold;
+    border-color: $brand-primary-light;
     width: auto;
     /*bottom: 0;*/
     right: 0;
@@ -589,11 +639,11 @@ input{
     padding-bottom: 3px;
     margin: 0;
     margin-top: 15px;
-    background-color: #000000;
+    background-color: $brand-primary;
 }
 .btn-next span{ 
-    font-family: $font-family-serif;
-    color: $brand-primary-light;
+    font-family: $font-family-sans-serif;
+    background-color: $brand-primary;
     text-transform: uppercase;
     letter-spacing: 2px;
 }
@@ -604,7 +654,7 @@ input{
     position: relative;
     overflow: hidden;
     height: 400px;
-    background-color: $gray-dark;
+    background-color: $brand-primary-light;
     box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
     /*width: 135px;*/
 }
@@ -624,18 +674,25 @@ input{
     -webkit-mask-image: linear-gradient(top, rgba(248,248,170,1), rgba(202,160,78,.5) 50%, rgba(248,248,170,1));
 }
 .np-spinner div{
-    font-family: $font-family-serif;
+    font-family: $re-nu-serif;
+    color: $brand-primary;
     font-size: floor(($font-size-base * 2.5));
-    color: $gold-gradiant;
+    /*color: $gold-gradiant;*/
     line-height: 2.1em;
     text-align: center;
+}
+.np-spinner svg rect{
+    /*fill: #FFFFFF;*/
+    /*opacity: 0.75;*/
+    /*stroke: #FFFFFF;*/
+    stroke-width: 3;
 }
 .np-gold-border {
     position: absolute;
     top: 0;
     width: 100%;
     height: 400px;
-    box-shadow: inset 0 0 50px 15px rgba(0, 0, 0, 0.95);
+    box-shadow: inset 0 0 30px 15px rgba(0, 0, 0, 0.5);
 }
 /*
 ////////////////////////////////////////////////////////////////////////////////
@@ -658,15 +715,15 @@ input{
         position: relative;
         // width: 100%;
         height: 600px;
-        top: 70px;
+        top: 69px;
         > div {
             position: absolute;
             width: 100%;
-            height: 65px;
+            height: 70px;
             z-index: 999;
-            background-color: #313131;
+            background-color: $brand-primary-light;
             border-bottom: solid 1px;
-            border-bottom-color: $gold;
+            border-bottom-color: $brand-primary;
             outline: 1px solid transparent;
             backface-visibility:hidden;
         }
@@ -1073,14 +1130,16 @@ rect{
     padding: 0;
     opacity: .90;
 }  
-svg rect{
+.hit-area svg rect{
     fill: #FFFFFF;
     opacity: 0.75;
-}
-svg rect{
     stroke: #FFFFFF;
     stroke-width: 3;
 }
+/*svg rect{
+    stroke: #FFFFFF;
+    stroke-width: 3;
+}*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /* Hotspot Grid */
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
