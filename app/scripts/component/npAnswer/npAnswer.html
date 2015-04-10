@@ -32,8 +32,8 @@
             </svg>
         </div>
     </div>
-    <div class="col-xs-9">
-        <span class="npAnswer-label body-copy" for="{{npAnswer.id}}_input" ng-bind-html="npAnswer.label"></span>
+    <div class="col-xs-9 answer-content-wrapper">
+        <span class="npAnswer-label  body-copy" for="{{npAnswer.id}}_input" ng-bind-html="npAnswer.label"></span>
     </div>
     <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
 </div>
