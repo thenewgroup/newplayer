@@ -82,7 +82,7 @@
                                         "id": "reveal-0",
                                         "heading": "Reveal heading Item #0",
                                         "content": "Reveal Item #0 content content content content content content content content content content content content content content!!",
-                                        "buttonImage": "../_dev_assets/assets/images/comet-sml.jpg",
+                                        "buttonImage": "../_dev_assets/assets/images/comet-lrg.jpg",
                                         "buttonAltText": "thumb",
                                         "components": [
                                             {

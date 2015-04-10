@@ -75,7 +75,7 @@
                                     force3D: true
                                 }, 0.2);
                                 TweenMax.to($(".button-screen"), 1.5, {
-                                    autoAlpha: 0.75,
+                                    autoAlpha: 0.65,
                                     ease: Power4.easeOut
                                 });
                                 TweenMax.to($(".button-screen")[0], 1.75, {

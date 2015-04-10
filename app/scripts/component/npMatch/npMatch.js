@@ -53,8 +53,10 @@
           if (correct) {
             $rootScope.$emit('slider-disable-wrong');
             this.feedback = feedback.correct;
+            this.feedbackBad = false;
           } else {
             this.feedback = feedback.incorrect;
+            this.feedbackBad = true;
           }
         }
 
