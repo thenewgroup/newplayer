@@ -78,12 +78,6 @@
     <div class="col-xs-9">
         <span class="npAnswer-label answer-text" for="{{npAnswer.id}}_input" ng-bind-html="npAnswer.label"></span>
     </div>
-    <!--    <div>
-            <label>
-                <input type="checkbox" class="npAnswer-checkbox np-cmp-main " name="checkbox{{npAnswer.id}}" ng-model="npQuestion.answer[component.idx]" value="{{component.idx}}" id="{{npAnswer.id}}_input" ng-change="npQuestion.changed()" />
-                <span class="npAnswer-label" for="{{npAnswer.id}}_input" ng-bind-html="npAnswer.label"></span>
-            </label>
-        </div>-->
     <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
 </div>
 <div ng-if="npQuestion.type === 'text'" class="np-cmp-wrapper {{component.type}} input-group" ng-controller="npAnswerController as npAnswer">

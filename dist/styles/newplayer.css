@@ -5135,6 +5135,9 @@ button.close {
   /*New Player Flash Cards classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*New Player Matching Game classes*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*New Player Quiz classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -5171,6 +5174,14 @@ button.close {
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*New Player List classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*New Player Drag and Drop Select classes*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*.select-response-wrapper{
+      width: 100%;
+      height: 100%;
+      text-align: center;
+  }*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*New Player Drag and Drop Prioritize classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -5229,11 +5240,11 @@ button.close {
     color: #FFFFFF;
     /*margin-bottom: 0px;*/
     display: inline-block; }
-  #np_reNutriv h1, #np_reNutriv h2, #np_reNutriv h3, #np_reNutriv h4, #np_reNutriv h5 {
+  #np_reNutriv .h1, #np_reNutriv .h2, #np_reNutriv .h3, #np_reNutriv .h4, #np_reNutriv .h5 {
     color: #FFFFFF; }
-  #np_reNutriv p ul ol {
+  #np_reNutriv #np_reNutriv .p {
     color: #FFFFFF; }
-  #np_reNutriv small {
+  #np_reNutriv #np_reNutriv small {
     color: #FFFFFF; }
   #np_reNutriv .dark h1, #np_reNutriv h2, #np_reNutriv h3, #np_reNutriv h4, #np_reNutriv h5 {
     color: #333333; }
@@ -5357,6 +5368,43 @@ button.close {
     background-color: #FFFFFF; }
   #np_reNutriv .flash-card-content-back p {
     color: #000000; }
+  #np_reNutriv #np_reNutriv .matching-game {
+    height: 450px; }
+  #np_reNutriv #np_reNutriv .question-match {
+    position: relative;
+    height: auto;
+    float: left;
+    width: 100%; }
+  #np_reNutriv #np_reNutriv .question-match-outline {
+    position: absolute;
+    height: 360px;
+    right: 39%;
+    left: 39%;
+    margin-top: -20px;
+    margin-bottom: 20px;
+    box-shadow: 10px 10px 105px 50px rgba(0, 0, 0, 0.5); }
+  #np_reNutriv #np_reNutriv .question-match-outline-inner {
+    height: 100%; }
+  #np_reNutriv #np_reNutriv .question-match-set {
+    position: absolute;
+    height: 100%;
+    right: 0;
+    left: 0; }
+  #np_reNutriv #np_reNutriv .btn-match-submit-wrapper {
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0; }
+  #np_reNutriv #np_reNutriv .btn-match-submit {
+    font-family: "BauerBodoniStd-Roman";
+    color: #FFFFFF;
+    border-color: #9a7d46;
+    background-color: #000000;
+    text-transform: uppercase;
+    padding-top: 5px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    margin-left: 33%; }
   #np_reNutriv .quiz-label {
     font-family: "akzidenz-grotesk_bqregular";
     color: #FFFFFF;
@@ -5417,6 +5465,7 @@ button.close {
     position: relative;
     width: 20px;
     height: 20px;
+    cursor: pointer;
     /*float: left;*/
     /*margin-right: 20px;*/
     /*border-color: $gold;*/
@@ -5454,7 +5503,7 @@ button.close {
     position: absolute;
     top: 0;
     left: 0;
-    opacity: 0;
+    /*opacity: 0;*/
     display: block;
     margin: auto; }
   #np_reNutriv .answer-text {
@@ -5693,6 +5742,80 @@ button.close {
     color: #FFFFFF;
     letter-spacing: 2px;
     font-size: 14px; }
+  #np_reNutriv #hit-area-wrapper {
+    padding-top: 15px;
+    padding-bottom: 15px; }
+  #np_reNutriv #select-hit-area-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #313131;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65); }
+  #np_reNutriv .select-button-wrapper {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    margin-top: 1em;
+    margin-bottom: 1em; }
+  #np_reNutriv .btn-select-submit {
+    position: relative;
+    border-color: #9a7d46;
+    background-color: #000000;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px; }
+  #np_reNutriv .btn-select-submit span {
+    font-family: "BauerBodoniStd-Roman";
+    color: #FFFFFF;
+    text-transform: uppercase;
+    letter-spacing: 2px; }
+  #np_reNutriv .select-button-completion-content {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 25px;
+    padding-right: 25px; }
+  #np_reNutriv .select-response-wrapper {
+    position: absolute;
+    right: 0;
+    left: 0;
+    margin: auto;
+    width: 60%; }
+  #np_reNutriv .select-response-wrapper p, #np_reNutriv h2 {
+    color: #FFFFFF; }
+  #np_reNutriv .select-response-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #313131;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65); }
+  #np_reNutriv .select-response-correct {
+    position: absolute;
+    right: 0;
+    left: 0;
+    padding: 10px; }
+  #np_reNutriv .select-response-incorrect {
+    position: absolute;
+    right: 0;
+    left: 0;
+    padding: 10px; }
+  #np_reNutriv .left-column-select {
+    text-align: right; }
+  #np_reNutriv .right-column-select {
+    text-align: left;
+    margin-top: 3px; }
+  #np_reNutriv .response-icon-wrapper {
+    position: absolute;
+    right: 0;
+    width: 35px;
+    margin-top: -3px; }
   #np_reNutriv .button-prioritize-content {
     position: relative;
     display: block; }
@@ -5954,6 +6077,7 @@ button.close {
     padding-top: 20px;
     padding-bottom: 30px;
     display: inline-block;
+    width: 100%;
     margin: 0 auto;
     padding-left: 50px;
     padding-right: 50px; }
@@ -5999,14 +6123,7 @@ button.close {
     margin: 0 auto;
     padding-top: 10px; }
   #np_storyDefault .beths-signature {
-    background-image: url("../assets/svgs/signatureBethZurn.svg");
-    background-repeat: no-repeat;
-    background-position-x: 85%;
-    max-width: 296px;
-    width: 100%;
-    height: 121px;
-    padding-left: 70px;
-    padding-right: 70px; }
+    display: none; }
   #np_storyDefault .np_btn-favorite {
     padding-top: 20px;
     padding-bottom: 40px;
@@ -6047,6 +6164,156 @@ button.close {
       padding-left: 10px;
       padding-right: 10px; }
     #np_storyDefault .outside-padding {
+      padding-left: 5px;
+      padding-right: 5px; } }
+
+#np_storyBethsBlog {
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*page type background classes*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*When setting this ID for New Player use: 'newplayer-background'*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*New Player background color wrapper classes*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*When setting this class for New Player use: 'background-brand-primary-light'*/
+  /*When setting this class for New Player use: 'background-brand-offwhite' */
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*font stuff*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*New Player button wrapper classes*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*When setting this class for New Player use: 'btn-favorite'*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*New Player button wrapper classes*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/ }
+  #np_storyBethsBlog #np_newplayer-background {
+    position: absolute;
+    background-color: #E6E9EE;
+    background-size: cover;
+    position: fixed;
+    content: "";
+    width: 100%;
+    height: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    /*z-index: -1;*/ }
+  #np_storyBethsBlog .np_background-brand-primary-light {
+    background-color: #FFFFFF; }
+  #np_storyBethsBlog .np_background-brand-offwhite {
+    background-color: #E6E9EE; }
+  #np_storyBethsBlog .hero {
+    padding-top: 0px;
+    padding-bottom: 20px;
+    margin: 0 auto;
+    max-width: 550px;
+    width: 100%; }
+  #np_storyBethsBlog .header {
+    font-family: "optimadisplaylightlight";
+    font-weight: 100;
+    line-height: 1.25;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding-top: 20px;
+    padding-bottom: 30px;
+    display: inline-block;
+    width: 100%;
+    margin: 0 auto;
+    padding-left: 50px;
+    padding-right: 50px; }
+  #np_storyBethsBlog .sans-head {
+    font-family: "akzidenz-grotesk_bqbold";
+    color: #040A2B;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 2px;
+    padding-top: 20px;
+    padding-bottom: 3px;
+    display: inline-block;
+    margin: 0 auto; }
+  #np_storyBethsBlog .sans-head-link {
+    font-family: "akzidenz-grotesk_bqbold";
+    color: #040A2B;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: inline-block;
+    margin: 0 auto; }
+  #np_storyBethsBlog .body-copy {
+    font-family: "akzidenz-grotesk_bqregular";
+    color: #040A2B;
+    text-align: justify;
+    font-size: 18px;
+    letter-spacing: 1px;
+    display: inline-block;
+    margin: 0 auto; }
+  #np_storyBethsBlog .serif-body-link {
+    font-family: "optimadisplaylightlight";
+    color: #040A2B;
+    letter-spacing: 1px;
+    display: inline-block;
+    margin: 0 auto; }
+  #np_storyBethsBlog .serif-date-link {
+    font-family: "optimadisplaylightlight";
+    font-style: italic;
+    color: #040A2B;
+    letter-spacing: 1px;
+    display: inline-block;
+    margin: 0 auto;
+    padding-top: 10px; }
+  #np_storyBethsBlog .beths-signature {
+    background-image: url("../assets/svgs/signatureBethZurn.svg");
+    background-repeat: no-repeat;
+    background-position-x: 85%;
+    max-width: 296px;
+    width: 100%;
+    height: 121px;
+    padding-left: 70px;
+    padding-right: 70px; }
+  #np_storyBethsBlog .np_btn-favorite {
+    padding-top: 20px;
+    padding-bottom: 40px;
+    padding-left: 200px;
+    padding-right: 200px; }
+  #np_storyBethsBlog .btn-open-favorites {
+    /*width: 7em;*/ }
+  #np_storyBethsBlog .center-padding {
+    padding-left: 200px;
+    padding-right: 200px;
+    width: 100%; }
+  @media (max-width: 1200px) {
+    #np_storyBethsBlog .center-padding {
+      padding-left: 100px;
+      padding-right: 100px; } }
+  @media (max-width: 992px) {
+    #np_storyBethsBlog .center-padding {
+      padding-left: 70px;
+      padding-right: 70px; }
+    #np_storyBethsBlog .outside-padding {
+      padding-left: 50px;
+      padding-right: 50px; }
+    #np_storyBethsBlog .np_btn-favorite {
+      padding-top: 10px;
+      padding-bottom: 20px;
+      padding-left: 0px;
+      padding-right: 0px; }
+    #np_storyBethsBlog .header {
+      padding-top: 10px;
+      padding-bottom: 15px;
+      padding-left: 5px;
+      padding-right: 5px; }
+    #np_storyBethsBlog .sans-head {
+      padding-left: 50px;
+      padding-right: 50px; } }
+  @media (max-width: 768px) {
+    #np_storyBethsBlog .center-padding {
+      padding-left: 10px;
+      padding-right: 10px; }
+    #np_storyBethsBlog .outside-padding {
       padding-left: 5px;
       padding-right: 5px; } }
 

@@ -37,25 +37,34 @@
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*ReNutriv font classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-.headline {
-  font-family: $re-nu-serif;
-  color: $brand-primary-light;
-  letter-spacing: 2px;
-  padding-top: 10px;
-  padding-bottom: 0px;
-  margin-top: 10px;
-  margin-bottom: 0px;
-  display: inline-block;
-}
 
-.instructional {
-  letter-spacing: 1px;
-  padding-top: 0px;
-  padding-bottom: 20px;
-  margin-top: 0px;
-  color: $brand-primary-light;
-  /*margin-bottom: 0px;*/
-  display: inline-block;
+.headline{
+    font-family: $re-nu-serif;
+    color: $brand-primary-light;
+    letter-spacing: 2px;
+    padding-top: 10px;
+    padding-bottom: 0px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    display: inline-block;
+}
+.instructional{
+    letter-spacing: 1px;
+    padding-top: 0px;
+    padding-bottom: 20px;
+    margin-top: 0px;
+    color: $brand-primary-light;
+    /*margin-bottom: 0px;*/
+    display: inline-block;
+}
+.h1, .h2, .h3, .h4, .h5{
+    color: $brand-primary-light;
+}
+#np_reNutriv .p{
+    color: $brand-primary-light;
+}
+#np_reNutriv small{
+    color: $brand-primary-light;
 }
 
 h1, h2, h3, h4, h5 {
@@ -262,6 +271,53 @@ small {
 }
 
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player Matching Game classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+#np_reNutriv .matching-game{
+    height:450px;
+}
+#np_reNutriv .question-match{
+    position: relative;
+    height:auto;
+    float: left;
+    width: 100%;
+}
+#np_reNutriv .question-match-outline{
+    position: absolute;
+    height: 360px;
+    right: 39%;
+    left: 39%;
+    margin-top: -20px;
+    margin-bottom: 20px;
+    box-shadow: 10px 10px 105px 50px rgba(0,0,0,0.5);
+}
+#np_reNutriv .question-match-outline-inner{
+    height:100%;
+}
+#np_reNutriv .question-match-set{
+    position: absolute;
+    height:100%;
+    right: 0;
+    left: 0;
+}
+#np_reNutriv .btn-match-submit-wrapper{
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right:0;
+}
+#np_reNutriv .btn-match-submit{
+    font-family: $re-nu-serif;
+    color: $brand-primary-light;
+    border-color: #9a7d46;
+    background-color: #000000;
+    text-transform: uppercase;
+    padding-top: 5px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    margin-left: 33%;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Quiz classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 .quiz-label {
@@ -374,6 +430,35 @@ input {
   display: block;
   margin: auto;
   box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
+
+.checkbox-box svg{
+    position: absolute;
+    top:0;
+    left:0;
+    display: block;
+    margin: auto;
+}
+.checkbox-x{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    display: block;
+    margin: auto;
+}
+.checkbox-x svg{
+    position: absolute;
+    top:0;
+    left:0;
+    /*opacity: 0;*/
+    display: block;
+    margin: auto;
+}
+.answer-text{
+    font-family: $font-family-sans-serif;
+    /*float: left;*/
+    color: $brand-primary-light;
+    letter-spacing: 2px;
+    /*margin-right: 20px;*/
 }
 
 .checkbox-box svg {
@@ -764,6 +849,103 @@ input {
   font-size: $font-size-base;
 }
 
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player Drag and Drop Select classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+#hit-area-wrapper{
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+#select-hit-area-background {
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    background-color: #313131;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
+}
+.select-button-wrapper{
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.btn-select-submit{
+    position: relative;
+    border-color: #9a7d46;
+    background-color: #000000;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.btn-select-submit span{
+    font-family: $re-nu-serif;
+    color: $brand-primary-light;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+.select-button-completion-content{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+/*.select-response-wrapper{
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}*/
+.select-response-wrapper{
+    position: absolute;
+    right: 0;
+    left: 0;
+    margin: auto;
+    width: 60%;
+}
+.select-response-wrapper p, h2{
+    color: $brand-primary-light;
+}
+.select-response-background {
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    background-color: #313131;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
+}
+.select-response-correct{
+    position: absolute;
+    right: 0;
+    left: 0;
+    padding: 10px;
+}
+.select-response-incorrect{
+    position: absolute;
+    right: 0;
+    left: 0;
+    padding: 10px;
+}
+.left-column-select{
+    text-align: right;
+}
+.right-column-select{
+    text-align: left;
+    margin-top: 3px;
+}
+.response-icon-wrapper{
+    position: absolute;
+    right: 0;
+    width: 35px;
+    margin-top: -3px;
+}
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Drag and Drop Prioritize classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/

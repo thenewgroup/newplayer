@@ -58,12 +58,14 @@
                             }
 
                           // TODO: Should this trigger a full evaluation on change or just for this element?
+
                             if (feedback.immediate) {
                                 vm.feedback = '';
                                 negativeFeedbackIcon = $element.find('.negative-feedback-icon');
                                 TweenMax.set(negativeFeedbackIcon, {opacity: 0, scale: 2.5, force3D: true});
                             }
                         };
+
                         vm.registerAnswer = function(idx, answer) {
                           vm.answers[idx] = answer;
                         };
@@ -158,9 +160,6 @@
                                 isCorrectAnswer = false;
                             }
 
-                            //$log.debug('npQuestion::evaluate:isCorrect', isCorrectAnswer);
-
-
                             // NOTE: feedback.correct/incorrect is set on the npQuestion's data, NOT npAnswer
                             if (feedback.immediate && vm.feedback === '') {
                               var tweenOpts = {
@@ -201,12 +200,10 @@
                     var negativeFeedbackIcon = '';
                     setTimeout(function () {
                         $scope.$apply(function () {
-                            negativeFeedbackIcon = $element.find('.hotspotButton');
+//                            negativeFeedbackIcon = $element.find('.hotspotButton');
                             function onPageLoadBuild() {
                                 negativeFeedbackIcon = $('.negative-feedback-icon');
                                 TweenMax.set(negativeFeedbackIcon, {opacity: 0, scale: 2.5, force3D: true});
-//                                TweenMax.set(hotspotButton, {opacity: 0, scale: .25, force3D: true});
-//                                TweenMax.staggerTo(hotspotButton, 2, {scale: 1, opacity: 1, delay: 0.5, ease: Elastic.easeOut, force3D: true}, 0.2);
                             }
                             onPageLoadBuild();
                         });

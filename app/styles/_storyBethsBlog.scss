@@ -98,9 +98,15 @@
     margin: 0 auto;
     padding-top: 10px;
 }
-
 .beths-signature {
-    display: none;
+    background-image:  url('../assets/svgs/signatureBethZurn.svg');
+    background-repeat: no-repeat;
+    background-position-x: 85%;
+    max-width:296px;
+    width:100%;
+    height:121px;
+    padding-left: 70px;
+    padding-right: 70px;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player button wrapper classes*/
