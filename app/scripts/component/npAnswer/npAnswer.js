@@ -12,6 +12,8 @@
 //                                checkmark = $element.find('svg#Layer_1'),
 //                                cmpData = $scope.component.data || {}; // already defined above
                         vm.isCorrect = cmpData.correct;
+                      // updateCheck is currently not defined but needed. Should it be the code below?
+                      var updateCheck = angular.noop;
 //                        var updateCheck = function () {
 //                            var tweenOptions = {ease: Power3.easeOut};
 
