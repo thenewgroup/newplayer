@@ -15,8 +15,8 @@
                         vm.type = cmpData.type;
                         vm.currentPage = 0;
                         vm.feedback = '';
-                        vm.assment = AssessmentService();
-                        vm.assment.setRequiredPages(pagesLen);
+//                        vm.assment = AssessmentService();
+//                        vm.assment.setRequiredPages(pagesLen);
                         vm.seenComponents = _.shuffle($scope.components);
                         vm.pageId = vm.seenComponents[0].data.id;
                         vm.difficulty = vm.seenComponents[0].components[0].data.difficulty || 0;

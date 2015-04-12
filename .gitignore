@@ -4,4 +4,3 @@ app/scripts/templates.js
 .sass-cache
 bower_components
 test/bower_components
-!/app/assets/video/ELX_Welcome_640x360_ENG.mp4
