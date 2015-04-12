@@ -117,7 +117,7 @@
                         onDrag: "&"
                     },
                     link: function (scope, element, attrs) {
-                        var hitArea = undefined;
+                        var hitArea;
                         var hitAreaWrapper = document.getElementById('draggableContainer');
                         var draggables = document.getElementsByClassName('draggableButton');
                         var currentTarget;
