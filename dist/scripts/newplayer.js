@@ -1806,12 +1806,16 @@
                         console.log(
                                 '\n::::::::::::::::::::::::::::::::::::::this.go:::::::::::::::::::::::::::::::::::::::::::::::::',
                                 '\n::this::', this,
-//                                '\n::this.parentNode::', this.parentNode.parentNode.id,
+                                '\n::cmpData::', cmpData,
+                                '\n::$(cmpData)::', $(cmpData),
                                 '\n::this::', $(this),
                                 '\n::this::', $(this).parent(),
                                 '\n::cmpData::', cmpData,
 //                                '\n::idx::', idx,
+                                '\n::btnLink::', btnLink,
                                 '\n::cmpData.link::', cmpData.link,
+                                '\n::angular.isString(btnLink)::', angular.isString(btnLink),
+                                '\n::btnLink.indexOf(/)::', btnLink.indexOf('/'),
                                 '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
                                 );
                         if (angular.isString(btnLink)) {
@@ -1825,6 +1829,30 @@
                                     }
                                     this.linkInternal = false;
                                 }
+                            } else if (typeof btnLink === 'undefined' || btnLink === '') {
+                                var parentPage = $('.npPage').closest('[data-cmptype="npPage"]');
+                                var allPages = ManifestService.getAll(parentPage, $scope.cmpIdx);
+//                                data-cmptype="npPage"
+                                console.log(
+                                        '\n::::::::::::::::::::::::::::::::::::::btnLink===undefined:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                        '\n::allPages::', allPages,
+                                        '\n::parentPage::', parentPage,
+                                        '\n::parentPage.length::', parentPage.length,
+                                        '\n::cmpData::', cmpData,
+                                        '\n::ManifestService.getPageId()::', ManifestService.getPageId(),
+//                                        '\n::ManifestService.getComponentIdx()::', ManifestService.getNextComponent(),
+                                        '\n::npPage::', $('.npPage'),
+                                        '\n::npPage::', $('.npPage').length,
+                                        '\n::$(this).closest(.npPage)::', $(this).closest('.npPage'),
+                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                        );
+                                this.link = parentPage[1];
+//                                if (!this.target) {
+//                                    this.target = '_blank';
+//                                }
+//                                ManifestService.setPageId('Page2');
+                                ManifestService.goToNextPage();
+//                                this.linkInternal = true;
                             } else if (/^([a-zA-Z]{1,10}:)?\/\//.test(btnLink)) {
                                 if (!this.target) {
                                     this.target = '_blank';
@@ -1857,6 +1885,7 @@
                                         '\n::::::::::::::::::::::::::::::::::::::this.linkInternal:::::::::::::::::::::::::::::::::::::::::::::::::',
                                         '\n::cmpData::', cmpData,
                                         '\n::cmpData.link::', cmpData.link,
+                                        '\n::ManifestService.setPageId(cmpData.link)::', ManifestService.setPageId(cmpData.link),
                                         '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
                                         );
                             } else {
@@ -1867,7 +1896,12 @@
                                     APIService.postData(btnLink);
                                     return;
                                 }
-                                TrackingService.trackExternalLinkClick(btnLink);
+                                console.log(
+                                        '\n::::::::::::::::::::::::::::::::::::::this.target:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                        '\n::this.link::', this.link,
+                                        '\n::this.target::', this.target,
+                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                        );
                                 window.open(this.link, this.target);
                             }
                         };
@@ -3466,13 +3500,22 @@
                         //////////////////////////////////////////////////////////////////////////////////////
                         //build that 
                         //////////////////////////////////////////////////////////////////////////////////////
-                        TweenMax.staggerTo($(".boxElements"), 2, {
-                            scale: 1,
-                            autoAlpha: 1,
-                            delay: 0.75,
-                            ease: Power4.easeOut,
-                            force3D: true
-                        }, 0.2);
+                        setTimeout(function () {
+                            $scope.$apply(function () {
+                                TweenMax.set($(".response-item"), {
+                                    autoAlpha: 0,
+                                    scale: 0.5,
+                                    force3D: true
+                                });
+                                TweenMax.staggerTo($(".response-item"), 2, {
+                                    scale: 1,
+                                    autoAlpha: 1,
+                                    delay: 0.75,
+                                    ease: Power4.easeOut,
+                                    force3D: true
+                                }, 0.2);
+                            });
+                        });
                         this.update = function (event) {
                             $log.debug('npQuestion::answer changed');
                             if (feedback.immediate) {
@@ -3480,12 +3523,12 @@
                                 negativeFeedbackIcon = $element.find('.negative-feedback-icon');
                                 positiveFeedbackIcon = $element.find('.positive-feedback-icon');
                                 TweenMax.set(negativeFeedbackIcon, {
-                                    opacity: 0,
+                                    autoAlpha: 0,
                                     scale: 2.5,
                                     force3D: true
                                 });
                                 TweenMax.set(positiveFeedbackIcon, {
-                                    opacity: 0,
+                                    autoAlpha: 0,
                                     scale: 2.5,
                                     force3D: true
                                 });
@@ -3498,12 +3541,12 @@
                             negativeFeedbackIcon = $element.find('.negative-feedback-icon');
                             positiveFeedbackIcon = $element.find('.positive-feedback-icon');
                             TweenMax.to(negativeFeedbackIcon, 0.25, {
-                                opacity: 0,
+                                autoAlpha: 0,
                                 scale: 2.5,
                                 force3D: true
                             });
                             TweenMax.to(positiveFeedbackIcon, 0.25, {
-                                opacity: 0,
+                                autoAlpha: 0,
                                 scale: 2.5,
                                 force3D: true
                             });
@@ -3571,7 +3614,7 @@
                                 this.feedback = feedback.correct;
                                 this.canContinue = true;
                                 TweenMax.to(positiveFeedbackIcon, 0.75, {
-                                    opacity: 1,
+                                    autoAlpha: 1,
                                     scale: 1,
                                     force3D: true
                                 });
@@ -3579,7 +3622,7 @@
                                 this.feedback = feedback.incorrect;
                                 this.canContinue = false;
                                 TweenMax.to(negativeFeedbackIcon, 0.75, {
-                                    opacity: 1,
+                                    autoAlpha: 1,
                                     scale: 1,
                                     force3D: true
                                 });
@@ -3604,8 +3647,8 @@
                             function onPageLoadBuild() {
                                 negativeFeedbackIcon = $('.negative-feedback-icon');
                                 postiveFeedbackIcon = $('.positive-feedback-icon');
-                                TweenMax.set(negativeFeedbackIcon, {opacity: 0, scale: 2.5, force3D: true});
-                                TweenMax.set(postiveFeedbackIcon, {opacity: 0, scale: 2.5, force3D: true});
+                                TweenMax.set(negativeFeedbackIcon, {autoAlpha: 0, scale: 2.5, force3D: true});
+                                TweenMax.set(postiveFeedbackIcon, {autoAlpha: 0, scale: 2.5, force3D: true});
                             }
                             onPageLoadBuild();
                         });
@@ -6243,7 +6286,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "    <p class=\"h5 quiz-label\">question:</p>\n" +
     "    <div class=\"npQuestion-content question-text h4\" ng-bind-html=\"npQuestion.content\"></div>\n" +
     "    <p class=\"h5 quiz-label\">answers:</p>\n" +
-    "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "    <div np-component class=\"response-item\" ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
     "    <div class=\"row\">\n" +
     "        <button type=\"submit\" class=\"btn-submit\" ng-click=\"npQuestion.evaluate()\">\n" +
     "            <span>Submit</span>\n" +
