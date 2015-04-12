@@ -68,7 +68,7 @@
                             $checked = $element.find('.checkbox-x[checked]');
                             $log.debug('npQuestion::evaluate:', this.answer);
 //                            if (!!this.answer) {
-                            if (!!$checked === true) {
+                            if (!!$checked) {
                                 switch (this.type) {
                                     case 'checkbox':
                                         //var chkAnswers = ManifestService.getAll('npAnswer', $scope.cmpIdx); // defined above
@@ -78,12 +78,12 @@
                                             $currentCheckbox = $($checkbox[idx]);
                                             if (chkAnswers[idx].data.correct) {
                                                 // confirm all correct answers were checked
-                                                if ((!!$currentCheckbox.attr('checked')) !== true) {
+                                                if (!$currentCheckbox.attr('checked')) {
                                                     correct = false;
                                                 }
                                             } else {
                                                 // confirm no incorrect answers were checked
-                                                if ((!!$currentCheckbox.attr('checked')) === true) {
+                                                if (!!$currentCheckbox.attr('checked')) {
                                                     correct = false;
                                                 }
                                             }
