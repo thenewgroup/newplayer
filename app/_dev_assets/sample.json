@@ -560,6 +560,16 @@
                                     "types": ["mp4"]
                                 },
                                 "components": []
+                            },
+                            {
+                                "type": "npVideo",
+                                "data": {
+                                    "id": "vidMain",
+                                    "poster": "//ia700505.us.archive.org/3/items/Windows7WildlifeSampleVideo/Windows7WildlifeSampleVideo.thumbs/Wildlife_000001.jpg",
+                                    "baseURL": "./assets/video/ELX_Welcome_640x360_ENG",
+                                    "types": ["mp4"]
+                                },
+                                "components": []
                             }
                         ]
                     }
