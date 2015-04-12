@@ -68,7 +68,7 @@
                       "id": "How Much Do You Know About Re-Nutriv 1",
                       "parentId": "",
                       "title": "How Much Do You Know About Re-Nutriv 1",
-                      "required": true,
+                      "required": false,
                       "first": true,
                       "last": false
                     },
@@ -89,8 +89,8 @@
                       {
                         "type": "npQuestion",
                         "data": {
-                          "required": true,
-                          "forced": true,
+                          "required": false,
+                          "forced": false,
                           "type": "checkbox",
                           "difficulty": "1",
                           "content": "How do you identify a Re-Nutriv customer?",
