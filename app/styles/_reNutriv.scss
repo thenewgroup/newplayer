@@ -95,7 +95,7 @@
     .body-copy{
         font-size: $font-size-base;
         letter-spacing: 1px;
-        line-height: 0.6;
+        line-height: 1.25;
     }
 }
 #np_reNutriv small{
@@ -483,6 +483,15 @@ input{
     text-transform: uppercase;
     letter-spacing: 2px;
 }
+.question-feedback-wrapper{ 
+    position: relative;
+    background-color: $gray-dark;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+}
 .question-feedback{ 
     position: relative;
     height: 160px;
@@ -500,11 +509,21 @@ input{
     float: left;
     color: $brand-primary-light;
     letter-spacing: 2px;
+    margin-left: 35px;
+}
+.positive-feedback-icon{ 
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 25px;
+    left: 20px;
 }
 .negative-feedback-icon{ 
-    width: 20px;
-    margin-right: 10px;
-    float: left;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 25px;
+    left: 20px;
 }
 .question-feedback-label{ 
     font-family: $font-family-sans-serif;
@@ -515,21 +534,12 @@ input{
     letter-spacing: 2px;
     padding-top: 4.5%;
 }
-.question-feedback-wrapper{ 
-    position: absolute;
-    background-color: $gray-dark;
-    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
-    padding: 20px;
-    width: 100%;
-    height: 100%;
-    min-height: 100%;
-}
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Matching Game classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-.matching-game-row{
+/*.matching-game-row{
     display: inline-block; 
-    /*width: 400px;*/ 
+    width: 400px; 
 }
 #np_matchgame {
     color: #fff;
@@ -598,7 +608,7 @@ input{
         left: 30%;
         position: absolute; 
     }
-}
+}*/
 
 // .rsContent {
 //     width: 100%;
