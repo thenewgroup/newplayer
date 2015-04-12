@@ -21,7 +21,7 @@
                             <stop  offset="0.9816" style="stop-color:#F3DB7E"/>
                         </linearGradient>
                         <rect fill="" stroke="url(#SVGID_1_)" stroke-width="3" vector-effect="non-scaling-stroke" x="0" y="0" width="100%" height="100%"/>
-                        <foreignObject x="5%" y="0" width="100%" height="100%">
+                        <foreignObject x="0%" y="0" width="100%" height="100%">
                             <div class="{{draggableButton.class}} button-content">
                                 <img class="draggableButtonImage" ng-src="{{draggableButton.image}}" alt="{{draggableButton.alt}}" />
                                 <div class="draggableButtonContent subhead-copy" ng-bind-html="draggableButton.content" ></div>
@@ -68,7 +68,7 @@
                 <div class="col-xs-6"></div>
                 <div class="col-xs-6">
                     <div class="select-button-wrapper">
-                        <button class="btn-select-submit" is-clickable="true" ng-click="evaluate()">
+                        <button class="btn-select-submit btn" is-clickable="true" ng-click="evaluate()">
                             <span>SUBMIT</span>
                         </button>
                     </div>
@@ -91,7 +91,7 @@
                                     </svg>
                                 </div>
                             </div>
-                            <div class="col-xs-7 right-column-select" ng-bind-html="npDragAndDropSelect.positiveFeedback" >
+                            <div class="col-xs-7 right-column-select body-copy" ng-bind-html="npDragAndDropSelect.positiveFeedback" >
                             </div>
                         </div>
                         <div class="select-response-incorrect row">
@@ -119,7 +119,7 @@
                                     </svg>
                                 </div>
                             </div>
-                            <div class="col-xs-7 right-column-select" ng-bind-html="npDragAndDropSelect.negativeFeedback" >
+                            <div class="col-xs-7 right-column-select body-copy" ng-bind-html="npDragAndDropSelect.negativeFeedback" >
                             </div>
                         </div>
                     </div>
