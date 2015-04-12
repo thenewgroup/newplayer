@@ -71,7 +71,7 @@
                             if (!!$checked === true) {
                                 switch (this.type) {
                                     case 'checkbox':
-                                        var chkAnswers = ManifestService.getAll('npAnswer', $scope.cmpIdx);
+                                        //var chkAnswers = ManifestService.getAll('npAnswer', $scope.cmpIdx); // defined above
                                         var idx;
                                         var $currentCheckbox;
                                         for (idx in chkAnswers) {
