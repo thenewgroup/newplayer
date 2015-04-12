@@ -1,97 +1,126 @@
 [{
-        "type": "npFeature",
+"type": "npFeature",
         "data": {
-            "id": "GMTC",
-            "class": "",
-            "version": "0.0.1",
-            "timestamp": "2015-Apr-Fri_02:04:20"
+        "id": "GMTC",
+                "class": "",
+                "version": "0.0.1",
+                "timestamp": "2015-Apr-Fri_02:04:20"
         },
         "components": [{
-                "type": "npContent",
+        "type": "npContent",
                 "data": {
-                    "id": "content_en",
-                    "language": "en",
-                    "title": "Learning-Content-GMTC-4.0-Meet-List-1",
-                    "description": "This manifest creates a Story or Learning Object content object . "
+                "id": "content_en",
+                        "language": "en",
+                        "title": "Learning-Content-GMTC-4.0-Meet-List-1",
+                        "description": "This manifest creates a Story or Learning Object content object . "
                 },
                 "components": [{
-                        "type": "npHTML",
+                "type": "npHTML",
                         "data": {
-                            "id": "newplayer-background"
+                        "id": "newplayer-background"
                         },
                         "components": [{
-                                "type": "npHTML",
+                        "type": "npHTML",
                                 "data": {
-                                    "id": "background-image"
+                                "id": "background-image"
                                 },
                                 "components": []
-                            }]
-                    }, {
-                        "type": "npHTML",
+                        }]
+                }, {
+                "type": "npHTML",
                         "data": {
-                            "class": "outside-padding"
+                        "class": "outside-padding"
                         },
                         "components": [{
-                                "type": "npHTML",
+                        "type": "npHTML",
                                 "data": {
-                                    "class": "renutriv-logo-image"
+                                "class": "renutriv-logo-image"
                                 },
                                 "components": []
-                            }, {
-                                "type": "npHTML",
+                        }, {
+                        "type": "npHTML",
                                 "data": {
-                                    "class": "h3 headline",
-                                    "content": "Meet"
+                                "class": "h3 headline",
+                                        "content": "Meet"
                                 },
                                 "components": []
-                            }, {
-                                "type": "npHTML",
+                        }, {
+                        "type": "npHTML",
                                 "data": {
-                                    "class": "h6 instructional",
-                                    "content": "<p>After making a connection with your customer, what questions can you ask to find out what she needs? How does taking the time to properly meet your customer&rsquo;s needs make a difference?</p>"
+                                "class": "h6 instructional",
+                                        "content": "<p>After making a connection with your customer, what questions can you ask to find out what she needs? How does taking the time to properly meet your customer&rsquo;s needs make a difference?</p>"
                                 },
                                 "components": []
-                            }, {
-                                "type": "npList",
+                        }, {
+                        "type": "npList",
                                 "data": {
-                                    "class": "h6 instructional",
-                                    "data-ng:wrap": "true",
-                                    "content": " <p>After making a connection with your customer, what questions can you ask to find out what she needs?</p><p>How does taking the time to properly meet your customer&rsquo;s needs make a difference?</p>"
+                                "class": "h6 instructional",
+                                        "data-ng:wrap": "true",
+                                        "content": " <p>After making a connection with your customer, what questions can you ask to find out what she needs?</p><p>How does taking the time to properly meet your customer&rsquo;s needs make a difference?</p>"
                                 },
                                 "components": [
-                                    {
-                                        "type": "npVideo",
+                                {
+                                "type": "npVideo",
                                         "data": {
-                                            "id": "vidMain",
-                                            "poster": "//ia700505.us.archive.org/3/items/Windows7WildlifeSampleVideo/Windows7WildlifeSampleVideo.thumbs/Wildlife_000001.jpg",
-                                            "baseUrl": "../assets/video/ELX_Welcome_640x360_ENG",
-                                            "types": ["mp4"]
+                                        "id": "",
+                                                "poster": "//ia700505.us.archive.org/3/items/Windows7WildlifeSampleVideo/Windows7WildlifeSampleVideo.thumbs/Wildlife_000001.jpg",
+                                                "baseURL": "./assets/video/Wildlife",
+                                                "types": ["mp4"]
                                         },
                                         "components": []
-                                    },
-                                    
-                                    {
-                                        "type": "npVideo",
+                                },
+                                {
+                                "type": "npVideo",
                                         "data": {
-                                            "id": "vidMain",
-                                            "poster": "//ia700505.us.archive.org/3/items/Windows7WildlifeSampleVideo/Windows7WildlifeSampleVideo.thumbs/Wildlife_000001.jpg",
-                                            "baseUrl": "../assets/video/ELX_Welcome_640x360_ENG",
-                                            "types": ["mp4"]
+                                        "id": "vidMain",
+                                                "poster": "//ia700505.us.archive.org/3/items/Windows7WildlifeSampleVideo/Windows7WildlifeSampleVideo.thumbs/Wildlife_000001.jpg",
+                                                "baseURL": "./assets/video/Wildlife",
+                                                "types": ["mp4"]
                                         },
                                         "components": []
-                                    },
-                                    {
-                                        "type": "npVideo",
+                                },
+                                {
+                                "type": "npVideo",
                                         "data": {
-                                            "id": "vidMain",
-                                            "poster": "//ia700505.us.archive.org/3/items/Windows7WildlifeSampleVideo/Windows7WildlifeSampleVideo.thumbs/Wildlife_000001.jpg",
-                                            "baseURL": "//archive.org/download/Windows7WildlifeSampleVideo/Wildlife_512kb",
-                                            "types": ["mp4"]
+                                        "id": "vidMain",
+                                                "poster": "//ia700505.us.archive.org/3/items/Windows7WildlifeSampleVideo/Windows7WildlifeSampleVideo.thumbs/Wildlife_000001.jpg",
+                                                "baseURL": "./assets/video/ELX_Welcome_640x360_ENG",
+                                                "types": ["mp4"]
                                         },
                                         "components": []
-                                    }
-                                    ]
-                            }]
-                    }]
-            }]
-    }]
+                                },
+                                {
+                                "type": "npVideo",
+                                        "data": {
+                                        "id": "",
+                                                "poster": "//ia700505.us.archive.org/3/items/Windows7WildlifeSampleVideo/Windows7WildlifeSampleVideo.thumbs/Wildlife_000001.jpg",
+                                                "baseURL": "./assets/video/Wildlife",
+                                                "types": ["mp4"]
+                                        },
+                                        "components": []
+                                },
+                                {
+                                "type": "npVideo",
+                                        "data": {
+                                        "id": "vidMain",
+                                                "poster": "//ia700505.us.archive.org/3/items/Windows7WildlifeSampleVideo/Windows7WildlifeSampleVideo.thumbs/Wildlife_000001.jpg",
+                                                "baseURL": "../assets/video/ELX_Welcome_640x360_ENG",
+                                                "types": ["mp4"]
+                                        },
+                                        "components": []
+                                },
+                                {
+                                "type": "npVideo",
+                                        "data": {
+                                        "id": "vidMain",
+                                                "poster": "//ia700505.us.archive.org/3/items/Windows7WildlifeSampleVideo/Windows7WildlifeSampleVideo.thumbs/Wildlife_000001.jpg",
+                                                "baseURL": "//archive.org/download/Windows7WildlifeSampleVideo/Wildlife_512kb",
+                                                "types": ["mp4"]
+                                        },
+                                        "components": []
+                                }
+                                ]
+                        }]
+                }]
+        }]
+}]
