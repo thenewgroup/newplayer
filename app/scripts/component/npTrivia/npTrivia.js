@@ -8,7 +8,7 @@
                     function ($log, $scope, $rootScope, $timeout, ManifestService, $sce) {
                         var vm = this;
                         var cmpData = $scope.component.data;
-                        var pagesLen = $scope.components.length;
+//                        var pagesLen = $scope.components.length;
                         $log.debug('npTrivia::data', cmpData);
                         vm.id = cmpData.id;
                         vm.content = $sce.trustAsHtml(cmpData.content);
