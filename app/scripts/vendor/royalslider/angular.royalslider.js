@@ -10,7 +10,7 @@
    * @inject
    * @constructor
    */
-  function npRoyalSliderDirective($log, $timeout, $rootScope, sliders, screenSize) {
+  function npRoyalSliderDirective($log, $timeout, $rootScope, sliders) {
     var directive = {
       restrict: 'A',
       scope: {},
@@ -35,50 +35,26 @@
 
       var options = element.data();
       if (options.match) {
-        if (!screenSize.is('xs, sm')) {
-          opts = {
-            addActiveClass: false,
-            arrowsNav: false,
-            autoScaleSlider: true,
-            autoScaleSliderWidth: 600,
-            autoScaleSliderHeight: 100,
-            imageAlignCenter: false,
-            imageScaleMode: 'fit',
-            controlNavigation: 'none',
-            autoHeight: true,
-            loop: true,
-            randomizeSlides: true,
-            fadeinLoadedSlide: false,
-            navigateByClick: false,
-            visibleNearby: {
-              enabled: true,
-              centerArea: 0.2,
-              center: true,
-              breakpoint: 0,
-              breakpointCenterArea: 0.6,
-              navigateByCenterClick: false
-            }
-          };
-        } else {
-          opts = {
-            addActiveClass: false,
-            arrowsNav: false,
-            autoScaleSlider: true,
-            autoScaleSliderWidth: 800,
-            autoScaleSliderHeight: 900,
-            imageAlignCenter: false,
-            imageScaleMode: 'fit',
-            controlNavigation: 'none',
-            autoHeight: true,
-            loop: true,
-            randomizeSlides: true,
-            fadeinLoadedSlide: false,
-            navigateByClick: false,
-            visibleNearby: {
-              enabled: false
-            }
-          };
-        }
+        opts = {
+          addActiveClass: false,
+          arrowsNav: false,
+          autoScaleSlider: true,
+          autoScaleSliderWidth: 1200,
+          autoScaleSliderHeight: 300,
+          controlNavigation: 'none',
+          loop: true,
+          randomizeSlides: true,
+          fadeinLoadedSlide: true,
+          navigateByClick: false,
+          visibleNearby: {
+            enabled: true,
+            centerArea: 0.2,
+            center: true,
+            breakpoint: 0,
+            breakpointCenterArea: 0.6,
+            navigateByCenterClick: false
+          }
+        };
       }
 
       $timeout(function () {
@@ -93,7 +69,6 @@
           var $correct = $(element).data('royalSlider').currSlide.holder;
           $correct.css('opacity', '0.5');
           $correct.data('correct', 'true');
-          $correct.find('.slide-wrapper').append('<i class="fa fa-check-circle correct"/>');
         });
 
         $rootScope.$on('slider-enable-all', function () {
