@@ -16,7 +16,7 @@
                         this.feedback = '';
                         this.canContinue = false;
                         var feedback = cmpData.feedback;
-                        var feedback_label = $element.find('.question-feedback-label');
+                        var feedbackLabel = $element.find('.question-feedback-label');
                         var negativeFeedbackIcon = '';
                         var positiveFeedbackIcon = '';
                         //////////////////////////////////////////////////////////////////////////////////////
@@ -105,13 +105,13 @@
                                         if (!regExp.test(this.answer)) {
                                             if (angular.isObject(txtAnswer.data.feedback) && angular.isString(txtAnswer.data.feedback.incorrect)) {
                                                 this.feedback = txtAnswer.data.feedback.incorrect;
-                                                feedback_label.remove();
+                                                feedbackLabel.remove();
                                             }
                                             correct = false;
                                         } else {
                                             if (angular.isObject(txtAnswer.data.feedback) && angular.isString(txtAnswer.data.feedback.correct)) {
                                                 this.feedback = txtAnswer.data.feedback.correct;
-                                                feedback_label.remove();
+                                                feedbackLabel.remove();
                                             }
                                         }
                                         break;
@@ -122,7 +122,7 @@
                             $log.debug('npQuestion::evaluate:isCorrect', correct);
                             // set by ng-model of npAnswer's input's
 //                            if (feedback.immediate && this.feedback === '') {
-                            feedback_label.remove();
+                            feedbackLabel.remove();
                             if (correct) {
                                 this.feedback = feedback.correct;
                                 this.canContinue = true;
