@@ -211,8 +211,10 @@
     right: 0;
 }
 #flash-cards {
-    position: absolute;
-    left:0;
+    position: relative;
+    height: 100%;
+    padding-top: 45px !important;
+    margin-left: 0px;
 }
 ///////////////cards/////////////////
 .flash-cards-object {
