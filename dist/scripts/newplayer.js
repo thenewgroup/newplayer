@@ -210,6 +210,7 @@
   /** @ngInject */
   function i18nService($log) {
     var key,
+      /* jshint validthis:true */
       vm = this,
       dict = {
         submit: 'Submit',
@@ -1541,10 +1542,12 @@
                         var cmpData = $scope.component.data || {};
                         this.id = cmpData.id;
                         this.label = $sce.trustAsHtml(cmpData.label);
-                        var vm = this,
+                        var vm = this;
 //                                checkmark = $element.find('svg#Layer_1'),
-                                cmpData = $scope.component.data || {};
+//                                cmpData = $scope.component.data || {}; // already defined above
                         vm.isCorrect = cmpData.correct;
+                      // updateCheck is currently not defined but needed. Should it be the code below?
+                      var updateCheck = angular.noop;
 //                        var updateCheck = function () {
 //                            var tweenOptions = {ease: Power3.easeOut};
 
@@ -1615,13 +1618,13 @@
 //                                            '\n::$checkbox.attr(checked)::', $checkbox.attr('checked'),
 //                                            '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
 //                                            );
-                                    TweenMax.to($(clickedCheckbox).find('.checkbox-x'), .75, {
+                                    TweenMax.to($(clickedCheckbox).find('.checkbox-x'), 0.75, {
                                         autoAlpha: 1,
-                                        scale: .7,
+                                        scale: 0.7,
                                         ease: Power3.easeOut
                                     });
                                 } else if ($checkbox.attr('checked') !== 'checked') {
-                                    TweenMax.to($(clickedCheckbox).find('.checkbox-x'), .25, {
+                                    TweenMax.to($(clickedCheckbox).find('.checkbox-x'), 0.25, {
                                         autoAlpha: 0,
                                         scale: 2.5,
                                         ease: Power3.easeOut
@@ -2547,11 +2550,11 @@
                                 //on ready set states
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 TweenMax.set($('.select-response-correct'), {
-                                    scale: .25,
+                                    scale: 0.25,
                                     autoAlpha: 0
                                 });
                                 TweenMax.set($('.select-response-incorrect'), {
-                                    scale: .25,
+                                    scale: 0.25,
                                     autoAlpha: 0
                                 });
                                 var hitAreaLength = 0;
@@ -2566,23 +2569,23 @@
                                     hitAreaSelectedIncorrect = $("[data-match=skeletor]").length;
                                     $('.hit-area').each(function () {
                                         if (Number(hitAreaLength) === Number(hitAreaSelectedLength) && (hitAreaSelectedIncorrect === 0)) {
-                                            TweenMax.to($('.select-response-correct'), .75, {
+                                            TweenMax.to($('.select-response-correct'), 0.75, {
                                                 autoAlpha: 1,
                                                 scale: 1,
                                                 ease: Power4.easeOut
                                             });
-                                            TweenMax.to($('.select-response-incorrect'), .75, {
+                                            TweenMax.to($('.select-response-incorrect'), 0.75, {
                                                 autoAlpha: 0,
-                                                scale: .25,
+                                                scale: 0.25,
                                                 ease: Power4.easeOut
                                             });
                                         } else {
-                                            TweenMax.to($('.select-response-correct'), .75, {
+                                            TweenMax.to($('.select-response-correct'), 0.75, {
                                                 autoAlpha: 0,
-                                                scale: .25,
+                                                scale: 0.25,
                                                 ease: Power4.easeOut
                                             });
-                                            TweenMax.to($('.select-response-incorrect'), .75, {
+                                            TweenMax.to($('.select-response-incorrect'), 0.75, {
                                                 autoAlpha: 1,
                                                 scale: 1,
                                                 ease: Power4.easeOut
@@ -2609,7 +2612,7 @@
                         onDrag: "&"
                     },
                     link: function (scope, element, attrs) {
-                        var hitArea = undefined;
+                        var hitArea;
                         var hitAreaWrapper = document.getElementById('draggableContainer');
                         var draggables = document.getElementsByClassName('draggableButton');
                         var currentTarget;
@@ -2675,10 +2678,10 @@
                                     });
                                 }
                                 //////////////////////////////////////////////////////////////////////////////////////
-                                //build that 
+                                //build that
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 shuffle();
-                                TweenMax.to($('#draggableContainer'), .75, {
+                                TweenMax.to($('#draggableContainer'), 0.75, {
                                     autoAlpha: 1,
                                     ease: Power4.easeOut
                                 });
@@ -3457,7 +3460,7 @@
                         this.feedback = '';
                         this.canContinue = false;
                         var feedback = cmpData.feedback;
-                        var feedback_label = $element.find('.question-feedback-label');
+                        var feedbackLabel = $element.find('.question-feedback-label');
                         var negativeFeedbackIcon = '';
                         var positiveFeedbackIcon = '';
                         //////////////////////////////////////////////////////////////////////////////////////
@@ -3509,22 +3512,22 @@
                             $checked = $element.find('.checkbox-x[checked]');
                             $log.debug('npQuestion::evaluate:', this.answer);
 //                            if (!!this.answer) {
-                            if (!!$checked === true) {
+                            if (!!$checked) {
                                 switch (this.type) {
                                     case 'checkbox':
-                                        var chkAnswers = ManifestService.getAll('npAnswer', $scope.cmpIdx);
+                                        //var chkAnswers = ManifestService.getAll('npAnswer', $scope.cmpIdx); // defined above
                                         var idx;
                                         var $currentCheckbox;
                                         for (idx in chkAnswers) {
                                             $currentCheckbox = $($checkbox[idx]);
                                             if (chkAnswers[idx].data.correct) {
                                                 // confirm all correct answers were checked
-                                                if ((!!$currentCheckbox.attr('checked')) !== true) {
+                                                if (!$currentCheckbox.attr('checked')) {
                                                     correct = false;
                                                 }
                                             } else {
                                                 // confirm no incorrect answers were checked
-                                                if ((!!$currentCheckbox.attr('checked')) === true) {
+                                                if (!!$currentCheckbox.attr('checked')) {
                                                     correct = false;
                                                 }
                                             }
@@ -3546,13 +3549,13 @@
                                         if (!regExp.test(this.answer)) {
                                             if (angular.isObject(txtAnswer.data.feedback) && angular.isString(txtAnswer.data.feedback.incorrect)) {
                                                 this.feedback = txtAnswer.data.feedback.incorrect;
-                                                feedback_label.remove();
+                                                feedbackLabel.remove();
                                             }
                                             correct = false;
                                         } else {
                                             if (angular.isObject(txtAnswer.data.feedback) && angular.isString(txtAnswer.data.feedback.correct)) {
                                                 this.feedback = txtAnswer.data.feedback.correct;
-                                                feedback_label.remove();
+                                                feedbackLabel.remove();
                                             }
                                         }
                                         break;
@@ -3563,7 +3566,7 @@
                             $log.debug('npQuestion::evaluate:isCorrect', correct);
                             // set by ng-model of npAnswer's input's
 //                            if (feedback.immediate && this.feedback === '') {
-                            feedback_label.remove();
+                            feedbackLabel.remove();
                             if (correct) {
                                 this.feedback = feedback.correct;
                                 this.canContinue = true;
@@ -3616,6 +3619,7 @@
                     }
             );
 })();
+
 (function () {
 
   'use strict';
@@ -4589,7 +4593,7 @@
   )
 
   /** @ngInject */
-    .factory('AssessmentService', AssessmentService)
+    //.factory('AssessmentService', AssessmentService) // no longer using this
     .config( /** @ngInject */ function ($logProvider) {
       $logProvider.debugEnabled(true);
     });
