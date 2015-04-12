@@ -1577,11 +1577,11 @@
                                 vm.checked = true;
                                 vm.question.answerChanged(vm);
                             }
-                            updateCheck();
+//                            updateCheck();
                         };
                         vm.clear = function () {
                             vm.checked = false;
-                            updateCheck();
+//                            updateCheck();
                         };
                     }
             )
