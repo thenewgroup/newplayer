@@ -55,11 +55,11 @@
                                 //on ready set states
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 TweenMax.set($('.select-response-correct'), {
-                                    scale: .25,
+                                    scale: 0.25,
                                     autoAlpha: 0
                                 });
                                 TweenMax.set($('.select-response-incorrect'), {
-                                    scale: .25,
+                                    scale: 0.25,
                                     autoAlpha: 0
                                 });
                                 var hitAreaLength = 0;
@@ -74,23 +74,23 @@
                                     hitAreaSelectedIncorrect = $("[data-match=skeletor]").length;
                                     $('.hit-area').each(function () {
                                         if (Number(hitAreaLength) === Number(hitAreaSelectedLength) && (hitAreaSelectedIncorrect === 0)) {
-                                            TweenMax.to($('.select-response-correct'), .75, {
+                                            TweenMax.to($('.select-response-correct'), 0.75, {
                                                 autoAlpha: 1,
                                                 scale: 1,
                                                 ease: Power4.easeOut
                                             });
-                                            TweenMax.to($('.select-response-incorrect'), .75, {
+                                            TweenMax.to($('.select-response-incorrect'), 0.75, {
                                                 autoAlpha: 0,
-                                                scale: .25,
+                                                scale: 0.25,
                                                 ease: Power4.easeOut
                                             });
                                         } else {
-                                            TweenMax.to($('.select-response-correct'), .75, {
+                                            TweenMax.to($('.select-response-correct'), 0.75, {
                                                 autoAlpha: 0,
-                                                scale: .25,
+                                                scale: 0.25,
                                                 ease: Power4.easeOut
                                             });
-                                            TweenMax.to($('.select-response-incorrect'), .75, {
+                                            TweenMax.to($('.select-response-incorrect'), 0.75, {
                                                 autoAlpha: 1,
                                                 scale: 1,
                                                 ease: Power4.easeOut
@@ -183,10 +183,10 @@
                                     });
                                 }
                                 //////////////////////////////////////////////////////////////////////////////////////
-                                //build that 
+                                //build that
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 shuffle();
-                                TweenMax.to($('#draggableContainer'), .75, {
+                                TweenMax.to($('#draggableContainer'), 0.75, {
                                     autoAlpha: 1,
                                     ease: Power4.easeOut
                                 });

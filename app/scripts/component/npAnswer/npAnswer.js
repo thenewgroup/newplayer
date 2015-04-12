@@ -84,13 +84,13 @@
 //                                            '\n::$checkbox.attr(checked)::', $checkbox.attr('checked'),
 //                                            '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
 //                                            );
-                                    TweenMax.to($(clickedCheckbox).find('.checkbox-x'), .75, {
+                                    TweenMax.to($(clickedCheckbox).find('.checkbox-x'), 0.75, {
                                         autoAlpha: 1,
-                                        scale: .7,
+                                        scale: 0.7,
                                         ease: Power3.easeOut
                                     });
                                 } else if ($checkbox.attr('checked') !== 'checked') {
-                                    TweenMax.to($(clickedCheckbox).find('.checkbox-x'), .25, {
+                                    TweenMax.to($(clickedCheckbox).find('.checkbox-x'), 0.25, {
                                         autoAlpha: 0,
                                         scale: 2.5,
                                         ease: Power3.easeOut
