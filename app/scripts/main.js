@@ -15,7 +15,7 @@
   )
 
   /** @ngInject */
-    .factory('AssessmentService', AssessmentService)
+    //.factory('AssessmentService', AssessmentService) // no longer using this
     .config( /** @ngInject */ function ($logProvider) {
       $logProvider.debugEnabled(true);
     });
