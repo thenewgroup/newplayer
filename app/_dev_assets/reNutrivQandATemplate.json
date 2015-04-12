@@ -1,256 +1,353 @@
 [
-    {
-        "type": "npFeature",
+  {
+    "type": "npFeature",
+    "data": {
+      "id": "reNutriv",
+      "class": " ",
+      "req": [],
+      "version": "0.0.1",
+      "timestamp": "1970-01-01_00:00:00"
+    },
+    "components": [
+      {
+        "type": "npContent",
         "data": {
-            "id": "reNutriv",
-            "class": " ",
-            "req": [],
-            "version": "0.0.1",
-            "timestamp": "1970-01-01_00:00:00"
+          "id": "content_en-US",
+          "class": "",
+          "language": "en-US",
+          "title": "Re Nutriv",
+          "description": "Re Nutriv template"
         },
         "components": [
-            {
-                "type": "npContent",
+          {
+            "type": "npHTML",
+            "data": {
+              "id": "newplayer-background",
+              "class": "",
+              "content": ""
+            },
+            "components": [
+              {
+                "type": "npHTML",
                 "data": {
-                    "id": "content_en-US",
-                    "class": "",
-                    "language": "en-US",
-                    "title": "Re Nutriv",
-                    "description": "Re Nutriv template"
+                  "id": "background-image",
+                  "class": ""
+                },
+                "components": []
+              }
+            ]
+          },
+          {
+            "type": "npHTML",
+            "data": {
+              "id": "",
+              "class": "outside-padding",
+              "content": ""
+            },
+            "components": [
+              {
+                "type": "npHTML",
+                "data": {
+                  "id": "",
+                  "class": "renutriv-logo-image"
+                },
+                "components": []
+              },
+              {
+                "type": "npQuiz",
+                "data": {
+                  "id":"",
+                  "assessed":"1",
+                  "questions":"3",
+                  "percentage":"80"
                 },
                 "components": [
-                    {
-                        "type": "npHTML",
-                        "data": {
-                            "id": "newplayer-background",
-                            "class": "",
-                            "content": ""
-                        },
-                        "components": [
-                            {
-                                "type": "npHTML",
-                                "data": {
-                                    "id": "background-image",
-                                    "class": ""
-                                },
-                                "components": []
-                            }
-                        ]
+                  {
+                    "type": "npPage",
+                    "data": {
+                      "id": "How Much Do You Know About Re-Nutriv 1",
+                      "parentId": "",
+                      "title": "How Much Do You Know About Re-Nutriv 1",
+                      "required": true,
+                      "first": true,
+                      "last": false
                     },
-                    {
+                    "components": [
+                      {
                         "type": "npHTML",
                         "data": {
-                            "id": "",
-                            "class": "outside-padding",
-                            "content": ""
+                          "class": "field-label",
+                          "content": "1"
+                        },
+                        "components": []
+                      },
+                      {
+                        "type": "npHTML",
+                        "data": {"class": "field-label"},
+                        "components": []
+                      },
+                      {
+                        "type": "npQuestion",
+                        "data": {
+                          "required": true,
+                          "forced": true,
+                          "type": "checkbox",
+                          "difficulty": "1",
+                          "content": "How do you identify a Re-Nutriv customer?",
+                          "buttons": {
+                            "submit": "m.Submit",
+                            "next": "m.next"
+                          },
+                          "feedback": {
+                            "immediate": true,
+                            "correct": "That's it! Explain that we have two skincare lines, and share the benefits of each one.",
+                            "incorrect": "That's not it. Explain that we have two skincare lines, and share the benefits of each one."
+                          }
                         },
                         "components": [
-                            {
-                                "type": "npHTML",
-                                "data": {
-                                    "id": "",
-                                    "class": "renutriv-logo-image"
-                                },
-                                "components": []
-                            },
-                            {
-                                "type": "npPage",
-                                "data": {
-                                    "id": "Page1",
-                                    "parentId": "",
-                                    "title": "Welcome",
-                                    "inMenu": true,
-                                    "required": false
-                                },
-                                "components": [
-                                    {
-                                        "type": "npQuestion",
-                                        "data": {
-                                            "class": "row",
-                                            "id": "Question1",
-                                            "required": false,
-                                            "forced": false,
-                                            "type": "checkbox",
-                                            "difficulty": 1,
-                                            "content": "What number am I thinking of? QUESTION 1",
-                                            "feedback": {
-                                                "immediate": true,
-                                                "correct": "Hey, that's right!",
-                                                "incorrect": "No! ... What are you thinking!?"
-                                            }
-                                        },
-                                        "components": [
-                                            {
-                                                "type": "npAnswer",
-                                                "data": {
-                                                    "label": "No! ... What are you thinking!?No! ... What are you thinking!?No! ... What are you thinking!?No! ... What are you thinking!?No! ... What are you thinking!?No! ... What are you thinking!?No! ... What are you thinking!?No! ... What are you thinking!?No! ... What are you thinking!?No! ... What are you thinking!?No! ... What are you thinking!?",
-                                                    "correct": false
-                                                },
-                                                "components": [
-                                                ]
-                                            },
-                                            {
-                                                "type": "npAnswer",
-                                                "data": {
-                                                    "label": "7,433.6",
-                                                    "correct": false
-                                                },
-                                                "components": [
-                                                ]
-                                            },
-                                            {
-                                                "type": "npAnswer",
-                                                "data": {
-                                                    "label": "<img src=\"http://i.istockimg.com/file_thumbview_approve/33898764/2/stock-photo-33898764-isolated-chicken-with-egg.jpg\" height=\"50\" />",
-                                                    "correct": true
-                                                },
-                                                "components": [
-                                                ]
-                                            },
-                                            {
-                                                "type": "npAnswer",
-                                                "data": {
-                                                    "label": "<strong>Bologna!</strong>",
-                                                    "correct": true
-                                                },
-                                                "components": [
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "type": "npButton",
-                                        "data": {
-                                            "link": "[0,0,1,2]",
-                                            "class": "btn-next",
-                                            "content": "NEXT"
-                                        },
-                                        "components": []
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "npPage",
-                                "data": {
-                                    "id": "Page2",
-                                    "parentId": "question1",
-                                    "title": "Question 1",
-                                    "inMenu": true,
-                                    "required": false
-                                },
-                                "components": [
-                                    {
-                                        "type": "npQuestion",
-                                        "data": {
-                                            "class": "row",
-                                            "required": false,
-                                            "forced": false,
-                                            "type": "checkbox",
-                                            "difficulty": 2,
-                                            "content": "What number am I thinking of? QUESTION 2",
-                                            "feedback": {
-                                                "immediate": true,
-                                                "correct": "Hey, that's right!",
-                                                "incorrect": "No! ... What are you thinking!?"
-                                            }
-                                        },
-                                        "components": [
-                                            {
-                                                "type": "npAnswer",
-                                                "data": {
-                                                    "label": "800000000",
-                                                    "correct": false
-                                                },
-                                                "feedback": {
-                                                    "correct": "correct",
-                                                    "incorrect": "No! ... incorrect!?"
-                                                },
-                                                "components": [
-                                                ]
-                                            },
-                                            {
-                                                "type": "npAnswer",
-                                                "data": {
-                                                    "label": "7,433.6",
-                                                    "correct": false
-                                                },
-                                                "components": [
-                                                ]
-                                            },
-                                            {
-                                                "type": "npAnswer",
-                                                "data": {
-                                                    "label": "<img src=\"http://i.istockimg.com/file_thumbview_approve/33898764/2/stock-photo-33898764-isolated-chicken-with-egg.jpg\" height=\"50\" />",
-                                                    "correct": true
-                                                },
-                                                "components": [
-                                                ]
-                                            },
-                                            {
-                                                "type": "npAnswer",
-                                                "data": {
-                                                    "label": "<strong>Bologna!</strong>",
-                                                    "correct": true
-                                                },
-                                                "components": [
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "type": "npButton",
-                                        "data": {
-                                            "link": "Page2",
-                                            "class": "btn-next",
-                                            "content": "NEXT"
-                                        },
-                                        "components": []
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "npPage",
-                                "data": {
-                                    "id": "Page3",
-                                    "parentId": "QuizIntro",
-                                    "title": "Question 1",
-                                    "inMenu": true,
-                                    "required": false
-                                },
-                                "components":
-                                        [
-                                            {
-                                                "type": "npQuestion",
-                                                "data": {
-                                                    "class": "row",
-                                                    "required": false,
-                                                    "forced": false,
-                                                    "type": "text",
-                                                    "difficulty": 3,
-                                                    "content": "What is the greatest thing ever!? QUESTION 3",
-                                                    "feedback": {
-                                                        "immediate": false,
-                                                        "correct": "Of course it is!",
-                                                        "incorrect": "Hmmm... yeeeaaa... no!"
-                                                    }
-                                                },
-                                                "components": [
-                                                    {
-                                                        "type": "npAnswer",
-                                                        "data": {
-                                                            "label": "Answer:",
-                                                            "correct": "/ice\\s?cream/i"
-                                                        },
-                                                        "components": []
-                                                    }
-                                                ]
-                                            }
-                                        ]
+                          {
+                            "type": "npAnswer",
+                            "data": {
+                              "label": "Look at what she's wearing.",
+                              "correct": false,
+                              "feedback": {"incorrect": "That's not it. Explain that we have two skincare lines, and share the benefits of each one."}
                             }
+                          },
+                          {
+                            "type": "npAnswer",
+                            "data": {
+                              "label": "Assume every customer is a Re-Nutriv customer; introduce it to everyone.",
+                              "correct": false,
+                              "feedback": {"incorrect": "That's not it. Explain that we have two skincare lines, and share the benefits of each one."}
+                            }
+                          },
+                          {
+                            "type": "npAnswer",
+                            "data": {
+                              "label": "Always explain to your customer that we have two skincare lines, Beautiful Skin Solutions and Re-Nutriv; share the benefits of each.",
+                              "correct": true,
+                              "feedback": {"correct": "That's it! Explain that we have two skincare lines, and share the benefits of each one."}
+                            }
+                          },
+                          {
+                            "type": "npAnswer",
+                            "data": {
+                              "label": "Always explain to your customer that we have two skincare lines, Beautiful Skin Solutions and Re-Nutriv; tell her that Re-Nutriv is superior.",
+                              "correct": false,
+                              "feedback": {"incorrect": "That's not it. Explain that we have two skincare lines, and share the benefits of each one."}
+                            }
+                          }
                         ]
-                    }
+                      },
+                      {
+                        "type": "npHTML",
+                        "data": {
+                          "class": "field-label",
+                          "content": "single"
+                        },
+                        "components": []
+                      },
+                      {
+                        "type": "npHTML",
+                        "data": {"class": "field-label"},
+                        "components": []
+                      },
+                      {
+                        "type": "npHTML",
+                        "data": {
+                          "class": "field-label",
+                          "content": "How Much Do You Know About Re-Nutriv 1"
+                        },
+                        "components": []
+                      },
+                      {
+                        "type": "npHTML",
+                        "data": {
+                          "class": "field-label",
+                          "content": "How Much Do You Know About Re-Nutriv 1"
+                        },
+                        "components": []
+                      },
+                      {
+                        "type": "npHTML",
+                        "data": {"class": "field-label"},
+                        "components": []
+                      },
+                      {
+                        "type": "npHTML",
+                        "data": {
+                          "class": "field-label",
+                          "content": "How Much Do You Know About Re-Nutriv 1"
+                        },
+                        "components": []
+                      },
+                      {
+                        "type": "npHTML",
+                        "data": {"class": "field-label"},
+                        "components": []
+                      }
+                    ]
+                  },
+                  {
+                    "type": "npPage",
+                    "data": {
+                      "id": "Page2",
+                      "parentId": "question1",
+                      "title": "Question 1",
+                      "required": false,
+                      "first": false,
+                      "last": false
+                    },
+                    "components": [
+                      {
+                        "type": "npQuestion",
+                        "data": {
+                          "class": "row",
+                          "required": true,
+                          "forced": false,
+                          "type": "checkbox",
+                          "difficulty": 2,
+                          "content": "What number am I thinking of? QUESTION 2",
+                          "buttons": {
+                              "submit": "m.Submit",
+                              "next": "m.next"
+                          },
+                          "feedback": {
+                            "immediate": true,
+                            "correct": "Hey, that's right!",
+                            "incorrect": "No! ... What are you thinking!?"
+                          }
+                        },
+                        "components": [
+                          {
+                            "type": "npAnswer",
+                            "data": {
+                              "label": "800000000",
+                              "correct": false
+                            },
+                            "components": [
+                            ]
+                          },
+                          {
+                            "type": "npAnswer",
+                            "data": {
+                              "label": "7,433.6",
+                              "correct": false
+                            },
+                            "components": [
+                            ]
+                          },
+                          {
+                            "type": "npAnswer",
+                            "data": {
+                              "label": "<img src=\"http://i.istockimg.com/file_thumbview_approve/33898764/2/stock-photo-33898764-isolated-chicken-with-egg.jpg\" height=\"50\" />",
+                              "correct": true
+                            },
+                            "components": [
+                            ]
+                          },
+                          {
+                            "type": "npAnswer",
+                            "data": {
+                              "label": "<strong>Bologna!</strong>",
+                              "correct": true
+                            },
+                            "components": [
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "npPage",
+                    "data": {
+                      "id": "Page3",
+                      "parentId": "QuizIntro",
+                      "title": "Question 1",
+                      "inMenu": true,
+                      "required": false
+                    },
+                    "components": [
+                      {
+                        "type": "npQuestion",
+                        "data": {
+                          "class": "row",
+                          "required": true,
+                          "forced": true,
+                          "type": "text",
+                          "difficulty": 3,
+                          "content": "What is the greatest thing ever!? QUESTION 3",
+                          "buttons": {
+                            "submit": "m.Submit",
+                            "next": "m.next"
+                          },
+                          "feedback": {
+                            "immediate": true,
+                            "correct": "Of course it is!",
+                            "incorrect": "Hmmm... yeeeaaa... no!"
+                          },
+                          "first": false,
+                          "last": true
+                        },
+                        "components": [
+                          {
+                            "type": "npAnswer",
+                            "data": {
+                              "label": "Answer:",
+                              "correct": "/ice\\s?cream/i"
+                            },
+                            "components": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "npPage",
+                    "data": {
+                      "id": "How Much Do You Know About Re-Nutriv Summary",
+                      "parentId": "QuizIntro",
+                      "title": "How Much Do You Know About Re-Nutriv Summary",
+                      "inMenu": false,
+                      "required": false
+                    },
+                    "components": [
+                      {
+                        "type": "npQuizSummary",
+                        "data": {
+                          "feedback": {
+                            "pass": "Congratulations, you scored :USERSCORE:% and have passed this module.",
+                            "fail": "Sorry, you scored :USERSCORE:% and you needed to score :MINSCORE:% to pass. Try it again!"
+                          },
+                          "achievements": [
+                            {
+                              "score": 0.8,
+                              "compare": "gte",
+                              "content": "In addition, you a grip of points!"
+                            },
+                            {
+                              "score": 1,
+                              "compare": "eq",
+                              "content": "In addition, you get this badge and a grip of points!"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "type": "npHTML",
+                        "data": {"class": "next_stuff"},
+                        "components": [],
+                        "content": "Maybe more tiles or links out to something here?"
+                      }
+                    ]
+                  }
                 ]
-            }
+              }
+            ]
+          }
         ]
-    }
+      }
+    ]
+  }
 ]

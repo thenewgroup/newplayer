@@ -81,7 +81,7 @@
     .factory('ConfigService', ConfigService);
 
   /** @ngInject */
-  function ConfigService($log, $rootScope, APIService, ManifestService/*, $timeout, $q, $rootScope*/) {
+  function ConfigService($log, APIService, ManifestService/*, $timeout, $q, $rootScope*/) {
     $log.debug('configService::Init');
 
     var Service = function () {
@@ -91,6 +91,7 @@
       var manifestURL = null;
       var overrideURL = null;
       var overrideData = null;
+
 
       this.setManifestId = function (id) {
         $log.debug('ConfigService::setManifestId', id);
@@ -198,6 +199,56 @@
   }
 })();
 
+/* jshint -W003, -W117, -W004 */
+(function () {
+  'use strict';
+
+  angular
+    .module('newplayer.service')
+    .service('i18nService', i18nService);
+
+  /** @ngInject */
+  function i18nService($log) {
+    var key,
+      vm = this,
+      dict = {
+        submit: 'Submit',
+        next: 'Next',
+        pass: 'Congratulations, you scored :USERSCORE:% and have passed this module.',
+        fail: 'Sorry, you scored :USERSCORE:% and you needed to score :MINSCORE:% to pass. Try it again!'
+      };
+
+    $log.debug('i18n | init');
+
+    function initWithDict(newDict) {
+      $log.debug('i18n | initWithDict', newDict);
+
+      for(key in newDict) {
+        dict[key] = newDict[key];
+      }
+
+      $log.debug('i18n | initWithDict internal dict updated', dict);
+    }
+
+    function get(forKey) {
+      if( dict.hasOwnProperty(forKey)) {
+        return dict[forKey];
+      }
+
+      return '';
+    }
+
+    var service = {
+      initWithDict: initWithDict,
+      get: get
+    };
+
+    $log.debug('i18n | service init');
+
+    return service;
+  }
+})();
+
 /* jshint -W004 */
 (function() {
   'use strict';
@@ -222,6 +273,7 @@
       var overrides;
 
       var componentIdx;
+      var pageComponentIdx;
       // if these are not defined by the route
       // the manifest components will teach this service
       // what the values should be
@@ -370,7 +422,7 @@
               newData = newData.replace(/\n/g, ' ');
             }
             // found override for this component!
-            $log.debug('ManifestService::initializeComponent: override builderId:', builderId, newData);
+            //$log.debug('ManifestService::initializeComponent: override builderId:', builderId, newData);
             if (typeof( newData ) === 'string') {
               switch (newData) {
                 case 'delete':
@@ -394,13 +446,13 @@
                   try {
                     newData = angular.fromJson(newData);
                   } catch (e) {
-                    $log.debug('ManifestService::initializeComponent: override: did not know what to do with builderId:', builderId, newData, e);
+                    //$log.debug('ManifestService::initializeComponent: override: did not know what to do with builderId:', builderId, newData, e);
                   }
                   break;
               }
             }
             if (typeof( newData ) === 'object') {
-              $log.debug('ManifestService::initializeComponent: override: extend:', cmp.data, newData);
+              //$log.debug('ManifestService::initializeComponent: override: extend:', cmp.data, newData);
               extendDeep(cmp.data, newData);
             }
           }
@@ -409,7 +461,7 @@
         // will we ever re-index after manifest initialization!?
         // index component
         cmp.idx = getComponentIdx().slice(0);
-        $log.debug('ManifestService::initializeComponent: initialized:', cmp.idx, cmp);
+        //$log.debug('ManifestService::initializeComponent: initialized:', cmp.idx, cmp);
       }
 
       /*
@@ -420,7 +472,7 @@
         var cmp;
         if (!idx) {
           // idx not specified, get next using services idx
-          $log.debug('ManifestService::getComponent: getNextComponent');
+          //$log.debug('ManifestService::getComponent: getNextComponent');
           cmp = getNextComponent();
 
           // initialize the component
@@ -429,7 +481,7 @@
 
           idx = deserializeIdx(idx);
           setComponentIdx(idx);
-          $log.debug('ManifestService::getComponent: find component:', idx);
+          //$log.debug('ManifestService::getComponent: find component:', idx);
 
           // traverse idx array to retrieve this particular cmp
           cmp = getData()[idx[0]];
@@ -453,7 +505,7 @@
             // root index out of range
             return null;
           }
-          $log.debug('ManifestService::getComponent: found:', idx, cmp);
+          //$log.debug('ManifestService::getComponent: found:', idx, cmp);
         }
         return cmp;
       };
@@ -471,7 +523,7 @@
           context = deserializeIdx(context);
         }
 
-        $log.debug('ManifestService::getFirst', cmpType, context);
+        //$log.debug('ManifestService::getFirst', cmpType, context);
         var cmp = self.getComponent(context);
         while (!!cmp && cmp.type !== cmpType) {
           cmp = getNextComponent();
@@ -494,7 +546,7 @@
        * @returns {Component[]}
        */
       this.getAll = function (cmpType, context) {
-        $log.debug('ManifestService::getAll:initialContext', context);
+        //$log.debug('ManifestService::getAll:initialContext', context);
         if (!context) {
           context = [0];
         } else {
@@ -502,17 +554,17 @@
         }
         var cmps = [];
 
-        $log.debug('ManifestService::getAll', cmpType, context);
+        //$log.debug('ManifestService::getAll', cmpType, context);
         var cmp = self.getComponent(context);
         while (!!cmp) {
-          $log.debug('ManifestService::getAll:match?', cmp.type, cmpType);
+          //$log.debug('ManifestService::getAll:match?', cmp.type, cmpType);
           if (cmp.type === cmpType) {
             cmps.push(cmp);
-            $log.debug('ManifestService::getAll:match!', cmps);
+            //$log.debug('ManifestService::getAll:match!', cmps);
           }
           cmp = getNextComponent();
 
-          $log.debug('ManifestService::getAll:in context?', context, getComponentIdx());
+          //$log.debug('ManifestService::getAll:in context?', context, getComponentIdx());
           // don't search out of context - exclude siblings & parents
           if (!!getComponentIdx() &&
             ( getComponentIdx().length < context.length ||
@@ -534,41 +586,68 @@
       this.getPageId = function () {
         return this.pageId;
       };
-      this.setPageId = function (pageId) {
-        $log.debug('ManifestService, setPageId', pageId);
+      this.setPageId = function (pageId, componentIdx) {
+        //$log.debug('ManifestService, setPageId', pageId);
         // reset component index for reparsing new page
         if (this.pageId === pageId) {
           return;
         }
         setComponentIdx(null);
+        // Not sure if this impacts anything else, so tracking page component ID differently
+        pageComponentIdx = componentIdx;
 
         this.pageId = pageId;
         $rootScope.$broadcast('npPageIdChanged', pageId);
       };
 
       this.goToNextPage = function () {
-        var thisPage = this.getPageId();
-        var nextPage, i;
-        if (!thisPage) {
+        var thisPageId = this.getPageId();
+        var nextPage, nextPageComponentIdx, i, pageParentComponent,
+            pageParentComponentIdx = pageComponentIdx.slice(0); // copy the array stack here so we can mangle it
+        if (!thisPageId) {
+          $log.warn('ManifestService::goToNextPage | thisPage is not valid');
           return;
         }
 
-        var parent = this.getComponent(this.getPageId());
-        for (i = 0; i < parent.components.length; i++) {
-          var component = parent.components[i];
+        // We need to start looking for the component after current page component
+        i = parseInt(pageParentComponentIdx.pop(), 10); // pop this child off the array so we can have the parent
+        i++; // let's always start with the index after ours
+
+
+        //$log.debug('ManifestService::goToNextPage | for pageId, componentIdx', thisPageId, componentIdx);
+        pageParentComponent = this.getComponent(pageParentComponentIdx);
+
+        for ( /* initialized above*/; i < pageParentComponent.components.length; i++) {
+          var component = pageParentComponent.components[i];
+          //$log.debug('ManifestService::goToNextPage | -- Evaluating component', component);
           if (component.type === 'npPage') {
-            if (component.data.id === thisPage) {
+            //$log.debug('ManifestService::goToNextPage | --> found npPage');
+            if (component.data.id === thisPageId) {
+              //$log.debug('ManifestService::goToNextPage | --> ignoring thisPage');
               continue;
             }
+
             nextPage = component.data.id;
+            nextPageComponentIdx = component.idx;
+            //$log.debug('ManifestService::goToNextPage | --> found nextPage, nextPageComponentIdx', nextPage, nextPageComponentIdx);
             break;
           }
         }
-        this.setPageId(nextPage);
+
+
+        if( !!nextPageComponentIdx ) {
+          //$log.debug('ManifestService::goToNextPage | sending client to nextPage', nextPage);
+          this.setPageId(nextPage, nextPageComponentIdx);
+          return true;
+        }
+
+
+        //$log.debug('ManifestService::goToNextPage | no valid next page found, returning false');
+        return false;
       };
 
       this.initialize = function (data, overrides) {
-        $log.debug('ManifestService::initialize:', data, overrides);
+        //$log.debug('ManifestService::initialize:', data, overrides);
 
         if( !!data ) {
           setData(data);
@@ -581,14 +660,14 @@
         // index all components
         setComponentIdx(null);
         var cmp = self.getComponent();
-        $log.debug('ManifestService::initialize:initialParse', cmp);
+        //$log.debug('ManifestService::initialize:initialParse', cmp);
         while (!!cmp) {
           cmp = self.getComponent();
         }
 
         manifestInitialized = true;
 
-        $log.debug('ManifestService::initialize:manifest data:', getData());
+        //$log.debug('ManifestService::initialize:manifest data:', getData());
       };
 
     };
@@ -607,7 +686,7 @@
 
   /** @ngInject */
   function ComponentService($log, $templateCache, $http/*, $timeout, $http, $q, $rootScope*/) {
-    $log.debug('\nComponentService::Init\n');
+    //$log.debug('\nComponentService::Init\n');
 
     var Service = function () {
       var self = this;
@@ -624,7 +703,7 @@
 
 
       var initCmp = function (componentObj) {
-        //$log.debug( 'ComponentService::initCmp:', cmpType, COMPONENT_ROOT );
+        $log.debug( 'ComponentService::initCmp:', cmpType, COMPONENT_ROOT );
 
         // reset specific-component values
         setCmpDependencies([]);
@@ -725,7 +804,7 @@
               cmpTemplate = cmpData.template;
             }
             // TBD validate incoming data
-            $log.debug('ComponentService::load: parseTemplate', componentObj, cmpTemplate);
+            //$log.debug('ComponentService::load: parseTemplate', componentObj, cmpTemplate);
             template = cleanURL(cmpType, cmpTemplate);
           }
         }
@@ -884,126 +963,432 @@
   }
 })();
 
+/* jshint -W003, -W117, -W004 */
 (function () {
   'use strict';
-  angular.module('newplayer.component', ['newplayer.service']);
-})();
 
-'use strict';
+  angular
+    .module('newplayer.service')
+    .service('AssessmentService', AssessmentService);
 
-/** @ngInject */
-function AssessmentService ( $log ) {
+  /** @ngInject */
+  function AssessmentService($log, $rootScope, ConfigService, AssessmentIOService) {
+    var assessmentID, pages, questions,
+      vm = this,
+      isAssessing,
+      minPassing = 0,
+      io = AssessmentIOService,              // This is the I/O module for saving/restoring assessment stuff
+      config = ConfigService.getConfig();
 
-  var pages = { required: 0, viewed: { required: 0, total: 0, log: []}};
-  var questions = { required: 0, answered: { required: 0, total: 0, log: []}};
-  var minimumPassing = 0.8;
+    if (config.hasOwnProperty('assessmentIO') && typeof config.assessmentIO === 'object' && config.assessmentIO.hasOwnProperty('updateFinal')) {
+      $log.debug('using assessmentIO from config');
+      setIO(config.assessmentIO);
+    } else {
+      $log.debug('using default assessmentIO');
+    }
 
-  /**
-   * Initializes the assessment service for this page/session
-   *
-   * @param ??
-   */
-  function setRequirements(requiredPages, requiredQuestions, minimumPassing) {
-    pages.required = requiredPages;
-    questions.required = requiredQuestions;
-    minimumPassing = minimumPassing;
-  }
+    // NOTE: this function is run below to initialize this service
 
-  /** 
-   * Get the user's current score according to page and answer counts
-   *
-   * @return score from 0..1. Returns 1 if there are no required questions or answers.
-   */
-  function getScore() {
-    /*
-     * (# of req. pages viewed + # of correctly answered req. questions) / 
-     *      (total req. pages + total req. questions)
+    /**
+     * Initializes the assessment service back to its 'blank' state.
      */
+    function reset() {
+      assessmentID = false;
+      isAssessing = false;
+      minPassing = -1;
+
+      questions = {
+        required: 0, total: 0, inventory: {},
+        answered: {requiredCorrect: 0, inventory: {}}
+      };
+
+      pages = {
+        required: 0, total: 0, inventory: {},
+        viewed: {required: 0, inventory: {}}
+      };
+    }
+
+  // NOTE: reset when the IIFE executes after the script is loaded.
+    reset();
+
+    /**
+     * Begins an assessment session for a given ID and optionally a minimum passing score
+     *
+     * @param id The unique string for this assessment to identify it to the backend
+     * @param newMinPassing A fractional number from 0 to 1 (e.g. 0.75 for 75%)
+     */
+    function beginFor(id, newMinPassing) {
+      //$log.debug('Beginning assessments for ', id, newMinPassing);
+
+      reset();
+      assessmentID = id;
+      setMinPassing(newMinPassing);
+
+      isAssessing = true;
+    }
+
+    /**
+     * Mark assessment as complete, whatever that will mean to the end system
+     */
+    function finalize() {
+      if (!isAssessing) {
+        //$log.debug('Assessment:finalize | assessment is disabled, ignoring');
+        return;
+      }
+
+      //$log.debug('NP assessment::finalize | Finalizing assessments for ', assessmentID);
+
+      // TODO - should this wait for a promise?
+      io.updateFinal(getAssessment());
+
+      isAssessing = false;
+    }
+
+
+    function getAssessment() {
+      return {
+        assessmentID: assessmentID,
+        isAssessing: isAssessing,
+        isPassing: isPassing(),
+        minPassing: minPassing,
+        pages: pages,
+        questions: questions,
+        score: getScore()
+      };
+    }
+
+    /**
+     * This sets the mechanism for how the assessment service communicates data
+     * to an external data store. See the example in the assessmentio.service.js
+     *
+     * @see app/scripts/service/assessmentio.service.js
+     */
+    function setIO(newAssessmentIO) {
+      // at some point this may change to validating the plugin
+      io = newAssessmentIO;
+    }
+
+    // ---------------------------| Scoring
+
+    /**
+     * Get the minimum passing score
+     * @returns {number} fraction of 1 (e.g. 0.6 for 60%)
+     */
+    function getMinPassing() {
+      return minPassing;
+    }
+
+    /**
+     * Sets the minimum passing score for this assessment.
+     *
+     * @param newMinPassing {number} fraction of 1 (e.g. 0.6 for 60%)
+     */
+    function setMinPassing(newMinPassing) {
+      //$log.info('Assessment:setMinPassing', minPassing);
+
+      newMinPassing = parseFloat(newMinPassing);
+
+      if (!isNaN(newMinPassing)) {
+
+        if (newMinPassing > 1) {
+          $log.warn('NP assessment::setMinPassing | minPassing should be a fraction of 1. It is unlikely users will pass this assessment.', newMinPassing);
+        }
+
+        minPassing = newMinPassing;
+
+      } else if (minPassing === -1 && config.hasOwnProperty('minPassing')) {
+        minPassing = config.minPassing;
+      } else if( minPassing === -1 ) {
+        $log.warn('NP assessment::setMinPassing | no minimum passing score provided to beginFor or in config; any score will pass.');
+        minPassing = 0;
+      }
+    }
+
+    /**
+     * Get the user's current score according to page and answer counts
+     *
+     * @return score from 0..1. Returns 1 if there are no required questions or answers.
+     */
+    function getScore() {
+
+      if (!isAssessing) {
+        return 0;
+      }
+
+
+      /*
+       * (# of req. pages viewed + # of correctly answered req. questions) /
+       *      (total req. pages + total req. questions)
+       */
 
       var totalRequired = pages.required + questions.required;
 
       // User scores 100% if there are no requirements...
-      if( totalRequired === 0 ) {
-          return 1;
-      } 
-
-      return Math.min(( pages.viewed.required + questions.answered.required ) / totalRequired, 1);
-  }
-
-  /** 
-   * Determine if the user is passing based on the minimumPassing score
-   *
-   * @return bool
-   */
-  function isPassing() {
-
-      if( minimumPassing === 0 ) {
-          return true;
+      if (totalRequired === 0) {
+        return 1;
       }
 
-    return getScore() >= minimumPassing;
-  }
-  
-  /**
-   * Record that a page was viewed and whether it was required
-   *
-   * @param pageNamed string The name or ID of the page (we'll keep a stack of it)
-   * @param pageIsRequired bool Whether the page was required so it can help user's score.
-   */
-  function pageViewed(pageName, pageIsRequired) {
-      pages.viewed.total++;
-      pages.viewed.log.push(pageName);
+      return Math.min(( pages.viewed.required + questions.answered.requiredCorrect ) / totalRequired, 1);
+    }
 
-      if( pageIsRequired ) {
-        pages.viewed.required++;
+    /**
+     * Determine if the user is passing based on the minPassing score
+     *
+     * @return bool
+     */
+    function isPassing() {
+
+      if (!isAssessing) {
+        return false;
       }
-  }
 
-  /**
-   * Record that a question was correctly answered and whether it was required 
-   *
-   * @param pageNamed string The name or ID of the page (we'll keep a stack of it)
-   * @param pageIsRequired bool Whether the page was required so it can help user's score.
-   */
-  function questionCorrectlyAnswered(questionName, questionIsRequired) {
-      questions.answered.total++;
-      questions.answered.log.push(questionName);
-
-      if( questionIsRequired ) {
-        questions.answered.required++;
+      if (minPassing === 0) {
+        return true;
       }
-  }
 
-  /**
-   * Gets all pageview data
-   *
-   * @return obj of pageview stats
-   */
-  function getPageStats() {
+      return getScore() >= minPassing;
+    }
+
+    // ---------------------------| Pages
+
+    function setRequiredPages(newRequiredPages) {
+
+      var requiredPagesInt = parseInt(newRequiredPages);
+
+      if( isNaN(requiredPagesInt)) {
+        $log.error('Assessment:setRequiredPages | pages must be a number');
+        return;
+      }
+
+      pages.required = requiredPagesInt;
+    }
+
+    /**
+     * Add a potential page to view and whether it is required for score
+     *
+     * @param pageNamed string The name or ID of the page (we'll keep a stack of it)
+     * @param pageIsRequired bool Whether the page was required so it can help user's score.
+     */
+    function addPage(pageName, pageIsRequired) {
+
+      $log.info('Assessment:addPage | name, required?', pageName, pageIsRequired);
+
+      // look in the inventory to see if this property already exists
+      if (pages.inventory.hasOwnProperty(pageName)) {
+        $log.warn('Assessment:addPage | ignoring duplicate page ' + pageName);
+      } else {
+        pages.total++;
+        pages.inventory[pageName] = pageIsRequired;
+        pages.viewed.inventory[pageName] = false;
+
+        // NOTE: commented for now, we're for now declaring the number of required pages directly
+        //if (pageIsRequired) {
+        //  pages.required++;
+        //}
+      }
+    }
+
+    /**
+     * Record that a page was viewed
+     *
+     * @param pageNamed string The name or ID of the page (we'll keep a stack of it)
+     */
+    function pageViewed(pageId) {
+      //$log.info('Assessment:pageViewed | ', pageId);
+
+      if (pages.viewed.inventory[pageId] === false) {
+        pages.viewed.inventory[pageId] = new Date();
+
+        if (pages.inventory[pageId] === true) {
+          pages.viewed.required++;
+
+          if (isAssessing) {
+            io.updatePage(pageId, getAssessment());
+          }
+        }
+      } else {
+        $log.warning('Assessment:pageViewed | page already viewed, ', pageId);
+      }
+    }
+
+    /**
+     * Gets all pageview data
+     *
+     * @return obj of pageview stats
+     */
+    function getPageStats() {
       return pages;
-  }
+    }
 
-  /**
-   * Gets all questions stats
-   *
-   * @return obj of questions stats
-   */
-  function getQuestionStats() {
-    return questions;
-  }
+    /**
+     * Gets the count of number of unique pageviews
+     * @returns {pages.viewed.total|*}
+     */
+    function getPageviewsCount() {
+      return pages.viewed.total;
+    }
 
-  var service = {
+
+
+    // ---------------------------| Q+A
+
+
+    function setRequiredQuestions(newRequiredQuestions) {
+
+      var requiredQuestionsInt = parseInt(newRequiredQuestions);
+
+      if( isNaN(requiredQuestionsInt)) {
+        $log.error('Assessment:setRequiredQuestions | questions must be a number');
+        return;
+      }
+
+      questions.required = requiredQuestionsInt;
+      dumpState();
+    }
+
+    /**
+     * Record that a question was correctly answered and whether it was required
+     *
+     * @param pageNamed string The name or ID of the page (we'll keep a stack of it)
+     * @param pageIsRequired bool Whether the page was required so it can help user's score.
+     */
+    function addQuestion(questionName, questionIsRequired) {
+
+      $log.info('Assessment:addQuestion | name, required?', questionName, questionIsRequired);
+
+      // look in the inventory to see if this property already exists
+      if (questions.inventory.hasOwnProperty(questionName)) {
+        $log.warn('Assessment:addQuestion | ignoring duplicate page ' + questionName);
+      } else {
+        questions.total++;
+        questions.inventory[questionName] = questionIsRequired;
+        questions.answered.inventory[questionName] = {
+          isCorrect: null,
+          isRequired: questionIsRequired,
+          answered: false
+        };
+
+        //NOTE: We are setting question required count through setRequiredQuestions()
+        //if (questionIsRequired) {
+        //  questions.required++;
+        //}
+      }
+    }
+
+    /**
+     * Record that a question was correctly answered and whether it was required
+     *
+     * @param pageNamed string The name or ID of the page (we'll keep a stack of it)
+     * @param isCorrect bool Whether the answer provided is correct
+     */
+    function questionAnswered(questionId, isCorrect) {
+
+      $log.info('Assessment:questionAnswered | ', questionId, isCorrect);
+
+      if (questions.answered.inventory[questionId].answered === false) {
+        questions.answered.inventory[questionId].answered = new Date();
+        questions.answered.inventory[questionId].isCorrect = !!isCorrect;
+
+        if (isCorrect && questions.answered.inventory[questionId].isRequired) {
+          questions.answered.requiredCorrect++;
+        }
+
+        if (isAssessing) {
+          io.updateQuestion(questionId, getAssessment());
+        }
+
+      } else {
+        $log.warning('Assessment:questionAnswered | question already answered, ', questionId);
+      }
+    }
+
+    /**
+     * Gets all questions stats
+     *
+     * @return obj of questions stats
+     */
+    function getQuestionStats() {
+      return questions;
+    }
+
+    /**
+     * DEBUG ONLY
+     */
+    function dumpState() {
+      $log.info('Assessment:dumpState | ', getAssessment());
+    }
+
+    var service = {
+      beginFor: beginFor,
+      finalize: finalize,
+      getAssessment: getAssessment,
+      reset: reset,
+      setIO: setIO,
+
+      //--- Scoring
+      getMinPassing: getMinPassing,
       getScore: getScore,
       isPassing: isPassing,
-      setRequirements: setRequirements,
-      pageViewed: pageViewed,
-      questionCorrectlyAnswered: questionCorrectlyAnswered,
-      getPageStats: getPageStats,
-      getQuestionStats: getQuestionStats
-  };
+      setMinPassing: setMinPassing,
 
-  return service;
-}
+      //--- Pages
+      addPage: addPage,
+      getPageviewsCount: getPageviewsCount,
+      getPageStats: getPageStats,
+      pageViewed: pageViewed,
+      setRequiredPages: setRequiredPages,
+
+      //--- Questions
+      addQuestion: addQuestion,
+      getQuestionStats: getQuestionStats,
+      questionAnswered: questionAnswered,
+      setRequiredQuestions: setRequiredQuestions,
+
+      // DEBUG
+      dumpState: dumpState
+    };
+
+    $log.info('Assessment | service init');
+
+    return service;
+  }
+})();
+
+/* jshint -W003, -W117, -W004 */
+(function() {
+  'use strict';
+
+  angular
+    .module('newplayer.service')
+    .service('AssessmentIOService', AssessmentIO);
+
+  /** @ngInject */
+  function AssessmentIO($log) {
+    var vm = this;
+      vm.type = 'AssessmentIO (default)';
+
+    vm.updateQuestion = function(questionID, assessment) {
+      $log.debug('AssessmentIO::updateQuestion function stub', questionID, assessment);
+    };
+
+    vm.updatePage = function(pageID, assessment) {
+      $log.debug('AssessmentIO::updatePage function stub', pageID, assessment);
+    };
+
+    vm.updateFinal = function(assessment) {
+      $log.debug('AssessmentIO::updateFinal function stub', assessment);
+    };
+
+    vm.retrieve = function() {
+      $log.debug('AssessmentIO.log::retrieve function stub');
+    };
+  }
+})();
+
+(function () {
+  'use strict';
+  angular.module('newplayer.component', ['newplayer.service']);
+})();
 
 /* jshint -W003, -W038, -W004 */
 (function () {
@@ -1013,7 +1398,7 @@ function AssessmentService ( $log ) {
             .directive('npComponent', ComponentDirective);
     /** @ngInject */
     function ComponentDirective($log, ManifestService, ComponentService, $compile/*, $timeout*/) {
-        $log.debug('\nnpComponent::Init\n');
+        //$log.debug('\nnpComponent::Init\n');
         var Directive = function () {
             var vm = this;
             this.restrict = 'EA';
@@ -1021,7 +1406,7 @@ function AssessmentService ( $log ) {
             /** @ngInject */
             this.controller =
                     function ($scope, $element, $attrs) {
-                        $log.debug('npComponent::controller', $element, $attrs);
+                        //$log.debug('npComponent::controller', $element, $attrs);
                         /*
                          var $attributes = $element[0].attributes;
                          */
@@ -1031,7 +1416,7 @@ function AssessmentService ( $log ) {
             this.compile = function (tElement, tAttrs, transclude) {
                 /** @ngInject */
                 return function ($scope, $element, $attributes) {
-                    $log.debug('npComponent::compile!');
+                    //$log.debug('npComponent::compile!');
                     parseComponent($scope, $element, $attributes);
                 };
             };
@@ -1056,14 +1441,14 @@ function AssessmentService ( $log ) {
             function parseComponent($scope, $element, $attributes) {
                 var cmp = ManifestService.getComponent($attributes.idx);
                 var cmpIdx = cmp.idx || [0];
-                $log.debug('npComponent::parseComponent', cmp, cmpIdx, $attributes);
+                //$log.debug('npComponent::parseComponent', cmp, cmpIdx, $attributes);
                 if (!!cmp) {
                     //ComponentService.load(
                     //  cmp
                     //)
                     //  .then(
                     //  function () {
-                    $log.debug('npComponent::parseComponent then', cmp, cmpIdx);
+                    //$log.debug('npComponent::parseComponent then', cmp, cmpIdx);
                     // reset scope!!!
                     $scope.subCmp = false;
                     $scope.component = cmp;
@@ -1102,12 +1487,12 @@ function AssessmentService ( $log ) {
                         }
                     }
                     if (!!cmp.components && cmp.components.length > 0) {
-                        $log.debug('npComponent::parseComponent - HAS SUBS:', cmp);
+                        //$log.debug('npComponent::parseComponent - HAS SUBS:', cmp);
                         $scope.subCmp = true;
                         $scope.components = cmp.components;
                     }
                     var templateData = ComponentService.getTemplate(cmp);
-                    $log.debug('npComponent::parseComponent: template', templateData);
+                    //$log.debug('npComponent::parseComponent: template', templateData);
                     // modify template before compiling!?
                     var tmpTemplate = document.createElement('div');
                     tmpTemplate.innerHTML = templateData;
@@ -1147,81 +1532,72 @@ function AssessmentService ( $log ) {
 })();
 
 (function () {
-    'use strict';
-    angular
-            .module('newplayer.component')
-            /** @ngInject */
-            .controller('npAnswerController',
-                    function ($log, $scope, $sce) {
-                        var cmpData = $scope.component.data || {};
-                        $log.debug('npAnswer::data', cmpData);
-                        this.id = cmpData.id;
-                        this.label = $sce.trustAsHtml(cmpData.label);
-//                        console.log(
-//                                '\n::::::::::::::::::::::::::::::::::::::npAnswerController::inside:::::::::::::::::::::::::::::::::::::::::::::::::',
-//                                '\n::cmpData::', cmpData,
-//                                '\n::cmpData.id::', cmpData.id,
-//                                '\n::this.label::', this.label,
-//                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-//                                );
-                    }
-            )
-            .directive('npAnswerCheckbox', function () {
-                return function ($scope, $element, $sce) {
-                    var cmpData = $scope.component.data || {};
-//                    this.label = $sce.trustAsHtml(cmpData.label);
-//                    console.log(
-//                            '\n::::::::::::::::::::::::::::::::::::::npAnswerCheckbox::inside:::::::::::::::::::::::::::::::::::::::::::::::::',
-//                            '\n::this::', this,
-//                            '\n::cmpData::', cmpData,
-//                            '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-//                            );
-                    setTimeout(function () {
-                        $scope.$apply(function () {
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            //set states
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            var checkboxX = $element.find('.checkbox-x');
-                            TweenMax.set(checkboxX, {autoAlpha: 0, scale: 2.5, force3D: true});
-                            $scope.update = function (event) {
-                                var clickedCheckbox = event.currentTarget;
-                                var $checkbox = $(clickedCheckbox).find('.checkbox-x');
-                                $checkbox.attr('checked', !$checkbox.attr('checked'));
-                                //////////////////////////////////////////////////////////////////////////////////////
-                                //update states on click
-                                //////////////////////////////////////////////////////////////////////////////////////
-                                if ($checkbox.attr('checked') === 'checked') {
-//                                    console.log(
-//                                            '\n::::::::::::::::::::::::::::::::::::::npAnswerCheckbox::inside:::::::::::::::::::::::::::::::::::::::::::::::::',
-//                                            '\n::this::', this,
-//                                            '\n::this.npAnswer::', this.npAnswer,
-//                                            '\n::this.label::', this.label,
-//                                            '\n::$checkbox.attr(checked)::', $checkbox.attr('checked'),
-//                                            '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-//                                            );
-                                    TweenMax.to($(clickedCheckbox).find('.checkbox-x'), .75, {
-                                        autoAlpha: 1,
-                                        scale: .7,
-                                        ease: Power3.easeOut
-                                    });
-                                } else if ($checkbox.attr('checked') !== 'checked') {
-                                    TweenMax.to($(clickedCheckbox).find('.checkbox-x'), .25, {
-                                        autoAlpha: 0,
-                                        scale: 2.5,
-                                        ease: Power3.easeOut
-                                    });
-                                }
-                            };
-                        });
-                    });
-                };
-            })
-            /** @ngInject */
-            .run(
-                    function ($log, $rootScope) {
-                        $log.debug('npAnswer::component loaded!');
-                    }
-            );
+
+  'use strict';
+  angular
+    .module('newplayer.component')
+  /** @ngInject */
+    .controller('npAnswerController',
+    function ($log, $scope, $sce, $element) {
+      var vm = this,
+          checkmark = $element.find('svg#Layer_1'),
+          cmpData = $scope.component.data || {};
+
+      vm.isCorrect = cmpData.correct;
+
+
+      var updateCheck = function() {
+        var tweenOptions = {ease: Power3.easeOut};
+
+        if( vm.checked ) {
+          tweenOptions.autoAlpha = 1;
+        } else {
+          tweenOptions.autoAlpha = 0;
+        }
+
+        //$log.debug('updateCheck', checkmark, tweenOptions);
+        TweenMax.to(checkmark, 0.25, tweenOptions);
+      };
+
+      //$log.debug('npAnswer::data', cmpData);
+      vm.id = cmpData.id;
+      vm.label = $sce.trustAsHtml(cmpData.label);
+      vm.question = null;
+      vm.checked = false;
+
+      vm.setQuestion = function(idx, question) {
+        vm.question = question;
+        question.registerAnswer(idx, this);
+      };
+
+      vm.clicked = function($event) {
+        //$log.debug('npAnswer clicked', $event, cmpData);
+
+
+        if( vm.question.type === 'checkbox' ) {
+          vm.checked = !vm.checked;
+          vm.question.answerChanged(vm);
+        } else if( vm.question.type === 'radio' ) {
+          vm.checked = true;
+          vm.question.answerChanged(vm);
+        }
+
+        updateCheck();
+      };
+
+      vm.clear = function() {
+        vm.checked = false;
+        updateCheck();
+      };
+
+    }
+  )
+  /** @ngInject */
+    .run(
+    function ($log, $rootScope) {
+      //$log.debug('npAnswer::component loaded!');
+    }
+  );
 })();
 
 
@@ -1482,7 +1858,7 @@ function AssessmentService ( $log ) {
 
 
       var cmpData = $scope.component.data || {};
-      $log.debug('npColumn::data', cmpData);
+      //$log.debug('npColumn::data', cmpData);
 
       var childCount = $scope.component.components.length;
       var columns = +cmpData.cols;
@@ -1505,7 +1881,7 @@ function AssessmentService ( $log ) {
   /** @ngInject */
     .run(
     function ($log) {
-      $log.debug('npColumn::component loaded!');
+      //$log.debug('npColumn::component loaded!');
     }
   );
 
@@ -1521,7 +1897,7 @@ function AssessmentService ( $log ) {
     .controller('npContentController',
     function ($log, $scope, $rootScope, ManifestService) {
       var cmpData = $scope.component.data || {};
-      $log.debug('npContent::data', cmpData);
+      //$log.debug('npContent::data', cmpData);
 
       this.contentTitle = cmpData.title;
 
@@ -1530,20 +1906,20 @@ function AssessmentService ( $log ) {
       if (!manifestLang) {
         var firstContentCmp = ManifestService.getFirst('npContent');
         manifestLang = firstContentCmp.data.language;
-        $log.debug('npContent::set lang', manifestLang);
+        //$log.debug('npContent::set lang', manifestLang);
         ManifestService.setLang(manifestLang);
       }
 
       var cmpLang = cmpData.language;
       if (cmpLang === manifestLang) {
-        $log.debug('npContent::lang match', cmpLang, manifestLang);
+        //$log.debug('npContent::lang match', cmpLang, manifestLang);
         $scope.currentLang = true;
         $scope.currentContent = $scope;
 
         // set page title
         $rootScope.PageTitle = cmpData.title;
       } else {
-        $log.debug('npContent::wrong lang', cmpLang, manifestLang);
+        //$log.debug('npContent::wrong lang', cmpLang, manifestLang);
         $scope.currentLang = false;
       }
     }
@@ -1552,7 +1928,7 @@ function AssessmentService ( $log ) {
   /** @ngInject */
     .run(
     function ($log, $rootScope) {
-      $log.debug('npContent component loaded!');
+      //$log.debug('npContent component loaded!');
     }
   );
 })();
@@ -1566,7 +1942,7 @@ function AssessmentService ( $log ) {
             .controller('npFeatureController',
                     function ($log, $scope/*, ManifestService*/, $element) {
                         var cmpData = $scope.component.data || {};
-                        $log.debug('npFeature::data', cmpData);
+                        //$log.debug('npFeature::data', cmpData);
                     }
             )
             .directive('newPlayerPageTop', function () {
@@ -1612,7 +1988,7 @@ function AssessmentService ( $log ) {
             /** @ngInject */
             .run(
                     function ($log, $rootScope) {
-                        $log.debug('npFeature::component loaded!');
+                        //$log.debug('npFeature::component loaded!');
                     }
             );
 })();
@@ -1749,7 +2125,7 @@ function AssessmentService ( $log ) {
                             hotspotButton = $element.find('.hotspotButton');
                             function onPageLoadBuild() {
                                 hotspotButton = $('.hotspotButton');
-                                TweenMax.set(hotspotButton, {opacity: 0, scale: .25, force3D: true});
+                                TweenMax.set(hotspotButton, {opacity: 0, scale: 0.25, force3D: true});
                                 TweenMax.staggerTo(hotspotButton, 2, {scale: 1, opacity: 1, delay: 0.5, ease: Elastic.easeOut, force3D: true}, 0.2);
                             }
                             onPageLoadBuild();
@@ -1826,7 +2202,7 @@ function AssessmentService ( $log ) {
                         onDrag: "&"
                     },
                     link: function (scope, element, attrs) {
-                        var hitArea = undefined;
+                        var hitArea;
                         var hitAreaWrapper = document.getElementById('draggableContainer');
                         var draggables = document.getElementsByClassName('draggableButton');
                         var currentTarget;
@@ -1939,9 +2315,9 @@ function AssessmentService ( $log ) {
                             };
                         }
                         var hitAreaPosition = 'undefined';
-                        var window_offset;
+                        var windowOffset;
                         $(window).scroll(function () {
-                            window_offset = $(window).scrollTop();
+                            windowOffset = $(window).scrollTop();
                         });
                         //////////////////////////////////////////////////////////////////////////////////////
                         //on drag offset method
@@ -2006,7 +2382,7 @@ function AssessmentService ( $log ) {
                                                 hitAreaPosition = getOffsetRect(hitAreaWrapper);
                                                 var positionX = (hitAreaPosition.left - hitAreaPosition.left);
 //                                          var positionY = (hitAreaPosition.top - hitAreaPosition.top) - (Math.round(draggablePositionTop[i].top) - hitAreaPosition.top);
-                                                var postionTopOffset = Math.round(window_offset + hitAreaPosition.top);
+                                                var postionTopOffset = Math.round(windowOffset + hitAreaPosition.top);
                                                 console.log(
                                                         '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
                                                         '\n::hitAreaPosition.top::', hitAreaPosition.top,
@@ -2711,16 +3087,16 @@ function AssessmentService ( $log ) {
                         var vm = this,
                                 cmpData = $scope.component.data,
                                 content = null;
-                        $log.debug('npHTML::data', cmpData);
+                        //$log.debug('npHTML::data', cmpData);
 //                        console.log(':: cmpData :: ', cmpData);
 
                         if (cmpData.link) {
                             this.link = cmpData.link;
                         }
                         this.content = cmpData.content;
-                        $log.info('npHTML::content', $scope.content, this.content, cmpData.link);
+                        //$log.debug('npHTML::content', $scope.content, this.content, cmpData.link);
                         this.handleLink = function () {
-                            $log.info('npHTML:handleLink | link is a manifest');
+                            //$log.debug('npHTML:handleLink | link is a manifest');
                             $rootScope.$broadcast('npReplaceManifest', cmpData.link);
                         };
                         ////////////////////////////////////////////////////////////
@@ -2806,19 +3182,19 @@ function AssessmentService ( $log ) {
     .controller('npImageController',
     function ($log, $scope, $sce) {
       var cmpData = $scope.component.data || {};
-      $log.debug('npImage::data', cmpData);
+      //$log.debug('npImage::data', cmpData);
 
       this.alt = cmpData.alt;
       // TODO - use sce for URL whitelist?
       this.src = cmpData.src;
-      $log.debug('npImage::src', this.src);
+      //$log.debug('npImage::src', this.src);
     }
   )
 
   /** @ngInject */
     .run(
     function ($log, $rootScope) {
-      $log.debug('npImage::component loaded!');
+      //$log.debug('npImage::component loaded!');
     }
   );
 })();
@@ -2973,7 +3349,7 @@ function AssessmentService ( $log ) {
     .controller('npPageController',
     function ($log, $scope, $rootScope, ManifestService, TrackingService) {
       var cmpData = $scope.component.data || {};
-      $log.debug('npPage::data', cmpData, $scope.contentTitle);
+      //$log.debug('npPage::data', cmpData, $scope.contentTitle);
 
       this.title = cmpData.title;
       var parentIdx = $scope.component.idx.slice(0);
@@ -2983,8 +3359,8 @@ function AssessmentService ( $log ) {
       if (!pageId) {
         var firstPageCmp = ManifestService.getFirst('npPage', parentIdx);
         pageId = firstPageCmp.data.id;
-        ManifestService.setPageId(pageId);
-        $log.debug('npPage::set page', pageId);
+        ManifestService.setPageId(pageId, firstPageCmp.idx);
+        //$log.debug('npPage::set page', pageId);
       }
 
       npPageIdChanged(null, pageId);
@@ -2996,7 +3372,7 @@ function AssessmentService ( $log ) {
         pageId = newPageId;
 
         // check if current route is for this page
-        $log.debug('npPage::on current page?', pageId, cmpData.id);
+        //$log.debug('npPage::on current page?', pageId, cmpData.id);
         if (cmpData.id === pageId) {
           $scope.currentPage = true;
           $scope.npPage = $scope;
@@ -3018,7 +3394,7 @@ function AssessmentService ( $log ) {
   /** @ngInject */
     .run(
     function ($log, $rootScope) {
-      $log.debug('npPage::component loaded!');
+      //$log.debug('npPage::component loaded!');
     }
   );
 })();
@@ -3029,73 +3405,134 @@ function AssessmentService ( $log ) {
             .module('newplayer.component')
             /** @ngInject */
             .controller('npQuestionController',
-                    function ($log, $scope, $attrs, $rootScope, ManifestService, $sce, $element) {
-                        //////////////////////////////////////////////////////////////////////////////////////
-                        //set that 
-                        //////////////////////////////////////////////////////////////////////////////////////
-                        var cmpData = $scope.component.data;
-                        $log.debug('npQuestion::data', cmpData);
-                        this.id = cmpData.id;
-                        this.content = $sce.trustAsHtml(cmpData.content);
-                        this.type = cmpData.type;
-                        this.feedback = '';
-                        this.canContinue = false;
+                    function ($log, $scope, $rootScope, $sce, $element,
+                              i18nService, ManifestService, AssessmentService) {
+                      var vm = this,
+                          cmpData = $scope.component.data;
+
+                        //$log.debug('npQuestion::data', cmpData);
+                        vm.id = cmpData.id;
+                        vm.content = $sce.trustAsHtml(cmpData.content);
+                        vm.type = cmpData.type;
+                        vm.feedback = '';
+                        vm.canContinue = false;
+                        vm.answers = [];
+                        vm.questionHasEvaluated = false;
+                        // vm.buttons = cmpData.buttons; // if this ever moves into the manifest
+                        vm.buttons = {
+                          submit: i18nService.get('submit'),
+                          next: i18nService.get('next')
+                        };
+                        //vm.answer = [];
+
                         var feedback = cmpData.feedback;
-                        var feedback_label = $element.find('.question-feedback-label');
+                        var feedbackLabel = $element.find('.question-feedback-label');
+                        var feedbackCheckboxX = $element.find('.checkbox-x');
                         var negativeFeedbackIcon = '';
-                        //////////////////////////////////////////////////////////////////////////////////////
-                        //build that 
-                        //////////////////////////////////////////////////////////////////////////////////////
-                        TweenMax.staggerTo($(".boxElements"), 2, {
-                            scale: 1,
-                            autoAlpha: 1,
-                            delay: 0.75,
-                            ease: Power4.easeOut,
-                            force3D: true
-                        }, 0.2);
-                        this.update = function (event) {
-                            $log.debug('npQuestion::answer changed');
+
+                      AssessmentService.addQuestion(vm.id, !!cmpData.required);
+//                        console.log(
+//                                '\n::::::::::::::::::::::::::::::::::::::npQuestions::default:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                '\n:::', vm,
+//                                '\n::type::', cmpData.type,
+//                                '\n::feedback::', feedback,
+//                                '\n::feedback_label::', feedback_label,
+//                                '\n::$element::', $element,
+//                                '\n::feedback_checkbox_x::', feedback_checkbox_x,
+//                                '\n::$element.find(".checkbox-x")::', $element.find(".checkbox-x"),
+//                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                );
+                        vm.answerChanged = function (changedAnswer) {
+//                            console.log(
+//                                    '\n::::::::::::::::::::::::::::::::::::::npQuestions::changed:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                    '\n::id::', event,
+//                                    '\n::id::', event.target,
+//                                    '\n::id::', event.currentTarget,
+//                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                    );
+
+                            //$log.debug('npQuestion::answer changed', vm.answers);
+
+                          // if this is a radio, clear the other radios
+                            if( vm.type === 'radio' ) {
+                              vm.answers.forEach(function (answer, index, array) {
+                                if( answer !== changedAnswer ) {
+                                  answer.clear();
+                                }
+                              });
+                            }
+
+                          // TODO: Should this trigger a full evaluation on change or just for this element?
+
                             if (feedback.immediate) {
-                                this.feedback = '';
+                                vm.feedback = '';
                                 negativeFeedbackIcon = $element.find('.negative-feedback-icon');
                                 TweenMax.set(negativeFeedbackIcon, {opacity: 0, scale: 2.5, force3D: true});
                             }
                         };
-                        this.evaluate = function () {
-                            var correct = true;
-                            var $checkbox = false;
-                            var $checked = false;
+
+                        vm.registerAnswer = function(idx, answer) {
+                          vm.answers[idx] = answer;
+                        };
+                        vm.evaluate = function () {
+                            var i, isCorrectAnswer = true;
                             negativeFeedbackIcon = $element.find('.negative-feedback-icon');
-                            TweenMax.to(negativeFeedbackIcon, 0.75, {
-                                opacity: 1,
-                                scale: 1,
-                                force3D: true
-                            });
-                            var chkAnswers = ManifestService.getAll('npAnswer', $scope.cmpIdx);
-                            $checkbox = $element.find('.checkbox-x');
-                            $checked = $element.find('.checkbox-x[checked]');
-                            $log.debug('npQuestion::evaluate:', this.answer);
-//                            if (!!this.answer) {
-                            if (!!$checked === true) {
-                                switch (this.type) {
-                                    case 'checkbox':
-                                        var chkAnswers = ManifestService.getAll('npAnswer', $scope.cmpIdx);
-                                        var idx;
-                                        var $currentCheckbox;
-                                        for (idx in chkAnswers) {
-                                            $currentCheckbox = $($checkbox[idx]);
-                                            if (chkAnswers[idx].data.correct) {
-                                                // confirm all correct answers were checked
-                                                if ((!!$currentCheckbox.attr('checked')) !== true) {
-                                                    correct = false;
-                                                }
-                                            } else {
-                                                // confirm no incorrect answers were checked
-                                                if ((!!$currentCheckbox.attr('checked')) === true) {
-                                                    correct = false;
-                                                }
-                                            }
+
+//                            console.log(
+//                                    '\n::::::::::::::::::::::::::::::::::::::npQuestions::evaluate:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                    '\n::vm::', vm,
+//                                    '\n::vm.answer::', vm.answer,
+//                                    '\n::cmpData::', cmpData,
+//                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                    );
+                            //$log.debug('npQuestion::evaluate:', vm.answer, vm.answers);
+                            if (!!vm.answers) {
+                                switch (vm.type) {
+                                    case 'radio':
+                                        //var radAnswer = ManifestService.getComponent(vm.answers);
+                                        //if (angular.isString(radAnswer.data.feedback)) {
+                                        //    vm.feedback = radAnswer.data.feedback;
+                                        //}
+                                        //correct = radAnswer.data.correct;
+
+                                        for( i=0; i < vm.answers.length; i++ ) {
+                                          if( vm.answers[i].checked === false ) {
+                                            continue;
+                                          }
+
+                                          isCorrectAnswer = vm.answers[i].isCorrect;
                                         }
+
+                                        break; case 'checkbox':
+
+                                    // Answers are only correct if all of their check states match their isCorrect state.
+                                      for( i=0; i < vm.answers.length; i++ ) {
+                                        isCorrectAnswer = isCorrectAnswer && vm.answers[i].checked === vm.answers[i].isCorrect;
+                                      }
+
+
+                                        //var chkAnswers = ManifestService.getAll('npAnswer', $scope.cmpIdx);
+                                        //var idx;
+                                        //for (idx in chkAnswers) {
+                                        //    if (chkAnswers[idx].data.correct) {
+                                        //        console.log(
+                                        //                '\n::::::::::::::::::::::::::::::::::::::npQuestions::default:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                        //                '\n::idx::', idx,
+                                        //                '\n::chkAnswers::', chkAnswers,
+                                        //                '\n::vm.answer[chkAnswers[idx].idx]::', vm.answer[chkAnswers[idx].idx],
+                                        //                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                        //                );
+                                        //        // confirm all correct answers were checked
+                                        //        if (!vm.answer[chkAnswers[idx].idx]) {
+                                        //            isCorrectAnswer = false;
+                                        //        }
+                                        //    } else {
+                                        //        // confirm no incorrect answers were checked
+                                        //        if (vm.answer[chkAnswers[idx].idx]) {
+                                        //            isCorrectAnswer = false;
+                                        //        }
+                                        //    }
+                                        //}
                                         break;
                                     case 'text':
                                         var txtAnswer = ManifestService.getFirst('npAnswer', $scope.cmpIdx);
@@ -3110,41 +3547,56 @@ function AssessmentService ( $log ) {
                                             pat = '^(' + key.join('|') + ')$';
                                         }
                                         regExp = new RegExp(pat, mod);
-                                        if (!regExp.test(this.answer)) {
+                                        if (!regExp.test(vm.answer)) {
                                             if (angular.isObject(txtAnswer.data.feedback) && angular.isString(txtAnswer.data.feedback.incorrect)) {
-                                                this.feedback = txtAnswer.data.feedback.incorrect;
-                                                feedback_label.remove();
+                                                vm.feedback = txtAnswer.data.feedback.incorrect;
+                                                feedbackLabel.remove();
                                             }
-                                            correct = false;
+                                            isCorrectAnswer = false;
                                         } else {
                                             if (angular.isObject(txtAnswer.data.feedback) && angular.isString(txtAnswer.data.feedback.correct)) {
-                                                this.feedback = txtAnswer.data.feedback.correct;
-                                                feedback_label.remove();
+                                                vm.feedback = txtAnswer.data.feedback.correct;
+                                                feedbackLabel.remove();
                                             }
                                         }
                                         break;
                                 }
                             } else {
-                                correct = false;
+                                isCorrectAnswer = false;
                             }
-                            $log.debug('npQuestion::evaluate:isCorrect', correct);
-                            // set by ng-model of npAnswer's input's
-//                            if (feedback.immediate && this.feedback === '') {
-                            feedback_label.remove();
-                            if (correct) {
-                                this.feedback = feedback.correct;
-                                this.canContinue = true;
-                            } else {
-                                this.feedback = feedback.incorrect;
-                                this.canContinue = false;
+
+                            // NOTE: feedback.correct/incorrect is set on the npQuestion's data, NOT npAnswer
+                            if (feedback.immediate && vm.feedback === '') {
+                              var tweenOpts = {
+                                      opacity: 1,
+                                      scale: 1,
+                                      force3D: true
+                                  };
+
+                                feedbackLabel.remove();
+
+
+                              AssessmentService.questionAnswered(vm.id, isCorrectAnswer);
+                                if (isCorrectAnswer) {
+                                    vm.feedback = feedback.correct;
+                                    vm.canContinue = true;
+                                  tweenOpts.opacity = 0;
+                                } else {
+                                    vm.feedback = feedback.incorrect;
+                                    vm.canContinue = false;
+                                }
+
+                              TweenMax.to(negativeFeedbackIcon, 0.75, tweenOpts);
                             }
-//                            }
+                          vm.questionHasEvaluated = true;
                         };
-                        this.nextPage = function (evt) {
+                        vm.nextPage = function (evt) {
                             evt.preventDefault();
-                            if (this.canContinue) {
-                                $rootScope.$emit('question.answered', true);
-                            }
+                            //if (vm.canContinue) {
+                              if( ManifestService.goToNextPage() === false ) {
+                                // how to show
+                              }
+                            //}
                         };
                     }
             )
@@ -3166,10 +3618,11 @@ function AssessmentService ( $log ) {
             /** @ngInject */
             .run(
                     function ($log, $rootScope) {
-                        $log.debug('npQuestion::component loaded!');
+                        //$log.debug('npQuestion::component loaded!');
                     }
             );
 })();
+
 (function () {
 
   'use strict';
@@ -3177,85 +3630,28 @@ function AssessmentService ( $log ) {
     .module('newplayer.component')
   /** @ngInject */
     .controller('npQuizController',
-    function ($log, $scope, ManifestService, $sce) {
-      var cmpData = $scope.component.data;
+    function ($log, $scope, AssessmentService) {
+      var minPassing, cmpData = $scope.component.data;
       $log.debug('npQuiz::data', cmpData);
 
-      this.id = cmpData.id;
-      this.content = $sce.trustAsHtml(cmpData.content);
-      this.type = cmpData.type;
-      this.feedback = '';
+      if( cmpData.hasOwnProperty('assessed') && parseInt(cmpData.assessed) === 1 ) {
+        if( cmpData.hasOwnProperty('percentage') ) {
+          minPassing = parseFloat(cmpData.percentage);
 
-      var feedback = cmpData.feedback;
-
-      this.changed = function () {
-        $log.debug('npQuiz::answer changed');
-        if (feedback.immediate) {
-          this.feedback = '';
-        }
-      };
-
-      this.evaluate = function () {
-        $log.debug('npQuiz::evaluate:', this.answer);
-        var correct = true;
-
-        if (!!this.answer) {
-          switch (this.type) {
-            case 'radio':
-              var radAnswer = ManifestService.getComponent(this.answer);
-              if (!radAnswer.data.correct) {
-                correct = false;
-              }
-              break;
-            case 'checkbox':
-              var chkAnswers = ManifestService.getAll('npAnswer', $scope.cmpIdx);
-              var idx;
-              for (idx in chkAnswers) {
-                if (chkAnswers[idx].data.correct) {
-                  // confirm all correct answers were checked
-                  if (!this.answer[chkAnswers[idx].idx]) {
-                    correct = false;
-                  }
-                } else {
-                  // confirm no incorrect answers were checked
-                  if (this.answer[chkAnswers[idx].idx]) {
-                    correct = false;
-                  }
-                }
-              }
-              break;
-            case 'text':
-              var txtAnswer = ManifestService.getFirst('npAnswer', $scope.cmpIdx);
-              var key = txtAnswer.data.correct;
-              var regExp, pat, mod = 'i';
-              if (angular.isString(key)) {
-                if (key.indexOf('/') === 0) {
-                  pat = key.substring(1, key.lastIndexOf('/'));
-                  mod = key.substring(key.lastIndexOf('/') + 1);
-                }
-              } else if (angular.isArray(key)) {
-                pat = '^(' + key.join('|') + ')$';
-              }
-              regExp = new RegExp(pat, mod);
-              if (!regExp.test(this.answer)) {
-                correct = false;
-              }
-              break;
-          }
-        } else {
-          correct = false;
-        }
-        $log.debug('npQuiz::evaluate:isCorrect', correct);
-
-        // set by ng-model of npAnswer's input's
-        if (feedback.immediate) {
-          if (correct) {
-            this.feedback = feedback.correct;
-          } else {
-            this.feedback = feedback.incorrect;
+          if( minPassing > 1) {
+            minPassing = minPassing / 100;
           }
         }
-      };
+
+        AssessmentService.beginFor(cmpData.id, minPassing);
+      } else {
+        AssessmentService.reset();
+      }
+
+      if( cmpData.hasOwnProperty('questions') ) {
+        $log.debug('has questions property');
+        AssessmentService.setRequiredQuestions(parseInt(cmpData.questions));
+      }
     }
   )
 
@@ -3266,6 +3662,70 @@ function AssessmentService ( $log ) {
     }
   );
 
+})();
+
+(function () {
+  'use strict';
+  angular
+    .module('newplayer.component')
+  /** @ngInject */
+    .controller('npQuizSummaryController',
+    function ($log, $scope, $rootScope, $sce, $element, $filter,
+              i18nService, ManifestService, AssessmentService) {
+      var i,
+          vm = this,
+          cmpData = $scope.component.data;
+
+      $log.info('npQuizSummaryController::Init\n');
+
+      vm.minScore = AssessmentService.getMinPassing();
+      vm.score = AssessmentService.getScore();
+      vm.isPassing = AssessmentService.isPassing();
+
+      vm.summaryText = '';
+
+      if(  vm.isPassing ) {
+        //vm.summaryText = cmpData.feedback.pass;
+        vm.summaryText = i18nService.get('pass');
+      } else {
+        //vm.summaryText = cmpData.feedback.fail;
+        vm.summaryText = i18nService.get('fail');
+      }
+
+      // replace tokens in the string as we go
+      vm.summaryText = vm.summaryText.replace(/:USERSCORE:/, $filter('number')(vm.score * 100, 0));
+      vm.summaryText = vm.summaryText.replace(/:MINSCORE:/, $filter('number')(vm.minScore * 100, 0));
+
+      vm.achievementText = '';
+      if( cmpData.hasOwnProperty('achievements') ) {
+        for (i = 0; i < cmpData.achievements.length; i++) {
+          var achievement = cmpData.achievements[i];
+          achievement.score = parseFloat(achievement.score);
+
+          if( achievement.compare === 'gte' && vm.score >= achievement.score ) {
+            vm.achievementText = achievement.content;
+          } else if( achievement.compare === 'gt' && vm.score > achievement.score ) {
+            vm.achievementText = achievement.content;
+          } else if( achievement.compare === 'eq' && vm.score === achievement.score) {
+            vm.achievementText = achievement.content;
+          } else if( achievement.compare === 'lte' && vm.score <= achievement.score ) {
+            vm.achievementText = achievement.content;
+          } else if( achievement.compare === 'lt' && vm.score < achievement.score ) {
+            vm.achievementText = achievement.content;
+          }
+        }
+      }
+
+      // and then once the score is saved on the server and it lets us know
+      // their badge status, then we show the goods?
+      if( vm.score === 100 ) {
+        vm.badgeEarned = true;
+      } else {
+        vm.badgeEarned = false;
+      }
+
+      AssessmentService.finalize();
+    });
 })();
 
 /* jshint -W003, -W117 */
@@ -3371,7 +3831,7 @@ function AssessmentService ( $log ) {
                                 });
                                 TweenMax.set($(".reveal-button"), {
                                     opacity: 0,
-                                    scale: .25,
+                                    scale: 0.25,
                                     force3D: true
                                 });
                                 //////////////////////////////////////////////////////////////////////////////////////
@@ -3447,6 +3907,7 @@ function AssessmentService ( $log ) {
                     }
             );
 })();
+
 /* jshint -W003, -W117, -W004 */
 (function () {
     'use strict';
@@ -3527,7 +3988,7 @@ function AssessmentService ( $log ) {
                                 autoAlpha: 0,
                                 ease: Power4.easeOut
                             });
-                           
+
 //                            console.log(
 //                                    '\n::::::::::::::::::::::::::::::::::::::npFlashCards::data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
 //                                    '\n:::', idx,
@@ -3896,7 +4357,8 @@ function AssessmentService ( $log ) {
                             });
                         }
                         update();
-                        function NScrollSNAP(Array, val) {
+                      // TODO: Refactor this / the below, it's confusing
+                      function nScrollSNAP(Array, val) {
                             var SPoint, range = 400, i = 0;
                             for (i in Array) {
                                 var MResult = Math.abs(val - Array[i]);
@@ -3907,6 +4369,7 @@ function AssessmentService ( $log ) {
                             }
                             return SPoint;
                         }
+                      // TODO: Refactor this / the above, it's confusing
                         function NScrollSnap() {
                             if (nativeSCrl) {
 //                                console.log(
@@ -3914,7 +4377,7 @@ function AssessmentService ( $log ) {
 //                                        '\n::nativeSCrl:', nativeSCrl,
 //                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
 //                                        );
-                                var S = NScrollSNAP(flashCardsDraggable[0].vars.snap,
+                                var S = nScrollSNAP(flashCardsDraggable[0].vars.snap,
                                         flashCardsDraggable[0].scrollProxy.scrollTop());
                                 TweenMax.to(flashCardsDraggable[0].scrollProxy.element,
                                         0.5, {
@@ -4079,7 +4542,7 @@ function AssessmentService ( $log ) {
                         vm.currentPage = 0;
                         vm.feedback = '';
                         vm.assment = AssessmentService();
-                        vm.assment.setRequirements(pagesLen, pagesLen, null);
+                        vm.assment.setRequiredPages(pagesLen);
                         vm.seenComponents = _.shuffle($scope.components);
                         vm.pageId = vm.seenComponents[0].data.id;
                         vm.difficulty = vm.seenComponents[0].components[0].data.difficulty || 0;
@@ -4090,7 +4553,7 @@ function AssessmentService ( $log ) {
                         $rootScope.$on('question.answered', function (evt, correct) {
                             if (correct) {
                                 vm.assment.pageViewed();
-                                vm.currentPage = vm.assment.getPageStats().viewed.total;
+                                vm.currentPage = vm.assment.getPageviewsCount();
                                 vm.pageId = vm.seenComponents[vm.currentPage] ? vm.seenComponents[vm.currentPage].data.id : '';
                                 ManifestService.setPageId(vm.pageId);
                                 $rootScope.$emit('spin-to-win');
@@ -4132,7 +4595,7 @@ function AssessmentService ( $log ) {
   /** @ngInject */
     .factory('AssessmentService', AssessmentService)
     .config( /** @ngInject */ function ($logProvider) {
-      $logProvider.debugEnabled(false);
+      $logProvider.debugEnabled(true);
     });
 })();
 
@@ -4146,11 +4609,21 @@ function AssessmentService ( $log ) {
     .value('sliders', {});
 
   /** @ngInject */
-  function AppController($log, $scope, AssessmentService/*, ImagePreloadFactory, HomeService, $scope*/) {
+  function AppController($log, $scope, AssessmentIOService/*, ImagePreloadFactory, HomeService, $scope*/) {
     $log.debug('AppController::Init');
+
     var vm = this;
     vm.doTrack = function (event, data) {
       $log.warn('AppController', event, data);
+    };
+
+    vm.assessmentIO = AssessmentIOService;
+
+    vm.i18n = {
+      submit: 'Submit',
+      next: 'Next',
+      pass: 'Congratulations, you scored :USERSCORE:% and have passed this module.',
+      fail: 'Sorry, you scored :USERSCORE:% and you needed to score :MINSCORE:% to pass. Try it again!'
     };
 
     //AssessmentService.setRequirements(10,5,0.8);
@@ -4592,7 +5065,7 @@ function AssessmentService ( $log ) {
 
     /** @ngInject */
     function NpLayer($log/*,  $timeout*/) {
-        $log.debug('NpLayer::Init\n');
+        $log.info('NpLayer::Init\n');
 
         var directive = {
             restrict: 'E',
@@ -4601,9 +5074,12 @@ function AssessmentService ( $log ) {
                 manifestURL: '@npUrl',
                 overrideURL: '@npOverrideUrl',
                 overrideData: '@npOverrideData',
+                minPassing: '@npMinPassing',
                 language: '@npLang',
+                onTrackService: '&npAnalyticsService',
+                assessmentIO: '=assessmentIo',
                 manifestData: '=?',
-                onTrackService: '&npAnalyticsService'
+                i18n: '=?'
             },
             //compile: function (tElement, tAttrs, transclude, ConfigService)
             //{
@@ -4628,7 +5104,7 @@ function AssessmentService ( $log ) {
 
     /** @ngInject */
     function NpLayerController($scope, $rootScope, $element, $attrs, $log, $compile,
-            APIService, ComponentService, ConfigService, ManifestService, TrackingService) {
+            APIService, ComponentService, ConfigService, i18nService, ManifestService, TrackingService) {
         var vm = this;
         vm.manifestData = null;
         vm.overrideData = null;
@@ -4640,6 +5116,10 @@ function AssessmentService ( $log ) {
         ConfigService.setConfigData(vm);
         loadManifests();
         TrackingService.setCallback(vm.onTrackService);
+
+        if( typeof vm.i18n === 'object' ) {
+          i18nService.initWithDict(vm.i18n);
+        }
 
         //function npManifestChanged(event, toManifest, toPage) {
         //
@@ -4709,10 +5189,10 @@ function AssessmentService ( $log ) {
             var cmp = ManifestService.getComponent($attributes.idx);
             var cmpIdx = cmp.idx || [0];
 
-            $log.debug('NpLayer::parseComponent', cmp, cmpIdx, $attributes);
+            //$log.debug('NpLayer::parseComponent', cmp, cmpIdx, $attributes);
             if (!!cmp) {
 
-                $log.debug('NpLayer::parseComponent then', cmp, cmpIdx);
+                //$log.debug('NpLayer::parseComponent then', cmp, cmpIdx);
                 // reset scope!!!
                 $scope.subCmp = false;
                 $scope.component = cmp;
@@ -4753,13 +5233,13 @@ function AssessmentService ( $log ) {
                     }
                 }
                 if (!!cmp.components && cmp.components.length > 0) {
-                    $log.debug('NpLayer::parseComponent - HAS SUBS:', cmp);
+                    //$log.debug('NpLayer::parseComponent - HAS SUBS:', cmp);
                     $scope.subCmp = true;
                     $scope.components = cmp.components;
                 }
 
                 var templateData = ComponentService.getTemplate(cmp);
-                $log.debug('npComponent::parseComponent: template', templateData);
+                //$log.debug('npComponent::parseComponent: template', templateData);
 
                 // modify template before compiling!?
                 var tmpTemplate = document.createElement('div');
@@ -4856,10 +5336,10 @@ function AssessmentService ( $log ) {
                 //////////////////////////////////////////////////////////////////////////////////////
                 // using clipping now :: no spin for you! //
                 //////////////////////////////////////////////////////////////////////////////////////
-                TweenMax.to($choice, .25, {
+                TweenMax.to($choice, 0.25, {
                     alpha: 0
                 });
-                TweenMax.to($wheel, .25, {
+                TweenMax.to($wheel, 0.25, {
                     alpha: 0
                 });
                 if (!Modernizr.csstransforms3d) {
@@ -4882,7 +5362,7 @@ function AssessmentService ( $log ) {
 //                            '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
 //                            );
                     //////////////////////////////////////////////////////////////////////////////////////
-                    // adjust index amount (number in template) vs numberDisplayed to detirmine facete 
+                    // adjust index amount (number in template) vs numberDisplayed to detirmine facete
                     // number displayed.
                     //////////////////////////////////////////////////////////////////////////////////////
                     var numberDisplayed = 20;
@@ -4893,7 +5373,7 @@ function AssessmentService ( $log ) {
                 });
                 //////////////////////////////////////////////////////////////////////////////////////
                 // test code for use in the console, select the
-                // s='10% 10% -100px';e='10% 10% -100px';wheel = $('.wheel');TweenMax.fromTo(wheel, 5, 
+                // s='10% 10% -100px';e='10% 10% -100px';wheel = $('.wheel');TweenMax.fromTo(wheel, 5,
                 // {rotationX:-360,transformOrigin:s}, {rotationX:0,transformOrigin:e})
                 //////////////////////////////////////////////////////////////////////////////////////
                 var transformOrigin = '0% 5% -200px';
@@ -4907,7 +5387,7 @@ function AssessmentService ( $log ) {
                     transformOrigin: transformOrigin
 //                    ease: Elastic.easeOut.config(1, 0.3)
                 });
-                TweenMax.to($choice, .25, {
+                TweenMax.to($choice, 0.25, {
                     alpha: 1,
                     ease: Power3.easeOut
                 });
@@ -4957,8 +5437,51 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "<div class=\"debug\">\n" +
     "    <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
     "</div>\n" +
-    "<div np-answer-checkbox ng-if=\"npQuestion.type === 'checkbox'\" class=\"row np-cmp-wrapper {{component.type}} checkbox answer-wrapper\" ng-controller=\"npAnswerController as npAnswer\" ng-click=\"update($event)\">\n" +
-    "    <div class=\"col-xs-1 npAnswer-checkbox np-cmp-main answer-checkbox\" name=\"checkbox{{npAnswer.id}}\" ng-model=\"npQuestion.answer[component.idx]\" value=\"{{component.idx}}\" id=\"{{npAnswer.id}}\">\n" +
+    "<div ng-if=\"npQuestion.type === 'radio'\" class=\"row np-cmp-wrapper {{component.type}} radio answer-wrapper\" ng-controller=\"npAnswerController as npAnswer\">\n" +
+    "    <div type=\"radio\" class=\"col-sm-1 npAnswer-radio np-cmp-main answer-radio\" name=\"radio\" ng-model=\"npQuestion.answer\" value=\"{{component.idx}}\" id=\"{{npAnswer.id}}\" ng-click=\"npAnswer.clicked($event);\">\n" +
+    "        <div class=\"checkbox-box\">\n" +
+    "            <svg  version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
+    "                <style type=\"text/css\">\n" +
+    "                    <![CDATA[\n" +
+    "                    .st0{fill:url(#SVGID_1_);}\n" +
+    "                    .st1{display:inline;}\n" +
+    "                    .st2{display:none;}\n" +
+    "                    ]]>\n" +
+    "                </style>\n" +
+    "                <g id=\"Layer_2\">\n" +
+    "                    <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"0.8359\" y1=\"0.9399\" x2=\"367.8515\" y2=\"221.4724\">\n" +
+    "                        <stop  offset=\"0\" style=\"stop-color:#CAA04C\"/>\n" +
+    "                        <stop  offset=\"0.3497\" style=\"stop-color:#F8E4AA\"/>\n" +
+    "                        <stop  offset=\"0.638\" style=\"stop-color:#CAA04D\"/>\n" +
+    "                        <stop  offset=\"0.9816\" style=\"stop-color:#F3DB7E\"/>\n" +
+    "                    </linearGradient>\n" +
+    "                    <rect fill=\"url(#MyGradient)\" stroke=\"url(#SVGID_1_)\" vector-effect=\"non-scaling-stroke\" stroke-width=\"3\" x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
+    "                </g>\n" +
+    "            </svg>\n" +
+    "        </div>\n" +
+    "        <div class=\"checkbox-x\">\n" +
+    "            <svg version=\"1.0\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"22.121px\" height=\"22.121px\" viewBox=\"796.393 809.141 22.121 22.121\" style=\"enable-background:new 796.393 809.141 22.121 22.121;\" xml:space=\"preserve\">\n" +
+    "                <g>\n" +
+    "                    <line style=\"fill:none;stroke:#040A2B;stroke-width:3;stroke-miterlimit:10;\" x1=\"797.453\" y1=\"830.201\" x2=\"817.453\" y2=\"810.201\"/>\n" +
+    "                    <line style=\"fill:none;stroke:#040A2B;stroke-width:3;stroke-miterlimit:10;\" x1=\"817.453\" y1=\"830.201\" x2=\"797.453\" y2=\"810.201\"/>\n" +
+    "                </g>\n" +
+    "            </svg>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"col-sm-10\">\n" +
+    "        <span class=\"npAnswer-label answer-text p\" for=\"{{npAnswer.id}}_input\" ng-bind-html=\"npAnswer.label\"></span>\n" +
+    "    </div>\n" +
+    "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "</div>\n" +
+    "<!--<div ng-if=\"npQuestion.type === 'radio'\" class=\"np-cmp-wrapper {{component.type}} radio\" ng-controller=\"npAnswerController as npAnswer\">\n" +
+    "    <label>\n" +
+    "        <input type=\"radio\" class=\"npAnswer-radio np-cmp-main \" name=\"radio\" ng-model=\"npQuestion.answer\" value=\"{{component.idx}}\" id=\"{{npAnswer.id}}_input\" ng-change=\"npQuestion.changed()\" />\n" +
+    "        <span class=\"npAnswer-label answer-text-radio\" for=\"{{npAnswer.id}}_input\" ng-bind-html=\"npAnswer.label\" ></span>\n" +
+    "    </label>\n" +
+    "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "</div>-->\n" +
+    "<div ng-if=\"npQuestion.type === 'checkbox'\" ng-checked=\"false\"class=\"row np-cmp-wrapper {{component.type}} checkbox answer-wrapper\" ng-controller=\"npAnswerController as npAnswer\" ng-init=\"npAnswer.setQuestion($index, npQuestion)\">\n" +
+    "    <div type=\"checkbox\" class=\"col-xs-1 npAnswer-checkbox np-cmp-main answer-checkbox\" name=\"checkbox{{npAnswer.id}}\" ng-model=\"npQuestion.answer[component.idx]\" value=\"{{component.idx}}\" id=\"{{npAnswer.id}}\" ng-click=\"npAnswer.clicked($event);\">\n" +
     "        <div class=\"checkbox-box\">\n" +
     "            <svg  version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
     "                <style type=\"text/css\">\n" +
@@ -5755,7 +6278,6 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('scripts/component/npQuestion/npQuestion.html',
     "<div class=\"np-cmp-wrapper {{component.type}} \" ng-controller=\"npQuestionController as npQuestion\" ng-submit=\"npQuestion.evaluate()\">\n" +
-    "    <!--<form class=\"np-cmp-wrapper {{component.type}} \" ng-controller=\"npQuestionController as npQuestion\" ng-submit=\"npQuestion.evaluate()\">-->\n" +
     "    <div class=\"debug\">\n" +
     "        <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
     "    </div>\n" +
@@ -5763,15 +6285,14 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "    <div class=\"npQuestion-content question-text h4\" ng-bind-html=\"npQuestion.content\"></div>\n" +
     "    <p class=\"h5 quiz-label\">answers:</p>\n" +
     "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
-    "    <div class=\"row\">\n" +
-    "        <button type=\"submit\" class=\"btn-submit\" ng-click=\"npQuestion.evaluate()\">\n" +
-    "            <span>Submit</span>\n" +
+    "    <div class=\"row\" ng-if=\"npQuestion.buttons\" ng-cloak>\n" +
+    "        <button type=\"submit\" class=\"btn-submit\" ng-click=\"npQuestion.evaluate()\" ng-show=\"!npQuestion.questionHasEvaluated\" ng-cloak>\n" +
+    "            <span>{{npQuestion.buttons.submit}}</span>\n" +
     "        </button>\n" +
+    "      <button class=\"btn-submit btn-npq-next\" ng-click=\"npQuestion.nextPage($event)\" ng-show=\"npQuestion.questionHasEvaluated\" ng-cloak>\n" +
+    "        <span>{{npQuestion.buttons.next}}</span>\n" +
+    "      </button>\n" +
     "    </div>\n" +
-    "    <!--<button id=\"next_button\" class=\"btn-default\" ng-click=\"npQuestion.nextPage($event)\">Next</button>-->\n" +
-    "    <!--    <div class=\"btn btn-default\">\n" +
-    "            <input type=\"submit\" />\n" +
-    "        </div>-->\n" +
     "    <div question-feedback-build class=\"row\">\n" +
     "        <div  class=\"col-sm-7 question-feedback\">\n" +
     "            <div class=\"question-feedback-wrapper\">\n" +
@@ -5798,12 +6319,12 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                </div>\n" +
     "                <div class=\"npQuestion-feedback question-feedback-text\" ng-if=\"npQuestion.feedback\" ng-bind-html=\"npQuestion.feedback\"></div>\n" +
     "                <div class=\"question-feedback-label\">Feedback area</div>\n" +
-    "            </div\n" +
+    "            </div>\n" +
     "        </div>\n" +
     "        <div  class=\"col-sm-5\">\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "</div>"
+    "</div>\n"
   );
 
 
@@ -5823,6 +6344,19 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "  <div class=\"npQuiz-feedback\" ng-if=\"npQuiz.feedback\" ng-bind-html=\"npQuiz.feedback\"></div>\n" +
     "</form>\n" +
     "\n"
+  );
+
+
+  $templateCache.put('scripts/component/npQuizSummary/npQuizSummary.html',
+    "<div class=\"np-cmp-wrapper {{component.type}} \" ng-controller=\"npQuizSummaryController as npSummary\">\n" +
+    "\n" +
+    "  <div class=\"summary\">\n" +
+    "    {{npSummary.summaryText}}\n" +
+    "\n" +
+    "    <div ng-show=\"npSummary.achievementText\">{{npSummary.achievementText}}</div>\n" +
+    "  </div>\n" +
+    "  <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "</div>\n"
   );
 
 

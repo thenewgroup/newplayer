@@ -22,6 +22,7 @@
       var overrides;
 
       var componentIdx;
+      var pageComponentIdx;
       // if these are not defined by the route
       // the manifest components will teach this service
       // what the values should be
@@ -170,7 +171,7 @@
               newData = newData.replace(/\n/g, ' ');
             }
             // found override for this component!
-            $log.debug('ManifestService::initializeComponent: override builderId:', builderId, newData);
+            //$log.debug('ManifestService::initializeComponent: override builderId:', builderId, newData);
             if (typeof( newData ) === 'string') {
               switch (newData) {
                 case 'delete':
@@ -194,13 +195,13 @@
                   try {
                     newData = angular.fromJson(newData);
                   } catch (e) {
-                    $log.debug('ManifestService::initializeComponent: override: did not know what to do with builderId:', builderId, newData, e);
+                    //$log.debug('ManifestService::initializeComponent: override: did not know what to do with builderId:', builderId, newData, e);
                   }
                   break;
               }
             }
             if (typeof( newData ) === 'object') {
-              $log.debug('ManifestService::initializeComponent: override: extend:', cmp.data, newData);
+              //$log.debug('ManifestService::initializeComponent: override: extend:', cmp.data, newData);
               extendDeep(cmp.data, newData);
             }
           }
@@ -209,7 +210,7 @@
         // will we ever re-index after manifest initialization!?
         // index component
         cmp.idx = getComponentIdx().slice(0);
-        $log.debug('ManifestService::initializeComponent: initialized:', cmp.idx, cmp);
+        //$log.debug('ManifestService::initializeComponent: initialized:', cmp.idx, cmp);
       }
 
       /*
@@ -220,7 +221,7 @@
         var cmp;
         if (!idx) {
           // idx not specified, get next using services idx
-          $log.debug('ManifestService::getComponent: getNextComponent');
+          //$log.debug('ManifestService::getComponent: getNextComponent');
           cmp = getNextComponent();
 
           // initialize the component
@@ -229,7 +230,7 @@
 
           idx = deserializeIdx(idx);
           setComponentIdx(idx);
-          $log.debug('ManifestService::getComponent: find component:', idx);
+          //$log.debug('ManifestService::getComponent: find component:', idx);
 
           // traverse idx array to retrieve this particular cmp
           cmp = getData()[idx[0]];
@@ -253,7 +254,7 @@
             // root index out of range
             return null;
           }
-          $log.debug('ManifestService::getComponent: found:', idx, cmp);
+          //$log.debug('ManifestService::getComponent: found:', idx, cmp);
         }
         return cmp;
       };
@@ -271,7 +272,7 @@
           context = deserializeIdx(context);
         }
 
-        $log.debug('ManifestService::getFirst', cmpType, context);
+        //$log.debug('ManifestService::getFirst', cmpType, context);
         var cmp = self.getComponent(context);
         while (!!cmp && cmp.type !== cmpType) {
           cmp = getNextComponent();
@@ -294,7 +295,7 @@
        * @returns {Component[]}
        */
       this.getAll = function (cmpType, context) {
-        $log.debug('ManifestService::getAll:initialContext', context);
+        //$log.debug('ManifestService::getAll:initialContext', context);
         if (!context) {
           context = [0];
         } else {
@@ -302,17 +303,17 @@
         }
         var cmps = [];
 
-        $log.debug('ManifestService::getAll', cmpType, context);
+        //$log.debug('ManifestService::getAll', cmpType, context);
         var cmp = self.getComponent(context);
         while (!!cmp) {
-          $log.debug('ManifestService::getAll:match?', cmp.type, cmpType);
+          //$log.debug('ManifestService::getAll:match?', cmp.type, cmpType);
           if (cmp.type === cmpType) {
             cmps.push(cmp);
-            $log.debug('ManifestService::getAll:match!', cmps);
+            //$log.debug('ManifestService::getAll:match!', cmps);
           }
           cmp = getNextComponent();
 
-          $log.debug('ManifestService::getAll:in context?', context, getComponentIdx());
+          //$log.debug('ManifestService::getAll:in context?', context, getComponentIdx());
           // don't search out of context - exclude siblings & parents
           if (!!getComponentIdx() &&
             ( getComponentIdx().length < context.length ||
@@ -334,41 +335,68 @@
       this.getPageId = function () {
         return this.pageId;
       };
-      this.setPageId = function (pageId) {
-        $log.debug('ManifestService, setPageId', pageId);
+      this.setPageId = function (pageId, componentIdx) {
+        //$log.debug('ManifestService, setPageId', pageId);
         // reset component index for reparsing new page
         if (this.pageId === pageId) {
           return;
         }
         setComponentIdx(null);
+        // Not sure if this impacts anything else, so tracking page component ID differently
+        pageComponentIdx = componentIdx;
 
         this.pageId = pageId;
         $rootScope.$broadcast('npPageIdChanged', pageId);
       };
 
       this.goToNextPage = function () {
-        var thisPage = this.getPageId();
-        var nextPage, i;
-        if (!thisPage) {
+        var thisPageId = this.getPageId();
+        var nextPage, nextPageComponentIdx, i, pageParentComponent,
+            pageParentComponentIdx = pageComponentIdx.slice(0); // copy the array stack here so we can mangle it
+        if (!thisPageId) {
+          $log.warn('ManifestService::goToNextPage | thisPage is not valid');
           return;
         }
 
-        var parent = this.getComponent(this.getPageId());
-        for (i = 0; i < parent.components.length; i++) {
-          var component = parent.components[i];
+        // We need to start looking for the component after current page component
+        i = parseInt(pageParentComponentIdx.pop(), 10); // pop this child off the array so we can have the parent
+        i++; // let's always start with the index after ours
+
+
+        //$log.debug('ManifestService::goToNextPage | for pageId, componentIdx', thisPageId, componentIdx);
+        pageParentComponent = this.getComponent(pageParentComponentIdx);
+
+        for ( /* initialized above*/; i < pageParentComponent.components.length; i++) {
+          var component = pageParentComponent.components[i];
+          //$log.debug('ManifestService::goToNextPage | -- Evaluating component', component);
           if (component.type === 'npPage') {
-            if (component.data.id === thisPage) {
+            //$log.debug('ManifestService::goToNextPage | --> found npPage');
+            if (component.data.id === thisPageId) {
+              //$log.debug('ManifestService::goToNextPage | --> ignoring thisPage');
               continue;
             }
+
             nextPage = component.data.id;
+            nextPageComponentIdx = component.idx;
+            //$log.debug('ManifestService::goToNextPage | --> found nextPage, nextPageComponentIdx', nextPage, nextPageComponentIdx);
             break;
           }
         }
-        this.setPageId(nextPage);
+
+
+        if( !!nextPageComponentIdx ) {
+          //$log.debug('ManifestService::goToNextPage | sending client to nextPage', nextPage);
+          this.setPageId(nextPage, nextPageComponentIdx);
+          return true;
+        }
+
+
+        //$log.debug('ManifestService::goToNextPage | no valid next page found, returning false');
+        return false;
       };
 
       this.initialize = function (data, overrides) {
-        $log.debug('ManifestService::initialize:', data, overrides);
+        //$log.debug('ManifestService::initialize:', data, overrides);
 
         if( !!data ) {
           setData(data);
@@ -381,14 +409,14 @@
         // index all components
         setComponentIdx(null);
         var cmp = self.getComponent();
-        $log.debug('ManifestService::initialize:initialParse', cmp);
+        //$log.debug('ManifestService::initialize:initialParse', cmp);
         while (!!cmp) {
           cmp = self.getComponent();
         }
 
         manifestInitialized = true;
 
-        $log.debug('ManifestService::initialize:manifest data:', getData());
+        //$log.debug('ManifestService::initialize:manifest data:', getData());
       };
 
     };

@@ -27,6 +27,7 @@ module.exports = function (grunt) {
         '<%= config.app %>/scripts/{,**/}*.js',
         '!<%= config.app %>/scripts/templates.js',
         '!<%= config.app %>/scripts/**/mediaelement/*',
+        '!<%= config.app %>/scripts/plugin/**',
         '!<%= config.app %>/scripts/vendor/**',
         '<%= config.app %>/scripts/vendor/**/*.directive.js',
         'test/spec/{,*/}*.js'

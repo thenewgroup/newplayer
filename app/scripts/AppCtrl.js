@@ -8,11 +8,21 @@
     .value('sliders', {});
 
   /** @ngInject */
-  function AppController($log, $scope, AssessmentService/*, ImagePreloadFactory, HomeService, $scope*/) {
+  function AppController($log, $scope, AssessmentIOService/*, ImagePreloadFactory, HomeService, $scope*/) {
     $log.debug('AppController::Init');
+
     var vm = this;
     vm.doTrack = function (event, data) {
       $log.warn('AppController', event, data);
+    };
+
+    vm.assessmentIO = AssessmentIOService;
+
+    vm.i18n = {
+      submit: 'Submit',
+      next: 'Next',
+      pass: 'Congratulations, you scored :USERSCORE:% and have passed this module.',
+      fail: 'Sorry, you scored :USERSCORE:% and you needed to score :MINSCORE:% to pass. Try it again!'
     };
 
     //AssessmentService.setRequirements(10,5,0.8);

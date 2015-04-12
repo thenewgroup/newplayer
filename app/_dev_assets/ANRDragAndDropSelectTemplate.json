@@ -1,0 +1,132 @@
+[
+    {
+        "type": "npFeature",
+        "data": {
+            "id": "reNutriv",
+            "class": " ",
+            "req": [],
+            "version": "0.0.1",
+            "timestamp": "1970-01-01_00:00:00"
+        },
+        "components": [
+            {
+                "type": "npContent",
+                "data": {
+                    "id": "content_en-US",
+                    "class": "",
+                    "language": "en-US",
+                    "title": "Re Nutriv",
+                    "description": "Re Nutriv template"
+                },
+                "components": [
+                    {
+                        "type": "npHTML",
+                        "data": {
+                            "id": "newplayer-background",
+                            "class": "",
+                            "content": ""
+                        },
+                        "components": [
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "background-image",
+                                    "class": ""
+                                },
+                                "components": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "npHTML",
+                        "data": {
+                            "id": "",
+                            "class": "outside-padding",
+                            "content": ""
+                        },
+                        "components": [
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "",
+                                    "class": "renutriv-logo-image"
+                                },
+                                "components": []
+                            },
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "",
+                                    "class": "h3 headline",
+                                    "content": "<p>(h3 Headline) Our Newest Collection: Ultimate Diamond</p>"
+                                },
+                                "components": []
+                            },
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "",
+                                    "class": "h6 instructional",
+                                    "content": "<p>(Instructional copy) Drag only matching items and click select.</p>"
+                                },
+                                "components": []
+                            },
+                            {
+                                "type": "npDragAndDropSelect",
+                                "data": {
+                                    "id": "container",
+                                    "positiveFeedback": "<p>That's it!</p>",
+                                    "negativeFeedback": "<p>ehh?!?!</p>",
+                                    "image": "",
+                                    "req": [
+                                        "mediaelement/GreenSock/TweenMax.min.js",
+                                        "mediaelement/GreenSock/utils/Draggable.min.js",
+                                        "mediaelement/jquery-1.11.1.min.js"
+                                    ],
+                                    "draggableButtons": [
+                                        {
+                                            "select": "true",
+                                            "content": "<p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
+                                            "image": "/assets/images/hotspot.png",
+                                            "matchingContent": "<p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
+                                            "matchingImage": "/assets/images/hotspot.png"
+                                        },
+                                        {
+                                            "select": "false",
+                                            "content": "<p>this is the content1.2 !this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
+                                            "image": "",
+                                            "matchingContent": "<p>this is the content1!this is the content1! this is the content1.2 !this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
+                                            "matchingImage": ""
+                                        },
+                                        {
+                                            "select": "true",
+                                            "content": "<p>this is the content2!</p>",
+                                            "image": "/assets/images/hotspot.png",
+                                            "matchingContent": "<p>this is the matching content2!</p>",
+                                            "matchingImage": "/assets/images/hotspot.png"
+                                        },
+                                        {
+                                            "select": "true",
+                                            "content": "<p>this is the content3!</p>",
+                                            "image": "/assets/images/hotspot.png",
+                                            "matchingContent": "<p>this is the matching content3!</p>",
+                                            "matchingImage": "/assets/images/hotspot.png"
+                                        },
+                                        {
+                                            "select": "false",
+                                            "content": "<p>this is the content4!</p>",
+                                            "image": "",
+                                            "matchingContent": "<p>this is the matching content4!</p>",
+                                            "matchingImage": ""
+                                        }
+                                    ]
+                                },
+                                "components": []
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

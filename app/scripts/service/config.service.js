@@ -7,7 +7,7 @@
     .factory('ConfigService', ConfigService);
 
   /** @ngInject */
-  function ConfigService($log, $rootScope, APIService, ManifestService/*, $timeout, $q, $rootScope*/) {
+  function ConfigService($log, APIService, ManifestService/*, $timeout, $q, $rootScope*/) {
     $log.debug('configService::Init');
 
     var Service = function () {
@@ -17,6 +17,7 @@
       var manifestURL = null;
       var overrideURL = null;
       var overrideData = null;
+
 
       this.setManifestId = function (id) {
         $log.debug('ConfigService::setManifestId', id);
