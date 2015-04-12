@@ -6,7 +6,7 @@
     <p class="h5 quiz-label">question:</p>
     <div class="npQuestion-content question-text h4" ng-bind-html="npQuestion.content"></div>
     <p class="h5 quiz-label">answers:</p>
-    <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+    <div np-component class="response-item" ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
     <div class="row">
         <button type="submit" class="btn-submit" ng-click="npQuestion.evaluate()">
             <span>Submit</span>

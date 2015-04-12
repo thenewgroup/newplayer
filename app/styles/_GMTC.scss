@@ -492,6 +492,15 @@ input{
     /*text-transform: uppercase;*/
     letter-spacing: 2px;
 }
+.question-feedback-wrapper{ 
+    position: relative;
+    background-color: #FFFFFF;
+    box-shadow: inset 0 0 5px 3px rgba(0, 0, 0, 0.25);
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+}
 .question-feedback{ 
     position: relative;
     height: 160px;
@@ -510,15 +519,19 @@ input{
     color: $brand-primary;
     letter-spacing: 2px;
 }
-.negative-feedback-icon{ 
-    width: 20px;
-    margin-right: 10px;
-    float: left;
-}
 .positive-feedback-icon{ 
-    width: 20px;
-    margin-right: 10px;
-    float: left;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 25px;
+    left: 20px;
+}
+.negative-feedback-icon{ 
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 25px;
+    left: 20px;
 }
 .question-feedback-label{ 
     font-family: $font-family-sans-serif;
@@ -527,15 +540,6 @@ input{
     text-transform: uppercase;
     text-align: center;
     letter-spacing: 2px;
-}
-.question-feedback-wrapper{ 
-    position: absolute;
-    background-color: #FFFFFF;
-    box-shadow: inset 0 0 5px 3px rgba(0, 0, 0, 0.25);
-    padding: 20px;
-    width: 100%;
-    height: 100%;
-    min-height: 100%;
 }
 .question-feedback-wrapper svg polygon{ 
     fill: $brand-primary;

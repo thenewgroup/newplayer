@@ -21,12 +21,16 @@
                         console.log(
                                 '\n::::::::::::::::::::::::::::::::::::::this.go:::::::::::::::::::::::::::::::::::::::::::::::::',
                                 '\n::this::', this,
-//                                '\n::this.parentNode::', this.parentNode.parentNode.id,
+                                '\n::cmpData::', cmpData,
+                                '\n::$(cmpData)::', $(cmpData),
                                 '\n::this::', $(this),
                                 '\n::this::', $(this).parent(),
                                 '\n::cmpData::', cmpData,
 //                                '\n::idx::', idx,
+                                '\n::btnLink::', btnLink,
                                 '\n::cmpData.link::', cmpData.link,
+                                '\n::angular.isString(btnLink)::', angular.isString(btnLink),
+                                '\n::btnLink.indexOf(/)::', btnLink.indexOf('/'),
                                 '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
                                 );
                         if (angular.isString(btnLink)) {
@@ -40,6 +44,30 @@
                                     }
                                     this.linkInternal = false;
                                 }
+                            } else if (typeof btnLink === 'undefined' || btnLink === '') {
+                                var parentPage = $('.npPage').closest('[data-cmptype="npPage"]');
+                                var allPages = ManifestService.getAll(parentPage, $scope.cmpIdx);
+//                                data-cmptype="npPage"
+                                console.log(
+                                        '\n::::::::::::::::::::::::::::::::::::::btnLink===undefined:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                        '\n::allPages::', allPages,
+                                        '\n::parentPage::', parentPage,
+                                        '\n::parentPage.length::', parentPage.length,
+                                        '\n::cmpData::', cmpData,
+                                        '\n::ManifestService.getPageId()::', ManifestService.getPageId(),
+//                                        '\n::ManifestService.getComponentIdx()::', ManifestService.getNextComponent(),
+                                        '\n::npPage::', $('.npPage'),
+                                        '\n::npPage::', $('.npPage').length,
+                                        '\n::$(this).closest(.npPage)::', $(this).closest('.npPage'),
+                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                        );
+                                this.link = parentPage[1];
+//                                if (!this.target) {
+//                                    this.target = '_blank';
+//                                }
+//                                ManifestService.setPageId('Page2');
+                                ManifestService.goToNextPage();
+//                                this.linkInternal = true;
                             } else if (/^([a-zA-Z]{1,10}:)?\/\//.test(btnLink)) {
                                 if (!this.target) {
                                     this.target = '_blank';
@@ -72,6 +100,7 @@
                                         '\n::::::::::::::::::::::::::::::::::::::this.linkInternal:::::::::::::::::::::::::::::::::::::::::::::::::',
                                         '\n::cmpData::', cmpData,
                                         '\n::cmpData.link::', cmpData.link,
+                                        '\n::ManifestService.setPageId(cmpData.link)::', ManifestService.setPageId(cmpData.link),
                                         '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
                                         );
                             } else {
@@ -82,7 +111,12 @@
                                     APIService.postData(btnLink);
                                     return;
                                 }
-                                TrackingService.trackExternalLinkClick(btnLink);
+                                console.log(
+                                        '\n::::::::::::::::::::::::::::::::::::::this.target:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                        '\n::this.link::', this.link,
+                                        '\n::this.target::', this.target,
+                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                        );
                                 window.open(this.link, this.target);
                             }
                         };
