@@ -8,9 +8,9 @@
                         var cmpData = $scope.component.data || {};
                         this.id = cmpData.id;
                         this.label = $sce.trustAsHtml(cmpData.label);
-                        var vm = this,
+                        var vm = this;
 //                                checkmark = $element.find('svg#Layer_1'),
-                                cmpData = $scope.component.data || {};
+//                                cmpData = $scope.component.data || {}; // already defined above
                         vm.isCorrect = cmpData.correct;
 //                        var updateCheck = function () {
 //                            var tweenOptions = {ease: Power3.easeOut};
