@@ -211,8 +211,10 @@ small{
     right: 0;
 }
 #flash-cards {
-    position: absolute;
-    left:0;
+    position: relative;
+    height: 100%;
+    padding-top: 45px !important;
+    margin-left: 0px;
 }
 ///////////////cards/////////////////
 .flash-cards-object {
@@ -931,7 +933,7 @@ input{
 .select-response-wrapper p, h2{
     color: $brand-primary;
 }
-.select-response-wrapper polygon, path{
+.select-response-wrapper polygon, .select-response-wrapper path{
     fill: $brand-primary !important;
 }
 .select-response-background {
