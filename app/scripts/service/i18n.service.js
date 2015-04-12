@@ -9,6 +9,7 @@
   /** @ngInject */
   function i18nService($log) {
     var key,
+      /* jshint validthis:true */
       vm = this,
       dict = {
         submit: 'Submit',
