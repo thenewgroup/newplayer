@@ -16,7 +16,6 @@
                     "description": "Sample presentation"
                 },
                 "components": [
-                    
                     {
                         "type": "npMenu",
                         "data": {
