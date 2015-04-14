@@ -251,446 +251,430 @@
 })();
 
 /* jshint -W004 */
-(function () {
-    'use strict';
-    angular
-            .module('newplayer.service')
-            .factory('ManifestService', ManifestService);
-    /*
-     * console:
-     * angular.element(document.body).injector().get('ManifestService')
-     */
-    /** @ngInject */
-    function ManifestService($log, $rootScope /*, $timeout, $http, $q */) {
-        $log.debug('\nManifestService::Init\n');
-        var Service = function () {
-            var self = this;
-            var manifestInitialized = false;
-            var data;
-            var overrides;
-            var componentIdx;
-            var pageComponentIdx;
-            // if these are not defined by the route
-            // the manifest components will teach this service
-            // what the values should be
-            var lang;
-            var pageId;
-            var link;
-            function getData() {
-                return data;
-            }
-            function setData(d) {
-                data = d;
-            }
-            function getOverrides() {
-                return overrides;
-            }
-            function setOverrides(data) {
-                overrides = data;
-            }
-            function getComponentIdx() {
-                return componentIdx;
-            }
-            function setComponentIdx(cmpIdx) {
-                componentIdx = cmpIdx;
-            }
-            /*
-             * Determines manifest idx of next component when recursing the manifest
-             * first looks for sub-component
-             * next looks for sibling
-             * then it backs up to the parent and looks for sibling until it finds
-             * one or gets back to the root
-             */
-            function getNextComponent() {
-                var idx = getComponentIdx();
-                var cmp = null;
-                if (!idx) {
-                    idx = [0];
-                    cmp = self.getComponent(idx);
-                } else {
-                    // get current Component and find next
-                    cmp = self.getComponent(idx);
-                    if (!!cmp.components && cmp.components.length > 0) {
-                        // sub-components exist - go deeper
-                        idx.push(0);
-                        cmp = self.getComponent(idx);
-                    } else {
-                        // no children - try to find next sibling
-                        var lastIdx = idx.pop();
-                        idx.push(++lastIdx);
-                        cmp = self.getComponent(idx);
-                        if (!cmp) {
-                            // no sibling - find closest ancestor's sibling
-                            var backup = true;
-                            while (!cmp && backup) {
-                                if (idx.length > 1) {
-                                    // try parent's sibling
-                                    idx.pop();
-                                    lastIdx = idx.pop();
-                                    idx.push(++lastIdx);
-                                    cmp = self.getComponent(idx);
-                                } else {
-                                    // back to root - done
-                                    backup = false;
-                                    idx = null;
-                                }
-                            }
-                        }
-                    }
-                }
-                setComponentIdx(idx);
-                if (!idx) {
-                    return null;
-                }
-                return cmp;
-            }
-            function deserializeIdx(idx) {
-                if (angular.isArray(idx)) {
-                    // return a clone of the array (not the original)
-                    return idx.slice(0);
-                }
-                if (typeof (idx) === 'string') {
-                    // convert string rep of array to integer array
-                    idx = idx.replace(/[\[\]]/g, '');
-                    var arr = idx.split(',');
-                    // force array values to integer
-                    for (var i = 0; i < arr.length; i++) {
-                        arr[i] = +arr[i] || 0;  // default to 0 if NaN!?
-                    }
-                    return arr;
-                }
-                return [0];
-            }
-            function extendDeep(dst) {
-                angular.forEach(
-                        arguments,
-                        function (obj) {
-                            if (obj !== dst) {
-                                angular.forEach(
-                                        obj,
-                                        function (value, key) {
-                                            if (dst[key] && dst[key].constructor && dst[key].constructor === Object) {
-                                                extendDeep(dst[key], value);
-                                            } else {
-                                                dst[key] = value;
-                                            }
-                                        }
-                                );
-                            }
-                        }
-                );
-                return dst;
-            }
-            /*
-             * Initializes the component for the manifest
-             */
-            function initializeComponent(cmp) {
-                var builderId, newData, localOverrides;
-                if (!cmp) {
-                    return;
-                }
-                if (!manifestInitialized) {
-                    // first pass, check overrides and modify this component
-                    builderId = (cmp.data || {}).builderId;
-                    localOverrides = getOverrides();
-                    if (!!localOverrides) {
-                        newData = localOverrides[builderId];
-                    }
-                    if (!!builderId && !!newData) {
-                        // TBD - improve data sanitization
-                        if (angular.isString(newData)) {
-                            newData = newData.replace(/\n/g, ' ');
-                        }
-                        // found override for this component!
-                        //$log.debug('ManifestService::initializeComponent: override builderId:', builderId, newData);
-                        if (typeof (newData) === 'string') {
-                            switch (newData) {
-                                case 'delete':
-                                    // get current component's idx
-                                    var cmpIdx = getComponentIdx();
-                                    // get the idx for this component in context of its parent
-                                    var childIdx = cmpIdx.pop();
-                                    // get the parent component
-                                    var parentCmp = self.getComponent(cmpIdx);
-                                    // and delete parent's sub component with index: childIdx
-                                    var thisChild = parentCmp.components.splice(childIdx, 1);
-                                    // parser's current idx is deleted component's parent
-                                    // if deleted component had a older sibling:
-                                    if (childIdx > 0) {
-                                        // repoint to deleted component's older sibling
-                                        cmpIdx.push(childIdx - 1);
-                                        setComponentIdx(cmpIdx);
-                                    }
-                                    break;
-                                default:
-                                    try {
-                                        newData = angular.fromJson(newData);
-                                    } catch (e) {
-                                        //$log.debug('ManifestService::initializeComponent: override: did not know what to do with builderId:', builderId, newData, e);
-                                    }
-                                    break;
-                            }
-                        }
-                        if (typeof (newData) === 'object') {
-                            //$log.debug('ManifestService::initializeComponent: override: extend:', cmp.data, newData);
-                            extendDeep(cmp.data, newData);
-                        }
-                    }
-                }
-                // will we ever re-index after manifest initialization!?
-                // index component
-                cmp.idx = getComponentIdx().slice(0);
-                //$log.debug('ManifestService::initializeComponent: initialized:', cmp.idx, cmp);
-            }
-            /*
-             * Gets the component from the manifest specified by the idx array
-             * if no idx is specified, use the service's idx
-             */
-            this.getComponent = function (idx) {
-                var cmp;
-                if (!idx) {
-                    // idx not specified, get next using services idx
-                    //$log.debug('ManifestService::getComponent: getNextComponent');
-                    cmp = getNextComponent();
-                    // initialize the component
-                    initializeComponent(cmp);
-                } else {
-                    idx = deserializeIdx(idx);
-                    setComponentIdx(idx);
-                    //$log.debug('ManifestService::getComponent: find component:', idx);
-                    // traverse idx array to retrieve this particular cmp
-                    cmp = getData()[idx[0]];
-                    if (!!cmp) {
-                        for (var j in idx) {
-                            if (j > 0) {
-                                var components = cmp.components;
-                                if (!!components) {
-                                    cmp = components[idx[j]];
-                                    if (!cmp) {
-                                        // child idx out of range
-                                        return null;
-                                    }
-                                } else {
-                                    // no children
-                                    return null;
-                                }
-                            }
-                        }
-                    } else {
-                        // root index out of range
-                        return null;
-                    }
-                    //$log.debug('ManifestService::getComponent: found:', idx, cmp);
-                }
-                return cmp;
-            };
-            /*
-             * Searches for the first occurance of the specified component
-             * @param {string} cmpType Component type to search for
-             * @param {(string|int[])=} context Context in which to do the search
-             * @returns {Component}
-             */
-            this.getFirst = function (cmpType, context) {
-                if (!context) {
-                    context = [0];
-                } else {
-                    context = deserializeIdx(context);
-                }
-                //$log.debug('ManifestService::getFirst', cmpType, context);
-                var cmp = self.getComponent(context);
-                while (!!cmp && cmp.type !== cmpType) {
-                    cmp = getNextComponent();
-                    // don't search out of context - exclude siblings & parents
-                    if (!!getComponentIdx() &&
-                            (getComponentIdx().length < context.length ||
-                                    getComponentIdx()[context.length - 1] !== context[context.length - 1])) {
-                        return null;
-                    }
-                }
-                return cmp;
-            };
-            /*
-             * Searches for all occurances of the specified component
-             * @param {string} cmpType Component type to search for
-             * @param {(string|int[])=} context Context in which to do the search
-             * @returns {Component[]}
-             */
-            this.getAll = function (cmpType, context) {
-                //$log.debug('ManifestService::getAll:initialContext', context);
-                if (!context) {
-                    context = [0];
-                } else {
-                    context = deserializeIdx(context);
-                }
-                var cmps = [];
-                //$log.debug('ManifestService::getAll', cmpType, context);
-                var cmp = self.getComponent(context);
-                while (!!cmp) {
-                    //$log.debug('ManifestService::getAll:match?', cmp.type, cmpType);
-                    if (cmp.type === cmpType) {
-                        cmps.push(cmp);
-                        //$log.debug('ManifestService::getAll:match!', cmps);
-                    }
-                    cmp = getNextComponent();
-                    //$log.debug('ManifestService::getAll:in context?', context, getComponentIdx());
-                    // don't search out of context - exclude siblings & parents
-                    if (!!getComponentIdx() &&
-                            (getComponentIdx().length < context.length ||
-                                    getComponentIdx()[context.length - 1] !== context[context.length - 1])) {
-                        return cmps;
-                    }
-                }
-                return cmps;
-            };
-            this.getLang = function () {
-                return this.lang;
-            };
-            this.setLang = function (lang) {
-                this.lang = lang;
-            };
+(function() {
+  'use strict';
 
-            this.getPageId = function () {
-                return this.pageId;
-            };
-            this.setPageId = function (pageId, componentIdx) {
-                //$log.debug('ManifestService, setPageId', pageId);
-                // reset component index for reparsing new page
-                if (this.pageId === pageId) {
-                    return;
+  angular
+    .module('newplayer.service')
+    .factory('ManifestService', ManifestService);
+
+  /*
+   * console:
+   * angular.element(document.body).injector().get('ManifestService')
+   */
+
+  /** @ngInject */
+  function ManifestService($log, $rootScope /*, $timeout, $http, $q */) {
+    $log.debug('\nManifestService::Init\n');
+
+    var Service = function () {
+      var self = this;
+      var manifestInitialized = false;
+      var data;
+      var overrides;
+
+      var componentIdx;
+      var pageComponentIdx;
+      // if these are not defined by the route
+      // the manifest components will teach this service
+      // what the values should be
+      var lang;
+      var pageId;
+
+      function getData() {
+        return data;
+      }
+
+      function setData(d) {
+        data = d;
+      }
+
+      function getOverrides() {
+        return overrides;
+      }
+
+      function setOverrides(data) {
+        overrides = data;
+      }
+
+      function getComponentIdx() {
+        return componentIdx;
+      }
+
+      function setComponentIdx(cmpIdx) {
+        componentIdx = cmpIdx;
+      }
+
+      /*
+       * Determines manifest idx of next component when recursing the manifest
+       * first looks for sub-component
+       * next looks for sibling
+       * then it backs up to the parent and looks for sibling until it finds
+       * one or gets back to the root
+       */
+      function getNextComponent() {
+        var idx = getComponentIdx();
+        var cmp = null;
+        if (!idx) {
+          idx = [0];
+          cmp = self.getComponent(idx);
+        } else {
+          // get current Component and find next
+          cmp = self.getComponent(idx);
+
+          if (!!cmp.components && cmp.components.length > 0) {
+            // sub-components exist - go deeper
+            idx.push(0);
+            cmp = self.getComponent(idx);
+          } else {
+            // no children - try to find next sibling
+            var lastIdx = idx.pop();
+            idx.push(++lastIdx);
+            cmp = self.getComponent(idx);
+
+            if (!cmp) {
+              // no sibling - find closest ancestor's sibling
+              var backup = true;
+              while (!cmp && backup) {
+                if (idx.length > 1) {
+                  // try parent's sibling
+                  idx.pop();
+                  lastIdx = idx.pop();
+                  idx.push(++lastIdx);
+                  cmp = self.getComponent(idx);
+                } else {
+                  // back to root - done
+                  backup = false;
+                  idx = null;
                 }
-                setComponentIdx(null);
-                // Not sure if this impacts anything else, so tracking page component ID differently
-                pageComponentIdx = componentIdx;
-                this.pageId = pageId;
-                $rootScope.$broadcast('npPageIdChanged', pageId);
-            };
-            this.getNextPageId = function () {
-                var thisPageId = this.getPageId();
-                var
-                        nextPage,
-                        nextPageComponentIdx,
-                        i = thisPageId.substring(thisPageId.length - 1),
-                        pageParentComponent,
-                        pageParentComponentId = thisPageId.substring(0, thisPageId.length - 1);
-                if (!thisPageId) {
-                    $log.warn('ManifestService::goToNextPage | thisPage is not valid');
-                    return;
+              }
+            }
+          }
+        }
+
+        setComponentIdx(idx);
+        if (!idx) {
+          return null;
+        }
+        return cmp;
+      }
+
+      function deserializeIdx(idx) {
+        if (angular.isArray(idx)) {
+          // return a clone of the array (not the original)
+          return idx.slice(0);
+        }
+        if (typeof( idx ) === 'string') {
+          // convert string rep of array to integer array
+          idx = idx.replace(/[\[\]]/g, '');
+          var arr = idx.split(',');
+          // force array values to integer
+          for (var i = 0; i < arr.length; i++) {
+            arr[i] = +arr[i] || 0;  // default to 0 if NaN!?
+          }
+          return arr;
+        }
+        return [0];
+      }
+
+      function extendDeep(dst) {
+        angular.forEach
+        (
+          arguments,
+          function (obj) {
+            if (obj !== dst) {
+              angular.forEach
+              (
+                obj,
+                function (value, key) {
+                  if (dst[key] && dst[key].constructor && dst[key].constructor === Object) {
+                    extendDeep(dst[key], value);
+                  } else {
+                    dst[key] = value;
+                  }
                 }
-                i = parseInt(i, 10);
-                i++;
-                pageParentComponentId = pageParentComponentId + i;
-                pageParentComponent = this.getComponent(pageParentComponentId);
-                return nextPage = pageParentComponentId;
-            };
-            this.getNextPageIdx = function () {
-                var thisPageId = this.getPageId();
-                var
-                        nextPageComponentIdx,
-                        i,
-                        pageParentComponent,
-                        pageParentComponentIdx = pageComponentIdx.slice(0);
-                if (!thisPageId) {
-                    $log.warn('ManifestService::goToNextPage | thisPage is not valid');
-                    return;
+              );
+            }
+          }
+        );
+        return dst;
+      }
+
+      /*
+       * Initializes the component for the manifest
+       */
+      function initializeComponent(cmp) {
+        var builderId, newData, localOverrides;
+        if (!cmp) {
+          return;
+        }
+
+        if (!manifestInitialized) {
+          // first pass, check overrides and modify this component
+          builderId = (cmp.data || {}).builderId;
+          localOverrides = getOverrides();
+          if( !!localOverrides ) {
+            newData = localOverrides[builderId];
+          }
+
+          if (!!builderId && !!newData) {
+            // TBD - improve data sanitization
+            if (angular.isString(newData)) {
+              newData = newData.replace(/\n/g, ' ');
+            }
+            // found override for this component!
+            //$log.debug('ManifestService::initializeComponent: override builderId:', builderId, newData);
+            if (typeof( newData ) === 'string') {
+              switch (newData) {
+                case 'delete':
+                  // get current component's idx
+                  var cmpIdx = getComponentIdx();
+                  // get the idx for this component in context of its parent
+                  var childIdx = cmpIdx.pop();
+                  // get the parent component
+                  var parentCmp = self.getComponent(cmpIdx);
+                  // and delete parent's sub component with index: childIdx
+                  var thisChild = parentCmp.components.splice(childIdx, 1);
+                  // parser's current idx is deleted component's parent
+                  // if deleted component had a older sibling:
+                  if (childIdx > 0) {
+                    // repoint to deleted component's older sibling
+                    cmpIdx.push(childIdx - 1);
+                    setComponentIdx(cmpIdx);
+                  }
+                  break;
+                default:
+                  try {
+                    newData = angular.fromJson(newData);
+                  } catch (e) {
+                    //$log.debug('ManifestService::initializeComponent: override: did not know what to do with builderId:', builderId, newData, e);
+                  }
+                  break;
+              }
+            }
+            if (typeof( newData ) === 'object') {
+              //$log.debug('ManifestService::initializeComponent: override: extend:', cmp.data, newData);
+              extendDeep(cmp.data, newData);
+            }
+          }
+        }
+
+        // will we ever re-index after manifest initialization!?
+        // index component
+        cmp.idx = getComponentIdx().slice(0);
+        //$log.debug('ManifestService::initializeComponent: initialized:', cmp.idx, cmp);
+      }
+
+      /*
+       * Gets the component from the manifest specified by the idx array
+       * if no idx is specified, use the service's idx
+       */
+      this.getComponent = function (idx) {
+        var cmp;
+        if (!idx) {
+          // idx not specified, get next using services idx
+          //$log.debug('ManifestService::getComponent: getNextComponent');
+          cmp = getNextComponent();
+
+          // initialize the component
+          initializeComponent(cmp);
+        } else {
+
+          idx = deserializeIdx(idx);
+          setComponentIdx(idx);
+          //$log.debug('ManifestService::getComponent: find component:', idx);
+
+          // traverse idx array to retrieve this particular cmp
+          cmp = getData()[idx[0]];
+          if (!!cmp) {
+            for (var j in idx) {
+              if (j > 0) {
+                var components = cmp.components;
+                if (!!components) {
+                  cmp = components[idx[j]];
+                  if (!cmp) {
+                    // child idx out of range
+                    return null;
+                  }
+                } else {
+                  // no children
+                  return null;
                 }
-                i = parseInt(pageParentComponentIdx.pop(), 10);
-                i++;
-                pageParentComponent = this.getComponent(pageParentComponentIdx);
-                for (/* initialized above*/; i < pageParentComponent.components.length; i++) {
-                    var component = pageParentComponent.components[i];
-                    if (component.type === 'npPage') {
-                        if (component.data.id === thisPageId) {
-                            continue;
-                        }
-                        return nextPageComponentIdx = component.idx;
-                    }
-                }
-            };
-            this.goToNextPage = function () {
-                var thisPageId = this.getPageId();
-                var nextPage,
-                        nextPageComponentIdx,
-                        i,
-                        pageParentComponent,
-                        pageParentComponentIdx = pageComponentIdx.slice(0); // copy the array stack here so we can mangle it
-                if (!thisPageId) {
-                    $log.warn('ManifestService::goToNextPage | thisPage is not valid');
-                    return;
-                }
-                // We need to start looking for the component after current page component
-                i = parseInt(pageParentComponentIdx.pop(), 10); // pop this child off the array so we can have the parent
-                i++; // let's always start with the index after ours
-                //$log.debug('ManifestService::goToNextPage | for pageId, componentIdx', thisPageId, componentIdx);
-                pageParentComponent = this.getComponent(pageParentComponentIdx);
-                for (/* initialized above*/; i < pageParentComponent.components.length; i++) {
-                    var component = pageParentComponent.components[i];
-                    //$log.debug('ManifestService::goToNextPage | -- Evaluating component', component);
-                    if (component.type === 'npPage') {
-                        //$log.debug('ManifestService::goToNextPage | --> found npPage');
-                        console.log(
-                                '\n::::::::::::::::::::::::::::::::::::::component.type===component.type:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                '\n::component.type::', component.type,
-                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                );
-                        if (component.data.id === thisPageId) {
-                            //$log.debug('ManifestService::goToNextPage | --> ignoring thisPage');
-                            continue;
-                        }
-                        nextPage = component.data.id;
-                        nextPageComponentIdx = component.idx;
-//                        console.log(
-//                                '\n::::::::::::::::::::::::::::::::::::::component.type======:::::::::::::::::::::::::::::::::::::::::::::::::',
-//                                '\n::component::', component,
-//                                '\n::component.data::', component.data,
-//                                '\n::component.data.id::', component.data.id,
-//                                '\n::component.data.last::', component.data.last,
-//                                '\n::nextPage::', nextPage,
-//                                '\n::nextPageComponentIdx::', nextPageComponentIdx,
-//                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-//                                );
-                        //$log.debug('ManifestService::goToNextPage | --> found nextPage, nextPageComponentIdx', nextPage, nextPageComponentIdx);
-                        break;
-                    }
-                }
-                if (!!nextPageComponentIdx) {
-                    //$log.debug('ManifestService::goToNextPage | sending client to nextPage', nextPage);
-                    console.log(
-                            '\n::::::::::::::::::::::::::::::::::::::goToNextPage===goToNextPage:::::::::::::::::::::::::::::::::::::::::::::::::',
-                            '\n::i::', i,
-                            '\n::nextPage::', nextPage,
-                            '\n::thisPageId::', thisPageId,
-                            '\n::nextPageComponentIdx::', nextPageComponentIdx,
-                            '\n::pageParentComponentIdx::', pageParentComponentIdx,
-                            '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                            );
-                    this.setPageId(nextPage, nextPageComponentIdx);
-                    return true;
-                }
-                //$log.debug('ManifestService::goToNextPage | no valid next page found, returning false');
-                return false;
-            };
-            this.initialize = function (data, overrides) {
-                //$log.debug('ManifestService::initialize:', data, overrides);
-                if (!!data) {
-                    setData(data);
-                }
-                if (!!overrides) {
-                    setOverrides(overrides[0]);
-                }
-                manifestInitialized = false;
-                // index all components
-                setComponentIdx(null);
-                var cmp = self.getComponent();
-                //$log.debug('ManifestService::initialize:initialParse', cmp);
-                while (!!cmp) {
-                    cmp = self.getComponent();
-                }
-                manifestInitialized = true;
-                //$log.debug('ManifestService::initialize:manifest data:', getData());
-            };
-        };
-        return new Service();
-    }
+              }
+            }
+          } else {
+            // root index out of range
+            return null;
+          }
+          //$log.debug('ManifestService::getComponent: found:', idx, cmp);
+        }
+        return cmp;
+      };
+
+      /*
+       * Searches for the first occurance of the specified component
+       * @param {string} cmpType Component type to search for
+       * @param {(string|int[])=} context Context in which to do the search
+       * @returns {Component}
+       */
+      this.getFirst = function (cmpType, context) {
+        if (!context) {
+          context = [0];
+        } else {
+          context = deserializeIdx(context);
+        }
+
+        //$log.debug('ManifestService::getFirst', cmpType, context);
+        var cmp = self.getComponent(context);
+        while (!!cmp && cmp.type !== cmpType) {
+          cmp = getNextComponent();
+
+          // don't search out of context - exclude siblings & parents
+          if (!!getComponentIdx() &&
+            ( getComponentIdx().length < context.length ||
+            getComponentIdx()[context.length - 1] !== context[context.length - 1] )) {
+            return null;
+          }
+        }
+
+        return cmp;
+      };
+
+      /*
+       * Searches for all occurances of the specified component
+       * @param {string} cmpType Component type to search for
+       * @param {(string|int[])=} context Context in which to do the search
+       * @returns {Component[]}
+       */
+      this.getAll = function (cmpType, context) {
+        //$log.debug('ManifestService::getAll:initialContext', context);
+        if (!context) {
+          context = [0];
+        } else {
+          context = deserializeIdx(context);
+        }
+        var cmps = [];
+
+        //$log.debug('ManifestService::getAll', cmpType, context);
+        var cmp = self.getComponent(context);
+        while (!!cmp) {
+          //$log.debug('ManifestService::getAll:match?', cmp.type, cmpType);
+          if (cmp.type === cmpType) {
+            cmps.push(cmp);
+            //$log.debug('ManifestService::getAll:match!', cmps);
+          }
+          cmp = getNextComponent();
+
+          //$log.debug('ManifestService::getAll:in context?', context, getComponentIdx());
+          // don't search out of context - exclude siblings & parents
+          if (!!getComponentIdx() &&
+            ( getComponentIdx().length < context.length ||
+            getComponentIdx()[context.length - 1] !== context[context.length - 1] )) {
+            return cmps;
+          }
+        }
+
+        return cmps;
+      };
+
+      this.getLang = function () {
+        return this.lang;
+      };
+      this.setLang = function (lang) {
+        this.lang = lang;
+      };
+
+      this.getPageId = function () {
+        return this.pageId;
+      };
+      this.setPageId = function (pageId, componentIdx) {
+        //$log.debug('ManifestService, setPageId', pageId);
+        // reset component index for reparsing new page
+        if (this.pageId === pageId) {
+          return;
+        }
+        setComponentIdx(null);
+        // Not sure if this impacts anything else, so tracking page component ID differently
+        pageComponentIdx = componentIdx;
+
+        this.pageId = pageId;
+        $rootScope.$broadcast('npPageIdChanged', pageId);
+      };
+
+      this.goToNextPage = function () {
+        var thisPageId = this.getPageId();
+        var nextPage, nextPageComponentIdx, i, pageParentComponent,
+            pageParentComponentIdx = pageComponentIdx.slice(0); // copy the array stack here so we can mangle it
+        if (!thisPageId) {
+          $log.warn('ManifestService::goToNextPage | thisPage is not valid');
+          return;
+        }
+
+        // We need to start looking for the component after current page component
+        i = parseInt(pageParentComponentIdx.pop(), 10); // pop this child off the array so we can have the parent
+        i++; // let's always start with the index after ours
+
+
+        //$log.debug('ManifestService::goToNextPage | for pageId, componentIdx', thisPageId, componentIdx);
+        pageParentComponent = this.getComponent(pageParentComponentIdx);
+
+        for ( /* initialized above*/; i < pageParentComponent.components.length; i++) {
+          var component = pageParentComponent.components[i];
+          //$log.debug('ManifestService::goToNextPage | -- Evaluating component', component);
+          if (component.type === 'npPage') {
+            //$log.debug('ManifestService::goToNextPage | --> found npPage');
+            if (component.data.id === thisPageId) {
+              //$log.debug('ManifestService::goToNextPage | --> ignoring thisPage');
+              continue;
+            }
+
+            nextPage = component.data.id;
+            nextPageComponentIdx = component.idx;
+            //$log.debug('ManifestService::goToNextPage | --> found nextPage, nextPageComponentIdx', nextPage, nextPageComponentIdx);
+            break;
+          }
+        }
+
+
+        if( !!nextPageComponentIdx ) {
+          //$log.debug('ManifestService::goToNextPage | sending client to nextPage', nextPage);
+          this.setPageId(nextPage, nextPageComponentIdx);
+          return true;
+        }
+
+
+        //$log.debug('ManifestService::goToNextPage | no valid next page found, returning false');
+        return false;
+      };
+
+      this.initialize = function (data, overrides) {
+        //$log.debug('ManifestService::initialize:', data, overrides);
+
+        if( !!data ) {
+          setData(data);
+        }
+        if( !! overrides ) {
+          setOverrides(overrides[0]);
+        }
+        manifestInitialized = false;
+
+        // index all components
+        setComponentIdx(null);
+        var cmp = self.getComponent();
+        //$log.debug('ManifestService::initialize:initialParse', cmp);
+        while (!!cmp) {
+          cmp = self.getComponent();
+        }
+
+        manifestInitialized = true;
+
+        //$log.debug('ManifestService::initialize:manifest data:', getData());
+      };
+
+    };
+    return new Service();
+
+  }
 })();
 
 /* jshint -W003, -W117, -W004 */
@@ -1827,6 +1811,7 @@
                                 '\n::this::', $(this),
                                 '\n::this::', $(this).parent(),
                                 '\n::cmpData::', cmpData,
+//                                '\n::idx::', idx,
                                 '\n::btnLink::', btnLink,
                                 '\n::cmpData.link::', cmpData.link,
                                 '\n::angular.isString(btnLink)::', angular.isString(btnLink),
@@ -1844,16 +1829,35 @@
                                     }
                                     this.linkInternal = false;
                                 }
+                            } else if (typeof btnLink === 'undefined' || btnLink === '') {
+                                var parentPage = $('.npPage').closest('[data-cmptype="npPage"]');
+                                var allPages = ManifestService.getAll(parentPage, $scope.cmpIdx);
+//                                data-cmptype="npPage"
+                                console.log(
+                                        '\n::::::::::::::::::::::::::::::::::::::btnLink===undefined:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                        '\n::allPages::', allPages,
+                                        '\n::parentPage::', parentPage,
+                                        '\n::parentPage.length::', parentPage.length,
+                                        '\n::cmpData::', cmpData,
+                                        '\n::ManifestService.getPageId()::', ManifestService.getPageId(),
+//                                        '\n::ManifestService.getComponentIdx()::', ManifestService.getNextComponent(),
+                                        '\n::npPage::', $('.npPage'),
+                                        '\n::npPage::', $('.npPage').length,
+                                        '\n::$(this).closest(.npPage)::', $(this).closest('.npPage'),
+                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                        );
+                                this.link = parentPage[1];
+//                                if (!this.target) {
+//                                    this.target = '_blank';
+//                                }
+//                                ManifestService.setPageId('Page2');
+                                ManifestService.goToNextPage();
+//                                this.linkInternal = true;
                             } else if (/^([a-zA-Z]{1,10}:)?\/\//.test(btnLink)) {
                                 if (!this.target) {
                                     this.target = '_blank';
                                 }
                                 this.linkInternal = false;
-                            } else if (typeof ManifestService.getPageId() === 'undefined' || ManifestService.getPageId() === '') {
-                                if (!this.target) {
-                                    this.target = '_blank';
-                                }
-                                ManifestService.goToNextPage();
                             } else {
                                 if (btnLink.indexOf('#') === 0) {
                                     btnLink = btnLink.substr(1);
@@ -1867,21 +1871,21 @@
                         this.go = function () {
                             console.log(
                                     '\n::::::::::::::::::::::::::::::::::::::this.go:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                    '\n::this::', this,
                                     '\n::cmpData::', cmpData,
-                                    '\n::btnLink::', btnLink,
                                     '\n::cmpData.link::', cmpData.link,
+                                    '\n::ManifestService.setPageId(cmpData.link)::', ManifestService.setPageId(cmpData.link),
+                                    '\n::$location.url(this.link)::', $location.url(this.link),
                                     '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
                                     );
                             if (this.linkInternal) {
-                                btnLink = ManifestService.getNextPageId();
-//                                btnLink = ManifestService.getNextPageId();
-                                ManifestService.setPageId(btnLink);
+                                //$location.url(this.link);
+                                ManifestService.setPageId(cmpData.link);
                                 console.log(
                                         '\n::::::::::::::::::::::::::::::::::::::this.linkInternal:::::::::::::::::::::::::::::::::::::::::::::::::',
                                         '\n::cmpData::', cmpData,
-                                        '\n::this.link::', this.link,
                                         '\n::cmpData.link::', cmpData.link,
-                                        '\n::btnLink::', btnLink,
+                                        '\n::ManifestService.setPageId(cmpData.link)::', ManifestService.setPageId(cmpData.link),
                                         '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
                                         );
                             } else {
@@ -5629,7 +5633,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('scripts/component/npButton/npButton.html',
     "<!--<div class=\"{{component.type}} {{npButton.type}} np-cmp-main btn\"  ng-controller=\"npButtonController as npButton\" ng-click=\"npButton.go()\">-->\n" +
-    "<button class=\"{{component.type}} {{npButton.type}} np-cmp-main btn\"  ng-controller=\"npButtonController as npButton\" ng-click=\"npButton.go($event)\">\n" +
+    "<button class=\"{{component.type}} {{npButton.type}} np-cmp-main btn\"  ng-controller=\"npButtonController as npButton\" ng-click=\"npButton.go()\">\n" +
     "    <span class=\"debug\">\n" +
     "        <span class=\"h3\">{{component.type}} -- <small>{{component.idx}}</small></span>\n" +
     "    </span>\n" +
@@ -6167,13 +6171,17 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
   $templateCache.put('scripts/component/npMatch/npMatch.html',
     "<section id=\"np_matchgame\" class=\"col-xs-12\"> \n" +
     "    <form class=\"np-cmp-wrapper {{component.type}} \" ng-controller=\"npMatchController as npMatch\" ng-submit=\"npMatch.evaluate()\">\n" +
+    "\n" +
     "        <div class=\"debug\">\n" +
     "            <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
     "        </div>\n" +
+    "\n" +
     "        <!--<h5 class=\"text-uppercase\">question:</h5>-->\n" +
     "        <div class=\"npMatch-content\" ng-bind-html=\"npMatch.content\"></div>\n" +
+    "\n" +
     "        <!--<h5 class=\"text-uppercase\">answers:</h5>-->\n" +
     "        <div np-component ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "\n" +
     "        <div class=\"col-xs-12\">\n" +
     "            <button type=\"submit\" class=\"col-xs-offset-6 btn-primary\">Submit</button>        \n" +
     "            <button id=\"next_button\" class=\"btn-default\" ng-click=\"npMatch.nextPage($event)\" ng-show=\"npMatch.canContinue\">Next</button>\n" +
@@ -6181,7 +6189,9 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "    <!--    <div class=\"btn btn-default\">\n" +
     "            <input type=\"submit\" />\n" +
     "        </div>-->\n" +
+    "\n" +
     "        <!-- <div class=\"npMatch-feedback question-feedback col-xs-offset-5\" ng-bind-html=\"npMatch.feedback\"></div> -->\n" +
+    "\n" +
     "        <div question-feedback-build class=\"row\">\n" +
     "            <div  class=\"col-xs-12 col-md-4 col-md-offset-4 question-feedback\">\n" +
     "                <div class=\"question-feedback-wrapper\">\n" +
@@ -6211,7 +6221,9 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "            </div>\n" +
     "        </div>\n" +
     "    </form>\n" +
-    "</section>"
+    "</section>\n" +
+    "\n" +
+    "<br/><br/><br/>\n"
   );
 
 
