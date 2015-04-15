@@ -65,8 +65,7 @@
                 </div>
             </div> 
             <div np-drag-and-drop-select-evaluate class="row">
-                <div class="col-xs-6"></div>
-                <div class="col-xs-6">
+                <div class="col-xs-12">
                     <div class="select-button-wrapper">
                         <button class="btn-select-submit btn" is-clickable="true" ng-click="evaluate()">
                             <span>SUBMIT</span>
@@ -75,7 +74,7 @@
                     <div class="select-response-wrapper">
                         <div class="select-response-correct row">
                             <div class="select-response-background"></div>
-                            <div class="col-xs-5 left-column-select">              
+                            <div class="col-xs-1 left-column-select">              
                                 <div class="response-icon-wrapper">             
                                     <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="22.8px" height="22.801px" viewBox="58.368 58.368 22.8 22.801" enable-background="new 58.368 58.368 22.8 22.801" xml:space="preserve">
                                         <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="425.3076" y1="46.0552" x2="423.378" y2="48.4836" gradientTransform="matrix(6.1102 0.342 -0.342 6.1102 -2507.3147 -365.3418)">
@@ -91,12 +90,12 @@
                                     </svg>
                                 </div>
                             </div>
-                            <div class="col-xs-7 right-column-select body-copy" ng-bind-html="npDragAndDropSelect.positiveFeedback" >
+                            <div class="col-xs-11 right-column-select body-copy" ng-bind-html="npDragAndDropSelect.positiveFeedback" >
                             </div>
                         </div>
                         <div class="select-response-incorrect row">
                             <div class="select-response-background"></div>
-                            <div class="col-xs-5 left-column-select">
+                            <div class="col-xs-1 left-column-select">
                                 <div class="response-icon-wrapper">
                                     <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="22.8px" height="22.801px" viewBox="0 0 22.8 22.801" style="enable-background:new 0 0 22.8 22.801;" xml:space="preserve">
                                         <path style="fill:#9A7D46;" d="M11.4,22.801C5.101,22.801,0,17.7,0,11.4S5.101,0,11.4,0S22.8,5.101,22.8,11.4  S17.7,22.801,11.4,22.801z M11.4,1C5.7,1,1,5.7,1,11.4s4.7,10.4,10.4,10.4S21.8,17.101,21.8,11.4S17.101,1,11.4,1z"/>
@@ -119,7 +118,7 @@
                                     </svg>
                                 </div>
                             </div>
-                            <div class="col-xs-7 right-column-select body-copy" ng-bind-html="npDragAndDropSelect.negativeFeedback" >
+                            <div class="col-xs-11 right-column-select body-copy" ng-bind-html="npDragAndDropSelect.negativeFeedback" >
                             </div>
                         </div>
                     </div>

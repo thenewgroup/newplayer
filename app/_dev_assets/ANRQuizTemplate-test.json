@@ -1,1 +1,197 @@
-[{"type":"npFeature","data":{"id":"ANR","class":"","version":"0.0.1","timestamp":"2015-Apr-Thu_07:04:27"},"components":[{"type":"npContent","data":{"id":"content_en","language":"en","title":"Learning-Content-ANR-2.1-Understand-Why-Women-Love-Their-Advanced-Night-Repair-Quiz","description":"This manifest creates a Story or Learning Object content object . "},"components":[{"type":"npHTML","data":{"id":"newplayer-background"},"components":[{"type":"npHTML","data":{"id":"background-image"},"components":[]},{"type":"npQuiz","data":{"id":"","questions":"2","percentage":""},"components":[]},{"type":"npHTML","data":{"class":"outside-padding"},"components":[{"type":"npHTML","data":{"class":"renutriv-logo-image"},"components":[]},{"type":"npHTML","data":{"class":"h3 headline","content":"Understand Why Women Love Their Advanced Night Repair"},"components":[]},{"type":"npHTML","data":{"class":"h6 instructional","content":"Understand Why Women Love Their Advanced Night Repair"},"components":[]},{"type":"npPage","data":{"id":"1","parentId":"","title":"ANR-2.1-Understand-Why-Women-Love-Their-Advanced-Night-Repair-Quiz---1","inMenu":true,"required":true},"components":[{"type":"npQuestion","data":{"required":0,"forced":true,"type":"checkbox","difficulty":"","content":"An 18-year-old asks why she should use Advanced Night Repair. What should you tell her?","buttons":{"submit":"Submit","next":"Next"},"feedback":{"immediate":"true","correct":"That's it. Advanced Night Repair is a great product for all customers. This is a good way to introduce it.","incorrect":"That's not it. Try introducing Advanced Night Repair as our most famous product. It's #1—for everyone."}},"components":[{"type":"npAnswer","data":{"label":"Advanced Night Repair hydrates and repairs the look of skin. You might be young, but your skin could use some help.","correct":false,"feedback":{"incorrect":"That's not it. Try introducing Advanced Night Repair as our most famous product. It's #1—for everyone."}}},{"type":"npAnswer","data":{"label":"Start young to stay young! Repair is important at any age, and it's never too early to start caring for your skin.","correct":true,"feedback":{"correct":"That's it. Advanced Night Repair is a great product for all customers. This is a good way to introduce it."}}},{"type":"npAnswer","data":{"label":"You don't have wrinkles and lines yet, but one day you will. You should start using Advanced Night Repair right away.","correct":false,"feedback":{"incorrect":"That's not it. Try introducing Advanced Night Repair as our most famous product. It's #1—for everyone."}}},{"type":"npAnswer","data":{"label":"Advanced Night Repair is what you need—trust me.","correct":false,"feedback":{"incorrect":"That's not it. Try introducing Advanced Night Repair as our most famous product. It's #1—for everyone."}}}]},{"type":"npButton","data":{"link":"1","type":"btn-next","class":"","content":"Next"},"components":[]}]},{"type":"npPage","data":{"id":"1","parentId":"","title":"ANR-2.1-Understand-Why-Women-Love-Their-Advanced-Night-Repair-Quiz---2","inMenu":true,"required":true},"components":[{"type":"npQuestion","data":{"required":0,"forced":true,"type":"checkbox","difficulty":"","content":"An 80-year-old asks why she should use Advanced Night Repair. What should you tell her?","buttons":{"submit":"Submit","next":"Next"},"feedback":{"immediate":"true","correct":"Good job. Advanced Night Repair is ideal for all customers, of any age.","incorrect":"That's not right. Try explaining that Advanced Night Repair is actually ideal for all customers of any age."}},"components":[{"type":"npAnswer","data":{"label":"I know skincare might not be a top priority at your age, but Advanced Night Repair can still help you.","correct":false,"feedback":{"incorrect":"That's not right. Try explaining that Advanced Night Repair is actually ideal for all customers of any age."}}},{"type":"npAnswer","data":{"label":"It's not too late—you can still get some benefits from Advanced Night Repair.","correct":false,"feedback":{"incorrect":"That's not right. Try explaining that Advanced Night Repair is actually ideal for all customers of any age."}}},{"type":"npAnswer","data":{"label":"I know you want to look best for your \"golden years.\" Advanced Night Repair is the answer!","correct":false,"feedback":{"incorrect":"That's not right. Try explaining that Advanced Night Repair is actually ideal for all customers of any age."}}},{"type":"npAnswer","data":{"label":"Everyone can benefit from a skincare routine, and Advanced Night Repair can help give you your best skin.","correct":true,"feedback":{"correct":"Good job. Advanced Night Repair is ideal for all customers, of any age."}}}]},{"type":"npButton","data":{"link":"1","type":"btn-next","class":"","content":"Next"},"components":[]}]}]}]}]}]}]
+[{
+        "type": "npFeature",
+        "data": {
+            "id": "ANR",
+            "class": "",
+            "version": "0.0.1",
+            "timestamp": "2015-Apr-Sun_12:04:20"
+        },
+        "components": [{
+                "type": "npContent",
+                "data": {
+                    "id": "content_en",
+                    "language": "en",
+                    "title": "Learning-Content-ANR-2.1-Understand-Why-Women-Love-Their-Advanced-Night-Repair-Part-2",
+                    "description": "This manifest creates a Story or Learning Object content object . "
+                },
+                "components": [{
+                        "type": "npHTML",
+                        "data": {
+                            "id": "newplayer-background"
+                        },
+                        "components": [{
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "background-image"
+                                },
+                                "components": []
+                            }]
+                    }, {
+                        "type": "npHTML",
+                        "data": {
+                            "class": "outside-padding"
+                        },
+                        "components": [{
+                                "type": "npHTML",
+                                "data": {
+                                    "class": "renutriv-logo-image"
+                                },
+                                "components": []
+                            }, {
+                                "type": "npHTML",
+                                "data": {
+                                    "class": "h3 headline",
+                                    "content": "Understand Why Women Love Their Advanced Night Repair - Part 2"
+                                },
+                                "components": []
+                            }, {
+                                "type": "npHTML",
+                                "data": {
+                                    "class": "h6 instructional",
+                                    "content": "<p>Top 10 Amazing Facts to Share About Advanced Night Repair<br />Now that you understand why existing customers love it so much, here are some fun stats you can use to recruit new ones!</p>"
+                                },
+                                "components": []
+                            }, {
+                                "type": "npList",
+                                "data": {
+                                    "class": "h6 instructional",
+                                    "data-ng:wrap": "false",
+                                    "content": " <p>It&#39;s oil-free and fragrance-free&mdash;high-powered skincare at its most pure.</p>"
+                                },
+                                "components": [{
+                                        "type": "npImage",
+                                        "data": {
+                                            "src": "assets/ANR_2point1_numerals_10.png"
+                                        },
+                                        "components": []
+                                    }]
+                            }, {
+                                "type": "npList",
+                                "data": {
+                                    "class": "h6 instructional",
+                                    "data-ng:wrap": "false",
+                                    "content": " <p>It has more than 30 years of innovation&mdash;it was the first-ever night repair serum and sparked an entire category!</p>"
+                                },
+                                "components": [{
+                                        "type": "npImage",
+                                        "data": {
+                                            "src": "assets/ANR_2point1_numerals_9.png"
+                                        },
+                                        "components": []
+                                    }]
+                            }, {
+                                "type": "npList",
+                                "data": {
+                                    "class": "h6 instructional",
+                                    "data-ng:wrap": "false",
+                                    "content": " <p>It&#39;s earned 65+ global awards&mdash;and counting!</p>"
+                                },
+                                "components": [{
+                                        "type": "npImage",
+                                        "data": {
+                                            "src": "assets/ANR_2point1_numerals_8.png"
+                                        },
+                                        "components": []
+                                    }]
+                            }, {
+                                "type": "npList",
+                                "data": {
+                                    "class": "h6 instructional",
+                                    "data-ng:wrap": "false",
+                                    "content": " <p>With 25+ patents, it&#39;s often imitated, but never duplicated.</p>"
+                                },
+                                "components": [{
+                                        "type": "npImage",
+                                        "data": {
+                                            "src": "assets/ANR_2point1_numerals_7.png"
+                                        },
+                                        "components": []
+                                    }]
+                            }, {
+                                "type": "npList",
+                                "data": {
+                                    "class": "h6 instructional",
+                                    "data-ng:wrap": "false",
+                                    "content": " <p>10 bottles are sold every minute around the world&mdash;that&#39;s the equivalent of 14,400 bottles per day!</p>"
+                                },
+                                "components": [{
+                                        "type": "npImage",
+                                        "data": {
+                                            "src": "assets/ANR_2point1_numerals_6.png"
+                                        },
+                                        "components": []
+                                    }]
+                            }, {
+                                "type": "npList",
+                                "data": {
+                                    "class": "h6 instructional",
+                                    "data-ng:wrap": "false",
+                                    "content": " <p>It has consistent 5-star ratings&mdash;customers love it, and they&#39;re not afraid to say so.</p>"
+                                },
+                                "components": [{
+                                        "type": "npImage",
+                                        "data": {
+                                            "src": "assets/ANR_2point1_numerals_5.png"
+                                        },
+                                        "components": []
+                                    }]
+                            }, {
+                                "type": "npList",
+                                "data": {
+                                    "class": "h6 instructional",
+                                    "data-ng:wrap": "false",
+                                    "content": " <p>It addresses the look of every key sign of aging&mdash;lines, wrinkles, dullness, dehydration, and even tone.</p>"
+                                },
+                                "components": [{
+                                        "type": "npImage",
+                                        "data": {
+                                            "src": "assets/ANR_2point1_numerals_4.png"
+                                        },
+                                        "components": []
+                                    }]
+                            }, {
+                                "type": "npList",
+                                "data": {
+                                    "class": "h6 instructional",
+                                    "data-ng:wrap": "false",
+                                    "content": " <p>It renews the look of skin&mdash;tested and proven.</p>"
+                                },
+                                "components": [{
+                                        "type": "npImage",
+                                        "data": {
+                                            "src": "assets/ANR_2point1_numerals_3.png"
+                                        },
+                                        "components": []
+                                    }]
+                            }, {
+                                "type": "npList",
+                                "data": {
+                                    "class": "h6 instructional",
+                                    "data-ng:wrap": "false",
+                                    "content": " <p>It helps you look like you got a good night&#39;s sleep&mdash;even when you didn&#39;t&mdash;and you&#39;ll wake up to more beautiful skin every day.</p>"
+                                },
+                                "components": [{
+                                        "type": "npImage",
+                                        "data": {
+                                            "src": "assets/ANR_2point1_numerals_2.png"
+                                        },
+                                        "components": []
+                                    }]
+                            }, {
+                                "type": "npList",
+                                "data": {
+                                    "class": "h6 instructional",
+                                    "data-ng:wrap": "false",
+                                    "content": " <p>It&#39;s for everyone&mdash;every woman, every age, every ethnicity, every skin concern.</p>"
+                                },
+                                "components": [{
+                                        "type": "npImage",
+                                        "data": {
+                                            "src": "assets/ANR_2point1_numerals_1.png"
+                                        },
+                                        "components": []
+                                    }]
+                            }]
+                    }]
+            }]
+    }]

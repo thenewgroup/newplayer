@@ -99,7 +99,7 @@
     .body-copy{
         font-size: $font-size-base;
         letter-spacing: 1px;
-        line-height: 0.6;
+        line-height: 1.25;
     }
 }
 .dark .h1, .h2, .h3, .h4, .h5 {
@@ -760,7 +760,7 @@ input{
 .reveal-button-image  {
     position: absolute;
     padding: 5.5%;
-    background-color:#FFFFFF;
+    background-color:#999999;
     overflow: hidden;
 }
 /*
@@ -781,6 +781,7 @@ input{
     right: 0;
     bottom: 0;
     margin: auto;
+    background-color: #999999;
 }
 .button-screen {
     position: absolute;
@@ -788,9 +789,9 @@ input{
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #00518F;
+    background-color: #FFFFFF;
 }
-#np_reNutriv, .reveal-button {
+.reveal-button {
     position: relative;
     width: 4.46em;
     height: 4.46em;
@@ -840,7 +841,6 @@ input{
     height: 100%;
     background-color: #FFFFFF;
     opacity: 0.75;
-    /*z-index: -1;*/
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player List classes*/
@@ -913,7 +913,7 @@ input{
     right: 0;
     left: 0;
     margin: auto;
-    width: 60%;
+    width: 90%;
 }
 .select-response-wrapper p, h2{
     color: $brand-primary;
@@ -955,7 +955,8 @@ input{
     position: absolute;
     right: 0;
     width: 35px;
-    margin-top: -3px;
+    margin-top: 1px;
+    margin-bottom: 20px;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Drag and Drop Prioritize classes*/
@@ -1063,18 +1064,17 @@ foreignobject{
     resize: vertical;
 }
 .positive-feedback-content{
-    font-family: akzidenz-grotesk_bqregular;
-    color: $brand-primary;
-    text-transform: uppercase;
     padding-top: 10px;
+    margin-left: 35px;
 }
 .positive-feedback-image{
-    background-image: url("/assets/svgs/feedback-correct-icon-ANR.svg");
-    background-repeat: no-repeat;
-    background-position: right;
-    height: 40px;
-    border: 0;
-    background-size: 40px auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 25px;
+}
+.positive-feedback-image polygon, path{
+    fill: $brand-primary;
 }
 .button-content{
     position: relative;
