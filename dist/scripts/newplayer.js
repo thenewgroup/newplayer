@@ -5732,26 +5732,65 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                                    <stop  offset=\"0.5063\" style=\"stop-color:#D7B26A\"/>\n" +
     "                                    <stop  offset=\"0.5581\" style=\"stop-color:#CAA04E\"/>\n" +
     "                                    <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
-    "                                    <defs>\n" +
-    "                                    </defs>\n" +
     "                            </g>\n" +
     "                            <g id=\"complete-background-Layer_2\">\n" +
     "                                <rect stroke=\"url(#SVGID_1_)\" stroke-width=\"3\" vector-effect=\"non-scaling-stroke\" fill=\"none\"  x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
     "                            </g>\n" +
     "                            <g id=\"complete-background-Layer_4\">\n" +
     "                                <foreignObject  x=\"0\" y=\"0\" width=\"100%\" height=\"100%\" >\n" +
+    "\n" +
+    "<!--                                    <div question-feedback-build class=\"row\">\n" +
+    "                                        <div  class=\"col-sm-7 question-feedback\">\n" +
+    "                                            <div class=\"question-feedback-wrapper vertical-centered\">\n" +
+    "                                                <div class=\"positive-feedback-icon\">\n" +
+    "                                                    <svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n" +
+    "                                                         width=\"139.535px\" height=\"139.536px\" viewBox=\"665.896 1118.26 139.535 139.536\"\n" +
+    "                                                         enable-background=\"new 665.896 1118.26 139.535 139.536\" xml:space=\"preserve\">\n" +
+    "                                                        <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"486.9971\" y1=\"-44.001\" x2=\"475.1884\" y2=\"-58.8622\" gradientTransform=\"matrix(6.1102 0.342 0.342 -6.1102 -2188.8755 702.1841)\">\n" +
+    "                                                            <stop  offset=\"0.1882\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                                            <stop  offset=\"0.3683\" style=\"stop-color:#FFEBC3\"/>\n" +
+    "                                                            <stop  offset=\"0.3952\" style=\"stop-color:#F7DFB1\"/>\n" +
+    "                                                            <stop  offset=\"0.5063\" style=\"stop-color:#D7B26A\"/>\n" +
+    "                                                            <stop  offset=\"0.5581\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                                            <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
+    "                                                        </linearGradient>\n" +
+    "                                                        <polygon fill=\"url(#SVGID_1_)\" points=\"784.624,1164.16 768.712,1150.084 722.812,1203.939 695.271,1180.684 681.195,1196.596  724.648,1233.316 \"/>\n" +
+    "                                                        <path fill=\"#9A7D46\" d=\"M735.664,1257.796c-38.556,0-69.768-31.212-69.768-69.769c0-38.556,31.212-69.768,69.768-69.768  s69.768,31.212,69.768,69.768C805.432,1226.584,774.22,1257.796,735.664,1257.796z M735.664,1124.38  c-34.884,0-63.648,28.765-63.648,63.648s28.765,63.647,63.648,63.647s63.648-28.764,63.648-63.647S770.548,1124.38,735.664,1124.38z  \"/>\n" +
+    "                                                    </svg>\n" +
+    "                                                </div>\n" +
+    "                                                <div class=\"npQuestion-feedback body-copy question-feedback-text\" ng-if=\"npQuestion.feedback\" ng-bind-html=\"npQuestion.feedback\"></div>\n" +
+    "                                                <div class=\"question-feedback-label\">Feedback area</div>\n" +
+    "                                            </div\n" +
+    "                                        </div>\n" +
+    "                                        <div  class=\"col-sm-5\">\n" +
+    "                                        </div>\n" +
+    "                                    </div>-->\n" +
     "                                    <div class=\"button-content\">\n" +
     "                                        <img class=\"hitAreaImage\" ng-src=\"{{draggableButton.matchingImage}}\" alt=\"{{hitArea.alt}}\" />\n" +
     "                                        <div class=\"hitAreaContent body-copy\" ng-bind-html=\"draggableButton.matchingContent\" ></div>\n" +
     "                                    </div>\n" +
     "                                    <div class=\"button-completion-content vertical-centered\">\n" +
     "                                        <div class=\"row \" >\n" +
-    "                                            <div class=\" col-xs-6 \" >\n" +
-    "                                                <div class=\"positive-feedback-image\"></div>\n" +
+    "                                            <!--<div class=\" col-xs-2\" >-->\n" +
+    "                                                <div class=\"positive-feedback-image\">\n" +
+    "                                                <svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n" +
+    "                                                     width=\"139.535px\" height=\"139.536px\" viewBox=\"665.896 1118.26 139.535 139.536\"\n" +
+    "                                                     enable-background=\"new 665.896 1118.26 139.535 139.536\" xml:space=\"preserve\">\n" +
+    "                                                    <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"486.9971\" y1=\"-44.001\" x2=\"475.1884\" y2=\"-58.8622\" gradientTransform=\"matrix(6.1102 0.342 0.342 -6.1102 -2188.8755 702.1841)\">\n" +
+    "                                                        <stop  offset=\"0.1882\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                                        <stop  offset=\"0.3683\" style=\"stop-color:#FFEBC3\"/>\n" +
+    "                                                        <stop  offset=\"0.3952\" style=\"stop-color:#F7DFB1\"/>\n" +
+    "                                                        <stop  offset=\"0.5063\" style=\"stop-color:#D7B26A\"/>\n" +
+    "                                                        <stop  offset=\"0.5581\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                                        <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
+    "                                                    </linearGradient>\n" +
+    "                                                    <polygon fill=\"url(#SVGID_1_)\" points=\"784.624,1164.16 768.712,1150.084 722.812,1203.939 695.271,1180.684 681.195,1196.596  724.648,1233.316 \"/>\n" +
+    "                                                    <path fill=\"#9A7D46\" d=\"M735.664,1257.796c-38.556,0-69.768-31.212-69.768-69.769c0-38.556,31.212-69.768,69.768-69.768  s69.768,31.212,69.768,69.768C805.432,1226.584,774.22,1257.796,735.664,1257.796z M735.664,1124.38  c-34.884,0-63.648,28.765-63.648,63.648s28.765,63.647,63.648,63.647s63.648-28.764,63.648-63.647S770.548,1124.38,735.664,1124.38z  \"/>\n" +
+    "                                                </svg>\n" +
     "                                            </div>\n" +
-    "                                            <div class=\" col-xs-6 \" >\n" +
+    "                                            <!--<div class=\"\" >-->\n" +
     "                                                <div class=\"positive-feedback-content body-copy \" ng-bind-html=\"positiveFeedback\"></div>\n" +
-    "                                            </div>\n" +
+    "                                            <!--</div>-->\n" +
     "                                        </div>\n" +
     "                                    </div>\n" +
     "                                </foreignObject>\n" +
@@ -5909,8 +5948,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                </div>\n" +
     "            </div> \n" +
     "            <div np-drag-and-drop-select-evaluate class=\"row\">\n" +
-    "                <div class=\"col-xs-6\"></div>\n" +
-    "                <div class=\"col-xs-6\">\n" +
+    "                <div class=\"col-xs-12\">\n" +
     "                    <div class=\"select-button-wrapper\">\n" +
     "                        <button class=\"btn-select-submit btn\" is-clickable=\"true\" ng-click=\"evaluate()\">\n" +
     "                            <span>SUBMIT</span>\n" +
@@ -5919,7 +5957,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                    <div class=\"select-response-wrapper\">\n" +
     "                        <div class=\"select-response-correct row\">\n" +
     "                            <div class=\"select-response-background\"></div>\n" +
-    "                            <div class=\"col-xs-5 left-column-select\">              \n" +
+    "                            <div class=\"col-xs-1 left-column-select\">              \n" +
     "                                <div class=\"response-icon-wrapper\">             \n" +
     "                                    <svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"22.8px\" height=\"22.801px\" viewBox=\"58.368 58.368 22.8 22.801\" enable-background=\"new 58.368 58.368 22.8 22.801\" xml:space=\"preserve\">\n" +
     "                                        <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"425.3076\" y1=\"46.0552\" x2=\"423.378\" y2=\"48.4836\" gradientTransform=\"matrix(6.1102 0.342 -0.342 6.1102 -2507.3147 -365.3418)\">\n" +
@@ -5935,12 +5973,12 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                                    </svg>\n" +
     "                                </div>\n" +
     "                            </div>\n" +
-    "                            <div class=\"col-xs-7 right-column-select body-copy\" ng-bind-html=\"npDragAndDropSelect.positiveFeedback\" >\n" +
+    "                            <div class=\"col-xs-11 right-column-select body-copy\" ng-bind-html=\"npDragAndDropSelect.positiveFeedback\" >\n" +
     "                            </div>\n" +
     "                        </div>\n" +
     "                        <div class=\"select-response-incorrect row\">\n" +
     "                            <div class=\"select-response-background\"></div>\n" +
-    "                            <div class=\"col-xs-5 left-column-select\">\n" +
+    "                            <div class=\"col-xs-1 left-column-select\">\n" +
     "                                <div class=\"response-icon-wrapper\">\n" +
     "                                    <svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"22.8px\" height=\"22.801px\" viewBox=\"0 0 22.8 22.801\" style=\"enable-background:new 0 0 22.8 22.801;\" xml:space=\"preserve\">\n" +
     "                                        <path style=\"fill:#9A7D46;\" d=\"M11.4,22.801C5.101,22.801,0,17.7,0,11.4S5.101,0,11.4,0S22.8,5.101,22.8,11.4  S17.7,22.801,11.4,22.801z M11.4,1C5.7,1,1,5.7,1,11.4s4.7,10.4,10.4,10.4S21.8,17.101,21.8,11.4S17.101,1,11.4,1z\"/>\n" +
@@ -5963,7 +6001,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                                    </svg>\n" +
     "                                </div>\n" +
     "                            </div>\n" +
-    "                            <div class=\"col-xs-7 right-column-select body-copy\" ng-bind-html=\"npDragAndDropSelect.negativeFeedback\" >\n" +
+    "                            <div class=\"col-xs-11 right-column-select body-copy\" ng-bind-html=\"npDragAndDropSelect.negativeFeedback\" >\n" +
     "                            </div>\n" +
     "                        </div>\n" +
     "                    </div>\n" +

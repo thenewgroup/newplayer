@@ -5917,7 +5917,7 @@ button.close {
     right: 0;
     left: 0;
     margin: auto;
-    width: 60%; }
+    width: 90%; }
   #np_reNutriv .select-response-wrapper p, #np_reNutriv h2 {
     color: #FFFFFF; }
   #np_reNutriv .select-response-background {
@@ -5949,7 +5949,7 @@ button.close {
     position: absolute;
     right: 0;
     width: 35px;
-    margin-top: -3px; }
+    margin-top: 1px; }
   #np_reNutriv .button-prioritize-content {
     position: relative;
     display: block; }
@@ -6026,7 +6026,8 @@ button.close {
     left: 0;
     top: 10%;
     bottom: 0;
-    margin: auto; }
+    margin: auto;
+    min-height: 100%; }
   #np_reNutriv .centered-content {
     padding-top: 3em;
     display: -webkit-box;
@@ -6044,14 +6045,13 @@ button.close {
             justify-content: center;
     resize: vertical; }
   #np_reNutriv .positive-feedback-content {
-    padding-top: 10px; }
+    padding-top: 10px;
+    margin-left: 35px; }
   #np_reNutriv .positive-feedback-image {
-    background-image: url("/assets/svgs/feedback-correct-icon-ReNutriv.svg");
-    background-repeat: no-repeat;
-    background-position: right;
-    height: 40px;
-    border: 0;
-    background-size: 40px auto; }
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 25px; }
   #np_reNutriv .button-content {
     position: relative;
     padding: 5%; }
@@ -6747,7 +6747,7 @@ button.close {
     #ANR .body-copy {
       font-size: 14px;
       letter-spacing: 1px;
-      line-height: 0.6; } }
+      line-height: 1.25; } }
   #ANR small {
     color: #040A2B; }
   #ANR .dark .h1, #ANR .h2, #ANR .h3, #ANR .h4, #ANR .h5 {
@@ -7285,7 +7285,7 @@ button.close {
     right: 0;
     left: 0;
     margin: auto;
-    width: 60%; }
+    width: 90%; }
   #ANR .select-response-wrapper p, #ANR h2 {
     color: #040A2B; }
   #ANR .select-response-wrapper polygon, #ANR .select-response-wrapper path {
@@ -7319,7 +7319,8 @@ button.close {
     position: absolute;
     right: 0;
     width: 35px;
-    margin-top: -3px; }
+    margin-top: 1px;
+    margin-bottom: 20px; }
   #ANR .button-prioritize-content {
     position: relative;
     display: block; }
@@ -7413,19 +7414,15 @@ button.close {
             justify-content: center;
     resize: vertical; }
   #ANR .positive-feedback-content {
-    font-family: akzidenz-grotesk_bqregular;
-    color: #040A2B;
-    text-transform: uppercase;
     padding-top: 10px;
-    /*width: auto;*/ }
+    margin-left: 35px; }
   #ANR .positive-feedback-image {
-    background-image: url("/assets/svgs/feedback-correct-icon-ANR.svg");
-    background-repeat: no-repeat;
-    background-position: right;
-    /* width: 40px; */
-    height: 40px;
-    border: 0;
-    background-size: 40px auto; }
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 25px; }
+  #ANR .positive-feedback-image polygon, #ANR path {
+    fill: #040A2B; }
   #ANR .button-content {
     position: relative;
     padding: 5%; }
@@ -7826,7 +7823,7 @@ button.close {
     #GMTC .body-copy {
       font-size: 14px;
       letter-spacing: 1px;
-      line-height: 0.6; } }
+      line-height: 1.25; } }
   #GMTC .dark .h1, #GMTC .h2, #GMTC .h3, #GMTC .h4, #GMTC .h5 {
     /*color: $gray-dark;*/ }
   #GMTC .header-dark {
@@ -8242,7 +8239,7 @@ button.close {
   #GMTC .reveal-button-image {
     position: absolute;
     padding: 5.5%;
-    background-color: #FFFFFF;
+    background-color: #999999;
     overflow: hidden; }
   #GMTC .reveal-button-container {
     position: relative;
@@ -8261,15 +8258,16 @@ button.close {
     left: 0;
     right: 0;
     bottom: 0;
-    margin: auto; }
+    margin: auto;
+    background-color: #999999; }
   #GMTC .button-screen {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #00518F; }
-  #GMTC #np_reNutriv, #GMTC .reveal-button {
+    background-color: #FFFFFF; }
+  #GMTC .reveal-button {
     position: relative;
     width: 4.46em;
     height: 4.46em;
@@ -8305,8 +8303,7 @@ button.close {
     width: 100%;
     height: 100%;
     background-color: #FFFFFF;
-    opacity: 0.75;
-    /*z-index: -1;*/ }
+    opacity: 0.75; }
   #GMTC .list-item {
     color: #040A2B;
     letter-spacing: 2px; }
@@ -8362,7 +8359,7 @@ button.close {
     right: 0;
     left: 0;
     margin: auto;
-    width: 60%; }
+    width: 90%; }
   #GMTC .select-response-wrapper p, #GMTC h2 {
     color: #040A2B; }
   #GMTC .select-response-wrapper polygon, #GMTC .select-response-wrapper path {
@@ -8396,7 +8393,8 @@ button.close {
     position: absolute;
     right: 0;
     width: 35px;
-    margin-top: -3px; }
+    margin-top: 1px;
+    margin-bottom: 20px; }
   #GMTC .button-prioritize-content {
     position: relative;
     display: block; }
@@ -8490,17 +8488,15 @@ button.close {
             justify-content: center;
     resize: vertical; }
   #GMTC .positive-feedback-content {
-    font-family: akzidenz-grotesk_bqregular;
-    color: #040A2B;
-    text-transform: uppercase;
-    padding-top: 10px; }
+    padding-top: 10px;
+    margin-left: 35px; }
   #GMTC .positive-feedback-image {
-    background-image: url("/assets/svgs/feedback-correct-icon-ANR.svg");
-    background-repeat: no-repeat;
-    background-position: right;
-    height: 40px;
-    border: 0;
-    background-size: 40px auto; }
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 25px; }
+  #GMTC .positive-feedback-image polygon, #GMTC path {
+    fill: #040A2B; }
   #GMTC .button-content {
     position: relative;
     padding: 5%; }
