@@ -75,7 +75,7 @@
                                 "type": "npDragAndDropSelect",
                                 "data": {
                                     "id": "container",
-                                    "positiveFeedback": "<p>That's it!</p>",
+                                    "positiveFeedback": "<p>That's it!</p><p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p><p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
                                     "negativeFeedback": "<p>ehh?!?!</p>",
                                     "image": "",
                                     "req": [
