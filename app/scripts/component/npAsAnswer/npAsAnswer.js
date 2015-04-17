@@ -25,7 +25,7 @@
                         //$log.debug('updateCheck', checkmark, tweenOptions);
 //                            TweenMax.to(checkmark, 0.25, tweenOptions);
 //                        };
-                        //$log.debug('npAnswer::data', cmpData);
+                        //$log.debug('npAsAnswer::data', cmpData);
                         vm.id = cmpData.id;
                         vm.label = $sce.trustAsHtml(cmpData.label);
                         vm.question = null;
@@ -35,7 +35,7 @@
                             question.registerAnswer(idx, this);
                         };
                         vm.clicked = function ($event) {
-                            //$log.debug('npAnswer clicked', $event, cmpData);
+                            //$log.debug('npAsAnswer clicked', $event, cmpData);
                             if (vm.question.type === 'checkbox') {
                                 vm.checked = !vm.checked;
                                 vm.question.answerChanged(vm);
@@ -51,12 +51,12 @@
                         };
                     }
             )
-            .directive('npAnswerCheckbox', function () {
+            .directive('npAsAnswerCheckbox', function () {
                 return function ($scope, $element, $sce) {
                     var cmpData = $scope.component.data || {};
 //                    this.label = $sce.trustAsHtml(cmpData.label);
                     console.log(
-                            '\n::::::::::::::::::::::::::::::::::::::npAnswerCheckbox::inside:::::::::::::::::::::::::::::::::::::::::::::::::',
+                            '\n::::::::::::::::::::::::::::::::::::::npAsAnswerCheckbox::inside:::::::::::::::::::::::::::::::::::::::::::::::::',
                             '\n::this::', this,
                             '\n::cmpData::', cmpData,
                             '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
@@ -77,9 +77,9 @@
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 if ($checkbox.attr('checked') === 'checked') {
 //                                    console.log(
-//                                            '\n::::::::::::::::::::::::::::::::::::::npAnswerCheckbox::inside:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                            '\n::::::::::::::::::::::::::::::::::::::npAsAnswerCheckbox::inside:::::::::::::::::::::::::::::::::::::::::::::::::',
 //                                            '\n::this::', this,
-//                                            '\n::this.npAnswer::', this.npAnswer,
+//                                            '\n::this.npAsAnswer::', this.npAsAnswer,
 //                                            '\n::this.label::', this.label,
 //                                            '\n::$checkbox.attr(checked)::', $checkbox.attr('checked'),
 //                                            '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
@@ -104,7 +104,7 @@
             /** @ngInject */
             .run(
                     function ($log, $rootScope) {
-                        //$log.debug('npAnswer::component loaded!');
+                        //$log.debug('npAsAnswer::component loaded!');
                     }
             );
 })();
