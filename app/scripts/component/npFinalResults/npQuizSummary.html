@@ -1,0 +1,9 @@
+<div class="np-cmp-wrapper {{component.type}} " ng-controller="npQuizSummaryController as npSummary">
+
+  <div class="summary">
+    {{npSummary.summaryText}}
+
+    <div ng-show="npSummary.achievementText">{{npSummary.achievementText}}</div>
+  </div>
+  <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+</div>
