@@ -13,7 +13,7 @@
       var ms = null;
 
       function initialize(data, overrides) {
-        $log.debug('ManifestServiceWrapper initialize w/data');
+        //$log.debug('ManifestServiceWrapper initialize w/data');
         self.ms = new ManifestService($log, $rootScope);
         return self.ms.initialize(data, overrides);
       }
@@ -275,14 +275,14 @@
       var cmp;
       if (!idx) {
         // idx not specified, get next using services idx
-        $log.debug('ManifestService::getComponent: getNextComponent');
+        //$log.debug('ManifestService::getComponent: getNextComponent');
         cmp = getNextComponent();
         // initialize the component
         initializeComponent(cmp);
       } else {
         idx = deserializeIdx(idx);
         setComponentIdx(idx);
-        $log.debug('ManifestService::getComponent: find component:', idx);
+        //$log.debug('ManifestService::getComponent: find component:', idx);
         // traverse idx array to retrieve this particular cmp
         cmp = getData()[idx[0]];
         if (!!cmp) {
@@ -290,27 +290,27 @@
             if (j > 0) {
               var components = cmp.components;
 
-              $log.debug('ManifestService::getComponent: looking for components in ', components);
+              //$log.debug('ManifestService::getComponent: looking for components in ', components);
               if (!!components) {
                 cmp = components[idx[j]];
                 if (!cmp) {
-                  $log.debug('ManifestService::getComponent: no components in travers ', components);
+                  //$log.debug('ManifestService::getComponent: no components in travers ', components);
                   // child idx out of range
                   return null;
                 }
               } else {
                 // no children
-                $log.debug('ManifestService::getComponent: no children ');
+                //$log.debug('ManifestService::getComponent: no children ');
                 return null;
               }
             }
           }
         } else {
           // root index out of range
-          $log.debug('ManifestService::getComponent: no root');
+          //$log.debug('ManifestService::getComponent: no root');
           return null;
         }
-        $log.debug('ManifestService::getComponent: found:', idx, cmp);
+        //$log.debug('ManifestService::getComponent: found:', idx, cmp);
       }
       return cmp;
     };
@@ -437,9 +437,9 @@
       }
     };
     function goToFirstPage() {
-      $log.debug('ManifestService::goToFirstPage | begin');
+      //$log.debug('ManifestService::goToFirstPage | begin');
       var firstPage = self.getFirst('npPage');
-      $log.debug('ManifestService::goToFirstPage | found page', firstPage);
+      //$log.debug('ManifestService::goToFirstPage | found page', firstPage);
 
       self.setPageId(firstPage.data.id, firstPage.idx);
     }
@@ -529,12 +529,12 @@
       }
 
       var cmp = self.getComponent();
-      $log.debug('ManifestService::initialize:initialParse', cmp);
+      //$log.debug('ManifestService::initialize:initialParse', cmp);
       while (!!cmp) {
         cmp = self.getComponent();
       }
 
-      $log.debug('ManifestService::initialize:manifest data:', getData());
+      //$log.debug('ManifestService::initialize:manifest data:', getData());
       manifestInitialized = true;
 
       //goToFirstPage();
