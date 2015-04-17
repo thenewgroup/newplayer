@@ -4,7 +4,8 @@
     angular
             .module('newplayer.component')
             .controller('npDragAndDropSelectController',
-                    function ($log, $scope, $sce, $element) {
+                    /** @ngInject */
+                    function ($log, $scope, $sce, $element, AssessmentService) {
                         var cmpData = $scope.component.data;
                         var buttonData = $scope.feedback || {};
                         $log.debug('npDragAndDropSelect::data', cmpData, buttonData);
@@ -21,6 +22,9 @@
                         $scope.content = cmpData.content;
                         $scope.ID = cmpData.id;
                         $scope.select = cmpData.select;
+
+                        AssessmentService.addQuestion(cmpData.id, !!cmpData.required);
+
                         //////////////////////////////////////////////////////////////////////////////////////
                         //set drag and drag end event handlers
                         //////////////////////////////////////////////////////////////////////////////////////
@@ -42,7 +46,8 @@
             //////////////////////////////////////////////////////////////////////////////////////
             //set evaluate button logic
             //////////////////////////////////////////////////////////////////////////////////////
-            .directive('npDragAndDropSelectEvaluate', function () {
+            /** @ngInject */
+            .directive('npDragAndDropSelectEvaluate', function ($log, AssessmentService) {
                 return {
                     restrict: 'A',
                     link: function ($scope, $element, $attrs) {
@@ -72,7 +77,14 @@
                                 $scope.evaluate = function () {
                                     hitAreaSelectedLength = $("[data-match=selected]").length;
                                     hitAreaSelectedIncorrect = $("[data-match=skeletor]").length;
+
+                                  var isPassing = false,
+                                      percent = 0,
+                                      hitsTotal = 0,
+                                      hitsCorrect = 0;
+
                                     $('.hit-area').each(function () {
+                                        hitsTotal++;
                                         if (Number(hitAreaLength) === Number(hitAreaSelectedLength) && (hitAreaSelectedIncorrect === 0)) {
                                             TweenMax.to($('.select-response-correct'), 0.75, {
                                                 autoAlpha: 1,
@@ -84,6 +96,7 @@
                                                 scale: 0.25,
                                                 ease: Power4.easeOut
                                             });
+                                          hitsCorrect++;
                                         } else {
                                             TweenMax.to($('.select-response-correct'), 0.75, {
                                                 autoAlpha: 0,
@@ -95,9 +108,18 @@
                                                 scale: 1,
                                                 ease: Power4.easeOut
                                             });
+
+                                          hitsCorrect++;
                                         }
                                     });
 
+                                  if( hitsTotal !== 0 ) {
+                                    percent = hitsCorrect / hitsTotal;
+                                  }
+
+                                  isPassing = percent >= AssessmentService.getMinPassing();
+                                  $log.debug('[nDnDS] right, total, perc, pass?', hitsCorrect, hitsTotal, percent, isPassing);
+                                  AssessmentService.questionAnswered('dndNeedsID', isPassing);
                                 };
 
                             });
@@ -157,7 +179,7 @@
                                 });
 
                                 //////////////////////////////////////////////////////////////////////////////////////
-                                //shuffle that 
+                                //shuffle that
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 function shuffle() {
                                     $("#draggableButtons").each(function () {
