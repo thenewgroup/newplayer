@@ -320,6 +320,12 @@
 
       $log.info('[Assessment::questionAnswered] ', questionId, isCorrect);
 
+      // double-check this has an entry
+      if (!questions.inventory.hasOwnProperty(questionId)) {
+        $log.warn('[Assessment::questionAnswered] answered question has no registered question, defaulting to NOT required.', questionId);
+        addQuestion(questionId, false);
+      }
+
       if (questions.answered.inventory[questionId].answered === false) {
         questions.answered.inventory[questionId].answered = new Date();
         questions.answered.inventory[questionId].isCorrect = !!isCorrect;
