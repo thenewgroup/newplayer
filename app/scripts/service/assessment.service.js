@@ -16,10 +16,10 @@
       config = ConfigService.getConfig();
 
     if (config.hasOwnProperty('assessmentIO') && typeof config.assessmentIO === 'object' && config.assessmentIO.hasOwnProperty('updateFinal')) {
-      $log.debug('using assessmentIO from config');
+      $log.debug('[Assessment] using assessmentIO from config');
       setIO(config.assessmentIO);
     } else {
-      $log.debug('using default assessmentIO');
+      $log.debug('[Assessment] using default assessmentIO');
     }
 
     // NOTE: this function is run below to initialize this service
@@ -126,7 +126,7 @@
       if (!isNaN(newMinPassing)) {
 
         if (newMinPassing > 1) {
-          $log.warn('NP assessment::setMinPassing | minPassing should be a fraction of 1. It is unlikely users will pass this assessment.', newMinPassing);
+          $log.warn('[Assessment::setMinPassing] minPassing should be a fraction of 1. It is unlikely users will pass this assessment.', newMinPassing);
         }
 
         minPassing = newMinPassing;
@@ -134,7 +134,7 @@
       } else if (minPassing === -1 && config.hasOwnProperty('minPassing')) {
         minPassing = config.minPassing;
       } else if( minPassing === -1 ) {
-        $log.warn('NP assessment::setMinPassing | no minimum passing score provided to beginFor or in config; any score will pass.');
+        $log.warn('[Assessment::setMinPassing] no minimum passing score provided to beginFor or in config; any score will pass.');
         minPassing = 0;
       }
     }
@@ -206,11 +206,11 @@
      */
     function addPage(pageName, pageIsRequired) {
 
-      $log.info('Assessment:addPage | name, required?', pageName, pageIsRequired);
+      $log.info('[Assessment::addPage] name, required?', pageName, pageIsRequired);
 
       // look in the inventory to see if this property already exists
       if (pages.inventory.hasOwnProperty(pageName)) {
-        $log.warn('Assessment:addPage | ignoring duplicate page ' + pageName);
+        $log.warn('[Assessment::addPage] ignoring duplicate page ' + pageName);
       } else {
         pages.total++;
         pages.inventory[pageName] = pageIsRequired;
@@ -229,7 +229,7 @@
      * @param pageNamed string The name or ID of the page (we'll keep a stack of it)
      */
     function pageViewed(pageId) {
-      //$log.info('Assessment:pageViewed | ', pageId);
+      //$log.info('[Assessment::pageViewed]  ', pageId);
 
       if (pages.viewed.inventory[pageId] === false) {
         pages.viewed.inventory[pageId] = new Date();
@@ -273,7 +273,7 @@
       var requiredQuestionsInt = parseInt(newRequiredQuestions);
 
       if( isNaN(requiredQuestionsInt)) {
-        $log.error('Assessment:setRequiredQuestions | questions must be a number');
+        $log.error('[Assessment::setRequiredQuestions] questions must be a number');
         return;
       }
 
@@ -289,11 +289,11 @@
      */
     function addQuestion(questionName, questionIsRequired) {
 
-      $log.info('Assessment:addQuestion | name, required?', questionName, questionIsRequired);
+      $log.info('[Assessment::addQuestion] name, required?', questionName, questionIsRequired);
 
       // look in the inventory to see if this property already exists
       if (questions.inventory.hasOwnProperty(questionName)) {
-        $log.warn('Assessment:addQuestion | ignoring duplicate page ' + questionName);
+        $log.warn('[Assessment::addQuestion] ignoring duplicate page ' + questionName);
       } else {
         questions.total++;
         questions.inventory[questionName] = questionIsRequired;
@@ -318,7 +318,7 @@
      */
     function questionAnswered(questionId, isCorrect) {
 
-      $log.info('Assessment:questionAnswered | ', questionId, isCorrect);
+      $log.info('[Assessment::questionAnswered] ', questionId, isCorrect);
 
       if (questions.answered.inventory[questionId].answered === false) {
         questions.answered.inventory[questionId].answered = new Date();
@@ -333,7 +333,7 @@
         }
 
       } else {
-        $log.warning('Assessment:questionAnswered | question already answered, ', questionId);
+        $log.warning('[Assessment::questionAnswered] question already answered, ', questionId);
       }
     }
 
@@ -350,7 +350,7 @@
      * DEBUG ONLY
      */
     function dumpState() {
-      $log.info('Assessment:dumpState | ', getAssessment());
+      $log.info('[Assessment:dumpState] ', getAssessment());
     }
 
     var service = {
@@ -383,7 +383,7 @@
       dumpState: dumpState
     };
 
-    $log.info('Assessment | service init');
+    $log.info('[Assessment] service init');
 
     return service;
   }
