@@ -4,21 +4,25 @@
             .module('newplayer.component')
             /** @ngInject */
             .controller('npAsQuestionController',
-                    function ($log, $scope, $attrs, $rootScope, ManifestService, $sce, $element) {
+                    function ($log, $scope, $attrs, $rootScope, ManifestService, $sce, $element, AssessmentService) {
                         //////////////////////////////////////////////////////////////////////////////////////
                         //set that
                         //////////////////////////////////////////////////////////////////////////////////////
-                        var cmpData = $scope.component.data;
-                        $log.debug('npQuestion::data', cmpData);
-                        this.id = cmpData.id;
-                        this.content = $sce.trustAsHtml(cmpData.content);
-                        this.type = cmpData.type;
-                        this.feedback = '';
-                        this.canContinue = false;
+                        var cmpData = $scope.component.data,
+                          vm = this;
+                        $log.debug('npAsQuestion::data', cmpData);
+                        vm.id = cmpData.id;
+                        vm.content = $sce.trustAsHtml(cmpData.content);
+                        vm.type = cmpData.type;
+                        vm.feedback = '';
+                        vm.canContinue = false;
+                        vm.answers = [];
                         var feedback = cmpData.feedback;
                         var feedbackLabel = $element.find('.question-feedback-label');
                         var negativeFeedbackIcon = '';
                         var positiveFeedbackIcon = '';
+
+                      AssessmentService.addQuestion(vm.id, !!cmpData.required);
                         //////////////////////////////////////////////////////////////////////////////////////
                         //build that
                         //////////////////////////////////////////////////////////////////////////////////////
@@ -38,10 +42,13 @@
                                 }, 0.2);
                             });
                         });
-                        this.update = function (event) {
-                            $log.debug('npQuestion::answer changed');
+                      vm.registerAnswer = function(idx, answer) {
+                        vm.answers[idx] = answer;
+                      };
+                        vm.update = function (event) {
+                            $log.debug('npAsQuestion::answer changed');
                             if (feedback.immediate) {
-                                this.feedback = '';
+                                vm.feedback = '';
                                 negativeFeedbackIcon = $element.find('.negative-feedback-icon');
                                 positiveFeedbackIcon = $element.find('.positive-feedback-icon');
                                 TweenMax.set(negativeFeedbackIcon, {
@@ -56,8 +63,8 @@
                                 });
                             }
                         };
-                        this.evaluate = function () {
-                            var correct = true;
+                        vm.evaluate = function () {
+                            var isCorrectAnswer = true;
                             var $checkbox = false;
                             var $checked = false;
                             negativeFeedbackIcon = $element.find('.negative-feedback-icon');
@@ -75,10 +82,10 @@
                             var chkAnswers = ManifestService.getAll('npAnswer', $scope.cmpIdx);
                             $checkbox = $element.find('.checkbox-x');
                             $checked = $element.find('.checkbox-x[checked]');
-                            $log.debug('npQuestion::evaluate:', this.answer);
-//                            if (!!this.answer) {
+                            $log.debug('npAsQuestion::evaluate:', vm.answer);
+//                            if (!!vm.answer) {
                             if (!!$checked) {
-                                switch (this.type) {
+                                switch (vm.type) {
                                     case 'checkbox':
                                         //var chkAnswers = ManifestService.getAll('npAnswer', $scope.cmpIdx); // defined above
                                         var idx;
@@ -88,12 +95,12 @@
                                             if (chkAnswers[idx].data.correct) {
                                                 // confirm all correct answers were checked
                                                 if (!$currentCheckbox.attr('checked')) {
-                                                    correct = false;
+                                                    isCorrectAnswer = false;
                                                 }
                                             } else {
                                                 // confirm no incorrect answers were checked
                                                 if (!!$currentCheckbox.attr('checked')) {
-                                                    correct = false;
+                                                    isCorrectAnswer = false;
                                                 }
                                             }
                                         }
@@ -111,38 +118,41 @@
                                             pat = '^(' + key.join('|') + ')$';
                                         }
                                         regExp = new RegExp(pat, mod);
-                                        if (!regExp.test(this.answer)) {
+                                        if (!regExp.test(vm.answer)) {
                                             if (angular.isObject(txtAnswer.data.feedback) && angular.isString(txtAnswer.data.feedback.incorrect)) {
-                                                this.feedback = txtAnswer.data.feedback.incorrect;
+                                                vm.feedback = txtAnswer.data.feedback.incorrect;
                                                 feedbackLabel.remove();
                                             }
-                                            correct = false;
+                                            isCorrectAnswer = false;
                                         } else {
                                             if (angular.isObject(txtAnswer.data.feedback) && angular.isString(txtAnswer.data.feedback.correct)) {
-                                                this.feedback = txtAnswer.data.feedback.correct;
+                                                vm.feedback = txtAnswer.data.feedback.correct;
                                                 feedbackLabel.remove();
                                             }
                                         }
                                         break;
                                 }
                             } else {
-                                correct = false;
+                                isCorrectAnswer = false;
                             }
-                            $log.debug('npQuestion::evaluate:isCorrect', correct);
+
+
+                          AssessmentService.questionAnswered(vm.id, isCorrectAnswer);
+                            $log.debug('npAsQuestion::evaluate:isCorrect', isCorrectAnswer);
                             // set by ng-model of npAnswer's input's
-//                            if (feedback.immediate && this.feedback === '') {
+//                            if (feedback.immediate && vm.feedback === '') {
                             feedbackLabel.remove();
-                            if (correct) {
-                                this.feedback = feedback.correct;
-                                this.canContinue = true;
+                            if (isCorrectAnswer) {
+                                vm.feedback = feedback.correct;
+                                vm.canContinue = true;
                                 TweenMax.to(positiveFeedbackIcon, 0.75, {
                                     autoAlpha: 1,
                                     scale: 1,
                                     force3D: true
                                 });
                             } else {
-                                this.feedback = feedback.incorrect;
-                                this.canContinue = false;
+                                vm.feedback = feedback.incorrect;
+                                vm.canContinue = false;
                                 TweenMax.to(negativeFeedbackIcon, 0.75, {
                                     autoAlpha: 1,
                                     scale: 1,
@@ -151,9 +161,9 @@
                             }
 //                            }
                         };
-                        this.nextPage = function (evt) {
+                        vm.nextPage = function (evt) {
                             evt.preventDefault();
-                            if (this.canContinue) {
+                            if (vm.canContinue) {
                                 $rootScope.$emit('question.answered', true);
                             }
                         };
@@ -180,7 +190,7 @@
             /** @ngInject */
             .run(
                     function ($log, $rootScope) {
-                        $log.debug('npQuestion::component loaded!');
+                        $log.debug('npAsQuestion::component loaded!');
                     }
             );
 })();
