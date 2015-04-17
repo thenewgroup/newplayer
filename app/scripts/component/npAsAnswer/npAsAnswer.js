@@ -3,7 +3,7 @@
     angular
             .module('newplayer.component')
             /** @ngInject */
-            .controller('npAnswerController',
+            .controller('npAsAnswerController',
                     function ($log, $scope, $sce, $element) {
                         var cmpData = $scope.component.data || {};
                         this.id = cmpData.id;

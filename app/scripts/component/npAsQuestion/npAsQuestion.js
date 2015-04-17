@@ -3,10 +3,10 @@
     angular
             .module('newplayer.component')
             /** @ngInject */
-            .controller('npQuestionController',
+            .controller('npAsQuestionController',
                     function ($log, $scope, $attrs, $rootScope, ManifestService, $sce, $element) {
                         //////////////////////////////////////////////////////////////////////////////////////
-                        //set that 
+                        //set that
                         //////////////////////////////////////////////////////////////////////////////////////
                         var cmpData = $scope.component.data;
                         $log.debug('npQuestion::data', cmpData);
@@ -20,7 +20,7 @@
                         var negativeFeedbackIcon = '';
                         var positiveFeedbackIcon = '';
                         //////////////////////////////////////////////////////////////////////////////////////
-                        //build that 
+                        //build that
                         //////////////////////////////////////////////////////////////////////////////////////
                         setTimeout(function () {
                             $scope.$apply(function () {
