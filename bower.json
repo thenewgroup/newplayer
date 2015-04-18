@@ -62,7 +62,8 @@
     "gsap": "~1.16.0",
     "bootstrap-sass-official": "3.3.2",
     "modernizer": "~2.8.2",
-    "angular-media-queries": "~0.4.0"
+    "angular-media-queries": "~0.4.0",
+    "imagesloaded": "^3.1.8"
   },
   "resolutions": {
     "gsap": "~1.16.0",
