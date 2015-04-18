@@ -92,3 +92,32 @@
     text-indent:-28px;
     margin-left:28px
 }
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*Collapse responsive*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+@media (max-width: $screen-sm) {
+    .collapse-toggle{
+        background-color: $brand-offwhite;
+        cursor: pointer;
+        width: 100%;
+        border-bottom: none;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        padding-right: 7px;
+        padding-left: 7px;
+        &:hover,
+            &:focus {
+            background-color: darken($brand-offwhite, 5%);
+        }
+        &:before {
+            font-family: 'elx-icons';
+            content: "\e613";
+            float: right;
+            color: $brand-primary;
+            -webkit-transition: opacity 1s ease-in-out;
+            -moz-transition: opacity 1s ease-in-out;
+            -o-transition: opacity 1s ease-in-out;
+            transition: opacity 1s ease-in-out;
+        }
+    }
+}
