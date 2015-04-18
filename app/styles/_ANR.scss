@@ -8,7 +8,7 @@
     background-size: cover;
     content: "";
     width:100%;
-    min-height: 1100px;
+    /*min-height: 1100px;*/
     height:auto;
     bottom: 0;
     left: 0;
@@ -18,12 +18,13 @@
 #background-image {
     position:fixed;
     background-image: url('../assets/images/ESTL-005_ANR_bg_img.jpg');
-    background-position: bottom;
+    background-position: fixed;
     background-repeat: no-repeat;
+    background-attachment: fixed;
     background-size:100%;
     width:100%;
     height:100%;
-    min-height: 1100px;
+    /*min-height: 1100px;*/
 }
 .renutriv-logo-image {
     position: relative;
@@ -44,8 +45,8 @@
     padding-top: 10px;
     padding-bottom: 0px;
     margin-top: 10px;
-    margin-bottom: 0px;
     display: inline-block;
+    margin-bottom: $line-height-computed;
 }
 .instructional{
     font-family: $font-family-sans-serif;
@@ -55,8 +56,8 @@
     padding-top: 0px;
     padding-bottom: 20px;
     margin-top: 0px;
-    /*margin-bottom: 0px;*/
     display: inline-block;
+    margin-bottom: $line-height-computed;
 }
 .h1, .h2, .h3, .h4, .h5{
     color: $brand-primary-light;
@@ -68,12 +69,14 @@
     font-size: $font-size-18;
     letter-spacing: 2px;
     text-transform: uppercase;
+    margin-bottom: $line-height-computed;
 }
 .body-copy-strong{
     color: $brand-primary;
     font-family: $font-family-sans-serif;
     font-size: $font-size-18;
     letter-spacing: 2px;
+    margin-bottom: $line-height-computed;
 }
 @media (max-width: $screen-md) {
     .subhead-copy{
@@ -91,6 +94,7 @@
     font-size: $font-size-17;
     letter-spacing: 2px;
     line-height: 1.35;
+    margin-bottom: $line-height-computed;
 }
 @media (max-width: $screen-md) {
     .body-copy{
@@ -125,22 +129,44 @@ small{
     letter-spacing: 2px;
 }
 .btn{ 
-    position: absolute;
+    position: relative;
     border-color: $brand-primary-light;
-    width: auto;
-    /*bottom: 0;*/
-    right: 0;
-    padding-top: 5px;
-    padding-bottom: 3px;
-    margin: 0;
-    margin-top: 15px;
     background-color: $brand-primary;
+    width: auto;
+    margin-top: 5px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    padding-left: 2em;
+    padding-right: 2em;
+    min-width: fit-content;
 }
 .btn span{ 
     font-family: $font-family-sans-serif;
     color: $brand-primary-light;
     text-transform: uppercase;
     letter-spacing: 2px;
+}
+.btn-next{ 
+    position: relative;
+    float: right;
+    border-color: $brand-primary-light;
+    background-color: $brand-primary;
+    border-width: 1px;
+    width: auto;
+    padding-top: 5px;
+    padding-bottom: 3px;
+    margin-top: 15px;
+}
+.btn-next span{ 
+    font-family: $font-family-sans-serif;
+    color: $brand-primary-light;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 0;
+}
+.btn-submit{
+}
+.btn-submit span{ 
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player padding wrapper classes*/
@@ -155,7 +181,7 @@ small{
     /*    position: absolute;
     left: 10px;
     right: 20px;*/
-    background-color:hsla(0,100%,0%,0.5);
+    background-color:hsla(100%,100%,100%,0.5);
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player HotSpot classes*/
@@ -208,12 +234,13 @@ small{
     position: fixed;
     content: "";
     width: 100%;
+    top: 200px;
     left: 0;
     right: 0;
 }
 #flash-cards {
     position: relative;
-    height: 100%;
+    /*height: 100%;*/
     padding-top: 45px !important;
     margin-left: 0px;
 }
@@ -223,7 +250,9 @@ small{
     display: inline-block;
     overflow: hidden;
     width: 560px;
-    height: 800px;
+    /*min-height: 800px;*/
+    margin-bottom: 222px;
+    padding-bottom: 15px;
 }
 @media (max-width: $screen-sm) {
     .flash-cards-object {
@@ -268,6 +297,7 @@ small{
 .flash-card-front-wrapper {
     position: absolute;
     top:0;
+    bottom:0;
     width: 100%;
     overflow: hidden;
     height: 475px;
@@ -284,6 +314,7 @@ small{
     right: 0;
     top: 0;
     bottom: 0;
+    overflow: hidden;
     background-color: #FFFFFF;
     min-height: 475px;
 }
@@ -366,23 +397,6 @@ small{
     letter-spacing: 2px;
     display: inline-block;
 }
-.btn-submit{
-    position: relative;
-    border-color: $brand-primary-light;
-    background-color: $brand-primary;
-    padding-top: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin-top: 25px;
-    margin-bottom: 25px;
-    margin-left: 30px;
-}
-.btn-submit span{ 
-    font-family: $font-family-sans-serif;
-    color: $brand-primary-light;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
 input{ 
     font-family: $re-nu-serif;
     size: $font-size-small;
@@ -462,13 +476,6 @@ input{
     stroke: #FFFFFF;
     stroke-width: 3;
 }
-/*.checkbox-box svg{ 
-    position: absolute;
-    top:0;
-    left:0;
-    display: block;
-    margin: auto;
-}*/
 .checkbox-x{ 
     position: absolute;
     width: 20px;
@@ -524,7 +531,7 @@ input{
     height: 160px;
     margin-top: 10px;
     margin-bottom: 10px;
-    margin-right: 30px;
+    margin-right: 15px;
 }
 .question-feedback-outline{ 
     position: absolute;
@@ -536,6 +543,8 @@ input{
     float: left;
     color: $brand-primary;
     letter-spacing: 2px;
+    margin-bottom: 0;
+    margin-left: 40px;
 }
 .positive-feedback-icon{ 
     position: absolute;
@@ -564,6 +573,10 @@ input{
 }
 .question-feedback-wrapper svg path{ 
     fill: $brand-primary;
+}
+.question-submit-wrapper{
+    text-align: center;
+    margin-top: 3em;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Matching Game classes*/
@@ -648,28 +661,7 @@ input{
 // }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Trivia/Spinner classes*/
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-.btn-next{ 
-    position: absolute;
-    border-color: $brand-primary-light;
-    width: auto;
-    /*bottom: 0;*/
-    right: 0;
-    padding-top: 5px;
-    padding-bottom: 3px;
-    margin: 0;
-    margin-top: 15px;
-    background-color: $brand-primary;
-}
-.btn-next span{ 
-    font-family: $font-family-sans-serif;
-    background-color: $brand-primary;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-.btn-next span p{ 
-    padding: 0;
-}
+
 .np-spinner-wrapper {
     position: relative;
     overflow: hidden;
@@ -806,7 +798,7 @@ input{
     bottom: 0;
     background-color: #00518F;
 }
-#np_reNutriv, .reveal-button {
+.reveal-button {
     position: relative;
     width: 4.46em;
     height: 4.46em;
@@ -843,7 +835,6 @@ input{
 .reveal-text-body{
     padding-bottom: 15px;
 }
-
 .reveal-content-text{
     padding-top: 15px;
     padding-left: 15px;
@@ -857,7 +848,6 @@ input{
     height: 100%;
     background-color: #FFFFFF;
     opacity: 0.75;
-    /*z-index: -1;*/
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player List classes*/
@@ -877,14 +867,13 @@ input{
     padding: 5%;
     background-color: #FFFFFF;
     opacity: 0.75;
-    filter: url(styles/inset-shadow.svg#inset-shadow); 
+    /*filter: url(styles/inset-shadow.svg#inset-shadow);*/ 
 }
 .list-body-text{
     color: $brand-primary;
     letter-spacing: 2px;
     font-size: $font-size-base;
 }
-
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Drag and Drop Select classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -910,7 +899,6 @@ input{
     margin-top: 1em;
     margin-bottom: 1em;
 }
-
 .btn-select-submit{
     position: relative;
     padding-top: 5px;
@@ -921,7 +909,6 @@ input{
     text-transform: uppercase;
     letter-spacing: 2px;
 }
-
 .select-button-completion-content{
     padding-top: 15px;
     padding-bottom: 15px;
@@ -1147,10 +1134,6 @@ rect{
     stroke: #FFFFFF;
     stroke-width: 3;
 }
-/*svg rect{
-    stroke: #FFFFFF;
-    stroke-width: 3;
-}*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /* Hotspot Grid */
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
