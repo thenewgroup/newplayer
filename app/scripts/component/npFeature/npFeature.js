@@ -4,15 +4,24 @@
             .module('newplayer.component')
             /** @ngInject */
             .controller('npFeatureController',
-                    function ($log, $scope/*, ManifestService*/, $element) {
+                    function ($log, $scope, ManifestService, $element) {
                         var cmpData = $scope.component.data || {};
                         //$log.debug('npFeature::data', cmpData);
                     }
             )
             .directive('newPlayerPageTop', function () {
-                return function ($scope, $element, attrs) {
+                return function ($scope, $element, attrs, ManifestService) {
                     setTimeout(function () {
                         $scope.$apply(function () {
+//                            console.log(
+//                                    '\n::::::::::::::::::::::::::::::::::::::ManifestService::Initialize:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                    '\n::ManifestService.initialize()::', ManifestService,
+//                                    '\n::$scope::', $scope,
+//                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                    );
+//                            var cmpData = $scope.component.data || {};
+//                            ManifestService.initialize($scope);
+//                            ManifestService.initializeComponent($scope.component);
 //                            var np_wrapper = $element.find('.np_outside-padding');
 //                            var hotspotImage = $element.find('.hotspotImage');
 //                            var page_container = $element.find('.modal-open');

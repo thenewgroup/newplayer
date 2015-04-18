@@ -5063,7 +5063,10 @@ button.close {
       z-index: -1;
   }*/
   /*$top-image: margin-left:-100px;*/
-  /*Q and A text outdent*/ }
+  /*Q and A text outdent*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*Collapse responsive*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/ }
   #np_products #np_newplayer-background {
     position: absolute;
     background-color: #e6e9ee;
@@ -5209,6 +5212,25 @@ button.close {
   #np_products .q-and-a-outdent {
     text-indent: -28px;
     margin-left: 28px; }
+  @media (max-width: 768px) {
+    #np_products .collapse-toggle {
+      background-color: #E6E9EE;
+      cursor: pointer;
+      width: 100%;
+      border-bottom: none;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      padding-right: 7px;
+      padding-left: 7px; }
+      #np_products .collapse-toggle:hover, #np_products .collapse-toggle:focus {
+        background-color: #d7dce4; }
+      #np_products .collapse-toggle:before {
+        font-family: 'elx-icons';
+        content: "\e613";
+        float: right;
+        color: #040A2B;
+        -webkit-transition: opacity 1s ease-in-out;
+        transition: opacity 1s ease-in-out; } }
 
 #np_reNutriv {
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -5439,16 +5461,16 @@ button.close {
     padding-top: 10px;
     padding-bottom: 0px;
     margin-top: 10px;
-    margin-bottom: 0px;
-    display: inline-block; }
+    display: inline-block;
+    margin-bottom: 20px; }
   #np_reNutriv .instructional {
     letter-spacing: 1px;
     padding-top: 0px;
     padding-bottom: 20px;
     margin-top: 0px;
-    color: white;
-    /*margin-bottom: 0px;*/
-    display: inline-block; }
+    color: #FFFFFF;
+    display: inline-block;
+    margin-bottom: 20px; }
   #np_reNutriv .h1, #np_reNutriv .h2, #np_reNutriv .h3, #np_reNutriv .h4, #np_reNutriv .h5 {
     color: white; }
   #np_reNutriv .subhead-copy {
@@ -5456,12 +5478,14 @@ button.close {
     font-family: "akzidenz-grotesk_bqregular";
     font-size: 18px;
     letter-spacing: 2px;
-    text-transform: uppercase; }
+    text-transform: uppercase;
+    margin-bottom: 20px; }
   #np_reNutriv .body-copy-strong {
     color: white;
     font-family: "akzidenz-grotesk_bqregular";
     font-size: 18px;
-    letter-spacing: 2px; }
+    letter-spacing: 2px;
+    margin-bottom: 20px; }
   @media (max-width: 992px) {
     #np_reNutriv .subhead-copy {
       font-size: 17px;
@@ -5474,7 +5498,8 @@ button.close {
     font-family: "akzidenz-grotesk_bqregular";
     font-size: 17px;
     letter-spacing: 2px;
-    line-height: 1.35; }
+    line-height: 1.35;
+    margin-bottom: 20px; }
   @media (max-width: 992px) {
     #np_reNutriv .body-copy {
       font-size: 14px;
@@ -5501,16 +5526,14 @@ button.close {
     text-transform: uppercase;
     letter-spacing: 2px; }
   #np_reNutriv .btn {
-    position: absolute;
+    position: relative;
     border-color: #9a7d46;
     background-color: #000000;
-    width: auto;
-    /*bottom: 0;*/
-    right: 0;
-    padding-top: 5px;
-    padding-bottom: 3px;
-    margin: 0;
-    margin-top: 15px; }
+    margin-top: 5px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    min-width: 20%;
+    width: 100%; }
   #np_reNutriv .btn span {
     font-family: "akzidenz-grotesk_bqregular";
     color: white;
@@ -5560,19 +5583,22 @@ button.close {
     position: fixed;
     content: "";
     width: 100%;
+    top: 200px;
     left: 0;
-    right: 0; }
+    right: 0;
+    /*min-height: 1400px;*/ }
   #np_reNutriv #flash-cards {
     position: relative;
-    height: 100%;
+    /*height: 100%;*/
     padding-top: 45px !important;
-    margin-left: 0px; }
+    margin-left: 0px;
+    height: 1600px; }
   #np_reNutriv .flash-cards-object {
     position: relative;
     display: inline-block;
     overflow: hidden;
     width: 560px;
-    height: 800px; }
+    /*min-height: 800px;*/ }
   @media (max-width: 768px) {
     #np_reNutriv .flash-cards-object {
       width: 280px; } }
@@ -6602,13 +6628,6 @@ button.close {
       background-color: #000000;
       box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
   }*/
-  /*.checkbox-box svg{ 
-      position: absolute;
-      top:0;
-      left:0;
-      display: block;
-      margin: auto;
-  }*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*New Player Quiz Questions classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -6735,10 +6754,11 @@ button.close {
     right: 0;
     top: 0; }
   #ANR #background-image {
-    position: fixed;
+    position: static;
     background-image: url("../assets/images/ESTL-005_ANR_bg_img.jpg");
-    background-position: bottom;
+    background-position: fixed;
     background-repeat: no-repeat;
+    background-attachment: fixed;
     background-size: 100%;
     width: 100%;
     height: 100%;
@@ -6759,7 +6779,8 @@ button.close {
     padding-bottom: 0px;
     margin-top: 10px;
     margin-bottom: 0px;
-    display: inline-block; }
+    display: inline-block;
+    margin-bottom: 20px; }
   #ANR .instructional {
     font-family: "akzidenz-grotesk_bqregular";
     font-size: 14px;
@@ -6768,8 +6789,8 @@ button.close {
     padding-top: 0px;
     padding-bottom: 20px;
     margin-top: 0px;
-    /*margin-bottom: 0px;*/
-    display: inline-block; }
+    display: inline-block;
+    margin-bottom: 20px; }
   #ANR .h1, #ANR .h2, #ANR .h3, #ANR .h4, #ANR .h5 {
     color: white; }
   #ANR .subhead-copy {
@@ -6777,12 +6798,14 @@ button.close {
     font-family: "akzidenz-grotesk_bqregular";
     font-size: 18px;
     letter-spacing: 2px;
-    text-transform: uppercase; }
+    text-transform: uppercase;
+    margin-bottom: 20px; }
   #ANR .body-copy-strong {
     color: #040a2b;
     font-family: "akzidenz-grotesk_bqregular";
     font-size: 18px;
-    letter-spacing: 2px; }
+    letter-spacing: 2px;
+    margin-bottom: 20px; }
   @media (max-width: 992px) {
     #ANR .subhead-copy {
       font-size: 17px;
@@ -6795,7 +6818,8 @@ button.close {
     font-family: "akzidenz-grotesk_bqregular";
     font-size: 17px;
     letter-spacing: 2px;
-    line-height: 1.35; }
+    line-height: 1.35;
+    margin-bottom: 20px; }
   @media (max-width: 992px) {
     #ANR .body-copy {
       font-size: 14px;
@@ -6822,16 +6846,15 @@ button.close {
     text-transform: uppercase;
     letter-spacing: 2px; }
   #ANR .btn {
-    position: absolute;
-    border-color: white;
+    position: relative;
+    border-color: #FFFFFF;
     width: auto;
-    /*bottom: 0;*/
-    right: 0;
-    padding-top: 5px;
-    padding-bottom: 3px;
-    margin: 0;
-    margin-top: 15px;
-    background-color: #040a2b; }
+    margin-top: 5px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    min-width: 20%;
+    width: 100%;
+    background-color: #040A2B; }
   #ANR .btn span {
     font-family: "akzidenz-grotesk_bqregular";
     color: white;
@@ -6841,7 +6864,7 @@ button.close {
     /*    position: absolute;
     left: 10px;
     right: 20px;*/
-    background-color: rgba(0, 0, 0, 0.5); }
+    background-color: rgba(255, 255, 255, 0.5); }
   #ANR .npHotspot {
     top: 0;
     left: 0; }
@@ -7093,8 +7116,9 @@ button.close {
   #ANR .question-feedback-text {
     font-family: "akzidenz-grotesk_bqregular";
     float: left;
-    color: #040a2b;
-    letter-spacing: 2px; }
+    color: #040A2B;
+    letter-spacing: 2px;
+    margin-left: 40px; }
   #ANR .positive-feedback-icon {
     position: absolute;
     top: 0;
@@ -7293,8 +7317,7 @@ button.close {
     padding: 5%;
     background-color: #FFFFFF;
     opacity: 0.75;
-    -webkit-filter: url(styles/inset-shadow.svg#inset-shadow);
-            filter: url(styles/inset-shadow.svg#inset-shadow); }
+    /*filter: url(styles/inset-shadow.svg#inset-shadow);*/ }
   #ANR .list-body-text {
     color: #040a2b;
     letter-spacing: 2px;
@@ -7813,7 +7836,8 @@ button.close {
     padding-bottom: 0px;
     margin-top: 10px;
     margin-bottom: 0px;
-    display: inline-block; }
+    display: inline-block;
+    margin-bottom: 20px; }
   #GMTC .instructional {
     font-family: "akzidenz-grotesk_bqregular";
     font-size: 14px;
@@ -7822,8 +7846,8 @@ button.close {
     padding-top: 0px;
     padding-bottom: 20px;
     margin-top: 0px;
-    /*margin-bottom: 0px;*/
-    display: inline-block; }
+    display: inline-block;
+    margin-bottom: 20px; }
   #GMTC .h1, #GMTC .h2, #GMTC .h3, #GMTC .h4, #GMTC .h5 {
     color: #040a2b; }
   #GMTC .subhead-copy {
@@ -7831,12 +7855,14 @@ button.close {
     font-family: "akzidenz-grotesk_bqregular";
     font-size: 18px;
     letter-spacing: 2px;
-    text-transform: uppercase; }
+    text-transform: uppercase;
+    margin-bottom: 20px; }
   #GMTC .body-copy-strong {
     color: #040a2b;
     font-family: "akzidenz-grotesk_bqregular";
     font-size: 18px;
-    letter-spacing: 2px; }
+    letter-spacing: 2px;
+    margin-bottom: 20px; }
   @media (max-width: 992px) {
     #GMTC .subhead-copy {
       font-size: 17px;
@@ -7849,7 +7875,8 @@ button.close {
     font-family: "akzidenz-grotesk_bqregular";
     font-size: 17px;
     letter-spacing: 2px;
-    line-height: 1.35; }
+    line-height: 1.35;
+    margin-bottom: 20px; }
   @media (max-width: 992px) {
     #GMTC .body-copy {
       font-size: 14px;
@@ -7868,27 +7895,40 @@ button.close {
   #GMTC .gold {
     /*color: #9a7d46;*/
     color: #9a7d46; }
+  #GMTC .btn {
+    position: relative;
+    border-color: #FFFFFF;
+    background-color: #040A2B;
+    width: auto;
+    margin-top: 5px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    padding-left: 2em;
+    padding-right: 2em;
+    min-width: -webkit-fit-content;
+    min-width: -moz-fit-content;
+    min-width: fit-content; }
   #GMTC .btn span {
     font-family: "akzidenz-grotesk_bqregular";
     color: white;
     text-transform: uppercase;
     letter-spacing: 2px; }
-  #GMTC .btn {
-    position: absolute;
-    border-color: #cccccc;
-    background-color: #a3a3ab;
+  #GMTC .btn-next {
+    position: relative;
+    float: right;
+    border-color: #FFFFFF;
+    background-color: #040A2B;
+    border-width: 3px;
     width: auto;
-    /*bottom: 0;*/
-    right: 0;
     padding-top: 5px;
     padding-bottom: 3px;
-    margin: 0;
     margin-top: 15px; }
-  #GMTC .btn span {
+  #GMTC .btn-next span {
     font-family: "akzidenz-grotesk_bqregular";
-    color: #cccccc;
+    color: #FFFFFF;
     text-transform: uppercase;
-    letter-spacing: 2px; }
+    letter-spacing: 2px;
+    padding: 0; }
   #GMTC .content-background {
     /*background-color:hsla(0,100%,0%,0.5);*/
     background-color: white; }
@@ -8025,21 +8065,6 @@ button.close {
     text-transform: uppercase;
     letter-spacing: 2px;
     display: inline-block; }
-  #GMTC .btn-submit {
-    position: relative;
-    border-color: #cccccc;
-    background-color: #a3a3ab;
-    padding-top: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin-top: 25px;
-    margin-bottom: 25px;
-    margin-left: 30px; }
-  #GMTC .btn-submit span {
-    font-family: "akzidenz-grotesk_bqregular";
-    color: #cccccc;
-    text-transform: uppercase;
-    letter-spacing: 2px; }
   #GMTC input {
     font-family: "optimadisplaylightlight";
     size: 17px;
@@ -8125,17 +8150,20 @@ button.close {
   #GMTC .question-feedback-wrapper {
     position: relative;
     background-color: #FFFFFF;
-    box-shadow: inset 0 0 5px 3px rgba(0, 0, 0, 0.25);
+    /*box-shadow: inset 0 0 5px 3px rgba(0, 0, 0, 0.25);*/
     padding: 20px;
     width: 100%;
     height: 100%;
-    min-height: 100%; }
+    min-height: 100%;
+    border-style: solid;
+    border-color: #040A2B;
+    border-width: 1px; }
   #GMTC .question-feedback {
     position: relative;
     height: 160px;
     margin-top: 10px;
     margin-bottom: 10px;
-    margin-right: 30px; }
+    margin-right: 15px; }
   #GMTC .question-feedback-outline {
     position: absolute;
     width: 100%;
@@ -8143,8 +8171,10 @@ button.close {
   #GMTC .question-feedback-text {
     font-family: "akzidenz-grotesk_bqregular";
     float: left;
-    color: #040a2b;
-    letter-spacing: 2px; }
+    color: #040A2B;
+    letter-spacing: 2px;
+    margin-bottom: 0;
+    margin-left: 40px; }
   #GMTC .positive-feedback-icon {
     position: absolute;
     top: 0;
@@ -8167,27 +8197,10 @@ button.close {
   #GMTC .question-feedback-wrapper svg polygon {
     fill: #040a2b; }
   #GMTC .question-feedback-wrapper svg path {
-    fill: #040a2b; }
-  #GMTC .btn-next {
-    position: absolute;
-    border-color: #cccccc;
-    background-color: #a3a3ab;
-    border-width: 3px;
-    width: auto;
-    /*bottom: 0;*/
-    right: 50px;
-    padding-top: 5px;
-    padding-bottom: 3px;
-    margin: 0;
-    margin-top: 15px; }
-  #GMTC .btn-next span {
-    font-family: "akzidenz-grotesk_bqregular";
-    color: #cccccc;
-    /*background-color: $brand-primary;*/
-    text-transform: uppercase;
-    letter-spacing: 2px; }
-  #GMTC .btn-next span p {
-    padding: 0; }
+    fill: #040A2B; }
+  #GMTC .question-submit-wrapper {
+    text-align: center;
+    margin-top: 3em; }
   #GMTC .np-spinner-wrapper {
     position: relative;
     overflow: hidden;
@@ -9350,6 +9363,9 @@ button.close {
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*main bootstrap override classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.scroller {
+  min-height: 1200px; }
+
 .debug,
 .hide {
   display: none; }
@@ -9577,7 +9593,8 @@ img.blur {
     padding-bottom: 3px;
     display: inline-block;
 }*/
-/*@media (max-width: $screen-sm) {
+/*
+@media (max-width: $screen-sm) {
     .collapse-toggle{
         background-color: $brand-offwhite;
         cursor: pointer;

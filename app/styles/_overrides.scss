@@ -1,6 +1,9 @@
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*main bootstrap override classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.scroller{
+    min-height: 1200px;
+}
 .debug,
 .hide {
     display: none;
@@ -209,6 +212,12 @@ img.blur {
         padding: 5%;
     }
 }
+@media (max-width: $screen-xs) {
+    .container {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+}
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*Sans font overrides*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -222,8 +231,8 @@ img.blur {
     padding-bottom: 3px;
     display: inline-block;
 }*/
-
-/*@media (max-width: $screen-sm) {
+/*
+@media (max-width: $screen-sm) {
     .collapse-toggle{
         background-color: $brand-offwhite;
         cursor: pointer;
@@ -318,4 +327,3 @@ img.blur {
     margin: 0.2em 0;
     padding: 0.2em 0;
 }*/
-

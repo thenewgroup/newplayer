@@ -75,8 +75,8 @@
                                             "content": "What number am I thinking of? QUESTION 1",
                                             "feedback": {
                                                 "immediate": true,
-                                                "correct": "Hey, that's right!",
-                                                "incorrect": "No! ... What are you thinking!?"
+                                                "correct": "That's right! Advanced Night Repair is for everyone—every age, ethnicity, and skin concern.",
+                                                "incorrect": "No! Advanced Night Repair is for everyone—every age, ethnicity, and skin concern."
                                             }
                                         },
                                         "components": [

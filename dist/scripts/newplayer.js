@@ -2115,15 +2115,24 @@
             .module('newplayer.component')
             /** @ngInject */
             .controller('npFeatureController',
-                    function ($log, $scope/*, ManifestService*/, $element) {
+                    function ($log, $scope, ManifestService, $element) {
                         var cmpData = $scope.component.data || {};
                         //$log.debug('npFeature::data', cmpData);
                     }
             )
             .directive('newPlayerPageTop', function () {
-                return function ($scope, $element, attrs) {
+                return function ($scope, $element, attrs, ManifestService) {
                     setTimeout(function () {
                         $scope.$apply(function () {
+//                            console.log(
+//                                    '\n::::::::::::::::::::::::::::::::::::::ManifestService::Initialize:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                    '\n::ManifestService.initialize()::', ManifestService,
+//                                    '\n::$scope::', $scope,
+//                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                    );
+//                            var cmpData = $scope.component.data || {};
+//                            ManifestService.initialize($scope);
+//                            ManifestService.initializeComponent($scope.component);
 //                            var np_wrapper = $element.find('.np_outside-padding');
 //                            var hotspotImage = $element.find('.hotspotImage');
 //                            var page_container = $element.find('.modal-open');
@@ -4070,7 +4079,6 @@
                                 flashCards = $scope.component.flashCards;
 //                                flashCardsIndex = $scope.component.idx;
 //                                flashCardsButtonImage = $scope.component.flashCards.buttonImage;
-//
 //                        console.log(
 //                                '\n::::::::::::::::::::::::::::::::::::::npFlashCards::data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
 //                                '\n::flashCards::', flashCards,
@@ -4207,9 +4215,28 @@
 //                                            '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
 //                                            );
 //                                });
-//                                var maxHeight = Math.max.apply(null, $('.flash-card-content-back').map(function () {
-//                                    return $(this).outerHeight();
-//                                }).get());
+
+//                                var $itemsOffset = getOffsetRect($('.flash-card-content-back'));
+//                                var itemsOffsetHeight = $itemsOffset.height;
+// element
+                                imagesLoaded(document.querySelector('.container'), function (instance) {
+                                    console.log('all images are loaded');
+                                });
+                                var maxHeight = Math.max.apply(null, $('.flash-card-content-back').map(function () {
+                                    return $(this).outerHeight(true);
+                                }).get());
+                                TweenMax.set($('.flash-cards-object'), {
+                                    height: maxHeight
+                                });
+                                console.log(
+                                        '\n::::::::::::::::::::::::::::::::::::::npFlashCards::data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                        '\n::maxHeight:', maxHeight,
+//                                        '\n::itemsOffsetHeight:', itemsOffsetHeight,
+                                        '\n::$(.flash-card-content-back):', $('.flash-card-content-back').outerHeight(true),
+                                        '\n::$(.flash-card-object):', $('.flash-cards-object').outerHeight(),
+                                        '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                        );
+
 //                                var maxHeight = 800;
 //                                TweenMax.to($('.flash-cards-object'), 0.75, {
 //                                    force3D: true,
@@ -4220,13 +4247,6 @@
 //                                $('.flash-card-content-back').each(function () {
 //                                    outerHeight = $(this).outerHeight();
 //                                });
-//                                console.log(
-//                                        '\n::::::::::::::::::::::::::::::::::::::npFlashCards::data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
-//                                        '\n::maxHeight:', maxHeight,
-//                                        '\n::$(.flash-card-content-back):', $('.flash-card-content-back').height(),
-//                                        '\n::outerHeight:', outerHeight,
-//                                        '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-//                                        );
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //finish ready check items
                                 //////////////////////////////////////////////////////////////////////////////////////
@@ -4259,7 +4279,14 @@
                             var clientLeft = docElem.clientLeft || body.clientLeft || 0;
                             var top = box.top + scrollTop - clientTop;
                             var left = box.left + scrollLeft - clientLeft;
-                            return {top: Math.round(top), left: Math.round(left)};
+                            var bottom = top + (box.bottom - box.top);
+                            var right = left + (box.right - box.left);
+                            return {
+                                top: Math.round(top),
+                                left: Math.round(left),
+                                bottom: Math.round(bottom),
+                                right: Math.round(right)
+                            };
                         }
                         //////////////////////////////////////////////////////////////////////////////////////
                         //drag and throw vars
@@ -4294,12 +4321,12 @@
                                 var itemsOffsetCenter = (itemsOffsetLeft + currentIterationCenterWidth);
                                 var windowCenterOffsetOne = ($(".flash-cards-object").width() / 3);
                                 var windowCenterOffsetTwo = $(".flash-cards-object").width();
-                                console.log(
-                                        '\n::::::::::::::::::::::::::::::::::::::npFlashCards::data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                        '\n::windowCenterOffsetOne:', windowCenterOffsetOne,
-                                        '\n::windowCenterOffsetTwo:', windowCenterOffsetTwo,
-                                        '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                        );
+//                                console.log(
+//                                        '\n::::::::::::::::::::::::::::::::::::::npFlashCards::data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                        '\n::windowCenterOffsetOne:', windowCenterOffsetOne,
+//                                        '\n::windowCenterOffsetTwo:', windowCenterOffsetTwo,
+//                                        '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                        );
 //                                var defaultHeight = '475px';
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //drag and throw CENTER item animation
@@ -4307,7 +4334,7 @@
                                 if ((itemsOffsetCenter <= (windowCenter + windowCenterOffsetOne)) && (itemsOffsetCenter >= (windowCenter - windowCenterOffsetTwo))) {
                                     TweenMax.to(currentIteration, 1.75, {
                                         force3D: true,
-                                        top: 0,
+                                        top: '10px',
                                         marginLeft: '0em',
                                         marginRight: '0em',
                                         scale: 1,
@@ -4342,6 +4369,7 @@
                                     });
                                     TweenMax.to(currentIteration, 1.75, {
                                         force3D: true,
+                                        top: '10px',
                                         rotationY: 0,
                                         marginLeft: '-7em',
                                         marginRight: '7em',
@@ -4372,6 +4400,7 @@
                                     });
                                     TweenMax.to(currentIteration, 1.75, {
                                         force3D: true,
+                                        top: '10px',
                                         marginLeft: '-20em',
                                         marginRight: '20em',
                                         scale: 0.75,
@@ -4397,6 +4426,7 @@
                                     });
                                     TweenMax.to(currentIteration, 1.75, {
                                         force3D: true,
+                                        top: '10px',
                                         rotationY: 0,
                                         marginRight: '-7em',
                                         marginLeft: '7em',
@@ -4427,6 +4457,7 @@
                                     });
                                     TweenMax.to(currentIteration, 1.75, {
                                         force3D: true,
+                                        top: '10px',
                                         z: '-70',
                                         marginRight: '-20em',
                                         marginLeft: '20em',
@@ -4445,6 +4476,22 @@
                                 }
                             }
                         }
+                        $(window).scroll(function () {
+                            var windowPosition = $(window).scrollTop();
+                            var doc = document.documentElement;
+                            var topOffset = Math.round((window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0));
+                            TweenMax.to($('#flash-cards-test-id'), 1.25, {
+                                force3D: true,
+                                top: -(topOffset - 200),
+                                ease: Power4.easeOut
+                            });
+                            console.log(
+                                    '\n::::::::::::::::::::::::::::::::::::::npFlashCards::(window).scroll:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                    '\n::windowPosition:', windowPosition,
+                                    '\n::topOffset:', topOffset,
+                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                    );
+                        });
                         function update() {
                             var content;
                             var dragContent;
@@ -4471,6 +4518,21 @@
                             elementWrapper = document.getElementById("flash-cards-swipe-container");
                             content = document.getElementById("flash-cards");
                             var dragContent = Draggable.get(content);
+                            var $view = $('#np-flash-card');
+                            $view.on("touchmove", function () {
+                                console.log(
+                                        '\n::::::::::::::::::::::::::::::::::::::npFlashCards::scroll:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                        '\n::$view:', 'touchmove',
+                                        '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                        );
+                            });
+                            $view.on("scroll", function () {
+                                console.log(
+                                        '\n::::::::::::::::::::::::::::::::::::::npFlashCards::scroll:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                        '\n::$view:', 'scroll',
+                                        '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                        );
+                            });
                             function killTweens() {
                                 TweenMax.killTweensOf([dragContent.scrollProxy]);
                             }
@@ -4498,8 +4560,8 @@
                             });
                         }
                         update();
-                      // TODO: Refactor this / the below, it's confusing
-                      function nScrollSNAP(Array, val) {
+                        // TODO: Refactor this / the below, it's confusing
+                        function nScrollSNAP(Array, val) {
                             var SPoint, range = 400, i = 0;
                             for (i in Array) {
                                 var MResult = Math.abs(val - Array[i]);
@@ -4510,7 +4572,7 @@
                             }
                             return SPoint;
                         }
-                      // TODO: Refactor this / the above, it's confusing
+                        // TODO: Refactor this / the above, it's confusing
                         function NScrollSnap() {
                             if (nativeSCrl) {
 //                                console.log(
@@ -6416,59 +6478,61 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "    <p class=\"h5 quiz-label\">answers:</p>\n" +
     "    <div np-component class=\"response-item\" ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
     "    <div class=\"row\">\n" +
-    "        <button type=\"submit\" class=\"btn-submit\" ng-click=\"npQuestion.evaluate()\">\n" +
-    "            <span>Submit</span>\n" +
-    "        </button>\n" +
-    "    </div>\n" +
-    "    <!--<button id=\"next_button\" class=\"btn-default\" ng-click=\"npQuestion.nextPage($event)\">Next</button>-->\n" +
-    "    <!--    <div class=\"btn btn-default\">\n" +
-    "            <input type=\"submit\" />\n" +
-    "        </div>-->\n" +
-    "    <div question-feedback-build class=\"row\">\n" +
-    "        <div  class=\"col-sm-7 question-feedback\">\n" +
-    "            <div class=\"question-feedback-wrapper vertical-centered\">\n" +
-    "                <div class=\"positive-feedback-icon\">\n" +
-    "                    <svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n" +
-    "                         width=\"139.535px\" height=\"139.536px\" viewBox=\"665.896 1118.26 139.535 139.536\"\n" +
-    "                         enable-background=\"new 665.896 1118.26 139.535 139.536\" xml:space=\"preserve\">\n" +
-    "                        <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"486.9971\" y1=\"-44.001\" x2=\"475.1884\" y2=\"-58.8622\" gradientTransform=\"matrix(6.1102 0.342 0.342 -6.1102 -2188.8755 702.1841)\">\n" +
-    "                            <stop  offset=\"0.1882\" style=\"stop-color:#CAA04E\"/>\n" +
-    "                            <stop  offset=\"0.3683\" style=\"stop-color:#FFEBC3\"/>\n" +
-    "                            <stop  offset=\"0.3952\" style=\"stop-color:#F7DFB1\"/>\n" +
-    "                            <stop  offset=\"0.5063\" style=\"stop-color:#D7B26A\"/>\n" +
-    "                            <stop  offset=\"0.5581\" style=\"stop-color:#CAA04E\"/>\n" +
-    "                            <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
-    "                        </linearGradient>\n" +
-    "                        <polygon fill=\"url(#SVGID_1_)\" points=\"784.624,1164.16 768.712,1150.084 722.812,1203.939 695.271,1180.684 681.195,1196.596  724.648,1233.316 \"/>\n" +
-    "                        <path fill=\"#9A7D46\" d=\"M735.664,1257.796c-38.556,0-69.768-31.212-69.768-69.769c0-38.556,31.212-69.768,69.768-69.768  s69.768,31.212,69.768,69.768C805.432,1226.584,774.22,1257.796,735.664,1257.796z M735.664,1124.38  c-34.884,0-63.648,28.765-63.648,63.648s28.765,63.647,63.648,63.647s63.648-28.764,63.648-63.647S770.548,1124.38,735.664,1124.38z  \"/>\n" +
-    "                    </svg>\n" +
-    "                </div>\n" +
-    "                <div class=\"negative-feedback-icon\">\n" +
-    "                    <svg version=\"1.0\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"22.8px\" height=\"22.801px\" viewBox=\"599.8 837.1 22.8 22.801\" enable-background=\"new 599.8 837.1 22.8 22.801\" xml:space=\"preserve\">\n" +
-    "                        <path fill=\"#9A7D46\" d=\"M611.2,859.9c-6.3,0-11.4-5.101-11.4-11.4s5.101-11.4,11.4-11.4S622.6,842.2,622.6,848.5 S617.5,859.9,611.2,859.9z M611.2,838.1c-5.7,0-10.4,4.7-10.4,10.4s4.7,10.4,10.4,10.4s10.399-4.7,10.399-10.4 S616.9,838.1,611.2,838.1z\"/>\n" +
-    "                        <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"874.293\" y1=\"-1086.3877\" x2=\"861.2496\" y2=\"-1099.811\" gradientTransform=\"matrix(1 0 0 -1 -256 -245)\">\n" +
-    "                            <stop  offset=\"0.1642\" style=\"stop-color:#CAA04E\"/>\n" +
-    "                            <stop  offset=\"0.1698\" style=\"stop-color:#CCA352\"/>\n" +
-    "                            <stop  offset=\"0.2532\" style=\"stop-color:#E4C682\"/>\n" +
-    "                            <stop  offset=\"0.3167\" style=\"stop-color:#F2DCA0\"/>\n" +
-    "                            <stop  offset=\"0.3527\" style=\"stop-color:#F8E4AB\"/>\n" +
-    "                            <stop  offset=\"0.4062\" style=\"stop-color:#EBD191\"/>\n" +
-    "                            <stop  offset=\"0.48\" style=\"stop-color:#DDBC74\"/>\n" +
-    "                            <stop  offset=\"0.5532\" style=\"stop-color:#D2AC5F\"/>\n" +
-    "                            <stop  offset=\"0.6249\" style=\"stop-color:#CCA352\"/>\n" +
-    "                            <stop  offset=\"0.6933\" style=\"stop-color:#CAA04E\"/>\n" +
-    "                            <stop  offset=\"0.7957\" style=\"stop-color:#D5B05B\"/>\n" +
-    "                            <stop  offset=\"0.9955\" style=\"stop-color:#F2DA7E\"/>\n" +
-    "                            <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
-    "                        </linearGradient>\n" +
-    "                        <polygon fill=\"url(#SVGID_1_)\" points=\"605.8,856.5 611.2,851.2 616.5,856.5 619,854 613.7,848.7 619,843.4 616.5,840.8 611.2,846.1 605.9,840.8 603.4,843.4 608.7,848.7 603.3,854 \"/>\n" +
-    "                    </svg>\n" +
-    "                </div>\n" +
-    "                <div class=\"npQuestion-feedback body-copy question-feedback-text\" ng-if=\"npQuestion.feedback\" ng-bind-html=\"npQuestion.feedback\"></div>\n" +
-    "                <div class=\"question-feedback-label\">Feedback area</div>\n" +
-    "            </div\n" +
+    "        <div class=\"col-sm-6 question-submit-wrapper\">\n" +
+    "            <button type=\"submit\" class=\"btn-submit btn\" ng-click=\"npQuestion.evaluate()\">\n" +
+    "                <span>Submit</span>\n" +
+    "            </button>\n" +
     "        </div>\n" +
-    "        <div  class=\"col-sm-5\">\n" +
+    "        <div class=\"col-sm-6\">\n" +
+    "            <div question-feedback-build >\n" +
+    "                <div  class=\"question-feedback\">\n" +
+    "                    <div class=\"question-feedback-wrapper vertical-centered\">\n" +
+    "                        <div class=\"positive-feedback-icon\">\n" +
+    "                            <svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n" +
+    "                                 width=\"139.535px\" height=\"139.536px\" viewBox=\"665.896 1118.26 139.535 139.536\"\n" +
+    "                                 enable-background=\"new 665.896 1118.26 139.535 139.536\" xml:space=\"preserve\">\n" +
+    "                                <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"486.9971\" y1=\"-44.001\" x2=\"475.1884\" y2=\"-58.8622\" gradientTransform=\"matrix(6.1102 0.342 0.342 -6.1102 -2188.8755 702.1841)\">\n" +
+    "                                    <stop  offset=\"0.1882\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                    <stop  offset=\"0.3683\" style=\"stop-color:#FFEBC3\"/>\n" +
+    "                                    <stop  offset=\"0.3952\" style=\"stop-color:#F7DFB1\"/>\n" +
+    "                                    <stop  offset=\"0.5063\" style=\"stop-color:#D7B26A\"/>\n" +
+    "                                    <stop  offset=\"0.5581\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                    <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
+    "                                </linearGradient>\n" +
+    "                                <polygon fill=\"url(#SVGID_1_)\" points=\"784.624,1164.16 768.712,1150.084 722.812,1203.939 695.271,1180.684 681.195,1196.596  724.648,1233.316 \"/>\n" +
+    "                                <path fill=\"#9A7D46\" d=\"M735.664,1257.796c-38.556,0-69.768-31.212-69.768-69.769c0-38.556,31.212-69.768,69.768-69.768  s69.768,31.212,69.768,69.768C805.432,1226.584,774.22,1257.796,735.664,1257.796z M735.664,1124.38  c-34.884,0-63.648,28.765-63.648,63.648s28.765,63.647,63.648,63.647s63.648-28.764,63.648-63.647S770.548,1124.38,735.664,1124.38z  \"/>\n" +
+    "                            </svg>\n" +
+    "                        </div>\n" +
+    "                        <div class=\"negative-feedback-icon\">\n" +
+    "                            <svg version=\"1.0\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"22.8px\" height=\"22.801px\" viewBox=\"599.8 837.1 22.8 22.801\" enable-background=\"new 599.8 837.1 22.8 22.801\" xml:space=\"preserve\">\n" +
+    "                                <path fill=\"#9A7D46\" d=\"M611.2,859.9c-6.3,0-11.4-5.101-11.4-11.4s5.101-11.4,11.4-11.4S622.6,842.2,622.6,848.5 S617.5,859.9,611.2,859.9z M611.2,838.1c-5.7,0-10.4,4.7-10.4,10.4s4.7,10.4,10.4,10.4s10.399-4.7,10.399-10.4 S616.9,838.1,611.2,838.1z\"/>\n" +
+    "                                <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"874.293\" y1=\"-1086.3877\" x2=\"861.2496\" y2=\"-1099.811\" gradientTransform=\"matrix(1 0 0 -1 -256 -245)\">\n" +
+    "                                    <stop  offset=\"0.1642\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                    <stop  offset=\"0.1698\" style=\"stop-color:#CCA352\"/>\n" +
+    "                                    <stop  offset=\"0.2532\" style=\"stop-color:#E4C682\"/>\n" +
+    "                                    <stop  offset=\"0.3167\" style=\"stop-color:#F2DCA0\"/>\n" +
+    "                                    <stop  offset=\"0.3527\" style=\"stop-color:#F8E4AB\"/>\n" +
+    "                                    <stop  offset=\"0.4062\" style=\"stop-color:#EBD191\"/>\n" +
+    "                                    <stop  offset=\"0.48\" style=\"stop-color:#DDBC74\"/>\n" +
+    "                                    <stop  offset=\"0.5532\" style=\"stop-color:#D2AC5F\"/>\n" +
+    "                                    <stop  offset=\"0.6249\" style=\"stop-color:#CCA352\"/>\n" +
+    "                                    <stop  offset=\"0.6933\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                    <stop  offset=\"0.7957\" style=\"stop-color:#D5B05B\"/>\n" +
+    "                                    <stop  offset=\"0.9955\" style=\"stop-color:#F2DA7E\"/>\n" +
+    "                                    <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
+    "                                </linearGradient>\n" +
+    "                                <polygon fill=\"url(#SVGID_1_)\" points=\"605.8,856.5 611.2,851.2 616.5,856.5 619,854 613.7,848.7 619,843.4 616.5,840.8 611.2,846.1 605.9,840.8 603.4,843.4 608.7,848.7 603.3,854 \"/>\n" +
+    "                            </svg>\n" +
+    "                        </div>\n" +
+    "                        <div class=\"npQuestion-feedback body-copy question-feedback-text\" ng-if=\"npQuestion.feedback\" ng-bind-html=\"npQuestion.feedback\"></div>\n" +
+    "                        <div class=\"question-feedback-label\">Feedback area</div>\n" +
+    "                    </div\n" +
+    "                </div\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"col-sm-6\">\n" +
+    "        </div>\n" +
+    "        <div class=\"col-sm-6\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "</div>"
