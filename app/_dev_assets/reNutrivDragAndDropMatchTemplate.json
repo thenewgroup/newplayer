@@ -86,7 +86,7 @@
                                     "draggableButtons": [
                                         {
                                             "content": "<p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
-                                            "image": "/assets/images/hotspot.png",
+                                            "image": "",
                                             "matchingContent": "<p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
                                             "matchingImage": "/assets/images/hotspot.png"
                                         },
