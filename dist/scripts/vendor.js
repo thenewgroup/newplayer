@@ -80439,7 +80439,7 @@ $.extend(mejs.MepDefaults,
 
 })(mejs.$);
 /**
-* @version: 1.3.19
+* @version: 1.3.21
 * @author: Dan Grossman http://www.dangrossman.info/
 * @copyright: Copyright (c) 2012-2015 Dan Grossman. All rights reserved.
 * @license: Licensed under the MIT license. See http://www.opensource.org/licenses/mit-license.php
@@ -80512,22 +80512,7 @@ $.extend(mejs.MepDefaults,
 
         this.setOptions(options, cb);
 
-        //apply CSS classes and labels to buttons
-        var c = this.container;
-        $.each(this.buttonClasses, function (idx, val) {
-            c.find('button').addClass(val);
-        });
-        this.container.find('.daterangepicker_start_input label').html(this.locale.fromLabel);
-        this.container.find('.daterangepicker_end_input label').html(this.locale.toLabel);
-        if (this.applyClass.length)
-            this.container.find('.applyBtn').addClass(this.applyClass);
-        if (this.cancelClass.length)
-            this.container.find('.cancelBtn').addClass(this.cancelClass);
-        this.container.find('.applyBtn').html(this.locale.applyLabel);
-        this.container.find('.cancelBtn').html(this.locale.cancelLabel);
-
         //event listeners
-
         this.container.find('.calendar')
             .on('click.daterangepicker', '.prev', $.proxy(this.clickPrev, this))
             .on('click.daterangepicker', '.next', $.proxy(this.clickNext, this))
@@ -80552,7 +80537,8 @@ $.extend(mejs.MepDefaults,
             this.element.on({
                 'click.daterangepicker': $.proxy(this.show, this),
                 'focus.daterangepicker': $.proxy(this.show, this),
-                'keyup.daterangepicker': $.proxy(this.updateFromControl, this)
+                'keyup.daterangepicker': $.proxy(this.updateFromControl, this),
+                'keydown.daterangepicker': $.proxy(this.keydown, this)
             });
         } else {
             this.element.on('click.daterangepicker', $.proxy(this.toggle, this));
@@ -80585,6 +80571,10 @@ $.extend(mejs.MepDefaults,
             this.opens = 'right';
             if (this.element.hasClass('pull-right'))
                 this.opens = 'left';
+
+            this.drops = 'down';
+            if (this.element.hasClass('dropup'))
+                this.drops = 'up';
 
             this.buttonClasses = ['btn', 'btn-small btn-sm'];
             this.applyClass = 'btn-success';
@@ -80690,6 +80680,9 @@ $.extend(mejs.MepDefaults,
             if (typeof options.opens === 'string')
                 this.opens = options.opens;
 
+            if (typeof options.drops === 'string')
+                this.drops = options.drops;
+
             if (typeof options.showWeekNumbers === 'boolean') {
                 this.showWeekNumbers = options.showWeekNumbers;
             }
@@ -80764,9 +80757,13 @@ $.extend(mejs.MepDefaults,
 
             // bind the time zone used to build the calendar to either the timeZone passed in through the options or the zone of the startDate (which will be the local time zone by default)
             if (typeof options.timeZone === 'string' || typeof options.timeZone === 'number') {
-                this.timeZone = options.timeZone;
-                this.startDate.utcOffset(this.timeZone);
-                this.endDate.utcOffset(this.timeZone);
+            	if (typeof options.timeZone === 'string' && typeof moment.tz !== 'undefined') {
+            		this.timeZone = moment.tz.zone(options.timeZone).parse(new Date) * -1;	// Offset is positive if the timezone is behind UTC and negative if it is ahead.
+            	} else {
+            		this.timeZone = options.timeZone;
+            	}
+              this.startDate.utcOffset(this.timeZone);
+              this.endDate.utcOffset(this.timeZone);
             } else {
                 this.timeZone = moment(this.startDate).utcOffset();
             }
@@ -80877,11 +80874,24 @@ $.extend(mejs.MepDefaults,
                 this.container.addClass('show-calendar');
             }
 
-            this.container.addClass('opens' + this.opens);
+            this.container.removeClass('opensleft opensright').addClass('opens' + this.opens);
 
             this.updateView();
             this.updateCalendars();
 
+            //apply CSS classes and labels to buttons
+            var c = this.container;
+            $.each(this.buttonClasses, function (idx, val) {
+                c.find('button').addClass(val);
+            });
+            this.container.find('.daterangepicker_start_input label').html(this.locale.fromLabel);
+            this.container.find('.daterangepicker_end_input label').html(this.locale.toLabel);
+            if (this.applyClass.length)
+                this.container.find('.applyBtn').addClass(this.applyClass);
+            if (this.cancelClass.length)
+                this.container.find('.cancelBtn').addClass(this.cancelClass);
+            this.container.find('.applyBtn').html(this.locale.applyLabel);
+            this.container.find('.cancelBtn').html(this.locale.cancelLabel);
         },
 
         setStartDate: function(startDate) {
@@ -80966,6 +80976,13 @@ $.extend(mejs.MepDefaults,
 
             this.updateCalendars();
         },
+        
+        keydown: function (e) {
+            //hide on tab or enter
+        	if ((e.keyCode === 9) || (e.keyCode === 13)) {
+        		this.hide();
+        	}
+        },
 
         notify: function () {
             this.updateView();
@@ -80973,7 +80990,8 @@ $.extend(mejs.MepDefaults,
         },
 
         move: function () {
-            var parentOffset = { top: 0, left: 0 };
+            var parentOffset = { top: 0, left: 0 },
+            	containerTop;
             var parentRightEdge = $(window).width();
             if (!this.parentEl.is('body')) {
                 parentOffset = {
@@ -80982,10 +81000,16 @@ $.extend(mejs.MepDefaults,
                 };
                 parentRightEdge = this.parentEl[0].clientWidth + this.parentEl.offset().left;
             }
+            
+            if (this.drops == 'up')
+            	containerTop = this.element.offset().top - this.container.outerHeight() - parentOffset.top;
+            else
+            	containerTop = this.element.offset().top + this.element.outerHeight() - parentOffset.top;
+            this.container[this.drops == 'up' ? 'addClass' : 'removeClass']('dropup');
 
             if (this.opens == 'left') {
                 this.container.css({
-                    top: this.element.offset().top + this.element.outerHeight() - parentOffset.top,
+                    top: containerTop,
                     right: parentRightEdge - this.element.offset().left - this.element.outerWidth(),
                     left: 'auto'
                 });
@@ -80997,7 +81021,7 @@ $.extend(mejs.MepDefaults,
                 }
             } else if (this.opens == 'center') {
                 this.container.css({
-                    top: this.element.offset().top + this.element.outerHeight() - parentOffset.top,
+                    top: containerTop,
                     left: this.element.offset().left - parentOffset.left + this.element.outerWidth() / 2
                             - this.container.outerWidth() / 2,
                     right: 'auto'
@@ -81010,7 +81034,7 @@ $.extend(mejs.MepDefaults,
                 }
             } else {
                 this.container.css({
-                    top: this.element.offset().top + this.element.outerHeight() - parentOffset.top,
+                    top: containerTop,
                     left: this.element.offset().left - parentOffset.left,
                     right: 'auto'
                 });
@@ -81211,7 +81235,7 @@ $.extend(mejs.MepDefaults,
                 var difference = this.endDate.diff(this.startDate);
                 endDate = moment(startDate).add(difference, 'ms');
                 if (this.maxDate && endDate.isAfter(this.maxDate)) {
-                  endDate = this.maxDate;
+                  endDate = this.maxDate.clone();
                 }
             }
             this.startDate = startDate;
