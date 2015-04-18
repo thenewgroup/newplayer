@@ -10,7 +10,7 @@
     background-size: cover;
     content: "";
     width:100%;
-    min-height: 1100px;
+    /*min-height: 1100px;*/
     height:auto;
     bottom: 0;
     left: 0;
@@ -25,7 +25,7 @@
     background-size:50%;
     width:100%;
     height:100%;
-    min-height: 1100px;
+    /*min-height: 1100px;*/
 }
 .renutriv-logo-image {
     position: relative;
@@ -41,21 +41,23 @@
 .headline{
     font-family: $re-nu-serif;
     color: $brand-primary-light;
+    color: $brand-primary; 
     letter-spacing: 2px;
     padding-top: 10px;
     padding-bottom: 0px;
     margin-top: 10px;
-    margin-bottom: 0px;
     display: inline-block;
+    margin-bottom: $line-height-computed;
 }
 .instructional{
+    font-size: $font-size-h5;
+    color: $brand-primary-light;
     letter-spacing: 1px;
     padding-top: 0px;
     padding-bottom: 20px;
     margin-top: 0px;
-    color: $brand-primary-light;
-    /*margin-bottom: 0px;*/
     display: inline-block;
+    margin-bottom: $line-height-computed;
 }
 .h1, .h2, .h3, .h4, .h5{
     color: $brand-primary-light;
@@ -67,12 +69,14 @@
     font-size: $font-size-18;
     letter-spacing: 2px;
     text-transform: uppercase;
+    margin-bottom: $line-height-computed;
 }
 .body-copy-strong{
     color: $brand-primary-light;
     font-family: $font-family-sans-serif;
     font-size: $font-size-18;
     letter-spacing: 2px;
+    margin-bottom: $line-height-computed;
 }
 @media (max-width: $screen-md) {
     .subhead-copy{
@@ -90,6 +94,7 @@
     font-size: $font-size-17;
     letter-spacing: 2px;
     line-height: 1.35;
+    margin-bottom: $line-height-computed;
 }
 @media (max-width: $screen-md) {
     .body-copy{
@@ -124,16 +129,16 @@
     letter-spacing: 2px;
 }
 .btn{ 
-    position: absolute;
+    position: relative;
     border-color: #9a7d46;
     background-color: #000000;
     width: auto;
-    /*bottom: 0;*/
-    right: 0;
-    padding-top: 5px;
-    padding-bottom: 3px;
-    margin: 0;
-    margin-top: 15px;
+    margin-top: 5px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    padding-left: 2em;
+    padding-right: 2em;
+    min-width: fit-content;
 }
 .btn span{ 
     font-family: $font-family-sans-serif;
@@ -141,7 +146,23 @@
     text-transform: uppercase;
     letter-spacing: 2px;
 }
-
+.btn-next{ 
+    position: relative;
+    float: right;
+    border-width: 3px;
+    width: auto;
+    padding-top: 5px;
+    padding-bottom: 3px;
+    margin-top: 15px;
+}
+.btn-next span{ 
+    letter-spacing: 2px;
+    padding: 0;
+}
+.btn-submit{
+}
+.btn-submit span{ 
+}
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player padding wrapper classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -208,14 +229,17 @@
     position: fixed;
     content: "";
     width: 100%;
+    top: 200px;
     left: 0;
     right: 0;
+    /*min-height: 1400px;*/
 }
 #flash-cards {
     position: relative;
-    height: 100%;
+    /*height: 100%;*/
     padding-top: 45px !important;
     margin-left: 0px;
+    /*min-height: 1000px;*/
 }
 ///////////////cards/////////////////
 .flash-cards-object {
@@ -223,7 +247,9 @@
     display: inline-block;
     overflow: hidden;
     width: 560px;
-    height: 800px;
+    /*min-height: 800px;*/
+    margin-bottom: 222px;
+    padding-bottom: 15px;
 }
 @media (max-width: $screen-sm) {
     .flash-cards-object {
@@ -256,6 +282,7 @@
 .flash-card-front-wrapper {
     position: absolute;
     top:0;
+    bottom:0;
     width: 100%;
     /*height:100%;*/
     overflow: hidden;
@@ -272,6 +299,8 @@
     left: 0;
     right: 0;
     top: 0;
+    bottom: 0;
+    overflow: hidden;
     background-color: #FFFFFF;
     min-height: 475px;
 }
@@ -281,9 +310,9 @@
 ///////////////back/////////////////
 .flash-card-back-wrapper {
     position: absolute;
-    top:0;
+    top: 0;
     width: 100%;
-    height:100%;
+    height: 100%;
 }
 .flash-card-content-back {
     position: absolute;
@@ -353,23 +382,6 @@
     text-transform: uppercase;
     letter-spacing: 2px;
     display: inline-block;
-}
-.btn-submit{
-    position: relative;
-    border-color: #9a7d46;
-    background-color: #000000;
-    padding-top: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin-top: 25px;
-    margin-bottom: 25px;
-    margin-left: 30px;
-}
-.btn-submit span{ 
-    font-family: $re-nu-serif;
-    color: $brand-primary-light;
-    text-transform: uppercase;
-    letter-spacing: 2px;
 }
 input{ 
     font-family: $re-nu-serif;
@@ -509,7 +521,8 @@ input{
     float: left;
     color: $brand-primary-light;
     letter-spacing: 2px;
-    margin-left: 35px;
+    margin-bottom: 0;
+    margin-left: 40px;
 }
 .positive-feedback-icon{ 
     position: absolute;
@@ -533,6 +546,16 @@ input{
     text-align: center;
     letter-spacing: 2px;
     padding-top: 4.5%;
+}
+.question-feedback-wrapper svg polygon{ 
+    /*fill: $brand-primary;*/
+}
+.question-feedback-wrapper svg path{ 
+/*    fill: $brand-primary;*/
+}
+.question-submit-wrapper{
+    text-align: center;
+    margin-top: 3em;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Matching Game classes*/
@@ -618,27 +641,6 @@ input{
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Trivia/Spinner classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-.btn-next{ 
-    position: absolute;
-    border-color: $gold;
-    width: auto;
-    /*bottom: 0;*/
-    right: 0;
-    padding-top: 5px;
-    padding-bottom: 3px;
-    margin: 0;
-    margin-top: 15px;
-    background-color: #000000;
-}
-.btn-next span{ 
-    font-family: $re-nu-serif;
-    color: $brand-primary-light;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-.btn-next span p{ 
-    padding: 0;
-}
 .np-spinner-wrapper {
     position: relative;
     overflow: hidden;
@@ -848,7 +850,6 @@ input{
     letter-spacing: 2px;
     font-size: $font-size-base;
 }
-
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Drag and Drop Select classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -874,7 +875,6 @@ input{
     margin-top: 1em;
     margin-bottom: 1em;
 }
-
 .btn-select-submit{
     position: relative;
     border-color: #9a7d46;
@@ -895,11 +895,6 @@ input{
     padding-left: 25px;
     padding-right: 25px;
 }
-/*.select-response-wrapper{
-    width: 100%;
-    height: 100%;
-    text-align: center;
-}*/
 .select-response-wrapper{
     position: absolute;
     right: 0;
