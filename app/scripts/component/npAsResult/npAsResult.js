@@ -3,14 +3,14 @@
   angular
     .module('newplayer.component')
   /** @ngInject */
-    .controller('npQuizSummaryController',
+    .controller('npAsResultController',
     function ($log, $scope, $rootScope, $sce, $element, $filter,
               i18nService, ManifestService, AssessmentService) {
       var i,
           vm = this,
           cmpData = $scope.component.data;
 
-      $log.info('npQuizSummaryController::Init\n');
+      $log.info('npAsResultController::Init\n');
 
       vm.minScore = AssessmentService.getMinPassing();
       vm.score = AssessmentService.getScore();
