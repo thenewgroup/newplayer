@@ -21,12 +21,12 @@
                         var btnLink = cmpData.link;
                         console.log(
                                 '\n::::::::::::::::::::::::::::::::::::::this.go:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                '\n::this::', this,
-                                '\n::buttonType::', buttonType,
-                                '\n::cmpData::', cmpData,
-                                '\n::$(cmpData)::', $(cmpData),
-                                '\n::this::', $(this),
-                                '\n::this::', $(this).parent(),
+//                                '\n::this::', this,
+//                                '\n::buttonType::', buttonType,
+//                                '\n::cmpData::', cmpData,
+//                                '\n::$(cmpData)::', $(cmpData),
+//                                '\n::this::', $(this),
+//                                '\n::this::', $(this).parent(),
                                 '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
                                 );
                         if (typeof buttonType !== 'undefined') {
@@ -40,12 +40,12 @@
                             $(this).addClass(buttonType);
                             console.log(
                                     '\n::::::::::::::::::::::::::::::::::::::this.go.buttonType:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                    '\n::$element::', $element,
-                                    '\n::$element::', $element[0],
+//                                    '\n::$element::', $element,
+//                                    '\n::$element::', $element[0],
                                     '\n::currentElement::', currentElement,
-                                    '\n::$element.className::', $element.className,
-                                    '\n::buttonType::', buttonType,
-                                    '\n::cmpData::', cmpData,
+//                                    '\n::$element.className::', $element.className,
+//                                    '\n::buttonType::', buttonType,
+//                                    '\n::cmpData::', cmpData,
                                     '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
                                     );
                         }
