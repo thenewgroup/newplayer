@@ -20,6 +20,7 @@
                         vm.seenComponents = _.shuffle($scope.components);
                         vm.pageId = vm.seenComponents[0].data.id;
                         vm.difficulty = vm.seenComponents[0].components[0].data.difficulty || 0;
+
                         //////////////////////////////////////////////////////////////////////////////////////
                         //get ready
                         //////////////////////////////////////////////////////////////////////////////////////
@@ -35,21 +36,24 @@
                                 });
                             });
                         });
+
+                        /* NOTE: commented 2015-04-20, this seems to actually break trivia per manifest */
                         // go to the first page, since pages were shuffled
-                        $timeout(function () {
-                            ManifestService.setPageId(vm.pageId);
-                        });
+                        //$timeout(function () {
+                        //    ManifestService.setPageId(vm.pageId);
+                        //});
                         $rootScope.$on('question.answered', function (evt, correct) {
                             if (correct) {
                                 vm.assment.pageViewed();
                                 vm.currentPage = vm.assment.getPageviewsCount();
-                                vm.pageId = vm.seenComponents[vm.currentPage] ? vm.seenComponents[vm.currentPage].data.id : '';
-                                ManifestService.setPageId(vm.pageId);
+                              /* NOTE: commented 2015-04-20, this seems to actually break trivia per manifest */
+                              vm.pageId = vm.seenComponents[vm.currentPage] ? vm.seenComponents[vm.currentPage].data.id : '';
+                              //  ManifestService.setPageId(vm.pageId);
                                 $rootScope.$emit('spin-to-win');
                                 // end of the trivia questions
                                 // TODO - add this message the template and set the two values
                                 // here in the controller
-                                // NOTE: This text should come from the app 
+                                // NOTE: This text should come from the app
 //  min-height: 740px;
                                 if (!vm.pageId) {
                                     vm.feedback = 'Good job, you scored 5,000 points out of 7,500 possible.';
