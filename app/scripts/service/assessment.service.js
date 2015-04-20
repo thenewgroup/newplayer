@@ -339,7 +339,7 @@
         }
 
       } else {
-        $log.warning('[Assessment::questionAnswered] question already answered, ', questionId);
+        $log.warn('[Assessment::questionAnswered] question already answered, ', questionId);
       }
     }
 
