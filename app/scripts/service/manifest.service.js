@@ -10,7 +10,8 @@
     $log.debug('ManifestServiceWrapper');
 
     var Service = function () {
-      var ms = null;
+      var self = this;
+      self.ms = null;
 
       function initialize(data, overrides) {
         //$log.debug('ManifestServiceWrapper initialize w/data');
@@ -54,16 +55,16 @@
         return self.ms.setPageId(pageId, componentIdx);
       }
 
-      this.getAll = getAll;
-      this.getComponent = getComponent;
-      this.getFirst = getFirst;
-      this.getLang = getLang;
-      this.getNextPageId = getNextPageId;
-      this.getPageId = getPageId;
-      this.goToNextPage = goToNextPage;
-      this.initialize = initialize;
-      this.setLang = setLang;
-      this.setPageId = setPageId;
+      self.getAll = getAll;
+      self.getComponent = getComponent;
+      self.getFirst = getFirst;
+      self.getLang = getLang;
+      self.getNextPageId = getNextPageId;
+      self.getPageId = getPageId;
+      self.goToNextPage = goToNextPage;
+      self.initialize = initialize;
+      self.setLang = setLang;
+      self.setPageId = setPageId;
     }; // end Service
 
     return new Service();
@@ -390,51 +391,100 @@
       }
       setComponentIdx(null);
       // Not sure if this impacts anything else, so tracking page component ID differently
-      pageComponentIdx = componentIdx;
+      self.pageComponentIdx = componentIdx;
       self.pageId = pageId;
       $rootScope.$broadcast('npPageIdChanged', pageId);
     };
     self.getNextPageId = function () {
-      var thisPageId = self.getPageId();
-      var
-        nextPage,
-        nextPageComponentIdx,
-        i = thisPageId.substring(thisPageId.length - 1),
-        pageParentComponent,
-        pageParentComponentId = thisPageId.substring(0, thisPageId.length - 1);
-      if (!thisPageId) {
-        $log.warn('ManifestService::goToNextPage | thisPage is not valid');
-        return;
-      }
-      i = parseInt(i, 10);
-      i++;
-      pageParentComponentId = pageParentComponentId + i;
-      pageParentComponent = self.getComponent(pageParentComponentId);
-      return nextPage = pageParentComponentId;
-    };
-    self.getNextPageIdx = function () {
-      var thisPageId = self.getPageId();
-      var
+      var nextPage,
         nextPageComponentIdx,
         i,
         pageParentComponent,
-        pageParentComponentIdx = pageComponentIdx.slice(0);
+        pageParentComponentIdx,
+        thisPageId = self.getPageId();
+
+        $log.debug('ManifestService::getNextPageId', self);
       if (!thisPageId) {
-        $log.warn('ManifestService::goToNextPage | thisPage is not valid');
+        $log.warn('ManifestService::getNextPageId | thisPage is not valid');
         return;
       }
-      i = parseInt(pageParentComponentIdx.pop(), 10);
-      i++;
+
+      pageParentComponentIdx = self.pageComponentIdx.slice(0); // copy the array stack here so we can mangle it
+
+      // We need to start looking for the component after current page component
+      i = parseInt(pageParentComponentIdx.pop(), 10); // pop this child off the array so we can have the parent
+      i++; // let's always start with the index after ours
+      //$log.debug('ManifestService::getNextPageId | for pageId, componentIdx', thisPageId, componentIdx);
       pageParentComponent = self.getComponent(pageParentComponentIdx);
       for (/* initialized above*/; i < pageParentComponent.components.length; i++) {
         var component = pageParentComponent.components[i];
+        $log.debug('ManifestService::getNextPageId | -- Evaluating component', component);
         if (component.type === 'npPage') {
+          //$log.debug('ManifestService::getNextPageId | --> found npPage');
           if (component.data.id === thisPageId) {
+            //$log.debug('ManifestService::getNextPageId | --> ignoring thisPage');
             continue;
           }
-          return nextPageComponentIdx = component.idx;
+          nextPage = component.data.id;
+          nextPageComponentIdx = component.idx;
+//                        console.log(
+//                                '\n::::::::::::::::::::::::::::::::::::::component.type======:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                '\n::component::', component,
+//                                '\n::component.data::', component.data,
+//                                '\n::component.data.id::', component.data.id,
+//                                '\n::component.data.last::', component.data.last,
+//                                '\n::nextPage::', nextPage,
+//                                '\n::nextPageComponentIdx::', nextPageComponentIdx,
+//                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                );
+          $log.debug('ManifestService::getNextPageId | --> found nextPage, nextPageComponentIdx', nextPage, nextPageComponentIdx);
+          break;
         }
       }
+      return nextPage;
+    };
+    self.getNextPageIdx = function () {
+      var thisPageId = self.getPageId();
+      var nextPage,
+        nextPageComponentIdx,
+        i,
+        pageParentComponent,
+        pageParentComponentIdx = self.pageComponentIdx.slice(0); // copy the array stack here so we can mangle it
+      if (!thisPageId) {
+        $log.warn('ManifestService::getNextPageIdx | thisPage is not valid');
+        return;
+      }
+      // We need to start looking for the component after current page component
+      i = parseInt(pageParentComponentIdx.pop(), 10); // pop this child off the array so we can have the parent
+      i++; // let's always start with the index after ours
+      //$log.debug('ManifestService::getNextPageIdx | for pageId, componentIdx', thisPageId, componentIdx);
+      pageParentComponent = self.getComponent(pageParentComponentIdx);
+      for (/* initialized above*/; i < pageParentComponent.components.length; i++) {
+        var component = pageParentComponent.components[i];
+        $log.debug('ManifestService::getNextPageIdx | -- Evaluating component', component);
+        if (component.type === 'npPage') {
+          //$log.debug('ManifestService::getNextPageIdx | --> found npPage');
+          if (component.data.id === thisPageId) {
+            //$log.debug('ManifestService::getNextPageIdx | --> ignoring thisPage');
+            continue;
+          }
+          nextPage = component.data.id;
+          nextPageComponentIdx = component.idx;
+//                        console.log(
+//                                '\n::::::::::::::::::::::::::::::::::::::component.type======:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                '\n::component::', component,
+//                                '\n::component.data::', component.data,
+//                                '\n::component.data.id::', component.data.id,
+//                                '\n::component.data.last::', component.data.last,
+//                                '\n::nextPage::', nextPage,
+//                                '\n::nextPageComponentIdx::', nextPageComponentIdx,
+//                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                );
+          $log.debug('ManifestService::getNextPageIdx | --> found nextPage, nextPageComponentIdx', nextPage, nextPageComponentIdx);
+          break;
+        }
+      }
+      return nextPageComponentIdx;
     };
     function goToFirstPage() {
       //$log.debug('ManifestService::goToFirstPage | begin');
@@ -452,7 +502,7 @@
         nextPageComponentIdx,
         i,
         pageParentComponent,
-        pageParentComponentIdx = pageComponentIdx.slice(0); // copy the array stack here so we can mangle it
+        pageParentComponentIdx = self.pageComponentIdx.slice(0); // copy the array stack here so we can mangle it
       if (!thisPageId) {
         $log.warn('ManifestService::goToNextPage | thisPage is not valid');
         return;
@@ -464,31 +514,26 @@
       pageParentComponent = self.getComponent(pageParentComponentIdx);
       for (/* initialized above*/; i < pageParentComponent.components.length; i++) {
         var component = pageParentComponent.components[i];
-        //$log.debug('ManifestService::goToNextPage | -- Evaluating component', component);
+        $log.debug('ManifestService::goToNextPage | -- Evaluating component', component);
         if (component.type === 'npPage') {
-          //$log.debug('ManifestService::goToNextPage | --> found npPage');
-          console.log(
-            '\n::::::::::::::::::::::::::::::::::::::component.type===component.type:::::::::::::::::::::::::::::::::::::::::::::::::',
-            '\n::component.type::', component.type,
-            '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-          );
+          $log.debug('ManifestService::goToNextPage | --> found npPage');
           if (component.data.id === thisPageId) {
-            //$log.debug('ManifestService::goToNextPage | --> ignoring thisPage');
+            $log.debug('ManifestService::goToNextPage | --> ignoring thisPage');
             continue;
           }
           nextPage = component.data.id;
           nextPageComponentIdx = component.idx;
-//                        console.log(
-//                                '\n::::::::::::::::::::::::::::::::::::::component.type======:::::::::::::::::::::::::::::::::::::::::::::::::',
-//                                '\n::component::', component,
-//                                '\n::component.data::', component.data,
-//                                '\n::component.data.id::', component.data.id,
-//                                '\n::component.data.last::', component.data.last,
-//                                '\n::nextPage::', nextPage,
-//                                '\n::nextPageComponentIdx::', nextPageComponentIdx,
-//                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-//                                );
-          //$log.debug('ManifestService::goToNextPage | --> found nextPage, nextPageComponentIdx', nextPage, nextPageComponentIdx);
+                        //console.log(
+                        //        '\n::::::::::::::::::::::::::::::::::::::component.type======:::::::::::::::::::::::::::::::::::::::::::::::::',
+                        //        '\n::component::', component,
+                        //        '\n::component.data::', component['data'],
+                        //        '\n::component.data.id::', component.data.id,
+                        //        '\n::component.data.last::', component.data.last,
+                        //        '\n::nextPage::', nextPage,
+                        //        '\n::nextPageComponentIdx::', nextPageComponentIdx,
+                        //        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                        //        );
+          $log.debug('ManifestService::goToNextPage | --> found nextPage, nextPageComponentIdx', nextPage, nextPageComponentIdx);
           break;
         }
       }
@@ -506,7 +551,7 @@
         self.setPageId(nextPage, nextPageComponentIdx);
         return true;
       }
-      //$log.debug('ManifestService::goToNextPage | no valid next page found, returning false');
+      $log.debug('ManifestService::goToNextPage | no valid next page found, returning false');
       return false;
     };
     self.initialize = function (data, overrides) {
@@ -540,5 +585,5 @@
       //goToFirstPage();
       setComponentIdx(null);
     };
-  }
+  };
 })();
