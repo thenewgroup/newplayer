@@ -1,0 +1,177 @@
+[{
+        "type": "npFeature",
+        "data": {
+            "id": "ANR",
+            "class": "",
+            "version": "0.0.1",
+            "timestamp": "2015-Apr-Tue_09:04:10"
+        },
+        "components": [{
+                "type": "npContent",
+                "data": {
+                    "id": "content_en",
+                    "language": "en",
+                    "title": "Learning-Content-ANR-4.0-Advanced-Night-Repair:-How-It-Works",
+                    "description": "This manifest creates a Story or Learning Object content object . "
+                },
+                "components": [{
+                        "type": "npHTML",
+                        "data": {
+                            "id": "newplayer-background"
+                        },
+                        "components": [{
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "background-image"
+                                },
+                                "components": []
+                            }]
+                    }, {
+                        "type": "npHTML",
+                        "data": {
+                            "class": "outside-padding"
+                        },
+                        "components": [{
+                                "type": "npHTML",
+                                "data": {
+                                    "class": "renutriv-logo-image"
+                                },
+                                "components": []
+                            }, {
+                                "type": "npHTML",
+                                "data": {
+                                    "class": "h3 headline",
+                                    "content": "Advanced Night Repair: How It Works"
+                                },
+                                "components": []
+                            }, {
+                                "type": "npHTML",
+                                "data": {
+                                    "class": "h6 instructional",
+                                    "content": "<p>Most customers are wowed by the demonstration, and they love Advanced Night Repair as soon as they feel it. You may have some who still want to know more. Make sure you&#39;re prepared to help them understand the benefits and how they work.</p><p><strong>Customer Benefits</strong></p><p>Tell your customer all about how she&#39;ll benefit! Select each flashcard to learn more.</p><p>[Repair EVERY night]<br />[Prevent and hydrate EVERY day]<br />[Address the look of EVERY key sign of aging]</p>"
+                                },
+                                "components": []
+                            }, {
+                                "type": "npPage",
+                                "data": {},
+                                "components": [{
+                                        "type": "npList",
+                                        "data": {
+                                            "class": "h6 instructional",
+                                            "data-ng:wrap": "false",
+                                            "content": " <p><strong>Why There&#39;s Only 1</strong></p><p>Our #1&mdash;for everyone. Advanced Night Repair is our #1 best-selling repair serum that addresses the look of every key sign of aging, with more than 25 patents*.</p><p>Show her the Power Demonstration"
+                                        },
+                                        "components": [{
+                                                "type": "npImage",
+                                                "data": {
+                                                    "src": "assets/ANR-Night-Repair-Cellular-Recovery-Complex.jpg"
+                                                },
+                                                "components": []
+                                            }]
+                                    }, {
+                                        "type": "npButton",
+                                        "data": {
+                                            "link": "",
+                                            "type": "btn-next",
+                                            "class": "",
+                                            "content": "Next"
+                                        },
+                                        "components": []
+                                    }]
+                            }, {
+                                "type": "npPage",
+                                "data": {},
+                                "components": [{
+                                        "type": "npFlashCards",
+                                        "data": {
+                                            "id": "flash-cards-test-id",
+                                            "class": "flash-cards-test-class"
+                                        },
+                                        "flashCards": [{
+                                                "contentFront": " <p><strong>Repair EVERY Night</strong></p><p><img alt= class=image-flash_card_image img-responsive height=250 src=assets/styles/flash_card_image/public/ANR-Flashcard-EveryStory-1.jpg?itok=1hxcGn3t width=500 /></p><p>Repair EVERY night&mdash;while you sleep, it helps maximize skin&#39;s natural nightly renewal.</p>",
+                                                "contentBack": " <p><strong>If She Asks, Share</strong></p><p>Our powerful ChronoluxCB&trade; Technology helps support skin cells&#39; natural purification and synchronization processes for our most comprehensive anti-aging serum:</p><ul><li>Purification&mdash;A natural repair process that helps remove cellular debris that can accelerate premature signs of aging.</li><li>Synchronization&mdash;A natural repair process that helps ensure cellular renewal happens at the right time.</li></ul>"
+                                            }, {
+                                                "contentFront": " <p><strong>Prevent and Hydrate EVERY Day</strong></p><p><img alt= class=image-flash_card_image img-responsive height=250 src=assets/styles/flash_card_image/public/ANR-Flashcard-EveryStory-2.jpg?itok=GRIVBZCy width=500 /></p><p>Prevent and hydrate EVERY day&mdash;during the day, it helps protect skin from environmental assaults.</p>",
+                                                "contentBack": " <p><strong>If She Asks, Share</strong></p><p>A powerful blend of anti-oxidants helps neutralize up to 90%* of free radicals to help prevent future damage. High levels of hyaluronic acid help lock in moisture to create the perfect environment for skin&#39;s natural renewal.</p><div class=disclaimer><em>*In vitro testing</em></div>"
+                                            }, {
+                                                "contentFront": " <p><strong>Address the Look of EVERY Key Sign of Aging</strong></p><p><img alt= class=image-flash_card_image img-responsive height=250 src=assets/styles/flash_card_image/public/ANR-Flashcard-EveryStory-3.jpg?itok=DIb9VuGL width=500 /></p><p>Address the look of EVERY key sign of aging&mdash;use it every day for a dramatic reduction in the look of every major sign of aging.</p>",
+                                                "contentBack": " <p><strong>If She Asks, Share</strong></p><p>Tested and proven. Lines and wrinkles look significantly reduced. Skin feels smoother, hydrated and stronger. Looks younger, radiant, more translucent and even toned.</p>"
+                                            }]
+                                    }, {
+                                        "type": "npButton",
+                                        "data": {
+                                            "link": "",
+                                            "type": "btn-next",
+                                            "class": "",
+                                            "content": "Next"
+                                        },
+                                        "components": []
+                                    }]
+                            }, {
+                                "type": "npPage",
+                                "data": {},
+                                "components": [{
+                                        "type": "npReveal",
+                                        "data": {
+                                            "id": "reveal-test-id",
+                                            "class": "reveal-test-class"
+                                        },
+                                        "revealItems": [{
+                                                "id": "reveal-0",
+                                                "content": "<p><strong>1. Who It&#39;s For</strong></p><p>It&#39;s intended for every woman, every age, and every ethnicity.&nbsp;</p>",
+                                                "buttonImage": "assets/styles/reveal_thumbnail/public/ANR-4point0-Reveal-image1.jpg",
+                                                "components": [{
+                                                        "type": "npImage",
+                                                        "data": {
+                                                            "src": "assets/styles/reveal_hero/public/ANR-4point0-Reveal-HeartRitual-1.jpg"
+                                                        },
+                                                        "components": []
+                                                    }]
+                                            }, {
+                                                "id": "reveal-1",
+                                                "content": "<p><strong>2. Heart Ritual Step 1</strong></p><p>Warm 5 drops of Advanced Night Repair in between hands and massage onto face in a heart shape. Using all 4 fingers of both hands, start at the center of your face and move out to ears. Glide hands from sides of face down under chin.</p>",
+                                                "buttonImage": "assets/styles/reveal_thumbnail/public/ANR-Reveal-HeartRitual-1.jpg",
+                                                "components": [{
+                                                        "type": "npImage",
+                                                        "data": {
+                                                            "src": "assets/styles/reveal_hero/public/ANR-Reveal-HeartRitual-1.jpg"
+                                                        },
+                                                        "components": []
+                                                    }]
+                                            }, {
+                                                "id": "reveal-2",
+                                                "content": "<p><strong>3. Heart Ritual Step 2</strong></p><p>Next, trace a larger heart from middle forehead out toward temples. Glide down the sides of the face and close the heart again under your chin.</p>",
+                                                "buttonImage": "assets/styles/reveal_thumbnail/public/ANR-Reveal-HeartRitual-2.jpg",
+                                                "components": [{
+                                                        "type": "npImage",
+                                                        "data": {
+                                                            "src": "assets/styles/reveal_hero/public/ANR-Reveal-HeartRitual-2.jpg"
+                                                        },
+                                                        "components": []
+                                                    }]
+                                            }, {
+                                                "id": "reveal-3",
+                                                "content": "<p><strong>4. Heart Ritual Step 3</strong></p><p>Finish the Heart Ritual by gently massaging onto neck.</p>",
+                                                "buttonImage": "assets/styles/reveal_thumbnail/public/ANR-Reveal-HeartRitual-3.jpg",
+                                                "components": [{
+                                                        "type": "npImage",
+                                                        "data": {
+                                                            "src": "assets/styles/reveal_hero/public/ANR-Reveal-HeartRitual-3.jpg"
+                                                        },
+                                                        "components": []
+                                                    }]
+                                            }]
+                                    }, {
+                                        "type": "npButton",
+                                        "data": {
+                                            "link": "",
+                                            "type": "btn-next",
+                                            "class": "",
+                                            "content": "Next"
+                                        },
+                                        "components": []
+                                    }]
+                            }]
+                    }]
+            }]
+    }]

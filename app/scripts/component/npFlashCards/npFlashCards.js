@@ -127,7 +127,6 @@
                                 //get actuall height
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 imagesLoaded(document.querySelector('.np-flash-card'), function (instance) {
-                                    console.log('all images are loaded');
                                     var maxHeight = Math.max.apply(null, $('.flash-card-content-back').map(function () {
                                         return $(this).outerHeight(true);
                                     }).get());
@@ -137,6 +136,9 @@
                                     });
                                     TweenMax.set($('.np_outside-padding'), {
                                         height: maxHeight + outsidePaddingHeight
+                                    });
+                                    TweenMax.set($('.btn-next'), {
+                                        marginTop: maxHeight + 150
                                     });
                                     TweenMax.from($('#flash-cards'), 2, {
                                         left: '1000px',
@@ -158,16 +160,21 @@
                                         scale: 0.9,
                                         z: '-35',
                                         ease: Power4.easeOut
+                                    }); 
+                                });
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //offset top on scroll
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                var flashCardsOffset = $('.npFlashCards').offset();
+                                $(window).scroll(function () {
+                                    var windowPosition = $(window).scrollTop();
+                                    var doc = document.documentElement;
+                                    var topOffset = Math.round((window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0));
+                                    TweenMax.to($('.npFlashCards'), 1.25, {
+                                        force3D: true,
+                                        top: -(topOffset - flashCardsOffset.top),
+                                        ease: Power4.easeOut
                                     });
-                                    console.log(
-                                            '\n::::::::::::::::::::::::::::::::::::::npFlashCards::data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                            '\n::maxHeight:', maxHeight,
-                                            '\n::outsidePaddingHeight:', outsidePaddingHeight,
-                                            '\n::New outsidePaddingHeight:', outsidePaddingHeight + maxHeight,
-                                            '\n::$(.flash-card-content-back):', $('.flash-card-content-back').outerHeight(true),
-                                            '\n::$(.flash-card-object):', $('.flash-cards-object').outerHeight(),
-                                            '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                            );
                                 });
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //finish ready check items
@@ -391,22 +398,6 @@
                                 }
                             }
                         }
-                        $(window).scroll(function () {
-                            var windowPosition = $(window).scrollTop();
-                            var doc = document.documentElement;
-                            var topOffset = Math.round((window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0));
-                            TweenMax.to($('#flash-cards-test-id'), 1.25, {
-                                force3D: true,
-                                top: -(topOffset - 200),
-                                ease: Power4.easeOut
-                            });
-                            console.log(
-                                    '\n::::::::::::::::::::::::::::::::::::::npFlashCards::(window).scroll:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                    '\n::windowPosition:', windowPosition,
-                                    '\n::topOffset:', topOffset,
-                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                    );
-                        });
                         function update() {
                             var content;
                             var dragContent;

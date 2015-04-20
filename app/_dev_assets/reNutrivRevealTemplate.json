@@ -79,24 +79,6 @@
                                 },
                                 "revealItems": [
                                     {
-                                        "id": "reveal-0",
-                                        "heading": "Reveal heading Item #0",
-                                        "content": "Reveal Item #0 content content content content content content content content content content content content content content!!",
-                                        "buttonImage": "../_dev_assets/assets/images/comet-lrg.jpg",
-                                        "buttonAltText": "thumb",
-                                        "components": [
-                                            {
-                                                "type": "npImage",
-                                                "data": {
-                                                    "id": "reveal-1-image",
-                                                    "src": "../_dev_assets/assets/images/comet-lrg.jpg",
-                                                    "alt": "choice"
-                                                },
-                                                "components": []
-                                            }
-                                        ]
-                                    },
-                                    {
                                         "id": "reveal-1",
                                         "heading": "Reveal heading Item #1",
                                         "content": "Reveal Item #1 more content content content content content content content content content content content content content!!",
@@ -110,6 +92,24 @@
                                                     "poster": "../_dev_assets/assets/images/ELX_Welcome_640x360_ENG.png",
                                                     "baseURL": "../_dev_assets/assets/video/ELX_Welcome_640x360_ENG",
                                                     "types": ["mp4"]
+                                                },
+                                                "components": []
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "reveal-0",
+                                        "heading": "Reveal heading Item #0",
+                                        "content": "Reveal Item #0 content content content content content content content content content content content content content content!!",
+                                        "buttonImage": "../_dev_assets/assets/images/comet-lrg.jpg",
+                                        "buttonAltText": "thumb",
+                                        "components": [
+                                            {
+                                                "type": "npImage",
+                                                "data": {
+                                                    "id": "reveal-1-image",
+                                                    "src": "../_dev_assets/assets/images/comet-lrg.jpg",
+                                                    "alt": "choice"
                                                 },
                                                 "components": []
                                             }
