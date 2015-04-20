@@ -5794,7 +5794,7 @@ button.close {
     height: 160px;
     margin-top: 10px;
     margin-bottom: 10px;
-    margin-right: 30px; }
+    /*margin-right: 30px;*/ }
   #np_reNutriv .question-feedback-outline {
     position: absolute;
     width: 100%;
@@ -7142,7 +7142,7 @@ button.close {
     height: 160px;
     margin-top: 10px;
     margin-bottom: 10px;
-    margin-right: 15px; }
+    /*margin-right: 15px;*/ }
   #ANR .question-feedback-outline {
     position: absolute;
     width: 100%;
@@ -8208,7 +8208,7 @@ button.close {
     height: 160px;
     margin-top: 10px;
     margin-bottom: 10px;
-    margin-right: 15px; }
+    /*margin-right: 15px;*/ }
   #GMTC .question-feedback-outline {
     position: absolute;
     width: 100%;
