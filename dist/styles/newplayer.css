@@ -5071,7 +5071,6 @@ button.close {
   /*Collapse responsive*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/ }
   #np_products #np_newplayer-background {
-    position: absolute;
     background-color: #E6E9EE;
     background-size: cover;
     position: fixed;
@@ -5612,7 +5611,7 @@ button.close {
     position: fixed;
     content: "";
     width: 100%;
-    top: 200px;
+    /*top: 200px;*/
     left: 0;
     right: 0;
     /*min-height: 1400px;*/ }
@@ -5900,7 +5899,7 @@ button.close {
   #np_reNutriv .np-reveal {
     position: relative;
     width: 100%;
-    height: 600px; }
+    /*height: 600px;*/ }
   #np_reNutriv .reveal-button {
     cursor: pointer; }
   #np_reNutriv .reveal-navigation {
@@ -6948,7 +6947,7 @@ button.close {
     position: fixed;
     content: "";
     width: 100%;
-    top: 200px;
+    /*top: 200px;*/
     left: 0;
     right: 0; }
   #ANR #flash-cards {
@@ -7839,10 +7838,10 @@ button.close {
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/ }
   #GMTC #np_newplayer-background {
     position: fixed;
-    background-color: #FFFFFF;
+    background-color: #E6E9EE;
     /*background-size: cover;*/
-    background-image: url("../assets/images/GMTC_pattern.png");
-    background-repeat: repeat;
+    /*background-image: url('../assets/images/GMTC_pattern.png');*/
+    /*background-repeat: repeat;*/
     content: "";
     width: 100%;
     /*min-height: 1100px;*/
@@ -7857,8 +7856,9 @@ button.close {
     background-position: top;
     background-repeat: no-repeat;
     /*background-size:100%;*/
+    bottom: 0;
+    top: 0;
     width: 100%;
-    height: 100%;
     /*min-height: 1100px;*/ }
   #GMTC .renutriv-logo-image {
     position: relative;
@@ -8013,7 +8013,7 @@ button.close {
     position: fixed;
     content: "";
     width: 100%;
-    top: 200px;
+    /*top: 200px;*/
     left: 0;
     right: 0; }
   #GMTC #flash-cards {
