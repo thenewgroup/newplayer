@@ -126,7 +126,7 @@
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //get actuall height
                                 //////////////////////////////////////////////////////////////////////////////////////
-                                imagesLoaded(document.querySelector('.container'), function (instance) {
+                                imagesLoaded(document.querySelector('.np-flash-card'), function (instance) {
                                     console.log('all images are loaded');
                                     var maxHeight = Math.max.apply(null, $('.flash-card-content-back').map(function () {
                                         return $(this).outerHeight(true);

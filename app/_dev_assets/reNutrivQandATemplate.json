@@ -139,8 +139,8 @@
                                                 "type": "npButton",
                                                 "data": {
                                                     "link": "",
-                                                    "type": "",
-                                                    "class": "btn-next",
+                                                    "type": "btn-next",
+                                                    "class": "",
                                                     "content": "Next"
                                                 },
                                                 "components": [
@@ -221,8 +221,8 @@
                                                 "type": "npButton",
                                                 "data": {
                                                     "link": "",
-                                                    "type": "",
-                                                    "class": "btn-next",
+                                                    "type": "btn-next",
+                                                    "class": "",
                                                     "content": "Next"
                                                 },
                                                 "components": [
@@ -276,8 +276,8 @@
                                                 "type": "npButton",
                                                 "data": {
                                                     "link": "",
-                                                    "type": "",
-                                                    "class": "btn-next",
+                                                    "type": "btn-next",
+                                                    "class": "",
                                                     "content": "Next"
                                                 },
                                                 "components": [
@@ -357,8 +357,8 @@
                                                 "type": "npButton",
                                                 "data": {
                                                     "link": "",
-                                                    "type": "",
-                                                    "class": "btn-next",
+                                                    "type": "btn-next",
+                                                    "class": "",
                                                     "content": "Next"
                                                 },
                                                 "components": [
@@ -438,8 +438,8 @@
                                                 "type": "npButton",
                                                 "data": {
                                                     "link": "",
-                                                    "type": "",
-                                                    "class": "btn-next",
+                                                    "type": "btn-next",
+                                                    "class": "",
                                                     "content": "Next"
                                                 },
                                                 "components": [

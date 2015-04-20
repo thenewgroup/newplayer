@@ -139,7 +139,7 @@
                                                 "data": {
                                                     "link": "",
                                                     "type": "btn-next",
-                                                    "class": "",
+                                                    "class": "btn-next",
                                                     "content": "Next"
                                                 },
                                                 "components": [
