@@ -11,43 +11,19 @@
                         var btnContent = cmpData.content;
                         if (angular.isString(btnContent)) {
                             this.content = $sce.trustAsHtml(btnContent);
-                            //$element.append( btnContent );
                         }
                         this.link = '';
                         this.target = cmpData.target;
-                        var buttonType = cmpData.type;
+                        this.npButton = buttonType;
                         this.linkInternal = true;
                         this.apiLink = false;
                         var btnLink = cmpData.link;
-                        console.log(
-                                '\n::::::::::::::::::::::::::::::::::::::this.go:::::::::::::::::::::::::::::::::::::::::::::::::',
-//                                '\n::this::', this,
-//                                '\n::buttonType::', buttonType,
-//                                '\n::cmpData::', cmpData,
-//                                '\n::$(cmpData)::', $(cmpData),
-//                                '\n::this::', $(this),
-//                                '\n::this::', $(this).parent(),
-                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                );
-                        if (typeof buttonType !== 'undefined') {
-//var el = document.getElementById('hello');
-//if(el) {
-//    el.className += el.className ? ' someClass' : 'someClass';
-//}
-//                            document.getElementById('foo').className += ' class_two';
-                            var currentElement = $element[0];
-//                            currentElement.className += (' ' + buttonType);
-                            $(this).addClass(buttonType);
-                            console.log(
-                                    '\n::::::::::::::::::::::::::::::::::::::this.go.buttonType:::::::::::::::::::::::::::::::::::::::::::::::::',
-//                                    '\n::$element::', $element,
-//                                    '\n::$element::', $element[0],
-                                    '\n::currentElement::', currentElement,
-//                                    '\n::$element.className::', $element.className,
-//                                    '\n::buttonType::', buttonType,
-//                                    '\n::cmpData::', cmpData,
-                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                    );
+                        var buttonType = cmpData.type;
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //check type and add class if next button type
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        if (typeof buttonType !== 'undefined' && buttonType === 'btn-next') {
+                            $scope.buttonTypeClass = buttonType;
                         }
                         if (angular.isString(btnLink)) {
                             if (btnLink.indexOf('/') === 0) {

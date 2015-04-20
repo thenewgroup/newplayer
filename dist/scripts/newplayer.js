@@ -1914,43 +1914,19 @@
                         var btnContent = cmpData.content;
                         if (angular.isString(btnContent)) {
                             this.content = $sce.trustAsHtml(btnContent);
-                            //$element.append( btnContent );
                         }
                         this.link = '';
                         this.target = cmpData.target;
-                        var buttonType = cmpData.type;
+                        this.npButton = buttonType;
                         this.linkInternal = true;
                         this.apiLink = false;
                         var btnLink = cmpData.link;
-                        console.log(
-                                '\n::::::::::::::::::::::::::::::::::::::this.go:::::::::::::::::::::::::::::::::::::::::::::::::',
-//                                '\n::this::', this,
-//                                '\n::buttonType::', buttonType,
-//                                '\n::cmpData::', cmpData,
-//                                '\n::$(cmpData)::', $(cmpData),
-//                                '\n::this::', $(this),
-//                                '\n::this::', $(this).parent(),
-                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                );
-                        if (typeof buttonType !== 'undefined') {
-//var el = document.getElementById('hello');
-//if(el) {
-//    el.className += el.className ? ' someClass' : 'someClass';
-//}
-//                            document.getElementById('foo').className += ' class_two';
-                            var currentElement = $element[0];
-//                            currentElement.className += (' ' + buttonType);
-                            $(this).addClass(buttonType);
-                            console.log(
-                                    '\n::::::::::::::::::::::::::::::::::::::this.go.buttonType:::::::::::::::::::::::::::::::::::::::::::::::::',
-//                                    '\n::$element::', $element,
-//                                    '\n::$element::', $element[0],
-                                    '\n::currentElement::', currentElement,
-//                                    '\n::$element.className::', $element.className,
-//                                    '\n::buttonType::', buttonType,
-//                                    '\n::cmpData::', cmpData,
-                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                    );
+                        var buttonType = cmpData.type;
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //check type and add class if next button type
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        if (typeof buttonType !== 'undefined' && buttonType === 'btn-next') {
+                            $scope.buttonTypeClass = buttonType;
                         }
                         if (angular.isString(btnLink)) {
                             if (btnLink.indexOf('/') === 0) {
@@ -3955,21 +3931,13 @@
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //on ready set states
                                 //////////////////////////////////////////////////////////////////////////////////////
-                                setTimeout(function () {
-                                    var maxHeight = 0;
-                                    $(".reveal-wrapper").each(function () {
-//                                        console.log(
-//                                                '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
-//                                                '\n::maxHeight::', maxHeight,
-//                                                '\n::$(this).outerHeight()::', $(this).outerHeight(true),
-//                                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-//                                                );
-                                        if ($(this).outerHeight() > maxHeight) {
-                                            maxHeight = ($(this).outerHeight() + 500);
-                                        }
-                                    });
-                                    $(".np-reveal").height(maxHeight);
-                                }, 1);
+                                var maxHeight = 0;
+                                $(".reveal-wrapper").each(function () {
+                                    if ($(this).outerHeight() > maxHeight) {
+                                        maxHeight = ($(this).outerHeight() + 500);
+                                    }
+                                });
+                                $(".np-reveal").height(maxHeight);
                                 TweenMax.to($(".reveal-object"), 0, {
                                     opacity: 0
                                 });
@@ -5747,7 +5715,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('scripts/component/npButton/npButton.html',
     "<!--<div class=\"{{component.type}} {{npButton.type}} np-cmp-main btn\"  ng-controller=\"npButtonController as npButton\" ng-click=\"npButton.go()\">-->\n" +
-    "<button class=\"{{component.type}} {{npButton.type}} np-cmp-main btn\"  ng-controller=\"npButtonController as npButton\" ng-click=\"npButton.go($event)\">\n" +
+    "<button class=\"{{component.type}} {{npButton.type}} {{buttonTypeClass}} np-cmp-main btn\"  ng-controller=\"npButtonController as npButton\" ng-click=\"npButton.go($event)\">\n" +
     "    <span class=\"debug\">\n" +
     "        <span class=\"h3\">{{component.type}} -- <small>{{component.idx}}</small></span>\n" +
     "    </span>\n" +
@@ -6552,7 +6520,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                <div class=\"reveal-item-wrapper\">\n" +
     "                    <img ng-if=\"revealItemComponent.components[0].type == 'npImage'\" class=\"reveal-item reveal-image img-responsive\" ng-src=\"{{revealItemComponent.components[0].data.src}}\" alt=\"{{component.alt}}\" />\n" +
     "                    <video controls ng-if=\"revealItemComponent.components[0].type == 'npVideo'\" class=\"reveal-item reveal-video\" poster=\"{{revealItemComponent.components[0].data.poster}}\">\n" +
-    "                        <source ng-src=\"{{revealItemComponent.components[0].data.baseURL}}\"/>\n" +
+    "                        <source ng-src=\"{{revealItemComponent.components[0].data.baseURL+'.mp4'}}\"/>\n" +
     "                    </video>\n" +
     "                </div>\n" +
     "                <div class=\"reveal-content-wrapper\">\n" +
