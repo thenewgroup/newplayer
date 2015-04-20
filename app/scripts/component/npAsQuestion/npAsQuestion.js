@@ -64,9 +64,10 @@
                             }
                         };
                         vm.evaluate = function () {
-                            var isCorrectAnswer = true;
-                            var $checkbox = false;
-                            var $checked = false;
+                            var answerIdx,chkAnswers,
+                                isCorrectAnswer = true,
+                                $checkbox = false,
+                                $checked = false;
                             negativeFeedbackIcon = $element.find('.negative-feedback-icon');
                             positiveFeedbackIcon = $element.find('.positive-feedback-icon');
                             TweenMax.to(negativeFeedbackIcon, 0.25, {
@@ -79,31 +80,27 @@
                                 scale: 2.5,
                                 force3D: true
                             });
-                            var chkAnswers = ManifestService.getAll('npAnswer', $scope.cmpIdx);
-                            $checkbox = $element.find('.checkbox-x');
-                            $checked = $element.find('.checkbox-x[checked]');
-                            $log.debug('npAsQuestion::evaluate:', vm.answer);
-//                            if (!!vm.answer) {
-                            if (!!$checked) {
-                                switch (vm.type) {
+                            //chkAnswers = ManifestService.getAll('npAnswer', $scope.cmpIdx);
+                            //$checkbox = $element.find('.checkbox-x');
+                            //$checked = $element.find('.checkbox-x[checked]');
+                            $log.debug('npAsQuestion::evaluating type to check', cmpData);
+
+
+
+                                switch (cmpData.type) {
                                     case 'checkbox':
-                                        //var chkAnswers = ManifestService.getAll('npAnswer', $scope.cmpIdx); // defined above
-                                        var idx;
-                                        var $currentCheckbox;
-                                        for (idx in chkAnswers) {
-                                            $currentCheckbox = $($checkbox[idx]);
-                                            if (chkAnswers[idx].data.correct) {
-                                                // confirm all correct answers were checked
-                                                if (!$currentCheckbox.attr('checked')) {
-                                                    isCorrectAnswer = false;
-                                                }
-                                            } else {
-                                                // confirm no incorrect answers were checked
-                                                if (!!$currentCheckbox.attr('checked')) {
-                                                    isCorrectAnswer = false;
-                                                }
-                                            }
+
+                                      $log.debug('npAsQuestion::evaluating checkboxes', vm.answers, vm.answers.length);
+                                      for( answerIdx in vm.answers )   {
+                                        var answer = vm.answers[answerIdx];
+
+                                        $log.debug('npAsQuestion: evaluating checkbox', answerIdx, answer);
+                                        isCorrectAnswer = isCorrectAnswer && answer.checked === answer.isCorrect;
+
+                                        if( !isCorrectAnswer ) {
+                                          break;
                                         }
+                                      }
                                         break;
                                     case 'text':
                                         var txtAnswer = ManifestService.getFirst('npAnswer', $scope.cmpIdx);
@@ -132,9 +129,6 @@
                                         }
                                         break;
                                 }
-                            } else {
-                                isCorrectAnswer = false;
-                            }
 
 
                           AssessmentService.questionAnswered(vm.id, isCorrectAnswer);

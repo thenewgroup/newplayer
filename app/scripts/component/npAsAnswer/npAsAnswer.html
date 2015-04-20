@@ -1,7 +1,7 @@
 <div class="debug">
     <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
 </div>
-<div np-answer-checkbox ng-if="npQuestion.type === 'checkbox'" class="row np-cmp-wrapper {{component.type}} checkbox answer-wrapper" ng-controller="npAnswerController as npAnswer" ng-click="update($event)">
+<div np-as-answer-checkbox ng-if="npQuestion.type === 'checkbox'" class="row np-cmp-wrapper {{component.type}} checkbox answer-wrapper" ng-controller="npAnswerController as npAnswer" ng-init="npAnswer.setQuestion(component.idx, npQuestion);" ng-click="update($event)">
     <div class="col-xs-1 npAnswer-checkbox np-cmp-main answer-checkbox" name="checkbox{{npAnswer.id}}" ng-model="npQuestion.answer[component.idx]" value="{{component.idx}}" id="{{npAnswer.id}}">
         <div class="checkbox-box">
             <svg  version="1.2" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"xml:space="preserve" preserveAspectRatio="none">
