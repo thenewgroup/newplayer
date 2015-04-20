@@ -108,7 +108,7 @@
                                                 "data": {
                                                     "id": "reveal-1-vid",
                                                     "poster": "../_dev_assets/assets/images/ELX_Welcome_640x360_ENG.png",
-                                                    "baseURL": "../_dev_assets/assets/video/ELX_Welcome_640x360_ENG.mp4",
+                                                    "baseURL": "../_dev_assets/assets/video/ELX_Welcome_640x360_ENG",
                                                     "types": ["mp4"]
                                                 },
                                                 "components": []
@@ -145,7 +145,7 @@
                                                 "data": {
                                                     "id": "reveal-1-vid",
                                                     "poster": "../_dev_assets/assets/images/ELX_Welcome_640x360_ENG.png",
-                                                    "baseURL": "../_dev_assets/assets/video/ELX_Welcome_640x360_ENG.mp4",
+                                                    "baseURL": "../_dev_assets/assets/video/ELX_Welcome_640x360_ENG",
                                                     "types": ["mp4"]
                                                 },
                                                 "components": []
