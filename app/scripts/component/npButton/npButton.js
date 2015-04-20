@@ -72,9 +72,7 @@
                                     '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
                                     );
                             if (this.linkInternal) {
-                                btnLink = ManifestService.getNextPageId();
-//                                btnLink = ManifestService.getNextPageId();
-                                ManifestService.setPageId(btnLink);
+                                ManifestService.goToNextPage();
                                 console.log(
                                         '\n::::::::::::::::::::::::::::::::::::::this.linkInternal:::::::::::::::::::::::::::::::::::::::::::::::::',
                                         '\n::cmpData::', cmpData,
