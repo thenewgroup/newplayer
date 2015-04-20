@@ -15,23 +15,40 @@
                         }
                         this.link = '';
                         this.target = cmpData.target;
+                        var buttonType = cmpData.type;
                         this.linkInternal = true;
                         this.apiLink = false;
                         var btnLink = cmpData.link;
                         console.log(
                                 '\n::::::::::::::::::::::::::::::::::::::this.go:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                '\n::this::', this,
-                                '\n::cmpData::', cmpData,
-                                '\n::$(cmpData)::', $(cmpData),
-                                '\n::this::', $(this),
-                                '\n::this::', $(this).parent(),
-                                '\n::cmpData::', cmpData,
-                                '\n::btnLink::', btnLink,
-                                '\n::cmpData.link::', cmpData.link,
-                                '\n::angular.isString(btnLink)::', angular.isString(btnLink),
-                                '\n::btnLink.indexOf(/)::', btnLink.indexOf('/'),
+//                                '\n::this::', this,
+//                                '\n::buttonType::', buttonType,
+//                                '\n::cmpData::', cmpData,
+//                                '\n::$(cmpData)::', $(cmpData),
+//                                '\n::this::', $(this),
+//                                '\n::this::', $(this).parent(),
                                 '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
                                 );
+                        if (typeof buttonType !== 'undefined') {
+//var el = document.getElementById('hello');
+//if(el) {
+//    el.className += el.className ? ' someClass' : 'someClass';
+//}
+//                            document.getElementById('foo').className += ' class_two';
+                            var currentElement = $element[0];
+//                            currentElement.className += (' ' + buttonType);
+                            $(this).addClass(buttonType);
+                            console.log(
+                                    '\n::::::::::::::::::::::::::::::::::::::this.go.buttonType:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                    '\n::$element::', $element,
+//                                    '\n::$element::', $element[0],
+                                    '\n::currentElement::', currentElement,
+//                                    '\n::$element.className::', $element.className,
+//                                    '\n::buttonType::', buttonType,
+//                                    '\n::cmpData::', cmpData,
+                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                    );
+                        }
                         if (angular.isString(btnLink)) {
                             if (btnLink.indexOf('/') === 0) {
                                 if (/^\/api\//.test(btnLink)) {
@@ -64,25 +81,9 @@
                             this.link = $sce.trustAsResourceUrl(btnLink);
                         }
                         this.go = function () {
-                            console.log(
-                                    '\n::::::::::::::::::::::::::::::::::::::this.go:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                    '\n::cmpData::', cmpData,
-                                    '\n::btnLink::', btnLink,
-                                    '\n::cmpData.link::', cmpData.link,
-                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                    );
                             if (this.linkInternal) {
                                 btnLink = ManifestService.getNextPageId();
-//                                btnLink = ManifestService.getNextPageId();
                                 ManifestService.setPageId(btnLink);
-                                console.log(
-                                        '\n::::::::::::::::::::::::::::::::::::::this.linkInternal:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                        '\n::cmpData::', cmpData,
-                                        '\n::this.link::', this.link,
-                                        '\n::cmpData.link::', cmpData.link,
-                                        '\n::btnLink::', btnLink,
-                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                        );
                             } else {
                                 if (this.apiLink) {
                                     //TODO: we may need a `method` property to know what to use here
@@ -91,18 +92,11 @@
                                     APIService.postData(btnLink);
                                     return;
                                 }
-                                console.log(
-                                        '\n::::::::::::::::::::::::::::::::::::::this.target:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                        '\n::this.link::', this.link,
-                                        '\n::this.target::', this.target,
-                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                        );
                                 window.open(this.link, this.target);
                             }
                         };
                     }
             )
-
             /** @ngInject */
             .run(
                     function ($log, $rootScope) {

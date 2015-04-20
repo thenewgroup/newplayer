@@ -1918,23 +1918,40 @@
                         }
                         this.link = '';
                         this.target = cmpData.target;
+                        var buttonType = cmpData.type;
                         this.linkInternal = true;
                         this.apiLink = false;
                         var btnLink = cmpData.link;
                         console.log(
                                 '\n::::::::::::::::::::::::::::::::::::::this.go:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                '\n::this::', this,
-                                '\n::cmpData::', cmpData,
-                                '\n::$(cmpData)::', $(cmpData),
-                                '\n::this::', $(this),
-                                '\n::this::', $(this).parent(),
-                                '\n::cmpData::', cmpData,
-                                '\n::btnLink::', btnLink,
-                                '\n::cmpData.link::', cmpData.link,
-                                '\n::angular.isString(btnLink)::', angular.isString(btnLink),
-                                '\n::btnLink.indexOf(/)::', btnLink.indexOf('/'),
+//                                '\n::this::', this,
+//                                '\n::buttonType::', buttonType,
+//                                '\n::cmpData::', cmpData,
+//                                '\n::$(cmpData)::', $(cmpData),
+//                                '\n::this::', $(this),
+//                                '\n::this::', $(this).parent(),
                                 '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
                                 );
+                        if (typeof buttonType !== 'undefined') {
+//var el = document.getElementById('hello');
+//if(el) {
+//    el.className += el.className ? ' someClass' : 'someClass';
+//}
+//                            document.getElementById('foo').className += ' class_two';
+                            var currentElement = $element[0];
+//                            currentElement.className += (' ' + buttonType);
+                            $(this).addClass(buttonType);
+                            console.log(
+                                    '\n::::::::::::::::::::::::::::::::::::::this.go.buttonType:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                    '\n::$element::', $element,
+//                                    '\n::$element::', $element[0],
+                                    '\n::currentElement::', currentElement,
+//                                    '\n::$element.className::', $element.className,
+//                                    '\n::buttonType::', buttonType,
+//                                    '\n::cmpData::', cmpData,
+                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                    );
+                        }
                         if (angular.isString(btnLink)) {
                             if (btnLink.indexOf('/') === 0) {
                                 if (/^\/api\//.test(btnLink)) {
@@ -1967,25 +1984,9 @@
                             this.link = $sce.trustAsResourceUrl(btnLink);
                         }
                         this.go = function () {
-                            console.log(
-                                    '\n::::::::::::::::::::::::::::::::::::::this.go:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                    '\n::cmpData::', cmpData,
-                                    '\n::btnLink::', btnLink,
-                                    '\n::cmpData.link::', cmpData.link,
-                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                    );
                             if (this.linkInternal) {
                                 btnLink = ManifestService.getNextPageId();
-//                                btnLink = ManifestService.getNextPageId();
                                 ManifestService.setPageId(btnLink);
-                                console.log(
-                                        '\n::::::::::::::::::::::::::::::::::::::this.linkInternal:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                        '\n::cmpData::', cmpData,
-                                        '\n::this.link::', this.link,
-                                        '\n::cmpData.link::', cmpData.link,
-                                        '\n::btnLink::', btnLink,
-                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                        );
                             } else {
                                 if (this.apiLink) {
                                     //TODO: we may need a `method` property to know what to use here
@@ -1994,18 +1995,11 @@
                                     APIService.postData(btnLink);
                                     return;
                                 }
-                                console.log(
-                                        '\n::::::::::::::::::::::::::::::::::::::this.target:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                        '\n::this.link::', this.link,
-                                        '\n::this.target::', this.target,
-                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                        );
                                 window.open(this.link, this.target);
                             }
                         };
                     }
             )
-
             /** @ngInject */
             .run(
                     function ($log, $rootScope) {
@@ -4077,18 +4071,7 @@
                     function ($log, $scope, $sce, $element) {
                         var cmpData = $scope.component.data,
                                 flashCards = $scope.component.flashCards;
-//                                flashCardsIndex = $scope.component.idx;
-//                                flashCardsButtonImage = $scope.component.flashCards.buttonImage;
-//                        console.log(
-//                                '\n::::::::::::::::::::::::::::::::::::::npFlashCards::data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
-//                                '\n::flashCards::', flashCards,
-//                                '\n::flashCardsIndex::', flashCardsIndex,
-//                                '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-//                                );
                         var buttonData = $scope.feedback || {};
-//                        var hotspotButtons = '';
-//                        this.hotspotButtons = cmpData.hotspotButtons;
-//                        this.flashCards = $scope.component.flashCards;
                         this.flashCardComponent = $scope.component.flashCards[0];
                         this.flashCardComponents = $scope.component.flashCards;
                         this.flashCardVideoType = $scope.component.baseURL;
@@ -4104,26 +4087,12 @@
                         this.update = function (flashCardButton) {
                             var idx = flashCards.indexOf(flashCardButton);
                             var clickedFlashCard = $(".flash-cards-object")[idx];
-//                            var clickedFlashCardBackHeight = clickedFlashCard.prop('height');
-//                            console.log(
-//                                    '\n::::::::::::::::::::::::::::::::::::::npFlashCards::data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
-//                                    '\n::flashCardButton::', flashCardButton,
-//                                    '\n::idx::', idx,
-//                                    '\n::$(.flash-cards-object)[idx]::', $(".flash-cards-object")[idx],
-//                                    '\n::clickedFlashCard.find(.flash-card-back-wrapper)::', clickedFlashCard.getElementsByClassName('flash-card-back-wrapper').height,
-//                                    '\n::clickedFlashCard::', clickedFlashCard,
-//                                    '\n::flashCards::', flashCards,
-//                                    '\n::flashCardsIndex::', flashCardsIndex,
-//                                    '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-//                                    );
-//                            TweenMax.to($(".flash-cards-object"), 1, {
-//                                        top: 0,
-//                                top: '-325px',
-//                                ease: Power4.easeOut
-//                            });
+                            var flipped;
+                            TweenMax.killAll(false, true, false);
                             TweenMax.to(clickedFlashCard, 1, {
                                 rotationY: 180,
-                                ease: Power4.easeOut
+                                ease: Power4.easeOut,
+                                overwrite: 0
                             });
                             TweenMax.to(clickedFlashCard.getElementsByClassName('flash-card-back-wrapper'), 1, {
                                 autoAlpha: 1,
@@ -4137,13 +4106,19 @@
                                 autoAlpha: 0,
                                 ease: Power4.easeOut
                             });
-
-//                            console.log(
-//                                    '\n::::::::::::::::::::::::::::::::::::::npFlashCards::data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
-//                                    '\n:::', idx,
-//                                    '\n:::', this.windowsCenter,
-//                                    '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-//                                    );
+//                            if (flipped === !flipped){
+//                                TweenMax.to($('.flash-card-button'), 1, {
+//                                    autoAlpha: 0,
+//                                    ease: Power4.easeOut
+//                                });
+//                                TweenMax.set($('.flash-card-button'), {
+//                                    left: '15px'
+//                                });
+//                                TweenMax.to($('.flash-card-button'), 1, {
+//                                    autoAlpha: 1,
+//                                    ease: Power4.easeOut
+//                                });
+//                            }
                             //////////////////////////////////////////////////////////////////////////////////////
                             //on navigation change stop and reset all video files
                             //////////////////////////////////////////////////////////////////////////////////////
@@ -4173,7 +4148,6 @@
                     scope: {
                         onDragEnd: "&",
                         onDrag: "&"
-//                        elementWrapper: 0
                     },
                     link: function ($scope, $element, attrs) {
                         //////////////////////////////////////////////////////////////////////////////////////
@@ -4206,47 +4180,49 @@
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //get actuall height
                                 //////////////////////////////////////////////////////////////////////////////////////
-//                                $.each($('.flash-cards-object'), function () {
-//                                    var currentHeight = $(this).find('.flash-card-back-wrapper p').innerHeight();
-//                                    $(this).height(currentHeight);
-//                                    console.log(
-//                                            '\n::::::::::::::::::::::::::::::::::::::npFlashCards::data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
-//                                            '\n::currentHeight:', currentHeight,
-//                                            '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-//                                            );
-//                                });
-
-//                                var $itemsOffset = getOffsetRect($('.flash-card-content-back'));
-//                                var itemsOffsetHeight = $itemsOffset.height;
-// element
-                                imagesLoaded(document.querySelector('.container'), function (instance) {
+                                imagesLoaded(document.querySelector('.np-flash-card'), function (instance) {
                                     console.log('all images are loaded');
+                                    var maxHeight = Math.max.apply(null, $('.flash-card-content-back').map(function () {
+                                        return $(this).outerHeight(true);
+                                    }).get());
+                                    var outsidePaddingHeight = $('.np_outside-padding').outerHeight(true);
+                                    TweenMax.set($('.flash-cards-object'), {
+                                        height: maxHeight
+                                    });
+                                    TweenMax.set($('.np_outside-padding'), {
+                                        height: maxHeight + outsidePaddingHeight
+                                    });
+                                    TweenMax.from($('#flash-cards'), 2, {
+                                        left: '1000px',
+                                        force3D: true,
+                                        ease: Power4.easeOut
+                                    });
+                                    var $cardTwo = $(".flash-cards-object")[1];
+                                    TweenMax.set($($cardTwo).find('.flash-card-overlay'), {
+                                        force3D: true,
+                                        opacity: 0.5
+                                    });
+                                    TweenMax.to($cardTwo, .75, {
+                                        force3D: true,
+                                        zIndex: middle,
+                                        top: '10px',
+                                        rotationY: 0,
+                                        marginLeft: '-7em',
+                                        marginRight: '7em',
+                                        scale: 0.9,
+                                        z: '-35',
+                                        ease: Power4.easeOut
+                                    });
+                                    console.log(
+                                            '\n::::::::::::::::::::::::::::::::::::::npFlashCards::data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                            '\n::maxHeight:', maxHeight,
+                                            '\n::outsidePaddingHeight:', outsidePaddingHeight,
+                                            '\n::New outsidePaddingHeight:', outsidePaddingHeight + maxHeight,
+                                            '\n::$(.flash-card-content-back):', $('.flash-card-content-back').outerHeight(true),
+                                            '\n::$(.flash-card-object):', $('.flash-cards-object').outerHeight(),
+                                            '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                            );
                                 });
-                                var maxHeight = Math.max.apply(null, $('.flash-card-content-back').map(function () {
-                                    return $(this).outerHeight(true);
-                                }).get());
-                                TweenMax.set($('.flash-cards-object'), {
-                                    height: maxHeight
-                                });
-                                console.log(
-                                        '\n::::::::::::::::::::::::::::::::::::::npFlashCards::data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                        '\n::maxHeight:', maxHeight,
-//                                        '\n::itemsOffsetHeight:', itemsOffsetHeight,
-                                        '\n::$(.flash-card-content-back):', $('.flash-card-content-back').outerHeight(true),
-                                        '\n::$(.flash-card-object):', $('.flash-cards-object').outerHeight(),
-                                        '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                        );
-
-//                                var maxHeight = 800;
-//                                TweenMax.to($('.flash-cards-object'), 0.75, {
-//                                    force3D: true,
-//                                    height: maxHeight,
-//                                    ease: Power4.easeOut
-//                                });
-//                                var outerHeight = 0;
-//                                $('.flash-card-content-back').each(function () {
-//                                    outerHeight = $(this).outerHeight();
-//                                });
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //finish ready check items
                                 //////////////////////////////////////////////////////////////////////////////////////
@@ -4311,7 +4287,7 @@
                             var windowCenter = $(window).width() / 2;
                             for (var i = elementIteration.length - 1; i >= 0; i--) {
                                 TweenMax.set(elementIteration, {
-                                    transformPerspective: "900"
+                                    transformPerspective: "1000"
                                 });
                                 var currentIteration = elementIteration[i];
                                 var currentIterationWidth = currentIteration.offsetWidth;
@@ -4321,13 +4297,6 @@
                                 var itemsOffsetCenter = (itemsOffsetLeft + currentIterationCenterWidth);
                                 var windowCenterOffsetOne = ($(".flash-cards-object").width() / 3);
                                 var windowCenterOffsetTwo = $(".flash-cards-object").width();
-//                                console.log(
-//                                        '\n::::::::::::::::::::::::::::::::::::::npFlashCards::data tests:::::::::::::::::::::::::::::::::::::::::::::::::',
-//                                        '\n::windowCenterOffsetOne:', windowCenterOffsetOne,
-//                                        '\n::windowCenterOffsetTwo:', windowCenterOffsetTwo,
-//                                        '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-//                                        );
-//                                var defaultHeight = '475px';
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //drag and throw CENTER item animation
                                 //////////////////////////////////////////////////////////////////////////////////////
@@ -4518,21 +4487,6 @@
                             elementWrapper = document.getElementById("flash-cards-swipe-container");
                             content = document.getElementById("flash-cards");
                             var dragContent = Draggable.get(content);
-                            var $view = $('#np-flash-card');
-                            $view.on("touchmove", function () {
-                                console.log(
-                                        '\n::::::::::::::::::::::::::::::::::::::npFlashCards::scroll:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                        '\n::$view:', 'touchmove',
-                                        '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                        );
-                            });
-                            $view.on("scroll", function () {
-                                console.log(
-                                        '\n::::::::::::::::::::::::::::::::::::::npFlashCards::scroll:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                        '\n::$view:', 'scroll',
-                                        '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                        );
-                            });
                             function killTweens() {
                                 TweenMax.killTweensOf([dragContent.scrollProxy]);
                             }
