@@ -37,21 +37,13 @@
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //on ready set states
                                 //////////////////////////////////////////////////////////////////////////////////////
-                                setTimeout(function () {
-                                    var maxHeight = 0;
-                                    $(".reveal-wrapper").each(function () {
-//                                        console.log(
-//                                                '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
-//                                                '\n::maxHeight::', maxHeight,
-//                                                '\n::$(this).outerHeight()::', $(this).outerHeight(true),
-//                                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-//                                                );
-                                        if ($(this).outerHeight() > maxHeight) {
-                                            maxHeight = ($(this).outerHeight() + 500);
-                                        }
-                                    });
-                                    $(".np-reveal").height(maxHeight);
-                                }, 1);
+                                var maxHeight = 0;
+                                $(".reveal-wrapper").each(function () {
+                                    if ($(this).outerHeight() > maxHeight) {
+                                        maxHeight = ($(this).outerHeight() + 500);
+                                    }
+                                });
+                                $(".np-reveal").height(maxHeight);
                                 TweenMax.to($(".reveal-object"), 0, {
                                     opacity: 0
                                 });
