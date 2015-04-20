@@ -5,10 +5,11 @@
             /** @ngInject */
             .controller('npAsAnswerController',
                     function ($log, $scope, $sce, $element) {
+                        var vm = this;
                         var cmpData = $scope.component.data || {};
                         this.id = cmpData.id;
                         this.label = $sce.trustAsHtml(cmpData.label);
-                        var vm = this;
+
 //                                checkmark = $element.find('svg#Layer_1'),
 //                                cmpData = $scope.component.data || {}; // already defined above
                         vm.isCorrect = cmpData.correct;
@@ -30,37 +31,37 @@
                         vm.label = $sce.trustAsHtml(cmpData.label);
                         vm.question = null;
                         vm.checked = false;
+                        vm.answer = vm;
+
                         vm.setQuestion = function (idx, question) {
-                            vm.question = question;
+                          $log.debug('setQuestion', idx, question);
+                            //$scope.question = question;
                             question.registerAnswer(idx, this);
                         };
-                        vm.clicked = function ($event) {
-                            //$log.debug('npAsAnswer clicked', $event, cmpData);
-                            if (vm.question.type === 'checkbox') {
-                                vm.checked = !vm.checked;
-                                vm.question.answerChanged(vm);
-                            } else if (vm.question.type === 'radio') {
-                                vm.checked = true;
-                                vm.question.answerChanged(vm);
-                            }
-//                            updateCheck();
-                        };
-                        vm.clear = function () {
-                            vm.checked = false;
-//                            updateCheck();
-                        };
+
+
+//                        vm.clicked = function ($event) {
+//                            //$log.debug('npAsAnswer clicked', $event, cmpData);
+//                            if (vm.question.type === 'checkbox') {
+//                                vm.checked = !vm.checked;
+//                                vm.question.answerChanged(vm);
+//                            } else if (vm.question.type === 'radio') {
+//                                vm.checked = true;
+//                                vm.question.answerChanged(vm);
+//                            }
+////                            updateCheck();
+//                        };
+//                        vm.clear = function () {
+//                            vm.checked = false;
+////                            updateCheck();
+//                        };
                     }
             )
             .directive('npAsAnswerCheckbox', function () {
-                return function ($scope, $element, $sce) {
+                return function ($scope, $element, $sce, $log) {
                     var cmpData = $scope.component.data || {};
 //                    this.label = $sce.trustAsHtml(cmpData.label);
-                    console.log(
-                            '\n::::::::::::::::::::::::::::::::::::::npAsAnswerCheckbox::inside:::::::::::::::::::::::::::::::::::::::::::::::::',
-                            '\n::this::', this,
-                            '\n::cmpData::', cmpData,
-                            '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                            );
+
                     setTimeout(function () {
                         $scope.$apply(function () {
                             //////////////////////////////////////////////////////////////////////////////////////
@@ -69,6 +70,7 @@
                             var checkboxX = $element.find('.checkbox-x');
                             TweenMax.set(checkboxX, {autoAlpha: 0, scale: 2.5, force3D: true});
                             $scope.update = function (event) {
+
                                 var clickedCheckbox = event.currentTarget;
                                 var $checkbox = $(clickedCheckbox).find('.checkbox-x');
                                 $checkbox.attr('checked', !$checkbox.attr('checked'), ('true'));
@@ -84,6 +86,8 @@
 //                                            '\n::$checkbox.attr(checked)::', $checkbox.attr('checked'),
 //                                            '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
 //                                            );
+
+                                    $scope.npAnswer.checked = true;
                                     TweenMax.to($(clickedCheckbox).find('.checkbox-x'), 0.75, {
                                         autoAlpha: 1,
                                         scale: 0.7,
@@ -95,7 +99,12 @@
                                         scale: 2.5,
                                         ease: Power3.easeOut
                                     });
+
+                                  $scope.npAnswer.checked = false;
                                 }
+
+                              //console.debug('npAsAnswer directive answer changed', $scope.npQuestion, $scope.npAnswer);
+                              //$scope.npQuestion.answerChanged($scope.answer);
                             };
                         });
                     });
