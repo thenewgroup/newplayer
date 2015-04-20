@@ -13,7 +13,7 @@
 
   /** @ngInject */
   function TrackingService($log, $rootScope, ConfigService /*, $timeout, $http, $q */) {
-    $log.warn('\nTrackingService::Init\n');
+    $log.debug('\nTrackingService::Init\n');
 
     var service = {
       trackEvent: angular.noop,
