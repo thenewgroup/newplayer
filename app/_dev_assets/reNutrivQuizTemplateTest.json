@@ -68,7 +68,6 @@
                             {
                                 "type": "npQuiz",
                                 "data": {
-                                    "id": "",
                                     "type": "assessment",
                                     "assessed": "1",
                                     "questions": "5",
@@ -85,10 +84,10 @@
                                             {
                                                 "type": "npDragAndDropSelect",
                                                 "data": {
-                                                    "id": "container",
                                                     "positiveFeedback": "<p>That's it!</p><p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p><p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
                                                     "negativeFeedback": "<p>ehh?!?!</p>",
                                                     "image": "",
+                                                    "required": true,
                                                     "req": [
                                                         "mediaelement/GreenSock/TweenMax.min.js",
                                                         "mediaelement/GreenSock/utils/Draggable.min.js",
@@ -97,35 +96,35 @@
                                                     "draggableButtons": [
                                                         {
                                                             "select": "true",
-                                                            "content": "<p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
+                                                            "content": "<p>slide right</p>",
                                                             "image": "/assets/images/hotspot.png",
                                                             "matchingContent": "<p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
                                                             "matchingImage": "/assets/images/hotspot.png"
                                                         },
                                                         {
                                                             "select": "false",
-                                                            "content": "<p>this is the content1.2 !this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
+                                                            "content": "<p>slide left</p>",
                                                             "image": "",
                                                             "matchingContent": "<p>this is the content1!this is the content1! this is the content1.2 !this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
                                                             "matchingImage": ""
                                                         },
                                                         {
                                                             "select": "true",
-                                                            "content": "<p>this is the content2!</p>",
+                                                            "content": "<p>slide right</p>",
                                                             "image": "/assets/images/hotspot.png",
                                                             "matchingContent": "<p>this is the matching content2!</p>",
                                                             "matchingImage": "/assets/images/hotspot.png"
                                                         },
                                                         {
                                                             "select": "true",
-                                                            "content": "<p>this is the content3!</p>",
+                                                            "content": "<p>slide right</p>",
                                                             "image": "/assets/images/hotspot.png",
                                                             "matchingContent": "<p>this is the matching content3!</p>",
                                                             "matchingImage": "/assets/images/hotspot.png"
                                                         },
                                                         {
                                                             "select": "false",
-                                                            "content": "<p>this is the content4!</p>",
+                                                            "content": "<p>slide left</p>",
                                                             "image": "",
                                                             "matchingContent": "<p>this is the matching content4!</p>",
                                                             "matchingImage": ""
@@ -155,7 +154,7 @@
                                             {
                                                 "type": "npAsQuestion",
                                                 "data": {
-                                                    "required": 0,
+                                                    "required": true,
                                                     "forced": false,
                                                     "type": "checkbox",
                                                     "difficulty": "",
@@ -234,7 +233,7 @@
                                             {
                                                 "type": "npAsQuestion",
                                                 "data": {
-                                                    "required": 0,
+                                                    "required": true,
                                                     "forced": false,
                                                     "type": "checkbox",
                                                     "difficulty": "",
@@ -313,7 +312,7 @@
                                             {
                                                 "type": "npAsQuestion",
                                                 "data": {
-                                                    "required": 0,
+                                                    "required": true,
                                                     "forced": false,
                                                     "type": "checkbox",
                                                     "difficulty": "",
@@ -392,7 +391,7 @@
                                             {
                                                 "type": "npTrivia",
                                                 "data": {
-                                                    "required": false,
+                                                    "required": true,
                                                     "forced": false,
                                                     "difficulty": 1,
                                                     "content": " This is the 'What number am I thinking of?' trivia!",
@@ -407,8 +406,7 @@
                                                         "type": "npAsQuestion",
                                                         "data": {
                                                             "class": "row",
-                                                            "id": "Question1",
-                                                            "required": false,
+                                                            "required": true,
                                                             "forced": false,
                                                             "type": "checkbox",
                                                             "difficulty": 1,
