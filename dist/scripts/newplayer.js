@@ -2672,11 +2672,22 @@
                                 var hitAreaSelectedLength = '';
                                 var hitAreaSelectedIncorrect = '';
                                 hitAreaLength = $("[data-match=true]").length;
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //get and set height of elements
+                                //////////////////////////////////////////////////////////////////////////////////////
                                 var responseHeight = $('.select-response-incorrect').outerHeight(true);
                                 var outsidePaddingHeight = $('.np_outside-padding').outerHeight(true);
                                 TweenMax.set($('.np_outside-padding'), {
                                     height: responseHeight + outsidePaddingHeight + 150
                                 });
+                                console.log(
+                                        '\n::::::::::::::::::::::::::::::::::::::npDragAndDropSelect::maxHeight:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                        '\n::responseHeight:', responseHeight,
+                                        '\n::outsidePaddingHeight:', outsidePaddingHeight,
+                                        '\n::maxHeight + outsidePaddingHeight:', responseHeight + outsidePaddingHeight,
+                                        '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                        );
+
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //evaluate interaction
                                 //////////////////////////////////////////////////////////////////////////////////////
