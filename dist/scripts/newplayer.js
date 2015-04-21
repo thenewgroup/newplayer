@@ -4206,7 +4206,7 @@
                                     var topOffset = Math.round((window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0));
                                     TweenMax.to($('.npFlashCards'), 1.25, {
                                         force3D: true,
-                                        top: -(topOffset - flashCardsOffset.top),
+                                        top: -(topOffset - flashCardsOffset.top - 100),
                                         ease: Power4.easeOut
                                     });
                                 });
