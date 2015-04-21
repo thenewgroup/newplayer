@@ -2732,9 +2732,9 @@
                                 //get and set height of elements
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 var responseHeight = $('.select-response-incorrect').outerHeight(true);
-                                var outsidePaddingHeight = $('.np_outside-padding').outerHeight(true);
+                                var outsidePaddingHeight = $('.np-cmp-wrapper').outerHeight(true);
                                 TweenMax.set($('.np_outside-padding'), {
-                                    height: responseHeight + outsidePaddingHeight + 150
+                                    height:  outsidePaddingHeight
                                 });
                                 console.log(
                                         '\n::::::::::::::::::::::::::::::::::::::npDragAndDropSelect::maxHeight:::::::::::::::::::::::::::::::::::::::::::::::::',
@@ -3918,6 +3918,7 @@
       // replace tokens in the string as we go
       vm.summaryText = vm.summaryText.replace(/:USERSCORE:/, $filter('number')(vm.score * 100, 0));
       vm.summaryText = vm.summaryText.replace(/:MINSCORE:/, $filter('number')(vm.minScore * 100, 0));
+      vm.summaryPecentage = (vm.score * 100);
 
       vm.achievementText = '';
       if( cmpData.hasOwnProperty('achievements') ) {
@@ -6130,59 +6131,61 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "    <p class=\"h5 quiz-label\">answers:</p>\n" +
     "    <div np-component class=\"response-item\" ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
     "    <div class=\"row\">\n" +
-    "        <button type=\"submit\" class=\"btn-submit\" ng-click=\"npQuestion.evaluate()\">\n" +
-    "            <span>Submit</span>\n" +
-    "        </button>\n" +
-    "    </div>\n" +
-    "    <!--<button id=\"next_button\" class=\"btn-default\" ng-click=\"npQuestion.nextPage($event)\">Next</button>-->\n" +
-    "    <!--    <div class=\"btn btn-default\">\n" +
-    "            <input type=\"submit\" />\n" +
-    "        </div>-->\n" +
-    "    <div question-feedback-build class=\"row\">\n" +
-    "        <div  class=\"col-sm-7 question-feedback\">\n" +
-    "            <div class=\"question-feedback-wrapper vertical-centered\">\n" +
-    "                <div class=\"positive-feedback-icon\">\n" +
-    "                    <svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n" +
-    "                         width=\"139.535px\" height=\"139.536px\" viewBox=\"665.896 1118.26 139.535 139.536\"\n" +
-    "                         enable-background=\"new 665.896 1118.26 139.535 139.536\" xml:space=\"preserve\">\n" +
-    "                        <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"486.9971\" y1=\"-44.001\" x2=\"475.1884\" y2=\"-58.8622\" gradientTransform=\"matrix(6.1102 0.342 0.342 -6.1102 -2188.8755 702.1841)\">\n" +
-    "                            <stop  offset=\"0.1882\" style=\"stop-color:#CAA04E\"/>\n" +
-    "                            <stop  offset=\"0.3683\" style=\"stop-color:#FFEBC3\"/>\n" +
-    "                            <stop  offset=\"0.3952\" style=\"stop-color:#F7DFB1\"/>\n" +
-    "                            <stop  offset=\"0.5063\" style=\"stop-color:#D7B26A\"/>\n" +
-    "                            <stop  offset=\"0.5581\" style=\"stop-color:#CAA04E\"/>\n" +
-    "                            <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
-    "                        </linearGradient>\n" +
-    "                        <polygon fill=\"url(#SVGID_1_)\" points=\"784.624,1164.16 768.712,1150.084 722.812,1203.939 695.271,1180.684 681.195,1196.596  724.648,1233.316 \"/>\n" +
-    "                        <path fill=\"#9A7D46\" d=\"M735.664,1257.796c-38.556,0-69.768-31.212-69.768-69.769c0-38.556,31.212-69.768,69.768-69.768  s69.768,31.212,69.768,69.768C805.432,1226.584,774.22,1257.796,735.664,1257.796z M735.664,1124.38  c-34.884,0-63.648,28.765-63.648,63.648s28.765,63.647,63.648,63.647s63.648-28.764,63.648-63.647S770.548,1124.38,735.664,1124.38z  \"/>\n" +
-    "                    </svg>\n" +
-    "                </div>\n" +
-    "                <div class=\"negative-feedback-icon\">\n" +
-    "                    <svg version=\"1.0\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"22.8px\" height=\"22.801px\" viewBox=\"599.8 837.1 22.8 22.801\" enable-background=\"new 599.8 837.1 22.8 22.801\" xml:space=\"preserve\">\n" +
-    "                        <path fill=\"#9A7D46\" d=\"M611.2,859.9c-6.3,0-11.4-5.101-11.4-11.4s5.101-11.4,11.4-11.4S622.6,842.2,622.6,848.5 S617.5,859.9,611.2,859.9z M611.2,838.1c-5.7,0-10.4,4.7-10.4,10.4s4.7,10.4,10.4,10.4s10.399-4.7,10.399-10.4 S616.9,838.1,611.2,838.1z\"/>\n" +
-    "                        <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"874.293\" y1=\"-1086.3877\" x2=\"861.2496\" y2=\"-1099.811\" gradientTransform=\"matrix(1 0 0 -1 -256 -245)\">\n" +
-    "                            <stop  offset=\"0.1642\" style=\"stop-color:#CAA04E\"/>\n" +
-    "                            <stop  offset=\"0.1698\" style=\"stop-color:#CCA352\"/>\n" +
-    "                            <stop  offset=\"0.2532\" style=\"stop-color:#E4C682\"/>\n" +
-    "                            <stop  offset=\"0.3167\" style=\"stop-color:#F2DCA0\"/>\n" +
-    "                            <stop  offset=\"0.3527\" style=\"stop-color:#F8E4AB\"/>\n" +
-    "                            <stop  offset=\"0.4062\" style=\"stop-color:#EBD191\"/>\n" +
-    "                            <stop  offset=\"0.48\" style=\"stop-color:#DDBC74\"/>\n" +
-    "                            <stop  offset=\"0.5532\" style=\"stop-color:#D2AC5F\"/>\n" +
-    "                            <stop  offset=\"0.6249\" style=\"stop-color:#CCA352\"/>\n" +
-    "                            <stop  offset=\"0.6933\" style=\"stop-color:#CAA04E\"/>\n" +
-    "                            <stop  offset=\"0.7957\" style=\"stop-color:#D5B05B\"/>\n" +
-    "                            <stop  offset=\"0.9955\" style=\"stop-color:#F2DA7E\"/>\n" +
-    "                            <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
-    "                        </linearGradient>\n" +
-    "                        <polygon fill=\"url(#SVGID_1_)\" points=\"605.8,856.5 611.2,851.2 616.5,856.5 619,854 613.7,848.7 619,843.4 616.5,840.8 611.2,846.1 605.9,840.8 603.4,843.4 608.7,848.7 603.3,854 \"/>\n" +
-    "                    </svg>\n" +
-    "                </div>\n" +
-    "                <div class=\"npQuestion-feedback body-copy question-feedback-text\" ng-if=\"npQuestion.feedback\" ng-bind-html=\"npQuestion.feedback\"></div>\n" +
-    "                <div class=\"question-feedback-label\">Feedback area</div>\n" +
-    "            </div\n" +
+    "        <div class=\"col-sm-6 question-submit-wrapper\">\n" +
+    "            <button type=\"submit\" class=\"btn-submit btn\" ng-click=\"npQuestion.evaluate()\">\n" +
+    "                <span>Submit</span>\n" +
+    "            </button>\n" +
     "        </div>\n" +
-    "        <div  class=\"col-sm-5\">\n" +
+    "        <div class=\"col-sm-6\">\n" +
+    "            <div question-feedback-build >\n" +
+    "                <div  class=\"question-feedback\">\n" +
+    "                    <div class=\"question-feedback-wrapper vertical-centered\">\n" +
+    "                        <div class=\"positive-feedback-icon\">\n" +
+    "                            <svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n" +
+    "                                 width=\"139.535px\" height=\"139.536px\" viewBox=\"665.896 1118.26 139.535 139.536\"\n" +
+    "                                 enable-background=\"new 665.896 1118.26 139.535 139.536\" xml:space=\"preserve\">\n" +
+    "                                <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"486.9971\" y1=\"-44.001\" x2=\"475.1884\" y2=\"-58.8622\" gradientTransform=\"matrix(6.1102 0.342 0.342 -6.1102 -2188.8755 702.1841)\">\n" +
+    "                                    <stop  offset=\"0.1882\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                    <stop  offset=\"0.3683\" style=\"stop-color:#FFEBC3\"/>\n" +
+    "                                    <stop  offset=\"0.3952\" style=\"stop-color:#F7DFB1\"/>\n" +
+    "                                    <stop  offset=\"0.5063\" style=\"stop-color:#D7B26A\"/>\n" +
+    "                                    <stop  offset=\"0.5581\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                    <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
+    "                                </linearGradient>\n" +
+    "                                <polygon fill=\"url(#SVGID_1_)\" points=\"784.624,1164.16 768.712,1150.084 722.812,1203.939 695.271,1180.684 681.195,1196.596  724.648,1233.316 \"/>\n" +
+    "                                <path fill=\"#9A7D46\" d=\"M735.664,1257.796c-38.556,0-69.768-31.212-69.768-69.769c0-38.556,31.212-69.768,69.768-69.768  s69.768,31.212,69.768,69.768C805.432,1226.584,774.22,1257.796,735.664,1257.796z M735.664,1124.38  c-34.884,0-63.648,28.765-63.648,63.648s28.765,63.647,63.648,63.647s63.648-28.764,63.648-63.647S770.548,1124.38,735.664,1124.38z  \"/>\n" +
+    "                            </svg>\n" +
+    "                        </div>\n" +
+    "                        <div class=\"negative-feedback-icon\">\n" +
+    "                            <svg version=\"1.0\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"22.8px\" height=\"22.801px\" viewBox=\"599.8 837.1 22.8 22.801\" enable-background=\"new 599.8 837.1 22.8 22.801\" xml:space=\"preserve\">\n" +
+    "                                <path fill=\"#9A7D46\" d=\"M611.2,859.9c-6.3,0-11.4-5.101-11.4-11.4s5.101-11.4,11.4-11.4S622.6,842.2,622.6,848.5 S617.5,859.9,611.2,859.9z M611.2,838.1c-5.7,0-10.4,4.7-10.4,10.4s4.7,10.4,10.4,10.4s10.399-4.7,10.399-10.4 S616.9,838.1,611.2,838.1z\"/>\n" +
+    "                                <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"874.293\" y1=\"-1086.3877\" x2=\"861.2496\" y2=\"-1099.811\" gradientTransform=\"matrix(1 0 0 -1 -256 -245)\">\n" +
+    "                                    <stop  offset=\"0.1642\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                    <stop  offset=\"0.1698\" style=\"stop-color:#CCA352\"/>\n" +
+    "                                    <stop  offset=\"0.2532\" style=\"stop-color:#E4C682\"/>\n" +
+    "                                    <stop  offset=\"0.3167\" style=\"stop-color:#F2DCA0\"/>\n" +
+    "                                    <stop  offset=\"0.3527\" style=\"stop-color:#F8E4AB\"/>\n" +
+    "                                    <stop  offset=\"0.4062\" style=\"stop-color:#EBD191\"/>\n" +
+    "                                    <stop  offset=\"0.48\" style=\"stop-color:#DDBC74\"/>\n" +
+    "                                    <stop  offset=\"0.5532\" style=\"stop-color:#D2AC5F\"/>\n" +
+    "                                    <stop  offset=\"0.6249\" style=\"stop-color:#CCA352\"/>\n" +
+    "                                    <stop  offset=\"0.6933\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                    <stop  offset=\"0.7957\" style=\"stop-color:#D5B05B\"/>\n" +
+    "                                    <stop  offset=\"0.9955\" style=\"stop-color:#F2DA7E\"/>\n" +
+    "                                    <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
+    "                                </linearGradient>\n" +
+    "                                <polygon fill=\"url(#SVGID_1_)\" points=\"605.8,856.5 611.2,851.2 616.5,856.5 619,854 613.7,848.7 619,843.4 616.5,840.8 611.2,846.1 605.9,840.8 603.4,843.4 608.7,848.7 603.3,854 \"/>\n" +
+    "                            </svg>\n" +
+    "                        </div>\n" +
+    "                        <div class=\"npQuestion-feedback body-copy question-feedback-text\" ng-if=\"npQuestion.feedback\" ng-bind-html=\"npQuestion.feedback\"></div>\n" +
+    "                        <div class=\"question-feedback-label\">Feedback area</div>\n" +
+    "                    </div\n" +
+    "                </div\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"col-sm-6\">\n" +
+    "        </div>\n" +
+    "        <div class=\"col-sm-6\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "</div>\n"
@@ -6190,14 +6193,35 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('scripts/component/npAsResult/npAsResult.html',
-    "<div class=\"np-cmp-wrapper {{component.type}} \" ng-controller=\"npAsResultController as npResult\">\n" +
-    "\n" +
-    "  <div class=\"summary\" style=\"color: white; font-size: 1.2em;\">\n" +
-    "    {{npResult.summaryText}}\n" +
-    "\n" +
-    "    <div ng-show=\"npResult.achievementText\">{{npResult.achievementText}}</div>\n" +
-    "  </div>\n" +
-    "  <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "<div class=\"np-cmp-wrapper {{component.type}} np-result\" ng-controller=\"npAsResultController as npResult\">\n" +
+    "    <div class=\"summary np-result-summary\">\n" +
+    "        <div class=\"np-result-gold-border\">\n" +
+    "            <svg  version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" viewBox=\"0 0 368 222\" xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
+    "                <style type=\"text/css\">\n" +
+    "                    <![CDATA[\n" +
+    "                    .st0{fill:url(#SVGID_1_);}\n" +
+    "                    .st1{display:inline;}\n" +
+    "                    .st2{display:none;}\n" +
+    "                    ]]>\n" +
+    "                </style>\n" +
+    "                <g id=\"Layer_2\">\n" +
+    "                    <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"0.8359\" y1=\"0.9399\" x2=\"367.8515\" y2=\"221.4724\">\n" +
+    "                        <stop  offset=\"0\" style=\"stop-color:#CAA04C\"/>\n" +
+    "                        <stop  offset=\"0.3497\" style=\"stop-color:#F8E4AA\"/>\n" +
+    "                        <stop  offset=\"0.638\" style=\"stop-color:#CAA04D\"/>\n" +
+    "                        <stop  offset=\"0.9816\" style=\"stop-color:#F3DB7E\"/>\n" +
+    "                    </linearGradient>\n" +
+    "                    <rect fill=\"url(#MyGradient)\" stroke=\"url(#SVGID_1_)\" vector-effect=\"non-scaling-stroke\" stroke-width=\"12\" x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
+    "                </g>\n" +
+    "            </svg>\n" +
+    "        </div>\n" +
+    "        <div class=\"results-wrapper\">\n" +
+    "            <div>{{npResult.summaryText}}</div>\n" +
+    "            <!--<div>{{npResult.summaryPecentage}}%</div>-->\n" +
+    "            <div ng-show=\"npResult.achievementText\">{{npResult.achievementText}}</div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
     "</div>\n"
   );
 
@@ -6700,222 +6724,6 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
   );
 
 
-  $templateCache.put('scripts/component/npFinalDragAndDropMatch/npFinalDragAndDropMatch.html',
-    "<div class=\"{{component.type}} npDragAndDropMatch\" ng-controller=\"npDragAndDropMatchController as npDragAndDropMatch\" id=\"{{npDragAndDropMatch.id}}\">\n" +
-    "    <div id=\"draggableContainer\">\n" +
-    "        <div class=\"row\">\n" +
-    "            <div class=\"debug\">\n" +
-    "                <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
-    "            </div>\n" +
-    "            <div id=\"draggableButtons\" class=\"col-xs-6\">\n" +
-    "                <div drag-button ng-repeat=\"draggableButton in npDragAndDropMatch.draggableButtons\" data-reference=\"{{$index}}\"  id=\"id{{$index}}\" ng-click=\"npDragAndDropMatch.update(draggableButton)\" class=\"draggableButton box boxElements\">\n" +
-    "                    <svg class=\"completeCheck\" version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
-    "                        <style type=\"text/css\">\n" +
-    "                            <![CDATA[\n" +
-    "                            .st0{fill:url(#SVGID_1_);}\n" +
-    "                            .st1{display:inline;}\n" +
-    "                            .st2{display:none;}\n" +
-    "                            ]]>\n" +
-    "                        </style>\n" +
-    "                        <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"0\" y1=\"0\" x2=\"400\" y2=\"200\">\n" +
-    "                            <stop  offset=\"0\" style=\"stop-color:#CAA04C\"/>\n" +
-    "                            <stop  offset=\"0.3497\" style=\"stop-color:#F8E4AA\"/>\n" +
-    "                            <stop  offset=\"0.638\" style=\"stop-color:#CAA04D\"/>\n" +
-    "                            <stop  offset=\"0.9816\" style=\"stop-color:#F3DB7E\"/>\n" +
-    "                        </linearGradient>\n" +
-    "                        <rect fill=\"\" stroke=\"url(#SVGID_1_)\" stroke-width=\"3\" vector-effect=\"non-scaling-stroke\"  x=\"0\" y=\"0\" width=\"99%\" height=\"99%\"/>\n" +
-    "                        <foreignObject x=\"0%\" y=\"0\" width=\"100%\" height=\"100%\">\n" +
-    "                            <div class=\"{{draggableButton.class}} button-content\">\n" +
-    "                                <img class=\"draggableButtonImage\" ng-src=\"{{draggableButton.image}}\" alt=\"{{draggableButton.alt}}\" />\n" +
-    "                                <div class=\"draggableButtonContent body-copy-strong\" ng-bind-html=\"draggableButton.content\" ></div>\n" +
-    "                            </div>\n" +
-    "                        </foreignObject>\n" +
-    "                    </svg>\n" +
-    "                </div>\n" +
-    "            </div>\n" +
-    "            <!--<div class=\"col-two\">-->\n" +
-    "            <div class=\"col-xs-6\">\n" +
-    "                <div id=\"hitAreaWrapper\">                    \n" +
-    "                    <div ng-repeat=\"draggableButton in npDragAndDropMatch.draggableButtons\" class=\"{{hitArea.class}} hit-area boxElements\">\n" +
-    "                        <div class=\"hit-area-background\"></div>\n" +
-    "                        <svg class=\"complete-background\" version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
-    "                            <g class=\"complete-background-Layer_1\">\n" +
-    "                                <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"486.5701\" y1=\"836.5667\" x2=\"474.7614\" y2=\"851.428\" gradientTransform=\"matrix(0.9984 5.588965e-02 -5.588965e-02 0.9984 48.0441 -25.572)\">\n" +
-    "                                    <stop  offset=\"0.1882\" style=\"stop-color:#CAA04E\"/>\n" +
-    "                                    <stop  offset=\"0.3683\" style=\"stop-color:#FFEBC3\"/>\n" +
-    "                                    <stop  offset=\"0.3952\" style=\"stop-color:#F7DFB1\"/>\n" +
-    "                                    <stop  offset=\"0.5063\" style=\"stop-color:#D7B26A\"/>\n" +
-    "                                    <stop  offset=\"0.5581\" style=\"stop-color:#CAA04E\"/>\n" +
-    "                                    <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
-    "                            </g>\n" +
-    "                            <g id=\"complete-background-Layer_2\">\n" +
-    "                                <rect stroke=\"url(#SVGID_1_)\" stroke-width=\"3\" vector-effect=\"non-scaling-stroke\" fill=\"none\"  x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
-    "                            </g>\n" +
-    "                            <g id=\"complete-background-Layer_4\">\n" +
-    "                                <foreignObject  x=\"0\" y=\"0\" width=\"100%\" height=\"100%\" >\n" +
-    "\n" +
-    "<!--                                    <div question-feedback-build class=\"row\">\n" +
-    "                                        <div  class=\"col-sm-7 question-feedback\">\n" +
-    "                                            <div class=\"question-feedback-wrapper vertical-centered\">\n" +
-    "                                                <div class=\"positive-feedback-icon\">\n" +
-    "                                                    <svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n" +
-    "                                                         width=\"139.535px\" height=\"139.536px\" viewBox=\"665.896 1118.26 139.535 139.536\"\n" +
-    "                                                         enable-background=\"new 665.896 1118.26 139.535 139.536\" xml:space=\"preserve\">\n" +
-    "                                                        <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"486.9971\" y1=\"-44.001\" x2=\"475.1884\" y2=\"-58.8622\" gradientTransform=\"matrix(6.1102 0.342 0.342 -6.1102 -2188.8755 702.1841)\">\n" +
-    "                                                            <stop  offset=\"0.1882\" style=\"stop-color:#CAA04E\"/>\n" +
-    "                                                            <stop  offset=\"0.3683\" style=\"stop-color:#FFEBC3\"/>\n" +
-    "                                                            <stop  offset=\"0.3952\" style=\"stop-color:#F7DFB1\"/>\n" +
-    "                                                            <stop  offset=\"0.5063\" style=\"stop-color:#D7B26A\"/>\n" +
-    "                                                            <stop  offset=\"0.5581\" style=\"stop-color:#CAA04E\"/>\n" +
-    "                                                            <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
-    "                                                        </linearGradient>\n" +
-    "                                                        <polygon fill=\"url(#SVGID_1_)\" points=\"784.624,1164.16 768.712,1150.084 722.812,1203.939 695.271,1180.684 681.195,1196.596  724.648,1233.316 \"/>\n" +
-    "                                                        <path fill=\"#9A7D46\" d=\"M735.664,1257.796c-38.556,0-69.768-31.212-69.768-69.769c0-38.556,31.212-69.768,69.768-69.768  s69.768,31.212,69.768,69.768C805.432,1226.584,774.22,1257.796,735.664,1257.796z M735.664,1124.38  c-34.884,0-63.648,28.765-63.648,63.648s28.765,63.647,63.648,63.647s63.648-28.764,63.648-63.647S770.548,1124.38,735.664,1124.38z  \"/>\n" +
-    "                                                    </svg>\n" +
-    "                                                </div>\n" +
-    "                                                <div class=\"npQuestion-feedback body-copy question-feedback-text\" ng-if=\"npQuestion.feedback\" ng-bind-html=\"npQuestion.feedback\"></div>\n" +
-    "                                                <div class=\"question-feedback-label\">Feedback area</div>\n" +
-    "                                            </div\n" +
-    "                                        </div>\n" +
-    "                                        <div  class=\"col-sm-5\">\n" +
-    "                                        </div>\n" +
-    "                                    </div>-->\n" +
-    "                                    <div class=\"button-content\">\n" +
-    "                                        <img class=\"hitAreaImage\" ng-src=\"{{draggableButton.matchingImage}}\" alt=\"{{hitArea.alt}}\" />\n" +
-    "                                        <div class=\"hitAreaContent body-copy\" ng-bind-html=\"draggableButton.matchingContent\" ></div>\n" +
-    "                                    </div>\n" +
-    "                                    <div class=\"button-completion-content vertical-centered\">\n" +
-    "                                        <div class=\"row \" >\n" +
-    "                                            <!--<div class=\" col-xs-2\" >-->\n" +
-    "                                                <div class=\"positive-feedback-image\">\n" +
-    "                                                <svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n" +
-    "                                                     width=\"139.535px\" height=\"139.536px\" viewBox=\"665.896 1118.26 139.535 139.536\"\n" +
-    "                                                     enable-background=\"new 665.896 1118.26 139.535 139.536\" xml:space=\"preserve\">\n" +
-    "                                                    <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"486.9971\" y1=\"-44.001\" x2=\"475.1884\" y2=\"-58.8622\" gradientTransform=\"matrix(6.1102 0.342 0.342 -6.1102 -2188.8755 702.1841)\">\n" +
-    "                                                        <stop  offset=\"0.1882\" style=\"stop-color:#CAA04E\"/>\n" +
-    "                                                        <stop  offset=\"0.3683\" style=\"stop-color:#FFEBC3\"/>\n" +
-    "                                                        <stop  offset=\"0.3952\" style=\"stop-color:#F7DFB1\"/>\n" +
-    "                                                        <stop  offset=\"0.5063\" style=\"stop-color:#D7B26A\"/>\n" +
-    "                                                        <stop  offset=\"0.5581\" style=\"stop-color:#CAA04E\"/>\n" +
-    "                                                        <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
-    "                                                    </linearGradient>\n" +
-    "                                                    <polygon fill=\"url(#SVGID_1_)\" points=\"784.624,1164.16 768.712,1150.084 722.812,1203.939 695.271,1180.684 681.195,1196.596  724.648,1233.316 \"/>\n" +
-    "                                                    <path fill=\"#9A7D46\" d=\"M735.664,1257.796c-38.556,0-69.768-31.212-69.768-69.769c0-38.556,31.212-69.768,69.768-69.768  s69.768,31.212,69.768,69.768C805.432,1226.584,774.22,1257.796,735.664,1257.796z M735.664,1124.38  c-34.884,0-63.648,28.765-63.648,63.648s28.765,63.647,63.648,63.647s63.648-28.764,63.648-63.647S770.548,1124.38,735.664,1124.38z  \"/>\n" +
-    "                                                </svg>\n" +
-    "                                            </div>\n" +
-    "                                            <!--<div class=\"\" >-->\n" +
-    "                                                <div class=\"positive-feedback-content body-copy \" ng-bind-html=\"positiveFeedback\"></div>\n" +
-    "                                            <!--</div>-->\n" +
-    "                                        </div>\n" +
-    "                                    </div>\n" +
-    "                                </foreignObject>\n" +
-    "                            </g>\n" +
-    "                        </svg>\n" +
-    "                    </div>\n" +
-    "                </div>\n" +
-    "            </div> \n" +
-    "        </div>\n" +
-    "    </div>\n" +
-    "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
-    "</div>"
-  );
-
-
-  $templateCache.put('scripts/component/npFinalQuiz/npQuiz.html',
-    "<form class=\"np-cmp-wrapper {{component.type}}\" ng-controller=\"npQuizController as npQuiz\"\n" +
-    "      ng-submit=\"npQuiz.evaluate()\">\n" +
-    "\n" +
-    "  <div class=\"debug\">\n" +
-    "    <h3>{{component.type}} --\n" +
-    "      <small>{{component.idx}}</small>\n" +
-    "    </h3>\n" +
-    "  </div>\n" +
-    "\n" +
-    "  <div class=\"npQuiz-content h4\" ng-bind-html=\"npQuiz.content\"></div>\n" +
-    "  <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
-    "\n" +
-    "  <div class=\"npQuiz-feedback\" ng-if=\"npQuiz.feedback\" ng-bind-html=\"npQuiz.feedback\"></div>\n" +
-    "</form>\n" +
-    "\n"
-  );
-
-
-  $templateCache.put('scripts/component/npFinalTrivia/npTrivia.html',
-    "<form class=\"np-cmp-wrapper {{component.type}}\" ng-controller=\"npTriviaController as npTrivia\" ng-submit=\"npTrivia.evaluate()\">\n" +
-    "    <div class=\"debug\">\n" +
-    "        <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
-    "    </div>\n" +
-    "    <!--    <div class=\"row\">\n" +
-    "            <div class=\"npTrivia-content h4 col-xs-12\" ng-bind-html=\"npTrivia.content\"></div>\n" +
-    "        </div>-->\n" +
-    "    <div class=\"row\">\n" +
-    "        <div class=\"col-sm-2 np-spinner\">\n" +
-    "            <div class=\"np-spinner-wrapper\">\n" +
-    "                <np-price-is-right-spinner class=\"np-spinner\" spinTime=\"2000\" ng-hide=\"!npTrivia.pageId\" data-difficulty=\"{{npTrivia.difficulty}}\">\n" +
-    "                    <div>0</div>\n" +
-    "                    <div>100</div>\n" +
-    "                    <div>200</div>\n" +
-    "                    <div>300</div>\n" +
-    "                    <div>400</div>\n" +
-    "                    <div>500</div>\n" +
-    "                    <div>600</div>\n" +
-    "                    <div>700</div>\n" +
-    "                    <div>800</div>\n" +
-    "                    <div>0</div>\n" +
-    "                    <div>100</div>\n" +
-    "                    <div>200</div>\n" +
-    "                    <div>300</div>\n" +
-    "                    <div>400</div>\n" +
-    "                    <div>500</div>\n" +
-    "                    <div>600</div>\n" +
-    "                    <div>700</div>\n" +
-    "                    <div>800</div>\n" +
-    "                    <div>900</div>\n" +
-    "                    <div>1000</div>\n" +
-    "                </np-price-is-right-spinner>\n" +
-    "                <div class=\"np-gold-border\">\n" +
-    "                    <svg  version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" viewBox=\"0 0 368 222\" xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
-    "                    <style type=\"text/css\">\n" +
-    "                        <![CDATA[\n" +
-    "                        .st0{fill:url(#SVGID_1_);}\n" +
-    "                        .st1{display:inline;}\n" +
-    "                        .st2{display:none;}\n" +
-    "                        ]]>\n" +
-    "                    </style>\n" +
-    "                    <g id=\"Layer_2\">\n" +
-    "                    <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"0.8359\" y1=\"0.9399\" x2=\"367.8515\" y2=\"221.4724\">\n" +
-    "                    <stop  offset=\"0\" style=\"stop-color:#CAA04C\"/>\n" +
-    "                    <stop  offset=\"0.3497\" style=\"stop-color:#F8E4AA\"/>\n" +
-    "                    <stop  offset=\"0.638\" style=\"stop-color:#CAA04D\"/>\n" +
-    "                    <stop  offset=\"0.9816\" style=\"stop-color:#F3DB7E\"/>\n" +
-    "                    </linearGradient>\n" +
-    "                    <rect fill=\"url(#MyGradient)\" stroke=\"url(#SVGID_1_)\" vector-effect=\"non-scaling-stroke\" stroke-width=\"3\" x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
-    "                    </g>\n" +
-    "                    </svg>\n" +
-    "                </div>\n" +
-    "                <div class=\"np-gold-pointer\">\n" +
-    "                    <svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n" +
-    "                         width=\"66.096px\" height=\"126.685px\" viewBox=\"308.824 1129.275 66.096 126.685\"\n" +
-    "                         style=\"enable-background:new 308.824 1129.275 66.096 126.685;\" xml:space=\"preserve\">\n" +
-    "                    <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"118.5967\" y1=\"-46.6729\" x2=\"105.6811\" y2=\"-62.1192\" gradientTransform=\"matrix(6.12 0 0 -6.12 -324.0952 866.6157)\">\n" +
-    "                    <stop  offset=\"0.2306\" style=\"stop-color:#CAA04E\"/>\n" +
-    "                    <stop  offset=\"0.3901\" style=\"stop-color:#F8E4AB\"/>\n" +
-    "                    <stop  offset=\"0.4768\" style=\"stop-color:#E1C27C\"/>\n" +
-    "                    <stop  offset=\"0.5692\" style=\"stop-color:#CAA04E\"/>\n" +
-    "                    <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
-    "                    </linearGradient>\n" +
-    "                    <polygon style=\"fill:url(#SVGID_1_);\" points=\"374.92,1129.275 374.92,1255.96 308.824,1191.7 \"/>\n" +
-    "                    </svg>\n" +
-    "                </div>\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "        <div class=\"col-xs-10 np_row\" np-component ng-if=\"subCmp\" ng-repeat=\"component in npTrivia.seenComponents\" idx=\"{{component.idx}}\" ng-hide=\"npTrivia.pageId !== component.data.id\"></div>\n" +
-    "        <div class=\"npTrivia-feedback\" ng-if=\"npTrivia.feedback\" ng-bind-html=\"npTrivia.feedback\"></div>\n" +
-    "    </div>\n" +
-    "</form>"
-  );
-
-
   $templateCache.put('scripts/component/npFlashCards/npFlashCards.html',
     "<div np-flash-cards id=\"{{npFlashCards.id}} \" class=\"{{component.type}} np-cmp-wrapper np-flash-card\" ng-controller=\"npFlashCardsController as npFlashCards\">\n" +
     "    <div class=\"debug\">\n" +
@@ -7268,18 +7076,17 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "<form class=\"np-cmp-wrapper {{component.type}}\" ng-controller=\"npQuizController as npQuiz\"\n" +
     "      ng-submit=\"npQuiz.evaluate()\">\n" +
     "\n" +
-    "  <div class=\"debug\">\n" +
-    "    <h3>{{component.type}} --\n" +
-    "      <small>{{component.idx}}</small>\n" +
-    "    </h3>\n" +
-    "  </div>\n" +
+    "    <div class=\"debug\">\n" +
+    "        <h3>{{component.type}} --\n" +
+    "            <small>{{component.idx}}</small>\n" +
+    "        </h3>\n" +
+    "    </div>\n" +
     "\n" +
-    "  <div class=\"npQuiz-content h4\" ng-bind-html=\"npQuiz.content\"></div>\n" +
-    "  <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "    <div class=\"npQuiz-content h4\" ng-bind-html=\"npQuiz.content\"></div>\n" +
+    "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
     "\n" +
-    "  <div class=\"npQuiz-feedback\" ng-if=\"npQuiz.feedback\" ng-bind-html=\"npQuiz.feedback\"></div>\n" +
-    "</form>\n" +
-    "\n"
+    "    <div class=\"npQuiz-feedback\" ng-if=\"npQuiz.feedback\" ng-bind-html=\"npQuiz.feedback\"></div>\n" +
+    "</form>"
   );
 
 
@@ -7382,10 +7189,8 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                    </g>\n" +
     "                    </svg>\n" +
     "                </div>\n" +
-    "                <div class=\"np-gold-pointer\">\n" +
-    "                    <svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n" +
-    "                         width=\"66.096px\" height=\"126.685px\" viewBox=\"308.824 1129.275 66.096 126.685\"\n" +
-    "                         style=\"enable-background:new 308.824 1129.275 66.096 126.685;\" xml:space=\"preserve\">\n" +
+    "                <div class=\"np-gold-pointer h1\">\n" +
+    "                    <svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"66.096px\" height=\"126.685px\" viewBox=\"308.824 1129.275 66.096 126.685\" style=\"enable-background:new 308.824 1129.275 66.096 126.685;\" xml:space=\"preserve\">\n" +
     "                    <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"118.5967\" y1=\"-46.6729\" x2=\"105.6811\" y2=\"-62.1192\" gradientTransform=\"matrix(6.12 0 0 -6.12 -324.0952 866.6157)\">\n" +
     "                    <stop  offset=\"0.2306\" style=\"stop-color:#CAA04E\"/>\n" +
     "                    <stop  offset=\"0.3901\" style=\"stop-color:#F8E4AB\"/>\n" +
@@ -7399,8 +7204,10 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "            </div>\n" +
     "        </div>\n" +
     "        <!--<div class=\"col-xs-10 np_row\" np-component ng-if=\"subCmp\" ng-repeat=\"component in npTrivia.seenComponents\" idx=\"{{component.idx}}\" ng-hide=\"npTrivia.pageId !== component.data.id\"></div>-->\n" +
-    "        <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
-    "        <div class=\"npTrivia-feedback\" ng-if=\"npTrivia.feedback\" ng-bind-html=\"npTrivia.feedback\"></div>\n" +
+    "        <div class=\"col-xs-10 np_row\">\n" +
+    "            <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "            <div class=\"npTrivia-feedback\" ng-if=\"npTrivia.feedback\" ng-bind-html=\"npTrivia.feedback\"></div>\n" +
+    "        </div> \n" +
     "    </div>\n" +
     "</form>\n"
   );
