@@ -2672,6 +2672,11 @@
                                 var hitAreaSelectedLength = '';
                                 var hitAreaSelectedIncorrect = '';
                                 hitAreaLength = $("[data-match=true]").length;
+                                var responseHeight = $('.select-response-incorrect').outerHeight(true);
+                                var outsidePaddingHeight = $('.np_outside-padding').outerHeight(true);
+                                TweenMax.set($('.np_outside-padding'), {
+                                    height: responseHeight + outsidePaddingHeight + 150
+                                });
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //evaluate interaction
                                 //////////////////////////////////////////////////////////////////////////////////////
@@ -2703,13 +2708,10 @@
                                             });
                                         }
                                     });
-
                                 };
-
                             });
                         });
                     }
-
                 };
             })
             //////////////////////////////////////////////////////////////////////////////////////
@@ -2761,7 +2763,6 @@
                                     autoAlpha: 0,
                                     ease: Power4.easeOut
                                 });
-
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //shuffle that 
                                 //////////////////////////////////////////////////////////////////////////////////////
@@ -2931,7 +2932,6 @@
                         update();
                     }
                 };
-
             });
     /** @ngInject */
     function npMediaElementDirective($log) {
@@ -2944,7 +2944,6 @@
         return new Directive();
     }
 })();
-
 /* jshint -W003, -W117 */
 (function () {
     'use strict';
@@ -4135,10 +4134,6 @@
                         //////////////////////////////////////////////////////////////////////////////////////
                         setTimeout(function () {
                             $scope.$apply(function () {
-                                TweenMax.to($('#draggableContainer'), 1.75, {
-                                    autoAlpha: 1,
-                                    ease: Power4.easeOut
-                                });
                                 TweenMax.set($('.flash-card-front-wrapper'), {
                                     autoAlpha: 1
                                 });
@@ -4151,9 +4146,6 @@
                                 TweenMax.set($('.flash-card-back-wrapper'), {
                                     rotationY: -180
                                 });
-//                                TweenMax.set($('.flash-card-back-wrapper'), {
-//                                    backfaceVisibility: "hidden"
-//                                });
                                 TweenMax.set([$('.flash-card-content-back'), $('.flash-card-content-front')], {
                                     backfaceVisibility: "hidden"
                                 });
@@ -4169,10 +4161,17 @@
                                         height: maxHeight
                                     });
                                     TweenMax.set($('.np_outside-padding'), {
-                                        height: maxHeight + outsidePaddingHeight
+                                        height: maxHeight + outsidePaddingHeight +150
                                     });
                                     TweenMax.set($('.btn-next'), {
                                         marginTop: maxHeight + 150
+                                    });
+                                    //////////////////////////////////////////////////////////////////////////////////////
+                                    //page build
+                                    //////////////////////////////////////////////////////////////////////////////////////
+                                    TweenMax.to($('#draggableContainer'), 1.75, {
+                                        autoAlpha: 1,
+                                        ease: Power4.easeOut
                                     });
                                     TweenMax.from($('#flash-cards'), 2, {
                                         left: '1000px',
@@ -4194,7 +4193,7 @@
                                         scale: 0.9,
                                         z: '-35',
                                         ease: Power4.easeOut
-                                    }); 
+                                    });
                                 });
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //offset top on scroll
@@ -4674,6 +4673,21 @@
                         vm.seenComponents = _.shuffle($scope.components);
                         vm.pageId = vm.seenComponents[0].data.id;
                         vm.difficulty = vm.seenComponents[0].components[0].data.difficulty || 0;
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //get ready
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        setTimeout(function () {
+                            $scope.$apply(function () {
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //on ready set states
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                var btnNextHeight = $('.btn-next ').outerHeight(true);
+                                var pageHeight = $('.npPage').outerHeight(true);
+                                TweenMax.set($('.npPage'), {
+                                    height: btnNextHeight + pageHeight
+                                });
+                            });
+                        });
                         // go to the first page, since pages were shuffled
                         $timeout(function () {
                             ManifestService.setPageId(vm.pageId);
@@ -4688,7 +4702,8 @@
                                 // end of the trivia questions
                                 // TODO - add this message the template and set the two values
                                 // here in the controller
-                                // NOTE: This text should come from the app
+                                // NOTE: This text should come from the app 
+//  min-height: 740px;
                                 if (!vm.pageId) {
                                     vm.feedback = 'Good job, you scored 5,000 points out of 7,500 possible.';
                                 }
