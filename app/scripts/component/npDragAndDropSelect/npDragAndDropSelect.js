@@ -4,7 +4,8 @@
     angular
             .module('newplayer.component')
             .controller('npDragAndDropSelectController',
-                    function ($log, $scope, $sce, $element) {
+                    /** @ngInject */
+                    function ($log, $scope, $sce, $element, AssessmentService) {
                         var cmpData = $scope.component.data;
                         var buttonData = $scope.feedback || {};
                         $log.debug('npDragAndDropSelect::data', cmpData, buttonData);
@@ -21,6 +22,9 @@
                         $scope.content = cmpData.content;
                         $scope.ID = cmpData.id;
                         $scope.select = cmpData.select;
+
+                        AssessmentService.addQuestion(cmpData.id, !!cmpData.required);
+
                         //////////////////////////////////////////////////////////////////////////////////////
                         //set drag and drag end event handlers
                         //////////////////////////////////////////////////////////////////////////////////////
@@ -42,7 +46,8 @@
             //////////////////////////////////////////////////////////////////////////////////////
             //set evaluate button logic
             //////////////////////////////////////////////////////////////////////////////////////
-            .directive('npDragAndDropSelectEvaluate', function () {
+            /** @ngInject */
+            .directive('npDragAndDropSelectEvaluate', function ($log, AssessmentService) {
                 return {
                     restrict: 'A',
                     link: function ($scope, $element, $attrs) {
@@ -51,6 +56,7 @@
                         //////////////////////////////////////////////////////////////////////////////////////
                         setTimeout(function () {
                             $scope.$apply(function () {
+                              var cmpData = $scope.component.data;
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //on ready set states
                                 //////////////////////////////////////////////////////////////////////////////////////
@@ -88,7 +94,11 @@
                                 $scope.evaluate = function () {
                                     hitAreaSelectedLength = $("[data-match=selected]").length;
                                     hitAreaSelectedIncorrect = $("[data-match=skeletor]").length;
-                                    $('.hit-area').each(function () {
+
+                                  var isPassing = false;
+
+                                    // TODO: Remove or re-enable, this doesn't appear to have a correlation with the code below
+                                    //$('.hit-area').each(function () {
                                         if (Number(hitAreaLength) === Number(hitAreaSelectedLength) && (hitAreaSelectedIncorrect === 0)) {
                                             TweenMax.to($('.select-response-correct'), 0.75, {
                                                 autoAlpha: 1,
@@ -100,6 +110,7 @@
                                                 scale: 0.25,
                                                 ease: Power4.easeOut
                                             });
+                                          isPassing = true;
                                         } else {
                                             TweenMax.to($('.select-response-correct'), 0.75, {
                                                 autoAlpha: 0,
@@ -111,8 +122,10 @@
                                                 scale: 1,
                                                 ease: Power4.easeOut
                                             });
+                                          isPassing = false;
                                         }
-                                    });
+                                    //});
+                                  AssessmentService.questionAnswered(cmpData.id, isPassing);
                                 };
                             });
                         });
@@ -169,7 +182,7 @@
                                     ease: Power4.easeOut
                                 });
                                 //////////////////////////////////////////////////////////////////////////////////////
-                                //shuffle that 
+                                //shuffle that
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 function shuffle() {
                                     $("#draggableButtons").each(function () {

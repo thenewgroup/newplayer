@@ -262,10 +262,11 @@
     $log.debug('ManifestServiceWrapper');
 
     var Service = function () {
-      var ms = null;
+      var self = this;
+      self.ms = null;
 
       function initialize(data, overrides) {
-        $log.debug('ManifestServiceWrapper initialize w/data');
+        //$log.debug('ManifestServiceWrapper initialize w/data');
         self.ms = new ManifestService($log, $rootScope);
         return self.ms.initialize(data, overrides);
       }
@@ -306,16 +307,16 @@
         return self.ms.setPageId(pageId, componentIdx);
       }
 
-      this.getAll = getAll;
-      this.getComponent = getComponent;
-      this.getFirst = getFirst;
-      this.getLang = getLang;
-      this.getNextPageId = getNextPageId;
-      this.getPageId = getPageId;
-      this.goToNextPage = goToNextPage;
-      this.initialize = initialize;
-      this.setLang = setLang;
-      this.setPageId = setPageId;
+      self.getAll = getAll;
+      self.getComponent = getComponent;
+      self.getFirst = getFirst;
+      self.getLang = getLang;
+      self.getNextPageId = getNextPageId;
+      self.getPageId = getPageId;
+      self.goToNextPage = goToNextPage;
+      self.initialize = initialize;
+      self.setLang = setLang;
+      self.setPageId = setPageId;
     }; // end Service
 
     return new Service();
@@ -527,14 +528,14 @@
       var cmp;
       if (!idx) {
         // idx not specified, get next using services idx
-        $log.debug('ManifestService::getComponent: getNextComponent');
+        //$log.debug('ManifestService::getComponent: getNextComponent');
         cmp = getNextComponent();
         // initialize the component
         initializeComponent(cmp);
       } else {
         idx = deserializeIdx(idx);
         setComponentIdx(idx);
-        $log.debug('ManifestService::getComponent: find component:', idx);
+        //$log.debug('ManifestService::getComponent: find component:', idx);
         // traverse idx array to retrieve this particular cmp
         cmp = getData()[idx[0]];
         if (!!cmp) {
@@ -542,27 +543,27 @@
             if (j > 0) {
               var components = cmp.components;
 
-              $log.debug('ManifestService::getComponent: looking for components in ', components);
+              //$log.debug('ManifestService::getComponent: looking for components in ', components);
               if (!!components) {
                 cmp = components[idx[j]];
                 if (!cmp) {
-                  $log.debug('ManifestService::getComponent: no components in travers ', components);
+                  //$log.debug('ManifestService::getComponent: no components in travers ', components);
                   // child idx out of range
                   return null;
                 }
               } else {
                 // no children
-                $log.debug('ManifestService::getComponent: no children ');
+                //$log.debug('ManifestService::getComponent: no children ');
                 return null;
               }
             }
           }
         } else {
           // root index out of range
-          $log.debug('ManifestService::getComponent: no root');
+          //$log.debug('ManifestService::getComponent: no root');
           return null;
         }
-        $log.debug('ManifestService::getComponent: found:', idx, cmp);
+        //$log.debug('ManifestService::getComponent: found:', idx, cmp);
       }
       return cmp;
     };
@@ -642,90 +643,38 @@
       }
       setComponentIdx(null);
       // Not sure if this impacts anything else, so tracking page component ID differently
-      pageComponentIdx = componentIdx;
+      self.pageComponentIdx = componentIdx;
       self.pageId = pageId;
       $rootScope.$broadcast('npPageIdChanged', pageId);
     };
     self.getNextPageId = function () {
-      var thisPageId = self.getPageId();
-      var
-        nextPage,
-        nextPageComponentIdx,
-        i = thisPageId.substring(thisPageId.length - 1),
-        pageParentComponent,
-        pageParentComponentId = thisPageId.substring(0, thisPageId.length - 1);
-      if (!thisPageId) {
-        $log.warn('ManifestService::goToNextPage | thisPage is not valid');
-        return;
-      }
-      i = parseInt(i, 10);
-      i++;
-      pageParentComponentId = pageParentComponentId + i;
-      pageParentComponent = self.getComponent(pageParentComponentId);
-      return nextPage = pageParentComponentId;
-    };
-    self.getNextPageIdx = function () {
-      var thisPageId = self.getPageId();
-      var
-        nextPageComponentIdx,
-        i,
-        pageParentComponent,
-        pageParentComponentIdx = pageComponentIdx.slice(0);
-      if (!thisPageId) {
-        $log.warn('ManifestService::goToNextPage | thisPage is not valid');
-        return;
-      }
-      i = parseInt(pageParentComponentIdx.pop(), 10);
-      i++;
-      pageParentComponent = self.getComponent(pageParentComponentIdx);
-      for (/* initialized above*/; i < pageParentComponent.components.length; i++) {
-        var component = pageParentComponent.components[i];
-        if (component.type === 'npPage') {
-          if (component.data.id === thisPageId) {
-            continue;
-          }
-          return nextPageComponentIdx = component.idx;
-        }
-      }
-    };
-    function goToFirstPage() {
-      $log.debug('ManifestService::goToFirstPage | begin');
-      var firstPage = self.getFirst('npPage');
-      $log.debug('ManifestService::goToFirstPage | found page', firstPage);
-
-      self.setPageId(firstPage.data.id, firstPage.idx);
-    }
-
-    self.goToFirstPage = goToFirstPage;
-
-    self.goToNextPage = function () {
-      var thisPageId = self.getPageId();
       var nextPage,
         nextPageComponentIdx,
         i,
         pageParentComponent,
-        pageParentComponentIdx = pageComponentIdx.slice(0); // copy the array stack here so we can mangle it
+        pageParentComponentIdx,
+        thisPageId = self.getPageId();
+
+        $log.debug('ManifestService::getNextPageId', self);
       if (!thisPageId) {
-        $log.warn('ManifestService::goToNextPage | thisPage is not valid');
+        $log.warn('ManifestService::getNextPageId | thisPage is not valid');
         return;
       }
+
+      pageParentComponentIdx = self.pageComponentIdx.slice(0); // copy the array stack here so we can mangle it
+
       // We need to start looking for the component after current page component
       i = parseInt(pageParentComponentIdx.pop(), 10); // pop this child off the array so we can have the parent
       i++; // let's always start with the index after ours
-      //$log.debug('ManifestService::goToNextPage | for pageId, componentIdx', thisPageId, componentIdx);
+      //$log.debug('ManifestService::getNextPageId | for pageId, componentIdx', thisPageId, componentIdx);
       pageParentComponent = self.getComponent(pageParentComponentIdx);
       for (/* initialized above*/; i < pageParentComponent.components.length; i++) {
         var component = pageParentComponent.components[i];
-        //$log.debug('ManifestService::goToNextPage | -- Evaluating component', component);
+        $log.debug('ManifestService::getNextPageId | -- Evaluating component', component);
         if (component.type === 'npPage') {
-          //$log.debug('ManifestService::goToNextPage | --> found npPage');
-          console.log(
-            '\n::::::::::::::::::::::::::::::::::::::component.type===component.type:::::::::::::::::::::::::::::::::::::::::::::::::',
-            '\n::component.type::', component.type,
-            '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-          );
+          //$log.debug('ManifestService::getNextPageId | --> found npPage');
           if (component.data.id === thisPageId) {
-            //$log.debug('ManifestService::goToNextPage | --> ignoring thisPage');
+            //$log.debug('ManifestService::getNextPageId | --> ignoring thisPage');
             continue;
           }
           nextPage = component.data.id;
@@ -740,7 +689,103 @@
 //                                '\n::nextPageComponentIdx::', nextPageComponentIdx,
 //                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
 //                                );
-          //$log.debug('ManifestService::goToNextPage | --> found nextPage, nextPageComponentIdx', nextPage, nextPageComponentIdx);
+          $log.debug('ManifestService::getNextPageId | --> found nextPage, nextPageComponentIdx', nextPage, nextPageComponentIdx);
+          break;
+        }
+      }
+      return nextPage;
+    };
+    self.getNextPageIdx = function () {
+      var thisPageId = self.getPageId();
+      var nextPage,
+        nextPageComponentIdx,
+        i,
+        pageParentComponent,
+        pageParentComponentIdx = self.pageComponentIdx.slice(0); // copy the array stack here so we can mangle it
+      if (!thisPageId) {
+        $log.warn('ManifestService::getNextPageIdx | thisPage is not valid');
+        return;
+      }
+      // We need to start looking for the component after current page component
+      i = parseInt(pageParentComponentIdx.pop(), 10); // pop this child off the array so we can have the parent
+      i++; // let's always start with the index after ours
+      //$log.debug('ManifestService::getNextPageIdx | for pageId, componentIdx', thisPageId, componentIdx);
+      pageParentComponent = self.getComponent(pageParentComponentIdx);
+      for (/* initialized above*/; i < pageParentComponent.components.length; i++) {
+        var component = pageParentComponent.components[i];
+        $log.debug('ManifestService::getNextPageIdx | -- Evaluating component', component);
+        if (component.type === 'npPage') {
+          //$log.debug('ManifestService::getNextPageIdx | --> found npPage');
+          if (component.data.id === thisPageId) {
+            //$log.debug('ManifestService::getNextPageIdx | --> ignoring thisPage');
+            continue;
+          }
+          nextPage = component.data.id;
+          nextPageComponentIdx = component.idx;
+//                        console.log(
+//                                '\n::::::::::::::::::::::::::::::::::::::component.type======:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                '\n::component::', component,
+//                                '\n::component.data::', component.data,
+//                                '\n::component.data.id::', component.data.id,
+//                                '\n::component.data.last::', component.data.last,
+//                                '\n::nextPage::', nextPage,
+//                                '\n::nextPageComponentIdx::', nextPageComponentIdx,
+//                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                );
+          $log.debug('ManifestService::getNextPageIdx | --> found nextPage, nextPageComponentIdx', nextPage, nextPageComponentIdx);
+          break;
+        }
+      }
+      return nextPageComponentIdx;
+    };
+    function goToFirstPage() {
+      //$log.debug('ManifestService::goToFirstPage | begin');
+      var firstPage = self.getFirst('npPage');
+      //$log.debug('ManifestService::goToFirstPage | found page', firstPage);
+
+      self.setPageId(firstPage.data.id, firstPage.idx);
+    }
+
+    self.goToFirstPage = goToFirstPage;
+
+    self.goToNextPage = function () {
+      var thisPageId = self.getPageId();
+      var nextPage,
+        nextPageComponentIdx,
+        i,
+        pageParentComponent,
+        pageParentComponentIdx = self.pageComponentIdx.slice(0); // copy the array stack here so we can mangle it
+      if (!thisPageId) {
+        $log.warn('ManifestService::goToNextPage | thisPage is not valid');
+        return;
+      }
+      // We need to start looking for the component after current page component
+      i = parseInt(pageParentComponentIdx.pop(), 10); // pop this child off the array so we can have the parent
+      i++; // let's always start with the index after ours
+      //$log.debug('ManifestService::goToNextPage | for pageId, componentIdx', thisPageId, componentIdx);
+      pageParentComponent = self.getComponent(pageParentComponentIdx);
+      for (/* initialized above*/; i < pageParentComponent.components.length; i++) {
+        var component = pageParentComponent.components[i];
+        $log.debug('ManifestService::goToNextPage | -- Evaluating component', component);
+        if (component.type === 'npPage') {
+          $log.debug('ManifestService::goToNextPage | --> found npPage');
+          if (component.data.id === thisPageId) {
+            $log.debug('ManifestService::goToNextPage | --> ignoring thisPage');
+            continue;
+          }
+          nextPage = component.data.id;
+          nextPageComponentIdx = component.idx;
+                        //console.log(
+                        //        '\n::::::::::::::::::::::::::::::::::::::component.type======:::::::::::::::::::::::::::::::::::::::::::::::::',
+                        //        '\n::component::', component,
+                        //        '\n::component.data::', component['data'],
+                        //        '\n::component.data.id::', component.data.id,
+                        //        '\n::component.data.last::', component.data.last,
+                        //        '\n::nextPage::', nextPage,
+                        //        '\n::nextPageComponentIdx::', nextPageComponentIdx,
+                        //        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                        //        );
+          $log.debug('ManifestService::goToNextPage | --> found nextPage, nextPageComponentIdx', nextPage, nextPageComponentIdx);
           break;
         }
       }
@@ -758,7 +803,7 @@
         self.setPageId(nextPage, nextPageComponentIdx);
         return true;
       }
-      //$log.debug('ManifestService::goToNextPage | no valid next page found, returning false');
+      $log.debug('ManifestService::goToNextPage | no valid next page found, returning false');
       return false;
     };
     self.initialize = function (data, overrides) {
@@ -781,18 +826,18 @@
       }
 
       var cmp = self.getComponent();
-      $log.debug('ManifestService::initialize:initialParse', cmp);
+      //$log.debug('ManifestService::initialize:initialParse', cmp);
       while (!!cmp) {
         cmp = self.getComponent();
       }
 
-      $log.debug('ManifestService::initialize:manifest data:', getData());
+      //$log.debug('ManifestService::initialize:manifest data:', getData());
       manifestInitialized = true;
 
       //goToFirstPage();
       setComponentIdx(null);
     };
-  }
+  };
 })();
 
 /* jshint -W003, -W117, -W004 */
@@ -1042,7 +1087,7 @@
 
   /** @ngInject */
   function TrackingService($log, $rootScope, ConfigService /*, $timeout, $http, $q */) {
-    $log.warn('\nTrackingService::Init\n');
+    $log.debug('\nTrackingService::Init\n');
 
     var service = {
       trackEvent: angular.noop,
@@ -1100,10 +1145,10 @@
       config = ConfigService.getConfig();
 
     if (config.hasOwnProperty('assessmentIO') && typeof config.assessmentIO === 'object' && config.assessmentIO.hasOwnProperty('updateFinal')) {
-      $log.debug('using assessmentIO from config');
+      $log.debug('[Assessment] using assessmentIO from config');
       setIO(config.assessmentIO);
     } else {
-      $log.debug('using default assessmentIO');
+      $log.debug('[Assessment] using default assessmentIO');
     }
 
     // NOTE: this function is run below to initialize this service
@@ -1210,7 +1255,7 @@
       if (!isNaN(newMinPassing)) {
 
         if (newMinPassing > 1) {
-          $log.warn('NP assessment::setMinPassing | minPassing should be a fraction of 1. It is unlikely users will pass this assessment.', newMinPassing);
+          $log.warn('[Assessment::setMinPassing] minPassing should be a fraction of 1. It is unlikely users will pass this assessment.', newMinPassing);
         }
 
         minPassing = newMinPassing;
@@ -1218,7 +1263,7 @@
       } else if (minPassing === -1 && config.hasOwnProperty('minPassing')) {
         minPassing = config.minPassing;
       } else if( minPassing === -1 ) {
-        $log.warn('NP assessment::setMinPassing | no minimum passing score provided to beginFor or in config; any score will pass.');
+        $log.warn('[Assessment::setMinPassing] no minimum passing score provided to beginFor or in config; any score will pass.');
         minPassing = 0;
       }
     }
@@ -1290,11 +1335,11 @@
      */
     function addPage(pageName, pageIsRequired) {
 
-      $log.info('Assessment:addPage | name, required?', pageName, pageIsRequired);
+      $log.info('[Assessment::addPage] name, required?', pageName, pageIsRequired);
 
       // look in the inventory to see if this property already exists
       if (pages.inventory.hasOwnProperty(pageName)) {
-        $log.warn('Assessment:addPage | ignoring duplicate page ' + pageName);
+        $log.warn('[Assessment::addPage] ignoring duplicate page ' + pageName);
       } else {
         pages.total++;
         pages.inventory[pageName] = pageIsRequired;
@@ -1313,7 +1358,7 @@
      * @param pageNamed string The name or ID of the page (we'll keep a stack of it)
      */
     function pageViewed(pageId) {
-      //$log.info('Assessment:pageViewed | ', pageId);
+      //$log.info('[Assessment::pageViewed]  ', pageId);
 
       if (pages.viewed.inventory[pageId] === false) {
         pages.viewed.inventory[pageId] = new Date();
@@ -1357,7 +1402,7 @@
       var requiredQuestionsInt = parseInt(newRequiredQuestions);
 
       if( isNaN(requiredQuestionsInt)) {
-        $log.error('Assessment:setRequiredQuestions | questions must be a number');
+        $log.error('[Assessment::setRequiredQuestions] questions must be a number');
         return;
       }
 
@@ -1373,11 +1418,11 @@
      */
     function addQuestion(questionName, questionIsRequired) {
 
-      $log.info('Assessment:addQuestion | name, required?', questionName, questionIsRequired);
+      $log.info('[Assessment::addQuestion] name, required?', questionName, questionIsRequired);
 
       // look in the inventory to see if this property already exists
       if (questions.inventory.hasOwnProperty(questionName)) {
-        $log.warn('Assessment:addQuestion | ignoring duplicate page ' + questionName);
+        $log.warn('[Assessment::addQuestion] ignoring duplicate page ' + questionName);
       } else {
         questions.total++;
         questions.inventory[questionName] = questionIsRequired;
@@ -1402,7 +1447,13 @@
      */
     function questionAnswered(questionId, isCorrect) {
 
-      $log.info('Assessment:questionAnswered | ', questionId, isCorrect);
+      $log.info('[Assessment::questionAnswered] ', questionId, isCorrect);
+
+      // double-check this has an entry
+      if (!questions.inventory.hasOwnProperty(questionId)) {
+        $log.warn('[Assessment::questionAnswered] answered question has no registered question, defaulting to NOT required.', questionId);
+        addQuestion(questionId, false);
+      }
 
       if (questions.answered.inventory[questionId].answered === false) {
         questions.answered.inventory[questionId].answered = new Date();
@@ -1417,7 +1468,7 @@
         }
 
       } else {
-        $log.warning('Assessment:questionAnswered | question already answered, ', questionId);
+        $log.warn('[Assessment::questionAnswered] question already answered, ', questionId);
       }
     }
 
@@ -1434,7 +1485,7 @@
      * DEBUG ONLY
      */
     function dumpState() {
-      $log.info('Assessment:dumpState | ', getAssessment());
+      $log.info('[Assessment:dumpState] ', getAssessment());
     }
 
     var service = {
@@ -1467,7 +1518,7 @@
       dumpState: dumpState
     };
 
-    $log.info('Assessment | service init');
+    $log.info('[Assessment] service init');
 
     return service;
   }
@@ -1961,8 +2012,7 @@
                         }
                         this.go = function () {
                             if (this.linkInternal) {
-                                btnLink = ManifestService.getNextPageId();
-                                ManifestService.setPageId(btnLink);
+                                ManifestService.goToNextPage();
                             } else {
                                 if (this.apiLink) {
                                     //TODO: we may need a `method` property to know what to use here
@@ -2610,7 +2660,8 @@
     angular
             .module('newplayer.component')
             .controller('npDragAndDropSelectController',
-                    function ($log, $scope, $sce, $element) {
+                    /** @ngInject */
+                    function ($log, $scope, $sce, $element, AssessmentService) {
                         var cmpData = $scope.component.data;
                         var buttonData = $scope.feedback || {};
                         $log.debug('npDragAndDropSelect::data', cmpData, buttonData);
@@ -2627,6 +2678,9 @@
                         $scope.content = cmpData.content;
                         $scope.ID = cmpData.id;
                         $scope.select = cmpData.select;
+
+                        AssessmentService.addQuestion(cmpData.id, !!cmpData.required);
+
                         //////////////////////////////////////////////////////////////////////////////////////
                         //set drag and drag end event handlers
                         //////////////////////////////////////////////////////////////////////////////////////
@@ -2648,7 +2702,8 @@
             //////////////////////////////////////////////////////////////////////////////////////
             //set evaluate button logic
             //////////////////////////////////////////////////////////////////////////////////////
-            .directive('npDragAndDropSelectEvaluate', function () {
+            /** @ngInject */
+            .directive('npDragAndDropSelectEvaluate', function ($log, AssessmentService) {
                 return {
                     restrict: 'A',
                     link: function ($scope, $element, $attrs) {
@@ -2657,6 +2712,7 @@
                         //////////////////////////////////////////////////////////////////////////////////////
                         setTimeout(function () {
                             $scope.$apply(function () {
+                              var cmpData = $scope.component.data;
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //on ready set states
                                 //////////////////////////////////////////////////////////////////////////////////////
@@ -2694,7 +2750,11 @@
                                 $scope.evaluate = function () {
                                     hitAreaSelectedLength = $("[data-match=selected]").length;
                                     hitAreaSelectedIncorrect = $("[data-match=skeletor]").length;
-                                    $('.hit-area').each(function () {
+
+                                  var isPassing = false;
+
+                                    // TODO: Remove or re-enable, this doesn't appear to have a correlation with the code below
+                                    //$('.hit-area').each(function () {
                                         if (Number(hitAreaLength) === Number(hitAreaSelectedLength) && (hitAreaSelectedIncorrect === 0)) {
                                             TweenMax.to($('.select-response-correct'), 0.75, {
                                                 autoAlpha: 1,
@@ -2706,6 +2766,7 @@
                                                 scale: 0.25,
                                                 ease: Power4.easeOut
                                             });
+                                          isPassing = true;
                                         } else {
                                             TweenMax.to($('.select-response-correct'), 0.75, {
                                                 autoAlpha: 0,
@@ -2717,8 +2778,10 @@
                                                 scale: 1,
                                                 ease: Power4.easeOut
                                             });
+                                          isPassing = false;
                                         }
-                                    });
+                                    //});
+                                  AssessmentService.questionAnswered(cmpData.id, isPassing);
                                 };
                             });
                         });
@@ -2775,7 +2838,7 @@
                                     ease: Power4.easeOut
                                 });
                                 //////////////////////////////////////////////////////////////////////////////////////
-                                //shuffle that 
+                                //shuffle that
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 function shuffle() {
                                     $("#draggableButtons").each(function () {
@@ -2955,6 +3018,7 @@
         return new Directive();
     }
 })();
+
 /* jshint -W003, -W117 */
 (function () {
     'use strict';
@@ -3758,7 +3822,7 @@
   /** @ngInject */
     .controller('npQuizController',
     function ($log, $scope, AssessmentService) {
-      var minPassing, cmpData = $scope.component.data;
+      var minPassing, i, j, lastComponent, lastComponentIndex, nLastComponent, nLastComponentIndex, cmpData = $scope.component.data;
       $log.debug('npQuiz::data', cmpData);
 
       if( cmpData.hasOwnProperty('assessed') && parseInt(cmpData.assessed) === 1 ) {
@@ -3767,6 +3831,38 @@
 
           if( minPassing > 1) {
             minPassing = minPassing / 100;
+          }
+        }
+
+        var getResultsBtn = {
+          "type": "npButton",
+          "data": {
+            "link": "",
+            "type": "btn-next",
+            "class": "",
+            "content": "See Results"
+          },
+          "components": [
+          ]
+        };
+
+        // add the results button if the last page is a npAsResult
+        lastComponentIndex = $scope.component.components.length - 1;
+        if( lastComponentIndex >= 0 ) {
+          lastComponent = $scope.component.components[lastComponentIndex];
+
+
+          if( lastComponent ) {
+            for( i = 0; i < lastComponent.components.length; i++ ) {
+              $log.debug('npQuiz: looking for npAsResult', lastComponent.components[i]);
+              if( lastComponent.components[i].type === 'npAsResult' ) {
+                nLastComponentIndex = $scope.component.components.length - 2;
+
+                if( nLastComponentIndex >= 0 ) {
+                  $scope.component.components[nLastComponentIndex].components.push(getResultsBtn);
+                }
+              }
+            }
           }
         }
 
@@ -3796,14 +3892,14 @@
   angular
     .module('newplayer.component')
   /** @ngInject */
-    .controller('npQuizSummaryController',
+    .controller('npAsResultController',
     function ($log, $scope, $rootScope, $sce, $element, $filter,
               i18nService, ManifestService, AssessmentService) {
       var i,
           vm = this,
           cmpData = $scope.component.data;
 
-      $log.info('npQuizSummaryController::Init\n');
+      $log.info('npAsResultController::Init\n');
 
       vm.minScore = AssessmentService.getMinPassing();
       vm.score = AssessmentService.getScore();
@@ -4669,7 +4765,7 @@
             .module('newplayer.component')
             /** @ngInject */
             .controller('npTriviaController',
-                    function ($log, $scope, $rootScope, $timeout, ManifestService, $sce) {
+                    function ($log, $scope, $rootScope, $timeout, $sce, ManifestService, AssessmentService) {
                         var vm = this;
                         var cmpData = $scope.component.data;
 //                        var pagesLen = $scope.components.length;
@@ -4679,11 +4775,10 @@
                         vm.type = cmpData.type;
                         vm.currentPage = 0;
                         vm.feedback = '';
-//                        vm.assment = AssessmentService();
-//                        vm.assment.setRequiredPages(pagesLen);
-                        vm.seenComponents = _.shuffle($scope.components);
-                        vm.pageId = vm.seenComponents[0].data.id;
-                        vm.difficulty = vm.seenComponents[0].components[0].data.difficulty || 0;
+                        vm.pageId = cmpData.id;
+                        vm.difficulty = cmpData.difficulty || 0;
+                        //AssessmentService.addPage(cmpData.id, cmpData.required);
+
                         //////////////////////////////////////////////////////////////////////////////////////
                         //get ready
                         //////////////////////////////////////////////////////////////////////////////////////
@@ -4699,21 +4794,30 @@
                                 });
                             });
                         });
+
+                        /* NOTE: commented 2015-04-20 cw77, this disables shuffling of pages */
                         // go to the first page, since pages were shuffled
-                        $timeout(function () {
-                            ManifestService.setPageId(vm.pageId);
-                        });
+//                        vm.assment = AssessmentService();
+//                        vm.assment.setRequiredPages(pagesLen);
+//                        vm.seenComponents = _.shuffle($scope.components); // re-enable for more shuffle
+//                        vm.seenComponents = $scope.components;
+//                        vm.pageId = vm.seenComponents[0].data.id;
+//                        vm.difficulty = vm.seenComponents[0].components[0].data.difficulty || 0;
+                        //$timeout(function () {
+                        //    ManifestService.setPageId(vm.pageId);
+                        //});
                         $rootScope.$on('question.answered', function (evt, correct) {
                             if (correct) {
-                                vm.assment.pageViewed();
-                                vm.currentPage = vm.assment.getPageviewsCount();
-                                vm.pageId = vm.seenComponents[vm.currentPage] ? vm.seenComponents[vm.currentPage].data.id : '';
-                                ManifestService.setPageId(vm.pageId);
+                              /* NOTE: commented 2015-04-20 cw77, this disables shuffling of pages */
+                              //AssessmentService.pageViewed();
+                              //vm.currentPage = vm.assment.getPageviewsCount();
+                              //vm.pageId = vm.seenComponents[vm.currentPage] ? vm.seenComponents[vm.currentPage].data.id : '';
+                              //  ManifestService.setPageId(vm.pageId);
                                 $rootScope.$emit('spin-to-win');
                                 // end of the trivia questions
                                 // TODO - add this message the template and set the two values
                                 // here in the controller
-                                // NOTE: This text should come from the app 
+                                // NOTE: This text should come from the app
 //  min-height: 740px;
                                 if (!vm.pageId) {
                                     vm.feedback = 'Good job, you scored 5,000 points out of 7,500 possible.';
@@ -4729,6 +4833,320 @@
                     }
             );
 })();
+
+(function () {
+    'use strict';
+    angular
+            .module('newplayer.component')
+            /** @ngInject */
+            .controller('npAsQuestionController',
+                    function ($log, $scope, $attrs, $rootScope, ManifestService, $sce, $element, AssessmentService) {
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //set that
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        var cmpData = $scope.component.data,
+                          vm = this;
+                        $log.debug('npAsQuestion::data', cmpData);
+                        vm.id = cmpData.id;
+                        vm.content = $sce.trustAsHtml(cmpData.content);
+                        vm.type = cmpData.type;
+                        vm.feedback = '';
+                        vm.canContinue = false;
+                        vm.answers = [];
+                        var feedback = cmpData.feedback;
+                        var feedbackLabel = $element.find('.question-feedback-label');
+                        var negativeFeedbackIcon = '';
+                        var positiveFeedbackIcon = '';
+
+                      AssessmentService.addQuestion(vm.id, !!cmpData.required);
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //build that
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        setTimeout(function () {
+                            $scope.$apply(function () {
+                                TweenMax.set($(".response-item"), {
+                                    autoAlpha: 0,
+                                    scale: 0.5,
+                                    force3D: true
+                                });
+                                TweenMax.staggerTo($(".response-item"), 2, {
+                                    scale: 1,
+                                    autoAlpha: 1,
+                                    delay: 0.75,
+                                    ease: Power4.easeOut,
+                                    force3D: true
+                                }, 0.2);
+                            });
+                        });
+                      vm.registerAnswer = function(idx, answer) {
+                        vm.answers[idx] = answer;
+                      };
+                        vm.update = function (event) {
+                            $log.debug('npAsQuestion::answer changed');
+                            if (feedback.immediate) {
+                                vm.feedback = '';
+                                negativeFeedbackIcon = $element.find('.negative-feedback-icon');
+                                positiveFeedbackIcon = $element.find('.positive-feedback-icon');
+                                TweenMax.set(negativeFeedbackIcon, {
+                                    autoAlpha: 0,
+                                    scale: 2.5,
+                                    force3D: true
+                                });
+                                TweenMax.set(positiveFeedbackIcon, {
+                                    autoAlpha: 0,
+                                    scale: 2.5,
+                                    force3D: true
+                                });
+                            }
+                        };
+                        vm.evaluate = function () {
+                            var answerIdx,chkAnswers,
+                                isCorrectAnswer = true,
+                                $checkbox = false,
+                                $checked = false;
+                            negativeFeedbackIcon = $element.find('.negative-feedback-icon');
+                            positiveFeedbackIcon = $element.find('.positive-feedback-icon');
+                            TweenMax.to(negativeFeedbackIcon, 0.25, {
+                                autoAlpha: 0,
+                                scale: 2.5,
+                                force3D: true
+                            });
+                            TweenMax.to(positiveFeedbackIcon, 0.25, {
+                                autoAlpha: 0,
+                                scale: 2.5,
+                                force3D: true
+                            });
+                            //chkAnswers = ManifestService.getAll('npAnswer', $scope.cmpIdx);
+                            //$checkbox = $element.find('.checkbox-x');
+                            //$checked = $element.find('.checkbox-x[checked]');
+                            $log.debug('npAsQuestion::evaluating type to check', cmpData);
+
+
+
+                                switch (cmpData.type) {
+                                    case 'checkbox':
+
+                                      $log.debug('npAsQuestion::evaluating checkboxes', vm.answers, vm.answers.length);
+                                      for( answerIdx in vm.answers )   {
+                                        var answer = vm.answers[answerIdx];
+
+                                        $log.debug('npAsQuestion: evaluating checkbox', answerIdx, answer);
+                                        isCorrectAnswer = isCorrectAnswer && answer.checked === answer.isCorrect;
+
+                                        if( !isCorrectAnswer ) {
+                                          break;
+                                        }
+                                      }
+                                        break;
+                                    case 'text':
+                                        var txtAnswer = ManifestService.getFirst('npAnswer', $scope.cmpIdx);
+                                        var key = txtAnswer.data.correct;
+                                        var regExp, pat, mod = 'i';
+                                        if (angular.isString(key)) {
+                                            if (key.indexOf('/') === 0) {
+                                                pat = key.substring(1, key.lastIndexOf('/'));
+                                                mod = key.substring(key.lastIndexOf('/') + 1);
+                                            }
+                                        } else if (angular.isArray(key)) {
+                                            pat = '^(' + key.join('|') + ')$';
+                                        }
+                                        regExp = new RegExp(pat, mod);
+                                        if (!regExp.test(vm.answer)) {
+                                            if (angular.isObject(txtAnswer.data.feedback) && angular.isString(txtAnswer.data.feedback.incorrect)) {
+                                                vm.feedback = txtAnswer.data.feedback.incorrect;
+                                                feedbackLabel.remove();
+                                            }
+                                            isCorrectAnswer = false;
+                                        } else {
+                                            if (angular.isObject(txtAnswer.data.feedback) && angular.isString(txtAnswer.data.feedback.correct)) {
+                                                vm.feedback = txtAnswer.data.feedback.correct;
+                                                feedbackLabel.remove();
+                                            }
+                                        }
+                                        break;
+                                }
+
+
+                          AssessmentService.questionAnswered(vm.id, isCorrectAnswer);
+                            $log.debug('npAsQuestion::evaluate:isCorrect', isCorrectAnswer);
+                            // set by ng-model of npAnswer's input's
+//                            if (feedback.immediate && vm.feedback === '') {
+                            feedbackLabel.remove();
+                            if (isCorrectAnswer) {
+                                vm.feedback = feedback.correct;
+                                vm.canContinue = true;
+                                TweenMax.to(positiveFeedbackIcon, 0.75, {
+                                    autoAlpha: 1,
+                                    scale: 1,
+                                    force3D: true
+                                });
+                            } else {
+                                vm.feedback = feedback.incorrect;
+                                vm.canContinue = false;
+                                TweenMax.to(negativeFeedbackIcon, 0.75, {
+                                    autoAlpha: 1,
+                                    scale: 1,
+                                    force3D: true
+                                });
+                            }
+//                            }
+                        };
+                        vm.nextPage = function (evt) {
+                            evt.preventDefault();
+                            if (vm.canContinue) {
+                                $rootScope.$emit('question.answered', true);
+                            }
+                        };
+                    }
+            )
+            .directive('questionFeedbackBuild', function () {
+                return function ($scope, $element, attrs) {
+                    var negativeFeedbackIcon = '';
+                    var postiveFeedbackIcon = '';
+                    setTimeout(function () {
+                        $scope.$apply(function () {
+//                            negativeFeedbackIcon = $element.find('.hotspotButton');
+                            function onPageLoadBuild() {
+                                negativeFeedbackIcon = $('.negative-feedback-icon');
+                                postiveFeedbackIcon = $('.positive-feedback-icon');
+                                TweenMax.set(negativeFeedbackIcon, {autoAlpha: 0, scale: 2.5, force3D: true});
+                                TweenMax.set(postiveFeedbackIcon, {autoAlpha: 0, scale: 2.5, force3D: true});
+                            }
+                            onPageLoadBuild();
+                        });
+                    });
+                };
+            })
+            /** @ngInject */
+            .run(
+                    function ($log, $rootScope) {
+                        $log.debug('npAsQuestion::component loaded!');
+                    }
+            );
+})();
+
+(function () {
+    'use strict';
+    angular
+            .module('newplayer.component')
+            /** @ngInject */
+            .controller('npAsAnswerController',
+                    function ($log, $scope, $sce, $element) {
+                        var vm = this;
+                        var cmpData = $scope.component.data || {};
+                        this.id = cmpData.id;
+                        this.label = $sce.trustAsHtml(cmpData.label);
+
+//                                checkmark = $element.find('svg#Layer_1'),
+//                                cmpData = $scope.component.data || {}; // already defined above
+                        vm.isCorrect = cmpData.correct;
+                      // updateCheck is currently not defined but needed. Should it be the code below?
+                      var updateCheck = angular.noop;
+//                        var updateCheck = function () {
+//                            var tweenOptions = {ease: Power3.easeOut};
+
+//                            if (vm.checked) {
+//                                tweenOptions.autoAlpha = 1;
+//                            } else {
+//                                tweenOptions.autoAlpha = 0;
+//                            }
+                        //$log.debug('updateCheck', checkmark, tweenOptions);
+//                            TweenMax.to(checkmark, 0.25, tweenOptions);
+//                        };
+                        //$log.debug('npAsAnswer::data', cmpData);
+                        vm.id = cmpData.id;
+                        vm.label = $sce.trustAsHtml(cmpData.label);
+                        vm.question = null;
+                        vm.checked = false;
+                        vm.answer = vm;
+
+                        vm.setQuestion = function (idx, question) {
+                          $log.debug('setQuestion', idx, question);
+                            //$scope.question = question;
+                            question.registerAnswer(idx, this);
+                        };
+
+
+//                        vm.clicked = function ($event) {
+//                            //$log.debug('npAsAnswer clicked', $event, cmpData);
+//                            if (vm.question.type === 'checkbox') {
+//                                vm.checked = !vm.checked;
+//                                vm.question.answerChanged(vm);
+//                            } else if (vm.question.type === 'radio') {
+//                                vm.checked = true;
+//                                vm.question.answerChanged(vm);
+//                            }
+////                            updateCheck();
+//                        };
+//                        vm.clear = function () {
+//                            vm.checked = false;
+////                            updateCheck();
+//                        };
+                    }
+            )
+            .directive('npAsAnswerCheckbox', function () {
+                return function ($scope, $element, $sce, $log) {
+                    var cmpData = $scope.component.data || {};
+//                    this.label = $sce.trustAsHtml(cmpData.label);
+
+                    setTimeout(function () {
+                        $scope.$apply(function () {
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            //set states
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            var checkboxX = $element.find('.checkbox-x');
+                            TweenMax.set(checkboxX, {autoAlpha: 0, scale: 2.5, force3D: true});
+                            $scope.update = function (event) {
+
+                                var clickedCheckbox = event.currentTarget;
+                                var $checkbox = $(clickedCheckbox).find('.checkbox-x');
+                                $checkbox.attr('checked', !$checkbox.attr('checked'), ('true'));
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //update states on click
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                if ($checkbox.attr('checked') === 'checked') {
+//                                    console.log(
+//                                            '\n::::::::::::::::::::::::::::::::::::::npAsAnswerCheckbox::inside:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                            '\n::this::', this,
+//                                            '\n::this.npAsAnswer::', this.npAsAnswer,
+//                                            '\n::this.label::', this.label,
+//                                            '\n::$checkbox.attr(checked)::', $checkbox.attr('checked'),
+//                                            '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                            );
+
+                                    $scope.npAnswer.checked = true;
+                                    TweenMax.to($(clickedCheckbox).find('.checkbox-x'), 0.75, {
+                                        autoAlpha: 1,
+                                        scale: 0.7,
+                                        ease: Power3.easeOut
+                                    });
+                                } else if ($checkbox.attr('checked') !== 'checked') {
+                                    TweenMax.to($(clickedCheckbox).find('.checkbox-x'), 0.25, {
+                                        autoAlpha: 0,
+                                        scale: 2.5,
+                                        ease: Power3.easeOut
+                                    });
+
+                                  $scope.npAnswer.checked = false;
+                                }
+
+                              //console.debug('npAsAnswer directive answer changed', $scope.npQuestion, $scope.npAnswer);
+                              //$scope.npQuestion.answerChanged($scope.answer);
+                            };
+                        });
+                    });
+                };
+            })
+            /** @ngInject */
+            .run(
+                    function ($log, $rootScope) {
+                        //$log.debug('npAsAnswer::component loaded!');
+                    }
+            );
+})();
+
+
+
 
 (function() {
   'use strict';
@@ -5644,6 +6062,146 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
   );
 
 
+  $templateCache.put('scripts/component/npAsAnswer/npAsAnswer.html',
+    "<div class=\"debug\">\n" +
+    "    <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
+    "</div>\n" +
+    "<div np-as-answer-checkbox ng-if=\"npQuestion.type === 'checkbox'\" class=\"row np-cmp-wrapper {{component.type}} checkbox answer-wrapper\" ng-controller=\"npAnswerController as npAnswer\" ng-init=\"npAnswer.setQuestion(component.idx, npQuestion);\" ng-click=\"update($event)\">\n" +
+    "    <div class=\"col-xs-1 npAnswer-checkbox np-cmp-main answer-checkbox\" name=\"checkbox{{npAnswer.id}}\" ng-model=\"npQuestion.answer[component.idx]\" value=\"{{component.idx}}\" id=\"{{npAnswer.id}}\">\n" +
+    "        <div class=\"checkbox-box\">\n" +
+    "            <svg  version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
+    "                <style type=\"text/css\">\n" +
+    "                    <![CDATA[\n" +
+    "                    .st0{fill:url(#SVGID_1_);}\n" +
+    "                    .st1{display:inline;}\n" +
+    "                    .st2{display:none;}\n" +
+    "                    ]]>\n" +
+    "                </style>\n" +
+    "                <g id=\"Layer_2\">\n" +
+    "                    <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"0.8359\" y1=\"0.9399\" x2=\"367.8515\" y2=\"221.4724\">\n" +
+    "                        <stop  offset=\"0\" style=\"stop-color:#CAA04C\"/>\n" +
+    "                        <stop  offset=\"0.3497\" style=\"stop-color:#F8E4AA\"/>\n" +
+    "                        <stop  offset=\"0.638\" style=\"stop-color:#CAA04D\"/>\n" +
+    "                        <stop  offset=\"0.9816\" style=\"stop-color:#F3DB7E\"/>\n" +
+    "                    </linearGradient>\n" +
+    "                    <rect fill=\"url(#MyGradient)\" stroke=\"url(#SVGID_1_)\" vector-effect=\"non-scaling-stroke\" stroke-width=\"3\" x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
+    "                </g>\n" +
+    "            </svg>\n" +
+    "        </div>\n" +
+    "        <div class=\"checkbox-x\">\n" +
+    "            <svg version=\"1.0\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"22.121px\" height=\"22.121px\" viewBox=\"796.393 809.141 22.121 22.121\" style=\"enable-background:new 796.393 809.141 22.121 22.121;\" xml:space=\"preserve\">\n" +
+    "                <g>\n" +
+    "                    <line style=\"fill:none;stroke:#9a7d46;stroke-width:2;stroke-miterlimit:10;\" x1=\"797.453\" y1=\"830.201\" x2=\"817.453\" y2=\"810.201\"/>\n" +
+    "                    <line style=\"fill:none;stroke:#9a7d46;stroke-width:2;stroke-miterlimit:10;\" x1=\"817.453\" y1=\"830.201\" x2=\"797.453\" y2=\"810.201\"/>\n" +
+    "                </g>\n" +
+    "            </svg>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"col-xs-9 answer-content-wrapper\">\n" +
+    "        <span class=\"npAnswer-label  body-copy\" for=\"{{npAnswer.id}}_input\" ng-bind-html=\"npAnswer.label\"></span>\n" +
+    "    </div>\n" +
+    "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "</div>\n" +
+    "<div ng-if=\"npQuestion.type === 'text'\" class=\"np-cmp-wrapper {{component.type}} input-group\" ng-controller=\"npAnswerController as npAnswer\">\n" +
+    "    <!--<label class=\"npAnswer-label \" for=\"{{npAnswer.id}}_input\" ng-bind-html=\"npAnswer.label\"></label>-->\n" +
+    "    <span class=\"npAnswer-label input-group-addon answer-text-input\" for=\"{{npAnswer.id}}_input\" ng-bind-html=\"npAnswer.label\"></span>\n" +
+    "    <input type=\"text\" class=\"npAnswer-text np-cmp-main form-control answer-text-input\" name=\"text{{npAnswer.id}}\" ng-model=\"npQuestion.answer\" value=\"\" id=\"{{npAnswer.id}}_input\" ng-change=\"npQuestion.changed()\" />\n" +
+    "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "</div>\n" +
+    "<div ng-if=\"npMatch\" class=\"np-cmp-wrapper {{component.type}} matchbox\" ng-controller=\"npAnswerController as npAnswer\">\n" +
+    "    <div class=\"slide-wrapper reveal-slide rsContent\">\n" +
+    "        <label>\n" +
+    "            <span class=\"npAnswer-label\" for=\"{{npAnswer.id}}_input\" ng-bind-html=\"npAnswer.label\"></span>\n" +
+    "        </label>\n" +
+    "        <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "    </div>\n" +
+    "</div>\n"
+  );
+
+
+  $templateCache.put('scripts/component/npAsQuestion/npAsQuestion.html',
+    "<div class=\"np-cmp-wrapper {{component.type}} \" ng-controller=\"npAsQuestionController as npQuestion\" ng-submit=\"npQuestion.evaluate()\">\n" +
+    "    <!--<form class=\"np-cmp-wrapper {{component.type}} \" ng-controller=\"npQuestionController as npQuestion\" ng-submit=\"npQuestion.evaluate()\">-->\n" +
+    "    <div class=\"debug\">\n" +
+    "        <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
+    "    </div>\n" +
+    "    <p class=\"h5 quiz-label\">question:</p>\n" +
+    "    <div class=\"npQuestion-content question-text h4\" ng-bind-html=\"npQuestion.content\"></div>\n" +
+    "    <p class=\"h5 quiz-label\">answers:</p>\n" +
+    "    <div np-component class=\"response-item\" ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "    <div class=\"row\">\n" +
+    "        <button type=\"submit\" class=\"btn-submit\" ng-click=\"npQuestion.evaluate()\">\n" +
+    "            <span>Submit</span>\n" +
+    "        </button>\n" +
+    "    </div>\n" +
+    "    <!--<button id=\"next_button\" class=\"btn-default\" ng-click=\"npQuestion.nextPage($event)\">Next</button>-->\n" +
+    "    <!--    <div class=\"btn btn-default\">\n" +
+    "            <input type=\"submit\" />\n" +
+    "        </div>-->\n" +
+    "    <div question-feedback-build class=\"row\">\n" +
+    "        <div  class=\"col-sm-7 question-feedback\">\n" +
+    "            <div class=\"question-feedback-wrapper vertical-centered\">\n" +
+    "                <div class=\"positive-feedback-icon\">\n" +
+    "                    <svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n" +
+    "                         width=\"139.535px\" height=\"139.536px\" viewBox=\"665.896 1118.26 139.535 139.536\"\n" +
+    "                         enable-background=\"new 665.896 1118.26 139.535 139.536\" xml:space=\"preserve\">\n" +
+    "                        <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"486.9971\" y1=\"-44.001\" x2=\"475.1884\" y2=\"-58.8622\" gradientTransform=\"matrix(6.1102 0.342 0.342 -6.1102 -2188.8755 702.1841)\">\n" +
+    "                            <stop  offset=\"0.1882\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                            <stop  offset=\"0.3683\" style=\"stop-color:#FFEBC3\"/>\n" +
+    "                            <stop  offset=\"0.3952\" style=\"stop-color:#F7DFB1\"/>\n" +
+    "                            <stop  offset=\"0.5063\" style=\"stop-color:#D7B26A\"/>\n" +
+    "                            <stop  offset=\"0.5581\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                            <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
+    "                        </linearGradient>\n" +
+    "                        <polygon fill=\"url(#SVGID_1_)\" points=\"784.624,1164.16 768.712,1150.084 722.812,1203.939 695.271,1180.684 681.195,1196.596  724.648,1233.316 \"/>\n" +
+    "                        <path fill=\"#9A7D46\" d=\"M735.664,1257.796c-38.556,0-69.768-31.212-69.768-69.769c0-38.556,31.212-69.768,69.768-69.768  s69.768,31.212,69.768,69.768C805.432,1226.584,774.22,1257.796,735.664,1257.796z M735.664,1124.38  c-34.884,0-63.648,28.765-63.648,63.648s28.765,63.647,63.648,63.647s63.648-28.764,63.648-63.647S770.548,1124.38,735.664,1124.38z  \"/>\n" +
+    "                    </svg>\n" +
+    "                </div>\n" +
+    "                <div class=\"negative-feedback-icon\">\n" +
+    "                    <svg version=\"1.0\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"22.8px\" height=\"22.801px\" viewBox=\"599.8 837.1 22.8 22.801\" enable-background=\"new 599.8 837.1 22.8 22.801\" xml:space=\"preserve\">\n" +
+    "                        <path fill=\"#9A7D46\" d=\"M611.2,859.9c-6.3,0-11.4-5.101-11.4-11.4s5.101-11.4,11.4-11.4S622.6,842.2,622.6,848.5 S617.5,859.9,611.2,859.9z M611.2,838.1c-5.7,0-10.4,4.7-10.4,10.4s4.7,10.4,10.4,10.4s10.399-4.7,10.399-10.4 S616.9,838.1,611.2,838.1z\"/>\n" +
+    "                        <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"874.293\" y1=\"-1086.3877\" x2=\"861.2496\" y2=\"-1099.811\" gradientTransform=\"matrix(1 0 0 -1 -256 -245)\">\n" +
+    "                            <stop  offset=\"0.1642\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                            <stop  offset=\"0.1698\" style=\"stop-color:#CCA352\"/>\n" +
+    "                            <stop  offset=\"0.2532\" style=\"stop-color:#E4C682\"/>\n" +
+    "                            <stop  offset=\"0.3167\" style=\"stop-color:#F2DCA0\"/>\n" +
+    "                            <stop  offset=\"0.3527\" style=\"stop-color:#F8E4AB\"/>\n" +
+    "                            <stop  offset=\"0.4062\" style=\"stop-color:#EBD191\"/>\n" +
+    "                            <stop  offset=\"0.48\" style=\"stop-color:#DDBC74\"/>\n" +
+    "                            <stop  offset=\"0.5532\" style=\"stop-color:#D2AC5F\"/>\n" +
+    "                            <stop  offset=\"0.6249\" style=\"stop-color:#CCA352\"/>\n" +
+    "                            <stop  offset=\"0.6933\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                            <stop  offset=\"0.7957\" style=\"stop-color:#D5B05B\"/>\n" +
+    "                            <stop  offset=\"0.9955\" style=\"stop-color:#F2DA7E\"/>\n" +
+    "                            <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
+    "                        </linearGradient>\n" +
+    "                        <polygon fill=\"url(#SVGID_1_)\" points=\"605.8,856.5 611.2,851.2 616.5,856.5 619,854 613.7,848.7 619,843.4 616.5,840.8 611.2,846.1 605.9,840.8 603.4,843.4 608.7,848.7 603.3,854 \"/>\n" +
+    "                    </svg>\n" +
+    "                </div>\n" +
+    "                <div class=\"npQuestion-feedback body-copy question-feedback-text\" ng-if=\"npQuestion.feedback\" ng-bind-html=\"npQuestion.feedback\"></div>\n" +
+    "                <div class=\"question-feedback-label\">Feedback area</div>\n" +
+    "            </div\n" +
+    "        </div>\n" +
+    "        <div  class=\"col-sm-5\">\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n"
+  );
+
+
+  $templateCache.put('scripts/component/npAsResult/npAsResult.html',
+    "<div class=\"np-cmp-wrapper {{component.type}} \" ng-controller=\"npAsResultController as npResult\">\n" +
+    "\n" +
+    "  <div class=\"summary\" style=\"color: white; font-size: 1.2em;\">\n" +
+    "    {{npResult.summaryText}}\n" +
+    "\n" +
+    "    <div ng-show=\"npResult.achievementText\">{{npResult.achievementText}}</div>\n" +
+    "  </div>\n" +
+    "  <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "</div>\n"
+  );
+
+
   $templateCache.put('scripts/component/npAudio/npAudio.html',
     "<!--<div class=\"{{component.type}}\" ng-controller=\"npAudioController as npAudio\" id=\"{{npAudio.id}}\">\n" +
     "\n" +
@@ -6142,6 +6700,222 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
   );
 
 
+  $templateCache.put('scripts/component/npFinalDragAndDropMatch/npFinalDragAndDropMatch.html',
+    "<div class=\"{{component.type}} npDragAndDropMatch\" ng-controller=\"npDragAndDropMatchController as npDragAndDropMatch\" id=\"{{npDragAndDropMatch.id}}\">\n" +
+    "    <div id=\"draggableContainer\">\n" +
+    "        <div class=\"row\">\n" +
+    "            <div class=\"debug\">\n" +
+    "                <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
+    "            </div>\n" +
+    "            <div id=\"draggableButtons\" class=\"col-xs-6\">\n" +
+    "                <div drag-button ng-repeat=\"draggableButton in npDragAndDropMatch.draggableButtons\" data-reference=\"{{$index}}\"  id=\"id{{$index}}\" ng-click=\"npDragAndDropMatch.update(draggableButton)\" class=\"draggableButton box boxElements\">\n" +
+    "                    <svg class=\"completeCheck\" version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
+    "                        <style type=\"text/css\">\n" +
+    "                            <![CDATA[\n" +
+    "                            .st0{fill:url(#SVGID_1_);}\n" +
+    "                            .st1{display:inline;}\n" +
+    "                            .st2{display:none;}\n" +
+    "                            ]]>\n" +
+    "                        </style>\n" +
+    "                        <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"0\" y1=\"0\" x2=\"400\" y2=\"200\">\n" +
+    "                            <stop  offset=\"0\" style=\"stop-color:#CAA04C\"/>\n" +
+    "                            <stop  offset=\"0.3497\" style=\"stop-color:#F8E4AA\"/>\n" +
+    "                            <stop  offset=\"0.638\" style=\"stop-color:#CAA04D\"/>\n" +
+    "                            <stop  offset=\"0.9816\" style=\"stop-color:#F3DB7E\"/>\n" +
+    "                        </linearGradient>\n" +
+    "                        <rect fill=\"\" stroke=\"url(#SVGID_1_)\" stroke-width=\"3\" vector-effect=\"non-scaling-stroke\"  x=\"0\" y=\"0\" width=\"99%\" height=\"99%\"/>\n" +
+    "                        <foreignObject x=\"0%\" y=\"0\" width=\"100%\" height=\"100%\">\n" +
+    "                            <div class=\"{{draggableButton.class}} button-content\">\n" +
+    "                                <img class=\"draggableButtonImage\" ng-src=\"{{draggableButton.image}}\" alt=\"{{draggableButton.alt}}\" />\n" +
+    "                                <div class=\"draggableButtonContent body-copy-strong\" ng-bind-html=\"draggableButton.content\" ></div>\n" +
+    "                            </div>\n" +
+    "                        </foreignObject>\n" +
+    "                    </svg>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <!--<div class=\"col-two\">-->\n" +
+    "            <div class=\"col-xs-6\">\n" +
+    "                <div id=\"hitAreaWrapper\">                    \n" +
+    "                    <div ng-repeat=\"draggableButton in npDragAndDropMatch.draggableButtons\" class=\"{{hitArea.class}} hit-area boxElements\">\n" +
+    "                        <div class=\"hit-area-background\"></div>\n" +
+    "                        <svg class=\"complete-background\" version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
+    "                            <g class=\"complete-background-Layer_1\">\n" +
+    "                                <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"486.5701\" y1=\"836.5667\" x2=\"474.7614\" y2=\"851.428\" gradientTransform=\"matrix(0.9984 5.588965e-02 -5.588965e-02 0.9984 48.0441 -25.572)\">\n" +
+    "                                    <stop  offset=\"0.1882\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                    <stop  offset=\"0.3683\" style=\"stop-color:#FFEBC3\"/>\n" +
+    "                                    <stop  offset=\"0.3952\" style=\"stop-color:#F7DFB1\"/>\n" +
+    "                                    <stop  offset=\"0.5063\" style=\"stop-color:#D7B26A\"/>\n" +
+    "                                    <stop  offset=\"0.5581\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                    <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
+    "                            </g>\n" +
+    "                            <g id=\"complete-background-Layer_2\">\n" +
+    "                                <rect stroke=\"url(#SVGID_1_)\" stroke-width=\"3\" vector-effect=\"non-scaling-stroke\" fill=\"none\"  x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
+    "                            </g>\n" +
+    "                            <g id=\"complete-background-Layer_4\">\n" +
+    "                                <foreignObject  x=\"0\" y=\"0\" width=\"100%\" height=\"100%\" >\n" +
+    "\n" +
+    "<!--                                    <div question-feedback-build class=\"row\">\n" +
+    "                                        <div  class=\"col-sm-7 question-feedback\">\n" +
+    "                                            <div class=\"question-feedback-wrapper vertical-centered\">\n" +
+    "                                                <div class=\"positive-feedback-icon\">\n" +
+    "                                                    <svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n" +
+    "                                                         width=\"139.535px\" height=\"139.536px\" viewBox=\"665.896 1118.26 139.535 139.536\"\n" +
+    "                                                         enable-background=\"new 665.896 1118.26 139.535 139.536\" xml:space=\"preserve\">\n" +
+    "                                                        <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"486.9971\" y1=\"-44.001\" x2=\"475.1884\" y2=\"-58.8622\" gradientTransform=\"matrix(6.1102 0.342 0.342 -6.1102 -2188.8755 702.1841)\">\n" +
+    "                                                            <stop  offset=\"0.1882\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                                            <stop  offset=\"0.3683\" style=\"stop-color:#FFEBC3\"/>\n" +
+    "                                                            <stop  offset=\"0.3952\" style=\"stop-color:#F7DFB1\"/>\n" +
+    "                                                            <stop  offset=\"0.5063\" style=\"stop-color:#D7B26A\"/>\n" +
+    "                                                            <stop  offset=\"0.5581\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                                            <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
+    "                                                        </linearGradient>\n" +
+    "                                                        <polygon fill=\"url(#SVGID_1_)\" points=\"784.624,1164.16 768.712,1150.084 722.812,1203.939 695.271,1180.684 681.195,1196.596  724.648,1233.316 \"/>\n" +
+    "                                                        <path fill=\"#9A7D46\" d=\"M735.664,1257.796c-38.556,0-69.768-31.212-69.768-69.769c0-38.556,31.212-69.768,69.768-69.768  s69.768,31.212,69.768,69.768C805.432,1226.584,774.22,1257.796,735.664,1257.796z M735.664,1124.38  c-34.884,0-63.648,28.765-63.648,63.648s28.765,63.647,63.648,63.647s63.648-28.764,63.648-63.647S770.548,1124.38,735.664,1124.38z  \"/>\n" +
+    "                                                    </svg>\n" +
+    "                                                </div>\n" +
+    "                                                <div class=\"npQuestion-feedback body-copy question-feedback-text\" ng-if=\"npQuestion.feedback\" ng-bind-html=\"npQuestion.feedback\"></div>\n" +
+    "                                                <div class=\"question-feedback-label\">Feedback area</div>\n" +
+    "                                            </div\n" +
+    "                                        </div>\n" +
+    "                                        <div  class=\"col-sm-5\">\n" +
+    "                                        </div>\n" +
+    "                                    </div>-->\n" +
+    "                                    <div class=\"button-content\">\n" +
+    "                                        <img class=\"hitAreaImage\" ng-src=\"{{draggableButton.matchingImage}}\" alt=\"{{hitArea.alt}}\" />\n" +
+    "                                        <div class=\"hitAreaContent body-copy\" ng-bind-html=\"draggableButton.matchingContent\" ></div>\n" +
+    "                                    </div>\n" +
+    "                                    <div class=\"button-completion-content vertical-centered\">\n" +
+    "                                        <div class=\"row \" >\n" +
+    "                                            <!--<div class=\" col-xs-2\" >-->\n" +
+    "                                                <div class=\"positive-feedback-image\">\n" +
+    "                                                <svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n" +
+    "                                                     width=\"139.535px\" height=\"139.536px\" viewBox=\"665.896 1118.26 139.535 139.536\"\n" +
+    "                                                     enable-background=\"new 665.896 1118.26 139.535 139.536\" xml:space=\"preserve\">\n" +
+    "                                                    <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"486.9971\" y1=\"-44.001\" x2=\"475.1884\" y2=\"-58.8622\" gradientTransform=\"matrix(6.1102 0.342 0.342 -6.1102 -2188.8755 702.1841)\">\n" +
+    "                                                        <stop  offset=\"0.1882\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                                        <stop  offset=\"0.3683\" style=\"stop-color:#FFEBC3\"/>\n" +
+    "                                                        <stop  offset=\"0.3952\" style=\"stop-color:#F7DFB1\"/>\n" +
+    "                                                        <stop  offset=\"0.5063\" style=\"stop-color:#D7B26A\"/>\n" +
+    "                                                        <stop  offset=\"0.5581\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                                                        <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
+    "                                                    </linearGradient>\n" +
+    "                                                    <polygon fill=\"url(#SVGID_1_)\" points=\"784.624,1164.16 768.712,1150.084 722.812,1203.939 695.271,1180.684 681.195,1196.596  724.648,1233.316 \"/>\n" +
+    "                                                    <path fill=\"#9A7D46\" d=\"M735.664,1257.796c-38.556,0-69.768-31.212-69.768-69.769c0-38.556,31.212-69.768,69.768-69.768  s69.768,31.212,69.768,69.768C805.432,1226.584,774.22,1257.796,735.664,1257.796z M735.664,1124.38  c-34.884,0-63.648,28.765-63.648,63.648s28.765,63.647,63.648,63.647s63.648-28.764,63.648-63.647S770.548,1124.38,735.664,1124.38z  \"/>\n" +
+    "                                                </svg>\n" +
+    "                                            </div>\n" +
+    "                                            <!--<div class=\"\" >-->\n" +
+    "                                                <div class=\"positive-feedback-content body-copy \" ng-bind-html=\"positiveFeedback\"></div>\n" +
+    "                                            <!--</div>-->\n" +
+    "                                        </div>\n" +
+    "                                    </div>\n" +
+    "                                </foreignObject>\n" +
+    "                            </g>\n" +
+    "                        </svg>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div> \n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "</div>"
+  );
+
+
+  $templateCache.put('scripts/component/npFinalQuiz/npQuiz.html',
+    "<form class=\"np-cmp-wrapper {{component.type}}\" ng-controller=\"npQuizController as npQuiz\"\n" +
+    "      ng-submit=\"npQuiz.evaluate()\">\n" +
+    "\n" +
+    "  <div class=\"debug\">\n" +
+    "    <h3>{{component.type}} --\n" +
+    "      <small>{{component.idx}}</small>\n" +
+    "    </h3>\n" +
+    "  </div>\n" +
+    "\n" +
+    "  <div class=\"npQuiz-content h4\" ng-bind-html=\"npQuiz.content\"></div>\n" +
+    "  <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "\n" +
+    "  <div class=\"npQuiz-feedback\" ng-if=\"npQuiz.feedback\" ng-bind-html=\"npQuiz.feedback\"></div>\n" +
+    "</form>\n" +
+    "\n"
+  );
+
+
+  $templateCache.put('scripts/component/npFinalTrivia/npTrivia.html',
+    "<form class=\"np-cmp-wrapper {{component.type}}\" ng-controller=\"npTriviaController as npTrivia\" ng-submit=\"npTrivia.evaluate()\">\n" +
+    "    <div class=\"debug\">\n" +
+    "        <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
+    "    </div>\n" +
+    "    <!--    <div class=\"row\">\n" +
+    "            <div class=\"npTrivia-content h4 col-xs-12\" ng-bind-html=\"npTrivia.content\"></div>\n" +
+    "        </div>-->\n" +
+    "    <div class=\"row\">\n" +
+    "        <div class=\"col-sm-2 np-spinner\">\n" +
+    "            <div class=\"np-spinner-wrapper\">\n" +
+    "                <np-price-is-right-spinner class=\"np-spinner\" spinTime=\"2000\" ng-hide=\"!npTrivia.pageId\" data-difficulty=\"{{npTrivia.difficulty}}\">\n" +
+    "                    <div>0</div>\n" +
+    "                    <div>100</div>\n" +
+    "                    <div>200</div>\n" +
+    "                    <div>300</div>\n" +
+    "                    <div>400</div>\n" +
+    "                    <div>500</div>\n" +
+    "                    <div>600</div>\n" +
+    "                    <div>700</div>\n" +
+    "                    <div>800</div>\n" +
+    "                    <div>0</div>\n" +
+    "                    <div>100</div>\n" +
+    "                    <div>200</div>\n" +
+    "                    <div>300</div>\n" +
+    "                    <div>400</div>\n" +
+    "                    <div>500</div>\n" +
+    "                    <div>600</div>\n" +
+    "                    <div>700</div>\n" +
+    "                    <div>800</div>\n" +
+    "                    <div>900</div>\n" +
+    "                    <div>1000</div>\n" +
+    "                </np-price-is-right-spinner>\n" +
+    "                <div class=\"np-gold-border\">\n" +
+    "                    <svg  version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" viewBox=\"0 0 368 222\" xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
+    "                    <style type=\"text/css\">\n" +
+    "                        <![CDATA[\n" +
+    "                        .st0{fill:url(#SVGID_1_);}\n" +
+    "                        .st1{display:inline;}\n" +
+    "                        .st2{display:none;}\n" +
+    "                        ]]>\n" +
+    "                    </style>\n" +
+    "                    <g id=\"Layer_2\">\n" +
+    "                    <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"0.8359\" y1=\"0.9399\" x2=\"367.8515\" y2=\"221.4724\">\n" +
+    "                    <stop  offset=\"0\" style=\"stop-color:#CAA04C\"/>\n" +
+    "                    <stop  offset=\"0.3497\" style=\"stop-color:#F8E4AA\"/>\n" +
+    "                    <stop  offset=\"0.638\" style=\"stop-color:#CAA04D\"/>\n" +
+    "                    <stop  offset=\"0.9816\" style=\"stop-color:#F3DB7E\"/>\n" +
+    "                    </linearGradient>\n" +
+    "                    <rect fill=\"url(#MyGradient)\" stroke=\"url(#SVGID_1_)\" vector-effect=\"non-scaling-stroke\" stroke-width=\"3\" x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
+    "                    </g>\n" +
+    "                    </svg>\n" +
+    "                </div>\n" +
+    "                <div class=\"np-gold-pointer\">\n" +
+    "                    <svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n" +
+    "                         width=\"66.096px\" height=\"126.685px\" viewBox=\"308.824 1129.275 66.096 126.685\"\n" +
+    "                         style=\"enable-background:new 308.824 1129.275 66.096 126.685;\" xml:space=\"preserve\">\n" +
+    "                    <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"118.5967\" y1=\"-46.6729\" x2=\"105.6811\" y2=\"-62.1192\" gradientTransform=\"matrix(6.12 0 0 -6.12 -324.0952 866.6157)\">\n" +
+    "                    <stop  offset=\"0.2306\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                    <stop  offset=\"0.3901\" style=\"stop-color:#F8E4AB\"/>\n" +
+    "                    <stop  offset=\"0.4768\" style=\"stop-color:#E1C27C\"/>\n" +
+    "                    <stop  offset=\"0.5692\" style=\"stop-color:#CAA04E\"/>\n" +
+    "                    <stop  offset=\"1\" style=\"stop-color:#F3DB7F\"/>\n" +
+    "                    </linearGradient>\n" +
+    "                    <polygon style=\"fill:url(#SVGID_1_);\" points=\"374.92,1129.275 374.92,1255.96 308.824,1191.7 \"/>\n" +
+    "                    </svg>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"col-xs-10 np_row\" np-component ng-if=\"subCmp\" ng-repeat=\"component in npTrivia.seenComponents\" idx=\"{{component.idx}}\" ng-hide=\"npTrivia.pageId !== component.data.id\"></div>\n" +
+    "        <div class=\"npTrivia-feedback\" ng-if=\"npTrivia.feedback\" ng-bind-html=\"npTrivia.feedback\"></div>\n" +
+    "    </div>\n" +
+    "</form>"
+  );
+
+
   $templateCache.put('scripts/component/npFlashCards/npFlashCards.html',
     "<div np-flash-cards id=\"{{npFlashCards.id}} \" class=\"{{component.type}} np-cmp-wrapper np-flash-card\" ng-controller=\"npFlashCardsController as npFlashCards\">\n" +
     "    <div class=\"debug\">\n" +
@@ -6509,19 +7283,6 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
   );
 
 
-  $templateCache.put('scripts/component/npQuizSummary/npQuizSummary.html',
-    "<div class=\"np-cmp-wrapper {{component.type}} \" ng-controller=\"npQuizSummaryController as npSummary\">\n" +
-    "\n" +
-    "  <div class=\"summary\">\n" +
-    "    {{npSummary.summaryText}}\n" +
-    "\n" +
-    "    <div ng-show=\"npSummary.achievementText\">{{npSummary.achievementText}}</div>\n" +
-    "  </div>\n" +
-    "  <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
-    "</div>\n"
-  );
-
-
   $templateCache.put('scripts/component/npReveal/npReveal.html',
     "<div npReveal np-reveal-build id=\"{{npReveal.id}}\" class=\"{{component.type}} np-cmp-wrapper np-reveal\" ng-controller=\"npRevealController as npReveal\">\n" +
     "    <div class=\"debug\">\n" +
@@ -6637,10 +7398,11 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                </div>\n" +
     "            </div>\n" +
     "        </div>\n" +
-    "        <div class=\"col-xs-10 np_row\" np-component ng-if=\"subCmp\" ng-repeat=\"component in npTrivia.seenComponents\" idx=\"{{component.idx}}\" ng-hide=\"npTrivia.pageId !== component.data.id\"></div>\n" +
+    "        <!--<div class=\"col-xs-10 np_row\" np-component ng-if=\"subCmp\" ng-repeat=\"component in npTrivia.seenComponents\" idx=\"{{component.idx}}\" ng-hide=\"npTrivia.pageId !== component.data.id\"></div>-->\n" +
+    "        <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
     "        <div class=\"npTrivia-feedback\" ng-if=\"npTrivia.feedback\" ng-bind-html=\"npTrivia.feedback\"></div>\n" +
     "    </div>\n" +
-    "</form>"
+    "</form>\n"
   );
 
 

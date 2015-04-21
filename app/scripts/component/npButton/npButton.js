@@ -58,8 +58,7 @@
                         }
                         this.go = function () {
                             if (this.linkInternal) {
-                                btnLink = ManifestService.getNextPageId();
-                                ManifestService.setPageId(btnLink);
+                                ManifestService.goToNextPage();
                             } else {
                                 if (this.apiLink) {
                                     //TODO: we may need a `method` property to know what to use here
