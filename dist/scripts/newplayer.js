@@ -3941,22 +3941,22 @@
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //get actuall height
                                 //////////////////////////////////////////////////////////////////////////////////////
-                                imagesLoaded(document.querySelector('.reveal-object'), function (instance) {
-                                    var maxHeight = Math.max.apply(null, $('.reveal-wrapper').map(function () {
+                                imagesLoaded(document.querySelector('.reveal-objects-wrapper'), function (instance) {
+                                    var maxHeight = Math.max.apply(null, $('.reveal-object').map(function () {
                                         return $(this).outerHeight(true);
                                     }).get());
+                                    var npCmpWrapperHeight = $('.np-cmp-wrapper').outerHeight(true);
                                     var outsidePaddingHeight = $('.np_outside-padding').outerHeight(true);
-                                    TweenMax.set($('.reveal-wrapper'), {
-                                        height: maxHeight
-                                    });
                                     TweenMax.set($('.np_outside-padding'), {
-                                        height: maxHeight
+                                        height: maxHeight + npCmpWrapperHeight + 100
                                     });
                                     console.log(
                                             '\n::::::::::::::::::::::::::::::::::::::npFlashCards::maxHeight:::::::::::::::::::::::::::::::::::::::::::::::::',
                                             '\n::maxHeight:', maxHeight,
                                             '\n::outsidePaddingHeight:', outsidePaddingHeight,
+                                            '\n::npCmpWrapperHeight:', npCmpWrapperHeight,
                                             '\n::maxHeight + outsidePaddingHeight:', maxHeight + outsidePaddingHeight,
+                                            '\n::maxHeight + npCmpWrapperHeight:', maxHeight + npCmpWrapperHeight,
                                             '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
                                             );
                                     //////////////////////////////////////////////////////////////////////////////////////
@@ -6532,7 +6532,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "    <!--:::::::::::: buttons ::::::::::::::::-->\n" +
     "\n" +
     "    <!--::::::::::::  reveal  ::::::::::::::::-->\n" +
-    "    <div class=\"col-md-12\">\n" +
+    "    <div class=\"col-md-12 reveal-objects-wrapper\">\n" +
     "        <div class=\"reveal-object\" ng-repeat=\"revealItemComponent in npReveal.revealItemComponents\">\n" +
     "            <div class=\"reveal-wrapper\">\n" +
     "                <div class=\"reveal-item-wrapper\">\n" +
