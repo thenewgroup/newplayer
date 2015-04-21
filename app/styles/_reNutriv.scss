@@ -136,6 +136,7 @@
     padding-left: 2em;
     padding-right: 2em;
     min-width: fit-content;
+    border-width: 1px;
 }
 .btn span{ 
     font-family: $font-family-sans-serif;
@@ -143,14 +144,16 @@
     text-transform: uppercase;
     letter-spacing: 2px;
 }
+np_btn-next{ 
+    text-align: right;
+}
 .btn-next{ 
-    position: relative;
-    float: right;
-    border-width: 1px;
-    width: auto;
-    margin-top: 15px;
-    margin-right: 20px;
-    margin-bottom: 10px;
+    position: absolute;
+    right: 80px;
+    bottom: -60px;
+    margin-top: 35px;
+    margin-right: 30px;
+    margin-bottom: 50px;
 }
 .btn-next span{ 
     letter-spacing: 2px;
@@ -226,17 +229,13 @@
     position: fixed;
     content: "";
     width: 100%;
-    /*top: 200px;*/
     left: 0;
     right: 0;
-    /*min-height: 1400px;*/
 }
 #flash-cards {
     position: relative;
-    /*height: 100%;*/
     padding-top: 45px !important;
     margin-left: 0px;
-    /*min-height: 1000px;*/
 }
 ///////////////cards/////////////////
 .flash-cards-object {
@@ -244,7 +243,6 @@
     display: inline-block;
     overflow: hidden;
     width: 560px;
-    /*min-height: 800px;*/
     margin-bottom: 222px;
     padding-bottom: 15px;
 }
@@ -281,7 +279,6 @@
     top:0;
     bottom:0;
     width: 100%;
-    /*height:100%;*/
     overflow: hidden;
     height: 475px;
 }
@@ -548,7 +545,7 @@ input{
     /*fill: $brand-primary;*/
 }
 .question-feedback-wrapper svg path{ 
-/*    fill: $brand-primary;*/
+    /*    fill: $brand-primary;*/
 }
 .question-submit-wrapper{
     text-align: center;
