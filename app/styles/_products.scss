@@ -26,11 +26,8 @@
 }
 /*When setting this class for New Player use: 'background-brand-offwhite' */
 .np_background-brand-offwhite{
-    background-color: $brand-primary;
-    color: #fff;
-    small {
-        color: #fff;
-    }
+    background-color: $brand-offwhite;
+    color: $brand-primary;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*Sans font overrides*/
@@ -127,6 +124,21 @@ p {
 }
 
 @media (max-width: $screen-xs) {
+    #np_newplayer-background{
+        background-color: #fff;
+    }
+    .np_background-brand-offwhite {
+        &.np_inside-padding {
+            padding-left: 15px!important;
+            padding-right: 15px!important;
+            padding-bottom: 2px!important;
+        }
+    }
+
+    .h3.collapse-toggle {
+        margin-bottom: 2px;
+    }
+
     .h4 {
         font-size: 16px;
     }
@@ -181,6 +193,12 @@ p {
         background-color: #fff;
     }
     .np_background-brand-offwhite {
+        background-color: $brand-primary;
+        color: #fff;
+        border-bottom: 2px solid #fff;
+        small {
+            color: #fff;
+        }
         p {
             font-size: 18px;
         }
