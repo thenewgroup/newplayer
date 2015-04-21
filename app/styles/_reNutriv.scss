@@ -61,7 +61,6 @@
 .h1, .h2, .h3, .h4, .h5{
     color: $brand-primary-light;
 }
-/*#np_reNutriv p{*/
 .subhead-copy{
     color: $brand-primary-light;
     font-family: $font-family-sans-serif;
@@ -545,6 +544,30 @@ input{
 .question-submit-wrapper{
     text-align: center;
     margin-top: 3em;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player Result classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.np-result{
+
+}
+.np-result-summary{
+    position: relative;
+    padding-left: 100px;
+    padding-right: 100px;
+    color: white; 
+    font-size: 1.2em;
+}
+.results-wrapper{
+    position: absolute;
+    top:0;
+    bottom:0;
+    padding: 50px;
+    padding-top: 150px;
+    font-family: $re-nu-serif;
+    size: $font-size-h1;
+    color: $brand-primary-light;
+    letter-spacing: 2px;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Matching Game classes*/

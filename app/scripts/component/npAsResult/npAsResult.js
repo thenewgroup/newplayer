@@ -29,6 +29,7 @@
       // replace tokens in the string as we go
       vm.summaryText = vm.summaryText.replace(/:USERSCORE:/, $filter('number')(vm.score * 100, 0));
       vm.summaryText = vm.summaryText.replace(/:MINSCORE:/, $filter('number')(vm.minScore * 100, 0));
+      vm.summaryPecentage = (vm.score * 100);
 
       vm.achievementText = '';
       if( cmpData.hasOwnProperty('achievements') ) {
