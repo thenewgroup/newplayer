@@ -66,6 +66,11 @@
                                 var hitAreaSelectedLength = '';
                                 var hitAreaSelectedIncorrect = '';
                                 hitAreaLength = $("[data-match=true]").length;
+                                var responseHeight = $('.select-response-incorrect').outerHeight(true);
+                                var outsidePaddingHeight = $('.np_outside-padding').outerHeight(true);
+                                TweenMax.set($('.np_outside-padding'), {
+                                    height: responseHeight + outsidePaddingHeight + 150
+                                });
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //evaluate interaction
                                 //////////////////////////////////////////////////////////////////////////////////////
@@ -97,13 +102,10 @@
                                             });
                                         }
                                     });
-
                                 };
-
                             });
                         });
                     }
-
                 };
             })
             //////////////////////////////////////////////////////////////////////////////////////
@@ -155,7 +157,6 @@
                                     autoAlpha: 0,
                                     ease: Power4.easeOut
                                 });
-
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //shuffle that 
                                 //////////////////////////////////////////////////////////////////////////////////////
@@ -325,7 +326,6 @@
                         update();
                     }
                 };
-
             });
     /** @ngInject */
     function npMediaElementDirective($log) {
