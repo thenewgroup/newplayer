@@ -5243,7 +5243,6 @@ button.close {
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*ReNutriv font classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-  /*#np_reNutriv p{*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*New Player padding wrapper classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -5321,6 +5320,9 @@ button.close {
   }*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*New Player Quiz Questions classes*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*New Player Result classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*New Player Matching Game classes*/
@@ -5824,6 +5826,22 @@ button.close {
   #np_reNutriv .question-submit-wrapper {
     text-align: center;
     margin-top: 3em; }
+  #np_reNutriv .np-result-summary {
+    position: relative;
+    padding-left: 100px;
+    padding-right: 100px;
+    color: white;
+    font-size: 1.2em; }
+  #np_reNutriv .results-wrapper {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    padding: 50px;
+    padding-top: 150px;
+    font-family: "BauerBodoniStd-Roman";
+    size: 50px;
+    color: #FFFFFF;
+    letter-spacing: 2px; }
   #np_reNutriv .np-spinner-wrapper {
     position: relative;
     overflow: hidden;

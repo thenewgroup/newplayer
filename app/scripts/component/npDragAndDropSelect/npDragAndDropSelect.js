@@ -76,9 +76,9 @@
                                 //get and set height of elements
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 var responseHeight = $('.select-response-incorrect').outerHeight(true);
-                                var outsidePaddingHeight = $('.np_outside-padding').outerHeight(true);
+                                var outsidePaddingHeight = $('.np-cmp-wrapper').outerHeight(true);
                                 TweenMax.set($('.np_outside-padding'), {
-                                    height: responseHeight + outsidePaddingHeight + 150
+                                    height:  outsidePaddingHeight
                                 });
                                 console.log(
                                         '\n::::::::::::::::::::::::::::::::::::::npDragAndDropSelect::maxHeight:::::::::::::::::::::::::::::::::::::::::::::::::',

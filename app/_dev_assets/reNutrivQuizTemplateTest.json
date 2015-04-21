@@ -463,39 +463,39 @@
                                             }
                                         ]
                                     },
-                                  {
-                                    "type": "npPage",
-                                    "data": {
-                                      "id": "How Much Do You Know About Re-Nutriv Summary",
-                                      "parentId": "QuizIntro",
-                                      "title": "How Much Do You Know About Re-Nutriv Summary",
-                                      "inMenu": false,
-                                      "required": false
-                                    },
-                                    "components": [
-                                      {
-                                        "type": "npAsResult",
+                                    {
+                                        "type": "npPage",
                                         "data": {
-                                          "feedback": {
-                                            "pass": "Congratulations, you scored :USERSCORE:% and have passed this module.",
-                                            "fail": "Sorry, you scored :USERSCORE:% and you needed to score :MINSCORE:% to pass. Try it again!"
-                                          },
-                                          "achievements": [
+                                            "id": "How Much Do You Know About Re-Nutriv Summary",
+                                            "parentId": "QuizIntro",
+                                            "title": "How Much Do You Know About Re-Nutriv Summary",
+                                            "inMenu": false,
+                                            "required": false
+                                        },
+                                        "components": [
                                             {
-                                              "score": 0.8,
-                                              "compare": "gte",
-                                              "content": "In addition, you a grip of points!"
-                                            },
-                                            {
-                                              "score": 1,
-                                              "compare": "eq",
-                                              "content": "In addition, you get this badge and a grip of points!"
+                                                "type": "npAsResult",
+                                                "data": {
+                                                    "feedback": {
+                                                        "pass": "Congratulations, you scored :USERSCORE:% and have passed this module.",
+                                                        "fail": "Sorry, you scored :USERSCORE:% and you needed to score :MINSCORE:% to pass. Try it again!"
+                                                    },
+                                                    "achievements": [
+                                                        {
+                                                            "score": 0.8,
+                                                            "compare": "gte",
+                                                            "content": "In addition, you a grip of points!"
+                                                        },
+                                                        {
+                                                            "score": 1,
+                                                            "compare": "eq",
+                                                            "content": "In addition, you get this badge and a grip of points!"
+                                                        }
+                                                    ]
+                                                }
                                             }
-                                          ]
-                                        }
-                                      }
-                                    ]
-                                  }
+                                        ]
+                                    }
                                 ]
                             }
                         ]
