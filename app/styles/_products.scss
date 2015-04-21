@@ -131,12 +131,6 @@ p {
         font-size: 16px;
     }
 
-    .np_h1,
-    .np_h2 {
-        margin-left: 15px;
-        margin-right: 15px;
-    }
-
     .sans-normal,
     .sans-head.collapse-toggle {
         padding-left: 15px;
@@ -149,22 +143,6 @@ p {
     .np_topImage {
         padding-left: 0px;
         padding-right: 0px;
-    }
-
-    .np_background-brand-offwhite {
-        p {
-            font-size: 18px;
-        }
-        &.np_inside-padding {
-            padding-left: 15px!important;
-            padding-right: 15px!important;
-            padding-bottom: 2px!important;
-        }
-        
-        .sans-normal {
-            padding-left: 0px;
-            padding-right: 0px;
-        }
     }
 
     .np_collapse-element .np-cmp-sub .np-cmp-wrapper .np-cmp-sub .img-responsive {
@@ -199,8 +177,37 @@ p {
 }
 
 @media (max-width: $screen-sm) {
+    #np_newplayer-background{
+        background-color: #fff;
+    }
+    .np_background-brand-offwhite {
+        p {
+            font-size: 18px;
+        }
+        &.np_inside-padding {
+            padding-left: 15px!important;
+            padding-right: 15px!important;
+            padding-bottom: 2px!important;
+        }
+        
+        .sans-normal {
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+    }
+
+    .np_background-brand-primary-light {
+        padding-top: 15px;
+    }
+
     .h1 {
         margin-top: inherit;
+    }
+
+    .np_h1,
+    .np_h2 {
+        margin-left: 15px;
+        margin-right: 15px;
     }
 
      .center-padding {
