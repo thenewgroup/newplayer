@@ -56,6 +56,7 @@
                         //////////////////////////////////////////////////////////////////////////////////////
                         setTimeout(function () {
                             $scope.$apply(function () {
+                              var cmpData = $scope.component.data;
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //on ready set states
                                 //////////////////////////////////////////////////////////////////////////////////////
@@ -78,13 +79,10 @@
                                     hitAreaSelectedLength = $("[data-match=selected]").length;
                                     hitAreaSelectedIncorrect = $("[data-match=skeletor]").length;
 
-                                  var isPassing = false,
-                                      percent = 0,
-                                      hitsTotal = 0,
-                                      hitsCorrect = 0;
+                                  var isPassing = false;
 
-                                    $('.hit-area').each(function () {
-                                        hitsTotal++;
+                                    // TODO: Remove or re-enable, this doesn't appear to have a correlation with the code below
+                                    //$('.hit-area').each(function () {
                                         if (Number(hitAreaLength) === Number(hitAreaSelectedLength) && (hitAreaSelectedIncorrect === 0)) {
                                             TweenMax.to($('.select-response-correct'), 0.75, {
                                                 autoAlpha: 1,
@@ -96,7 +94,7 @@
                                                 scale: 0.25,
                                                 ease: Power4.easeOut
                                             });
-                                          hitsCorrect++;
+                                          isPassing = true;
                                         } else {
                                             TweenMax.to($('.select-response-correct'), 0.75, {
                                                 autoAlpha: 0,
@@ -108,18 +106,10 @@
                                                 scale: 1,
                                                 ease: Power4.easeOut
                                             });
-
-                                          hitsCorrect++;
+                                          isPassing = false;
                                         }
-                                    });
-
-                                  if( hitsTotal !== 0 ) {
-                                    percent = hitsCorrect / hitsTotal;
-                                  }
-
-                                  isPassing = percent >= AssessmentService.getMinPassing();
-                                  $log.debug('[nDnDS] right, total, perc, pass?', hitsCorrect, hitsTotal, percent, isPassing);
-                                  AssessmentService.questionAnswered('dndNeedsID', isPassing);
+                                    //});
+                                  AssessmentService.questionAnswered(cmpData.id, isPassing);
                                 };
 
                             });
