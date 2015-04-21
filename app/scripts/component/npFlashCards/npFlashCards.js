@@ -101,10 +101,6 @@
                         //////////////////////////////////////////////////////////////////////////////////////
                         setTimeout(function () {
                             $scope.$apply(function () {
-                                TweenMax.to($('#draggableContainer'), 1.75, {
-                                    autoAlpha: 1,
-                                    ease: Power4.easeOut
-                                });
                                 TweenMax.set($('.flash-card-front-wrapper'), {
                                     autoAlpha: 1
                                 });
@@ -117,9 +113,6 @@
                                 TweenMax.set($('.flash-card-back-wrapper'), {
                                     rotationY: -180
                                 });
-//                                TweenMax.set($('.flash-card-back-wrapper'), {
-//                                    backfaceVisibility: "hidden"
-//                                });
                                 TweenMax.set([$('.flash-card-content-back'), $('.flash-card-content-front')], {
                                     backfaceVisibility: "hidden"
                                 });
@@ -135,10 +128,17 @@
                                         height: maxHeight
                                     });
                                     TweenMax.set($('.np_outside-padding'), {
-                                        height: maxHeight + outsidePaddingHeight
+                                        height: maxHeight + outsidePaddingHeight +150
                                     });
                                     TweenMax.set($('.btn-next'), {
                                         marginTop: maxHeight + 150
+                                    });
+                                    //////////////////////////////////////////////////////////////////////////////////////
+                                    //page build
+                                    //////////////////////////////////////////////////////////////////////////////////////
+                                    TweenMax.to($('#draggableContainer'), 1.75, {
+                                        autoAlpha: 1,
+                                        ease: Power4.easeOut
                                     });
                                     TweenMax.from($('#flash-cards'), 2, {
                                         left: '1000px',
@@ -160,7 +160,7 @@
                                         scale: 0.9,
                                         z: '-35',
                                         ease: Power4.easeOut
-                                    }); 
+                                    });
                                 });
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //offset top on scroll
