@@ -6876,11 +6876,9 @@ button.close {
   #ANR #background-image {
     position: fixed;
     background-image: url("../assets/images/ESTL-005_ANR_bg_img.jpg");
-    background-position: top;
+    background-position: center top;
     background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-    /*background-origin: ;*/
+    background-size: 100%;
     width: 100%;
     height: 100%; }
   #ANR .renutriv-logo-image {
@@ -7034,16 +7032,18 @@ button.close {
     padding-bottom: 50px;
     padding-left: 30px;
     padding-right: 20px; }
+  #ANR .content-background-svg rect {
+    fill: rgba(255, 255, 255, 0.5);
+    stroke: #125aa0;
+    stroke-width: 4px; }
   #ANR .np-flash-card {
     position: fixed;
     content: "";
     width: 100%;
-    /*top: 200px;*/
     left: 0;
     right: 0; }
   #ANR #flash-cards {
     position: relative;
-    /*height: 100%;*/
     padding-top: 45px !important;
     margin-left: 0px; }
   #ANR .flash-cards-object {
