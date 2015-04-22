@@ -5590,6 +5590,13 @@ button.close {
   #np_reNutriv .btn-next span {
     letter-spacing: 2px;
     padding: 0; }
+  @media (max-width: 768px) {
+    #np_reNutriv .btn-next {
+      position: absolute;
+      right: 110px;
+      bottom: 0px;
+      margin-right: 0px;
+      margin-bottom: 50px; } }
   #np_reNutriv .content-background {
     background-color: rgba(0, 0, 0, 0.5); }
   #np_reNutriv .npPage-title {
@@ -6992,6 +6999,13 @@ button.close {
     text-transform: uppercase;
     letter-spacing: 2px;
     padding: 0; }
+  @media (max-width: 768px) {
+    #ANR .btn-next {
+      position: absolute;
+      right: 110px;
+      bottom: 0px;
+      margin-right: 0px;
+      margin-bottom: 50px; } }
   #ANR .content-background {
     /*    position: absolute;
     left: 10px;
@@ -8119,6 +8133,13 @@ button.close {
     text-transform: uppercase;
     letter-spacing: 2px;
     padding: 0; }
+  @media (max-width: 768px) {
+    #GMTC .btn-next {
+      position: absolute;
+      right: 110px;
+      bottom: 0px;
+      margin-right: 0px;
+      margin-bottom: 50px; } }
   #GMTC .content-background {
     /*background-color:hsla(0,100%,0%,0.5);*/
     background-color: white; }
@@ -9832,9 +9853,9 @@ img.blur {
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 @media (max-width: 768px) {
   .np_outside-padding {
-    position: absolute;
-    top: 0;
-    bottom: 0;
+    /*        position: absolute;
+            top: 0;
+            bottom: 0;*/
     padding-left: 15px;
     padding-right: 30px;
     padding-bottom: 100px; }
