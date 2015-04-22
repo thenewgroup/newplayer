@@ -26,11 +26,8 @@
 }
 /*When setting this class for New Player use: 'background-brand-offwhite' */
 .np_background-brand-offwhite{
-    background-color: $brand-primary;
-    color: #fff;
-    small {
-        color: #fff;
-    }
+    background-color: $brand-offwhite;
+    color: $brand-primary;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*Sans font overrides*/
@@ -127,14 +124,23 @@ p {
 }
 
 @media (max-width: $screen-xs) {
-    .h4 {
-        font-size: 16px;
+    #np_newplayer-background{
+        background-color: #fff;
+    }
+    .np_background-brand-offwhite {
+        &.np_inside-padding {
+            padding-left: 15px!important;
+            padding-right: 15px!important;
+            padding-bottom: 2px!important;
+        }
     }
 
-    .np_h1,
-    .np_h2 {
-        margin-left: 15px;
-        margin-right: 15px;
+    .h3.collapse-toggle {
+        margin-bottom: 2px;
+    }
+
+    .h4 {
+        font-size: 16px;
     }
 
     .sans-normal,
@@ -149,22 +155,6 @@ p {
     .np_topImage {
         padding-left: 0px;
         padding-right: 0px;
-    }
-
-    .np_background-brand-offwhite {
-        p {
-            font-size: 18px;
-        }
-        &.np_inside-padding {
-            padding-left: 15px!important;
-            padding-right: 15px!important;
-            padding-bottom: 2px!important;
-        }
-        
-        .sans-normal {
-            padding-left: 0px;
-            padding-right: 0px;
-        }
     }
 
     .np_collapse-element .np-cmp-sub .np-cmp-wrapper .np-cmp-sub .img-responsive {
@@ -199,8 +189,43 @@ p {
 }
 
 @media (max-width: $screen-sm) {
+    #np_newplayer-background{
+        background-color: #fff;
+    }
+    .np_background-brand-offwhite {
+        background-color: $brand-primary;
+        color: #fff;
+        border-bottom: 2px solid #fff;
+        small {
+            color: #fff;
+        }
+        p {
+            font-size: 18px;
+        }
+        &.np_inside-padding {
+            padding-left: 15px!important;
+            padding-right: 15px!important;
+            padding-bottom: 2px!important;
+        }
+        
+        .sans-normal {
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+    }
+
+    .np_background-brand-primary-light {
+        padding-top: 15px;
+    }
+
     .h1 {
         margin-top: inherit;
+    }
+
+    .np_h1,
+    .np_h2 {
+        margin-left: 15px;
+        margin-right: 15px;
     }
 
      .center-padding {
