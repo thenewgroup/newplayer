@@ -30,7 +30,7 @@
         <div class="scroller">
             <div class="container">
                 <div class="main" ng-class="{'cover':coverSupported}">
-                    <np-layer np-id="sample" np-url="../_dev_assets/productsTemplate.json" np-override-url="" np-analytics-service="vm.doTrack"></np-layer>
+                    <!--<np-layer np-id="sample" np-url="../_dev_assets/productsTemplate.json" np-override-url="" np-analytics-service="vm.doTrack"></np-layer>-->
                     <!--<np-layer np-id="sample" np-url="../_dev_assets/storyTemplate.json" np-override-url="" np-analytics-service="vm.doTrack"></np-layer>-->
                     <!--<np-layer np-id="sample" np-url="../_dev_assets/bethsBlogTemplate.json" np-override-url="" np-analytics-service="vm.doTrack"></np-layer>-->
                     <!--<np-layer np-id="sample" np-url="../_dev_assets/homepageModalTemplate.json" np-override-url=""></np-layer>-->
@@ -52,7 +52,7 @@
                     <!--<np-layer np-id="sample" np-url="../_dev_assets/ANRHotspotTemplate.json" np-override-url=""></np-layer>-->
                     <!--<np-layer np-id="sample" np-url="../_dev_assets/ANRQandATemplate.json" np-override-url=""></np-layer>-->
                     <!--<np-layer np-id="sample" np-url="../_dev_assets/ANRQuizTemplate.json" np-override-url="" np-min-passing="0.8" assessment-io="vm.assessmentIO" i18n="vm.i18n"></np-layer>-->
-                    <!--<np-layer np-id="sample" np-url="../_dev_assets/ANRListTemplate.json" np-override-url=""></np-layer>-->
+                    <np-layer np-id="sample" np-url="../_dev_assets/ANRListTemplate.json" np-override-url=""></np-layer>
                     <!--<np-layer np-id="sample" np-url="../_dev_assets/ANRRevealTemplate.json" np-override-url=""></np-layer>-->
                     <!--<np-layer np-id="sample" np-url="../_dev_assets/ANRTriviaTemplate.json" np-override-url=""></np-layer>-->
 
@@ -63,7 +63,7 @@
                     <!--<np-layer np-id="sample" np-url="../_dev_assets/GMTCHotspotTemplate.json" np-override-url=""></np-layer>-->
                     <!--<np-layer np-id="sample" np-url="../_dev_assets/GMTCListTemplate.json" np-override-url=""></np-layer>-->
                     <!--<np-layer np-id="sample" np-url="../_dev_assets/GMTCQandATemplate.json" np-override-url=""></np-layer>-->
-                    <np-layer np-id="sample" np-url="../_dev_assets/GMTCQuizTemplate.json" np-override-url="" np-min-passing="0.8" assessment-io="vm.assessmentIO" i18n="vm.i18n"></np-layer>
+                    <!--<np-layer np-id="sample" np-url="../_dev_assets/GMTCQuizTemplate.json" np-override-url="" np-min-passing="0.8" assessment-io="vm.assessmentIO" i18n="vm.i18n"></np-layer>-->
                     <!--<np-layer np-id="sample" np-url="../_dev_assets/GMTCRevealTemplate.json" np-override-url=""></np-layer>-->
                     <!--<np-layer np-id="sample" np-url="../_dev_assets/GMTCTriviaTemplate.json" np-override-url=""></np-layer>-->
 
@@ -84,6 +84,8 @@
         </div>
         <!-- build:js({app,.}) scripts/vendor.js -->
         <!-- bower:js -->
+        <script src="bower_components/jquery/jquery.js"></script>
+        <script src="bower_components/angular/angular.js"></script>
         <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
         <script src="bower_components/angular-touch/angular-touch.js"></script>
         <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
