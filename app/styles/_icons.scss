@@ -72,13 +72,13 @@
 	color: rgb(173, 176, 191);
 }
 
-.glyphicon-heart-filled,
+.glyphicon-heart-filled:before,
 .elx-heart-filled:before {
 	content: "\e60b";
         color: $brand-info;
 }
 
-.glyphicon-heart-empty,
+.glyphicon-heart-empty:before,
 .elx-heart:before {
 	content: "\e60c";
         color: $brand-info;
