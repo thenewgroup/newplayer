@@ -5082,10 +5082,8 @@ button.close {
   #np_products .np_background-brand-primary-light {
     background-color: white; }
   #np_products .np_background-brand-offwhite {
-    background-color: #040a2b;
-    color: #fff; }
-    #np_products .np_background-brand-offwhite small {
-      color: #fff; }
+    background-color: #e6e9ee;
+    color: #040a2b; }
   #np_products .sans-head {
     font-family: "akzidenz-grotesk_bqbold";
     text-transform: uppercase;
@@ -5125,6 +5123,14 @@ button.close {
   #np_products .h1 {
     margin-top: 0px; }
   @media (max-width: 480px) {
+    #np_products #np_newplayer-background {
+      background-color: #fff; }
+    #np_products .np_background-brand-offwhite.np_inside-padding {
+      padding-left: 15px !important;
+      padding-right: 15px !important;
+      padding-bottom: 2px !important; }
+    #np_products .h3.collapse-toggle {
+      margin-bottom: 2px; }
     #np_products .h4 {
       font-size: 16px; }
     #np_products .sans-normal,
@@ -5156,15 +5162,21 @@ button.close {
   @media (max-width: 768px) {
     #np_products #np_newplayer-background {
       background-color: #fff; }
-    #np_products .np_background-brand-offwhite p {
-      font-size: 18px; }
-    #np_products .np_background-brand-offwhite.np_inside-padding {
-      padding-left: 15px !important;
-      padding-right: 15px !important;
-      padding-bottom: 2px !important; }
-    #np_products .np_background-brand-offwhite .sans-normal {
-      padding-left: 0px;
-      padding-right: 0px; }
+    #np_products .np_background-brand-offwhite {
+      background-color: #040a2b;
+      color: #fff;
+      border-bottom: 2px solid #fff; }
+      #np_products .np_background-brand-offwhite small {
+        color: #fff; }
+      #np_products .np_background-brand-offwhite p {
+        font-size: 18px; }
+      #np_products .np_background-brand-offwhite.np_inside-padding {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+        padding-bottom: 2px !important; }
+      #np_products .np_background-brand-offwhite .sans-normal {
+        padding-left: 0px;
+        padding-right: 0px; }
     #np_products .np_background-brand-primary-light {
       padding-top: 15px; }
     #np_products .h1 {
