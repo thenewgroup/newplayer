@@ -6870,7 +6870,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "        <div class=\"col-md-5\">\n" +
     "            <div class=\"content-area\">\n" +
     "                <div class=\"content-background\">\n" +
-    "                    <svg  version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
+    "                    <svg  version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" viewBox=\"0 0 368 222\" xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
     "                        <style type=\"text/css\">\n" +
     "                            <![CDATA[\n" +
     "                            .st0{fill:url(#SVGID_1_);}\n" +
@@ -6885,7 +6885,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                                <stop  offset=\"0.638\" style=\"stop-color:#CAA04D\"/>\n" +
     "                                <stop  offset=\"0.9816\" style=\"stop-color:#F3DB7E\"/>\n" +
     "                            </linearGradient>\n" +
-    "                            <rect fill=\"url(#MyGradient)\" stroke=\"url(#SVGID_1_)\" vector-effect=\"non-scaling-stroke\" stroke-width=\"3\" x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
+    "                            <rect stroke=\"url(#SVGID_1_)\" vector-effect=\"non-scaling-stroke\" stroke-width=\"3\" x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
     "                        </g>\n" +
     "                    </svg>\n" +
     "                </div>\n" +
