@@ -47,10 +47,14 @@
                                 });
                                 $('.npHotspot-feedback p').each(function (index, totalArea) {
                                     contentAreaHeight = contentAreaHeight + $(this).outerHeight(true);
-                                    TweenMax.to($('.content-background'), 1, {
+                                    TweenMax.to($(['.content-background', '.content-background-svg']), 1, {
                                         height: contentAreaHeight + 25,
                                         ease: Power4.easeOut
                                     });
+//                                    TweenMax.to($('.content-background'), 1, {
+//                                        height: contentAreaHeight + 25,
+//                                        ease: Power4.easeOut
+//                                    });
                                     TweenMax.to($('.npHotspot-feedback'), 0.1, {
                                         opacity: 0,
                                         ease: Power4.easeOut
