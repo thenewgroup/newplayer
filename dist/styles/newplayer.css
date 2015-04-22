@@ -6658,7 +6658,6 @@ button.close {
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*ReNutriv font classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-  /*p{*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*New Player padding wrapper classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -6877,13 +6876,11 @@ button.close {
   #ANR #background-image {
     position: fixed;
     background-image: url("../assets/images/ESTL-005_ANR_bg_img.jpg");
-    background-position: fixed;
+    background-position: bottom;
     background-repeat: no-repeat;
-    background-attachment: fixed;
     background-size: 100%;
     width: 100%;
-    height: 100%;
-    /*min-height: 1100px;*/ }
+    height: 100%; }
   #ANR .renutriv-logo-image {
     position: relative;
     background-image: url("../assets/images/AdvancedNightRepairLogoSm.png");
@@ -6958,7 +6955,6 @@ button.close {
     padding-bottom: 0px;
     display: inline-block; }
   #ANR .gold {
-    /*color: #9a7d46;*/
     color: #9a7d46; }
   #ANR .btn span {
     font-family: "akzidenz-grotesk_bqregular";
