@@ -6870,7 +6870,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "        <div class=\"col-md-5\">\n" +
     "            <div class=\"content-area\">\n" +
     "                <div class=\"content-background\">\n" +
-    "                    <svg  version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" viewBox=\"0 0 368 222\" xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
+    "                    <svg  version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
     "                        <style type=\"text/css\">\n" +
     "                            <![CDATA[\n" +
     "                            .st0{fill:url(#SVGID_1_);}\n" +
