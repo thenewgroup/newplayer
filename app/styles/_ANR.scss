@@ -221,6 +221,11 @@ small{
     padding-left: 30px;
     padding-right: 20px;
 }
+.content-background-svg rect{
+    fill: hsla(100%,100%,100%,0.5);
+    stroke: #125aa0;
+    stroke-width: 4px;
+}
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Flash Cards classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
