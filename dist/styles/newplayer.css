@@ -5097,10 +5097,9 @@ button.close {
     padding-bottom: 3px;
     display: inline-block; }
   #np_products .np_inside-padding .sans-head {
-    border-bottom-color: white; }
+    border-bottom-color: #FFFFFF; }
   #np_products ol li, #np_products ul li {
     letter-spacing: 2px; }
-    border-bottom-color: #FFFFFF; }
   #np_products .topImage {
     margin-left: -75px; }
   #np_products .np_h2 .h2 {
@@ -5131,7 +5130,7 @@ button.close {
   #np_products .np_collapse-element .np-cmp-sub.np_col-sm-8 a,
   #np_products .np-cmp-main.col-sm-8.sans-small a {
     text-transform: none;
-    color: #040a2b;
+    color: #040A2B;
     font-size: 16px;
     font-family: "optimadisplaylightlight"; }
   #np_products .np-cmp-main.h5.sans-head-sub.col-sm-12 {
