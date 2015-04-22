@@ -71,6 +71,12 @@
     @extend .btn.btn-favorite;
 }
 
+ol,ul {
+    li {
+        letter-spacing: 2px;
+    }
+}
+
 .topImage{
     margin-left:-75px;
 }
@@ -123,6 +129,22 @@ p {
     margin-top: 0px;
 }
 
+.np_collapse-element .np-cmp-sub.np_col-sm-8,
+.np-cmp-main.col-sm-8.sans-small {
+    a {
+        text-transform: none;
+        color: $brand-primary;
+        font-size: 16px;
+        font-family: "optimadisplaylightlight";
+    }
+}
+
+.np-cmp-main.h5.sans-head-sub.col-sm-12 {
+    font-family: "akzidenz-grotesk_bqbold";
+    letter-spacing: 2px;
+    font-size: 15px;
+}
+
 @media (max-width: $screen-xs) {
     #np_newplayer-background{
         background-color: #fff;
@@ -157,9 +179,11 @@ p {
         padding-right: 0px;
     }
 
-    .np_collapse-element .np-cmp-sub .np-cmp-wrapper .np-cmp-sub .img-responsive {
-        max-width: 30%;
-        float: left;
+    .np_collapse-element .np-cmp-sub .np-cmp-wrapper {
+        .np-cmp-sub .img-responsive {
+            max-width: 30%;
+            float: left;
+        }
     }
 
     .np-cmp-sub .np-cmp-wrapper .np-cmp-main {  
