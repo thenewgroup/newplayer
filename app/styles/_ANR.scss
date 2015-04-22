@@ -160,6 +160,15 @@ small{
 }
 .btn-submit span{ 
 }
+@media (max-width: $screen-sm) {
+    .btn-next{ 
+        position: absolute;
+        right: 110px;
+        bottom: 0px;
+        margin-right: 0px;
+        margin-bottom: 50px;
+    }
+}
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player padding wrapper classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
