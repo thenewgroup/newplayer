@@ -3569,62 +3569,54 @@
 
 /* jshint -W003, -W117 */
 (function () {
-
-  'use strict';
-  angular
-    .module('newplayer.component')
-  /** @ngInject */
-    .controller('npPageController',
-    function ($log, $scope, $rootScope, ManifestService, TrackingService) {
-      var cmpData = $scope.component.data || {};
-      //$log.debug('npPage::data', cmpData, $scope.contentTitle);
-
-      this.title = cmpData.title;
-      var parentIdx = $scope.component.idx.slice(0);
-      parentIdx.pop();
-
-      var pageId = ManifestService.getPageId();
-      if (!pageId) {
-        var firstPageCmp = ManifestService.getFirst('npPage', parentIdx);
-        pageId = firstPageCmp.data.id;
-        ManifestService.setPageId(pageId, firstPageCmp.idx);
-        //$log.debug('npPage::set page', pageId);
-      }
-
-      npPageIdChanged(null, pageId);
-
-      $rootScope.$on('npPageIdChanged', npPageIdChanged);
-
-      function npPageIdChanged(event, newPageId) {
-
-        pageId = newPageId;
-
-        // check if current route is for this page
-        //$log.debug('npPage::on current page?', pageId, cmpData.id);
-        if (cmpData.id === pageId) {
-          $scope.currentPage = true;
-          $scope.npPage = $scope;
-
-          // set page title
-          if ($rootScope.PageTitle) {
-            $rootScope.PageTitle += ': ' + cmpData.title;
-          } else {
-            $rootScope.PageTitle = cmpData.title;
-          }
-        } else {
-          $scope.currentPage = false;
-          TrackingService.trackPageView(pageId);
-        }
-      }
-    }
-  )
-
-  /** @ngInject */
-    .run(
-    function ($log, $rootScope) {
-      //$log.debug('npPage::component loaded!');
-    }
-  );
+    'use strict';
+    angular
+            .module('newplayer.component')
+            /** @ngInject */
+            .controller('npPageController',
+                    function ($log, $scope, $rootScope, ManifestService, TrackingService) {
+                        var cmpData = $scope.component.data || {};
+                        //$log.debug('npPage::data', cmpData, $scope.contentTitle);
+                        $scope.title = cmpData.title;
+                        $scope.subTitle = cmpData.subTitle;
+                        $scope.instructional = cmpData.instructional;
+                        var parentIdx = $scope.component.idx.slice(0);
+                        parentIdx.pop();
+                        var pageId = ManifestService.getPageId();
+                        if (!pageId) {
+                            var firstPageCmp = ManifestService.getFirst('npPage', parentIdx);
+                            pageId = firstPageCmp.data.id;
+                            ManifestService.setPageId(pageId, firstPageCmp.idx);
+                            //$log.debug('npPage::set page', pageId);
+                        }
+                        npPageIdChanged(null, pageId);
+                        $rootScope.$on('npPageIdChanged', npPageIdChanged);
+                        function npPageIdChanged(event, newPageId) {
+                            pageId = newPageId;
+                            // check if current route is for this page
+                            //$log.debug('npPage::on current page?', pageId, cmpData.id);
+                            if (cmpData.id === pageId) {
+                                $scope.currentPage = true;
+                                $scope.npPage = $scope;
+                                // set page title
+                                if ($rootScope.PageTitle) {
+                                    $rootScope.PageTitle += ': ' + cmpData.title;
+                                } else {
+                                    $rootScope.PageTitle = cmpData.title;
+                                }
+                            } else {
+                                $scope.currentPage = false;
+                                TrackingService.trackPageView(pageId);
+                            }
+                        }
+                    }
+            )
+            /** @ngInject */
+            .run(
+                    function ($log, $rootScope) {
+                        //$log.debug('npPage::component loaded!');
+                    }
+            );
 })();
 
 (function () {
@@ -3888,68 +3880,102 @@
 })();
 
 (function () {
-  'use strict';
-  angular
-    .module('newplayer.component')
-  /** @ngInject */
-    .controller('npAsResultController',
-    function ($log, $scope, $rootScope, $sce, $element, $filter,
-              i18nService, ManifestService, AssessmentService) {
-      var i,
-          vm = this,
-          cmpData = $scope.component.data;
+    'use strict';
+    angular
+            .module('newplayer.component')
+            /** @ngInject */
+            .controller('npAsResultController',
+                    function ($log, $scope, $rootScope, $sce, $element, $filter, i18nService, ManifestService, AssessmentService) {
+                        var i,
+                                vm = this,
+                                cmpData = $scope.component.data;
+                        $log.info('npAsResultController::Init\n');
+                        vm.minScore = AssessmentService.getMinPassing();
+                        vm.score = AssessmentService.getScore();
+                        vm.isPassing = AssessmentService.isPassing();
+                        vm.summaryText = '';
 
-      $log.info('npAsResultController::Init\n');
-
-      vm.minScore = AssessmentService.getMinPassing();
-      vm.score = AssessmentService.getScore();
-      vm.isPassing = AssessmentService.isPassing();
-
-      vm.summaryText = '';
-
-      if(  vm.isPassing ) {
-        //vm.summaryText = cmpData.feedback.pass;
-        vm.summaryText = i18nService.get('pass');
-      } else {
-        //vm.summaryText = cmpData.feedback.fail;
-        vm.summaryText = i18nService.get('fail');
-      }
-
-      // replace tokens in the string as we go
-      vm.summaryText = vm.summaryText.replace(/:USERSCORE:/, $filter('number')(vm.score * 100, 0));
-      vm.summaryText = vm.summaryText.replace(/:MINSCORE:/, $filter('number')(vm.minScore * 100, 0));
-      vm.summaryPecentage = (vm.score * 100);
-
-      vm.achievementText = '';
-      if( cmpData.hasOwnProperty('achievements') ) {
-        for (i = 0; i < cmpData.achievements.length; i++) {
-          var achievement = cmpData.achievements[i];
-          achievement.score = parseFloat(achievement.score);
-
-          if( achievement.compare === 'gte' && vm.score >= achievement.score ) {
-            vm.achievementText = achievement.content;
-          } else if( achievement.compare === 'gt' && vm.score > achievement.score ) {
-            vm.achievementText = achievement.content;
-          } else if( achievement.compare === 'eq' && vm.score === achievement.score) {
-            vm.achievementText = achievement.content;
-          } else if( achievement.compare === 'lte' && vm.score <= achievement.score ) {
-            vm.achievementText = achievement.content;
-          } else if( achievement.compare === 'lt' && vm.score < achievement.score ) {
-            vm.achievementText = achievement.content;
-          }
-        }
-      }
-
-      // and then once the score is saved on the server and it lets us know
-      // their badge status, then we show the goods?
-      if( vm.score === 100 ) {
-        vm.badgeEarned = true;
-      } else {
-        vm.badgeEarned = false;
-      }
-
-      AssessmentService.finalize();
-    });
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //set states
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        setTimeout(function () {
+                            $scope.$apply(function () {
+//                                TweenMax.set($('.flash-card-front-wrapper'), {
+//                                    autoAlpha: 1
+//                                });
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //get actuall height
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                setHeightProperties(function () {
+                                    var outsidePaddingHeight = $('.np-result-summary').outerHeight(true);
+                                    TweenMax.set($('.np-result-container'), {
+                                        height: outsidePaddingHeight
+                                    });
+                                });
+                                setHeightProperties();
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //page build
+                                //////////////////////////////////////////////////////////////////////////////////////
+//                                TweenMax.to($('#draggableContainer'), 1.75, {
+//                                    autoAlpha: 1,
+//                                    ease: Power4.easeOut
+//                                });
+                            });
+                        });
+                        if (vm.isPassing) {
+                            TweenMax.set($(['.results-wrapper-incorrect', '.results-wrapper-correct']), {
+                                autoAlpha: 0
+                            });
+                            TweenMax.to($('.results-wrapper-correct'), 0.75, {
+                                autoAlpha: 1,
+                                ease: Power4.easeOut
+                            });
+                            vm.summaryLabelText = cmpData.feedback.passLabel;
+                            vm.summaryText = cmpData.feedback.pass;
+                            //vm.summaryText = i18nService.get('pass');
+                        } else {
+                            TweenMax.set($(['.results-wrapper-incorrect', '.results-wrapper-correct']), {
+                                autoAlpha: 0
+                            });
+                            TweenMax.to($('.results-wrapper-incorrect'), 0.75, {
+                                autoAlpha: 1,
+                                ease: Power4.easeOut
+                            });
+                            vm.summaryLabelText = cmpData.feedback.failLabel;
+                            vm.summaryText = cmpData.feedback.fail;
+                            //vm.summaryText = i18nService.get('fail');
+                        }
+                        // replace tokens in the string as we go
+                        vm.summaryText = vm.summaryText.replace(/:USERSCORE:/, $filter('number')(vm.score * 100, 0));
+                        vm.summaryText = vm.summaryText.replace(/:MINSCORE:/, $filter('number')(vm.minScore * 100, 0));
+                        vm.summaryPecentage = (vm.score * 100);
+                        vm.achievementText = '';
+                        if (cmpData.hasOwnProperty('achievements')) {
+                            for (i = 0; i < cmpData.achievements.length; i++) {
+                                var achievement = cmpData.achievements[i];
+                                achievement.score = parseFloat(achievement.score);
+                                if (achievement.compare === 'gte' && vm.score >= achievement.score) {
+                                    vm.achievementText = achievement.content;
+                                } else if (achievement.compare === 'gt' && vm.score > achievement.score) {
+                                    vm.achievementText = achievement.content;
+                                } else if (achievement.compare === 'eq' && vm.score === achievement.score) {
+                                    vm.achievementText = achievement.content;
+                                } else if (achievement.compare === 'lte' && vm.score <= achievement.score) {
+                                    vm.achievementText = achievement.content;
+                                } else if (achievement.compare === 'lt' && vm.score < achievement.score) {
+                                    vm.achievementText = achievement.content;
+                                }
+                            }
+                        }
+                        // and then once the score is saved on the server and it lets us know
+                        // their badge status, then we show the goods?
+                        if (vm.score === 100) {
+                            vm.badgeEarned = true;
+                        } else {
+                            vm.badgeEarned = false;
+                        }
+                        AssessmentService.finalize();
+                    });
 })();
 
 /* jshint -W003, -W117 */
@@ -6193,9 +6219,9 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('scripts/component/npAsResult/npAsResult.html',
-    "<div class=\"np-cmp-wrapper {{component.type}} np-result\" ng-controller=\"npAsResultController as npResult\">\n" +
-    "    <div class=\"summary np-result-summary\">\n" +
-    "        <div class=\"np-result-gold-border\">\n" +
+    "<div class=\"np-cmp-wrapper {{component.type}} np-result row\" ng-controller=\"npAsResultController as npResult\">\n" +
+    "    <div class=\"summary np-result-summary \">\n" +
+    "        <div class=\"np-result-container\">\n" +
     "            <svg  version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" viewBox=\"0 0 368 222\" xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
     "                <style type=\"text/css\">\n" +
     "                    <![CDATA[\n" +
@@ -6215,10 +6241,25 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                </g>\n" +
     "            </svg>\n" +
     "        </div>\n" +
-    "        <div class=\"results-wrapper\">\n" +
-    "            <div>{{npResult.summaryText}}</div>\n" +
-    "            <!--<div>{{npResult.summaryPecentage}}%</div>-->\n" +
+    "        <div class=\"results-wrapper-correct\">\n" +
+    "            <div class=\"results-summary-text-wrapper col-xs-12\">\n" +
+    "                <div class=\"results-summary-text\">{{npResult.summaryText}}</div>\n" +
+    "            </div>\n" +
+    "            <div class=\"results-summary-amount-wrapper row\">\n" +
+    "                <div class=\"results-summary-label-text col-xs-6\">{{npResult.summaryLabelText}}</div>\n" +
+    "                <div class=\"results-summary-pecentage col-xs-6\">{{npResult.summaryPecentage}}<div class=\"results-summary-pecentage-character\">%</div></div>\n" +
+    "            </div>\n" +
     "            <div ng-show=\"npResult.achievementText\">{{npResult.achievementText}}</div>\n" +
+    "        </div>\n" +
+    "        <div class=\"results-wrapper-incorrect\">\n" +
+    "            <div class=\"results-summary-amount-wrapper row\">\n" +
+    "                <div class=\"results-summary-label-text col-xs-6\">{{npResult.summaryLabelText}}</div>\n" +
+    "                <div class=\"results-summary-pecentage col-xs-6\">{{npResult.summaryPecentage}}<div class=\"results-summary-pecentage-character\">%</div></div>\n" +
+    "            </div>\n" +
+    "            <div class=\"results-summary-text-wrapper col-xs-12\">\n" +
+    "                <div class=\"results-summary-text\">{{npResult.summaryText}}</div>\n" +
+    "            </div>\n" +
+    "            <!--<div ng-show=\"npResult.achievementText\">{{npResult.achievementText}}</div>-->\n" +
     "        </div>\n" +
     "    </div>\n" +
     "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
@@ -6983,20 +7024,16 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('scripts/component/npPage/npPage.html',
     "<div class=\"np-cmp-wrapper {{component.type}}\" ng-controller=\"npPageController as npPage\" ng-show=\"currentPage\">\n" +
-    "\n" +
-    "\t<main ng-if=\"currentPage\" class=\"np-cmp-main\">\n" +
-    "\n" +
-    "\t\t<div class=\"debug\">\n" +
-    "\t\t\t<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
-    "\t\t</div>\n" +
-    "\n" +
-    "\t\t<h1 class=\"npPage-title\">{{npPage.title}}</h1>\n" +
-    "\n" +
-    "\t\t<div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
-    "\n" +
-    "\t</main>\n" +
-    "\n" +
-    "</div>\n"
+    "    <main ng-if=\"currentPage\" class=\"np-cmp-main\">\n" +
+    "        <div class=\"debug\">\n" +
+    "            <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
+    "        </div>\n" +
+    "        <div ng-bind-html=\"npPage.title\" class=\"npPage-title h3\">{{npPage.title}}</div>\n" +
+    "        <div ng-bind-html=\"npPage.subTitle\" class=\"npPage-subTitle h4\">{{npPage.subTitle}}</div>\n" +
+    "        <div ng-bind-html=\"npPage.instructional\" class=\"npPage-instructional\">{{npPage.instructional}}</div>\n" +
+    "        <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "    </main>\n" +
+    "</div>"
   );
 
 
