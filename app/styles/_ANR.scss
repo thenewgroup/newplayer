@@ -17,13 +17,11 @@
 #background-image {
     position:fixed;
     background-image: url('../assets/images/ESTL-005_ANR_bg_img.jpg');
-    background-position: fixed;
+    background-position: bottom;
     background-repeat: no-repeat;
-    background-attachment: fixed;
     background-size:100%;
     width:100%;
     height:100%;
-    /*min-height: 1100px;*/
 }
 .renutriv-logo-image {
     position: relative;
@@ -61,7 +59,6 @@
 .h1, .h2, .h3, .h4, .h5{
     color: $brand-primary-light;
 }
-/*p{*/
 .subhead-copy{
     color: $brand-primary;
     font-family: $font-family-sans-serif;
@@ -118,7 +115,6 @@ small{
     display: inline-block;
 }
 .gold {
-    /*color: #9a7d46;*/
     color: $gold;
 }
 .btn span{ 

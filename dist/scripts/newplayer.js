@@ -6885,7 +6885,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                                <stop  offset=\"0.638\" style=\"stop-color:#CAA04D\"/>\n" +
     "                                <stop  offset=\"0.9816\" style=\"stop-color:#F3DB7E\"/>\n" +
     "                            </linearGradient>\n" +
-    "                            <rect fill=\"url(#MyGradient)\" stroke=\"url(#SVGID_1_)\" vector-effect=\"non-scaling-stroke\" stroke-width=\"3\" x=\"0\" y=\"0\" width=\"99%\" height=\"99%\"/>\n" +
+    "                            <rect fill=\"url(#MyGradient)\" stroke=\"url(#SVGID_1_)\" vector-effect=\"non-scaling-stroke\" stroke-width=\"3\" x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
     "                        </g>\n" +
     "                    </svg>\n" +
     "                </div>\n" +
