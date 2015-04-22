@@ -2,7 +2,7 @@
     {
         "type": "npFeature",
         "data": {
-            "id": "reNutriv",
+            "id": "GMTC",
             "class": "",
             "version": "0.0.1",
             "timestamp": "2015-Apr-Tue_05:04:50"
@@ -72,16 +72,13 @@
                                     "assessed": "1",
                                     "questions": "5",
                                     "forced": "true",
-                                    "randomized": "false", 
+                                    "randomized": "false",
                                     "required": "true"
                                 },
                                 "components": [
                                     {
                                         "type": "npPage",
                                         "data": {
-                                            "title": "<p>title Read each question, select the best choice and then select <strong>Submit.</strong></p>",
-                                            "subTitle": "<p>subTitle Read each question, select the best choice and then select <strong>Submit.</strong></p>",
-                                            "instructional": "<p>instructional Read each question, select the best choice and then select <strong>Submit.</strong></p>"
                                         },
                                         "components": [
                                             {

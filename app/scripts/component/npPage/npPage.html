@@ -1,15 +1,11 @@
 <div class="np-cmp-wrapper {{component.type}}" ng-controller="npPageController as npPage" ng-show="currentPage">
-
-	<main ng-if="currentPage" class="np-cmp-main">
-
-		<div class="debug">
-			<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
-		</div>
-
-		<h1 class="npPage-title">{{npPage.title}}</h1>
-
-		<div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
-
-	</main>
-
+    <main ng-if="currentPage" class="np-cmp-main">
+        <div class="debug">
+            <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
+        </div>
+        <div ng-bind-html="npPage.title" class="npPage-title h3">{{npPage.title}}</div>
+        <div ng-bind-html="npPage.subTitle" class="npPage-subTitle h4">{{npPage.subTitle}}</div>
+        <div ng-bind-html="npPage.instructional" class="npPage-instructional">{{npPage.instructional}}</div>
+        <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+    </main>
 </div>

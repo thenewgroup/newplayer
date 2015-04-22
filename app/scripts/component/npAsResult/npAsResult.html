@@ -1,6 +1,6 @@
-<div class="np-cmp-wrapper {{component.type}} np-result" ng-controller="npAsResultController as npResult">
-    <div class="summary np-result-summary">
-        <div class="np-result-gold-border">
+<div class="np-cmp-wrapper {{component.type}} np-result row" ng-controller="npAsResultController as npResult">
+    <div class="summary np-result-summary ">
+        <div class="np-result-container">
             <svg  version="1.2" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 368 222" xml:space="preserve" preserveAspectRatio="none">
                 <style type="text/css">
                     <![CDATA[
@@ -20,10 +20,25 @@
                 </g>
             </svg>
         </div>
-        <div class="results-wrapper">
-            <div>{{npResult.summaryText}}</div>
-            <!--<div>{{npResult.summaryPecentage}}%</div>-->
+        <div class="results-wrapper-correct">
+            <div class="results-summary-text-wrapper col-xs-12">
+                <div class="results-summary-text">{{npResult.summaryText}}</div>
+            </div>
+            <div class="results-summary-amount-wrapper row">
+                <div class="results-summary-label-text col-xs-6">{{npResult.summaryLabelText}}</div>
+                <div class="results-summary-pecentage col-xs-6">{{npResult.summaryPecentage}}<div class="results-summary-pecentage-character">%</div></div>
+            </div>
             <div ng-show="npResult.achievementText">{{npResult.achievementText}}</div>
+        </div>
+        <div class="results-wrapper-incorrect">
+            <div class="results-summary-amount-wrapper row">
+                <div class="results-summary-label-text col-xs-6">{{npResult.summaryLabelText}}</div>
+                <div class="results-summary-pecentage col-xs-6">{{npResult.summaryPecentage}}<div class="results-summary-pecentage-character">%</div></div>
+            </div>
+            <div class="results-summary-text-wrapper col-xs-12">
+                <div class="results-summary-text">{{npResult.summaryText}}</div>
+            </div>
+            <!--<div ng-show="npResult.achievementText">{{npResult.achievementText}}</div>-->
         </div>
     </div>
     <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
