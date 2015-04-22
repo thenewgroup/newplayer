@@ -2292,10 +2292,14 @@
                                 });
                                 $('.npHotspot-feedback p').each(function (index, totalArea) {
                                     contentAreaHeight = contentAreaHeight + $(this).outerHeight(true);
-                                    TweenMax.to($('.content-background'), 1, {
+                                    TweenMax.to($(['.content-background', '.content-background-svg']), 1, {
                                         height: contentAreaHeight + 25,
                                         ease: Power4.easeOut
                                     });
+//                                    TweenMax.to($('.content-background'), 1, {
+//                                        height: contentAreaHeight + 25,
+//                                        ease: Power4.easeOut
+//                                    });
                                     TweenMax.to($('.npHotspot-feedback'), 0.1, {
                                         opacity: 0,
                                         ease: Power4.easeOut
@@ -6870,7 +6874,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "        <div class=\"col-md-5\">\n" +
     "            <div class=\"content-area\">\n" +
     "                <div class=\"content-background\">\n" +
-    "                    <svg  version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" viewBox=\"0 0 368 222\" xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
+    "                    <svg  class=\"content-background-svg\"  version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" viewBox=\"0 0 368 222\" xml:space=\"preserve\" preserveAspectRatio=\"none\">\n" +
     "                        <style type=\"text/css\">\n" +
     "                            <![CDATA[\n" +
     "                            .st0{fill:url(#SVGID_1_);}\n" +
@@ -6885,7 +6889,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                                <stop  offset=\"0.638\" style=\"stop-color:#CAA04D\"/>\n" +
     "                                <stop  offset=\"0.9816\" style=\"stop-color:#F3DB7E\"/>\n" +
     "                            </linearGradient>\n" +
-    "                            <rect stroke=\"url(#SVGID_1_)\" vector-effect=\"non-scaling-stroke\" stroke-width=\"3\" x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
+    "                            <rect fill=\"url(#MyGradient)\" stroke=\"url(#SVGID_1_)\" vector-effect=\"non-scaling-stroke\" stroke-width=\"3\" x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>\n" +
     "                        </g>\n" +
     "                    </svg>\n" +
     "                </div>\n" +
