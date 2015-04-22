@@ -1175,12 +1175,12 @@ th {
   margin-left: -1.0068359375em;
   color: #adb0bf; }
 
-.glyphicon-heart-filled,
+.glyphicon-heart-filled:before,
 .elx-heart-filled:before {
   content: "\e60b";
   color: #F05C72; }
 
-.glyphicon-heart-empty,
+.glyphicon-heart-empty:before,
 .elx-heart:before {
   content: "\e60c";
   color: #F05C72; }
@@ -9830,22 +9830,14 @@ img.blur {
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*responsive padding overrides*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/*.container{*/
-/*background-color: #000000;*/
-/*position: absolute;*/
-/*    background: url(./assets/images/OrionsHeart.jpg) no-repeat center center fixed;
-    background-color: #000000;
-    background-size: cover;
-    content: "";
-    bottom: 0;
-    left: 0;
-    right: 0;
-    top: 0;*/
-/*z-index: -2;*/
-/*}*/
 @media (max-width: 768px) {
   .np_outside-padding {
-    padding: 0px; }
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    padding-left: 15px;
+    padding-right: 30px;
+    padding-bottom: 100px; }
 
   .np_inside-padding {
     padding: 5%; }

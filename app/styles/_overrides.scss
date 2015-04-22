@@ -188,22 +188,14 @@ img.blur {
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*responsive padding overrides*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/*.container{*/
-/*background-color: #000000;*/
-/*position: absolute;*/
-/*    background: url(./assets/images/OrionsHeart.jpg) no-repeat center center fixed;
-    background-color: #000000;
-    background-size: cover;
-    content: "";
-    bottom: 0;
-    left: 0;
-    right: 0;
-    top: 0;*/
-/*z-index: -2;*/
-/*}*/
 @media (max-width: $screen-sm) {
     .np_outside-padding{
-        padding: 0px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        padding-left: 15px;
+        padding-right: 30px;
+        padding-bottom: 100px;
     }
     .np_inside-padding{
         padding: 5%;

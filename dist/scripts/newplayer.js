@@ -3952,7 +3952,7 @@
                         // replace tokens in the string as we go
                         vm.summaryText = vm.summaryText.replace(/:USERSCORE:/, $filter('number')(vm.score * 100, 0));
                         vm.summaryText = vm.summaryText.replace(/:MINSCORE:/, $filter('number')(vm.minScore * 100, 0));
-                        vm.summaryPecentage = (vm.score * 100);
+                        vm.summaryPecentage = Math.round(vm.score * 100);
                         vm.achievementText = '';
                         if (cmpData.hasOwnProperty('achievements')) {
                             for (i = 0; i < cmpData.achievements.length; i++) {
@@ -6371,7 +6371,8 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('scripts/component/npButton/npButton.html',
     "<!--<div class=\"{{component.type}} {{npButton.type}} np-cmp-main btn\"  ng-controller=\"npButtonController as npButton\" ng-click=\"npButton.go()\">-->\n" +
-    "<button class=\"{{component.type}} {{npButton.type}} {{buttonTypeClass}} np-cmp-main btn\"  ng-controller=\"npButtonController as npButton\" ng-click=\"npButton.go($event)\">\n" +
+    "<!--<button class=\"{{component.type}} {{npButton.type}} {{buttonTypeClass}} np-cmp-main btn\" ng-if=\"npButton.data.type == 'btn-next'\" ng-controller=\"npButtonController as npButton\" ng-click=\"npButton.go($event)\">-->\n" +
+    "<button class=\"{{component.type}} {{npButton.type}} {{buttonTypeClass}} np-cmp-main btn\" ng-controller=\"npButtonController as npButton\" ng-click=\"npButton.go($event)\">\n" +
     "    <span class=\"debug\">\n" +
     "        <span class=\"h3\">{{component.type}} -- <small>{{component.idx}}</small></span>\n" +
     "    </span>\n" +
