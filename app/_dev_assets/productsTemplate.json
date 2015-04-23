@@ -326,7 +326,7 @@
                                  "link":"/api/favorites/product/Product-Manifest-Advanced-Night-Repair-Synchronized-Recovery-Complex-II",
                                  "type":"",
                                  "class":"btn-open-favorites",
-                                 "content":"<span class='glyphicon glyphicon-heart-empty' aria-hidden='true'></span>  Favorite this"
+                                 "content":"<span class='elx-heart' aria-hidden='true'></span>  Favorite this"
                               },
                               "components":[  
 
