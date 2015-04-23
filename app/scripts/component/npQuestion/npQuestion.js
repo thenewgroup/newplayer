@@ -139,11 +139,6 @@
                             if (correct) {
                                 this.feedback = feedback.correct;
                                 this.canContinue = true;
-                                TweenMax.to(positiveFeedbackIcon, 0.75, {
-                                    autoAlpha: 1,
-                                    scale: 1,
-                                    force3D: true
-                                });
                                 setTimeout(function () {
                                     $scope.$apply(function () {
                                         if (contentAreaHeight === 0) {
@@ -165,7 +160,7 @@
                                         });
                                         TweenMax.to(feedbackWrapper, 0.5, {
                                             autoAlpha: 1,
-                                            height: contentAreaHeight + 20,
+                                            height: contentAreaHeight + 40,
                                             force3D: true,
                                             ease: Power4.easeOut,
                                             onComplete: function () {
@@ -185,11 +180,6 @@
                             } else {
                                 this.feedback = feedback.incorrect;
                                 this.canContinue = false;
-                                TweenMax.to(negativeFeedbackIcon, 0.75, {
-                                    autoAlpha: 1,
-                                    scale: 1,
-                                    force3D: true
-                                });
                                 setTimeout(function () {
                                     $scope.$apply(function () {
                                         if (contentAreaHeight === 0) {
@@ -211,7 +201,7 @@
                                         });
                                         TweenMax.to(feedbackWrapper, 0.5, {
                                             autoAlpha: 1,
-                                            height: contentAreaHeight + 20,
+                                            height: contentAreaHeight + 40,
                                             force3D: true,
                                             ease: Power4.easeOut,
                                             onComplete: function () {
@@ -237,7 +227,6 @@
                             }
                         };
                     }
-
             )
             .directive('questionFeedbackBuild', function () {
                 return function ($scope, $element, attrs) {
