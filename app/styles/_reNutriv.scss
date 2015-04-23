@@ -523,7 +523,8 @@ input{
 }
 .question-feedback{ 
     position: relative;
-    height: 160px;
+    /*height: 160px;*/
+    height: auto;
     margin-top: 10px;
     margin-bottom: 10px;
     /*margin-right: 30px;*/
