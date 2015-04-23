@@ -1,507 +1,432 @@
-[
-    {
-        "type": "npFeature",
-        "data": {
-            "id": "reNutriv",
-            "class": "",
-            "version": "0.0.1",
-            "timestamp": "2015-Apr-Tue_05:04:50"
-        },
-        "components": [
-            {
-                "type": "npContent",
-                "data": {
-                    "id": "content_en",
-                    "language": "en",
-                    "title": "Learning-Content-Re-nutriv-3.7-Ultimate-Diamond-Quiz",
-                    "description": "This manifest creates a Story or Learning Object content object . "
-                },
-                "components": [
-                    {
-                        "type": "npHTML",
-                        "data": {
-                            "id": "newplayer-background"
+[  
+   {  
+      "type":"npFeature",
+      "data":{  
+         "id":"reNutriv",
+         "class":"",
+         "version":"0.0.1",
+         "timestamp":"2015-Apr-Wed_04:04:53"
+      },
+      "components":[  
+         {  
+            "type":"npContent",
+            "data":{  
+               "id":"content_en",
+               "language":"en",
+               "title":"Learning-Content-Re-Nutriv-7.0-Becoming-a-Re-Nutriv-Expert-Quiz",
+               "description":"This manifest creates a Story or Learning Object content object . "
+            },
+            "components":[  
+               {  
+                  "type":"npHTML",
+                  "data":{  
+                     "id":"newplayer-background"
+                  },
+                  "components":[  
+                     {  
+                        "type":"npHTML",
+                        "data":{  
+                           "id":"background-image"
                         },
-                        "components": [
-                            {
-                                "type": "npHTML",
-                                "data": {
-                                    "id": "background-image"
-                                },
-                                "components": [
-                                ]
-                            }
+                        "components":[  
+
                         ]
-                    },
-                    {
-                        "type": "npHTML",
-                        "data": {
-                            "class": "outside-padding"
+                     }
+                  ]
+               },
+               {  
+                  "type":"npHTML",
+                  "data":{  
+                     "class":"outside-padding"
+                  },
+                  "components":[  
+                     {  
+                        "type":"npHTML",
+                        "data":{  
+                           "class":"renutriv-logo-image"
                         },
-                        "components": [
-                            {
-                                "type": "npHTML",
-                                "data": {
-                                    "class": "renutriv-logo-image"
-                                },
-                                "components": [
-                                ]
-                            },
-                            {
-                                "type": "npHTML",
-                                "data": {
-                                    "class": "h3 headline",
-                                    "content": "Ultimate Diamond Quiz"
-                                },
-                                "components": [
-                                ]
-                            },
-                            {
-                                "type": "npHTML",
-                                "data": {
-                                    "class": "h6 instructional",
-                                    "content": "<p>Read each question, select the best choice and then select <strong>Submit.</strong></p>"
-                                },
-                                "components": [
-                                ]
-                            },
-                            {
-                                "type": "npQuiz",
-                                "data": {
-                                    "type": "assessment",
-                                    "assessed": "1",
-                                    "questions": "5",
-                                    "forced": "true",
-                                    "randomized": "false",
-                                    "required": "true"
-                                },
-                                "components": [
-                                    {
-                                        "type": "npPage",
-                                        "data": {
-                                        },
-                                        "components": [
-                                            {
-                                                "type": "npDragAndDropSelect",
-                                                "data": {
-                                                    "positiveFeedback": "<p>That's it!</p><p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p><p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
-                                                    "negativeFeedback": "<p>ehh?!?!</p>",
-                                                    "image": "",
-                                                    "required": true,
-                                                    "req": [
-                                                        "mediaelement/GreenSock/TweenMax.min.js",
-                                                        "mediaelement/GreenSock/utils/Draggable.min.js",
-                                                        "mediaelement/jquery-1.11.1.min.js"
-                                                    ],
-                                                    "draggableButtons": [
-                                                        {
-                                                            "select": "true",
-                                                            "content": "<p>slide right</p>",
-                                                            "image": "/assets/images/hotspot.png",
-                                                            "matchingContent": "<p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
-                                                            "matchingImage": "/assets/images/hotspot.png"
-                                                        },
-                                                        {
-                                                            "select": "false",
-                                                            "content": "<p>slide left</p>",
-                                                            "image": "",
-                                                            "matchingContent": "<p>this is the content1!this is the content1! this is the content1.2 !this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
-                                                            "matchingImage": ""
-                                                        },
-                                                        {
-                                                            "select": "true",
-                                                            "content": "<p>slide right</p>",
-                                                            "image": "/assets/images/hotspot.png",
-                                                            "matchingContent": "<p>this is the matching content2!</p>",
-                                                            "matchingImage": "/assets/images/hotspot.png"
-                                                        },
-                                                        {
-                                                            "select": "true",
-                                                            "content": "<p>slide right</p>",
-                                                            "image": "/assets/images/hotspot.png",
-                                                            "matchingContent": "<p>this is the matching content3!</p>",
-                                                            "matchingImage": "/assets/images/hotspot.png"
-                                                        },
-                                                        {
-                                                            "select": "false",
-                                                            "content": "<p>slide left</p>",
-                                                            "image": "",
-                                                            "matchingContent": "<p>this is the matching content4!</p>",
-                                                            "matchingImage": ""
-                                                        }
-                                                    ]
-                                                },
-                                                "components": []
-                                            },
-                                            {
-                                                "type": "npButton",
-                                                "data": {
-                                                    "link": "",
-                                                    "type": "btn-next",
-                                                    "class": "",
-                                                    "content": "Next"
-                                                },
-                                                "components": [
-                                                ]
-                                            }
-                                        ]
+                        "components":[  
+
+                        ]
+                     },
+                     {  
+                        "type":"npHTML",
+                        "data":{  
+                           "class":"h3 headline",
+                           "content":"Re-Nutriv 7.0 Becoming a Re-Nutriv Expert Quiz"
+                        },
+                        "components":[  
+
+                        ]
+                     },
+                     {  
+                        "type":"npHTML",
+                        "data":{  
+                           "class":"h6 instructional"
+                        },
+                        "components":[  
+
+                        ]
+                     },
+                     {  
+                        "type":"npQuiz",
+                        "data":{  
+                           "id":"",
+                           "type":"assessment",
+                           "assessed":"1",
+                           "questions":"4",
+                           "percentage":"80",
+                           "forced":"true",
+                           "randomized":"false"
+                        },
+                        "components":[  
+                           {  
+                              "type":"npPage",
+                              "data":{  
+                                 "id":"6876",
+                                 "instructional":"<p>intro local to Q1</p><p>Your customer asks which is better: Re-Nutriv or Beautiful Skin Solutions. What should you say?</p>"
+                              },
+                              "components":[  
+                                 {  
+                                    "type":"npDragAndDropSelect",
+                                    "data":{  
+                                       "id":"container",
+                                       "positiveFeedback":"That's right! These are all points of discussion when helping customers choose between Re-Nutriv and Beautiful Skin Solutions.",
+                                       "negativeFeedback":"Sorry, thatâ€™s not it. A, B and E are all points of discussion when helping customers choose between Re-Nutriv and Beautiful Skin Solutions.",
+                                       "req":[  
+                                          "mediaelement/GreenSock/TweenMax.js",
+                                          "mediaelement/GreenSock/utils/Draggable.js",
+                                          "mediaelement/angular-tweenmax-draggable.js"
+                                       ],
+                                       "draggableButtons":[  
+                                          {  
+                                             "select":"true",
+                                             "content":"<p>All EstÃ©e Lauder skincare is the highest performance and quality. Tell me what you&#39;re currently using, and I&#39;ll help you find the best option.</p>",
+                                             "image":"",
+                                             "matchingContent":"1",
+                                             "matchingImage":""
+                                          },
+                                          {  
+                                             "select":"true",
+                                             "content":"<p>Let me show and describe both options to you; that will help you decide which is best for you.</p>",
+                                             "image":"",
+                                             "matchingContent":"1",
+                                             "matchingImage":""
+                                          },
+                                          {  
+                                             "select":"false",
+                                             "content":"<p>Re-Nutriv is great for customers who are over 40.</p>",
+                                             "image":"",
+                                             "matchingContent":"0",
+                                             "matchingImage":""
+                                          },
+                                          {  
+                                             "select":"false",
+                                             "content":"<p>How much is in your budget to spend?</p>",
+                                             "image":"",
+                                             "matchingContent":"0",
+                                             "matchingImage":""
+                                          },
+                                          {  
+                                             "select":"true",
+                                             "content":"<p>Re-Nutriv luxury skincare combines rare and precious ingredients with scientific advancements.</p>",
+                                             "image":"",
+                                             "matchingContent":"1",
+                                             "matchingImage":""
+                                          },
+                                          {  
+                                             "select":"true",
+                                             "content":"<p>Beautiful Skin Solutions is for targeting skincare solutions with advanced science and bestselling products.</p>",
+                                             "image":"",
+                                             "matchingContent":"1",
+                                             "matchingImage":""
+                                          }
+                                       ],
+                                       "feedback":"<p></p>",
+                                       "image":""
                                     },
-                                    {
-                                        "type": "npPage",
-                                        "data": {
-                                        },
-                                        "components": [
-                                            {
-                                                "type": "npAsQuestion",
-                                                "data": {
-                                                    "required": true,
-                                                    "forced": false,
-                                                    "type": "checkbox",
-                                                    "difficulty": "",
-                                                    "content": "Which of the following instantly provides skin with natural radiance?",
-                                                    "buttons": {
-                                                        "submit": "Submit",
-                                                        "next": "Next"
-                                                    },
-                                                    "feedback": {
-                                                        "immediate": "true",
-                                                        "correct": "That's it! South Sea Pearls and illuminating optics are featured in all Re-Nutriv collections, instantly providing skin with natural radiance.",
-                                                        "incorrect": "That's not right. South Sea Pearls and illuminating optics are featured in all Re-Nutriv collections, instantly providing skin with natural radiance."
-                                                    }
-                                                },
-                                                "components": [
-                                                    {
-                                                        "type": "npAsAnswer",
-                                                        "data": {
-                                                            "label": "South Sea Pearls and illuminating optics",
-                                                            "correct": true,
-                                                            "feedback": {
-                                                                "correct": "That's it! South Sea Pearls and illuminating optics are featured in all Re-Nutriv collections, instantly providing skin with natural radiance."
-                                                            }
-                                                        }
-                                                    },
-                                                    {
-                                                        "type": "npAsAnswer",
-                                                        "data": {
-                                                            "label": "Black Sea Optical Pearls",
-                                                            "correct": false,
-                                                            "feedback": {
-                                                                "incorrect": "That's not right. South Sea Pearls and illuminating optics are featured in all Re-Nutriv collections, instantly providing skin with natural radiance."
-                                                            }
-                                                        }
-                                                    },
-                                                    {
-                                                        "type": "npAsAnswer",
-                                                        "data": {
-                                                            "label": "White South American Pearls",
-                                                            "correct": false,
-                                                            "feedback": {
-                                                                "incorrect": "That's not right. South Sea Pearls and illuminating optics are featured in all Re-Nutriv collections, instantly providing skin with natural radiance."
-                                                            }
-                                                        }
-                                                    },
-                                                    {
-                                                        "type": "npAsAnswer",
-                                                        "data": {
-                                                            "label": "Black Sea Pearl Drops",
-                                                            "correct": false,
-                                                            "feedback": {
-                                                                "incorrect": "That's not right. South Sea Pearls and illuminating optics are featured in all Re-Nutriv collections, instantly providing skin with natural radiance."
-                                                            }
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "type": "npButton",
-                                                "data": {
-                                                    "link": "",
-                                                    "type": "btn-next",
-                                                    "class": "",
-                                                    "content": "Next"
-                                                },
-                                                "components": [
-                                                ]
-                                            }
-                                        ]
+                                    "components":[  
+
+                                    ]
+                                 },
+                                 {  
+                                    "type":"npButton",
+                                    "data":{  
+                                       "link":"",
+                                       "type":"btn-next",
+                                       "class":"",
+                                       "content":"Next"
                                     },
-                                    {
-                                        "type": "npPage",
-                                        "data": {
-                                        },
-                                        "components": [
-                                            {
-                                                "type": "npAsQuestion",
-                                                "data": {
-                                                    "required": true,
-                                                    "forced": false,
-                                                    "type": "checkbox",
-                                                    "difficulty": "",
-                                                    "content": "Which of the following includes an exclusive luxurious gold spatula?",
-                                                    "buttons": {
-                                                        "submit": "Submit",
-                                                        "next": "Next"
-                                                    },
-                                                    "feedback": {
-                                                        "immediate": "true",
-                                                        "correct": "Yes. The luxurious applicator is featured in all Re-Nutriv cremes, and is included in the packaging for the customer to use at home.",
-                                                        "incorrect": "That's not it. Actually, the luxurious applicator is featured in all Re-Nutriv cremes, and is included in the packaging for the customer to use at home."
-                                                    }
-                                                },
-                                                "components": [
-                                                    {
-                                                        "type": "npAsAnswer",
-                                                        "data": {
-                                                            "label": "Intensive Age-Renewal",
-                                                            "correct": false,
-                                                            "feedback": {
-                                                                "incorrect": "Yes. The luxurious applicator is featured in all Re-Nutriv cremes, and is included in the packaging for the customer to use at home."
-                                                            }
-                                                        }
-                                                    },
-                                                    {
-                                                        "type": "npAsAnswer",
-                                                        "data": {
-                                                            "label": "Ultimate Lift",
-                                                            "correct": false,
-                                                            "feedback": {
-                                                                "incorrect": "Yes. The luxurious applicator is featured in all Re-Nutriv cremes, and is included in the packaging for the customer to use at home."
-                                                            }
-                                                        }
-                                                    },
-                                                    {
-                                                        "type": "npAsAnswer",
-                                                        "data": {
-                                                            "label": "Dual Infusion",
-                                                            "correct": false,
-                                                            "feedback": {
-                                                                "incorrect": "That's not it. Actually, the luxurious applicator is featured in all Re-Nutriv cremes, and is included in the packaging for the customer to use at home."
-                                                            }
-                                                        }
-                                                    },
-                                                    {
-                                                        "type": "npAsAnswer",
-                                                        "data": {
-                                                            "label": "Transformative Energy Creme",
-                                                            "correct": true,
-                                                            "feedback": {
-                                                                "correct": "Yes. The luxurious applicator is featured in all Re-Nutriv cremes, and is included in the packaging for the customer to use at home."
-                                                            }
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "type": "npButton",
-                                                "data": {
-                                                    "link": "",
-                                                    "type": "btn-next",
-                                                    "class": "",
-                                                    "content": "Next"
-                                                },
-                                                "components": [
-                                                ]
-                                            }
-                                        ]
+                                    "components":[  
+
+                                    ]
+                                 }
+                              ]
+                           },
+                           {  
+                              "type":"npPage",
+                              "data":{  
+                                 "id":"6877",
+                                 "instructional":"<p>intro text Q2</p><p>Your customer asks you why Re-Nutriv is worth the price. What should you say?</p>"
+                              },
+                              "components":[  
+                                 {  
+                                    "type":"npDragAndDropSelect",
+                                    "data":{  
+                                       "id":"container",
+                                       "positiveFeedback":"Yes! Many customers are willing to spend more for luxury products if they believe they're worth the price. These are all great points of discussion.",
+                                       "negativeFeedback":"Sorry, thatâ€™s not it. A, C and D are the correct choices. Many customers are willing to spend more for luxury products if they believe they're worth the price. These are all great points of discussion.",
+                                       "req":[  
+                                          "mediaelement/GreenSock/TweenMax.js",
+                                          "mediaelement/GreenSock/utils/Draggable.js",
+                                          "mediaelement/angular-tweenmax-draggable.js"
+                                       ],
+                                       "draggableButtons":[  
+                                          {  
+                                             "select":"true",
+                                             "content":"<p>All Re-Nutriv formulas deliver powerful results you can see and feel immediately and over time.</p>",
+                                             "image":"",
+                                             "matchingContent":"1",
+                                             "matchingImage":""
+                                          },
+                                          {  
+                                             "select":"false",
+                                             "content":"<p>You&#39;ll actually spend less because the products last a long time.</p>",
+                                             "image":"",
+                                             "matchingContent":"0",
+                                             "matchingImage":""
+                                          },
+                                          {  
+                                             "select":"true",
+                                             "content":"<p>All Re-Nutriv formulas combine the ultimate in nature and science. We search the world for rare and precious ingredients and the latest scientific advancements.</p>",
+                                             "image":"",
+                                             "matchingContent":"1",
+                                             "matchingImage":""
+                                          },
+                                          {  
+                                             "select":"true",
+                                             "content":"<p>Re-Nutriv offers the most indulgent texture and experience, and you&#39;ll feel the Re-Nutriv difference right away.</p>",
+                                             "image":"",
+                                             "matchingContent":"1",
+                                             "matchingImage":""
+                                          },
+                                          {  
+                                             "select":"false",
+                                             "content":"<p>You deserve to treat yourself to a great product like Re-Nutriv.</p>",
+                                             "image":"",
+                                             "matchingContent":"0",
+                                             "matchingImage":""
+                                          }
+                                       ],
+                                       "feedback":"<p></p>",
+                                       "image":""
                                     },
-                                    {
-                                        "type": "npPage",
-                                        "data": {
-                                        },
-                                        "components": [
-                                            {
-                                                "type": "npAsQuestion",
-                                                "data": {
-                                                    "required": true,
-                                                    "forced": false,
-                                                    "type": "checkbox",
-                                                    "difficulty": "",
-                                                    "content": "The Dual Infusion and Transformative Energy Creme both feature beautiful herbaceous floral scents, including fresh green and citrus notes of lemon and grapefruit, along with which of the following?",
-                                                    "buttons": {
-                                                        "submit": "Submit",
-                                                        "next": "Next"
-                                                    },
-                                                    "feedback": {
-                                                        "immediate": "true",
-                                                        "correct": "You got it. Ask the customer to smell the product, and point out that the beautiful herbaceous floral scent features fresh green and citrus notes of lemon and grapefruit, as well as muguet, jasmine and rose petals.",
-                                                        "incorrect": "That's not right. Actually, ask the customer to smell the product, and point out that the beautiful herbaceous floral scent features fresh green and citrus notes of lemon and grapefruit, as well as muguet, jasmine and rose petals."
-                                                    }
-                                                },
-                                                "components": [
-                                                    {
-                                                        "type": "npAsAnswer",
-                                                        "data": {
-                                                            "label": "Lilies, rosemary and violets",
-                                                            "correct": false,
-                                                            "feedback": {
-                                                                "incorrect": "That's not right. Actually, ask the customer to smell the product, and point out that the beautiful herbaceous floral scent features fresh green and citrus notes of lemon and grapefruit, as well as muguet, jasmine and rose petals."
-                                                            }
-                                                        }
-                                                    },
-                                                    {
-                                                        "type": "npAsAnswer",
-                                                        "data": {
-                                                            "label": "Muguet, jasmine and rose petals",
-                                                            "correct": true,
-                                                            "feedback": {
-                                                                "correct": "You got it. Ask the customer to smell the product, and point out that the beautiful herbaceous floral scent features fresh green and citrus notes of lemon and grapefruit, as well as muguet, jasmine and rose petals."
-                                                            }
-                                                        }
-                                                    },
-                                                    {
-                                                        "type": "npAsAnswer",
-                                                        "data": {
-                                                            "label": "Sage, ylang ylang and lavender",
-                                                            "correct": false,
-                                                            "feedback": {
-                                                                "incorrect": "That's not right. Actually, ask the customer to smell the product, and point out that the beautiful herbaceous floral scent features fresh green and citrus notes of lemon and grapefruit, as well as muguet, jasmine and rose petals."
-                                                            }
-                                                        }
-                                                    },
-                                                    {
-                                                        "type": "npAsAnswer",
-                                                        "data": {
-                                                            "label": "Thyme, petunias and bergamot",
-                                                            "correct": false,
-                                                            "feedback": {
-                                                                "incorrect": "That's not right. Actually, ask the customer to smell the product, and point out that the beautiful herbaceous floral scent features fresh green and citrus notes of lemon and grapefruit, as well as muguet, jasmine and rose petals."
-                                                            }
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "type": "npButton",
-                                                "data": {
-                                                    "link": "",
-                                                    "type": "btn-next",
-                                                    "class": "",
-                                                    "content": "Next"
-                                                },
-                                                "components": [
-                                                ]
-                                            }
-                                        ]
+                                    "components":[  
+
+                                    ]
+                                 },
+                                 {  
+                                    "type":"npButton",
+                                    "data":{  
+                                       "link":"",
+                                       "type":"btn-next",
+                                       "class":"",
+                                       "content":"Next"
                                     },
-                                    {
-                                        "type": "npPage",
-                                        "data": {
-                                        },
-                                        "components": [
-                                            {
-                                                "type": "npTrivia",
-                                                "data": {
-                                                    "required": true,
-                                                    "forced": false,
-                                                    "difficulty": 1,
-                                                    "content": " This is the 'What number am I thinking of?' trivia!",
-                                                    "feedback": {
-                                                        "immediate": true,
-                                                        "correct": "Hey, that's right!",
-                                                        "incorrect": "No! ... What are you thinking!?"
-                                                    }
-                                                },
-                                                "components": [
-                                                    {
-                                                        "type": "npAsQuestion",
-                                                        "data": {
-                                                            "class": "row",
-                                                            "required": true,
-                                                            "forced": false,
-                                                            "type": "checkbox",
-                                                            "difficulty": 1,
-                                                            "content": "What number am I thinking of? QUESTION 1",
-                                                            "feedback": {
-                                                                "correct": "Hey, that's right!",
-                                                                "incorrect": "No! ... What are you thinking!?"
-                                                            }
-                                                        },
-                                                        "components": [
-                                                            {
-                                                                "type": "npAsAnswer",
-                                                                "data": {
-                                                                    "class": "answer-text",
-                                                                    "label": "8",
-                                                                    "correct": false
-                                                                },
-                                                                "components": [
-                                                                ]
-                                                            },
-                                                            {
-                                                                "type": "npAsAnswer",
-                                                                "data": {
-                                                                    "class": "answer-text",
-                                                                    "label": "7,433.6",
-                                                                    "correct": false
-                                                                },
-                                                                "components": [
-                                                                ]
-                                                            },
-                                                            {
-                                                                "type": "npAsAnswer",
-                                                                "data": {
-                                                                    "class": "answer-text",
-                                                                    "label": "<img src=\"http://i.istockimg.com/file_thumbview_approve/33898764/2/stock-photo-33898764-isolated-chicken-with-egg.jpg\" height=\"50\" />",
-                                                                    "correct": true
-                                                                },
-                                                                "components": [
-                                                                ]
-                                                            },
-                                                            {
-                                                                "type": "npAsAnswer",
-                                                                "data": {
-                                                                    "class": "answer-text",
-                                                                    "label": "<strong>Bologna!</strong>",
-                                                                    "correct": true
-                                                                },
-                                                                "components": [
-                                                                ]
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        ]
+                                    "components":[  
+
+                                    ]
+                                 }
+                              ]
+                           },
+                           {  
+                              "type":"npPage",
+                              "data":{  
+                                 "id":"6878",
+                                 "instructional":"<p>intro for Q3</p><p>Your customer asks how Re-Nutriv compares to other luxury brands. What should you say?</p>"
+                              },
+                              "components":[  
+                                 {  
+                                    "type":"npDragAndDropSelect",
+                                    "data":{  
+                                       "id":"container",
+                                       "positiveFeedback":"That's it! Be sure to explain everything that Re-Nutriv offers in comparison to other brands.",
+                                       "negativeFeedback":"Sorry, thatâ€™s not it. B, C, D and E are all things you can say. Be sure to explain everything that Re-Nutriv offers in comparison to other brands.",
+                                       "req":[  
+                                          "mediaelement/GreenSock/TweenMax.js",
+                                          "mediaelement/GreenSock/utils/Draggable.js",
+                                          "mediaelement/angular-tweenmax-draggable.js"
+                                       ],
+                                       "draggableButtons":[  
+                                          {  
+                                             "select":"false",
+                                             "content":"<p>There is no reason to try any other brand. Re-Nutriv has everything you need.</p>",
+                                             "image":"",
+                                             "matchingContent":"0",
+                                             "matchingImage":""
+                                          },
+                                          {  
+                                             "select":"true",
+                                             "content":"<p>Re-Nutriv is one of a kind in luxury because it combines the ultimate in nature and science.</p>",
+                                             "image":"",
+                                             "matchingContent":"1",
+                                             "matchingImage":""
+                                          },
+                                          {  
+                                             "select":"true",
+                                             "content":"<p>We never stop searching for the next big breakthrough.</p>",
+                                             "image":"",
+                                             "matchingContent":"1",
+                                             "matchingImage":""
+                                          },
+                                          {  
+                                             "select":"true",
+                                             "content":"<p>This unique combination of nature and science allows us to deliver the most extraordinary results and textures.</p>",
+                                             "image":"",
+                                             "matchingContent":"1",
+                                             "matchingImage":""
+                                          },
+                                          {  
+                                             "select":"true",
+                                             "content":"<p>Re-Nutriv was actually the world&#39;s first luxury skincare line. EstÃ©e Lauder wanted to create the world&#39;s ultimate skincare and spared no expense.</p>",
+                                             "image":"",
+                                             "matchingContent":"1",
+                                             "matchingImage":""
+                                          }
+                                       ],
+                                       "feedback":"<p></p>",
+                                       "image":""
                                     },
-                                    {
-                                        "type": "npPage",
-                                        "data": {
-                                            "id": "How Much Do You Know About Re-Nutriv Summary",
-                                            "parentId": "QuizIntro",
-                                            "title": "How Much Do You Know About Re-Nutriv Summary",
-                                            "inMenu": false,
-                                            "required": false
-                                        },
-                                        "components": [
-                                            {
-                                                "type": "npAsResult",
-                                                "data": {
-                                                    "feedback": {
-                                                        "pass": "Congratulations, you scored :USERSCORE:% and have passed this module.",
-                                                        "fail": "Sorry, you scored :USERSCORE:% and you needed to score :MINSCORE:% to pass. Try it again!"
-                                                    },
-                                                    "achievements": [
-                                                        {
-                                                            "score": 0.8,
-                                                            "compare": "gte",
-                                                            "content": "In addition, you a grip of points!"
-                                                        },
-                                                        {
-                                                            "score": 1,
-                                                            "compare": "eq",
-                                                            "content": "In addition, you get this badge and a grip of points!"
-                                                        }
-                                                    ]
-                                                }
-                                            }
-                                        ]
+                                    "components":[  
+
+                                    ]
+                                 },
+                                 {  
+                                    "type":"npButton",
+                                    "data":{  
+                                       "link":"",
+                                       "type":"btn-next",
+                                       "class":"",
+                                       "content":"Next"
+                                    },
+                                    "components":[  
+
+                                    ]
+                                 }
+                              ]
+                           },
+                           {  
+                              "type":"npPage",
+                              "data":{  
+                                 "id":"6879",
+                                 "instructional":"<p>intro for Q4</p><p>Your customer asks what results she&#39;ll see with Re-Nutriv. What should you say?</p>"
+                              },
+                              "components":[  
+                                 {  
+                                    "type":"npDragAndDropSelect",
+                                    "data":{  
+                                       "id":"container",
+                                       "positiveFeedback":"That's it! This is a very common question. Use all of these discussion points to explain the results she can expect from Re-Nutriv.",
+                                       "negativeFeedback":"Sorry, thatâ€™s not it. This is a very common question. Use all of these discussion points to explain the results she can expect from Re-Nutriv.",
+                                       "req":[  
+                                          "mediaelement/GreenSock/TweenMax.js",
+                                          "mediaelement/GreenSock/utils/Draggable.js",
+                                          "mediaelement/angular-tweenmax-draggable.js"
+                                       ],
+                                       "draggableButtons":[  
+                                          {  
+                                             "select":"false",
+                                             "content":"<p>You&#39;ll see and feel the difference as soon as it touches your skin. Each formula offers the most indulgent texture and experience.</p>",
+                                             "image":"",
+                                             "matchingContent":"0",
+                                             "matchingImage":""
+                                          },
+                                          {  
+                                             "select":"false",
+                                             "content":"<p>Let me put it on your hand so you can compare the difference.</p>",
+                                             "image":"",
+                                             "matchingContent":"0",
+                                             "matchingImage":""
+                                          },
+                                          {  
+                                             "select":"false",
+                                             "content":"<p>Each Re-Nutriv formula offers powerful, visible results that build over time.</p>",
+                                             "image":"",
+                                             "matchingContent":"0",
+                                             "matchingImage":""
+                                          },
+                                          {  
+                                             "select":"false",
+                                             "content":"<p>Let&#39;s find the formula that&#39;s best for you, and I&#39;ll show you the specific results.</p>",
+                                             "image":"",
+                                             "matchingContent":"0",
+                                             "matchingImage":""
+                                          },
+                                          {  
+                                             "select":"true",
+                                             "content":"<p>All of the above.</p>",
+                                             "image":"",
+                                             "matchingContent":"1",
+                                             "matchingImage":""
+                                          }
+                                       ],
+                                       "feedback":"<p></p>",
+                                       "image":""
+                                    },
+                                    "components":[  
+
+                                    ]
+                                 },
+                                 {  
+                                    "type":"npButton",
+                                    "data":{  
+                                       "link":"",
+                                       "type":"btn-next",
+                                       "class":"",
+                                       "content":"Next"
+                                    },
+                                    "components":[  
+
+                                    ]
+                                 }
+                              ]
+                           },
+                           {  
+                              "type":"npPage",
+                              "data":{  
+
+                              },
+                              "components":[  
+                                 {  
+                                    "type":"npAsResult",
+                                    "id":"summary",
+                                    "data":{  
+                                       "feedback":{  
+                                          "pass":"Congratulations, you scored :USERSCORE:% and have passed this module.",
+                                          "fail":"Sorry, you scored :USERSCORE:% and you needed to score :MINSCORE:% to pass. Try it again!"
+                                       },
+                                       "achievements":[  
+                                          {  
+                                             "score":0.8,
+                                             "compare":"gte",
+                                             "content":"In addition, you a grip of points!"
+                                          },
+                                          {  
+                                             "score":1,
+                                             "compare":"eq",
+                                             "content":"In addition, you get this badge and a grip of points!"
+                                          }
+                                       ]
                                     }
-                                ]
-                            }
+                                 }
+                              ]
+                           }
                         ]
-                    }
-                ]
-            }
-        ]
-    }
+                     }
+                  ]
+               }
+            ]
+         }
+      ]
+   }
 ]
