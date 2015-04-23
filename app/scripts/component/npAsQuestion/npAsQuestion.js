@@ -155,7 +155,7 @@
                                         });
                                         TweenMax.to(feedbackWrapper, 0.5, {
                                             autoAlpha: 1,
-                                            height: contentAreaHeight + 20,
+                                            height: contentAreaHeight + 40,
                                             force3D: true,
                                             ease: Power4.easeOut,
                                             onComplete: function () {
@@ -196,7 +196,7 @@
                                         });
                                         TweenMax.to(feedbackWrapper, 0.5, {
                                             autoAlpha: 1,
-                                            height: contentAreaHeight + 20,
+                                            height: contentAreaHeight + 40,
                                             force3D: true,
                                             ease: Power4.easeOut,
                                             onComplete: function () {
