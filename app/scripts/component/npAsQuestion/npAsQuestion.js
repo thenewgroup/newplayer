@@ -38,7 +38,7 @@
                                     scale: 0.5,
                                     force3D: true
                                 });
-                                TweenMax.staggerTo($(".response-item"), 2, {
+                                TweenMax.staggerTo($(".response-item"), 0.75, {
                                     scale: 1,
                                     autoAlpha: 1,
                                     delay: 0.75,
