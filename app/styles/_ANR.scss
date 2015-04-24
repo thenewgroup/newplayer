@@ -900,6 +900,10 @@ input{
 .reveal-item{
     width:100%;
 }
+.reveal-video{
+    height: auto;
+    max-width: 100%;
+}
 .reveal-content-wrapper{
     position: relative;
 }
@@ -944,7 +948,7 @@ input{
     margin-bottom: 1.5%;
 }
 .list-object video{
-    width: 100%;
+    max-width: 100%;
     height: auto;
 }
 .media-body{

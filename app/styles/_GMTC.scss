@@ -471,7 +471,6 @@ input{
     position: absolute;
     top:0;
     left:0;
-    /*opacity: 0;*/
     display: block;
     margin: auto;
 }
@@ -479,17 +478,12 @@ input{
     stroke: $brand-primary !important;
 }
 .answer-content-wrapper { 
-    /*padding: 6px;*/
     opacity: .75;
-    /*background-color: #FFFFFF;*/
-    /*margin-left: 20px;*/
 }
 .answer-text{ 
     font-family: $font-family-sans-serif;
-    /*float: left;*/
     color: $brand-primary;
     letter-spacing: 2px;
-    /*margin-right: 20px;*/
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Quiz Questions classes*/
@@ -498,7 +492,6 @@ input{
     font-family: $font-family-serif;
     size: $font-size-h3;
     color: $brand-primary;
-    /*text-transform: uppercase;*/
     letter-spacing: 2px;
 }
 .question-feedback-wrapper{ 
@@ -515,10 +508,8 @@ input{
 }
 .question-feedback{ 
     position: relative;
-    /*height: 160px;*/
     margin-top: 10px;
     margin-bottom: 10px;
-    /*margin-right: 15px;*/
 }
 .question-feedback-outline{ 
     position: absolute;
@@ -565,7 +556,6 @@ input{
     text-align: center;
     margin-top: 3em;
 }
-
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Result classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -732,7 +722,6 @@ input{
     height: 400px;
     background-color: $brand-primary-light;
     box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
-    /*width: 135px;*/
 }
 .np-spinner{
     color: $gold;
@@ -753,14 +742,10 @@ input{
     font-family: $re-nu-serif;
     color: $brand-primary;
     font-size: floor(($font-size-base * 2.5));
-    /*color: $gold-gradiant;*/
     line-height: 2.1em;
     text-align: center;
 }
 .np-spinner svg rect{
-    /*fill: #FFFFFF;*/
-    /*opacity: 0.75;*/
-    /*stroke: #FFFFFF;*/
     stroke-width: 3;
 }
 .np-gold-border {
@@ -781,7 +766,6 @@ input{
     top: 100px;
     text-align: center;
     width: 100%;
-    /*height: 600px;*/
     /*clip the container for those not supporting csstransforms3d*/ 
     .no-csstransforms3d & {
         overflow: hidden;
@@ -789,7 +773,6 @@ input{
     }
     .wheel {
         position: relative;
-        // width: 100%;
         height: 600px;
         top: 69px;
         > div {
@@ -881,6 +864,10 @@ input{
 .reveal-item{
     width:100%;
 }
+.reveal-video{
+    height: auto;
+    max-width: 100%;
+}
 .reveal-content-wrapper{
     position: relative;
 }
@@ -925,7 +912,7 @@ input{
     margin-bottom: 1.5%;
 }
 .list-object video{
-    width: 100%;
+    max-width: 100%;
     height: auto;
 }
 .media-body{
