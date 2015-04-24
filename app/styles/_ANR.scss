@@ -771,17 +771,20 @@ input{
 }
 .np-spinner div{
     font-family: $re-nu-serif;
-    color: $brand-primary;
+    color: $ANR-bg-color;
     font-size: floor(($font-size-base * 2.5));
-    /*color: $gold-gradiant;*/
     line-height: 2.1em;
     text-align: center;
 }
 .np-spinner svg rect{
-    /*fill: #FFFFFF;*/
-    /*opacity: 0.75;*/
-    /*stroke: #FFFFFF;*/
-    stroke-width: 3;
+    fill: rgba(0, 0, 0, 0.0);
+    stroke: #040A2B;
+    stroke-width: 4;
+}
+.np-gold-pointer svg polygon{
+    fill: #040A2B !important;
+    box-shadow: 10px 10px 25px -5px rgba(0,0,0,0.75);
+    z-index: 10000;
 }
 .np-gold-border {
     position: absolute;
