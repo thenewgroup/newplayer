@@ -17,13 +17,19 @@
                         this.canContinue = false;
                         var feedback = cmpData.feedback;
                         var feedbackLabel = $element.find('.question-feedback-label');
+                        var feedbackWrapper = $element.find('.question-feedback');
                         var negativeFeedbackIcon = '';
                         var positiveFeedbackIcon = '';
+                        var contentAreaHeight = 0;
                         //////////////////////////////////////////////////////////////////////////////////////
                         //build that 
                         //////////////////////////////////////////////////////////////////////////////////////
                         setTimeout(function () {
                             $scope.$apply(function () {
+                                TweenMax.set(feedbackWrapper, {
+                                    autoAlpha: 0,
+                                    force3D: true
+                                });
                                 TweenMax.set($(".response-item"), {
                                     autoAlpha: 0,
                                     scale: 0.5,
@@ -129,27 +135,90 @@
                                 correct = false;
                             }
                             $log.debug('npQuestion::evaluate:isCorrect', correct);
-                            // set by ng-model of npAnswer's input's
-//                            if (feedback.immediate && this.feedback === '') {
                             feedbackLabel.remove();
                             if (correct) {
                                 this.feedback = feedback.correct;
                                 this.canContinue = true;
-                                TweenMax.to(positiveFeedbackIcon, 0.75, {
-                                    autoAlpha: 1,
-                                    scale: 1,
-                                    force3D: true
+                                setTimeout(function () {
+                                    $scope.$apply(function () {
+                                        if (contentAreaHeight === 0) {
+                                            contentAreaHeight = $('.question-feedback-text').outerHeight(true);
+                                            TweenMax.set(feedbackWrapper, {
+                                                height: 0,
+                                                force3D: true
+                                            });
+                                        }
+                                        TweenMax.set($('.question-feedback-text'), {
+                                            autoAlpha: 0,
+                                            force3D: true
+                                        });
+                                        TweenMax.to($('.question-feedback-text'), 0.5, {
+                                            autoAlpha: 1,
+                                            force3D: true,
+                                            delay: 0.25,
+                                            ease: Power4.easeOut
+                                        });
+                                        TweenMax.to(feedbackWrapper, 0.5, {
+                                            autoAlpha: 1,
+                                            height: contentAreaHeight + 40,
+                                            force3D: true,
+                                            ease: Power4.easeOut,
+                                            onComplete: function () {
+                                                TweenMax.set(positiveFeedbackIcon, {
+                                                    top: ((contentAreaHeight / 2) + (positiveFeedbackIcon / 2)),
+                                                    force3D: true
+                                                });
+                                                TweenMax.to(positiveFeedbackIcon, 0.75, {
+                                                    autoAlpha: 1,
+                                                    scale: 1,
+                                                    force3D: true
+                                                });
+                                            }
+                                        });
+                                    });
                                 });
                             } else {
                                 this.feedback = feedback.incorrect;
                                 this.canContinue = false;
-                                TweenMax.to(negativeFeedbackIcon, 0.75, {
-                                    autoAlpha: 1,
-                                    scale: 1,
-                                    force3D: true
+                                setTimeout(function () {
+                                    $scope.$apply(function () {
+                                        if (contentAreaHeight === 0) {
+                                            contentAreaHeight = $('.question-feedback-text').outerHeight(true);
+                                            TweenMax.set(feedbackWrapper, {
+                                                height: 0,
+                                                force3D: true
+                                            });
+                                        }
+                                        TweenMax.to($('.question-feedback-text'), 0.5, {
+                                            autoAlpha: 1,
+                                            force3D: true,
+                                            delay: 0.25,
+                                            ease: Power4.easeOut
+                                        });
+                                        TweenMax.set(feedbackWrapper, {
+                                            height: 0,
+                                            force3D: true
+                                        });
+                                        TweenMax.to(feedbackWrapper, 0.5, {
+                                            autoAlpha: 1,
+                                            height: contentAreaHeight + 40,
+                                            force3D: true,
+                                            ease: Power4.easeOut,
+                                            onComplete: function () {
+                                                TweenMax.set(negativeFeedbackIcon, {
+                                                    top: ((contentAreaHeight / 2) + (negativeFeedbackIcon / 2)),
+                                                    force3D: true
+                                                });
+                                                TweenMax.to(negativeFeedbackIcon, 0.75, {
+                                                    autoAlpha: 1,
+                                                    scale: 1,
+                                                    force3D: true
+                                                });
+                                            }
+                                        });
+                                    });
                                 });
                             }
-//                            }
                         };
                         this.nextPage = function (evt) {
                             evt.preventDefault();
@@ -165,7 +234,6 @@
                     var postiveFeedbackIcon = '';
                     setTimeout(function () {
                         $scope.$apply(function () {
-//                            negativeFeedbackIcon = $element.find('.hotspotButton');
                             function onPageLoadBuild() {
                                 negativeFeedbackIcon = $('.negative-feedback-icon');
                                 postiveFeedbackIcon = $('.positive-feedback-icon');

@@ -149,6 +149,7 @@
     margin-bottom: 50px;
 }
 .btn-next span{ 
+    text-transform: uppercase;
     letter-spacing: 2px;
     padding: 0;
 }
@@ -456,15 +457,6 @@ input{
     background-color: #000000;
     box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
 }
-.answer-radio{ 
-    position: relative;
-    width: 20px;
-    height: 20px;
-    /*border-color: $gold;*/
-    border-color: #9a7d46;
-    background-color: #000000;
-    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
-}
 .checkbox-box{ 
     position: absolute;
     width: 20px;
@@ -523,7 +515,8 @@ input{
 }
 .question-feedback{ 
     position: relative;
-    height: 160px;
+    /*height: 160px;*/
+    height: auto;
     margin-top: 10px;
     margin-bottom: 10px;
     /*margin-right: 30px;*/
@@ -762,6 +755,13 @@ input{
     line-height: 2.1em;
     text-align: center;
 }
+.np-spinner svg rect{
+    fill: rgba(0, 0, 0, 0.0)!important;
+    stroke-width: 4;
+}
+.np-spinner-content div:nth-last-child(2) {
+    color: #F3DB7F; 
+}
 .np-gold-border {
     position: absolute;
     top: 0;
@@ -881,6 +881,10 @@ input{
 .reveal-item{
     width:100%;
 }
+.reveal-video{
+    height: auto;
+    max-width: 100%;
+}
 .reveal-content-wrapper{
     position: relative;
 }
@@ -900,7 +904,6 @@ input{
 .reveal-text-body{
     padding-bottom: 15px;
 }
-
 .reveal-content-text{
     padding-top: 15px;
     padding-left: 15px;
@@ -914,7 +917,6 @@ input{
     height: 100%;
     background-color: #000000;
     opacity: 0.75;
-    /*z-index: -1;*/
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player List classes*/
@@ -927,7 +929,7 @@ input{
     margin-bottom: 1.5%;
 }
 .list-object video{
-    width: 100%;
+    max-width: 100%;
     height: auto;
 }
 .media-body{

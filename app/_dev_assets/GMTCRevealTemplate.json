@@ -107,8 +107,8 @@
                                                 "type": "npVideo",
                                                 "data": {
                                                     "id": "reveal-1-vid",
-                                                    "poster": "../_dev_assets/assets/images/ELX_Welcome_640x360_ENG.png",
-                                                    "baseURL": "../_dev_assets/assets/video/ELX_Welcome_640x360_ENG",
+                                                    "poster": "",
+                                                    "baseURL": "../_dev_assets/assets/video/EL_CREME_CLEAN_HD_ELX",
                                                     "types": ["mp4"]
                                                 },
                                                 "components": []

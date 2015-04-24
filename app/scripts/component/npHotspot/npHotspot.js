@@ -14,13 +14,11 @@
                         this.id = cmpData.id;
                         this.baseURL = cmpData.baseURL;
                         this.src = cmpData.image;
-                        //////////////////////
                         var contentArea = '';
                         setTimeout(function () {
                             $scope.$apply(function () {
                                 contentArea = $element.find('.content-area');
                                 function onPageLoadSet() {
-//                                    hotspotButton = $('.hotspotButton');
                                     TweenMax.set(contentArea, {opacity: 0, force3D: true});
                                 }
                                 onPageLoadSet();
@@ -28,17 +26,9 @@
                         });
                         $scope.feedback = this.feedback = cmpData.feedback;
                         $scope.image = this.image = cmpData.image;
-                        //////////////////////
                         this.update = function (button) {
                             this.feedback = button.feedback;
                             var idx = this.hotspotButtons.indexOf(button);
-                            //////////////////////
-                            console.log(
-                                    '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                    '\n::button::', button,
-                                    '\n::idx::', idx,
-                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                    );
                             $scope.$watch('npHotspot.feedback', function (newValue, oldValue) {
                                 contentAreaHeight = 0;
                                 TweenMax.to(contentArea, 1, {
@@ -51,10 +41,6 @@
                                         height: contentAreaHeight + 25,
                                         ease: Power4.easeOut
                                     });
-//                                    TweenMax.to($('.content-background'), 1, {
-//                                        height: contentAreaHeight + 25,
-//                                        ease: Power4.easeOut
-//                                    });
                                     TweenMax.to($('.npHotspot-feedback'), 0.1, {
                                         opacity: 0,
                                         ease: Power4.easeOut

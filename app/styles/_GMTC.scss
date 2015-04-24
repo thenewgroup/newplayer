@@ -14,13 +14,13 @@
     top: 0;
 }
 #background-image {
-    position:fixed;
+    position: fixed;
+    top:0;
     background-image: url('../assets/images/GMTC_bg.png');
-    background-position: top;
+    background-position: center;
     background-repeat: no-repeat;
-    bottom: 0;
-    top: 0;
-    width:100%;
+    width: 100%;
+    height: 100%;
 }
 .renutriv-logo-image {
     position: relative;
@@ -58,7 +58,6 @@
 .h1, .h2, .h3, .h4, .h5{
     color: $brand-primary;
 }
-/*#np_reNutriv p{*/
 .subhead-copy{
     color: $brand-primary;
     font-family: $font-family-sans-serif;
@@ -456,7 +455,8 @@ input{
 }
 .checkbox-box svg rect{
     opacity: 0.75;
-    stroke: $brand-lightgrey;
+    stroke: #040A2B;
+    fill: $brand-primary-light;
     stroke-width: 3;
 }
 .checkbox-x{ 
@@ -470,7 +470,6 @@ input{
     position: absolute;
     top:0;
     left:0;
-    /*opacity: 0;*/
     display: block;
     margin: auto;
 }
@@ -478,17 +477,12 @@ input{
     stroke: $brand-primary !important;
 }
 .answer-content-wrapper { 
-    /*padding: 6px;*/
     opacity: .75;
-    /*background-color: #FFFFFF;*/
-    /*margin-left: 20px;*/
 }
 .answer-text{ 
     font-family: $font-family-sans-serif;
-    /*float: left;*/
     color: $brand-primary;
     letter-spacing: 2px;
-    /*margin-right: 20px;*/
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Quiz Questions classes*/
@@ -497,7 +491,6 @@ input{
     font-family: $font-family-serif;
     size: $font-size-h3;
     color: $brand-primary;
-    /*text-transform: uppercase;*/
     letter-spacing: 2px;
 }
 .question-feedback-wrapper{ 
@@ -514,10 +507,8 @@ input{
 }
 .question-feedback{ 
     position: relative;
-    height: 160px;
     margin-top: 10px;
     margin-bottom: 10px;
-    /*margin-right: 15px;*/
 }
 .question-feedback-outline{ 
     position: absolute;
@@ -564,7 +555,6 @@ input{
     text-align: center;
     margin-top: 3em;
 }
-
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Result classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -731,11 +721,30 @@ input{
     height: 400px;
     background-color: $brand-primary-light;
     box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
-    /*width: 135px;*/
 }
 .np-spinner{
     color: $gold;
     width: 155px;
+}
+.np-spinner div{
+    font-family: $re-nu-serif;
+    color: #9EAFFF;
+    font-size: floor(($font-size-base * 2.5));
+    line-height: 2.1em;
+    text-align: center;
+}
+.np-spinner svg rect{
+    fill: rgba(0, 0, 0, 0.0);
+    stroke: #040A2B;
+    stroke-width: 4;
+}
+.np-gold-pointer svg polygon{
+    fill: #040A2B !important;
+    box-shadow: 10px 10px 25px -5px rgba(0,0,0,0.75);
+    z-index: 10000;
+}
+.np-spinner-content div:nth-last-child(2) {
+    color: $brand-primary; 
 }
 .np-gold-pointer{
     position: absolute;
@@ -748,26 +757,12 @@ input{
     -webkit-mask-image: -webkit-linear-gradient(top, rgba(248,248,170,1), rgba(202,160,78,.5) 50%, rgba(248,248,170,1));
     -webkit-mask-image: linear-gradient(top, rgba(248,248,170,1), rgba(202,160,78,.5) 50%, rgba(248,248,170,1));
 }
-.np-spinner div{
-    font-family: $re-nu-serif;
-    color: $brand-primary;
-    font-size: floor(($font-size-base * 2.5));
-    /*color: $gold-gradiant;*/
-    line-height: 2.1em;
-    text-align: center;
-}
-.np-spinner svg rect{
-    /*fill: #FFFFFF;*/
-    /*opacity: 0.75;*/
-    /*stroke: #FFFFFF;*/
-    stroke-width: 3;
-}
 .np-gold-border {
     position: absolute;
     top: 0;
     width: 100%;
     height: 400px;
-    box-shadow: inset 0 0 50px 15px rgba(0, 0, 0, 0.95);
+    box-shadow: inset 0 0 50px 15px rgba(0, 0, 0, 0.65);
 }
 /*
 ////////////////////////////////////////////////////////////////////////////////
@@ -780,7 +775,6 @@ input{
     top: 100px;
     text-align: center;
     width: 100%;
-    /*height: 600px;*/
     /*clip the container for those not supporting csstransforms3d*/ 
     .no-csstransforms3d & {
         overflow: hidden;
@@ -788,7 +782,6 @@ input{
     }
     .wheel {
         position: relative;
-        // width: 100%;
         height: 600px;
         top: 69px;
         > div {
@@ -880,6 +873,10 @@ input{
 .reveal-item{
     width:100%;
 }
+.reveal-video{
+    height: auto;
+    max-width: 100%;
+}
 .reveal-content-wrapper{
     position: relative;
 }
@@ -924,7 +921,7 @@ input{
     margin-bottom: 1.5%;
 }
 .list-object video{
-    width: 100%;
+    max-width: 100%;
     height: auto;
 }
 .media-body{
