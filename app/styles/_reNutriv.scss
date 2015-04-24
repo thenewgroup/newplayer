@@ -755,6 +755,13 @@ input{
     line-height: 2.1em;
     text-align: center;
 }
+.np-spinner svg rect{
+    fill: rgba(0, 0, 0, 0.0)!important;
+    stroke-width: 4;
+}
+.np-spinner-content div:nth-last-child(2) {
+    color: #F3DB7F; 
+}
 .np-gold-border {
     position: absolute;
     top: 0;
