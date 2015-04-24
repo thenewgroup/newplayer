@@ -2259,13 +2259,11 @@
                         this.id = cmpData.id;
                         this.baseURL = cmpData.baseURL;
                         this.src = cmpData.image;
-                        //////////////////////
                         var contentArea = '';
                         setTimeout(function () {
                             $scope.$apply(function () {
                                 contentArea = $element.find('.content-area');
                                 function onPageLoadSet() {
-//                                    hotspotButton = $('.hotspotButton');
                                     TweenMax.set(contentArea, {opacity: 0, force3D: true});
                                 }
                                 onPageLoadSet();
@@ -2273,17 +2271,9 @@
                         });
                         $scope.feedback = this.feedback = cmpData.feedback;
                         $scope.image = this.image = cmpData.image;
-                        //////////////////////
                         this.update = function (button) {
                             this.feedback = button.feedback;
                             var idx = this.hotspotButtons.indexOf(button);
-                            //////////////////////
-                            console.log(
-                                    '\n::::::::::::::::::::::::::::::::::::::atTop::atTop:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                    '\n::button::', button,
-                                    '\n::idx::', idx,
-                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                    );
                             $scope.$watch('npHotspot.feedback', function (newValue, oldValue) {
                                 contentAreaHeight = 0;
                                 TweenMax.to(contentArea, 1, {
@@ -2296,10 +2286,6 @@
                                         height: contentAreaHeight + 25,
                                         ease: Power4.easeOut
                                     });
-//                                    TweenMax.to($('.content-background'), 1, {
-//                                        height: contentAreaHeight + 25,
-//                                        ease: Power4.easeOut
-//                                    });
                                     TweenMax.to($('.npHotspot-feedback'), 0.1, {
                                         opacity: 0,
                                         ease: Power4.easeOut
@@ -2665,363 +2651,370 @@
             .module('newplayer.component')
             .controller('npDragAndDropSelectController',
                     /** @ngInject */
-                    function ($log, $scope, $sce, $element, AssessmentService) {
-                        var cmpData = $scope.component.data;
-                        var buttonData = $scope.feedback || {};
-                        $log.debug('npDragAndDropSelect::data', cmpData, buttonData);
-                        var draggableButtons = '';
-                        this.draggableButtons = cmpData.draggableButtons;
-                        this.id = cmpData.id;
-                        this.positiveFeedback = cmpData.positiveFeedback;
-                        this.negativeFeedback = cmpData.negativeFeedback;
-                        this.baseURL = cmpData.baseURL;
-                        this.src = cmpData.image;
-                        $scope.positiveFeedback = this.positiveFeedback = cmpData.positiveFeedback;
-                        $scope.negativeFeedback = this.negativeFeedback = cmpData.negativeFeedback;
-                        $scope.image = this.image = cmpData.image;
-                        $scope.content = cmpData.content;
-                        $scope.ID = cmpData.id;
-                        $scope.select = cmpData.select;
-
-                        AssessmentService.addQuestion(cmpData.id, !!cmpData.required);
-
-                        //////////////////////////////////////////////////////////////////////////////////////
-                        //set drag and drag end event handlers
-                        //////////////////////////////////////////////////////////////////////////////////////
-                        $scope.onDrag = function (value) {
-                            $scope.currentRotation = value;
-                        };
-                        $scope.onDragEnd = function (value) {
-                            $scope.currentRotation = value;
-                        };
-                    }
-            )
-            .directive('mediaelement', npMediaElementDirective)
-            /** @ngInject */
-            .run(
-                    function ($log, $rootScope) {
-                        $log.debug('npDragAndDropSelect::component loaded!');
-                    }
-            )
-            //////////////////////////////////////////////////////////////////////////////////////
-            //set evaluate button logic
-            //////////////////////////////////////////////////////////////////////////////////////
-            /** @ngInject */
-            .directive('npDragAndDropSelectEvaluate', function ($log, AssessmentService) {
-                return {
-                    restrict: 'A',
-                    link: function ($scope, $element, $attrs) {
-                        //////////////////////////////////////////////////////////////////////////////////////
-                        //get ready
-                        //////////////////////////////////////////////////////////////////////////////////////
-                        setTimeout(function () {
-                            $scope.$apply(function () {
-                              var cmpData = $scope.component.data;
-                                //////////////////////////////////////////////////////////////////////////////////////
-                                //on ready set states
-                                //////////////////////////////////////////////////////////////////////////////////////
-                                TweenMax.set($('.select-response-correct'), {
-                                    scale: 0.25,
-                                    autoAlpha: 0
-                                });
-                                TweenMax.set($('.select-response-incorrect'), {
-                                    scale: 0.25,
-                                    autoAlpha: 0
-                                });
-                                var hitAreaLength = 0;
-                                var hitAreaSelectedLength = '';
-                                var hitAreaSelectedIncorrect = '';
-                                hitAreaLength = $("[data-match=true]").length;
-                                //////////////////////////////////////////////////////////////////////////////////////
-                                //get and set height of elements
-                                //////////////////////////////////////////////////////////////////////////////////////
-                                var responseHeight = $('.select-response-incorrect').outerHeight(true);
-                                var outsidePaddingHeight = $('.np-cmp-wrapper').outerHeight(true);
-                                TweenMax.set($('.np_outside-padding'), {
-                                    height:  outsidePaddingHeight
-                                });
-                                console.log(
-                                        '\n::::::::::::::::::::::::::::::::::::::npDragAndDropSelect::maxHeight:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                        '\n::responseHeight:', responseHeight,
-                                        '\n::outsidePaddingHeight:', outsidePaddingHeight,
-                                        '\n::maxHeight + outsidePaddingHeight:', responseHeight + outsidePaddingHeight,
-                                        '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                        );
-
-                                //////////////////////////////////////////////////////////////////////////////////////
-                                //evaluate interaction
-                                //////////////////////////////////////////////////////////////////////////////////////
-                                $scope.evaluate = function () {
-                                    hitAreaSelectedLength = $("[data-match=selected]").length;
-                                    hitAreaSelectedIncorrect = $("[data-match=skeletor]").length;
-
-                                  var isPassing = false;
-
-                                    // TODO: Remove or re-enable, this doesn't appear to have a correlation with the code below
-                                    //$('.hit-area').each(function () {
-                                        if (Number(hitAreaLength) === Number(hitAreaSelectedLength) && (hitAreaSelectedIncorrect === 0)) {
-                                            TweenMax.to($('.select-response-correct'), 0.75, {
-                                                autoAlpha: 1,
-                                                scale: 1,
-                                                ease: Power4.easeOut
+                            function ($log, $scope, $sce, $element, AssessmentService) {
+                                var cmpData = $scope.component.data;
+                                var buttonData = $scope.feedback || {};
+                                $log.debug('npDragAndDropSelect::data', cmpData, buttonData);
+                                var draggableButtons = '';
+                                this.draggableButtons = cmpData.draggableButtons;
+                                this.id = cmpData.id;
+                                this.positiveFeedback = cmpData.positiveFeedback;
+                                this.negativeFeedback = cmpData.negativeFeedback;
+                                this.baseURL = cmpData.baseURL;
+                                this.src = cmpData.image;
+                                $scope.positiveFeedback = this.positiveFeedback = cmpData.positiveFeedback;
+                                $scope.negativeFeedback = this.negativeFeedback = cmpData.negativeFeedback;
+                                $scope.image = this.image = cmpData.image;
+                                $scope.content = cmpData.content;
+                                $scope.ID = cmpData.id;
+                                $scope.select = cmpData.select;
+                                $scope.randomized = cmpData.randomized;
+                                setTimeout(function () {
+                                    $scope.$apply(function () {
+                                        //////////////////////////////////////////////////////////////////////////////////////
+                                        //shuffle that
+                                        //////////////////////////////////////////////////////////////////////////////////////
+                                        function shuffle() {
+                                            $("#draggableButtons").each(function () {
+                                                var divs = $(this).find('.draggableButton');
+                                                for (var k = 0; k < divs.length; k++) {
+                                                    $(divs[k]).remove();
+                                                }
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                //the fisher yates algorithm:
+                                                //http://stackoverflow.com/questions/2450954/how-to-randomize-a-javascript-array
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                var l = divs.length;
+                                                if (l === 0) {
+                                                    return false;
+                                                }
+                                                while (--l) {
+                                                    var j = Math.floor(Math.random() * (l + 1));
+                                                    var tempi = divs[l];
+                                                    var tempj = divs[j];
+                                                    divs[l] = tempj;
+                                                    divs[j] = tempi;
+                                                }
+                                                for (var m = 0; m < divs.length; m++) {
+                                                    $(divs[m]).appendTo(this);
+                                                }
                                             });
-                                            TweenMax.to($('.select-response-incorrect'), 0.75, {
-                                                autoAlpha: 0,
-                                                scale: 0.25,
-                                                ease: Power4.easeOut
-                                            });
-                                          isPassing = true;
-                                        } else {
-                                            TweenMax.to($('.select-response-correct'), 0.75, {
-                                                autoAlpha: 0,
-                                                scale: 0.25,
-                                                ease: Power4.easeOut
-                                            });
-                                            TweenMax.to($('.select-response-incorrect'), 0.75, {
-                                                autoAlpha: 1,
-                                                scale: 1,
-                                                ease: Power4.easeOut
-                                            });
-                                          isPassing = false;
                                         }
-                                    //});
-                                  AssessmentService.questionAnswered(cmpData.id, isPassing);
+                                        //////////////////////////////////////////////////////////////////////////////////////
+                                        //build that
+                                        //////////////////////////////////////////////////////////////////////////////////////
+                                        if (Boolean($scope.randomized)) {
+                                            shuffle();
+                                        }
+                                    });
+                                });
+                                AssessmentService.addQuestion(cmpData.id, !!cmpData.required);
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //set drag and drag end event handlers
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                $scope.onDrag = function (value) {
+                                    $scope.currentRotation = value;
+                                };
+                                $scope.onDragEnd = function (value) {
+                                    $scope.currentRotation = value;
+                                };
+                            }
+                    )
+                            .directive('mediaelement', npMediaElementDirective)
+                            /** @ngInject */
+                            .run(
+                                    function ($log, $rootScope) {
+                                        $log.debug('npDragAndDropSelect::component loaded!');
+                                    }
+                            )
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            //set evaluate button logic
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            /** @ngInject */
+                            .directive('npDragAndDropSelectEvaluate', function ($log, AssessmentService) {
+                                return {
+                                    restrict: 'A',
+                                    link: function ($scope, $element, $attrs) {
+                                        //////////////////////////////////////////////////////////////////////////////////////
+                                        //get ready
+                                        //////////////////////////////////////////////////////////////////////////////////////
+                                        setTimeout(function () {
+                                            $scope.$apply(function () {
+                                                var cmpData = $scope.component.data;
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                //on ready set states
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                TweenMax.set($('.select-response-correct'), {
+                                                    height: 0,
+                                                    autoAlpha: 0
+                                                });
+                                                TweenMax.set($('.select-response-incorrect'), {
+                                                    height: 0,
+                                                    autoAlpha: 0
+                                                });
+                                                var hitAreaLength = 0;
+                                                var hitAreaSelectedLength = '';
+                                                var hitAreaSelectedIncorrect = '';
+                                                hitAreaLength = $("[data-match=true]").length;
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                //get and set height of elements
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                var maxHeight = Math.max.apply(null, $('.select-response-feedback').map(function () {
+                                                    return $(this).outerHeight(true);
+                                                }).get());
+//                                                var responseHeight = $('.select-response-incorrect').outerHeight(true);
+                                                var responseHeight = $('.negative-feedback').outerHeight(true);
+                                                var outsidePaddingHeight = $('.np-cmp-wrapper').outerHeight(true);
+                                                TweenMax.set($('.np_outside-padding'), {
+                                                    height: outsidePaddingHeight + maxHeight
+                                                });
+//                                                console.log(
+//                                                        '\n::::::::::::::::::::::::::::::::::::::npDragAndDropSelect::maxHeight:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                                        '\n::maxHeight:', maxHeight,
+//                                                        '\n::responseHeight:', responseHeight,
+//                                                        '\n::outsidePaddingHeight:', outsidePaddingHeight,
+//                                                        '\n::maxHeight + outsidePaddingHeight:', responseHeight + outsidePaddingHeight,
+//                                                        '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                                        );
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                //evaluate interaction
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                $scope.evaluate = function () {
+                                                    hitAreaSelectedLength = $("[data-match=selected]").length;
+                                                    hitAreaSelectedIncorrect = $("[data-match=skeletor]").length;
+                                                    var isPassing = false;
+                                                    if (Number(hitAreaLength) === Number(hitAreaSelectedLength) && (hitAreaSelectedIncorrect === 0)) {
+                                                        TweenMax.to($('.select-response-correct'), 0.75, {
+                                                            autoAlpha: 1,
+                                                            height: maxHeight,
+                                                            ease: Power4.easeOut
+                                                        });
+                                                        TweenMax.to($('.select-response-incorrect'), 0.75, {
+                                                            autoAlpha: 0,
+                                                            height: 0,
+                                                            ease: Power4.easeOut
+                                                        });
+                                                        isPassing = true;
+                                                    } else {
+                                                        TweenMax.to($('.select-response-correct'), 0.75, {
+                                                            autoAlpha: 0,
+                                                            height: 0,
+                                                            ease: Power4.easeOut
+                                                        });
+                                                        TweenMax.to($('.select-response-incorrect'), 0.75, {
+                                                            autoAlpha: 1,
+                                                            height: maxHeight,
+                                                            ease: Power4.easeOut
+                                                        });
+                                                        isPassing = false;
+                                                    }
+                                                    AssessmentService.questionAnswered(cmpData.id, isPassing);
+                                                };
+                                            });
+                                        });
+                                    }
+                                };
+                            })
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            //GSAP Draggable Angular directive
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            .directive("dragButtonSelect", function () {
+                                return {
+                                    restrict: "A",
+                                    scope: {
+                                        onDragEnd: "&",
+                                        onDrag: "&"
+                                    },
+                                    link: function (scope, element, attrs) {
+                                        var hitArea;
+                                        var hitAreaWrapper = document.getElementById('draggableContainer');
+                                        var draggables = document.getElementsByClassName('draggableButton');
+                                        var currentTarget;
+                                        var currentElement;
+                                        //////////////////////////////////////////////////////////////////////////////////////
+                                        //set states
+                                        //////////////////////////////////////////////////////////////////////////////////////
+                                        TweenMax.to($('#draggableContainer'), 0, {
+                                            autoAlpha: 0
+                                        });
+                                        //////////////////////////////////////////////////////////////////////////////////////
+                                        //get ready
+                                        //////////////////////////////////////////////////////////////////////////////////////
+                                        setTimeout(function () {
+                                            scope.$apply(function () {
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                //on ready set states
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                hitArea = document.getElementsByClassName('hit-area');
+                                                TweenMax.to($('.hit-area'), 0, {
+                                                    strokeOpacity: 0
+                                                });
+                                                TweenMax.set($('.boxElements'), {
+                                                    autoAlpha: 0
+                                                });
+                                                TweenMax.to($(hitArea).find('.button-completion-content'), 0.5, {
+                                                    autoAlpha: 0,
+                                                    ease: Power4.easeOut
+                                                });
+                                                TweenMax.to($(hitArea).find('.feedback-draggable-button-image'), 0.5, {
+                                                    autoAlpha: 0,
+                                                    ease: Power4.easeOut
+                                                });
+                                                TweenMax.to($(hitArea).find('.feedback-draggable-button-content'), 0.5, {
+                                                    autoAlpha: 0,
+                                                    ease: Power4.easeOut
+                                                });
+                                                TweenMax.to($('#draggableContainer'), 0.75, {
+                                                    autoAlpha: 1,
+                                                    ease: Power4.easeOut
+                                                });
+                                                TweenMax.staggerTo($(".boxElements"), 2, {
+                                                    scale: 1,
+                                                    autoAlpha: 1,
+                                                    delay: 0.75,
+                                                    ease: Power4.easeOut,
+                                                    force3D: true
+                                                }, 0.2);
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                //get actuall height
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                $.each($('.boxElements'), function () {
+                                                    var currentHeight = $(this).find('.button-content').outerHeight();
+                                                    $(this).height(currentHeight);
+                                                });
+                                                $.each($('.boxElements'), function () {
+                                                    var currentHeight = $(this).find('.select-button-completion-content').outerHeight();
+                                                    $(this).height(currentHeight);
+                                                });
+                                            });
+                                        });
+                                        //////////////////////////////////////////////////////////////////////////////////////
+                                        //offset method
+                                        //////////////////////////////////////////////////////////////////////////////////////
+                                        function getOffsetRect(elem) {
+                                            var box = elem.getBoundingClientRect();
+                                            var body = document.body;
+                                            var docElem = document.documentElement;
+                                            var scrollTop = window.pageYOffset || docElem.scrollTop || body.scrollTop;
+                                            var scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft;
+                                            var clientTop = docElem.clientTop || body.clientTop || 0;
+                                            var clientLeft = docElem.clientLeft || body.clientLeft || 0;
+                                            var clientHeight = docElem.clientHeight || body.clientHeight || 0;
+                                            var top = box.top + scrollTop - clientTop;
+                                            var left = box.left + scrollLeft - clientLeft;
+                                            var height = box.top + scrollTop - clientHeight;
+                                            return {top: Math.round(top), left: Math.round(left), height: Math.round(height)};
+                                        }
+                                        function update() {
+                                            //////////////////////////////////////////////////////////////////////////////////////
+                                            //create draggable, set vars
+                                            //////////////////////////////////////////////////////////////////////////////////////
+                                            Draggable.create(element, {
+                                                type: "x,y",
+                                                edgeResistance: 0.65,
+                                                autoScroll: 1,
+                                                bounds: "#draggableContainer",
+                                                throwProps: true,
+                                                overlapThreshold: '50%',
+                                                onDrag: function (e) {
+                                                    scope.$apply(function () {
+                                                        scope.onDrag();
+                                                    });
+                                                },
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                //on drag method/vars
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                onDragEnd: function (e) {
+                                                    scope.$apply(function () {
+                                                        scope.onDragEnd();
+                                                        var targetNumber = hitArea.length;
+                                                        var hitAreaPosition;
+                                                        var hitAreaPositionSelectId;
+                                                        var hitAreaPositionSelect;
+                                                        var hitAreaBoolean;
+                                                        for (var i = 0; i < targetNumber; i++) {
+                                                            hitArea = document.getElementsByClassName('hit-area');
+                                                            currentTarget = 'id' + i;
+                                                            currentElement = element.attr("id");
+                                                            hitAreaPosition = getOffsetRect(hitArea[i]);
+                                                            hitAreaPositionSelectId = document.getElementById('select-hit-area-background');
+                                                            hitAreaPositionSelect = getOffsetRect(hitAreaPositionSelectId);
+                                                            if (Draggable.hitTest(hitAreaPositionSelect, e) && (currentElement === currentTarget)) {
+                                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                                //on drag match set match state
+                                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                                hitAreaBoolean = $(hitArea[i]).data('match');
+                                                                if (Boolean(hitAreaBoolean) === true) {
+                                                                    $(hitArea[i]).attr('data-match', 'selected');
+                                                                }
+                                                                if (Boolean(hitAreaBoolean) === false) {
+                                                                    $(hitArea[i]).attr('data-match', 'skeletor');
+                                                                }
+                                                                hitAreaPosition = getOffsetRect(hitAreaWrapper);
+                                                                var positionX = (hitAreaPosition.left - hitAreaPosition.left);
+                                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                                //on drag match set match position/states
+                                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                                TweenMax.to(element, 0.15, {
+                                                                    autoAlpha: 0,
+                                                                    x: positionX,
+                                                                    ease: Power4.easeOut
+                                                                });
+                                                                TweenMax.to(hitArea[i], 0.5, {
+                                                                    autoAlpha: 0.95,
+                                                                    strokeOpacity: 1,
+                                                                    ease: Power4.easeOut
+                                                                });
+                                                                TweenMax.to($(hitArea[i]).find('.button-content'), 0.5, {
+                                                                    autoAlpha: 0,
+                                                                    ease: Power4.easeOut
+                                                                });
+                                                                TweenMax.to($(hitArea[i]).find('.button-completion-content'), 0.5, {
+                                                                    autoAlpha: 1,
+                                                                    ease: Power4.easeOut
+                                                                });
+                                                                TweenMax.to($(hitArea[i]).find('.feedback-draggable-button-image'), 0.5, {
+                                                                    autoAlpha: 1,
+                                                                    ease: Power4.easeOut
+                                                                });
+                                                                TweenMax.to($(hitArea[i]).find('.feedback-draggable-button-content'), 0.5, {
+                                                                    autoAlpha: 1,
+                                                                    ease: Power4.easeOut
+                                                                });
+                                                                return;
+                                                            } else {
+                                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                                //on drag no match set state
+                                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                                TweenMax.to(element, 1, {
+                                                                    x: "0px",
+                                                                    y: '0px',
+                                                                    ease: Power4.easeOut
+                                                                });
+                                                            }
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                        }
+                                        $(window).scroll(function () {
+                                            update();
+                                        });
+                                        update();
+                                    }
                                 };
                             });
-                        });
+                    /** @ngInject */
+                    function npMediaElementDirective($log) {
+                        $log.debug('\nnpDragAndDropSelect mediaelementDirective::Init\n');
+                        var Directive = function () {
+                            this.restrict = 'A';
+                            this.link = function (scope, element, attrs, controller) {
+                            };
+                        };
+                        return new Directive();
                     }
-                };
-            })
-            //////////////////////////////////////////////////////////////////////////////////////
-            //GSAP Draggable Angular directive
-            //////////////////////////////////////////////////////////////////////////////////////
-            .directive("dragButtonSelect", function () {
-                return {
-                    restrict: "A",
-                    scope: {
-                        onDragEnd: "&",
-                        onDrag: "&"
-                    },
-                    link: function (scope, element, attrs) {
-                        var hitArea;
-                        var hitAreaWrapper = document.getElementById('draggableContainer');
-                        var draggables = document.getElementsByClassName('draggableButton');
-                        var currentTarget;
-                        var currentElement;
-                        //////////////////////////////////////////////////////////////////////////////////////
-                        //set states
-                        //////////////////////////////////////////////////////////////////////////////////////
-                        TweenMax.to($('#draggableContainer'), 0, {
-                            autoAlpha: 0
-                        });
-                        //////////////////////////////////////////////////////////////////////////////////////
-                        //get ready
-                        //////////////////////////////////////////////////////////////////////////////////////
-                        setTimeout(function () {
-                            scope.$apply(function () {
-                                //////////////////////////////////////////////////////////////////////////////////////
-                                //on ready set states
-                                //////////////////////////////////////////////////////////////////////////////////////
-                                hitArea = document.getElementsByClassName('hit-area');
-                                TweenMax.to($('.hit-area'), 0, {
-                                    strokeOpacity: 0
-                                });
-                                TweenMax.set($('.boxElements'), {
-                                    autoAlpha: 0
-                                });
-                                TweenMax.to($(hitArea).find('.button-completion-content'), 0.5, {
-                                    autoAlpha: 0,
-                                    ease: Power4.easeOut
-                                });
-                                TweenMax.to($(hitArea).find('.feedback-draggable-button-image'), 0.5, {
-                                    autoAlpha: 0,
-                                    ease: Power4.easeOut
-                                });
-                                TweenMax.to($(hitArea).find('.feedback-draggable-button-content'), 0.5, {
-                                    autoAlpha: 0,
-                                    ease: Power4.easeOut
-                                });
-                                //////////////////////////////////////////////////////////////////////////////////////
-                                //shuffle that
-                                //////////////////////////////////////////////////////////////////////////////////////
-                                function shuffle() {
-                                    $("#draggableButtons").each(function () {
-                                        var divs = $(this).find('.draggableButton');
-                                        for (var k = 0; k < divs.length; k++) {
-                                            $(divs[k]).remove();
-                                        }
-                                        //the fisher yates algorithm, from http://stackoverflow.com/questions/2450954/how-to-randomize-a-javascript-array
-                                        var l = divs.length;
-                                        if (l === 0) {
-                                            return false;
-                                        }
-                                        while (--l) {
-                                            var j = Math.floor(Math.random() * (l + 1));
-                                            var tempi = divs[l];
-                                            var tempj = divs[j];
-                                            divs[l] = tempj;
-                                            divs[j] = tempi;
-                                        }
-                                        for (var m = 0; m < divs.length; m++) {
-                                            $(divs[m]).appendTo(this);
-                                        }
-                                    });
-                                }
-                                //////////////////////////////////////////////////////////////////////////////////////
-                                //build that
-                                //////////////////////////////////////////////////////////////////////////////////////
-                                shuffle();
-                                TweenMax.to($('#draggableContainer'), 0.75, {
-                                    autoAlpha: 1,
-                                    ease: Power4.easeOut
-                                });
-                                TweenMax.staggerTo($(".boxElements"), 2, {
-                                    scale: 1,
-                                    autoAlpha: 1,
-                                    delay: 0.75,
-                                    ease: Power4.easeOut,
-                                    force3D: true
-                                }, 0.2);
-                                //////////////////////////////////////////////////////////////////////////////////////
-                                //get actuall height
-                                //////////////////////////////////////////////////////////////////////////////////////
-                                $.each($('.boxElements'), function () {
-                                    var currentHeight = $(this).find('.button-content').outerHeight();
-                                    $(this).height(currentHeight);
-                                });
-                                $.each($('.boxElements'), function () {
-                                    var currentHeight = $(this).find('.select-button-completion-content').outerHeight();
-                                    $(this).height(currentHeight);
-                                });
-                            });
-                        });
-                        //////////////////////////////////////////////////////////////////////////////////////
-                        //offset method
-                        //////////////////////////////////////////////////////////////////////////////////////
-                        function getOffsetRect(elem) {
-                            var box = elem.getBoundingClientRect();
-                            var body = document.body;
-                            var docElem = document.documentElement;
-                            var scrollTop = window.pageYOffset || docElem.scrollTop || body.scrollTop;
-                            var scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft;
-                            var clientTop = docElem.clientTop || body.clientTop || 0;
-                            var clientLeft = docElem.clientLeft || body.clientLeft || 0;
-                            var clientHeight = docElem.clientHeight || body.clientHeight || 0;
-                            var top = box.top + scrollTop - clientTop;
-                            var left = box.left + scrollLeft - clientLeft;
-                            var height = box.top + scrollTop - clientHeight;
-                            return {top: Math.round(top), left: Math.round(left), height: Math.round(height)};
-                        }
-                        function update() {
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            //create draggable, set vars
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            Draggable.create(element, {
-                                type: "x,y",
-                                edgeResistance: 0.65,
-                                autoScroll: 1,
-                                bounds: "#draggableContainer",
-                                throwProps: true,
-                                overlapThreshold: '50%',
-                                onDrag: function (e) {
-                                    scope.$apply(function () {
-                                        scope.onDrag();
-                                    });
-                                },
-                                //////////////////////////////////////////////////////////////////////////////////////
-                                //on drag method/vars
-                                //////////////////////////////////////////////////////////////////////////////////////
-                                onDragEnd: function (e) {
-                                    scope.$apply(function () {
-                                        scope.onDragEnd();
-                                        var targetNumber = hitArea.length;
-                                        var hitAreaPosition;
-                                        var hitAreaPositionSelectId;
-                                        var hitAreaPositionSelect;
-                                        var hitAreaBoolean;
-                                        for (var i = 0; i < targetNumber; i++) {
-                                            hitArea = document.getElementsByClassName('hit-area');
-                                            currentTarget = 'id' + i;
-                                            currentElement = element.attr("id");
-                                            hitAreaPosition = getOffsetRect(hitArea[i]);
-                                            hitAreaPositionSelectId = document.getElementById('select-hit-area-background');
-                                            hitAreaPositionSelect = getOffsetRect(hitAreaPositionSelectId);
-                                            if (Draggable.hitTest(hitAreaPositionSelect, e) && (currentElement === currentTarget)) {
-                                                //////////////////////////////////////////////////////////////////////////////////////
-                                                //on drag match set match state
-                                                //////////////////////////////////////////////////////////////////////////////////////
-                                                hitAreaBoolean = $(hitArea[i]).data('match');
-                                                if (Boolean(hitAreaBoolean) === true) {
-                                                    $(hitArea[i]).attr('data-match', 'selected');
-                                                }
-                                                if (Boolean(hitAreaBoolean) === false) {
-                                                    $(hitArea[i]).attr('data-match', 'skeletor');
-                                                }
-                                                hitAreaPosition = getOffsetRect(hitAreaWrapper);
-                                                var positionX = (hitAreaPosition.left - hitAreaPosition.left);
-                                                //////////////////////////////////////////////////////////////////////////////////////
-                                                //on drag match set match position/states
-                                                //////////////////////////////////////////////////////////////////////////////////////
-                                                TweenMax.to(element, 0.15, {
-                                                    autoAlpha: 0,
-                                                    x: positionX,
-                                                    ease: Power4.easeOut
-                                                });
-                                                TweenMax.to(hitArea[i], 0.5, {
-                                                    autoAlpha: 0.95,
-                                                    strokeOpacity: 1,
-                                                    ease: Power4.easeOut
-                                                });
-                                                TweenMax.to($(hitArea[i]).find('.button-content'), 0.5, {
-                                                    autoAlpha: 0,
-                                                    ease: Power4.easeOut
-                                                });
-                                                TweenMax.to($(hitArea[i]).find('.button-completion-content'), 0.5, {
-                                                    autoAlpha: 1,
-                                                    ease: Power4.easeOut
-                                                });
-                                                TweenMax.to($(hitArea[i]).find('.feedback-draggable-button-image'), 0.5, {
-                                                    autoAlpha: 1,
-                                                    ease: Power4.easeOut
-                                                });
-                                                TweenMax.to($(hitArea[i]).find('.feedback-draggable-button-content'), 0.5, {
-                                                    autoAlpha: 1,
-                                                    ease: Power4.easeOut
-                                                });
-                                                return;
-                                            } else {
-                                                //////////////////////////////////////////////////////////////////////////////////////
-                                                //on drag no match set state
-                                                //////////////////////////////////////////////////////////////////////////////////////
-                                                TweenMax.to(element, 1, {
-                                                    x: "0px",
-                                                    y: '0px',
-                                                    ease: Power4.easeOut
-                                                });
-                                            }
-                                        }
-                                    });
-                                }
-                            });
-                        }
-                        $(window).scroll(function () {
-                            update();
-                        });
-                        update();
-                    }
-                };
-            });
-    /** @ngInject */
-    function npMediaElementDirective($log) {
-        $log.debug('\nnpDragAndDropSelect mediaelementDirective::Init\n');
-        var Directive = function () {
-            this.restrict = 'A';
-            this.link = function (scope, element, attrs, controller) {
-            };
-        };
-        return new Directive();
-    }
-})();
+                })();
 
 /* jshint -W003, -W117 */
 (function () {
@@ -3642,13 +3635,19 @@
                         this.canContinue = false;
                         var feedback = cmpData.feedback;
                         var feedbackLabel = $element.find('.question-feedback-label');
+                        var feedbackWrapper = $element.find('.question-feedback');
                         var negativeFeedbackIcon = '';
                         var positiveFeedbackIcon = '';
+                        var contentAreaHeight = 0;
                         //////////////////////////////////////////////////////////////////////////////////////
                         //build that 
                         //////////////////////////////////////////////////////////////////////////////////////
                         setTimeout(function () {
                             $scope.$apply(function () {
+                                TweenMax.set(feedbackWrapper, {
+                                    autoAlpha: 0,
+                                    force3D: true
+                                });
                                 TweenMax.set($(".response-item"), {
                                     autoAlpha: 0,
                                     scale: 0.5,
@@ -3754,27 +3753,90 @@
                                 correct = false;
                             }
                             $log.debug('npQuestion::evaluate:isCorrect', correct);
-                            // set by ng-model of npAnswer's input's
-//                            if (feedback.immediate && this.feedback === '') {
                             feedbackLabel.remove();
                             if (correct) {
                                 this.feedback = feedback.correct;
                                 this.canContinue = true;
-                                TweenMax.to(positiveFeedbackIcon, 0.75, {
-                                    autoAlpha: 1,
-                                    scale: 1,
-                                    force3D: true
+                                setTimeout(function () {
+                                    $scope.$apply(function () {
+                                        if (contentAreaHeight === 0) {
+                                            contentAreaHeight = $('.question-feedback-text').outerHeight(true);
+                                            TweenMax.set(feedbackWrapper, {
+                                                height: 0,
+                                                force3D: true
+                                            });
+                                        }
+                                        TweenMax.set($('.question-feedback-text'), {
+                                            autoAlpha: 0,
+                                            force3D: true
+                                        });
+                                        TweenMax.to($('.question-feedback-text'), 0.5, {
+                                            autoAlpha: 1,
+                                            force3D: true,
+                                            delay: 0.25,
+                                            ease: Power4.easeOut
+                                        });
+                                        TweenMax.to(feedbackWrapper, 0.5, {
+                                            autoAlpha: 1,
+                                            height: contentAreaHeight + 40,
+                                            force3D: true,
+                                            ease: Power4.easeOut,
+                                            onComplete: function () {
+                                                TweenMax.set(positiveFeedbackIcon, {
+                                                    top: ((contentAreaHeight / 2) + (positiveFeedbackIcon / 2)),
+                                                    force3D: true
+                                                });
+                                                TweenMax.to(positiveFeedbackIcon, 0.75, {
+                                                    autoAlpha: 1,
+                                                    scale: 1,
+                                                    force3D: true
+                                                });
+                                            }
+                                        });
+                                    });
                                 });
                             } else {
                                 this.feedback = feedback.incorrect;
                                 this.canContinue = false;
-                                TweenMax.to(negativeFeedbackIcon, 0.75, {
-                                    autoAlpha: 1,
-                                    scale: 1,
-                                    force3D: true
+                                setTimeout(function () {
+                                    $scope.$apply(function () {
+                                        if (contentAreaHeight === 0) {
+                                            contentAreaHeight = $('.question-feedback-text').outerHeight(true);
+                                            TweenMax.set(feedbackWrapper, {
+                                                height: 0,
+                                                force3D: true
+                                            });
+                                        }
+                                        TweenMax.to($('.question-feedback-text'), 0.5, {
+                                            autoAlpha: 1,
+                                            force3D: true,
+                                            delay: 0.25,
+                                            ease: Power4.easeOut
+                                        });
+                                        TweenMax.set(feedbackWrapper, {
+                                            height: 0,
+                                            force3D: true
+                                        });
+                                        TweenMax.to(feedbackWrapper, 0.5, {
+                                            autoAlpha: 1,
+                                            height: contentAreaHeight + 40,
+                                            force3D: true,
+                                            ease: Power4.easeOut,
+                                            onComplete: function () {
+                                                TweenMax.set(negativeFeedbackIcon, {
+                                                    top: ((contentAreaHeight / 2) + (negativeFeedbackIcon / 2)),
+                                                    force3D: true
+                                                });
+                                                TweenMax.to(negativeFeedbackIcon, 0.75, {
+                                                    autoAlpha: 1,
+                                                    scale: 1,
+                                                    force3D: true
+                                                });
+                                            }
+                                        });
+                                    });
                                 });
                             }
-//                            }
                         };
                         this.nextPage = function (evt) {
                             evt.preventDefault();
@@ -3790,7 +3852,6 @@
                     var postiveFeedbackIcon = '';
                     setTimeout(function () {
                         $scope.$apply(function () {
-//                            negativeFeedbackIcon = $element.find('.hotspotButton');
                             function onPageLoadBuild() {
                                 negativeFeedbackIcon = $('.negative-feedback-icon');
                                 postiveFeedbackIcon = $('.positive-feedback-icon');
@@ -4876,7 +4937,7 @@
                         //set that
                         //////////////////////////////////////////////////////////////////////////////////////
                         var cmpData = $scope.component.data,
-                          vm = this;
+                                vm = this;
                         $log.debug('npAsQuestion::data', cmpData);
                         vm.id = cmpData.id;
                         vm.content = $sce.trustAsHtml(cmpData.content);
@@ -4886,21 +4947,26 @@
                         vm.answers = [];
                         var feedback = cmpData.feedback;
                         var feedbackLabel = $element.find('.question-feedback-label');
+                        var feedbackWrapper = $element.find('.question-feedback');
                         var negativeFeedbackIcon = '';
                         var positiveFeedbackIcon = '';
-
-                      AssessmentService.addQuestion(vm.id, !!cmpData.required);
+                        var contentAreaHeight = 0;
+                        AssessmentService.addQuestion(vm.id, !!cmpData.required);
                         //////////////////////////////////////////////////////////////////////////////////////
                         //build that
                         //////////////////////////////////////////////////////////////////////////////////////
                         setTimeout(function () {
                             $scope.$apply(function () {
+                                TweenMax.set(feedbackWrapper, {
+                                    autoAlpha: 0,
+                                    force3D: true
+                                });
                                 TweenMax.set($(".response-item"), {
                                     autoAlpha: 0,
                                     scale: 0.5,
                                     force3D: true
                                 });
-                                TweenMax.staggerTo($(".response-item"), 2, {
+                                TweenMax.staggerTo($(".response-item"), 0.75, {
                                     scale: 1,
                                     autoAlpha: 1,
                                     delay: 0.75,
@@ -4909,9 +4975,9 @@
                                 }, 0.2);
                             });
                         });
-                      vm.registerAnswer = function(idx, answer) {
-                        vm.answers[idx] = answer;
-                      };
+                        vm.registerAnswer = function (idx, answer) {
+                            vm.answers[idx] = answer;
+                        };
                         vm.update = function (event) {
                             $log.debug('npAsQuestion::answer changed');
                             if (feedback.immediate) {
@@ -4931,10 +4997,10 @@
                             }
                         };
                         vm.evaluate = function () {
-                            var answerIdx,chkAnswers,
-                                isCorrectAnswer = true,
-                                $checkbox = false,
-                                $checked = false;
+                            var answerIdx, chkAnswers,
+                                    isCorrectAnswer = true,
+                                    $checkbox = false,
+                                    $checked = false;
                             negativeFeedbackIcon = $element.find('.negative-feedback-icon');
                             positiveFeedbackIcon = $element.find('.positive-feedback-icon');
                             TweenMax.to(negativeFeedbackIcon, 0.25, {
@@ -4951,76 +5017,131 @@
                             //$checkbox = $element.find('.checkbox-x');
                             //$checked = $element.find('.checkbox-x[checked]');
                             $log.debug('npAsQuestion::evaluating type to check', cmpData);
-
-
-
-                                switch (cmpData.type) {
-                                    case 'checkbox':
-
-                                      $log.debug('npAsQuestion::evaluating checkboxes', vm.answers, vm.answers.length);
-                                      for( answerIdx in vm.answers )   {
+                            switch (cmpData.type) {
+                                case 'checkbox':
+                                    $log.debug('npAsQuestion::evaluating checkboxes', vm.answers, vm.answers.length);
+                                    for (answerIdx in vm.answers) {
                                         var answer = vm.answers[answerIdx];
-
                                         $log.debug('npAsQuestion: evaluating checkbox', answerIdx, answer);
                                         isCorrectAnswer = isCorrectAnswer && answer.checked === answer.isCorrect;
-
-                                        if( !isCorrectAnswer ) {
-                                          break;
+                                        if (!isCorrectAnswer) {
+                                            break;
                                         }
-                                      }
-                                        break;
-                                    case 'text':
-                                        var txtAnswer = ManifestService.getFirst('npAnswer', $scope.cmpIdx);
-                                        var key = txtAnswer.data.correct;
-                                        var regExp, pat, mod = 'i';
-                                        if (angular.isString(key)) {
-                                            if (key.indexOf('/') === 0) {
-                                                pat = key.substring(1, key.lastIndexOf('/'));
-                                                mod = key.substring(key.lastIndexOf('/') + 1);
-                                            }
-                                        } else if (angular.isArray(key)) {
-                                            pat = '^(' + key.join('|') + ')$';
+                                    }
+                                    break;
+                                case 'text':
+                                    var txtAnswer = ManifestService.getFirst('npAnswer', $scope.cmpIdx);
+                                    var key = txtAnswer.data.correct;
+                                    var regExp, pat, mod = 'i';
+                                    if (angular.isString(key)) {
+                                        if (key.indexOf('/') === 0) {
+                                            pat = key.substring(1, key.lastIndexOf('/'));
+                                            mod = key.substring(key.lastIndexOf('/') + 1);
                                         }
-                                        regExp = new RegExp(pat, mod);
-                                        if (!regExp.test(vm.answer)) {
-                                            if (angular.isObject(txtAnswer.data.feedback) && angular.isString(txtAnswer.data.feedback.incorrect)) {
-                                                vm.feedback = txtAnswer.data.feedback.incorrect;
-                                                feedbackLabel.remove();
-                                            }
-                                            isCorrectAnswer = false;
-                                        } else {
-                                            if (angular.isObject(txtAnswer.data.feedback) && angular.isString(txtAnswer.data.feedback.correct)) {
-                                                vm.feedback = txtAnswer.data.feedback.correct;
-                                                feedbackLabel.remove();
-                                            }
+                                    } else if (angular.isArray(key)) {
+                                        pat = '^(' + key.join('|') + ')$';
+                                    }
+                                    regExp = new RegExp(pat, mod);
+                                    if (!regExp.test(vm.answer)) {
+                                        if (angular.isObject(txtAnswer.data.feedback) && angular.isString(txtAnswer.data.feedback.incorrect)) {
+                                            vm.feedback = txtAnswer.data.feedback.incorrect;
+                                            feedbackLabel.remove();
                                         }
-                                        break;
-                                }
-
-
-                          AssessmentService.questionAnswered(vm.id, isCorrectAnswer);
+                                        isCorrectAnswer = false;
+                                    } else {
+                                        if (angular.isObject(txtAnswer.data.feedback) && angular.isString(txtAnswer.data.feedback.correct)) {
+                                            vm.feedback = txtAnswer.data.feedback.correct;
+                                            feedbackLabel.remove();
+                                        }
+                                    }
+                                    break;
+                            }
+                            AssessmentService.questionAnswered(vm.id, isCorrectAnswer);
                             $log.debug('npAsQuestion::evaluate:isCorrect', isCorrectAnswer);
-                            // set by ng-model of npAnswer's input's
-//                            if (feedback.immediate && vm.feedback === '') {
                             feedbackLabel.remove();
                             if (isCorrectAnswer) {
                                 vm.feedback = feedback.correct;
                                 vm.canContinue = true;
-                                TweenMax.to(positiveFeedbackIcon, 0.75, {
-                                    autoAlpha: 1,
-                                    scale: 1,
-                                    force3D: true
+                                setTimeout(function () {
+                                    $scope.$apply(function () {
+                                        if (contentAreaHeight === 0) {
+                                            contentAreaHeight = $('.question-feedback-text').outerHeight(true);
+                                            TweenMax.set(feedbackWrapper, {
+                                                height: 0,
+                                                force3D: true
+                                            });
+                                        }
+                                        TweenMax.set($('.question-feedback-text'), {
+                                            autoAlpha: 0,
+                                            force3D: true
+                                        });
+                                        TweenMax.to($('.question-feedback-text'), 0.5, {
+                                            autoAlpha: 1,
+                                            force3D: true,
+                                            delay: 0.25,
+                                            ease: Power4.easeOut
+                                        });
+                                        TweenMax.to(feedbackWrapper, 0.5, {
+                                            autoAlpha: 1,
+                                            height: contentAreaHeight + 40,
+                                            force3D: true,
+                                            ease: Power4.easeOut,
+                                            onComplete: function () {
+                                                TweenMax.set(positiveFeedbackIcon, {
+                                                    top: ((contentAreaHeight / 2) + (positiveFeedbackIcon / 2)),
+                                                    force3D: true
+                                                });
+                                                TweenMax.to(positiveFeedbackIcon, 0.75, {
+                                                    autoAlpha: 1,
+                                                    scale: 1,
+                                                    force3D: true
+                                                });
+                                            }
+                                        });
+                                    });
                                 });
                             } else {
                                 vm.feedback = feedback.incorrect;
                                 vm.canContinue = false;
-                                TweenMax.to(negativeFeedbackIcon, 0.75, {
-                                    autoAlpha: 1,
-                                    scale: 1,
-                                    force3D: true
+                                setTimeout(function () {
+                                    $scope.$apply(function () {
+                                        if (contentAreaHeight === 0) {
+                                            contentAreaHeight = $('.question-feedback-text').outerHeight(true);
+                                            TweenMax.set(feedbackWrapper, {
+                                                height: 0,
+                                                force3D: true
+                                            });
+                                        }
+                                        TweenMax.to($('.question-feedback-text'), 0.5, {
+                                            autoAlpha: 1,
+                                            force3D: true,
+                                            delay: 0.25,
+                                            ease: Power4.easeOut
+                                        });
+                                        TweenMax.set(feedbackWrapper, {
+                                            height: 0,
+                                            force3D: true
+                                        });
+                                        TweenMax.to(feedbackWrapper, 0.5, {
+                                            autoAlpha: 1,
+                                            height: contentAreaHeight + 40,
+                                            force3D: true,
+                                            ease: Power4.easeOut,
+                                            onComplete: function () {
+                                                TweenMax.set(negativeFeedbackIcon, {
+                                                    top: ((contentAreaHeight / 2) + (negativeFeedbackIcon / 2)),
+                                                    force3D: true
+                                                });
+                                                TweenMax.to(negativeFeedbackIcon, 0.75, {
+                                                    autoAlpha: 1,
+                                                    scale: 1,
+                                                    force3D: true
+                                                });
+                                            }
+                                        });
+                                    });
                                 });
                             }
-//                            }
                         };
                         vm.nextPage = function (evt) {
                             evt.preventDefault();
@@ -5036,7 +5157,6 @@
                     var postiveFeedbackIcon = '';
                     setTimeout(function () {
                         $scope.$apply(function () {
-//                            negativeFeedbackIcon = $element.find('.hotspotButton');
                             function onPageLoadBuild() {
                                 negativeFeedbackIcon = $('.negative-feedback-icon');
                                 postiveFeedbackIcon = $('.positive-feedback-icon');
@@ -6170,7 +6290,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "            <div question-feedback-build >\n" +
     "                <div  class=\"question-feedback\">\n" +
     "                    <div class=\"question-feedback-wrapper vertical-centered\">\n" +
-    "                        <div class=\"positive-feedback-icon\">\n" +
+    "                        <div class=\"positive-feedback-icon absolute-vertical-center\">\n" +
     "                            <svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n" +
     "                                 width=\"139.535px\" height=\"139.536px\" viewBox=\"665.896 1118.26 139.535 139.536\"\n" +
     "                                 enable-background=\"new 665.896 1118.26 139.535 139.536\" xml:space=\"preserve\">\n" +
@@ -6186,7 +6306,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                                <path fill=\"#9A7D46\" d=\"M735.664,1257.796c-38.556,0-69.768-31.212-69.768-69.769c0-38.556,31.212-69.768,69.768-69.768  s69.768,31.212,69.768,69.768C805.432,1226.584,774.22,1257.796,735.664,1257.796z M735.664,1124.38  c-34.884,0-63.648,28.765-63.648,63.648s28.765,63.647,63.648,63.647s63.648-28.764,63.648-63.647S770.548,1124.38,735.664,1124.38z  \"/>\n" +
     "                            </svg>\n" +
     "                        </div>\n" +
-    "                        <div class=\"negative-feedback-icon\">\n" +
+    "                        <div class=\"negative-feedback-icon absolute-vertical-center\">\n" +
     "                            <svg version=\"1.0\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"22.8px\" height=\"22.801px\" viewBox=\"599.8 837.1 22.8 22.801\" enable-background=\"new 599.8 837.1 22.8 22.801\" xml:space=\"preserve\">\n" +
     "                                <path fill=\"#9A7D46\" d=\"M611.2,859.9c-6.3,0-11.4-5.101-11.4-11.4s5.101-11.4,11.4-11.4S622.6,842.2,622.6,848.5 S617.5,859.9,611.2,859.9z M611.2,838.1c-5.7,0-10.4,4.7-10.4,10.4s4.7,10.4,10.4,10.4s10.399-4.7,10.399-10.4 S616.9,838.1,611.2,838.1z\"/>\n" +
     "                                <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"874.293\" y1=\"-1086.3877\" x2=\"861.2496\" y2=\"-1099.811\" gradientTransform=\"matrix(1 0 0 -1 -256 -245)\">\n" +
@@ -6208,7 +6328,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                            </svg>\n" +
     "                        </div>\n" +
     "                        <div class=\"npQuestion-feedback body-copy question-feedback-text\" ng-if=\"npQuestion.feedback\" ng-bind-html=\"npQuestion.feedback\"></div>\n" +
-    "                        <div class=\"question-feedback-label\">Feedback area</div>\n" +
+    "                        <!--<div class=\"question-feedback-label\">Feedback area</div>-->\n" +
     "                    </div\n" +
     "                </div\n" +
     "            </div>\n" +
@@ -6716,7 +6836,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                                    </svg>\n" +
     "                                </div>\n" +
     "                            </div>\n" +
-    "                            <div class=\"col-xs-11 right-column-select body-copy\" ng-bind-html=\"npDragAndDropSelect.positiveFeedback\" >\n" +
+    "                            <div class=\"col-xs-11 right-column-select body-copy select-response-feedback\" ng-bind-html=\"npDragAndDropSelect.positiveFeedback\" >\n" +
     "                            </div>\n" +
     "                        </div>\n" +
     "                        <div class=\"select-response-incorrect row\">\n" +
@@ -6744,7 +6864,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                                    </svg>\n" +
     "                                </div>\n" +
     "                            </div>\n" +
-    "                            <div class=\"col-xs-11 right-column-select body-copy\" ng-bind-html=\"npDragAndDropSelect.negativeFeedback\" >\n" +
+    "                            <div class=\"col-xs-11 right-column-select body-copy select-response-feedback\" ng-bind-html=\"npDragAndDropSelect.negativeFeedback\" >\n" +
     "                            </div>\n" +
     "                        </div>\n" +
     "                    </div>\n" +
@@ -7062,7 +7182,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "            <div question-feedback-build >\n" +
     "                <div  class=\"question-feedback\">\n" +
     "                    <div class=\"question-feedback-wrapper vertical-centered\">\n" +
-    "                        <div class=\"positive-feedback-icon\">\n" +
+    "                        <div class=\"positive-feedback-icon absolute-vertical-center\">\n" +
     "                            <svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n" +
     "                                 width=\"139.535px\" height=\"139.536px\" viewBox=\"665.896 1118.26 139.535 139.536\"\n" +
     "                                 enable-background=\"new 665.896 1118.26 139.535 139.536\" xml:space=\"preserve\">\n" +
@@ -7078,7 +7198,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                                <path fill=\"#9A7D46\" d=\"M735.664,1257.796c-38.556,0-69.768-31.212-69.768-69.769c0-38.556,31.212-69.768,69.768-69.768  s69.768,31.212,69.768,69.768C805.432,1226.584,774.22,1257.796,735.664,1257.796z M735.664,1124.38  c-34.884,0-63.648,28.765-63.648,63.648s28.765,63.647,63.648,63.647s63.648-28.764,63.648-63.647S770.548,1124.38,735.664,1124.38z  \"/>\n" +
     "                            </svg>\n" +
     "                        </div>\n" +
-    "                        <div class=\"negative-feedback-icon\">\n" +
+    "                        <div class=\"negative-feedback-icon absolute-vertical-center\">\n" +
     "                            <svg version=\"1.0\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"22.8px\" height=\"22.801px\" viewBox=\"599.8 837.1 22.8 22.801\" enable-background=\"new 599.8 837.1 22.8 22.801\" xml:space=\"preserve\">\n" +
     "                                <path fill=\"#9A7D46\" d=\"M611.2,859.9c-6.3,0-11.4-5.101-11.4-11.4s5.101-11.4,11.4-11.4S622.6,842.2,622.6,848.5 S617.5,859.9,611.2,859.9z M611.2,838.1c-5.7,0-10.4,4.7-10.4,10.4s4.7,10.4,10.4,10.4s10.399-4.7,10.399-10.4 S616.9,838.1,611.2,838.1z\"/>\n" +
     "                                <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"874.293\" y1=\"-1086.3877\" x2=\"861.2496\" y2=\"-1099.811\" gradientTransform=\"matrix(1 0 0 -1 -256 -245)\">\n" +
@@ -7158,7 +7278,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "            <div class=\"reveal-wrapper\">\n" +
     "                <div class=\"reveal-item-wrapper\">\n" +
     "                    <img ng-if=\"revealItemComponent.components[0].type == 'npImage'\" class=\"reveal-item reveal-image img-responsive\" ng-src=\"{{revealItemComponent.components[0].data.src}}\" alt=\"{{component.alt}}\" />\n" +
-    "                    <video controls ng-if=\"revealItemComponent.components[0].type == 'npVideo'\" class=\"reveal-item reveal-video\" poster=\"{{revealItemComponent.components[0].data.poster}}\">\n" +
+    "                    <video controls ng-if=\"revealItemComponent.components[0].type == 'npVideo'\" class=\"reveal-item reveal-video flex-video widescreen\" poster=\"{{revealItemComponent.components[0].data.poster}}\">\n" +
     "                        <source ng-src=\"{{revealItemComponent.components[0].data.baseURL+'.mp4'}}\"/>\n" +
     "                    </video>\n" +
     "                </div>\n" +
@@ -7189,7 +7309,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "    <div class=\"row\">\n" +
     "        <div class=\"col-sm-2 np-spinner\">\n" +
     "            <div class=\"np-spinner-wrapper\">\n" +
-    "                <np-price-is-right-spinner class=\"np-spinner\" spinTime=\"2000\" ng-hide=\"!npTrivia.pageId\" data-difficulty=\"{{npTrivia.difficulty}}\">\n" +
+    "                <np-price-is-right-spinner class=\"np-spinner-content\" spinTime=\"2000\" ng-hide=\"!npTrivia.pageId\" data-difficulty=\"{{npTrivia.difficulty}}\">\n" +
     "                    <div>0</div>\n" +
     "                    <div>100</div>\n" +
     "                    <div>200</div>\n" +
@@ -7231,7 +7351,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                    </g>\n" +
     "                    </svg>\n" +
     "                </div>\n" +
-    "                <div class=\"np-gold-pointer h1\">\n" +
+    "                <div class=\"np-gold-pointer\">\n" +
     "                    <svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"66.096px\" height=\"126.685px\" viewBox=\"308.824 1129.275 66.096 126.685\" style=\"enable-background:new 308.824 1129.275 66.096 126.685;\" xml:space=\"preserve\">\n" +
     "                    <linearGradient id=\"SVGID_1_\" gradientUnits=\"userSpaceOnUse\" x1=\"118.5967\" y1=\"-46.6729\" x2=\"105.6811\" y2=\"-62.1192\" gradientTransform=\"matrix(6.12 0 0 -6.12 -324.0952 866.6157)\">\n" +
     "                    <stop  offset=\"0.2306\" style=\"stop-color:#CAA04E\"/>\n" +
@@ -7256,19 +7376,13 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('scripts/component/npVideo/npVideo.html',
-    "<np-video component=\"component\" class=\"{{component.type}}\" id=\"{{component.data.id}}\">\n" +
+    "<np-video component=\"component\" id=\"{{component.data.id}}\" class=\"{{component.type}}\">\n" +
     "    <div class=\"debug\">\n" +
     "        <h3>{{component.type}} --\n" +
     "            <small>{{component.idx}}</small>\n" +
     "        </h3>\n" +
     "    </div>\n" +
-    "    <video\n" +
-    "        height=\"{{component.data.height}}\"\n" +
-    "        width=\"{{component.data.width}}\"\n" +
-    "        poster=\"{{component.data.poster}}\"\n" +
-    "        preload=\"{{component.data.preload}}\"\n" +
-    "        ng-src=\"{{component.data.src}}\"\n" +
-    "        controls=\"controls\" mediaelelement>\n" +
+    "    <video class=\"\" height=\"{{component.data.height}}\" width=\"{{component.data.width}}\" poster=\"{{component.data.poster}}\" preload=\"{{component.data.preload}}\" ng-src=\"{{component.data.src}}\" controls=\"controls\" mediaelelement>\n" +
     "        <source ng-repeat=\"source in npVideo.sources\" type=\"video/{{source.type}}\" ng-src=\"{{source.src}}\" />\n" +
     "        <object width=\"{{component.data.width}}\" height=\"{{component.data.height}}\" type=\"application/x-shockwave-flash\" data=\"scripts/component/npVideo/mediaelement/flashmediaelement.swf\">\n" +
     "            <param name=\"movie\" value=\"scripts/component/npVideo/mediaelement/flashmediaelement.swf\"/>\n" +
