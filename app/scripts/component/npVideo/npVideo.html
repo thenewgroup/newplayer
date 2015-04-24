@@ -1,16 +1,10 @@
-<np-video component="component" class="{{component.type}}" id="{{component.data.id}}">
+<np-video component="component" id="{{component.data.id}}" class="{{component.type}}">
     <div class="debug">
         <h3>{{component.type}} --
             <small>{{component.idx}}</small>
         </h3>
     </div>
-    <video
-        height="{{component.data.height}}"
-        width="{{component.data.width}}"
-        poster="{{component.data.poster}}"
-        preload="{{component.data.preload}}"
-        ng-src="{{component.data.src}}"
-        controls="controls" mediaelelement>
+    <video class="" height="{{component.data.height}}" width="{{component.data.width}}" poster="{{component.data.poster}}" preload="{{component.data.preload}}" ng-src="{{component.data.src}}" controls="controls" mediaelelement>
         <source ng-repeat="source in npVideo.sources" type="video/{{source.type}}" ng-src="{{source.src}}" />
         <object width="{{component.data.width}}" height="{{component.data.height}}" type="application/x-shockwave-flash" data="scripts/component/npVideo/mediaelement/flashmediaelement.swf">
             <param name="movie" value="scripts/component/npVideo/mediaelement/flashmediaelement.swf"/>
