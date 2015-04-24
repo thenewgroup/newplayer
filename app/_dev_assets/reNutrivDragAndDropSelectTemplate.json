@@ -78,11 +78,7 @@
                                     "positiveFeedback": "<p>That's it!</p><p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p><p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
                                     "negativeFeedback": "<p>ehh?!?!</p>",
                                     "image": "",
-                                    "req": [
-                                        "mediaelement/GreenSock/TweenMax.min.js",
-                                        "mediaelement/GreenSock/utils/Draggable.min.js",
-                                        "mediaelement/jquery-1.11.1.min.js"
-                                    ],
+                                    "randomized": "",
                                     "draggableButtons": [
                                         {
                                             "select": "true",
