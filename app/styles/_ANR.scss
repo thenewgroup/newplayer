@@ -786,6 +786,9 @@ input{
     box-shadow: 10px 10px 25px -5px rgba(0,0,0,0.75);
     z-index: 10000;
 }
+.np-spinner-content div:nth-last-child(2) {
+    color: $brand-primary; 
+}
 .np-gold-border {
     position: absolute;
     top: 0;

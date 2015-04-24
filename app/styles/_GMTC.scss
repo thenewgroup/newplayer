@@ -726,17 +726,6 @@ input{
     color: $gold;
     width: 155px;
 }
-.np-gold-pointer{
-    position: absolute;
-    top:0;
-    bottom:0;
-    right:0;
-    width:33px;
-}
-.method2 {
-    -webkit-mask-image: -webkit-linear-gradient(top, rgba(248,248,170,1), rgba(202,160,78,.5) 50%, rgba(248,248,170,1));
-    -webkit-mask-image: linear-gradient(top, rgba(248,248,170,1), rgba(202,160,78,.5) 50%, rgba(248,248,170,1));
-}
 .np-spinner div{
     font-family: $re-nu-serif;
     color: #9EAFFF;
@@ -753,6 +742,20 @@ input{
     fill: #040A2B !important;
     box-shadow: 10px 10px 25px -5px rgba(0,0,0,0.75);
     z-index: 10000;
+}
+.np-spinner-content div:nth-last-child(2) {
+    color: $brand-primary; 
+}
+.np-gold-pointer{
+    position: absolute;
+    top:0;
+    bottom:0;
+    right:0;
+    width:33px;
+}
+.method2 {
+    -webkit-mask-image: -webkit-linear-gradient(top, rgba(248,248,170,1), rgba(202,160,78,.5) 50%, rgba(248,248,170,1));
+    -webkit-mask-image: linear-gradient(top, rgba(248,248,170,1), rgba(202,160,78,.5) 50%, rgba(248,248,170,1));
 }
 .np-gold-border {
     position: absolute;
