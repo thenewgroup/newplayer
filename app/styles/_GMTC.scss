@@ -58,7 +58,6 @@
 .h1, .h2, .h3, .h4, .h5{
     color: $brand-primary;
 }
-/*#np_reNutriv p{*/
 .subhead-copy{
     color: $brand-primary;
     font-family: $font-family-sans-serif;
@@ -740,20 +739,27 @@ input{
 }
 .np-spinner div{
     font-family: $re-nu-serif;
-    color: $brand-primary;
+    color: #9EAFFF;
     font-size: floor(($font-size-base * 2.5));
     line-height: 2.1em;
     text-align: center;
 }
 .np-spinner svg rect{
-    stroke-width: 3;
+    fill: rgba(0, 0, 0, 0.0);
+    stroke: #040A2B;
+    stroke-width: 4;
+}
+.np-gold-pointer svg polygon{
+    fill: #040A2B !important;
+    box-shadow: 10px 10px 25px -5px rgba(0,0,0,0.75);
+    z-index: 10000;
 }
 .np-gold-border {
     position: absolute;
     top: 0;
     width: 100%;
     height: 400px;
-    box-shadow: inset 0 0 50px 15px rgba(0, 0, 0, 0.95);
+    box-shadow: inset 0 0 50px 15px rgba(0, 0, 0, 0.65);
 }
 /*
 ////////////////////////////////////////////////////////////////////////////////
