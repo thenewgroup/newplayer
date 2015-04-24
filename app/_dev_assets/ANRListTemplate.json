@@ -82,6 +82,72 @@
                                     }
                                 ]
                             },
+                                                        {
+                                "type": "npList",
+                                "data": {
+                                    "id": "",
+                                    "class": "h6 instructional",
+                                    "data-ng:wrap": "true",
+                                    "heading": "<p>List heading for Video</p>",
+                                    "content": "<p>List content etc., Apply one pump of the Dual Infusion into your palm. Press hands together and lightly blend all over hands. </p>"
+                                },
+                                "components": [
+                                    {
+                                        "type": "npVideo",
+                                        "data": {
+                                            "id": "vidMain",
+                                            "poster": "",
+                                            "baseURL": "../_dev_assets/assets/video/EL_CREME_CLEAN_HD_ELX",
+                                            "types": ["mp4"]
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npList",
+                                "data": {
+                                    "id": "",
+                                    "class": "h6 instructional",
+                                    "data-ng:wrap": "true",
+                                    "heading": "<p>List heading for Video</p>",
+                                    "content": "<p>List content etc., Apply one pump of the Dual Infusion into your palm. Press hands together and lightly blend all over hands. </p>"
+                                },
+                                "components": [
+                                    {
+                                        "type": "npVideo",
+                                        "data": {
+                                            "id": "vidMain",
+                                            "poster": "",
+                                            "baseURL": "../_dev_assets/assets/video/ELX_Welcome_640x360_ENG",
+                                            "types": ["mp4"]
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npList",
+                                "data": {
+                                    "id": "",
+                                    "class": "h6 instructional",
+                                    "data-ng:wrap": "true",
+                                    "heading": "<p>List heading for Video</p>",
+                                    "content": "<p>List content etc., Apply one pump of the Dual Infusion into your palm. Press hands together and lightly blend all over hands. </p>"
+                                },
+                                "components": [
+                                    {
+                                        "type": "npVideo",
+                                        "data": {
+                                            "id": "vidMain",
+                                            "poster": "//ia700505.us.archive.org/3/items/Windows7WildlifeSampleVideo/Windows7WildlifeSampleVideo.thumbs/Wildlife_000001.jpg",
+                                            "baseURL": "//archive.org/download/Windows7WildlifeSampleVideo/Wildlife_512kb",
+                                            "types": ["mp4"]
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
                             {
                                 "type": "npList",
                                 "data": {
