@@ -42,6 +42,7 @@
     padding-bottom: 3px;
     display: inline-block;
 }
+
 .np_inside-padding .sans-head{
     border-bottom-color: $brand-primary-light;
 }
@@ -92,9 +93,13 @@ ol,ul {
     font-family: "akzidenz-grotesk_bqregular"; 
     font-size: 18px;
     line-height: 24px;
-    p {
+    p, div {
         margin: 0 0 24px 0;
+        em {
+            font-size: 75%;
+        }
     }
+
 }
 
 .h3 {
@@ -157,6 +162,11 @@ p {
         }
     }
 
+    .np_outside-padding {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
     .h3.collapse-toggle {
         margin-bottom: 2px;
     }
@@ -210,12 +220,23 @@ p {
             color: inherit;
         }
     }
+
+    .np_outside-padding {
+        padding-left: 90px;
+        padding-right: 90px;
+    }
+}
+
+@media (min-width: $screen-md) {
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 @media (max-width: $screen-sm) {
     #np_newplayer-background{
         background-color: #fff;
     }
+
     .np_background-brand-offwhite {
         background-color: $brand-primary;
         color: #fff;
