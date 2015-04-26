@@ -29,20 +29,18 @@ img.blur {
     /*    -webkit-filter: blur(3px); 
         filter: blur(3px); */
 }
-
 .vertical-centered {
     min-height: 100%;  /* Fallback for vh unit */
     min-height: 100vh; /* You might also want to use
                           'height' property instead.
-                          
+                         
                           Note that for percentage values of
                           'height' or 'min-height' properties,
                           the 'height' of the parent element
                           should be specified explicitly.
-    
+   
                           In this case the parent of '.vertical-center'
                           is the <body> element */
-
     /* Make it a flex container */
     display: -webkit-box;
     display: -moz-box;
@@ -71,8 +69,6 @@ img.blur {
     -webkit-justify-content : center;
     justify-content : center;
 }
-
-
 .vertical-alignment {
     display: flex;
     align-items: center;
@@ -320,6 +316,41 @@ img.blur {
     margin: 0.2em 0;
     padding: 0.2em 0;
 }*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/* FireFox image responsive bug fix */
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*video {
+    width: 100%    !important;
+    height: auto   !important;
+}*/
+/*_::-webkit-full-page-media, _:future, :root video {
+    width: none !important; 
+}*/
+
+/*@media screen and (-webkit-min-device-pixel-ratio:0) { 
+     Safari and Chrome 
+    video {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+    }
+     Safari only override 
+    ::i-block-chrome, video {
+        width: none !important; 
+    }
+}*/
+
+
+.videoWidth {
+    /*width: inherit;*/
+    width: 100%;
+}
+video {
+    /*width: inherit;*/
+    /*width: 100%;*/
+    max-width: 100%;
+    height: auto;
+}
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /* FireFox image responsive bug fix */
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
