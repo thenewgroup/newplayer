@@ -112,12 +112,6 @@
     /*color: #9a7d46;*/
     color: $gold;
 }
-.btn span{ 
-    font-family: $font-family-sans-serif;
-    color: $brand-primary-light;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
 .btn{ 
     position: relative; 
     border-color: $brand-primary-light;
@@ -134,7 +128,7 @@
     font-family: $font-family-sans-serif;
     color: $brand-primary-light;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 0.25em;
 }
 .btn-next{ 
     position: absolute;
@@ -823,6 +817,8 @@ input{
 }
 .reveal-button-image  {
     position: absolute;
+    height: 62px;
+    width: 62px;
     padding: 5.5%;
     background-color:#999999;
     overflow: hidden;
@@ -868,10 +864,12 @@ input{
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 */
 .reveal-item-wrapper{
-    width:100%;
+    max-width: 100%;
+    display: table;
+    margin: 0 auto;
 }
 .reveal-item{
-    width:100%;
+    max-width: 100%; 
 }
 .reveal-video{
     height: auto;
