@@ -123,7 +123,7 @@
     font-family: $re-nu-serif;
     color: $brand-primary-light;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 0.25em;
 }
 .btn{ 
     position: relative;
@@ -732,7 +732,6 @@ input{
     height: 400px;
     background-color: $gray-dark;
     box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
-    /*width: 135px;*/
 }
 .np-spinner{
     color: $gold;
@@ -772,7 +771,7 @@ input{
 /*
 ////////////////////////////////////////////////////////////////////////////////
 :::::::::::::                 Spinner classes                      :::::::::::::
-// FROM - http://codepen.io/Aldlevine/pen/yGLqd
+:::::::::::::     FROM - http://codepen.io/Aldlevine/pen/yGLqd     :::::::::::::
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 */
 .wheels {
@@ -830,6 +829,8 @@ input{
 }
 .reveal-button-image  {
     position: absolute;
+    height: 62px;
+    width: 62px;
     padding: 5.5%;
     background-color:#FFFFFF;
     overflow: hidden;
@@ -843,7 +844,6 @@ input{
     position: relative;
     display: flex;
     justify-content: space-between;
-    /*border: 2px dashed #444;*/
     max-width: 770px;
 }
 .reveal-button-wrap {
@@ -876,15 +876,19 @@ input{
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 */
 .reveal-item-wrapper{
-    width:100%;
+    max-width: 100%;
+    display: table;
+    margin: 0 auto;
 }
 .reveal-item{
-    width:100%;
+    max-width: 100%; 
+    display: table;
+    margin: 0 auto;
 }
-.reveal-video{
+/*.reveal-video{
     height: auto;
     max-width: 100%;
-}
+}*/
 .reveal-content-wrapper{
     position: relative;
 }
@@ -928,10 +932,10 @@ input{
 .column-1{
     margin-bottom: 1.5%;
 }
-.list-object video{
+/*.list-object video{
     max-width: 100%;
     height: auto;
-}
+}*/
 .media-body{
     padding: 5%;
     background-color: #000000;

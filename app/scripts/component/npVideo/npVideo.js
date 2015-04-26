@@ -23,14 +23,24 @@
         if (angular.isArray(types) && types.length > 0) {
             var sources = [];
             for (var typeIdx in types) {
-//                console.log(
-//                        '\n::::::::::::::::::::::::::::::::::::::npQuestions::evaluate:::::::::::::::::::::::::::::::::::::::::::::::::',
-//                        '\n::$scope::', $scope,
-//                        '\n::source::', source,
-//                        '\n::$scope.component.data::', $scope.component.data,
-//                        '\n::$scope.component.data.baseURL::', $scope.component.data.baseURL,
-//                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-//                        );
+                console.log(
+                        '\n::::::::::::::::::::::::::::::::::::::npQuestions::evaluate:::::::::::::::::::::::::::::::::::::::::::::::::',
+                        '\n::$scope.component.data::', $scope.component.data,
+                        '\n::$scope.component.data.baseURL::', $scope.component.data.baseURL,
+                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                        );
+                $(function () {
+                    $("video").bind("loadedmetadata", function () {
+                        var width = this.videoWidth;
+                        var height = this.videoHeight;
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //On Safari only remove class setting width at 100% (for Safari 8+ video controls bug)
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        if (navigator.userAgent.indexOf('Safari') !== -1 && navigator.userAgent.indexOf('Chrome') === -1) {
+                            $(this).removeClass("videoWidth");
+                        }
+                    });
+                });
                 var type = types[typeIdx];
                 sources.push({
                     type: type,

@@ -1,0 +1,440 @@
+[
+    {
+        "type": "npFeature",
+        "data": {
+            "id": "reNutriv",
+            "class": "",
+            "version": "0.0.1",
+            "timestamp": "2015-Apr-Tue_05:04:50"
+        },
+        "components": [
+            {
+                "type": "npContent",
+                "data": {
+                    "id": "content_en",
+                    "language": "en",
+                    "title": "Learning-Content-Re-nutriv-3.7-Ultimate-Diamond-Quiz",
+                    "description": "This manifest creates a Story or Learning Object content object . "
+                },
+                "components": [
+                    {
+                        "type": "npHTML",
+                        "data": {
+                            "id": "newplayer-background"
+                        },
+                        "components": [
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "background-image"
+                                },
+                                "components": [
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "npHTML",
+                        "data": {
+                            "class": "outside-padding"
+                        },
+                        "components": [
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "class": "renutriv-logo-image"
+                                },
+                                "components": [
+                                ]
+                            },
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "class": "h3 headline",
+                                    "content": "Ultimate Diamond Quiz"
+                                },
+                                "components": [
+                                ]
+                            },
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "class": "h6 instructional",
+                                    "content": "<p>Read each question, select the best choice and then select <strong>Submit.</strong></p>"
+                                },
+                                "components": [
+                                ]
+                            },
+                            {
+                                "type": "npQuiz",
+                                "data": {
+                                    "type": "assessment",
+                                    "assessed": "1",
+                                    "questions": "4",
+                                    "percentage": "80",
+                                    "forced": "true",
+                                    "randomized": "false",
+                                    "required": "true"
+                                },
+                                "components": [
+                                    {
+                                        "type": "npPage",
+                                        "data": {
+                                            "title": "<p>title Read each question, select the best choice and then select <strong>Submit.</strong></p>",
+                                            "subTitle": "<p>subTitle Read each question, select the best choice and then select <strong>Submit.</strong></p>",
+                                            "instructional": "<p>instructional Read each question, select the best choice and then select <strong>Submit.</strong></p>"
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npDragAndDropSelect",
+                                                "data": {
+                                                    "positiveFeedback": "<p>That's it!</p><p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p><p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
+                                                    "negativeFeedback": "<p>ehh?!?!</p>",
+                                                    "image": "",
+                                                    "required": true,
+                                                    "draggableButtons": [
+                                                        {
+                                                            "select": "true",
+                                                            "content": "<p>slide right</p>",
+                                                            "image": "/assets/images/hotspot.png",
+                                                            "matchingContent": "<p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
+                                                            "matchingImage": "/assets/images/hotspot.png"
+                                                        },
+                                                        {
+                                                            "select": "false",
+                                                            "content": "<p>slide left</p>",
+                                                            "image": "",
+                                                            "matchingContent": "<p>this is the content1!this is the content1! this is the content1.2 !this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
+                                                            "matchingImage": ""
+                                                        },
+                                                        {
+                                                            "select": "true",
+                                                            "content": "<p>slide right</p>",
+                                                            "image": "/assets/images/hotspot.png",
+                                                            "matchingContent": "<p>this is the matching content2!</p>",
+                                                            "matchingImage": "/assets/images/hotspot.png"
+                                                        },
+                                                        {
+                                                            "select": "true",
+                                                            "content": "<p>slide right</p>",
+                                                            "image": "/assets/images/hotspot.png",
+                                                            "matchingContent": "<p>this is the matching content3!</p>",
+                                                            "matchingImage": "/assets/images/hotspot.png"
+                                                        },
+                                                        {
+                                                            "select": "false",
+                                                            "content": "<p>slide left</p>",
+                                                            "image": "",
+                                                            "matchingContent": "<p>this is the matching content4!</p>",
+                                                            "matchingImage": ""
+                                                        }
+                                                    ]
+                                                },
+                                                "components": []
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "",
+                                                    "type": "btn-next",
+                                                    "class": "",
+                                                    "content": "Next"
+                                                },
+                                                "components": [
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npPage",
+                                        "data": {
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npDragAndDropSelect",
+                                                "data": {
+                                                    "positiveFeedback": "<p>That's it!</p><p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p><p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
+                                                    "negativeFeedback": "<p>ehh?!?!</p>",
+                                                    "image": "",
+                                                    "required": true,
+                                                    "draggableButtons": [
+                                                        {
+                                                            "select": "true",
+                                                            "content": "<p>slide right</p>",
+                                                            "image": "/assets/images/hotspot.png",
+                                                            "matchingContent": "<p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
+                                                            "matchingImage": "/assets/images/hotspot.png"
+                                                        },
+                                                        {
+                                                            "select": "false",
+                                                            "content": "<p>slide left</p>",
+                                                            "image": "",
+                                                            "matchingContent": "<p>this is the content1!this is the content1! this is the content1.2 !this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
+                                                            "matchingImage": ""
+                                                        },
+                                                        {
+                                                            "select": "true",
+                                                            "content": "<p>slide right</p>",
+                                                            "image": "/assets/images/hotspot.png",
+                                                            "matchingContent": "<p>this is the matching content2!</p>",
+                                                            "matchingImage": "/assets/images/hotspot.png"
+                                                        },
+                                                        {
+                                                            "select": "true",
+                                                            "content": "<p>slide right</p>",
+                                                            "image": "/assets/images/hotspot.png",
+                                                            "matchingContent": "<p>this is the matching content3!</p>",
+                                                            "matchingImage": "/assets/images/hotspot.png"
+                                                        },
+                                                        {
+                                                            "select": "false",
+                                                            "content": "<p>slide left</p>",
+                                                            "image": "",
+                                                            "matchingContent": "<p>this is the matching content4!</p>",
+                                                            "matchingImage": ""
+                                                        }
+                                                    ]
+                                                },
+                                                "components": []
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "",
+                                                    "type": "btn-next",
+                                                    "class": "",
+                                                    "content": "Next"
+                                                },
+                                                "components": [
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npPage",
+                                        "data": {
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npDragAndDropSelect",
+                                                "data": {
+                                                    "positiveFeedback": "<p>That's it!</p><p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p><p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
+                                                    "negativeFeedback": "<p>ehh?!?!</p>",
+                                                    "image": "",
+                                                    "required": true,
+                                                    "draggableButtons": [
+                                                        {
+                                                            "select": "true",
+                                                            "content": "<p>slide right</p>",
+                                                            "image": "/assets/images/hotspot.png",
+                                                            "matchingContent": "<p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
+                                                            "matchingImage": "/assets/images/hotspot.png"
+                                                        },
+                                                        {
+                                                            "select": "false",
+                                                            "content": "<p>slide left</p>",
+                                                            "image": "",
+                                                            "matchingContent": "<p>this is the content1!this is the content1! this is the content1.2 !this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
+                                                            "matchingImage": ""
+                                                        },
+                                                        {
+                                                            "select": "true",
+                                                            "content": "<p>slide right</p>",
+                                                            "image": "/assets/images/hotspot.png",
+                                                            "matchingContent": "<p>this is the matching content2!</p>",
+                                                            "matchingImage": "/assets/images/hotspot.png"
+                                                        },
+                                                        {
+                                                            "select": "true",
+                                                            "content": "<p>slide right</p>",
+                                                            "image": "/assets/images/hotspot.png",
+                                                            "matchingContent": "<p>this is the matching content3!</p>",
+                                                            "matchingImage": "/assets/images/hotspot.png"
+                                                        },
+                                                        {
+                                                            "select": "false",
+                                                            "content": "<p>slide left</p>",
+                                                            "image": "",
+                                                            "matchingContent": "<p>this is the matching content4!</p>",
+                                                            "matchingImage": ""
+                                                        }
+                                                    ]
+                                                },
+                                                "components": []
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "",
+                                                    "type": "btn-next",
+                                                    "class": "",
+                                                    "content": "Next"
+                                                },
+                                                "components": [
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npPage",
+                                        "data": {
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npDragAndDropSelect",
+                                                "data": {
+                                                    "positiveFeedback": "<p>That's it!</p><p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p><p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
+                                                    "negativeFeedback": "<p>ehh?!?!</p>",
+                                                    "image": "",
+                                                    "required": true,
+                                                    "draggableButtons": [
+                                                        {
+                                                            "select": "true",
+                                                            "content": "<p>slide right</p>",
+                                                            "image": "/assets/images/hotspot.png",
+                                                            "matchingContent": "<p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
+                                                            "matchingImage": "/assets/images/hotspot.png"
+                                                        },
+                                                        {
+                                                            "select": "false",
+                                                            "content": "<p>slide left</p>",
+                                                            "image": "",
+                                                            "matchingContent": "<p>this is the content1!this is the content1! this is the content1.2 !this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
+                                                            "matchingImage": ""
+                                                        },
+                                                        {
+                                                            "select": "true",
+                                                            "content": "<p>slide right</p>",
+                                                            "image": "/assets/images/hotspot.png",
+                                                            "matchingContent": "<p>this is the matching content2!</p>",
+                                                            "matchingImage": "/assets/images/hotspot.png"
+                                                        },
+                                                        {
+                                                            "select": "true",
+                                                            "content": "<p>slide right</p>",
+                                                            "image": "/assets/images/hotspot.png",
+                                                            "matchingContent": "<p>this is the matching content3!</p>",
+                                                            "matchingImage": "/assets/images/hotspot.png"
+                                                        },
+                                                        {
+                                                            "select": "false",
+                                                            "content": "<p>slide left</p>",
+                                                            "image": "",
+                                                            "matchingContent": "<p>this is the matching content4!</p>",
+                                                            "matchingImage": ""
+                                                        }
+                                                    ]
+                                                },
+                                                "components": []
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "",
+                                                    "type": "btn-next",
+                                                    "class": "",
+                                                    "content": "Next"
+                                                },
+                                                "components": [
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npPage",
+                                        "data": {
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npDragAndDropSelect",
+                                                "data": {
+                                                    "positiveFeedback": "<p>That's it!</p><p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p><p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
+                                                    "negativeFeedback": "<p>ehh?!?!</p>",
+                                                    "image": "",
+                                                    "required": true,
+                                                    "draggableButtons": [
+                                                        {
+                                                            "select": "true",
+                                                            "content": "<p>slide right</p>",
+                                                            "image": "/assets/images/hotspot.png",
+                                                            "matchingContent": "<p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
+                                                            "matchingImage": "/assets/images/hotspot.png"
+                                                        },
+                                                        {
+                                                            "select": "false",
+                                                            "content": "<p>slide left</p>",
+                                                            "image": "",
+                                                            "matchingContent": "<p>this is the content1!this is the content1! this is the content1.2 !this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
+                                                            "matchingImage": ""
+                                                        },
+                                                        {
+                                                            "select": "true",
+                                                            "content": "<p>slide right</p>",
+                                                            "image": "/assets/images/hotspot.png",
+                                                            "matchingContent": "<p>this is the matching content2!</p>",
+                                                            "matchingImage": "/assets/images/hotspot.png"
+                                                        },
+                                                        {
+                                                            "select": "true",
+                                                            "content": "<p>slide right</p>",
+                                                            "image": "/assets/images/hotspot.png",
+                                                            "matchingContent": "<p>this is the matching content3!</p>",
+                                                            "matchingImage": "/assets/images/hotspot.png"
+                                                        },
+                                                        {
+                                                            "select": "false",
+                                                            "content": "<p>slide left</p>",
+                                                            "image": "",
+                                                            "matchingContent": "<p>this is the matching content4!</p>",
+                                                            "matchingImage": ""
+                                                        }
+                                                    ]
+                                                },
+                                                "components": []
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npPage",
+                                        "data": {
+                                            "id": "How Much Do You Know About Re-Nutriv Summary",
+                                            "parentId": "QuizIntro",
+                                            "title": "How Much Do You Know About Re-Nutriv Summary",
+                                            "inMenu": false,
+                                            "required": false
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npAsResult",
+                                                "data": {
+                                                    "feedback": {
+                                                        "passLabel": "You scored",
+                                                        "pass": "Congratulations, you've completed this topic!",
+                                                        "failLabel": "You scored",
+                                                        "fail": "Consider going back and reviewing the material again."
+                                                    },
+                                                    "achievements": [
+                                                        {
+                                                            "score": 0.8,
+                                                            "compare": "gte",
+                                                            "content": "In addition, you a grip of points!"
+                                                        },
+                                                        {
+                                                            "score": 1,
+                                                            "compare": "eq",
+                                                            "content": "In addition, you get this badge and a grip of points!"
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

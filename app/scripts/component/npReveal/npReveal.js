@@ -29,6 +29,18 @@
                         $scope.feedback = this.feedback = cmpData.feedback;
                         $scope.image = this.image = cmpData.image;
                         $log.debug('npReveal::data', cmpData, buttonData);
+//                        $(function () {
+//                            $(".reveal-video").bind("loadedmetadata", function () {
+//                                var width = this.videoWidth;
+//                                var height = this.videoHeight;
+//                                console.log(
+//                                        '\n::::::::::::::::::::::::::::::::::::::npFlashCards::videoWidth:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                        '\n::height:', height,
+//                                        '\n::width:', width,
+//                                        '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                        );
+//                            });
+//                        });
                         //////////////////////////////////////////////////////////////////////////////////////
                         //get ready
                         //////////////////////////////////////////////////////////////////////////////////////
@@ -57,15 +69,7 @@
                                     TweenMax.set($('.np_outside-padding'), {
                                         height: maxHeight + npCmpWrapperHeight + 100
                                     });
-                                    console.log(
-                                            '\n::::::::::::::::::::::::::::::::::::::npFlashCards::maxHeight:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                            '\n::maxHeight:', maxHeight,
-                                            '\n::outsidePaddingHeight:', outsidePaddingHeight,
-                                            '\n::npCmpWrapperHeight:', npCmpWrapperHeight,
-                                            '\n::maxHeight + outsidePaddingHeight:', maxHeight + outsidePaddingHeight,
-                                            '\n::maxHeight + npCmpWrapperHeight:', maxHeight + npCmpWrapperHeight,
-                                            '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                            );
+//                                    var videoHeight = $element.find('video');
                                     //////////////////////////////////////////////////////////////////////////////////////
                                     //build init state
                                     //////////////////////////////////////////////////////////////////////////////////////

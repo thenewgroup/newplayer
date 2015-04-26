@@ -5441,7 +5441,7 @@ button.close {
   /*
   ////////////////////////////////////////////////////////////////////////////////
   :::::::::::::                 Spinner classes                      :::::::::::::
-  // FROM - http://codepen.io/Aldlevine/pen/yGLqd
+  :::::::::::::     FROM - http://codepen.io/Aldlevine/pen/yGLqd     :::::::::::::
   \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   */
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -5457,9 +5457,17 @@ button.close {
   ::::::::::::: evenly ditribute navigation end ::::::::::::::::::::::::::::::::::
   \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   */
+  /*.reveal-video{
+      height: auto;
+      max-width: 100%;
+  }*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*New Player List classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+  /*.list-object video{
+      max-width: 100%;
+      height: auto;
+  }*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*New Player Drag and Drop Select classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -5576,7 +5584,7 @@ button.close {
     font-family: "BauerBodoniStd-Roman";
     color: #FFFFFF;
     text-transform: uppercase;
-    letter-spacing: 2px; }
+    letter-spacing: 0.25em; }
   #np_reNutriv .btn {
     position: relative;
     border-color: #9a7d46;
@@ -5946,8 +5954,7 @@ button.close {
     overflow: hidden;
     height: 400px;
     background-color: #333333;
-    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
-    /*width: 135px;*/ }
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65); }
   #np_reNutriv .np-spinner {
     color: #9a7d46;
     width: 155px; }
@@ -6020,6 +6027,8 @@ button.close {
     height: 100px; }
   #np_reNutriv .reveal-button-image {
     position: absolute;
+    height: 62px;
+    width: 62px;
     padding: 5.5%;
     background-color: #FFFFFF;
     overflow: hidden; }
@@ -6033,7 +6042,6 @@ button.close {
     -webkit-justify-content: space-between;
         -ms-flex-pack: justify;
             justify-content: space-between;
-    /*border: 2px dashed #444;*/
     max-width: 770px; }
   #np_reNutriv .reveal-button-wrap {
     position: absolute;
@@ -6057,12 +6065,13 @@ button.close {
     margin-left: 0.2em;
     margin-right: 0.2em; }
   #np_reNutriv .reveal-item-wrapper {
-    width: 100%; }
+    max-width: 100%;
+    display: table;
+    margin: 0 auto; }
   #np_reNutriv .reveal-item {
-    width: 100%; }
-  #np_reNutriv .reveal-video {
-    height: auto;
-    max-width: 100%; }
+    max-width: 100%;
+    display: table;
+    margin: 0 auto; }
   #np_reNutriv .reveal-content-wrapper {
     position: relative; }
   #np_reNutriv .reveal-content-text {
@@ -6095,9 +6104,6 @@ button.close {
     letter-spacing: 2px; }
   #np_reNutriv .column-1 {
     margin-bottom: 1.5%; }
-  #np_reNutriv .list-object video {
-    max-width: 100%;
-    height: auto; }
   #np_reNutriv .media-body {
     padding: 5%;
     background-color: #000000;
@@ -6746,15 +6752,6 @@ button.close {
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*New Player Quiz Answer classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-  /*.answer-radio{ 
-      position: relative;
-      width: 20px;
-      height: 20px;
-      border-color: $gold;
-      border-color: #9a7d46;
-      background-color: #000000;
-      box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
-  }*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
   /*New Player Quiz Questions classes*/
   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -6896,9 +6893,9 @@ button.close {
   #ANR #background-image {
     position: fixed;
     background-image: url("../assets/images/ESTL-005_ANR_bg_img.jpg");
-    background-position: center top;
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: 100% 100%;
+    background-origin: content-box;
     width: 100%;
     height: 100%; }
   #ANR .renutriv-logo-image {
@@ -6980,7 +6977,7 @@ button.close {
     font-family: "akzidenz-grotesk_bqregular";
     color: #FFFFFF;
     text-transform: uppercase;
-    letter-spacing: 2px; }
+    letter-spacing: 0.25em; }
   #ANR .btn {
     position: relative;
     border-color: #FFFFFF;
@@ -7195,13 +7192,7 @@ button.close {
     position: relative;
     width: 20px;
     height: 20px;
-    cursor: pointer;
-    /*float: left;*/
-    /*margin-right: 20px;*/
-    /*border-color: $gold;*/
-    /*border-color: #9a7d46;*/
-    /*    background-color: #000000;
-        box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);*/ }
+    cursor: pointer; }
   #ANR .checkbox-box {
     position: absolute;
     width: 20px;
@@ -7446,6 +7437,8 @@ button.close {
     height: 100px; }
   #ANR .reveal-button-image {
     position: absolute;
+    height: 62px;
+    width: 62px;
     padding: 5.5%;
     background-color: #FFFFFF;
     overflow: hidden; }
@@ -7481,9 +7474,13 @@ button.close {
     margin-left: 0.2em;
     margin-right: 0.2em; }
   #ANR .reveal-item-wrapper {
-    width: 100%; }
+    max-width: 100%;
+    display: table;
+    margin: 0 auto; }
   #ANR .reveal-item {
-    width: 100%; }
+    display: table;
+    margin: 0 auto;
+    max-width: 100%; }
   #ANR .reveal-video {
     height: auto;
     max-width: 100%; }
@@ -8117,11 +8114,6 @@ button.close {
   #GMTC .gold {
     /*color: #9a7d46;*/
     color: #9a7d46; }
-  #GMTC .btn span {
-    font-family: "akzidenz-grotesk_bqregular";
-    color: #FFFFFF;
-    text-transform: uppercase;
-    letter-spacing: 2px; }
   #GMTC .btn {
     position: relative;
     border-color: #FFFFFF;
@@ -8139,7 +8131,7 @@ button.close {
     font-family: "akzidenz-grotesk_bqregular";
     color: #FFFFFF;
     text-transform: uppercase;
-    letter-spacing: 2px; }
+    letter-spacing: 0.25em; }
   #GMTC .btn-next {
     position: absolute;
     right: 80px;
@@ -8570,6 +8562,8 @@ button.close {
     height: 100px; }
   #GMTC .reveal-button-image {
     position: absolute;
+    height: 62px;
+    width: 62px;
     padding: 5.5%;
     background-color: #999999;
     overflow: hidden; }
@@ -8606,9 +8600,11 @@ button.close {
     margin-left: 0.2em;
     margin-right: 0.2em; }
   #GMTC .reveal-item-wrapper {
-    width: 100%; }
+    max-width: 100%;
+    display: table;
+    margin: 0 auto; }
   #GMTC .reveal-item {
-    width: 100%; }
+    max-width: 100%; }
   #GMTC .reveal-video {
     height: auto;
     max-width: 100%; }
@@ -9696,16 +9692,16 @@ img.blur {
   min-height: 100%;
   /* Fallback for vh unit */
   min-height: 100vh;
-                   /* You might also want to use
-                      'height' property instead.
+                    /* You might also want to use
+                       'height' property instead.
                       
-                      Note that for percentage values of
-                      'height' or 'min-height' properties,
-                      the 'height' of the parent element
-                      should be specified explicitly.
+                       Note that for percentage values of
+                       'height' or 'min-height' properties,
+                       the 'height' of the parent element
+                       should be specified explicitly.
 
-                      In this case the parent of '.vertical-center'
-                      is the <body> element */
+                       In this case the parent of '.vertical-center'
+                       is the <body> element */
   /* Make it a flex container */
   display: -webkit-box;
   display: -ms-flexbox;
@@ -9992,6 +9988,38 @@ img.blur {
     margin: 0.2em 0;
     padding: 0.2em 0;
 }*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/* FireFox image responsive bug fix */
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*video {
+    width: 100%    !important;
+    height: auto   !important;
+}*/
+/*_::-webkit-full-page-media, _:future, :root video {
+    width: none !important; 
+}*/
+/*@media screen and (-webkit-min-device-pixel-ratio:0) { 
+     Safari and Chrome 
+    video {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+    }
+     Safari only override 
+    ::i-block-chrome, video {
+        width: none !important; 
+    }
+}*/
+.videoWidth {
+  /*width: inherit;*/
+  width: 100%; }
+
+video {
+  /*width: inherit;*/
+  /*width: 100%;*/
+  max-width: 100%;
+  height: auto; }
+
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /* FireFox image responsive bug fix */
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
