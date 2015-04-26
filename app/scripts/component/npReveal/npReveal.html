@@ -23,7 +23,7 @@
             <div class="reveal-wrapper">
                 <div class="reveal-item-wrapper">
                     <img ng-if="revealItemComponent.components[0].type == 'npImage'" class="reveal-item reveal-image img-responsive" ng-src="{{revealItemComponent.components[0].data.src}}" alt="{{component.alt}}" />
-                    <video controls ng-if="revealItemComponent.components[0].type == 'npVideo'" class="reveal-item reveal-video flex-video widescreen" poster="{{revealItemComponent.components[0].data.poster}}">
+                    <video controls ng-if="revealItemComponent.components[0].type == 'npVideo'" class="reveal-item reveal-video" poster="{{revealItemComponent.components[0].data.poster}}">
                         <source ng-src="{{revealItemComponent.components[0].data.baseURL+'.mp4'}}"/>
                     </video>
                 </div>
