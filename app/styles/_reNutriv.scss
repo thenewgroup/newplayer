@@ -119,26 +119,22 @@
     /*color: #9a7d46;*/
     color: $gold;
 }
-.btn span{ 
-    font-family: $re-nu-serif;
-    color: $brand-primary-light;
-    text-transform: uppercase;
-    letter-spacing: 0.25em;
-}
 .btn{ 
     position: relative;
     border-color: #9a7d46;
     background-color: #000000;
     width: auto !important;
+    padding-top: 8px;
     padding-left: 2em;
     padding-right: 2em;
     min-width: fit-content;
     border-width: 1px;
 }
 .btn span{ 
-    font-family: $font-family-sans-serif;
+    font-family: $re-nu-serif;
     color: $brand-primary-light;
     text-transform: uppercase;
+    /*letter-spacing: 0.25em;*/
     letter-spacing: 2px;
 }
 .btn-next{ 
@@ -149,14 +145,28 @@
     margin-bottom: 50px;
 }
 .btn-next span{ 
-    text-transform: uppercase;
-    letter-spacing: 2px;
     padding: 0;
 }
 .btn-submit{
 }
 .btn-submit span{ 
 }
+
+/*.btn-select-submit{
+    position: relative;
+    border-color: #9a7d46;
+    background-color: #000000;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}*/
+/*.btn-select-submit span{ 
+    font-family: $re-nu-serif;
+    color: $brand-primary-light;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}*/
+
 @media (max-width: $screen-sm) {
     .btn-next{ 
         position: absolute;
@@ -623,6 +633,7 @@ input{
     color: $gold;
     letter-spacing: 2px;
     float: left;
+    margin-top: 0.25em;
     margin-right: auto;
     width: auto;
     line-height: 1;
@@ -637,7 +648,7 @@ input{
     line-height: 1;
 }
 .results-wrapper-incorrect .results-summary-pecentage{  
-    line-height: 0.15;
+    line-height: 0.75;
 }
 .results-wrapper-incorrect .results-summary-pecentage-character{
     /*line-height: 0;*/
@@ -865,10 +876,10 @@ input{
 }
 .reveal-button {
     position: relative;
-    width: 4.46em;
-    height: 4.46em;
-    margin-left: 0.2em;
-    margin-right: 0.2em;
+    width: 62px;
+    height: 62px;
+    /*    margin-left: 0.2em;
+        margin-right: 0.2em;*/
 }
 /*
 ////////////////////////////////////////////////////////////////////////////////
@@ -971,20 +982,6 @@ input{
     text-align: center;
     margin-top: 1em;
     margin-bottom: 1em;
-}
-.btn-select-submit{
-    position: relative;
-    border-color: #9a7d46;
-    background-color: #000000;
-    padding-top: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-.btn-select-submit span{ 
-    font-family: $re-nu-serif;
-    color: $brand-primary-light;
-    text-transform: uppercase;
-    letter-spacing: 2px;
 }
 .select-button-completion-content{
     padding-top: 15px;
