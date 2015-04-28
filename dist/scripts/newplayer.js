@@ -2633,7 +2633,7 @@
                                             });
                                         }
                                         //////////////////////////////////////////////////////////////////////////////////////
-                                        //build that
+                                        //shuffle that but only if....
                                         //////////////////////////////////////////////////////////////////////////////////////
                                         if (Boolean($scope.randomized)) {
                                             shuffle();
@@ -2685,29 +2685,26 @@
                                                     autoAlpha: 0
                                                 });
                                                 var hitAreaLength = 0;
+//                                                var maxHeight = 0;
                                                 var hitAreaSelectedLength = '';
                                                 var hitAreaSelectedIncorrect = '';
                                                 hitAreaLength = $("[data-match=true]").length;
                                                 //////////////////////////////////////////////////////////////////////////////////////
                                                 //get and set height of elements
                                                 //////////////////////////////////////////////////////////////////////////////////////
-                                                var maxHeight = Math.max.apply(null, $('.select-response-feedback').map(function () {
-                                                    return $(this).outerHeight(true);
-                                                }).get());
-//                                                var responseHeight = $('.select-response-incorrect').outerHeight(true);
-                                                var responseHeight = $('.negative-feedback').outerHeight(true);
-                                                var outsidePaddingHeight = $('.np-cmp-wrapper').outerHeight(true);
-                                                TweenMax.set($('.np_outside-padding'), {
-                                                    height: outsidePaddingHeight + maxHeight
-                                                });
+//                                                maxHeight = Math.max.apply(null, $('.select-response-feedback').map(function () {
+//                                                    return $(this).outerHeight(true);
+//                                                }).get());
 //                                                console.log(
 //                                                        '\n::::::::::::::::::::::::::::::::::::::npDragAndDropSelect::maxHeight:::::::::::::::::::::::::::::::::::::::::::::::::',
 //                                                        '\n::maxHeight:', maxHeight,
-//                                                        '\n::responseHeight:', responseHeight,
-//                                                        '\n::outsidePaddingHeight:', outsidePaddingHeight,
-//                                                        '\n::maxHeight + outsidePaddingHeight:', responseHeight + outsidePaddingHeight,
+//                                                        '\n::$(.select-incorrect-feedback).outerHeight(true):', $('.select-incorrect-feedback').outerHeight(true),
+//                                                        '\n::$(.select-correct-feedback).outerHeight(true):', $('.select-correct-feedback').outerHeight(true),
 //                                                        '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
 //                                                        );
+                                                TweenMax.set($('.np_outside-padding'), {
+                                                    height: $('.btn-submit').offset().top + $('.btn-submit').outerHeight(true) + $('.btn-next').outerHeight(true) + 50
+                                                });
                                                 //////////////////////////////////////////////////////////////////////////////////////
                                                 //evaluate interaction
                                                 //////////////////////////////////////////////////////////////////////////////////////
@@ -2716,26 +2713,34 @@
                                                     hitAreaSelectedIncorrect = $("[data-match=skeletor]").length;
                                                     var isPassing = false;
                                                     if (Number(hitAreaLength) === Number(hitAreaSelectedLength) && (hitAreaSelectedIncorrect === 0)) {
-                                                        TweenMax.to($('.select-response-correct'), 0.75, {
-                                                            autoAlpha: 1,
-                                                            height: maxHeight,
+                                                        TweenMax.to($('.np_outside-padding'), 0.25, {
+                                                            height: $('.select-response-correct').offset().top + $('.select-correct-feedback').outerHeight(true) + $('.btn-next').outerHeight(true) + 20,
                                                             ease: Power4.easeOut
                                                         });
-                                                        TweenMax.to($('.select-response-incorrect'), 0.75, {
+                                                        TweenMax.to($('.select-response-correct'), 0.5, {
+                                                            autoAlpha: 1,
+                                                            height: $('.select-correct-feedback').outerHeight(true),
+                                                            ease: Power4.easeOut
+                                                        });
+                                                        TweenMax.to($('.select-response-incorrect'), 0.5, {
                                                             autoAlpha: 0,
-                                                            height: 0,
+//                                                            height: 0,
                                                             ease: Power4.easeOut
                                                         });
                                                         isPassing = true;
                                                     } else {
-                                                        TweenMax.to($('.select-response-correct'), 0.75, {
-                                                            autoAlpha: 0,
-                                                            height: 0,
+                                                        TweenMax.to($('.np_outside-padding'), 0.25, {
+                                                            height: $('.select-response-incorrect').offset().top + $('.select-incorrect-feedback').outerHeight(true) + $('.btn-next').outerHeight(true) + 20,
                                                             ease: Power4.easeOut
                                                         });
-                                                        TweenMax.to($('.select-response-incorrect'), 0.75, {
+                                                        TweenMax.to($('.select-response-correct'), 0.5, {
+                                                            autoAlpha: 0,
+//                                                            height: 0,
+                                                            ease: Power4.easeOut
+                                                        });
+                                                        TweenMax.to($('.select-response-incorrect'), 0.5, {
                                                             autoAlpha: 1,
-                                                            height: maxHeight,
+                                                            height: $('.select-incorrect-feedback').outerHeight(true),
                                                             ease: Power4.easeOut
                                                         });
                                                         isPassing = false;
@@ -3892,12 +3897,22 @@
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //get actuall height
                                 //////////////////////////////////////////////////////////////////////////////////////
-                                setHeightProperties(function () {
+                                var setHeightProperties = function () {
                                     var outsidePaddingHeight = $('.np-result-summary').outerHeight(true);
+                                    var resultsSummaryPecentageHeight = $('.results-summary-pecentage').outerHeight(true);
+                                    var resultsSummaryTextHeight = $('.results-summary-text').outerHeight(true);
+                                    console.log(
+                                            '\n::::::::::::::::::::::::::::::::::::::npAsResultController::setHeightProperties:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                            '\n::outsidePaddingHeight::', outsidePaddingHeight,
+                                            '\n::resultsSummaryPecentageHeight::', resultsSummaryPecentageHeight,
+                                            '\n::resultsSummaryTextHeight::', resultsSummaryTextHeight,
+                                            '\n::resultsSummaryPecentageHeight+resultsSummaryTextHeight::', resultsSummaryPecentageHeight+resultsSummaryTextHeight,
+                                            '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                            );
                                     TweenMax.set($('.np-result-container'), {
-                                        height: outsidePaddingHeight
+                                        height: resultsSummaryPecentageHeight + resultsSummaryTextHeight +120
                                     });
-                                });
+                                };
                                 setHeightProperties();
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //page build
@@ -4805,7 +4820,6 @@
                         vm.pageId = cmpData.id;
                         vm.difficulty = cmpData.difficulty || 0;
                         //AssessmentService.addPage(cmpData.id, cmpData.required);
-
                         //////////////////////////////////////////////////////////////////////////////////////
                         //get ready
                         //////////////////////////////////////////////////////////////////////////////////////
@@ -4819,9 +4833,11 @@
                                 TweenMax.set($('.npPage'), {
                                     height: btnNextHeight + pageHeight
                                 });
+                                TweenMax.set($('.trivia-question-wrapper'), {
+                                    height: $('.trivia-question-wrapper').outerHeight(true) + $('.btn-next').outerHeight(true) + 20
+                                });
                             });
                         });
-
                         /* NOTE: commented 2015-04-20 cw77, this disables shuffling of pages */
                         // go to the first page, since pages were shuffled
 //                        vm.assment = AssessmentService();
@@ -4835,17 +4851,17 @@
                         //});
                         $rootScope.$on('question.answered', function (evt, correct) {
                             if (correct) {
-                              /* NOTE: commented 2015-04-20 cw77, this disables shuffling of pages */
-                              //AssessmentService.pageViewed();
-                              //vm.currentPage = vm.assment.getPageviewsCount();
-                              //vm.pageId = vm.seenComponents[vm.currentPage] ? vm.seenComponents[vm.currentPage].data.id : '';
-                              //  ManifestService.setPageId(vm.pageId);
+                                /* NOTE: commented 2015-04-20 cw77, this disables shuffling of pages */
+                                //AssessmentService.pageViewed();
+                                //vm.currentPage = vm.assment.getPageviewsCount();
+                                //vm.pageId = vm.seenComponents[vm.currentPage] ? vm.seenComponents[vm.currentPage].data.id : '';
+                                //  ManifestService.setPageId(vm.pageId);
                                 $rootScope.$emit('spin-to-win');
                                 // end of the trivia questions
                                 // TODO - add this message the template and set the two values
                                 // here in the controller
                                 // NOTE: This text should come from the app
-//  min-height: 740px;
+                                //  min-height: 740px;
                                 if (!vm.pageId) {
                                     vm.feedback = 'Good job, you scored 5,000 points out of 7,500 possible.';
                                 }
@@ -4860,7 +4876,6 @@
                     }
             );
 })();
-
 (function () {
     'use strict';
     angular
@@ -4948,9 +4963,6 @@
                                 scale: 2.5,
                                 force3D: true
                             });
-                            //chkAnswers = ManifestService.getAll('npAnswer', $scope.cmpIdx);
-                            //$checkbox = $element.find('.checkbox-x');
-                            //$checked = $element.find('.checkbox-x[checked]');
                             $log.debug('npAsQuestion::evaluating type to check', cmpData);
                             switch (cmpData.type) {
                                 case 'checkbox':
@@ -5047,15 +5059,15 @@
                                                 force3D: true
                                             });
                                         }
+                                        TweenMax.set(feedbackWrapper, {
+                                            height: 0,
+                                            force3D: true
+                                        });
                                         TweenMax.to($('.question-feedback-text'), 0.5, {
                                             autoAlpha: 1,
                                             force3D: true,
                                             delay: 0.25,
                                             ease: Power4.easeOut
-                                        });
-                                        TweenMax.set(feedbackWrapper, {
-                                            height: 0,
-                                            force3D: true
                                         });
                                         TweenMax.to(feedbackWrapper, 0.5, {
                                             autoAlpha: 1,
@@ -6304,13 +6316,23 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "            <div class=\"results-summary-text-wrapper col-xs-12\">\n" +
     "                <div class=\"results-summary-text\">{{npResult.summaryText}}</div>\n" +
     "            </div>\n" +
-    "            <div class=\"results-summary-amount-wrapper row\">\n" +
-    "                <div class=\"results-summary-label-text col-xs-6\">{{npResult.summaryLabelText}}</div>\n" +
-    "                <div class=\"results-summary-pecentage col-xs-6\">{{npResult.summaryPecentage}}<div class=\"results-summary-pecentage-character\">%</div></div>\n" +
-    "            </div>\n" +
+    "            <!--<div class=\"results-summary-amount-wrapper row\">-->\n" +
+    "                <!--<div class=\"results-summary-label-text col-xs-6\">{{npResult.summaryLabelText}}</div>-->\n" +
+    "                <!--<div class=\"results-summary-pecentage col-xs-6\">{{npResult.summaryPecentage}}<div class=\"results-summary-pecentage-character\">%</div></div>-->\n" +
+    "            <!--</div>-->\n" +
     "            <div ng-show=\"npResult.achievementText\">{{npResult.achievementText}}</div>\n" +
     "        </div>\n" +
     "        <div class=\"results-wrapper-incorrect\">\n" +
+    "            <div class=\"results-summary-text-wrapper col-xs-12\">\n" +
+    "                <div class=\"results-summary-text\">{{npResult.summaryText}}</div>\n" +
+    "            </div>\n" +
+    "            <!--<div class=\"results-summary-amount-wrapper row\">-->\n" +
+    "                <!--<div class=\"results-summary-label-text col-xs-6\">{{npResult.summaryLabelText}}</div>-->\n" +
+    "                <!--<div class=\"results-summary-pecentage col-xs-6\">{{npResult.summaryPecentage}}<div class=\"results-summary-pecentage-character\">%</div></div>-->\n" +
+    "            <!--</div>-->\n" +
+    "            <div ng-show=\"npResult.achievementText\">{{npResult.achievementText}}</div>\n" +
+    "        </div>\n" +
+    "<!-- <div class=\"results-wrapper-incorrect\">\n" +
     "            <div class=\"results-summary-amount-wrapper row\">\n" +
     "                <div class=\"results-summary-label-text col-xs-6\">{{npResult.summaryLabelText}}</div>\n" +
     "                <div class=\"results-summary-pecentage col-xs-6\">{{npResult.summaryPecentage}}<div class=\"results-summary-pecentage-character\">%</div></div>\n" +
@@ -6318,11 +6340,11 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "            <div class=\"results-summary-text-wrapper col-xs-12\">\n" +
     "                <div class=\"results-summary-text\">{{npResult.summaryText}}</div>\n" +
     "            </div>\n" +
-    "            <!--<div ng-show=\"npResult.achievementText\">{{npResult.achievementText}}</div>-->\n" +
-    "        </div>\n" +
+    "            <div ng-show=\"npResult.achievementText\">{{npResult.achievementText}}</div>\n" +
+    "        </div>-->\n" +
     "    </div>\n" +
     "    <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
-    "</div>\n"
+    "</div>"
   );
 
 
@@ -6748,7 +6770,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "            <div np-drag-and-drop-select-evaluate class=\"row\">\n" +
     "                <div class=\"col-xs-12\">\n" +
     "                    <div class=\"select-button-wrapper\">\n" +
-    "                        <button class=\"btn-select-submit btn\" is-clickable=\"true\" ng-click=\"evaluate()\">\n" +
+    "                        <button class=\"btn-submit btn\" is-clickable=\"true\" ng-click=\"evaluate()\">\n" +
     "                            <span>SUBMIT</span>\n" +
     "                        </button>\n" +
     "                    </div>\n" +
@@ -6771,7 +6793,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                                    </svg>\n" +
     "                                </div>\n" +
     "                            </div>\n" +
-    "                            <div class=\"col-xs-11 right-column-select body-copy select-response-feedback\" ng-bind-html=\"npDragAndDropSelect.positiveFeedback\" >\n" +
+    "                            <div class=\"col-xs-11 right-column-select body-copy select-response-feedback select-correct-feedback\" ng-bind-html=\"npDragAndDropSelect.positiveFeedback\" >\n" +
     "                            </div>\n" +
     "                        </div>\n" +
     "                        <div class=\"select-response-incorrect row\">\n" +
@@ -6799,7 +6821,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                                    </svg>\n" +
     "                                </div>\n" +
     "                            </div>\n" +
-    "                            <div class=\"col-xs-11 right-column-select body-copy select-response-feedback\" ng-bind-html=\"npDragAndDropSelect.negativeFeedback\" >\n" +
+    "                            <div class=\"col-xs-11 right-column-select body-copy select-response-feedback select-incorrect-feedback\" ng-bind-html=\"npDragAndDropSelect.negativeFeedback\" >\n" +
     "                            </div>\n" +
     "                        </div>\n" +
     "                    </div>\n" +
@@ -7300,7 +7322,7 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "            </div>\n" +
     "        </div>\n" +
     "        <!--<div class=\"col-xs-10 np_row\" np-component ng-if=\"subCmp\" ng-repeat=\"component in npTrivia.seenComponents\" idx=\"{{component.idx}}\" ng-hide=\"npTrivia.pageId !== component.data.id\"></div>-->\n" +
-    "        <div class=\"col-xs-10 np_row\">\n" +
+    "        <div class=\"col-xs-10 np_row trivia-question-wrapper\">\n" +
     "            <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
     "            <div class=\"npTrivia-feedback\" ng-if=\"npTrivia.feedback\" ng-bind-html=\"npTrivia.feedback\"></div>\n" +
     "        </div> \n" +
