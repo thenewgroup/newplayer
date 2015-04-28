@@ -461,8 +461,8 @@
                                                 "type": "npQuizSummary",
                                                 "data": {
                                                     "feedback": {
-                                                        "pass": "Congratulations, you scored :USERSCORE:% and have passed this module.",
-                                                        "fail": "Sorry, you scored :USERSCORE:% and you needed to score :MINSCORE:% to pass. Try it again!"
+                                                        "pass": "<p>Congratulations, you scored :USERSCORE:% and have passed this module.</p>",
+                                                        "fail": "<p>Sorry, you scored :USERSCORE:% and you needed to score :MINSCORE:% to pass. Try it again!</p>"
                                                     },
                                                     "achievements": [
                                                         {
