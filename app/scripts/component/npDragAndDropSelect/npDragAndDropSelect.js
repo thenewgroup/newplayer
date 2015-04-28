@@ -153,7 +153,6 @@
                                                         });
                                                         TweenMax.to($('.select-response-incorrect'), 0.75, {
                                                             autoAlpha: 0,
-//                                                            height: 0,
                                                             ease: Power4.easeOut
                                                         });
                                                         isPassing = true;
@@ -164,7 +163,6 @@
                                                         });
                                                         TweenMax.to($('.select-response-correct'), 0.5, {
                                                             autoAlpha: 0,
-//                                                            height: 0,
                                                             ease: Power4.easeOut
                                                         });
                                                         TweenMax.to($('.select-response-incorrect'), 0.75, {
