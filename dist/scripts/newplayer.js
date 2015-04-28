@@ -2686,6 +2686,8 @@
                                                 });
                                                 var hitAreaLength = 0;
                                                 var maxHeight = 0;
+                                                var modalTopOffset = 275;
+                                                var maxHeight = 0;
                                                 var hitAreaSelectedLength = '';
                                                 var hitAreaSelectedIncorrect = '';
                                                 hitAreaLength = $("[data-match=true]").length;
@@ -2695,20 +2697,20 @@
                                                 maxHeight = Math.max.apply(null, $('.select-response-feedback').map(function () {
                                                     return $(this).outerHeight(true);
                                                 }).get());
-                                                console.log(
-                                                        '\n::::::::::::::::::::::::::::::::::::::npDragAndDropSelect::maxHeight:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                                        '\n::maxHeight:', maxHeight,
-                                                        '\n::$(.btn-submit).offset().top:', $('.btn-submit').offset().top,
-                                                        '\n::$(.btn-next).offset().top:', $('.btn-next').offset().top,
-                                                        '\n::$(.btn-next).outerHeight(true):', $('.btn-next').outerHeight(true),
-                                                        '\n::$(.np_outside-padding).outerHeight(true):', $('.np_outside-padding').outerHeight(true),
-                                                        '\n::$(.select-response-feedback).offset().top:', $('.select-response-feedback').offset().top,
-                                                        '\n::$(.select-correct-feedback).outerHeight(true):', $('.select-correct-feedback').outerHeight(true),
-                                                        '\n::$(.select-incorrect-feedback).outerHeight(true):', $('.select-incorrect-feedback').outerHeight(true),
-                                                        '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                                        );
+//                                                console.log(
+//                                                        '\n::::::::::::::::::::::::::::::::::::::npDragAndDropSelect::maxHeight:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                                        '\n::maxHeight:', maxHeight,
+//                                                        '\n::$(.btn-submit).offset().top:', $('.btn-submit').offset().top,
+//                                                        '\n::$(.btn-next).offset().top:', $('.btn-next').offset().top,
+//                                                        '\n::$(.btn-next).outerHeight(true):', $('.btn-next').outerHeight(true),
+//                                                        '\n::$(.np_outside-padding).outerHeight(true):', $('.np_outside-padding').outerHeight(true),
+//                                                        '\n::$(.select-response-feedback).offset().top:', $('.select-response-feedback').offset().top,
+//                                                        '\n::$(.select-correct-feedback).outerHeight(true):', $('.select-correct-feedback').outerHeight(true),
+//                                                        '\n::$(.select-incorrect-feedback).outerHeight(true):', $('.select-incorrect-feedback').outerHeight(true),
+//                                                        '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                                        );
                                                 TweenMax.set($('.np_outside-padding'), {
-                                                    height: $('.btn-submit').offset().top + $('.btn-next').outerHeight(true) + 50
+                                                    height: $('.btn-submit').offset().top + $('.btn-next').outerHeight(true) + modalTopOffset
                                                 });
                                                 //////////////////////////////////////////////////////////////////////////////////////
                                                 //evaluate interaction
@@ -2719,7 +2721,7 @@
                                                     var isPassing = false;
                                                     if (Number(hitAreaLength) === Number(hitAreaSelectedLength) && (hitAreaSelectedIncorrect === 0)) {
                                                         TweenMax.to($('.np_outside-padding'), 0.5, {
-                                                            height: $('.select-response-correct').offset().top + $('.select-correct-feedback').outerHeight(true) + $('.btn-next').outerHeight(true) + 50,
+                                                            height: $('.select-response-correct').offset().top + $('.select-correct-feedback').outerHeight(true) + $('.btn-next').outerHeight(true) + modalTopOffset,
                                                             ease: Power4.easeOut
                                                         });
                                                         TweenMax.to($('.select-response-correct'), 0.5, {
@@ -2729,18 +2731,16 @@
                                                         });
                                                         TweenMax.to($('.select-response-incorrect'), 0.75, {
                                                             autoAlpha: 0,
-//                                                            height: 0,
                                                             ease: Power4.easeOut
                                                         });
                                                         isPassing = true;
                                                     } else {
                                                         TweenMax.to($('.np_outside-padding'), 0.5, {
-                                                            height: $('.select-response-incorrect').offset().top + $('.select-incorrect-feedback').outerHeight(true) + $('.btn-next').outerHeight(true) + 50,
+                                                            height: $('.select-response-incorrect').offset().top + $('.select-incorrect-feedback').outerHeight(true) + $('.btn-next').outerHeight(true) + modalTopOffset,
                                                             ease: Power4.easeOut
                                                         });
                                                         TweenMax.to($('.select-response-correct'), 0.5, {
                                                             autoAlpha: 0,
-//                                                            height: 0,
                                                             ease: Power4.easeOut
                                                         });
                                                         TweenMax.to($('.select-response-incorrect'), 0.75, {
@@ -2957,7 +2957,6 @@
                         return new Directive();
                     }
                 })();
-
 /* jshint -W003, -W117 */
 (function () {
     'use strict';
