@@ -4,14 +4,14 @@
             "id": "ANR",
             "class": "",
             "version": "0.0.1",
-            "timestamp": "2015-Apr-Thu_03:04:41"
+            "timestamp": "2015-Apr-Sun_02:04:08"
         },
         "components": [{
                 "type": "npContent",
                 "data": {
                     "id": "content_en",
                     "language": "en",
-                    "title": "Learning-Content-ANR-2.2-Advanced-Night-Repair:-Test-Your-Knowledge!",
+                    "title": "Learning-Content-ANR-5.0-Are-You-an-Advanced-Night-Repair-Expert---Trivia",
                     "description": "This manifest creates a Story or Learning Object content object . "
                 },
                 "components": [{
@@ -41,58 +41,700 @@
                                 "type": "npHTML",
                                 "data": {
                                     "class": "h3 headline",
-                                    "content": "Advanced Night Repair: Test Your Knowledge!"
+                                    "content": "Are You an Advanced Night Repair Expert?"
                                 },
                                 "components": []
                             }, {
                                 "type": "npHTML",
                                 "data": {
                                     "class": "h6 instructional",
-                                    "content": "<p>You might think you know Advanced Night Repair like the back of your hand. Now prove it! Answer each question below&mdash;some have more than one correct answer.</p>"
+                                    "content": "<div><strong>Are You an Advanced Night Repair Expert?</strong></div><div>&nbsp;</div><div>Ready to roll? Just tap the wheel, answer a question, and earn points based on its level of difficulty.&nbsp;</div>"
                                 },
                                 "components": []
                             }, {
-                                "type": "npDragAndDropSelect",
+                                "type": "npQuiz",
                                 "data": {
-                                    "id": "container",
-                                    "positiveFeedback": "That's right! Advanced Night Repair is for everyone—every age, ethnicity, and skin concern.",
-                                    "negativeFeedback": "Sorry. The correct response is Advanced Night Repair is for everyone—every age, ethnicity, and skin concern.",
-                                    "req": ["mediaelement/GreenSock/TweenMax.js", "mediaelement/GreenSock/utils/Draggable.js", "mediaelement/angular-tweenmax-draggable.js"],
-                                    "draggableButtons": [{
-                                            "select": "true",
-                                            "content": "<p>Everyone</p>",
-                                            "image": "",
-                                            "matchingContent": "1",
-                                            "matchingImage": ""
-                                        }, {
-                                            "select": "false",
-                                            "content": "<p>Women under 30 only</p>",
-                                            "image": "",
-                                            "matchingContent": "0",
-                                            "matchingImage": ""
-                                        }, {
-                                            "select": "false",
-                                            "content": "<p>Women between 30 and 40 only</p>",
-                                            "image": "",
-                                            "matchingContent": "0",
-                                            "matchingImage": ""
-                                        }, {
-                                            "select": "false",
-                                            "content": "<p>People with dry skin only</p>",
-                                            "image": "",
-                                            "matchingContent": "0",
-                                            "matchingImage": ""
-                                        }, {
-                                            "select": "false",
-                                            "content": "<p>Women over 50 only</p>",
-                                            "image": "",
-                                            "matchingContent": "0",
-                                            "matchingImage": ""
-                                        }],
-                                    "feedback": "<p>this is the placeholder content</p>",
-                                    "image": ""
+                                    "id": "",
+                                    "type": "assessment",
+                                    "assessed": "1",
+                                    "questions": "8",
+                                    "percentage": "80",
+                                    "forced": "true",
+                                    "randomized": "false"
                                 },
-                                "components": []
+                                "components": [
+                                    
+                                    {
+                                        "type": "npPage",
+                                        "data": {},
+                                        "components": [{
+                                                "type": "npTrivia",
+                                                "data": {
+                                                    "required": false,
+                                                    "forced": false,
+                                                    "difficulty": 1,
+                                                    "content": "Trivia content piece",
+                                                    "feedback": {
+                                                        "immediate": true,
+                                                        "correct": "That's right",
+                                                        "incorrect": "That's not right"
+                                                    }
+                                                },
+                                                "components": [{
+                                                        "type": "npAsQuestion",
+                                                        "data": {
+                                                            "required": true,
+                                                            "forced": false,
+                                                            "type": "checkbox",
+                                                            "difficulty": "1",
+                                                            "content": "In three decades, how many times has the Advanced Night Repair formula been updated?",
+                                                            "buttons": {
+                                                                "submit": "Submit"
+                                                            },
+                                                            "feedback": {
+                                                                "immediate": "true",
+                                                                "correct": "You got it! The Advanced Night Repair formula is so advanced it has only been updated three times in three decades.",
+                                                                "incorrect": "That's not it. The Advanced Night Repair formula is so advanced it has only been updated three times in three decades."
+                                                            }
+                                                        },
+                                                        "components": [{
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "label": "Once",
+                                                                    "correct": false,
+                                                                    "feedback": {
+                                                                        "incorrect": "That's not it. The Advanced Night Repair formula is so advanced it has only been updated three times in three decades."
+                                                                    }
+                                                                }
+                                                            }, {
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "label": "Three times",
+                                                                    "correct": true,
+                                                                    "feedback": {
+                                                                        "correct": "You got it! The Advanced Night Repair formula is so advanced it has only been updated three times in three decades."
+                                                                    }
+                                                                }
+                                                            }, {
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "label": "Six times",
+                                                                    "correct": false,
+                                                                    "feedback": {
+                                                                        "incorrect": "That's not it. The Advanced Night Repair formula is so advanced it has only been updated three times in three decades."
+                                                                    }
+                                                                }
+                                                            }, {
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "label": "It has never been updated",
+                                                                    "correct": false,
+                                                                    "feedback": {
+                                                                        "incorrect": "That's not it. The Advanced Night Repair formula is so advanced it has only been updated three times in three decades."
+                                                                    }
+                                                                }
+                                                            }]
+                                                    }, {
+                                                        "type": "npButton",
+                                                        "data": {
+                                                            "link": "",
+                                                            "type": "btn-next",
+                                                            "class": "",
+                                                            "content": "Next"
+                                                        },
+                                                        "components": []
+                                                    }]
+                                            }]
+                                    }, {
+                                        "type": "npPage",
+                                        "data": {},
+                                        "components": [{
+                                                "type": "npTrivia",
+                                                "data": {
+                                                    "required": false,
+                                                    "forced": false,
+                                                    "difficulty": 1,
+                                                    "content": "Trivia content piece",
+                                                    "feedback": {
+                                                        "immediate": true,
+                                                        "correct": "That's right",
+                                                        "incorrect": "That's not right"
+                                                    }
+                                                },
+                                                "components": [{
+                                                        "type": "npAsQuestion",
+                                                        "data": {
+                                                            "required": true,
+                                                            "forced": false,
+                                                            "type": "checkbox",
+                                                            "difficulty": "2",
+                                                            "content": "Advanced Night Repair Synchronized Recovery Complex II combines the power of synchronization with the power of __________ to help maximize skin's natural nighttime renewal like never before.",
+                                                            "buttons": {
+                                                                "submit": "Submit"
+                                                            },
+                                                            "feedback": {
+                                                                "immediate": "true",
+                                                                "correct": "That's right! Purification helps maximize skin's natural nighttime renewal.",
+                                                                "incorrect": "That's not it. Purification helps maximize skin's natural nighttime renewal."
+                                                            }
+                                                        },
+                                                        "components": [{
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "label": "Serendipity",
+                                                                    "correct": false,
+                                                                    "feedback": {
+                                                                        "incorrect": "That's not it. Purification helps maximize skin's natural nighttime renewal."
+                                                                    }
+                                                                }
+                                                            }, {
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "label": "Hydration",
+                                                                    "correct": false,
+                                                                    "feedback": {
+                                                                        "incorrect": "That's not it. Purification helps maximize skin's natural nighttime renewal."
+                                                                    }
+                                                                }
+                                                            }, {
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "label": "Purification",
+                                                                    "correct": true,
+                                                                    "feedback": {
+                                                                        "correct": "That's right! Purification helps maximize skin's natural nighttime renewal."
+                                                                    }
+                                                                }
+                                                            }, {
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "label": "None of the above",
+                                                                    "correct": false,
+                                                                    "feedback": {
+                                                                        "incorrect": "That's not it. Purification helps maximize skin's natural nighttime renewal."
+                                                                    }
+                                                                }
+                                                            }]
+                                                    }, {
+                                                        "type": "npButton",
+                                                        "data": {
+                                                            "link": "",
+                                                            "type": "btn-next",
+                                                            "class": "",
+                                                            "content": "Next"
+                                                        },
+                                                        "components": []
+                                                    }]
+                                            }]
+                                    }, {
+                                        "type": "npPage",
+                                        "data": {},
+                                        "components": [{
+                                                "type": "npTrivia",
+                                                "data": {
+                                                    "required": false,
+                                                    "forced": false,
+                                                    "difficulty": 1,
+                                                    "content": "Trivia content piece",
+                                                    "feedback": {
+                                                        "immediate": true,
+                                                        "correct": "That's right",
+                                                        "incorrect": "That's not right"
+                                                    }
+                                                },
+                                                "components": [{
+                                                        "type": "npAsQuestion",
+                                                        "data": {
+                                                            "required": true,
+                                                            "forced": false,
+                                                            "type": "checkbox",
+                                                            "difficulty": "1",
+                                                            "content": "Share the secret benefit of hydration with which customers?",
+                                                            "buttons": {
+                                                                "submit": "Submit"
+                                                            },
+                                                            "feedback": {
+                                                                "immediate": "true",
+                                                                "correct": "That's it! Share the Advanced Night Repair secret benefit of hydration with every customer.",
+                                                                "incorrect": "That's not right. Share the Advanced Night Repair secret benefit of hydration with every customer."
+                                                            }
+                                                        },
+                                                        "components": [{
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "label": "Customers under 30",
+                                                                    "correct": false,
+                                                                    "feedback": {
+                                                                        "incorrect": "That's not right. Share the Advanced Night Repair secret benefit of hydration with every customer."
+                                                                    }
+                                                                }
+                                                            }, {
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "label": "Customers over 40",
+                                                                    "correct": false,
+                                                                    "feedback": {
+                                                                        "incorrect": "That's not right. Share the Advanced Night Repair secret benefit of hydration with every customer."
+                                                                    }
+                                                                }
+                                                            }, {
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "label": "Customers who show signs of aging",
+                                                                    "correct": false,
+                                                                    "feedback": {
+                                                                        "incorrect": "That's not right. Share the Advanced Night Repair secret benefit of hydration with every customer."
+                                                                    }
+                                                                }
+                                                            }, {
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "label": "All customers",
+                                                                    "correct": true,
+                                                                    "feedback": {
+                                                                        "correct": "That's it! Share the Advanced Night Repair secret benefit of hydration with every customer."
+                                                                    }
+                                                                }
+                                                            }]
+                                                    }, {
+                                                        "type": "npButton",
+                                                        "data": {
+                                                            "link": "",
+                                                            "type": "btn-next",
+                                                            "class": "",
+                                                            "content": "Next"
+                                                        },
+                                                        "components": []
+                                                    }]
+                                            }]
+                                    }, {
+                                        "type": "npPage",
+                                        "data": {},
+                                        "components": [{
+                                                "type": "npTrivia",
+                                                "data": {
+                                                    "required": false,
+                                                    "forced": false,
+                                                    "difficulty": 1,
+                                                    "content": "Trivia content piece",
+                                                    "feedback": {
+                                                        "immediate": true,
+                                                        "correct": "That's right",
+                                                        "incorrect": "That's not right"
+                                                    }
+                                                },
+                                                "components": [{
+                                                        "type": "npAsQuestion",
+                                                        "data": {
+                                                            "required": true,
+                                                            "forced": false,
+                                                            "type": "checkbox",
+                                                            "difficulty": "3",
+                                                            "content": "In addition to the Water Demonstration, Fatigue Fighter, and Heart Ritual, which other technique can you use to demonstrate Advanced Night Repair?",
+                                                            "buttons": {
+                                                                "submit": "Submit"
+                                                            },
+                                                            "feedback": {
+                                                                "immediate": "true",
+                                                                "correct": "Exactly. You can demonstrate Advanced Night Repair with the Highlight and Hydrate technique.",
+                                                                "incorrect": "That's not it. You can demonstrate Advanced Night Repair with the Highlight and Hydrate technique."
+                                                            }
+                                                        },
+                                                        "components": [{
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "label": "Highlight and Contour",
+                                                                    "correct": false,
+                                                                    "feedback": {
+                                                                        "incorrect": "That's not it. You can demonstrate Advanced Night Repair with the Highlight and Hydrate technique."
+                                                                    }
+                                                                }
+                                                            }, {
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "label": "Highlight and Hydrate",
+                                                                    "correct": true,
+                                                                    "feedback": {
+                                                                        "correct": "Exactly. You can demonstrate Advanced Night Repair with the Highlight and Hydrate technique."
+                                                                    }
+                                                                }
+                                                            }, {
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "label": "Instant Glow/Instant Matte",
+                                                                    "correct": false,
+                                                                    "feedback": {
+                                                                        "incorrect": "That's not it. You can demonstrate Advanced Night Repair with the Highlight and Hydrate technique."
+                                                                    }
+                                                                }
+                                                            }, {
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "label": "None of the above",
+                                                                    "correct": false,
+                                                                    "feedback": {
+                                                                        "incorrect": "That's not it. You can demonstrate Advanced Night Repair with the Highlight and Hydrate technique."
+                                                                    }
+                                                                }
+                                                            }]
+                                                    }, {
+                                                        "type": "npButton",
+                                                        "data": {
+                                                            "link": "",
+                                                            "type": "btn-next",
+                                                            "class": "",
+                                                            "content": "Next"
+                                                        },
+                                                        "components": []
+                                                    }]
+                                            }]
+                                    }, {
+                                        "type": "npPage",
+                                        "data": {},
+                                        "components": [{
+                                                "type": "npTrivia",
+                                                "data": {
+                                                    "required": false,
+                                                    "forced": false,
+                                                    "difficulty": 1,
+                                                    "content": "Trivia content piece",
+                                                    "feedback": {
+                                                        "immediate": true,
+                                                        "correct": "That's right",
+                                                        "incorrect": "That's not right"
+                                                    }
+                                                },
+                                                "components": [{
+                                                        "type": "npAsQuestion",
+                                                        "data": {
+                                                            "required": true,
+                                                            "forced": false,
+                                                            "type": "checkbox",
+                                                            "difficulty": "4",
+                                                            "content": "Skin cells have a natural ___________ process that helps them repair at night and protect by day.",
+                                                            "buttons": {
+                                                                "submit": "Submit"
+                                                            },
+                                                            "feedback": {
+                                                                "immediate": "true",
+                                                                "correct": "That's it! This natural synchronization can become out of sync to due to environmental assaults and aging.",
+                                                                "incorrect": "That's not it. This natural synchronization can become out of sync to due to environmental assaults and aging."
+                                                            }
+                                                        },
+                                                        "components": [{
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "label": "Synchronization",
+                                                                    "correct": true,
+                                                                    "feedback": {
+                                                                        "correct": "That's it! This natural synchronization can become out of sync to due to environmental assaults and aging."
+                                                                    }
+                                                                }
+                                                            }, {
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "label": "Hydration",
+                                                                    "correct": false,
+                                                                    "feedback": {
+                                                                        "incorrect": "That's not it. This natural synchronization can become out of sync to due to environmental assaults and aging."
+                                                                    }
+                                                                }
+                                                            }, {
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "label": "Exfoliation",
+                                                                    "correct": false,
+                                                                    "feedback": {
+                                                                        "incorrect": "That's not it. This natural synchronization can become out of sync to due to environmental assaults and aging."
+                                                                    }
+                                                                }
+                                                            }, {
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "label": "Regeneration",
+                                                                    "correct": false,
+                                                                    "feedback": {
+                                                                        "incorrect": "That's not it. This natural synchronization can become out of sync to due to environmental assaults and aging."
+                                                                    }
+                                                                }
+                                                            }]
+                                                    }, {
+                                                        "type": "npButton",
+                                                        "data": {
+                                                            "link": "",
+                                                            "type": "btn-next",
+                                                            "class": "",
+                                                            "content": "Next"
+                                                        },
+                                                        "components": []
+                                                    }]
+                                            }]
+                                    }, {
+                                        "type": "npPage",
+                                        "data": {},
+                                        "components": [{
+                                                "type": "npTrivia",
+                                                "data": {
+                                                    "required": false,
+                                                    "forced": false,
+                                                    "difficulty": 1,
+                                                    "content": "Trivia content piece",
+                                                    "feedback": {
+                                                        "immediate": true,
+                                                        "correct": "That's right",
+                                                        "incorrect": "That's not right"
+                                                    }
+                                                },
+                                                "components": [{
+                                                        "type": "npAsQuestion",
+                                                        "data": {
+                                                            "required": true,
+                                                            "forced": false,
+                                                            "type": "checkbox",
+                                                            "difficulty": "5",
+                                                            "content": "Stresses from the environment can cause which of the following?",
+                                                            "buttons": {
+                                                                "submit": "Submit"
+                                                            },
+                                                            "feedback": {
+                                                                "immediate": "true",
+                                                                "correct": "That's right. Environmental stress can cause cellular damage, which can lead to signs of premature aging.",
+                                                                "incorrect": "That's not right. Environmental stress can cause cellular damage, which can lead to signs of premature aging."
+                                                            }
+                                                        },
+                                                        "components": [{
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "label": "Less fatigued-looking skin",
+                                                                    "correct": false,
+                                                                    "feedback": {
+                                                                        "incorrect": "That's not right. Environmental stress can cause cellular damage, which can lead to signs of premature aging."
+                                                                    }
+                                                                }
+                                                            }, {
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "label": "More youthful appearance",
+                                                                    "correct": false,
+                                                                    "feedback": {
+                                                                        "incorrect": "That's not right. Environmental stress can cause cellular damage, which can lead to signs of premature aging."
+                                                                    }
+                                                                }
+                                                            }, {
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "label": "More even skin tone",
+                                                                    "correct": false,
+                                                                    "feedback": {
+                                                                        "incorrect": "That's not right. Environmental stress can cause cellular damage, which can lead to signs of premature aging."
+                                                                    }
+                                                                }
+                                                            }, {
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "label": "Cellular damage",
+                                                                    "correct": true,
+                                                                    "feedback": {
+                                                                        "correct": "That's right. Environmental stress can cause cellular damage, which can lead to signs of premature aging."
+                                                                    }
+                                                                }
+                                                            }]
+                                                    }, {
+                                                        "type": "npButton",
+                                                        "data": {
+                                                            "link": "",
+                                                            "type": "btn-next",
+                                                            "class": "",
+                                                            "content": "Next"
+                                                        },
+                                                        "components": []
+                                                    }]
+                                            }]
+                                    }, {
+                                        "type": "npPage",
+                                        "data": {},
+                                        "components": [{
+                                                "type": "npTrivia",
+                                                "data": {
+                                                    "required": false,
+                                                    "forced": false,
+                                                    "difficulty": 1,
+                                                    "content": "Trivia content piece",
+                                                    "feedback": {
+                                                        "immediate": true,
+                                                        "correct": "That's right",
+                                                        "incorrect": "That's not right"
+                                                    }
+                                                },
+                                                "components": [{
+                                                        "type": "npAsQuestion",
+                                                        "data": {
+                                                            "required": true,
+                                                            "forced": false,
+                                                            "type": "checkbox",
+                                                            "difficulty": "5",
+                                                            "content": "When does the skin's natural purification process tend to peak?",
+                                                            "buttons": {
+                                                                "submit": "Submit"
+                                                            },
+                                                            "feedback": {
+                                                                "immediate": "true",
+                                                                "correct": "You got it! Scientists determined that the skin's natural purification process happens at night while we sleep.",
+                                                                "incorrect": "That's not it. Scientists determined that the skin's natural purification process happens at night while we sleep."
+                                                            }
+                                                        },
+                                                        "components": [{
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "label": "Morning",
+                                                                    "correct": false,
+                                                                    "feedback": {
+                                                                        "incorrect": "That's not it. Scientists determined that the skin's natural purification process happens at night while we sleep."
+                                                                    }
+                                                                }
+                                                            }, {
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "label": "Afternoon",
+                                                                    "correct": false,
+                                                                    "feedback": {
+                                                                        "incorrect": "That's not it. Scientists determined that the skin's natural purification process happens at night while we sleep."
+                                                                    }
+                                                                }
+                                                            }, {
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "label": "Early evening",
+                                                                    "correct": false,
+                                                                    "feedback": {
+                                                                        "incorrect": "That's not it. Scientists determined that the skin's natural purification process happens at night while we sleep."
+                                                                    }
+                                                                }
+                                                            }, {
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "label": "Night",
+                                                                    "correct": true,
+                                                                    "feedback": {
+                                                                        "correct": "You got it! Scientists determined that the skin's natural purification process happens at night while we sleep."
+                                                                    }
+                                                                }
+                                                            }]
+                                                    }, {
+                                                        "type": "npButton",
+                                                        "data": {
+                                                            "link": "",
+                                                            "type": "btn-next",
+                                                            "class": "",
+                                                            "content": "Next"
+                                                        },
+                                                        "components": []
+                                                    }]
+                                            }]
+                                    }, {
+                                        "type": "npPage",
+                                        "data": {},
+                                        "components": [{
+                                                "type": "npTrivia",
+                                                "data": {
+                                                    "required": false,
+                                                    "forced": false,
+                                                    "difficulty": 1,
+                                                    "content": "Trivia content piece",
+                                                    "feedback": {
+                                                        "immediate": true,
+                                                        "correct": "That's right",
+                                                        "incorrect": "That's not right"
+                                                    }
+                                                },
+                                                "components": [{
+                                                        "type": "npAsQuestion",
+                                                        "data": {
+                                                            "required": true,
+                                                            "forced": false,
+                                                            "type": "checkbox",
+                                                            "difficulty": "5",
+                                                            "content": "A powerful blend of anti-oxidants helps to neutralize up to what percentage of free radicals from environmental assaults, according to in vitro testing?",
+                                                            "buttons": {
+                                                                "submit": "Submit"
+                                                            },
+                                                            "feedback": {
+                                                                "immediate": "true",
+                                                                "correct": "Yes! ChronoluxCB™ helps neutralize up to 90% of free radicals",
+                                                                "incorrect": "That's not right. ChronoluxCB™ helps neutralize up to 90% of free radicals."
+                                                            }
+                                                        },
+                                                        "components": [{
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "label": "80",
+                                                                    "correct": false,
+                                                                    "feedback": {
+                                                                        "incorrect": "That's not right. ChronoluxCB™ helps neutralize up to 90% of free radicals."
+                                                                    }
+                                                                }
+                                                            }, {
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "label": "90",
+                                                                    "correct": true,
+                                                                    "feedback": {
+                                                                        "correct": "Yes! ChronoluxCB™ helps neutralize up to 90% of free radicals"
+                                                                    }
+                                                                }
+                                                            }, {
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "label": "70",
+                                                                    "correct": false,
+                                                                    "feedback": {
+                                                                        "incorrect": "That's not right. ChronoluxCB™ helps neutralize up to 90% of free radicals."
+                                                                    }
+                                                                }
+                                                            }, {
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "label": "60",
+                                                                    "correct": false,
+                                                                    "feedback": {
+                                                                        "incorrect": "That's not right. ChronoluxCB™ helps neutralize up to 90% of free radicals."
+                                                                    }
+                                                                }
+                                                            }]
+                                                    }, {
+                                                        "type": "npButton",
+                                                        "data": {
+                                                            "link": "",
+                                                            "type": "btn-next",
+                                                            "class": "",
+                                                            "content": "Next"
+                                                        },
+                                                        "components": []
+                                                    }]
+                                            }]
+                                    }, {
+                                        "type": "npPage",
+                                        "data": {},
+                                        "components": [{
+                                                "type": "npAsResult",
+                                                "id": "summary",
+                                                "data": {
+                                                    "feedback": {
+                                                        "pass": "<p>Congratulations, you scored :USERSCORE:% and have passed this module.</p>",
+                                                        "fail": "<p>Sorry, you scored and you needed to score :MINSCORE:% to pass. Try it again!</p>"
+                                                    },
+                                                    "achievements": [{
+                                                            "score": 0.8,
+                                                            "compare": "gte",
+                                                            "content": "<p>You&#39;ve been awarded :POINTS:% points!</p>"
+                                                        }, {
+                                                            "score": 1,
+                                                            "compare": "eq",
+                                                            "content": "<p>You&#39;ve been awarded :BADGE:% badge and :POINTS:% points!</p>"
+                                                        }]
+                                                }
+                                            }]
+                                    }]
                             }]
                     }]
             }]

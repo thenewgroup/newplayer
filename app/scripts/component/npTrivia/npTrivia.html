@@ -65,7 +65,7 @@
             </div>
         </div>
         <!--<div class="col-xs-10 np_row" np-component ng-if="subCmp" ng-repeat="component in npTrivia.seenComponents" idx="{{component.idx}}" ng-hide="npTrivia.pageId !== component.data.id"></div>-->
-        <div class="col-xs-10 np_row">
+        <div class="col-xs-10 np_row trivia-question-wrapper">
             <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
             <div class="npTrivia-feedback" ng-if="npTrivia.feedback" ng-bind-html="npTrivia.feedback"></div>
         </div> 

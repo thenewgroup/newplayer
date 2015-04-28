@@ -25,12 +25,22 @@
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //get actuall height
                                 //////////////////////////////////////////////////////////////////////////////////////
-                                setHeightProperties(function () {
+                                var setHeightProperties = function () {
                                     var outsidePaddingHeight = $('.np-result-summary').outerHeight(true);
+                                    var resultsSummaryPecentageHeight = $('.results-summary-pecentage').outerHeight(true);
+                                    var resultsSummaryTextHeight = $('.results-summary-text').outerHeight(true);
+                                    console.log(
+                                            '\n::::::::::::::::::::::::::::::::::::::npAsResultController::setHeightProperties:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                            '\n::outsidePaddingHeight::', outsidePaddingHeight,
+                                            '\n::resultsSummaryPecentageHeight::', resultsSummaryPecentageHeight,
+                                            '\n::resultsSummaryTextHeight::', resultsSummaryTextHeight,
+                                            '\n::resultsSummaryPecentageHeight+resultsSummaryTextHeight::', resultsSummaryPecentageHeight+resultsSummaryTextHeight,
+                                            '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                            );
                                     TweenMax.set($('.np-result-container'), {
-                                        height: outsidePaddingHeight
+                                        height: resultsSummaryPecentageHeight + resultsSummaryTextHeight +120
                                     });
-                                });
+                                };
                                 setHeightProperties();
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //page build

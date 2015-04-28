@@ -67,7 +67,7 @@
             <div np-drag-and-drop-select-evaluate class="row">
                 <div class="col-xs-12">
                     <div class="select-button-wrapper">
-                        <button class="btn-select-submit btn" is-clickable="true" ng-click="evaluate()">
+                        <button class="btn-submit btn" is-clickable="true" ng-click="evaluate()">
                             <span>SUBMIT</span>
                         </button>
                     </div>
@@ -90,7 +90,7 @@
                                     </svg>
                                 </div>
                             </div>
-                            <div class="col-xs-11 right-column-select body-copy select-response-feedback" ng-bind-html="npDragAndDropSelect.positiveFeedback" >
+                            <div class="col-xs-11 right-column-select body-copy select-response-feedback select-correct-feedback" ng-bind-html="npDragAndDropSelect.positiveFeedback" >
                             </div>
                         </div>
                         <div class="select-response-incorrect row">
@@ -118,7 +118,7 @@
                                     </svg>
                                 </div>
                             </div>
-                            <div class="col-xs-11 right-column-select body-copy select-response-feedback" ng-bind-html="npDragAndDropSelect.negativeFeedback" >
+                            <div class="col-xs-11 right-column-select body-copy select-response-feedback select-incorrect-feedback" ng-bind-html="npDragAndDropSelect.negativeFeedback" >
                             </div>
                         </div>
                     </div>

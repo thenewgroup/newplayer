@@ -74,7 +74,6 @@
                             {
                                 "type": "npDragAndDropSelect",
                                 "data": {
-                                    "id": "container",
                                     "positiveFeedback": "<p>That's it!</p>",
                                     "negativeFeedback": "<p>ehh?!?!</p>",
                                     "image": "",

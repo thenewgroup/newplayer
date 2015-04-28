@@ -85,9 +85,6 @@
                                 scale: 2.5,
                                 force3D: true
                             });
-                            //chkAnswers = ManifestService.getAll('npAnswer', $scope.cmpIdx);
-                            //$checkbox = $element.find('.checkbox-x');
-                            //$checked = $element.find('.checkbox-x[checked]');
                             $log.debug('npAsQuestion::evaluating type to check', cmpData);
                             switch (cmpData.type) {
                                 case 'checkbox':
@@ -184,15 +181,15 @@
                                                 force3D: true
                                             });
                                         }
+                                        TweenMax.set(feedbackWrapper, {
+                                            height: 0,
+                                            force3D: true
+                                        });
                                         TweenMax.to($('.question-feedback-text'), 0.5, {
                                             autoAlpha: 1,
                                             force3D: true,
                                             delay: 0.25,
                                             ease: Power4.easeOut
-                                        });
-                                        TweenMax.set(feedbackWrapper, {
-                                            height: 0,
-                                            force3D: true
                                         });
                                         TweenMax.to(feedbackWrapper, 0.5, {
                                             autoAlpha: 1,

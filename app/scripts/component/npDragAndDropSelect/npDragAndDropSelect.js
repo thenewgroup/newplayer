@@ -55,7 +55,7 @@
                                             });
                                         }
                                         //////////////////////////////////////////////////////////////////////////////////////
-                                        //build that
+                                        //shuffle that but only if....
                                         //////////////////////////////////////////////////////////////////////////////////////
                                         if (Boolean($scope.randomized)) {
                                             shuffle();
@@ -107,29 +107,26 @@
                                                     autoAlpha: 0
                                                 });
                                                 var hitAreaLength = 0;
+//                                                var maxHeight = 0;
                                                 var hitAreaSelectedLength = '';
                                                 var hitAreaSelectedIncorrect = '';
                                                 hitAreaLength = $("[data-match=true]").length;
                                                 //////////////////////////////////////////////////////////////////////////////////////
                                                 //get and set height of elements
                                                 //////////////////////////////////////////////////////////////////////////////////////
-                                                var maxHeight = Math.max.apply(null, $('.select-response-feedback').map(function () {
-                                                    return $(this).outerHeight(true);
-                                                }).get());
-//                                                var responseHeight = $('.select-response-incorrect').outerHeight(true);
-                                                var responseHeight = $('.negative-feedback').outerHeight(true);
-                                                var outsidePaddingHeight = $('.np-cmp-wrapper').outerHeight(true);
-                                                TweenMax.set($('.np_outside-padding'), {
-                                                    height: outsidePaddingHeight + maxHeight
-                                                });
+//                                                maxHeight = Math.max.apply(null, $('.select-response-feedback').map(function () {
+//                                                    return $(this).outerHeight(true);
+//                                                }).get());
 //                                                console.log(
 //                                                        '\n::::::::::::::::::::::::::::::::::::::npDragAndDropSelect::maxHeight:::::::::::::::::::::::::::::::::::::::::::::::::',
 //                                                        '\n::maxHeight:', maxHeight,
-//                                                        '\n::responseHeight:', responseHeight,
-//                                                        '\n::outsidePaddingHeight:', outsidePaddingHeight,
-//                                                        '\n::maxHeight + outsidePaddingHeight:', responseHeight + outsidePaddingHeight,
+//                                                        '\n::$(.select-incorrect-feedback).outerHeight(true):', $('.select-incorrect-feedback').outerHeight(true),
+//                                                        '\n::$(.select-correct-feedback).outerHeight(true):', $('.select-correct-feedback').outerHeight(true),
 //                                                        '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
 //                                                        );
+                                                TweenMax.set($('.np_outside-padding'), {
+                                                    height: $('.btn-submit').offset().top + $('.btn-submit').outerHeight(true) + $('.btn-next').outerHeight(true) + 50
+                                                });
                                                 //////////////////////////////////////////////////////////////////////////////////////
                                                 //evaluate interaction
                                                 //////////////////////////////////////////////////////////////////////////////////////
@@ -138,26 +135,34 @@
                                                     hitAreaSelectedIncorrect = $("[data-match=skeletor]").length;
                                                     var isPassing = false;
                                                     if (Number(hitAreaLength) === Number(hitAreaSelectedLength) && (hitAreaSelectedIncorrect === 0)) {
-                                                        TweenMax.to($('.select-response-correct'), 0.75, {
-                                                            autoAlpha: 1,
-                                                            height: maxHeight,
+                                                        TweenMax.to($('.np_outside-padding'), 0.25, {
+                                                            height: $('.select-response-correct').offset().top + $('.select-correct-feedback').outerHeight(true) + $('.btn-next').outerHeight(true) + 20,
                                                             ease: Power4.easeOut
                                                         });
-                                                        TweenMax.to($('.select-response-incorrect'), 0.75, {
+                                                        TweenMax.to($('.select-response-correct'), 0.5, {
+                                                            autoAlpha: 1,
+                                                            height: $('.select-correct-feedback').outerHeight(true),
+                                                            ease: Power4.easeOut
+                                                        });
+                                                        TweenMax.to($('.select-response-incorrect'), 0.5, {
                                                             autoAlpha: 0,
-                                                            height: 0,
+//                                                            height: 0,
                                                             ease: Power4.easeOut
                                                         });
                                                         isPassing = true;
                                                     } else {
-                                                        TweenMax.to($('.select-response-correct'), 0.75, {
-                                                            autoAlpha: 0,
-                                                            height: 0,
+                                                        TweenMax.to($('.np_outside-padding'), 0.25, {
+                                                            height: $('.select-response-incorrect').offset().top + $('.select-incorrect-feedback').outerHeight(true) + $('.btn-next').outerHeight(true) + 20,
                                                             ease: Power4.easeOut
                                                         });
-                                                        TweenMax.to($('.select-response-incorrect'), 0.75, {
+                                                        TweenMax.to($('.select-response-correct'), 0.5, {
+                                                            autoAlpha: 0,
+//                                                            height: 0,
+                                                            ease: Power4.easeOut
+                                                        });
+                                                        TweenMax.to($('.select-response-incorrect'), 0.5, {
                                                             autoAlpha: 1,
-                                                            height: maxHeight,
+                                                            height: $('.select-incorrect-feedback').outerHeight(true),
                                                             ease: Power4.easeOut
                                                         });
                                                         isPassing = false;

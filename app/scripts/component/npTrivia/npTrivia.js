@@ -18,7 +18,6 @@
                         vm.pageId = cmpData.id;
                         vm.difficulty = cmpData.difficulty || 0;
                         //AssessmentService.addPage(cmpData.id, cmpData.required);
-
                         //////////////////////////////////////////////////////////////////////////////////////
                         //get ready
                         //////////////////////////////////////////////////////////////////////////////////////
@@ -32,9 +31,11 @@
                                 TweenMax.set($('.npPage'), {
                                     height: btnNextHeight + pageHeight
                                 });
+                                TweenMax.set($('.trivia-question-wrapper'), {
+                                    height: $('.trivia-question-wrapper').outerHeight(true) + $('.btn-next').outerHeight(true) + 20
+                                });
                             });
                         });
-
                         /* NOTE: commented 2015-04-20 cw77, this disables shuffling of pages */
                         // go to the first page, since pages were shuffled
 //                        vm.assment = AssessmentService();
@@ -48,17 +49,17 @@
                         //});
                         $rootScope.$on('question.answered', function (evt, correct) {
                             if (correct) {
-                              /* NOTE: commented 2015-04-20 cw77, this disables shuffling of pages */
-                              //AssessmentService.pageViewed();
-                              //vm.currentPage = vm.assment.getPageviewsCount();
-                              //vm.pageId = vm.seenComponents[vm.currentPage] ? vm.seenComponents[vm.currentPage].data.id : '';
-                              //  ManifestService.setPageId(vm.pageId);
+                                /* NOTE: commented 2015-04-20 cw77, this disables shuffling of pages */
+                                //AssessmentService.pageViewed();
+                                //vm.currentPage = vm.assment.getPageviewsCount();
+                                //vm.pageId = vm.seenComponents[vm.currentPage] ? vm.seenComponents[vm.currentPage].data.id : '';
+                                //  ManifestService.setPageId(vm.pageId);
                                 $rootScope.$emit('spin-to-win');
                                 // end of the trivia questions
                                 // TODO - add this message the template and set the two values
                                 // here in the controller
                                 // NOTE: This text should come from the app
-//  min-height: 740px;
+                                //  min-height: 740px;
                                 if (!vm.pageId) {
                                     vm.feedback = 'Good job, you scored 5,000 points out of 7,500 possible.';
                                 }
