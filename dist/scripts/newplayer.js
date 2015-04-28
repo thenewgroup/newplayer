@@ -2688,7 +2688,8 @@
                                                 var maxHeight = 0;
                                                 var outsideHeight = 0;
                                                 var modalTopOffset = 275;
-                                                var offsetHeight = ($(".select-response-wrapper").offset().top - $('#draggableContainer').outerHeight(true)) + 20;
+//                                                var offsetHeight = ($(".select-response-wrapper").offset().top - $('#draggableContainer').outerHeight(true)) + 20;
+                                                var offsetHeight = 0;
                                                 var maxHeight = 0;
                                                 var hitAreaSelectedLength = '';
                                                 var hitAreaSelectedIncorrect = '';
@@ -2696,10 +2697,55 @@
 //                                                outsideHeight = $('.np_outside-padding').outerHeight(true);
 //                                                outsideHeight = $('#draggableContainer').outerHeight(true);
                                                 //////////////////////////////////////////////////////////////////////////////////////
+                                                //offset method
+                                                //////////////////////////////////////////////////////////////////////////////////////
+                                                function getOffsetRect(elem) {
+                                                    var box = elem.getBoundingClientRect();
+                                                    var body = document.body;
+                                                    var docElem = document.documentElement;
+                                                    var scrollTop = window.pageYOffset || docElem.scrollTop || body.scrollTop;
+                                                    var scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft;
+                                                    var clientTop = docElem.clientTop || body.clientTop || 0;
+                                                    var clientLeft = docElem.clientLeft || body.clientLeft || 0;
+                                                    var clientHeight = elem.clientHeight || 0;
+                                                    var offsetHeight = elem.offsetHeight || 0;
+                                                    var scrollHeight = elem.scrollHeight || 0;
+                                                    var top = box.top + scrollTop - clientTop;
+                                                    var left = box.left + scrollLeft - clientLeft;
+                                                    var height = box.height - scrollTop;
+                                                    var bottom = top + (box.bottom - box.top);
+                                                    var right = left + (box.right - box.left);
+//                            var height = clientHeight;
+                                                    console.log(
+                                                            '\n::::::::::::::::::::::::::::::::::::::getOffsetRect:::::::::::::::::::::::::::::::::::::::::::::::::::::::::',
+                                                            '\n::elem.clientHeight::', elem.clientHeight,
+                                                            '\n::box.height::', box.height,
+                                                            '\n::box.bottom::', box.bottom,
+                                                            '\n::clientHeight::', clientHeight,
+                                                            '\n::offsetHeight::', offsetHeight,
+                                                            '\n::scrollHeight::', scrollHeight,
+                                                            '\n::scrollTop::', scrollTop,
+                                                            '\n::clientTop::', clientTop,
+                                                            '\n::height::', height,
+                                                            '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                                            );
+                                                    return {top: Math.round(top),
+                                                        left: Math.round(left),
+                                                        bottom: Math.round(bottom),
+                                                        right: Math.round(right)
+                                                    };
+                                                }
+                                                //////////////////////////////////////////////////////////////////////////////////////
                                                 //get and set height of elements
                                                 //////////////////////////////////////////////////////////////////////////////////////
+                                                var submitButton;
+                                                var submitButtonPosition;
+                                                submitButton = document.getElementsByClassName('btn-submit');
+                                                submitButtonPosition = getOffsetRect(submitButton[0]);
+                                                offsetHeight = submitButtonPosition.top;
                                                 TweenMax.to($('.np_outside-padding'), 0.5, {
-                                                    height: $('.npDragAndDropSelect').outerHeight(true) + $('.btn-next').outerHeight(true) + offsetHeight,
+                                                    height: $('.btn-next').outerHeight(true) + offsetHeight,
+//                                                    height: $('.npDragAndDropSelect').outerHeight(true) + $('.btn-next').outerHeight(true) + offsetHeight,
                                                     ease: Power4.easeOut
                                                 });
                                                 maxHeight = Math.max.apply(null, $('.select-response-feedback').map(function () {
@@ -2710,7 +2756,10 @@
                                                         '\n::maxHeight:', maxHeight,
                                                         '\n::outsideHeight:', outsideHeight,
                                                         '\n::offsetHeight:', offsetHeight,
+                                                        '\n::submitButtonPositionTop:', submitButtonPosition.top,
                                                         '\n::$(.btn-submit).offset().top:', $('.btn-submit').offset().top,
+                                                        '\n::$(.btn-submit).position().top:', $('.btn-submit').position().top,
+                                                        '\n::$(.btn-submit).scrollTop():', $('.btn-submit').scrollTop(),
                                                         '\n::$(.btn-next).outerHeight(true):', $('.btn-next').outerHeight(true),
                                                         '\n::$(.draggableContainer).outerHeight(true):', $('#draggableContainer').outerHeight(true),
                                                         '\n::$(.np_outside-padding).outerHeight(true):', $('.np_outside-padding').outerHeight(true),
@@ -2749,7 +2798,7 @@
                                                     var isPassing = false;
                                                     if (Number(hitAreaLength) === Number(hitAreaSelectedLength) && (hitAreaSelectedIncorrect === 0)) {
                                                         if (outsideHeight === 0) {
-                                                            outsideHeight = $('.npDragAndDropSelect').outerHeight(true) + $('.btn-next').outerHeight(true) + offsetHeight;
+                                                            outsideHeight = $('.btn-next').outerHeight(true) + offsetHeight;
                                                         }
                                                         TweenMax.to($('.np_outside-padding'), 0.5, {
                                                             height: outsideHeight + $('.select-correct-feedback').outerHeight(true),
@@ -2767,7 +2816,7 @@
                                                         isPassing = true;
                                                     } else {
                                                         if (outsideHeight === 0) {
-                                                            outsideHeight = $('.npDragAndDropSelect').outerHeight(true) + $('.btn-next').outerHeight(true) + offsetHeight;
+                                                            outsideHeight =  $('.btn-next').outerHeight(true) + offsetHeight;
                                                         }
                                                         TweenMax.to($('.np_outside-padding'), 0.5, {
                                                             height: outsideHeight + $('.select-incorrect-feedback').outerHeight(true),
