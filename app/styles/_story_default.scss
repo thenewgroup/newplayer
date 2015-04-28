@@ -129,6 +129,13 @@
     //padding-right: 200px;
     width: 100%;
 }
+
+@media (max-width: $screen-xs) {
+    .np_outside-padding {
+        padding: 0 0 100px 0;
+    }
+}
+
 @media (max-width: $screen-lg) {
     .center-padding{
         //padding-left: 100px;
