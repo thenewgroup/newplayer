@@ -107,44 +107,23 @@
                                                     autoAlpha: 0
                                                 });
                                                 var hitAreaLength = 0;
-                                                var maxHeight = 0;
-//                                                var outsidePaddingHeight = 0;
-//                                                var draggableContainerOffset = 0;
+//                                                var maxHeight = 0;
                                                 var hitAreaSelectedLength = '';
                                                 var hitAreaSelectedIncorrect = '';
                                                 hitAreaLength = $("[data-match=true]").length;
                                                 //////////////////////////////////////////////////////////////////////////////////////
-                                                //offset method
-                                                //////////////////////////////////////////////////////////////////////////////////////
-                                                function getOffsetRect(elem) {
-                                                    var box = elem.getBoundingClientRect();
-                                                    var body = document.body;
-                                                    var docElem = document.documentElement;
-                                                    var scrollTop = window.pageYOffset || docElem.scrollTop || body.scrollTop;
-                                                    var scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft;
-                                                    var clientTop = docElem.clientTop || body.clientTop || 0;
-                                                    var clientLeft = docElem.clientLeft || body.clientLeft || 0;
-                                                    var clientHeight = docElem.clientHeight || body.clientHeight || 0;
-                                                    var top = box.top + scrollTop - clientTop;
-                                                    var left = box.left + scrollLeft - clientLeft;
-                                                    var height = box.top + scrollTop - clientHeight;
-                                                    return {top: Math.round(top), left: Math.round(left), height: Math.round(height)};
-                                                }
-                                                //////////////////////////////////////////////////////////////////////////////////////
                                                 //get and set height of elements
                                                 //////////////////////////////////////////////////////////////////////////////////////
-                                                maxHeight = Math.max.apply(null, $('.select-response-feedback').map(function () {
-                                                    return $(this).outerHeight(true);
-                                                }).get());
-//                                                outsidePaddingHeight = $('.np_outside-padding').outerHeight(true);
-//                                                var selectedItem = '';
-                                                console.log(
-                                                        '\n::::::::::::::::::::::::::::::::::::::npDragAndDropSelect::maxHeight:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                                        '\n::maxHeight:', maxHeight,
-                                                        '\n::$(.select-response-incorrect).outerHeight(true):', $('.select-response-incorrect').outerHeight(true),
-                                                        '\n::$(.select-incorrect-feedback).outerHeight(true):', $('.select-incorrect-feedback').outerHeight(true),
-                                                        '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                                        );
+//                                                maxHeight = Math.max.apply(null, $('.select-response-feedback').map(function () {
+//                                                    return $(this).outerHeight(true);
+//                                                }).get());
+//                                                console.log(
+//                                                        '\n::::::::::::::::::::::::::::::::::::::npDragAndDropSelect::maxHeight:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                                        '\n::maxHeight:', maxHeight,
+//                                                        '\n::$(.select-incorrect-feedback).outerHeight(true):', $('.select-incorrect-feedback').outerHeight(true),
+//                                                        '\n::$(.select-correct-feedback).outerHeight(true):', $('.select-correct-feedback').outerHeight(true),
+//                                                        '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                                        );
                                                 TweenMax.set($('.np_outside-padding'), {
                                                     height: $('.btn-submit').offset().top + $('.btn-submit').outerHeight(true) + $('.btn-next').outerHeight(true) + 50
                                                 });
@@ -156,34 +135,34 @@
                                                     hitAreaSelectedIncorrect = $("[data-match=skeletor]").length;
                                                     var isPassing = false;
                                                     if (Number(hitAreaLength) === Number(hitAreaSelectedLength) && (hitAreaSelectedIncorrect === 0)) {
-                                                        TweenMax.to($('.np_outside-padding'), 0.75, {
+                                                        TweenMax.to($('.np_outside-padding'), 0.25, {
                                                             height: $('.select-response-correct').offset().top + $('.select-correct-feedback').outerHeight(true) + $('.btn-next').outerHeight(true) + 20,
                                                             ease: Power4.easeOut
                                                         });
-                                                        TweenMax.to($('.select-response-correct'), 0.75, {
+                                                        TweenMax.to($('.select-response-correct'), 0.5, {
                                                             autoAlpha: 1,
-                                                            height: maxHeight,
+                                                            height: $('.select-correct-feedback').outerHeight(true),
                                                             ease: Power4.easeOut
                                                         });
-                                                        TweenMax.to($('.select-response-incorrect'), 0.75, {
+                                                        TweenMax.to($('.select-response-incorrect'), 0.5, {
                                                             autoAlpha: 0,
-                                                            height: 0,
+//                                                            height: 0,
                                                             ease: Power4.easeOut
                                                         });
                                                         isPassing = true;
                                                     } else {
-                                                        TweenMax.to($('.np_outside-padding'), 0.75, {
+                                                        TweenMax.to($('.np_outside-padding'), 0.25, {
                                                             height: $('.select-response-incorrect').offset().top + $('.select-incorrect-feedback').outerHeight(true) + $('.btn-next').outerHeight(true) + 20,
                                                             ease: Power4.easeOut
                                                         });
-                                                        TweenMax.to($('.select-response-correct'), 0.75, {
+                                                        TweenMax.to($('.select-response-correct'), 0.5, {
                                                             autoAlpha: 0,
-                                                            height: 0,
+//                                                            height: 0,
                                                             ease: Power4.easeOut
                                                         });
-                                                        TweenMax.to($('.select-response-incorrect'), 0.75, {
+                                                        TweenMax.to($('.select-response-incorrect'), 0.5, {
                                                             autoAlpha: 1,
-                                                            height: maxHeight,
+                                                            height: $('.select-incorrect-feedback').outerHeight(true),
                                                             ease: Power4.easeOut
                                                         });
                                                         isPassing = false;
