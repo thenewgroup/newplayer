@@ -1905,12 +1905,28 @@
                         this.apiLink = false;
                         var btnLink = cmpData.link;
                         var buttonType = cmpData.type;
+                        var $buttonTypeFavorite = '';
                         //////////////////////////////////////////////////////////////////////////////////////
                         //check type and add class if next button type
                         //////////////////////////////////////////////////////////////////////////////////////
                         if (typeof buttonType !== 'undefined' && buttonType === 'btn-next') {
                             $scope.buttonTypeClass = buttonType;
                         }
+//                            console.log(
+//                                    '\n::::::::::::::::::::::::::::::::::::::npButtonController::$scope.buttonTypeClass = btn-open-favorites:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                    '\n::cmpData::', cmpData,
+//                                    '\n::cmpData::', cmpData.class,
+//                                    '\n::$scope.buttonTypeClass::', $scope.buttonTypeClass,
+//                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                    );
+                        console.log(
+                                '\n::::::::::::::::::::::::::::::::::::::npButtonController::$scope.buttonTypeClass:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                '\n::cmpData::', cmpData,
+                                '\n::cmpData::', cmpData.class,
+                                '\n::cmpData::', cmpData.content.span,
+                                '\n::$element::', $element.find('.elx-heart'),
+                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                );
                         if (angular.isString(btnLink)) {
                             if (btnLink.indexOf('/') === 0) {
                                 if (/^\/api\//.test(btnLink)) {
@@ -1943,6 +1959,16 @@
                             this.link = $sce.trustAsResourceUrl(btnLink);
                         }
                         this.go = function () {
+                            if ($element.find('.btn-open-favorites')) {
+                                $element.find('.elx-heart').toggleClass("elx-heart-filled");
+                            }
+                            if ($element.find('.btn-open-favorites')) {
+                                $element.find('.elx-heart-filled').toggleClass("elx-heart");
+                            }
+                            if ($element.find('.btn-open-favorites')) {
+                                $element.find('.elx-heart').toggleClass("elx-heart-filled");
+                            }
+
                             if (this.linkInternal) {
                                 ManifestService.goToNextPage();
                             } else {

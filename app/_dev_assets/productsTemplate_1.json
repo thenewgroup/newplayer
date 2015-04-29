@@ -1,0 +1,349 @@
+[{
+        "type": "npFeature",
+        "data": {
+            "id": "products",
+            "class": "productTemplate",
+            "version": "0.0.1",
+            "timestamp": "2015-Apr-Tue_10:04:07"
+        },
+        "components": [{
+                "type": "npContent",
+                "data": {
+                    "id": "content_en",
+                    "language": "en",
+                    "title": "Product-Manifest-Nutritious-Vitality8-Collection",
+                    "description": "Manifest for product page. "
+                },
+                "components": [{
+                        "type": "npHTML",
+                        "data": {
+                            "id": "newplayer-background"
+                        },
+                        "components": []
+                    }, {
+                        "type": "npHTML",
+                        "data": {
+                            "class": "background-brand-primary-light outside-padding"
+                        },
+                        "components": [{
+                                "type": "npHTML",
+                                "data": {
+                                    "class": "h1",
+                                    "content": "Nutritious "
+                                },
+                                "components": []
+                            }, {
+                                "type": "npHTML",
+                                "data": {
+                                    "class": "h2",
+                                    "content": "Vitality8™ Collection"
+                                },
+                                "components": []
+                            }, {
+                                "type": "npColumn",
+                                "data": {
+                                    "class": "",
+                                    "cols": "2"
+                                },
+                                "components": [{
+                                        "type": "npImage",
+                                        "data": {
+                                            "src": "assets/styles/product_detail/public/10-Nutritious-Vitality-8-Collection.jpg",
+                                            "id": "",
+                                            "class": "topImage img-responsive",
+                                            "alt": "Nutritious-Vitality8-Collection"
+                                        },
+                                        "components": []
+                                    }, {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "class": "background-brand-offwhite inside-padding"
+                                        },
+                                        "components": [{
+                                                "type": "npHTML",
+                                                "data": {
+                                                    "class": "h3 sans-head",
+                                                    "content": "Why there's only 1"
+                                                },
+                                                "components": [{
+                                                        "type": "npHTML",
+                                                        "data": {
+                                                            "class": "h4 sans-normal",
+                                                            "content": "<p>Our newest Nutritious collection is like a &quot;balanced diet&quot; for your skin. It helps to purify, energize, and nourish with an infusion of 8 good-for-your-skin ingredients. In just 8 days, it reawakens 8 signs of radiantly healthy-looking skin.</p>"
+                                                        },
+                                                        "components": []
+                                                    }]
+                                            }]
+                                    }]
+                            }, {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "",
+                                    "class": "h3 sans-head collapse-toggle",
+                                    "data-ng:click": "isCollapsed = !isCollapsed",
+                                    "xplugin": "np-expandable",
+                                    "content": "Demonstration"
+                                },
+                                "components": [{
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "h4 sans-normal collapse-element",
+                                            "data-collapse": "isCollapsed",
+                                            "content": "<p>Explain to your customer that Vitality8&trade; is just one piece of the overall Nutritious regimen, helping to purify, energize, and nourish.</p><p>On the back of one hand, talk to her about the nighttime detox benefits, and swipe the Overnight Detox Concentrate and Overnight Creme/Mask.</p><p>On the other hand, show her the options she has for day and swipe the Dual-Phase Emulsion and Moisture Creme.</p>"
+                                        },
+                                        "components": []
+                                    }]
+                            }, {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "",
+                                    "class": "h3 sans-head collapse-toggle",
+                                    "data-ng:click": "isCollapsed = !isCollapsed",
+                                    "xplugin": "np-expandable",
+                                    "content": "Benefits"
+                                },
+                                "components": [{
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "h4 sans-normal collapse-element",
+                                            "data-collapse": "isCollapsed",
+                                            "content": "<ol><li>8 Powerful Ingredients. Resets the skin&#39;s natural balance to revitalize dullness, dryness and fatigue.</li><li>8 Signs Of Radiant Health. Reactivates 8 key signs of healthy-looking vitality for skin: nourished, hydrated, energized, calmed, supple, refined, smoother, radiant.</li><li>8 Days To Recharge Your Skin. Customize your regimen based on the key benefits your skin needs to see your best results.</li></ol>"
+                                        },
+                                        "components": []
+                                    }]
+                            }, {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "",
+                                    "class": "h3 sans-head collapse-toggle",
+                                    "data-ng:click": "isCollapsed = !isCollapsed",
+                                    "xplugin": "np-expandable",
+                                    "content": "If she asks, share"
+                                },
+                                "components": [{
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "h4 sans-normal collapse-element",
+                                            "data-collapse": "isCollapsed",
+                                            "content": "<p>Pomegranate8 Complex provides high-potency anti-oxidant power. Features 8 powerful ingredients, including pomegranate, mangosteen, and soapberry, that help nourish, soothe, and protect skin from environmental assaults.</p><p>Intensive infusion of energy, hydration, vitamins and minerals help power and support skin cells, keeping skin balanced and in perfect harmony overall.</p><p>Dual-Phase Emulsion delivers intensified energy to refresh and recharge.</p><p>Moisture Creme and Overnight Creme/Mask deliver intensified moisture to help hydrate and strengthen.</p><p>Overnight Detox Concentrate delivers intensified detoxification to help purify, plus a concentrated infusion of Pomegranate.</p>"
+                                        },
+                                        "components": []
+                                    }]
+                            }, {
+                                "type": "npHTML",
+                                "data": {
+                                    "class": "h3 sans-head collapse-toggle",
+                                    "data-ng:click": "isCollapsed = !isCollapsed",
+                                    "xplugin": "np-expandable",
+                                    "content": "Perfect partners"
+                                },
+                                "components": [{
+                                        "type": "npHTML",
+                                        "data": {
+                                            "class": "collapse-element",
+                                            "data-collapse": "isCollapsed"
+                                        },
+                                        "components": [{
+                                                "type": "npColumn",
+                                                "data": {
+                                                    "class": "row",
+                                                    "cols": "2"
+                                                },
+                                                "components": [{
+                                                        "type": "npHTML",
+                                                        "data": {
+                                                            "class": "row"
+                                                        },
+                                                        "components": [{
+                                                                "type": "npImage",
+                                                                "data": {
+                                                                    "src": "",
+                                                                    "id": "",
+                                                                    "class": "col-sm-4",
+                                                                    "alt": ""
+                                                                },
+                                                                "components": []
+                                                            }, {
+                                                                "type": "npHTML",
+                                                                "data": {
+                                                                    "class": "col-sm-8 sans-small"
+                                                                },
+                                                                "components": []
+                                                            }, {
+                                                                "type": "npHTML",
+                                                                "data": {
+                                                                    "class": "col-sm-8 sans-small"
+                                                                },
+                                                                "components": []
+                                                            }]
+                                                    }, {
+                                                        "type": "npHTML",
+                                                        "data": {
+                                                            "class": "row"
+                                                        },
+                                                        "components": []
+                                                    }]
+                                            }, {
+                                                "type": "npHTML",
+                                                "data": {
+                                                    "class": "row"
+                                                },
+                                                "components": [{
+                                                        "type": "npHTML",
+                                                        "data": {
+                                                            "class": "h4 sans-normal",
+                                                            "content": "<p>Need a phrase to help you link? Try:</p><p><strong>&quot;Because you love ___, I also want to show you ___.&quot;</strong></p>"
+                                                        },
+                                                        "components": []
+                                                    }]
+                                            }]
+                                    }]
+                            }, {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "",
+                                    "class": "h3 sans-head collapse-toggle",
+                                    "data-ng:click": "isCollapsed = !isCollapsed",
+                                    "xplugin": "np-expandable",
+                                    "content": "Story"
+                                },
+                                "components": [{
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "h4 sans-normal collapse-element",
+                                            "data-collapse": "isCollapsed",
+                                            "content": "<p>8 days, 8 ways to radiantly healthy-looking skin. Through the power of pomegranate, Nutritious nourishes skin from the inside out. This legendary fruit is packed with vitamins and anti-oxidants, enabling it to help fight free radicals and refuel the look of fatigued skin. Never one to settle, we took the potent pomegranate and supercharged it to the power of 8, with our Pomegranate8 Complex. It provides high-potency anti-oxidant power and features 8 powerful ingredients, including pomegranate, mangosteen, and soapberry, that help nourish, soothe, and protect skin from environmental assaults.</p>"
+                                        },
+                                        "components": []
+                                    }]
+                            }, {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "",
+                                    "class": "h3 sans-head collapse-toggle",
+                                    "data-ng:click": "isCollapsed = !isCollapsed",
+                                    "xplugin": "np-expandable",
+                                    "content": "Customer questions"
+                                },
+                                "components": [{
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "h4 sans-normal collapse-element",
+                                            "data-collapse": "isCollapsed",
+                                            "content": "<p><strong>&quot;What makes Vitality8&trade; different from the existing Nutritious Radiant Vitality products?&quot;</strong></p><p>Vitality8&trade; features the all-new Pomegranate8 Complex, which provides high-potency anti-oxidant power.</p><p>In just 8 days, it reawakens 8 key signs of radiantly healthy-looking skin. The Radiant Vitality collection</p><p>features the Pomegranate Nectar Infusion, which helps to give skin the look of a healthy, post-workout glow.</p><p><strong>&quot;Why is the Overnight Detox Concentrate used for 28 nights?&quot;</strong></p><p>We recommend using the Overnight Detox Concentrate for at least 28 consecutive nights, as this is the average cell turnover cycle. While it can be used for more or fewer nights, the customer will see the best results with this regimen. Think of it as a periodic &quot;cleanse&quot; for skin, which helps to reset the look of skin. Teach her to introduce it into her regimen at the start of each season to refresh and purify. However, she will continue to experience benefits if she chooses to use the product beyond 28 days.</p><p><strong>&quot;How do I use it?&quot;</strong></p><ul><li>AM: Cleanse with Radiant Vitality 2-in-1 Foam Cleanser, and follow with Radiant Vitality Energy Lotion Intense Moist. Next, apply your choice of Vitality8&trade; Radiant Dual-Phase Emulsion or Radiant Moisture Creme.</li><li>PM: Cleanse with Radiant Vitality 2-in-1 Foam Cleanser, and follow with Radiant Vitality Energy Intense Moist. Apply preferred repair serum. Next, apply Vitality8&trade; Radiant Overnight Detox Concentrate for at least 28 nights, as needed. Follow with Vitality8&trade; Radiant Overnight Creme/Mask.</li></ul>"
+                                        },
+                                        "components": []
+                                    }]
+                            }, {
+                                "type": "npColumn",
+                                "data": {
+                                    "class": "row button-padding",
+                                    "cols": "2"
+                                },
+                                "components": [{
+                                        "type": "npButton",
+                                        "data": {
+                                            "link": "/api/favorites/product/Product-Manifest-Nutritious-Vitality8-Collection",
+                                            "type": "",
+                                            "class": "btn-open-favorites",
+                                            "content": "<span class='elx-heart' aria-hidden='true'></span>  Favorite this"
+                                        },
+                                        "components": []
+                                    }, {
+                                        "type": "npButton",
+                                        "data": {
+                                            "link": "Question1",
+                                            "type": "",
+                                            "class": "btn btn-info btn-sm",
+                                            "content": "GET THE FULL FACT SHEET"
+                                        },
+                                        "components": []
+                                    }]
+                            }]
+                    }]
+            }, {
+                "type": "npHTML",
+                "data": {
+                    "class": "outside-padding"
+                },
+                "components": [{
+                        "type": "npColumn",
+                        "data": {
+                            "class": "row ",
+                            "cols": "2"
+                        },
+                        "components": [{
+                                "type": "npHTML",
+                                "data": {
+                                    "class": "row"
+                                },
+                                "components": [{
+                                        "type": "npHTML",
+                                        "data": {
+                                            "class": "h5 sans-head-sub col-sm-12"
+                                        },
+                                        "components": []
+                                    }, {
+                                        "type": "npImage",
+                                        "data": {
+                                            "src": "",
+                                            "id": "",
+                                            "class": "col-sm-4 img-responsive",
+                                            "alt": ""
+                                        },
+                                        "components": []
+                                    }, {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "class": "col-sm-8 sans-small"
+                                        },
+                                        "components": []
+                                    }, {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "class": "col-sm-8 sans-small"
+                                        },
+                                        "components": []
+                                    }]
+                            }, {
+                                "type": "npHTML",
+                                "data": {
+                                    "class": "row"
+                                },
+                                "components": [{
+                                        "type": "npHTML",
+                                        "data": {
+                                            "class": "h5 sans-head-sub col-sm-12"
+                                        },
+                                        "components": []
+                                    }, {
+                                        "type": "npImage",
+                                        "data": {
+                                            "src": "",
+                                            "id": "",
+                                            "class": "col-sm-4 img-responsive",
+                                            "alt": ""
+                                        },
+                                        "components": []
+                                    }, {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "class": "col-sm-8 sans-small"
+                                        },
+                                        "components": []
+                                    }, {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "class": "col-sm-8 sans-small"
+                                        },
+                                        "components": []
+                                    }]
+                            }]
+                    }]
+            }]
+    }]
