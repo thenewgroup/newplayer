@@ -73,6 +73,12 @@
                             this.link = $sce.trustAsResourceUrl(btnLink);
                         }
                         this.go = function () {
+                            console.log(
+                                    '\n::::::::::::::::::::::::::::::::::::::npButtonController::$scope.buttonTypeClass:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                    '\n::$element.find(.btn-open-favorites)::', !!$element.find('.btn-open-favorites'),
+                                    '\n::$element::', $element.find('.elx-heart'),
+                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                    );
                             if ($element.find('.btn-open-favorites')) {
                                 $element.find('.elx-heart').toggleClass("elx-heart-filled");
                             }
@@ -82,7 +88,6 @@
                             if ($element.find('.btn-open-favorites')) {
                                 $element.find('.elx-heart').toggleClass("elx-heart-filled");
                             }
-
                             if (this.linkInternal) {
                                 ManifestService.goToNextPage();
                             } else {
