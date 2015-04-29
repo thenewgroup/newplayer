@@ -176,6 +176,7 @@
                                                     maxHeight = Math.max.apply(null, $('.select-response-feedback').map(function () {
                                                         return $(this).outerHeight(true);
                                                     }).get());
+                                                    $('.btn-next').css("margin-top", maxHeight+20);
 //                                                    var buttonTop = $('.select-response-wrapper').top() + maxHeight;
 //                                                    var parentPos = $('.select-correct-feedback')[0].parent().offset();
 //                                                    $('.btn-next').css('top', buttonTop);
@@ -237,10 +238,10 @@
                                                             autoAlpha: 0,
                                                             ease: Power4.easeOut
                                                         });
-                                                        TweenMax.to($('.btn-next'), 0.5, {
-                                                            top: nextButtonPosition + $('.select-correct-feedback').outerHeight(true),
-                                                            ease: Power4.easeOut
-                                                        });
+//                                                        TweenMax.to($('.btn-next'), 0.5, {
+//                                                            top: nextButtonPosition + $('.select-correct-feedback').outerHeight(true),
+//                                                            ease: Power4.easeOut
+//                                                        });
                                                         isPassing = true;
                                                     } else {
                                                         if (outsideHeight === 0) {
@@ -259,10 +260,10 @@
                                                             height: $('.select-incorrect-feedback').outerHeight(true),
                                                             ease: Power4.easeOut
                                                         });
-                                                        TweenMax.to($('.btn-next'), 0.5, {
-                                                            top: nextButtonPosition + $('.select-incorrect-feedback').outerHeight(true),
-                                                            ease: Power4.easeOut
-                                                        });
+//                                                        TweenMax.to($('.btn-next'), 0.5, {
+//                                                            top: nextButtonPosition + $('.select-incorrect-feedback').outerHeight(true),
+//                                                            ease: Power4.easeOut
+//                                                        });
                                                         isPassing = false;
                                                     }
                                                     AssessmentService.questionAnswered(cmpData.id, isPassing);
