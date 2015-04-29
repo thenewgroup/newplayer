@@ -106,22 +106,16 @@
                                                     height: 0,
                                                     autoAlpha: 0
                                                 });
-                                                TweenMax.set($('.npDragAndDropSelect'), {
-//                                                    height: 0,
-                                                    autoAlpha: 0
-                                                });
+
                                                 var hitAreaLength = 0;
                                                 var maxHeight = 0;
                                                 var outsideHeight = 0;
                                                 var modalTopOffset = 275;
-//                                                var offsetHeight = ($(".select-response-wrapper").offset().top - $('#draggableContainer').outerHeight(true)) + 20;
                                                 var offsetHeight = 0;
                                                 var maxHeight = 0;
                                                 var hitAreaSelectedLength = '';
                                                 var hitAreaSelectedIncorrect = '';
                                                 hitAreaLength = $("[data-match=true]").length;
-//                                                outsideHeight = $('.np_outside-padding').outerHeight(true);
-//                                                outsideHeight = $('#draggableContainer').outerHeight(true);
                                                 //////////////////////////////////////////////////////////////////////////////////////
                                                 //offset method
                                                 //////////////////////////////////////////////////////////////////////////////////////
@@ -141,7 +135,6 @@
                                                     var height = box.height - scrollTop;
                                                     var bottom = top + (box.bottom - box.top);
                                                     var right = left + (box.right - box.left);
-//                            var height = clientHeight;
                                                     console.log(
                                                             '\n::::::::::::::::::::::::::::::::::::::getOffsetRect:::::::::::::::::::::::::::::::::::::::::::::::::::::::::',
                                                             '\n::elem.clientHeight::', elem.clientHeight,
@@ -166,16 +159,11 @@
                                                 //////////////////////////////////////////////////////////////////////////////////////
                                                 var submitButton;
                                                 var submitButtonPosition;
-                                                submitButton = document.getElementsByClassName('btn-submit');
-                                                submitButtonPosition = getOffsetRect(submitButton[0]);
-                                                offsetHeight = submitButtonPosition.top;
-                                                TweenMax.to($('.npDragAndDropSelect'), 0.25, {
-                                                    autoAlpha: 1,
-                                                    ease: Power4.easeOut,
-                                                    onComplete: setOutSideHeight()
-                                                });
 
-                                                function setOutSideHeight(){
+                                                var setOutSideHeight = function () {
+                                                    submitButton = document.getElementsByClassName('btn-submit');
+                                                    submitButtonPosition = getOffsetRect(submitButton[0]);
+                                                    offsetHeight = submitButtonPosition.top;
                                                     TweenMax.to($('.np_outside-padding'), 0.5, {
                                                         height: $('.btn-next').outerHeight(true) + offsetHeight,
 //                                                    height: $('.npDragAndDropSelect').outerHeight(true) + $('.btn-next').outerHeight(true) + offsetHeight,
@@ -200,26 +188,17 @@
                                                             '\n::$(.select-incorrect-feedback).outerHeight(true):', $('.select-incorrect-feedback').outerHeight(true),
                                                             '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
                                                             );
-                                                }
-//    typeof neverDeclared == "undefined"
-//                                                if (typeof offsetHeight === "undefined") {
-//                                                    var offsetHeight = maxHeight * 2;
-//                                                    console.log(
-//                                                            '\n::::::::::::::::::::::::::::::::::::::npDragAndDropSelect::offsetHeight === 0:::::::::::::::::::::::::::::::::::::::::::::::::',
-//                                                            '\n::outsideHeight:', outsideHeight,
-//                                                            '\n::offsetHeight:', offsetHeight,
-//                                                            '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-//                                                            );
-//                                                }
-                                                if (($('.npDragAndDropSelect').outerHeight(true) + $('.btn-next').outerHeight(true)) <= outsideHeight) {
-                                                    console.log(
-                                                            '\n::::::::::::::::::::::::::::::::::::::npDragAndDropSelect::<:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                                            '\n::outsideHeight:', outsideHeight,
-                                                            '\n::offsetHeight:', offsetHeight,
-                                                            '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                                            );
-                                                    outsideHeight = $('.npDragAndDropSelect').outerHeight(true) + $('.btn-next').outerHeight(true);
-                                                }
+                                                    if (($('.npDragAndDropSelect').outerHeight(true) + $('.btn-next').outerHeight(true)) <= outsideHeight) {
+                                                        console.log(
+                                                                '\n::::::::::::::::::::::::::::::::::::::npDragAndDropSelect::<:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                                                '\n::outsideHeight:', outsideHeight,
+                                                                '\n::offsetHeight:', offsetHeight,
+                                                                '\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                                                );
+                                                        outsideHeight = $('.npDragAndDropSelect').outerHeight(true) + $('.btn-next').outerHeight(true);
+                                                    }
+                                                };
+                                                setTimeout(setOutSideHeight, 1000);
                                                 //////////////////////////////////////////////////////////////////////////////////////
                                                 //evaluate interaction
                                                 //////////////////////////////////////////////////////////////////////////////////////
@@ -234,7 +213,7 @@
                                                             outsideHeight = $('.btn-next').outerHeight(true) + offsetHeight;
                                                         }
                                                         TweenMax.to($('.np_outside-padding'), 0.5, {
-                                                            height: outsideHeight + $('.select-correct-feedback').outerHeight(true),
+                                                            height: outsideHeight + $('.select-correct-feedback').outerHeight(true) + $('.btn-next').outerHeight(true),
                                                             ease: Power4.easeOut
                                                         });
                                                         TweenMax.to($('.select-response-correct'), 0.5, {
@@ -252,7 +231,7 @@
                                                             outsideHeight = $('.btn-next').outerHeight(true) + offsetHeight;
                                                         }
                                                         TweenMax.to($('.np_outside-padding'), 0.5, {
-                                                            height: outsideHeight + $('.select-incorrect-feedback').outerHeight(true),
+                                                            height: outsideHeight + $('.select-incorrect-feedback').outerHeight(true) + $('.btn-next').outerHeight(true),
                                                             ease: Power4.easeOut
                                                         });
                                                         TweenMax.to($('.select-response-correct'), 0.5, {
