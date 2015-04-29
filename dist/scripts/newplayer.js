@@ -2684,6 +2684,7 @@
                                                     height: 0,
                                                     autoAlpha: 0
                                                 });
+                                                $('.btn-next').css('bottom', 'auto');
 
                                                 var hitAreaLength = 0;
                                                 var maxHeight = 0;
@@ -2737,24 +2738,35 @@
                                                 //////////////////////////////////////////////////////////////////////////////////////
                                                 var submitButton;
                                                 var submitButtonPosition;
+                                                var nextButtonPosition;
 
                                                 var setOutSideHeight = function () {
                                                     submitButton = document.getElementsByClassName('btn-submit');
                                                     submitButtonPosition = getOffsetRect(submitButton[0]);
                                                     offsetHeight = submitButtonPosition.top;
+                                                    nextButtonPosition = $('.btn-next').offset().top;
                                                     TweenMax.to($('.np_outside-padding'), 0.5, {
-                                                        height: $('.btn-next').outerHeight(true) + offsetHeight,
-//                                                    height: $('.npDragAndDropSelect').outerHeight(true) + $('.btn-next').outerHeight(true) + offsetHeight,
+                                                        height: 1900,
+//                                                      height: $('.btn-next').outerHeight(true) + offsetHeight,
+//                                                      height: $('.npDragAndDropSelect').outerHeight(true) + $('.btn-next').outerHeight(true) + offsetHeight,
                                                         ease: Power4.easeOut
                                                     });
                                                     maxHeight = Math.max.apply(null, $('.select-response-feedback').map(function () {
                                                         return $(this).outerHeight(true);
                                                     }).get());
+//                                                    var buttonTop = $('.select-response-wrapper').top() + maxHeight;
+//                                                    var parentPos = $('.select-correct-feedback')[0].parent().offset();
+//                                                    $('.btn-next').css('top', buttonTop);
+//                                                    TweenMax.to($('.btn-next'), 0.5, {
+//                                                        top: $('.select-response-wrapper').position().top + maxHeight,
+//                                                        ease: Power4.easeOut
+//                                                    });
                                                     console.log(
                                                             '\n::::::::::::::::::::::::::::::::::::::npDragAndDropSelect::maxHeight:::::::::::::::::::::::::::::::::::::::::::::::::',
                                                             '\n::maxHeight:', maxHeight,
                                                             '\n::outsideHeight:', outsideHeight,
                                                             '\n::offsetHeight:', offsetHeight,
+                                                            '\n::nextButtonPosition:', nextButtonPosition,
                                                             '\n::submitButtonPositionTop:', submitButtonPosition.top,
                                                             '\n::$(.btn-submit).offset().top:', $('.btn-submit').offset().top,
                                                             '\n::$(.btn-submit).position().top:', $('.btn-submit').position().top,
@@ -2790,10 +2802,10 @@
                                                         if (outsideHeight === 0) {
                                                             outsideHeight = $('.btn-next').outerHeight(true) + offsetHeight;
                                                         }
-                                                        TweenMax.to($('.np_outside-padding'), 0.5, {
-                                                            height: outsideHeight + $('.select-correct-feedback').outerHeight(true) + $('.btn-next').outerHeight(true),
-                                                            ease: Power4.easeOut
-                                                        });
+//                                                        TweenMax.to($('.np_outside-padding'), 0.5, {
+//                                                            height: outsideHeight + $('.select-correct-feedback').outerHeight(true) + $('.btn-next').outerHeight(true),
+//                                                            ease: Power4.easeOut
+//                                                        });
                                                         TweenMax.to($('.select-response-correct'), 0.5, {
                                                             autoAlpha: 1,
                                                             height: $('.select-correct-feedback').outerHeight(true),
@@ -2803,15 +2815,19 @@
                                                             autoAlpha: 0,
                                                             ease: Power4.easeOut
                                                         });
+                                                        TweenMax.to($('.btn-next'), 0.5, {
+                                                            top: nextButtonPosition + $('.select-correct-feedback').outerHeight(true),
+                                                            ease: Power4.easeOut
+                                                        });
                                                         isPassing = true;
                                                     } else {
                                                         if (outsideHeight === 0) {
                                                             outsideHeight = $('.btn-next').outerHeight(true) + offsetHeight;
                                                         }
-                                                        TweenMax.to($('.np_outside-padding'), 0.5, {
-                                                            height: outsideHeight + $('.select-incorrect-feedback').outerHeight(true) + $('.btn-next').outerHeight(true),
-                                                            ease: Power4.easeOut
-                                                        });
+//                                                        TweenMax.to($('.np_outside-padding'), 0.5, {
+//                                                            height: outsideHeight + $('.select-incorrect-feedback').outerHeight(true) + $('.btn-next').outerHeight(true),
+//                                                            ease: Power4.easeOut
+//                                                        });
                                                         TweenMax.to($('.select-response-correct'), 0.5, {
                                                             autoAlpha: 0,
                                                             ease: Power4.easeOut
@@ -2819,6 +2835,10 @@
                                                         TweenMax.to($('.select-response-incorrect'), 0.75, {
                                                             autoAlpha: 1,
                                                             height: $('.select-incorrect-feedback').outerHeight(true),
+                                                            ease: Power4.easeOut
+                                                        });
+                                                        TweenMax.to($('.btn-next'), 0.5, {
+                                                            top: nextButtonPosition + $('.select-incorrect-feedback').outerHeight(true),
                                                             ease: Power4.easeOut
                                                         });
                                                         isPassing = false;
