@@ -124,7 +124,6 @@
                                         '\n::$( #npHTML\\:0_0_1 )::', $("#npHTML\\:0_0_1").height(),
                                         '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
                                         );
-                                
                                 imagesLoaded(document.querySelector('.np-flash-card'), function (instance) {
                                     var maxHeight = Math.max.apply(null, $('.flash-card-content-back').map(function () {
                                         return $(this).outerHeight(true);
@@ -135,10 +134,10 @@
                                         height: maxHeight
                                     });
                                     TweenMax.set($('.np_outside-padding'), {
-                                        height: maxHeight + outsideHeight + 250
+                                        height: maxHeight + outsideHeight + 350
                                     });
                                     TweenMax.set($('.btn-next'), {
-                                        marginTop: maxHeight + 250
+                                        marginTop: maxHeight + 50
                                     });
                                     //////////////////////////////////////////////////////////////////////////////////////
                                     //page build
