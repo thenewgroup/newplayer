@@ -74,6 +74,7 @@
                                 };
                             }
                     )
+            
                             .directive('mediaelement', npMediaElementDirective)
                             /** @ngInject */
                             .run(
@@ -117,6 +118,11 @@
                                                 var hitAreaSelectedLength = '';
                                                 var hitAreaSelectedIncorrect = '';
                                                 hitAreaLength = $("[data-match=true]").length;
+                                                console.log(
+                                                        '\n::::::::::::::::::::::::::::::::::::::getOffsetRect::$( #npHTML\\:0_0_1 ):::::::::::::::::::::::::::::::::::::::::::::::::::::::',
+                                                        '\n::$( #npHTML\\:0_0_1 )::', $("#npHTML\\:0_0_1").height(),
+                                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                                        );
                                                 //////////////////////////////////////////////////////////////////////////////////////
                                                 //offset method
                                                 //////////////////////////////////////////////////////////////////////////////////////
@@ -136,19 +142,6 @@
                                                     var height = box.height - scrollTop;
                                                     var bottom = top + (box.bottom - box.top);
                                                     var right = left + (box.right - box.left);
-                                                    console.log(
-                                                            '\n::::::::::::::::::::::::::::::::::::::getOffsetRect:::::::::::::::::::::::::::::::::::::::::::::::::::::::::',
-                                                            '\n::elem.clientHeight::', elem.clientHeight,
-                                                            '\n::box.height::', box.height,
-                                                            '\n::box.bottom::', box.bottom,
-                                                            '\n::clientHeight::', clientHeight,
-                                                            '\n::offsetHeight::', offsetHeight,
-                                                            '\n::scrollHeight::', scrollHeight,
-                                                            '\n::scrollTop::', scrollTop,
-                                                            '\n::clientTop::', clientTop,
-                                                            '\n::height::', height,
-                                                            '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                                            );
                                                     return {top: Math.round(top),
                                                         left: Math.round(left),
                                                         bottom: Math.round(bottom),
@@ -176,7 +169,7 @@
                                                     maxHeight = Math.max.apply(null, $('.select-response-feedback').map(function () {
                                                         return $(this).outerHeight(true);
                                                     }).get());
-                                                    $('.btn-next').css("margin-top", maxHeight+20);
+                                                    $('.btn-next').css("margin-top", maxHeight + 20);
 //                                                    var buttonTop = $('.select-response-wrapper').top() + maxHeight;
 //                                                    var parentPos = $('.select-correct-feedback')[0].parent().offset();
 //                                                    $('.btn-next').css('top', buttonTop);

@@ -1,0 +1,135 @@
+[{
+        "type": "npFeature",
+        "data": {
+            "id": "GMTC",
+            "class": "",
+            "version": "0.0.1",
+            "timestamp": "2015-Apr-Tue_10:04:30"
+        },
+        "components": [{
+                "type": "npContent",
+                "data": {
+                    "id": "content_en",
+                    "language": "en",
+                    "title": "Learning-Content-GMTC-4.0-Meet",
+                    "description": "This manifest creates a Story or Learning Object content object . "
+                },
+                "components": [{
+                        "type": "npHTML",
+                        "data": {
+                            "id": "newplayer-background"
+                        },
+                        "components": [{
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "background-image"
+                                },
+                                "components": []
+                            }]
+                    }, {
+                        "type": "npHTML",
+                        "data": {
+                            "class": "outside-padding"
+                        },
+                        "components": [{
+                                "type": "npHTML",
+                                "data": {
+                                    "class": "renutriv-logo-image"
+                                },
+                                "components": []
+                            }, {
+                                "type": "npHTML",
+                                "data": {
+                                    "class": "h3 headline",
+                                    "content": "Meet"
+                                },
+                                "components": []
+                            }, {
+                                "type": "npHTML",
+                                "data": {
+                                    "class": "h6 instructional",
+                                    "content": "<p>After making a connection with your customer, what questions can you ask to find out what she needs? How does taking the time to properly meet your customer&rsquo;s needs make a difference?</p>"
+                                },
+                                "components": []
+                            }, {
+                                "type": "npPage",
+                                "data": {},
+                                "components": [{
+                                        "type": "npDragAndDropSelect",
+                                        "data": {
+                                            "id": "container",
+                                            "positiveFeedback": "That's it! Beauty is all about the senses and how your customer experiences the products. ",
+                                            "negativeFeedback": "Sorry. The correct responses are the product's scent, the product's texture, and the difference she can see and feel on her skin. Beauty is all about the senses and how your customer experiences the products.",
+                                            "req": ["mediaelement/GreenSock/TweenMax.js", "mediaelement/GreenSock/utils/Draggable.js", "mediaelement/angular-tweenmax-draggable.js"],
+                                            "draggableButtons": [{
+                                                    "select": "true",
+                                                    "content": "<p>The product&#39;s scent</p>",
+                                                    "image": "",
+                                                    "matchingContent": "1",
+                                                    "matchingImage": ""
+                                                }, {
+                                                    "select": "true",
+                                                    "content": "<p>The product&#39;s texture</p>",
+                                                    "image": "",
+                                                    "matchingContent": "1",
+                                                    "matchingImage": ""
+                                                }, {
+                                                    "select": "false",
+                                                    "content": "<p>The colors used on the product&#39;s packaging</p>",
+                                                    "image": "",
+                                                    "matchingContent": "0",
+                                                    "matchingImage": ""
+                                                }, {
+                                                    "select": "true",
+                                                    "content": "<p>The difference she can see and feel on her skin</p>",
+                                                    "image": "",
+                                                    "matchingContent": "1",
+                                                    "matchingImage": ""
+                                                }],
+                                            "feedback": "<p>this is the placeholder content</p>",
+                                            "image": ""
+                                        },
+                                        "components": []
+                                    }, {
+                                        "type": "npButton",
+                                        "data": {
+                                            "link": "",
+                                            "type": "btn-next",
+                                            "class": "",
+                                            "content": "Next"
+                                        },
+                                        "components": []
+                                    }]
+                            }, {
+                                "type": "npPage",
+                                "data": {},
+                                "components": [{
+                                        "type": "npFlashCards",
+                                        "data": {
+                                            "id": "flash-cards-test-id",
+                                            "class": "flash-cards-test-class"
+                                        },
+                                        "flashCards": [{
+                                                "contentFront": " <p><strong>&quot;What&#39;s your current beauty routine&quot;</strong></p><p><img alt= class=image-flash_card_image img-responsive height=430 src=assets/styles/flash_card_image/public/GMTC-4point0-WhatsYourCurrentBeautyRoutine.jpg?itok=E300cMoP width=500 /></p>",
+                                                "contentBack": " <p>Good question! This allows her to open up to you about how she&#39;s currently caring for her skin. Use this opportunity to look for any gaps in her regimen or things she could be doing differently.</p>"
+                                            }, {
+                                                "contentFront": " <p><strong>&quot;How are you using this product&quot;</strong></p><p><img alt= class=image-flash_card_image img-responsive height=430 src=assets/styles/flash_card_image/public/GMTC-4point0-HowAreYouUsingThisProduct.jpg?itok=X-O6TkQu width=500 /></p>",
+                                                "contentBack": " <p>Good question! Even if you show her something she&#39;s already using, asking her how she&#39;s using it will give you more information about her regimen&mdash;especially whether or not she&#39;s using it correctly. You might even be able to teach her something new!</p>"
+                                            }, {
+                                                "contentFront": " <p><strong>&quot;Do you like this product&quot;</strong></p><p><img alt= class=image-flash_card_image img-responsive height=430 src=assets/styles/flash_card_image/public/GMTC-4point0-DoYouLikeThisProduct.jpg?itok=1mXRggxl width=500 /></p>",
+                                                "contentBack": " <p>Not a great question. If she says &quot;yes,&quot; you don&#39;t really have anywhere to go. It&#39;s helpful if she says &quot;no,&quot; and you can ask her why, but you&#39;ll learn more in less time by rephrasing the question to, &quot;What do you love about this product?&quot; This will give you so much more information about her and her routine, whether her response is positive or negative.</p>"
+                                            }]
+                                    }, {
+                                        "type": "npButton",
+                                        "data": {
+                                            "link": "",
+                                            "type": "btn-next",
+                                            "class": "",
+                                            "content": "Next"
+                                        },
+                                        "components": []
+                                    }]
+                            }]
+                    }]
+            }]
+    }]

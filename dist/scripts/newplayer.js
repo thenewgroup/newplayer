@@ -1919,14 +1919,26 @@
 //                                    '\n::$scope.buttonTypeClass::', $scope.buttonTypeClass,
 //                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
 //                                    );
-                        console.log(
-                                '\n::::::::::::::::::::::::::::::::::::::npButtonController::$scope.buttonTypeClass:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                '\n::cmpData::', cmpData,
-                                '\n::cmpData::', cmpData.class,
-                                '\n::cmpData::', cmpData.content.span,
-                                '\n::$element::', $element.find('.elx-heart'),
-                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                );
+//                        if ($element.find('.btn-open-favorites')) {
+//                            $element.find('.btn-open-favorites').find('.elx-heart').addClass('favorites-icon');
+//                        }
+//                        console.log(
+//                                '\n::::::::::::::::::::::::::::::::::::::npButtonController::$scope.buttonTypeClass:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                '\n::cmpData::', cmpData,
+//                                '\n::cmpData::', cmpData.class,
+//                                '\n::cmpData::', cmpData.content.span,
+//                                '\n::$element::', $element.find('.elx-heart'),
+//                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                );
+//                        $('.elx-heart').addClass('icon-favorites');
+//                        console.log(
+//                                '\n::::::::::::::::::::::::::::::::::::::npButtonController::$scope.buttonTypeClass:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                '\n::$element.find(.elx-heart)::', !!$element.find('.elx-heart'),
+//                                '\n::$element.find(.icon-favorites)::', $element.find('.icon-favorites'),
+//                                '\n::$element.find(.icon-favorites)::', !!$element.find('.icon-favorites'),
+//                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                );
+
                         if (angular.isString(btnLink)) {
                             if (btnLink.indexOf('/') === 0) {
                                 if (/^\/api\//.test(btnLink)) {
@@ -1959,12 +1971,49 @@
                             this.link = $sce.trustAsResourceUrl(btnLink);
                         }
                         this.go = function () {
-                            console.log(
-                                    '\n::::::::::::::::::::::::::::::::::::::npButtonController::$scope.buttonTypeClass:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                    '\n::$element.find(.btn-open-favorites)::', !!$element.find('.btn-open-favorites'),
-                                    '\n::$element::', $element.find('.elx-heart'),
-                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                    );
+//                            console.log(
+//                                    '\n::::::::::::::::::::::::::::::::::::::npButtonController::$scope.buttonTypeClass:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                    '\n::!!$element.find(.elx-heart)::', !!$element.find('.elx-heart'),
+//                                    '\n::!!$element.find(.elx-heart-filled)::', $('.elx-heart-filled'),
+//                                    '\n::$element.find(.icon-favorites).hasClass(.elx-heart)::', $('.icon-favorites').hasClass('.elx-heart'),
+//                                    '\n::$element.find(.icon-favorites).hasClass(.elx-heart-filled)::', $('.icon-favorites').hasClass('.elx-heart-filled'),
+//                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                    );
+//                            $element.find('.icon-favorites').toggle(function () {
+//                                $element.find('.icon-favorites').addClass('elx-heart-filled');
+//                                $element.find('.icon-favorites').removeClass('elx-heart');
+//                            }, function () {
+//                                $element.find('.icon-favorites').addClass('elx-heart').removeClass('elx-heart-filled');
+//                            });
+//                            if ($element.find('.icon-favorites').hasClass('.elx-heart')) {
+//                                $element.find('.icon-favorites').addClass('elx-heart-filled').removeClass('elx-heart');
+//                                console.log(
+//                                        '\n::::::::::::::::::::::::::::::::::::::npButtonController::elx-heart-:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                        '\n::!!$element.find(.elx-heart)::', !!$element.find('.elx-heart'),
+//                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                        );
+//                            }else if ($element.find('.icon-favorites').hasClass('.elx-heart-filled')) {
+//                                $element.find('.icon-favorites').addClass('elx-heart').removeClass('elx-heart-filled');
+//                                console.log(
+//                                        '\n::::::::::::::::::::::::::::::::::::::npButtonController::elx-heart-filled:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                        '\n::!!$element.find(.elx-heart-filled)::', !!$element.find('.elx-heart-filled'),
+//                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                        );
+//                            }
+//                            console.log(
+//                                    '\n::::::::::::::::::::::::::::::::::::::npButtonController::$scope.buttonTypeClass:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                    '\n::$element.find(.btn-open-favorites)::', !!$element.find('.btn-open-favorites'),
+//                                    '\n::$element::', $element.find('.elx-heart'),
+//                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                    );
+//                            $('.btn-open-favorites').toggle(function () {
+//                                $('.play', this).removeClass('pausing');
+//                                $('.play', this).addClass('playing');
+//                            }, function () {
+//                                $('.play', this).addClass('pausing');
+//                                $('.play', this).removeClass('playing');
+//                            });
+//                            
                             if ($element.find('.btn-open-favorites')) {
                                 $element.find('.elx-heart').toggleClass("elx-heart-filled");
                             }
@@ -2682,6 +2731,7 @@
                                 };
                             }
                     )
+            
                             .directive('mediaelement', npMediaElementDirective)
                             /** @ngInject */
                             .run(
@@ -2725,6 +2775,11 @@
                                                 var hitAreaSelectedLength = '';
                                                 var hitAreaSelectedIncorrect = '';
                                                 hitAreaLength = $("[data-match=true]").length;
+                                                console.log(
+                                                        '\n::::::::::::::::::::::::::::::::::::::getOffsetRect::$( #npHTML\\:0_0_1 ):::::::::::::::::::::::::::::::::::::::::::::::::::::::',
+                                                        '\n::$( #npHTML\\:0_0_1 )::', $("#npHTML\\:0_0_1").height(),
+                                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                                        );
                                                 //////////////////////////////////////////////////////////////////////////////////////
                                                 //offset method
                                                 //////////////////////////////////////////////////////////////////////////////////////
@@ -2744,19 +2799,6 @@
                                                     var height = box.height - scrollTop;
                                                     var bottom = top + (box.bottom - box.top);
                                                     var right = left + (box.right - box.left);
-                                                    console.log(
-                                                            '\n::::::::::::::::::::::::::::::::::::::getOffsetRect:::::::::::::::::::::::::::::::::::::::::::::::::::::::::',
-                                                            '\n::elem.clientHeight::', elem.clientHeight,
-                                                            '\n::box.height::', box.height,
-                                                            '\n::box.bottom::', box.bottom,
-                                                            '\n::clientHeight::', clientHeight,
-                                                            '\n::offsetHeight::', offsetHeight,
-                                                            '\n::scrollHeight::', scrollHeight,
-                                                            '\n::scrollTop::', scrollTop,
-                                                            '\n::clientTop::', clientTop,
-                                                            '\n::height::', height,
-                                                            '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                                            );
                                                     return {top: Math.round(top),
                                                         left: Math.round(left),
                                                         bottom: Math.round(bottom),
@@ -2784,7 +2826,7 @@
                                                     maxHeight = Math.max.apply(null, $('.select-response-feedback').map(function () {
                                                         return $(this).outerHeight(true);
                                                     }).get());
-                                                    $('.btn-next').css("margin-top", maxHeight+20);
+                                                    $('.btn-next').css("margin-top", maxHeight + 20);
 //                                                    var buttonTop = $('.select-response-wrapper').top() + maxHeight;
 //                                                    var parentPos = $('.select-correct-feedback')[0].parent().offset();
 //                                                    $('.btn-next').css('top', buttonTop);
@@ -4429,19 +4471,25 @@
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //get actuall height
                                 //////////////////////////////////////////////////////////////////////////////////////
+                                console.log(
+                                        '\n::::::::::::::::::::::::::::::::::::::getOffsetRect::$( #npHTML\\:0_0_1 ):::::::::::::::::::::::::::::::::::::::::::::::::::::::',
+                                        '\n::$( #npHTML\\:0_0_1 )::', $("#npHTML\\:0_0_1").height(),
+                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                        );
                                 imagesLoaded(document.querySelector('.np-flash-card'), function (instance) {
                                     var maxHeight = Math.max.apply(null, $('.flash-card-content-back').map(function () {
                                         return $(this).outerHeight(true);
                                     }).get());
                                     var outsidePaddingHeight = $('.np_outside-padding').outerHeight(true);
+                                    var outsideHeight = $("#npHTML\\:0_0_1").outerHeight(true);
                                     TweenMax.set($('.flash-cards-object'), {
                                         height: maxHeight
                                     });
                                     TweenMax.set($('.np_outside-padding'), {
-                                        height: maxHeight + outsidePaddingHeight +150
+                                        height: maxHeight + outsideHeight + 350
                                     });
                                     TweenMax.set($('.btn-next'), {
-                                        marginTop: maxHeight + 150
+                                        marginTop: maxHeight + 50
                                     });
                                     //////////////////////////////////////////////////////////////////////////////////////
                                     //page build
@@ -4482,7 +4530,7 @@
                                     var topOffset = Math.round((window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0));
                                     TweenMax.to($('.npFlashCards'), 1.25, {
                                         force3D: true,
-                                        top: -(topOffset - flashCardsOffset.top - 100),
+                                        top: -(topOffset - flashCardsOffset.top - 10),
                                         ease: Power4.easeOut
                                     });
                                 });

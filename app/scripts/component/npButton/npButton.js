@@ -33,14 +33,26 @@
 //                                    '\n::$scope.buttonTypeClass::', $scope.buttonTypeClass,
 //                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
 //                                    );
-                        console.log(
-                                '\n::::::::::::::::::::::::::::::::::::::npButtonController::$scope.buttonTypeClass:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                '\n::cmpData::', cmpData,
-                                '\n::cmpData::', cmpData.class,
-                                '\n::cmpData::', cmpData.content.span,
-                                '\n::$element::', $element.find('.elx-heart'),
-                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                );
+//                        if ($element.find('.btn-open-favorites')) {
+//                            $element.find('.btn-open-favorites').find('.elx-heart').addClass('favorites-icon');
+//                        }
+//                        console.log(
+//                                '\n::::::::::::::::::::::::::::::::::::::npButtonController::$scope.buttonTypeClass:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                '\n::cmpData::', cmpData,
+//                                '\n::cmpData::', cmpData.class,
+//                                '\n::cmpData::', cmpData.content.span,
+//                                '\n::$element::', $element.find('.elx-heart'),
+//                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                );
+//                        $('.elx-heart').addClass('icon-favorites');
+//                        console.log(
+//                                '\n::::::::::::::::::::::::::::::::::::::npButtonController::$scope.buttonTypeClass:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                '\n::$element.find(.elx-heart)::', !!$element.find('.elx-heart'),
+//                                '\n::$element.find(.icon-favorites)::', $element.find('.icon-favorites'),
+//                                '\n::$element.find(.icon-favorites)::', !!$element.find('.icon-favorites'),
+//                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                );
+
                         if (angular.isString(btnLink)) {
                             if (btnLink.indexOf('/') === 0) {
                                 if (/^\/api\//.test(btnLink)) {
@@ -73,12 +85,49 @@
                             this.link = $sce.trustAsResourceUrl(btnLink);
                         }
                         this.go = function () {
-                            console.log(
-                                    '\n::::::::::::::::::::::::::::::::::::::npButtonController::$scope.buttonTypeClass:::::::::::::::::::::::::::::::::::::::::::::::::',
-                                    '\n::$element.find(.btn-open-favorites)::', !!$element.find('.btn-open-favorites'),
-                                    '\n::$element::', $element.find('.elx-heart'),
-                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                    );
+//                            console.log(
+//                                    '\n::::::::::::::::::::::::::::::::::::::npButtonController::$scope.buttonTypeClass:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                    '\n::!!$element.find(.elx-heart)::', !!$element.find('.elx-heart'),
+//                                    '\n::!!$element.find(.elx-heart-filled)::', $('.elx-heart-filled'),
+//                                    '\n::$element.find(.icon-favorites).hasClass(.elx-heart)::', $('.icon-favorites').hasClass('.elx-heart'),
+//                                    '\n::$element.find(.icon-favorites).hasClass(.elx-heart-filled)::', $('.icon-favorites').hasClass('.elx-heart-filled'),
+//                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                    );
+//                            $element.find('.icon-favorites').toggle(function () {
+//                                $element.find('.icon-favorites').addClass('elx-heart-filled');
+//                                $element.find('.icon-favorites').removeClass('elx-heart');
+//                            }, function () {
+//                                $element.find('.icon-favorites').addClass('elx-heart').removeClass('elx-heart-filled');
+//                            });
+//                            if ($element.find('.icon-favorites').hasClass('.elx-heart')) {
+//                                $element.find('.icon-favorites').addClass('elx-heart-filled').removeClass('elx-heart');
+//                                console.log(
+//                                        '\n::::::::::::::::::::::::::::::::::::::npButtonController::elx-heart-:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                        '\n::!!$element.find(.elx-heart)::', !!$element.find('.elx-heart'),
+//                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                        );
+//                            }else if ($element.find('.icon-favorites').hasClass('.elx-heart-filled')) {
+//                                $element.find('.icon-favorites').addClass('elx-heart').removeClass('elx-heart-filled');
+//                                console.log(
+//                                        '\n::::::::::::::::::::::::::::::::::::::npButtonController::elx-heart-filled:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                        '\n::!!$element.find(.elx-heart-filled)::', !!$element.find('.elx-heart-filled'),
+//                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                        );
+//                            }
+//                            console.log(
+//                                    '\n::::::::::::::::::::::::::::::::::::::npButtonController::$scope.buttonTypeClass:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                    '\n::$element.find(.btn-open-favorites)::', !!$element.find('.btn-open-favorites'),
+//                                    '\n::$element::', $element.find('.elx-heart'),
+//                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                    );
+//                            $('.btn-open-favorites').toggle(function () {
+//                                $('.play', this).removeClass('pausing');
+//                                $('.play', this).addClass('playing');
+//                            }, function () {
+//                                $('.play', this).addClass('pausing');
+//                                $('.play', this).removeClass('playing');
+//                            });
+//                            
                             if ($element.find('.btn-open-favorites')) {
                                 $element.find('.elx-heart').toggleClass("elx-heart-filled");
                             }
