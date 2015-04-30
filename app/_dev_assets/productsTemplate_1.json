@@ -254,6 +254,15 @@
                                             "content": "<span class='elx-heart' aria-hidden='true'></span>  Favorite this"
                                         },
                                         "components": []
+                                    },{
+                                        "type": "npButton",
+                                        "data": {
+                                            "link": "/api/favorites/product/Product-Manifest-Nutritious-Vitality8-Collection",
+                                            "type": "",
+                                            "class": "btn-open-favorites",
+                                            "content": "<span class='elx-heart' aria-hidden='true'></span>  Favorite this"
+                                        },
+                                        "components": []
                                     }, {
                                         "type": "npButton",
                                         "data": {

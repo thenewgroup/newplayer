@@ -119,19 +119,26 @@
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //get actuall height
                                 //////////////////////////////////////////////////////////////////////////////////////
+                                console.log(
+                                        '\n::::::::::::::::::::::::::::::::::::::getOffsetRect::$( #npHTML\\:0_0_1 ):::::::::::::::::::::::::::::::::::::::::::::::::::::::',
+                                        '\n::$( #npHTML\\:0_0_1 )::', $("#npHTML\\:0_0_1").height(),
+                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                        );
+                                
                                 imagesLoaded(document.querySelector('.np-flash-card'), function (instance) {
                                     var maxHeight = Math.max.apply(null, $('.flash-card-content-back').map(function () {
                                         return $(this).outerHeight(true);
                                     }).get());
                                     var outsidePaddingHeight = $('.np_outside-padding').outerHeight(true);
+                                    var outsideHeight = $("#npHTML\\:0_0_1").outerHeight(true);
                                     TweenMax.set($('.flash-cards-object'), {
                                         height: maxHeight
                                     });
                                     TweenMax.set($('.np_outside-padding'), {
-                                        height: maxHeight + outsidePaddingHeight +150
+                                        height: maxHeight + outsideHeight + 250
                                     });
                                     TweenMax.set($('.btn-next'), {
-                                        marginTop: maxHeight + 150
+                                        marginTop: maxHeight + 250
                                     });
                                     //////////////////////////////////////////////////////////////////////////////////////
                                     //page build
@@ -172,7 +179,7 @@
                                     var topOffset = Math.round((window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0));
                                     TweenMax.to($('.npFlashCards'), 1.25, {
                                         force3D: true,
-                                        top: -(topOffset - flashCardsOffset.top - 100),
+                                        top: -(topOffset - flashCardsOffset.top - 10),
                                         ease: Power4.easeOut
                                     });
                                 });
