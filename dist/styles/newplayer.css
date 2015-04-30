@@ -8482,6 +8482,7 @@ button.close {
     /*line-height: 0;*/ }
   #GMTC .np-result-container rect {
     stroke: #040A2B;
+    fill: #FFFFFF;
     stroke-width: 3; }
   #GMTC .np-spinner-wrapper {
     position: relative;
