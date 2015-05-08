@@ -64,6 +64,15 @@
 #GMTC {
     @import "_GMTC.scss";
 }
+#ANR2 {
+    @import "_ANR2.scss";
+}
+#BSFL {
+    @import "_BSFL.scss";
+}
+#ND {
+    @import "_ND.scss";
+}
 
 // Components w/ JavaScript
 @import "../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/modals";

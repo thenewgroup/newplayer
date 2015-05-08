@@ -60,16 +60,16 @@
     color: $brand-primary-light;
 }
 .subhead-copy{
-    color: $brand-primary;
     font-family: $font-family-sans-serif;
+    color: $brand-primary;
     font-size: $font-size-18;
     letter-spacing: 2px;
     text-transform: uppercase;
     margin-bottom: $line-height-computed;
 }
 .body-copy-strong{
-    color: $brand-primary;
     font-family: $font-family-sans-serif;
+    color: $brand-primary;
     font-size: $font-size-18;
     letter-spacing: 2px;
     margin-bottom: $line-height-computed;
@@ -85,8 +85,8 @@
     }
 }
 .body-copy{
-    color: $brand-primary;
     font-family: $font-family-sans-serif;
+    color: $brand-primary;
     font-size: $font-size-17;
     letter-spacing: 2px;
     line-height: 1.35;
@@ -106,17 +106,48 @@ small{
     /*color: $gray-dark;*/
 }
 .header-dark {
+    font-family: $font-family-serif;
     color: $gray-base;
     font-size: $font-size-36;
-    font-family: $font-family-serif;
     letter-spacing: 2px;
     padding-top: 0px;
     padding-bottom: 0px;
     display: inline-block;
 }
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player npPage classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.npPage-title{
+    font-family: $font-family-serif;
+    color: $brand-primary-light;
+    letter-spacing: 2px;
+    margin-top: 10px;
+    margin-bottom: $line-height-computed;
+}
+.npPage-subTitle{
+    font-family: $font-family-sans-serif;
+    color: $brand-primary-light;
+    font-size: $font-size-18;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: $line-height-computed;
+}
+.npPage-instructional{
+    font-size: $font-size-h5;
+    color: $brand-primary-light;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    margin-top: 0px;
+    display: inline-block;
+    margin-bottom: $line-height-computed;
+}
 .gold {
+    /*color: #9a7d46;*/
     color: $gold;
 }
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player button classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 .btn span{ 
     font-family: $font-family-sans-serif;
     color: $brand-primary-light;

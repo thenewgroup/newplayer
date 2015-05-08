@@ -74,7 +74,6 @@
                                 };
                             }
                     )
-            
                             .directive('mediaelement', npMediaElementDirective)
                             /** @ngInject */
                             .run(
@@ -108,7 +107,6 @@
                                                     autoAlpha: 0
                                                 });
                                                 $('.btn-next').css('bottom', 'auto');
-
                                                 var hitAreaLength = 0;
                                                 var maxHeight = 0;
                                                 var outsideHeight = 0;
@@ -154,15 +152,16 @@
                                                 var submitButton;
                                                 var submitButtonPosition;
                                                 var nextButtonPosition;
-
                                                 var setOutSideHeight = function () {
                                                     submitButton = document.getElementsByClassName('btn-submit');
                                                     submitButtonPosition = getOffsetRect(submitButton[0]);
-                                                    offsetHeight = submitButtonPosition.top;
+                                                    offsetHeight = $("#npHTML\\:0_0_1").height();
+//                                                    offsetHeight = submitButtonPosition.top;
                                                     nextButtonPosition = $('.btn-next').offset().top;
                                                     TweenMax.to($('.np_outside-padding'), 0.5, {
-                                                        height: 1900,
+//                                                        height: 1900,
 //                                                      height: $('.btn-next').outerHeight(true) + offsetHeight,
+                                                        height: $('.btn-next').outerHeight(true) + offsetHeight,
 //                                                      height: $('.npDragAndDropSelect').outerHeight(true) + $('.btn-next').outerHeight(true) + offsetHeight,
                                                         ease: Power4.easeOut
                                                     });

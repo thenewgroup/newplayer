@@ -4,7 +4,7 @@
 /*When setting this ID for New Player use: 'newplayer-background'*/
 #np_newplayer-background{
     position: fixed;
-    background-color: $ANR-bg-color;
+    background-color: $ND-primary;
     background-size: cover;
     content: "";
     width:100%;
@@ -15,17 +15,17 @@
     top: 0;
 }
 #background-image {
-    position:fixed;
-    background-image: url('../assets/images/ESTL-005_ANR_bg_img.jpg');
+    position: fixed;
+    background-image: url('../assets/images/ESTL-006-ND-bg.jpg');
+    background-position: top;
     background-repeat: no-repeat;
-    background-size: 100% 100%;
-    background-origin: content-box;
-    width:100%;
-    height:100%;
+    background-size: 100%;
+    width: 100%;
+    height: 100%;
 }
 .renutriv-logo-image {
     position: relative;
-    background-image: url("../assets/images/AdvancedNightRepairLogoSm.png");
+    background-image: url("../assets/images/NDLogo.png");
     background-repeat: no-repeat;
     width: 312px;
     height: 19px;
@@ -60,6 +60,14 @@
     color: $brand-primary-light;
 }
 .subhead-copy{
+    font-family: $font-family-sans-serif;
+    color: $brand-primary;
+    font-size: $font-size-18;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: $line-height-computed;
+}
+.subhead-ND{
     font-family: $font-family-sans-serif;
     color: $brand-primary;
     font-size: $font-size-18;
@@ -105,14 +113,18 @@ small{
 .dark .h1, .h2, .h3, .h4, .h5 {
     /*color: $gray-dark;*/
 }
-.header-dark {
-    font-family: $font-family-serif;
-    color: $gray-base;
-    font-size: $font-size-36;
+.header-dark {  
+    font-family: "akzidenz-grotesk_bqregular";
+    color: #FFFFFF;
+    font-size: 17px;
     letter-spacing: 2px;
-    padding-top: 0px;
-    padding-bottom: 0px;
+    text-transform: uppercase;
+    padding: 20px;
+    padding-top: 35px;
     display: inline-block;
+    background-image: url("../assets/svgs/ND_header_bg.svg");
+    background-size: auto 100%;
+    background-repeat: no-repeat;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player npPage classes*/
@@ -157,7 +169,7 @@ small{
 .btn{ 
     position: relative;
     border-color: $brand-primary-light;
-    background-color: $brand-primary;
+    background-color: $ND-primary;
     width: auto !important;
     min-width: fit-content;
     margin-top: 5px;
@@ -261,7 +273,7 @@ small{
 }
 .content-background-svg rect{
     fill: hsla(100%,100%,100%,0.5);
-    stroke: #125aa0;
+    stroke: $ND-primary;
     stroke-width: 4px;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -279,15 +291,20 @@ small{
     padding-top: 45px !important;
     margin-left: 0px;
 }
+.flash-card-text-heading {
+    color: $ND-primary;
+    font-size: $font-size-h4;
+    text-transform: uppercase;
+}
 ///////////////cards/////////////////
 .flash-cards-object {
     position: relative;
     display: inline-block;
-    overflow: hidden;
+    /*overflow: hidden;*/
     width: 560px;
-    /*min-height: 800px;*/
     margin-bottom: 222px;
     padding-bottom: 15px;
+    text-align: center;
 }
 @media (max-width: $screen-sm) {
     .flash-cards-object {
@@ -301,19 +318,7 @@ small{
     right: 0;
     top: 0;
     bottom: 0;
-    background-color: #00518F;
-}
-.flash-card-border {
-    position: absolute;
-    width: 100%;
-    visibility: hidden;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    border-color: $brand-primary;
-    border-width: 10px;
-    box-shadow: inset 0px 0px 10px 1px $brand-primary;
+    /*background-color: $ND-primary;*/
 }
 ///////////////button/////////////////
 .flash-card-button {
@@ -331,10 +336,10 @@ small{
 ///////////////front/////////////////
 .flash-card-front-wrapper {
     position: absolute;
-    top:0;
+    top:25px;
     bottom:0;
     width: 100%;
-    overflow: hidden;
+    /*overflow: hidden;*/
     height: 475px;
 }
 @media (max-width: $screen-sm) {
@@ -350,18 +355,18 @@ small{
     top: 0;
     bottom: 0;
     overflow: hidden;
-    background-color: #FFFFFF;
-    min-height: 475px;
+    /*background-color: #FFFFFF;*/
+    /*min-height: 475px;*/
 }
 .flash-card-content-front p{
-    color: $brand-primary;
+    /*color: #000000;*/
 }
 ///////////////back/////////////////
 .flash-card-back-wrapper {
     position: absolute;
-    top:0;
+    top: 25px;
     width: 100%;
-    height:100%;
+    height: 100%;
 }
 .flash-card-content-back {
     position: absolute;
@@ -369,11 +374,26 @@ small{
     left: 0;
     right: 0;
     top: 0;
-    background-color: #FFFFFF;
+    /*background-color: #FFFFFF;*/
     min-height: 475px;
 }
 .flash-card-content-back p{
-    color: $brand-primary;
+    /*color: #000000;*/
+}
+.flash-card-background {
+    position: absolute;
+    width: 150%;
+    margin-left: -25%;
+    height: 120%;
+    margin-top: -10%;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-image: url("../assets/images/ESTL-006-ND-cloudcontain1.png");
+    background-size: 100% 100%;
+    background-origin: content-box;
+    background-repeat: no-repeat;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Matching Game classes*/
@@ -427,7 +447,7 @@ small{
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 .quiz-label{
     font-family: $font-family-sans-serif;
-    color: $brand-primary-light;
+    color: $brand-primary;
     text-transform: uppercase;
     letter-spacing: 2px;
     display: inline-block;
@@ -445,8 +465,8 @@ input{
     size: $font-size-small;
     color: #737373;
     letter-spacing: 2px;
-    border-color: $gold;
-    background-color: $gray-dark;
+    border-color: $brand-primary-light;
+    background-color: $ND-primary;
     box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
 }
 .answer-text-checkbox { 
@@ -491,7 +511,7 @@ input{
     box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
 }
 .checkbox-box svg rect{
-    fill: $brand-primary;
+    fill: #FFFFFF;
     opacity: 0.75;
     stroke: #FFFFFF;
     stroke-width: 3;
@@ -512,7 +532,7 @@ input{
     margin: auto;
 }
 .checkbox-x svg line{ 
-    stroke: $brand-primary-light !important;
+    stroke: $brand-primary !important;
 }
 .answer-content-wrapper { 
     padding: 6px;
@@ -787,7 +807,7 @@ input{
 }
 .np-spinner div{
     font-family: $re-nu-serif;
-    color: $ANR-bg-color;
+    color: $ND-primary;
     font-size: floor(($font-size-base * 2.5));
     line-height: 2.1em;
     text-align: center;
@@ -904,7 +924,7 @@ input{
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #00518F;
+    background-color: $ND-primary;
 }
 .reveal-button {
     position: relative;
@@ -1220,8 +1240,8 @@ rect{
     cursor: pointer;
 }
 .draggableButton rect{
-    /*    stroke: $brand-primary;
-        stroke-width: 1.5px;*/
+    stroke: $ND-primary;
+    /*stroke-width: 1.5px;*/
     fill: $brand-primary-light;
 }
 .hit-area{

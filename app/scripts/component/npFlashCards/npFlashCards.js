@@ -16,8 +16,8 @@
             .controller('npFlashCardsController',
                     function ($log, $scope, $sce, $element) {
                         var cmpData = $scope.component.data,
-                                flashCards = $scope.component.flashCards;
-                        var buttonData = $scope.feedback || {};
+                                flashCards = $scope.component.flashCards,
+                                buttonData = $scope.feedback || {};
                         this.flashCardComponent = $scope.component.flashCards[0];
                         this.flashCardComponents = $scope.component.flashCards;
                         this.flashCardVideoType = $scope.component.baseURL;
@@ -31,9 +31,9 @@
                         //on button click do these things
                         //////////////////////////////////////////////////////////////////////////////////////
                         this.update = function (flashCardButton) {
-                            var idx = flashCards.indexOf(flashCardButton);
-                            var clickedFlashCard = $(".flash-cards-object")[idx];
-                            var flipped;
+                            var idx = flashCards.indexOf(flashCardButton),
+                                    clickedFlashCard = $(".flash-cards-object")[idx],
+                                    flipped;
                             TweenMax.killAll(false, true, false);
                             TweenMax.to(clickedFlashCard, 1, {
                                 rotationY: 180,
@@ -119,17 +119,27 @@
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //get actuall height
                                 //////////////////////////////////////////////////////////////////////////////////////
-                                console.log(
-                                        '\n::::::::::::::::::::::::::::::::::::::getOffsetRect::$( #npHTML\\:0_0_1 ):::::::::::::::::::::::::::::::::::::::::::::::::::::::',
-                                        '\n::$( #npHTML\\:0_0_1 )::', $("#npHTML\\:0_0_1").height(),
-                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-                                        );
+//                                console.log(
+//                                        '\n::::::::::::::::::::::::::::::::::::::getOffsetRect::$( #npHTML\\:0_0_1 ):::::::::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                        '\n::$( #npHTML\\:0_0_1 )::', $("#npHTML\\:0_0_1").height(),
+//                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                        );
                                 imagesLoaded(document.querySelector('.np-flash-card'), function (instance) {
                                     var maxHeight = Math.max.apply(null, $('.flash-card-content-back').map(function () {
                                         return $(this).outerHeight(true);
                                     }).get());
+//                                    $('.flash-card-content-back').outerHeight(true);
                                     var outsidePaddingHeight = $('.np_outside-padding').outerHeight(true);
                                     var outsideHeight = $("#npHTML\\:0_0_1").outerHeight(true);
+                                    console.log(
+                                            '\n::::::::::::::::::::::::::::::::::::::npFlashCards::max Height:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                            '\n::maxHeight:', maxHeight,
+                                            '\n::outsideHeight:', outsideHeight,
+                                            '\n::outsidePaddingHeight:', outsidePaddingHeight,
+                                            '\n::$(.flash-card-content-back).outerHeight(true):', $('.flash-card-content-back').outerHeight(true),
+                                            '\n::$(div .flash-card-content-back).outerHeight(true):', $('div .flash-card-content-back').outerHeight(true),
+                                            '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                            );
                                     TweenMax.set($('.flash-cards-object'), {
                                         height: maxHeight
                                     });
@@ -248,24 +258,66 @@
                                 TweenMax.set(elementIteration, {
                                     transformPerspective: "1000"
                                 });
-                                var currentIteration = elementIteration[i];
-                                var currentIterationWidth = currentIteration.offsetWidth;
-                                var currentIterationCenterWidth = (currentIterationWidth / 2);
-                                var itemsOffset = getOffsetRect(currentIteration);
-                                var itemsOffsetLeft = itemsOffset.left;
-                                var itemsOffsetCenter = (itemsOffsetLeft + currentIterationCenterWidth);
-                                var windowCenterOffsetOne = ($(".flash-cards-object").width() / 3);
-                                var windowCenterOffsetTwo = $(".flash-cards-object").width();
+                                var currentIteration = elementIteration[i],
+                                        currentIterationWidth = currentIteration.offsetWidth,
+                                        currentIterationCenterWidth = (currentIterationWidth / 2),
+                                        itemsOffset = getOffsetRect(currentIteration),
+                                        itemsOffsetLeft = itemsOffset.left,
+                                        itemsOffsetCenter = (itemsOffsetLeft + currentIterationCenterWidth),
+                                        windowCenterOffsetOne = ($(".flash-cards-object").width() / 3),
+                                        windowCenterOffsetTwo = $(".flash-cards-object").width() -100,
+                                        itemTopCenter,
+                                        itemAutoAlphaCenter,
+                                        itemAutoAlphaOne,
+                                        itemAutoAlphaTwo,
+                                        itemBlurCenter,
+                                        itemBlurOne,
+                                        itemBlurTwo,
+                                        itemMarginOffsetOne,
+                                        itemMarginOffsetTwo;
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                //get version for animation style from class
+                                //////////////////////////////////////////////////////////////////////////////////////
+                                if ($("#" + 'ND').length === 0) {
+                                    itemTopCenter = '10px';
+                                    itemAutoAlphaCenter = 1;
+                                    itemAutoAlphaOne = 1;
+                                    itemAutoAlphaTwo = 1;
+                                    itemBlurCenter = 0;
+                                    itemBlurOne = 0;
+                                    itemBlurTwo = 0;
+                                    itemMarginOffsetOne = '7em';
+                                    itemMarginOffsetTwo = '20em';
+                                } else {
+//                                    console.log(
+//                                            '\n::::::::::::::::::::::::::::::::::::::getOffsetRect::#ND .np-flash-card exists:::::::::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                            '\n::$("#ND .np-flash-card")::', $("#ND .np-flash-card"),
+//                                            '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                            );
+                                    itemTopCenter = '10px';
+                                    itemAutoAlphaCenter = 1;
+                                    itemAutoAlphaOne = 0.75;
+                                    itemAutoAlphaTwo = 0.45;
+                                    itemBlurCenter = 0;
+                                    itemBlurOne = 3;
+                                    itemBlurTwo = 6;
+                                    itemMarginOffsetOne = '15em';
+                                    itemMarginOffsetTwo = '33em';
+                                }
+
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //drag and throw CENTER item animation
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 if ((itemsOffsetCenter <= (windowCenter + windowCenterOffsetOne)) && (itemsOffsetCenter >= (windowCenter - windowCenterOffsetTwo))) {
                                     TweenMax.to(currentIteration, 1.75, {
                                         force3D: true,
-                                        top: '10px',
+                                        top: itemTopCenter,
                                         marginLeft: '0em',
                                         marginRight: '0em',
                                         scale: 1,
+                                        autoAlpha: itemAutoAlphaCenter, 
+                                        filter:"blur(" + itemBlurCenter + "px)",
+                                        webkitFilter:"blur(" + itemBlurCenter + "px)",
                                         z: '0',
                                         ease: Power4.easeOut
                                     });
@@ -297,11 +349,14 @@
                                     });
                                     TweenMax.to(currentIteration, 1.75, {
                                         force3D: true,
-                                        top: '10px',
+                                        top: itemTopCenter,
                                         rotationY: 0,
-                                        marginLeft: '-7em',
-                                        marginRight: '7em',
+                                        marginLeft: '-' + itemMarginOffsetOne,
+                                        marginRight: itemMarginOffsetOne,
                                         scale: 0.9,
+                                        autoAlpha: itemAutoAlphaOne,
+                                        filter:"blur(" + itemBlurOne + "px)",
+                                        webkitFilter:"blur(" + itemBlurOne + "px)",
                                         z: '-35',
                                         ease: Power4.easeOut
                                     });
@@ -328,10 +383,13 @@
                                     });
                                     TweenMax.to(currentIteration, 1.75, {
                                         force3D: true,
-                                        top: '10px',
-                                        marginLeft: '-20em',
-                                        marginRight: '20em',
+                                        top: itemTopCenter,
+                                        marginLeft: '-' + itemMarginOffsetTwo,
+                                        marginRight: itemMarginOffsetTwo,
                                         scale: 0.75,
+                                        autoAlpha: itemAutoAlphaTwo,
+                                        filter:"blur(" + itemBlurTwo + "px)",
+                                        webkitFilter:"blur(" + itemBlurTwo + "px)",
                                         z: '-70',
                                         ease: Power4.easeOut
                                     });
@@ -354,11 +412,14 @@
                                     });
                                     TweenMax.to(currentIteration, 1.75, {
                                         force3D: true,
-                                        top: '10px',
+                                        top: itemTopCenter,
                                         rotationY: 0,
-                                        marginRight: '-7em',
-                                        marginLeft: '7em',
+                                        marginRight: '-' + itemMarginOffsetOne,
+                                        marginLeft: itemMarginOffsetOne,
                                         scale: 0.9,
+                                        autoAlpha: itemAutoAlphaOne,
+                                        filter:"blur(" + itemBlurOne + "px)",
+                                        webkitFilter:"blur(" + itemBlurOne + "px)",
                                         z: '-50',
                                         ease: Power4.easeOut
                                     });
@@ -385,11 +446,14 @@
                                     });
                                     TweenMax.to(currentIteration, 1.75, {
                                         force3D: true,
-                                        top: '10px',
+                                        top: itemTopCenter,
                                         z: '-70',
-                                        marginRight: '-20em',
-                                        marginLeft: '20em',
+                                        marginRight: '-' + itemMarginOffsetTwo,
+                                        marginLeft: itemMarginOffsetTwo,
                                         scale: 0.75,
+                                        autoAlpha: itemAutoAlphaTwo,
+                                        filter:"blur(" + itemBlurTwo + "px)",
+                                        webkitFilter:"blur(" + itemBlurTwo + "px)",
                                         ease: Power4.easeOut
                                     });
                                     TweenMax.to($(currentIteration).find('.flash-card-overlay'), 1.75, {
@@ -457,7 +521,6 @@
                             });
                         }
                         update();
-                        // TODO: Refactor this / the below, it's confusing
                         function nScrollSNAP(Array, val) {
                             var SPoint, range = 400, i = 0;
                             for (i in Array) {
@@ -469,7 +532,6 @@
                             }
                             return SPoint;
                         }
-                        // TODO: Refactor this / the above, it's confusing
                         function NScrollSnap() {
                             if (nativeSCrl) {
 //                                console.log(
