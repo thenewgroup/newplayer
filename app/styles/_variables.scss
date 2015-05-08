@@ -47,8 +47,12 @@ $brand-success:         #9A7D46 !default;
 $brand-info:            #F05C72 !default;
 /*Tertiary error*/
 $brand-warning:         #FF0000 !default;
-
 $brand-danger:          #DC3522 !default;
+
+/*::::New Player Vars::::*/
+$ANR-bg-color:          #014c95 !default;
+$ND-primary:            #4ea1bf !default;
+$ND-secondary:          #70b3cb !default;
 
 /*::::Gradiant::::*/
 /*Gradiant points*/
@@ -131,7 +135,6 @@ $font-family-serif:       Georgia, "Times New Roman", Times, serif !default;*/
 $font-family-sans-serif_head:  "akzidenz-grotesk_bqbold";
 $font-family-sans-serif:  "akzidenz-grotesk_bqregular";
 $re-nu-serif:             "BauerBodoniStd-Roman";
-/*$font-family-sans-serif_head;*/
 
 $font-family-serif:       "optimadisplaylightlight";
 // Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
@@ -264,8 +267,6 @@ $table-bg-active:               $table-bg-hover !default;
 
 //::::Border color for table and cell borders.
 $table-border-color:            #ddd !default;
-$ANR-bg-color:                  #014c95 !default;
-
 
 //== Buttons
 //

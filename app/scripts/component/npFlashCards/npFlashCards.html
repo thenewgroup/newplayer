@@ -11,13 +11,14 @@
                 <div flash-card class="flash-cards-object " ng-repeat="flashCardComponent in npFlashCards.flashCardComponents">
                     <div class="flash-card-front-wrapper">
                         <div class="flash-card-background"></div>
-                        <p class="body-copy flash-card-content-front" ng-bind-html="flashCardComponent.contentFront"></p>
+                        <div class="body-copy flash-card-content-front" ng-bind-html="flashCardComponent.contentFront"></div>
                         <div class="flash-card-border"></div>
                         <div class="flash-card-overlay"></div>
                     </div>
                     <div class="flash-card-back-wrapper">
                         <div class="flash-card-background"></div>
-                        <p class="flash-card-content-back" ng-bind-html="flashCardComponent.contentBack"></p>
+                        <div class="flash-card-content-back" ng-bind-html="flashCardComponent.contentBack"></div>
+                        <!--<p class="flash-card-content-back" ng-bind-html="flashCardComponent.contentBack"></p>-->
                     </div>
                     <div class="flash-card-button" ng-click="npFlashCards.update(flashCardComponent)">
                         <svg version="1.0"  class='button-holder' xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="25px" height="19.7px" viewBox="343.2 692.6 25 19.7" xml:space="preserve">

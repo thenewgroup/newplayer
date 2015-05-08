@@ -510,6 +510,25 @@ module.exports = function (grunt) {
     ]);
   });
 
+  grunt.registerTask('punt', [
+    'clean:dist',
+    'wiredep:app',
+    'wiredep:sass',
+    'useminPrepare',
+    'concurrent:dist',
+    'autoprefixer',
+    'ngtemplates',
+    'concat',
+    'ngAnnotate',
+    'cssmin',
+    'uglify',
+    'copy:dist',
+    'modernizr',
+    'rev',
+    'usemin',
+    'htmlmin'
+  ]);
+
   grunt.registerTask('build', [
     'clean:dist',
     'wiredep:app',
