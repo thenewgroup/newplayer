@@ -3709,7 +3709,7 @@
                                 }
                             } else {
                                 $scope.currentPage = false;
-                                TrackingService.trackPageView(pageId);
+                                // TrackingService.trackPageView(pageId);
                             }
                         }
                     }
