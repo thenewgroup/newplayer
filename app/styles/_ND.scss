@@ -455,10 +455,9 @@ small{
 input{ 
     font-family: $re-nu-serif;
     size: $font-size-small;
-    color: #737373;
+    color: #313131;
     text-transform: uppercase;
     letter-spacing: 2px;
-    color: #313131;
 }
 .answer-text-input{ 
     font-family: $re-nu-serif;
@@ -1213,7 +1212,7 @@ foreignobject{
 .positive-feedback-image{
     position: absolute;
     top: 0;
-    bottom: 0;
+    bottom: 10px;
     width: 25px;
 }
 .positive-feedback-image polygon, path{

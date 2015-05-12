@@ -61,11 +61,17 @@
                                     scale: 2.5,
                                     force3D: true
                                 });
+                                TweenMax.to($element.find('.negative-feedback-icon svg'), 0.25, {
+                                    height: '100%',
+                                    force3D: true
+                                });
                                 TweenMax.set(positiveFeedbackIcon, {
                                     autoAlpha: 0,
                                     scale: 2.5,
                                     force3D: true
                                 });
+//                                TweenMax.set($element.find('.negative-feedback-icon svg'), {height: '100%'});
+                                TweenMax.set(positiveFeedbackIcon, {height: '100%'});
                             }
                         };
                         vm.evaluate = function () {
@@ -80,11 +86,17 @@
                                 scale: 2.5,
                                 force3D: true
                             });
+                            TweenMax.to($element.find('.negative-feedback-icon svg'), 0.25, {
+                                height: '100%',
+                                force3D: true
+                            });
                             TweenMax.to(positiveFeedbackIcon, 0.25, {
                                 autoAlpha: 0,
                                 scale: 2.5,
                                 force3D: true
                             });
+//                            TweenMax.set($element.find('.negative-feedback-icon svg'), {height: '100%'});
+                            TweenMax.set(positiveFeedbackIcon, {height: '100%'});
                             $log.debug('npAsQuestion::evaluating type to check', cmpData);
                             switch (cmpData.type) {
                                 case 'checkbox':
@@ -158,13 +170,16 @@
                                             onComplete: function () {
                                                 TweenMax.set(positiveFeedbackIcon, {
                                                     top: ((contentAreaHeight / 2) + (positiveFeedbackIcon / 2)),
+                                                    height: '100%',
                                                     force3D: true
                                                 });
                                                 TweenMax.to(positiveFeedbackIcon, 0.75, {
                                                     autoAlpha: 1,
                                                     scale: 1,
+                                                    height: '100%',
                                                     force3D: true
                                                 });
+                                                TweenMax.set(positiveFeedbackIcon, {height: '100%'});
                                             }
                                         });
                                     });
@@ -206,6 +221,7 @@
                                                     scale: 1,
                                                     force3D: true
                                                 });
+                                                TweenMax.set(negativeFeedbackIcon, {height: '100%'});
                                             }
                                         });
                                     });
@@ -223,14 +239,16 @@
             .directive('questionFeedbackBuild', function () {
                 return function ($scope, $element, attrs) {
                     var negativeFeedbackIcon = '';
-                    var postiveFeedbackIcon = '';
+                    var positiveFeedbackIcon = '';
                     setTimeout(function () {
                         $scope.$apply(function () {
                             function onPageLoadBuild() {
                                 negativeFeedbackIcon = $('.negative-feedback-icon');
-                                postiveFeedbackIcon = $('.positive-feedback-icon');
+                                positiveFeedbackIcon = $('.positive-feedback-icon');
                                 TweenMax.set(negativeFeedbackIcon, {autoAlpha: 0, scale: 2.5, force3D: true});
-                                TweenMax.set(postiveFeedbackIcon, {autoAlpha: 0, scale: 2.5, force3D: true});
+                                TweenMax.set(positiveFeedbackIcon, {autoAlpha: 0, scale: 2.5, force3D: true});
+                                TweenMax.set(negativeFeedbackIcon, {height: '100%'});
+                                TweenMax.set(positiveFeedbackIcon, {height: '100%'});
                             }
                             onPageLoadBuild();
                         });

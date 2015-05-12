@@ -51,6 +51,7 @@ $brand-danger:          #DC3522 !default;
 
 /*::::New Player Vars::::*/
 $ANR-bg-color:          #014c95 !default;
+$ANR2-color:            #080F30 !default;
 $ND-primary:            #4ea1bf !default;
 $ND-secondary:          #70b3cb !default;
 
@@ -147,6 +148,7 @@ $font-size-small:         ceil(($font-size-base * 1.15)) !default; // ~17px
 
 
 /*Headline*/
+$font-size-55:            floor(($font-size-base * 3.95)) !default;    // ~55px
 $font-size-h1:            floor(($font-size-base * 3.6)) !default;    // ~50px
 /*$font-size-h1:            floor(($font-size-base * 2.6)) !default;    // ~36px*/
 $font-size-36:            floor(($font-size-base * 2.6)) !default;    // ~36px

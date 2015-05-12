@@ -46,6 +46,21 @@
 @import "../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/close";
 
 //Custom Classes
+#ANR {
+    @import "_ANR.scss";
+}
+#ANR2 {
+    @import "_ANR2.scss";
+}
+#BSFL {
+    @import "_BSfL.scss";
+}
+#GMTC {
+    @import "_GMTC.scss";
+}
+#ND {
+    @import "_ND.scss";
+}
 #np_products {
     @import "_products.scss";
 }
@@ -57,21 +72,6 @@
 }
 #np_storyBethsBlog {
     @import "_storyBethsBlog.scss";
-}
-#ANR {
-    @import "_ANR.scss";
-}
-#GMTC {
-    @import "_GMTC.scss";
-}
-#ANR2 {
-    @import "_ANR2.scss";
-}
-#BSFL {
-    @import "_BSFL.scss";
-}
-#ND {
-    @import "_ND.scss";
 }
 
 // Components w/ JavaScript

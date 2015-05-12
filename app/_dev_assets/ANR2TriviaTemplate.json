@@ -1,0 +1,298 @@
+[
+    {
+        "type": "npFeature",
+        "data": {
+            "id": "ANR2",
+            "class": " ",
+            "req": [],
+            "version": "0.0.1",
+            "timestamp": "1970-01-01_00:00:00"
+        },
+        "components": [
+            {
+                "type": "npContent",
+                "data": {
+                    "id": "content_en-US",
+                    "class": "",
+                    "language": "en-US",
+                    "title": "Re Nutriv",
+                    "description": "Re Nutriv template"
+                },
+                "components": [
+                    {
+                        "type": "npHTML",
+                        "data": {
+                            "id": "newplayer-background",
+                            "class": "",
+                            "content": ""
+                        },
+                        "components": [
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "background-image",
+                                    "class": ""
+                                },
+                                "components": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "npHTML",
+                        "data": {
+                            "id": "",
+                            "class": "outside-padding",
+                            "content": ""
+                        },
+                        "components": [
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "",
+                                    "class": "renutriv-logo-image"
+                                },
+                                "components": []
+                            },
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "",
+                                    "class": "h3 headline",
+                                    "content": "<p>(h3 Headline) Our Newest List Component: Ultimate Diamond</p>"
+                                },
+                                "components": []
+                            },
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "",
+                                    "class": "h6 instructional",
+                                    "content": "<p>(Instructional copy) Select each image to learn more.</p>"
+                                },
+                                "components": []
+                            },
+                            {
+                                "type": "npTrivia",
+                                "data": {
+                                    "required": false,
+                                    "forced": false,
+                                    "difficulty": 1,
+                                    "content": " This is the 'What number am I thinking of?' trivia!",
+                                    "feedback": {
+                                        "immediate": true,
+                                        "correct": "Hey, that's right!",
+                                        "incorrect": "No! ... What are you thinking!?"
+                                    }
+                                },
+                                "components": [
+                                    {
+                                        "type": "npPage",
+                                        "data": {
+                                            "id": "Page1",
+                                            "parentId": "",
+                                            "title": "Welcome",
+                                            "inMenu": true,
+                                            "required": false
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npQuestion",
+                                                "data": {
+                                                    "class": "row",
+                                                    "id": "Question1",
+                                                    "required": false,
+                                                    "forced": false,
+                                                    "type": "checkbox",
+                                                    "difficulty": 1,
+                                                    "content": "What number am I thinking of? QUESTION 1",
+                                                    "feedback": {
+                                                        "correct": "Hey, that's right!",
+                                                        "incorrect": "No! ... What are you thinking!?"
+                                                    }
+                                                },
+                                                "components": [
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "class": "answer-text",
+                                                            "label": "8",
+                                                            "correct": false
+                                                        },
+                                                        "components": [
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "class": "answer-text",
+                                                            "label": "7,433.6",
+                                                            "correct": false
+                                                        },
+                                                        "components": [
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "class": "answer-text",
+                                                            "label": "<img src=\"http://i.istockimg.com/file_thumbview_approve/33898764/2/stock-photo-33898764-isolated-chicken-with-egg.jpg\" height=\"50\" />",
+                                                            "correct": true
+                                                        },
+                                                        "components": [
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "class": "answer-text",
+                                                            "label": "<strong>Bologna!</strong>",
+                                                            "correct": true
+                                                        },
+                                                        "components": [
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "Page2",
+                                                    "class": "btn-next",
+                                                    "content": "NEXT"
+                                                },
+                                                "components": []
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npPage",
+                                        "data": {
+                                            "id": "Page2",
+                                            "parentId": "question1",
+                                            "title": "Question 1",
+                                            "inMenu": true,
+                                            "required": false
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npQuestion",
+                                                "data": {
+                                                    "class": "row",
+                                                    "required": false,
+                                                    "forced": false,
+                                                    "type": "checkbox",
+                                                    "difficulty": 2,
+                                                    "content": "What number am I thinking of? QUESTION 2",
+                                                    "feedback": {
+                                                        "immediate": false,
+                                                        "correct": "Hey, that's right!",
+                                                        "incorrect": "No! ... What are you thinking!?"
+                                                    }
+                                                },
+                                                "components": [
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "class": "answer-text",
+                                                            "label": "800000000",
+                                                            "correct": false
+                                                        },
+                                                        "components": [
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "class": "answer-text",
+                                                            "label": "7,433.6",
+                                                            "correct": false,
+                                                            "correct": "Hey, that's right!",
+                                                            "incorrect": "No! ... What are you thinking!?"
+                                                        },
+                                                        "components": [
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "class": "answer-text",
+                                                            "label": "<img src=\"http://i.istockimg.com/file_thumbview_approve/33898764/2/stock-photo-33898764-isolated-chicken-with-egg.jpg\" height=\"50\" />",
+                                                            "correct": true,
+                                                            "correct": "Hey, that's right!",
+                                                            "incorrect": "No! ... What are you thinking!?"
+                                                        },
+                                                        "components": [
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "class": "answer-text",
+                                                            "label": "<strong>Bologna!</strong>",
+                                                            "correct": true
+                                                        },
+                                                        "components": [
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "Page3",
+                                                    "class": "btn-next",
+                                                    "content": "NEXT"
+                                                },
+                                                "components": []
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npPage",
+                                        "data": {
+                                            "id": "Page3",
+                                            "parentId": "QuizIntro",
+                                            "title": "Question 1",
+                                            "inMenu": true,
+                                            "required": false
+                                        },
+                                        "components":
+                                                [
+                                                    {
+                                                        "type": "npQuestion",
+                                                        "data": {
+                                                            "class": "row",
+                                                            "required": true,
+                                                            "forced": true,
+                                                            "type": "text",
+                                                            "difficulty": 3,
+                                                            "content": "What is the greatest thing ever!? QUESTION 3",
+                                                            "feedback": {
+                                                                "immediate": true,
+                                                                "correct": "Of course it is!",
+                                                                "incorrect": "Hmmm... yeeeaaa... no!"
+                                                            }
+                                                        },
+                                                        "components": [
+                                                            {
+                                                                "type": "npAnswer",
+                                                                "data": {
+                                                                    "class": "answer-text",
+                                                                    "label": "Answer:",
+                                                                    "correct": "/ice\\s?cream/i"
+                                                                },
+                                                                "components": []
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

@@ -30,17 +30,15 @@ img.blur {
         filter: blur(3px); */
 }
 .vertical-centered {
-    min-height: 100%;  /* Fallback for vh unit */
-    min-height: 100vh; /* You might also want to use
-                          'height' property instead.
-                         
-                          Note that for percentage values of
-                          'height' or 'min-height' properties,
-                          the 'height' of the parent element
-                          should be specified explicitly.
-   
-                          In this case the parent of '.vertical-center'
-                          is the <body> element */
+    /* Fallback for vh unit */
+    min-height: 100%;  
+    
+    /* You might also want to use 'height' property instead.
+    Note that for percentage values of 'height' or 'min-height' properties, the 
+    'height' of the parent element should be specified explicitly.
+    In this case the parent of '.vertical-center' is the <body> element */
+    min-height: 100vh; 
+    
     /* Make it a flex container */
     display: -webkit-box;
     display: -moz-box;
@@ -55,8 +53,7 @@ img.blur {
     -ms-flex-align : center;
     align-items : center;
 
-    /* In legacy web browsers such as Firefox 9
-       we need to specify the width of the flex container */
+    /* In legacy web browsers such as Firefox 9 we need to specify the width of the flex container */
     width: 100%;
 
     /* Also 'margin: 0 auto' doesn't have any effect on flex items in such web browsers
@@ -158,7 +155,6 @@ img.blur {
     background-origin: content-box ;
     padding-left: 16px; /* Or size of icon + spacing */
 }
-
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player padding wrapper classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -339,15 +335,19 @@ img.blur {
         width: none !important; 
     }
 }*/
-
-
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/* FireFox bug fix drag and drop*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.hit-area svg {
+    filter: blur(0px);
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/* Safari bug fix for video widths*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 .videoWidth {
-    /*width: inherit;*/
     width: 100%;
 }
 video {
-    /*width: inherit;*/
-    /*width: 100%;*/
     max-width: 100%;
     height: auto;
 }

@@ -4,7 +4,14 @@
 /*When setting this ID for New Player use: 'newplayer-background'*/
 #np_newplayer-background{
     position: fixed;
-    background-color: $ANR-bg-color;
+    background: rgba(4,10,43,1);
+    background: -moz-linear-gradient(left, rgba(4,10,43,1) 0%, rgba(59,75,119,1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(4,10,43,1)), color-stop(100%, rgba(59,75,119,1)));
+    background: -webkit-linear-gradient(left, rgba(4,10,43,1) 0%, rgba(59,75,119,1) 100%);
+    background: -o-linear-gradient(left, rgba(4,10,43,1) 0%, rgba(59,75,119,1) 100%);
+    background: -ms-linear-gradient(left, rgba(4,10,43,1) 0%, rgba(59,75,119,1) 100%);
+    background: linear-gradient(to right, rgba(4,10,43,1) 0%, rgba(59,75,119,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#040a2b', endColorstr='#3b4b77', GradientType=1 );
     background-size: cover;
     content: "";
     width:100%;
@@ -16,18 +23,19 @@
 }
 #background-image {
     position:fixed;
-    background-image: url('../assets/images/ESTL-005_ANR_bg_img.jpg');
+    background-image: url('../assets/images/ESTL-006-ANR2-helix.png');
+    background-position: right top;
     background-repeat: no-repeat;
-    background-size: 100% 100%;
+    background-size:35%;
     background-origin: content-box;
     width:100%;
     height:100%;
 }
 .renutriv-logo-image {
     position: relative;
-    background-image: url("../assets/images/AdvancedNightRepairLogoSm.png");
+    background-image: url("../assets/images/AdvancedNightRepair2LogoSm.png");
     background-repeat: no-repeat;
-    width: 312px;
+    width: 332px;
     height: 19px;
     padding-bottom: 11px;
 }
@@ -48,7 +56,7 @@
 .instructional{
     font-family: $font-family-sans-serif;
     font-size: $font-size-h5;
-    color: #000000;
+    color: $brand-primary-light;
     letter-spacing: 1px;
     padding-top: 0px;
     padding-bottom: 20px;
@@ -61,7 +69,7 @@
 }
 .subhead-copy{
     font-family: $font-family-sans-serif;
-    color: $brand-primary;
+    color: $brand-primary-light;
     font-size: $font-size-18;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -69,7 +77,7 @@
 }
 .body-copy-strong{
     font-family: $font-family-sans-serif;
-    color: $brand-primary;
+    color: $brand-primary-light;
     font-size: $font-size-18;
     letter-spacing: 2px;
     margin-bottom: $line-height-computed;
@@ -86,7 +94,7 @@
 }
 .body-copy{
     font-family: $font-family-sans-serif;
-    color: $brand-primary;
+    color: $brand-primary-light;
     font-size: $font-size-17;
     letter-spacing: 2px;
     line-height: 1.35;
@@ -100,14 +108,14 @@
     }
 }
 small{
-    color: $brand-primary;
+    color: $brand-primary-light;
 }
 .dark .h1, .h2, .h3, .h4, .h5 {
     /*color: $gray-dark;*/
 }
 .header-dark {
     font-family: $font-family-serif;
-    color: $gray-base;
+    color: $brand-primary-light;
     font-size: $font-size-36;
     letter-spacing: 2px;
     padding-top: 0px;
@@ -148,16 +156,10 @@ small{
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player button classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-.btn span{ 
-    font-family: $font-family-sans-serif;
-    color: $brand-primary-light;
-    text-transform: uppercase;
-    letter-spacing: 0.25em;
-}
 .btn{ 
     position: relative;
     border-color: $brand-primary-light;
-    background-color: $brand-primary;
+    background-color: $ANR2-color;
     width: auto !important;
     min-width: fit-content;
     margin-top: 5px;
@@ -188,6 +190,8 @@ small{
     padding: 0;
 }
 .btn-submit{
+    margin-top: 10px;
+    margin-left: 60px;
 }
 .btn-submit span{ 
 }
@@ -260,8 +264,9 @@ small{
     padding-right: 20px;
 }
 .content-background-svg rect{
-    fill: hsla(100%,100%,100%,0.5);
-    stroke: #125aa0;
+    /*fill: hsla(100%,100%,100%,0.5);*/
+    fill: $ANR2-color;
+    stroke: $brand-primary-light;
     stroke-width: 4px;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -285,7 +290,6 @@ small{
     display: inline-block;
     overflow: hidden;
     width: 560px;
-    /*min-height: 800px;*/
     margin-bottom: 222px;
     padding-bottom: 15px;
 }
@@ -301,7 +305,7 @@ small{
     right: 0;
     top: 0;
     bottom: 0;
-    background-color: #00518F;
+    background-color: $ANR2-color;
 }
 .flash-card-border {
     position: absolute;
@@ -311,7 +315,7 @@ small{
     right: 0;
     top: 0;
     bottom: 0;
-    border-color: $brand-primary;
+    border-color: $brand-primary-light;
     border-width: 10px;
     box-shadow: inset 0px 0px 10px 1px $brand-primary;
 }
@@ -350,11 +354,11 @@ small{
     top: 0;
     bottom: 0;
     overflow: hidden;
-    background-color: #FFFFFF;
+    background-color: $ANR2-color;
     min-height: 475px;
 }
 .flash-card-content-front p{
-    color: $brand-primary;
+    color: $brand-primary-light;
 }
 ///////////////back/////////////////
 .flash-card-back-wrapper {
@@ -369,11 +373,11 @@ small{
     left: 0;
     right: 0;
     top: 0;
-    background-color: #FFFFFF;
+    background-color: $ANR2-color;
     min-height: 475px;
 }
 .flash-card-content-back p{
-    color: $brand-primary;
+    color: $brand-primary-light;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Matching Game classes*/
@@ -435,18 +439,17 @@ small{
 input{ 
     font-family: $re-nu-serif;
     size: $font-size-small;
-    color: #737373;
+    color: $brand-primary-light;
     text-transform: uppercase;
     letter-spacing: 2px;
-    color: #313131;
 }
 .answer-text-input{ 
     font-family: $re-nu-serif;
     size: $font-size-small;
-    color: #737373;
+    color: $brand-primary-light;
     letter-spacing: 2px;
-    border-color: $gold;
-    background-color: $gray-dark;
+    border-color: $ANR2-color;
+    background-color: $brand-primary-light;
     box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
 }
 .answer-text-checkbox { 
@@ -491,9 +494,9 @@ input{
     box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
 }
 .checkbox-box svg rect{
-    fill: $brand-primary;
+    fill: $brand-primary-light;
     opacity: 0.75;
-    stroke: #FFFFFF;
+    stroke: $ANR2-color;
     stroke-width: 3;
 }
 .checkbox-x{ 
@@ -512,12 +515,12 @@ input{
     margin: auto;
 }
 .checkbox-x svg line{ 
-    stroke: $brand-primary-light !important;
+    stroke: $ANR2-color !important;
 }
 .answer-content-wrapper { 
     padding: 6px;
     opacity: .75;
-    background-color: #FFFFFF;
+    /*background-color: $ANR2-color;*/
     margin-left: 20px;
 }
 .answer-text{ 
@@ -539,7 +542,7 @@ input{
 }
 .question-feedback-wrapper{ 
     position: relative;
-    background-color: #FFFFFF;
+    background-color: $ANR2-color;
     box-shadow: inset 0 0 5px 3px rgba(0, 0, 0, 0.25);
     padding: 20px;
     width: 100%;
@@ -561,7 +564,7 @@ input{
 .question-feedback-text{ 
     font-family: $font-family-sans-serif;
     float: left;
-    color: $brand-primary;
+    color: $brand-primary-light;
     letter-spacing: 2px;
     margin-bottom: 0;
     margin-left: 40px;
@@ -589,21 +592,21 @@ input{
     letter-spacing: 2px;
 }
 .question-feedback-wrapper svg polygon{ 
-    fill: $brand-primary;
+    fill: $brand-primary-light;
 }
 .question-feedback-wrapper svg path{ 
-    fill: $brand-primary;
+    fill: $brand-primary-light;
 }
 .question-submit-wrapper{
-    text-align: center;
-    margin-top: 3em;
+    /*    text-align: center;
+        margin-top: 3em;*/
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Result classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 .np-result{
     font-family: $font-family-serif;
-    color: $brand-primary;
+    color: $brand-primary-light;
 }
 .np-result-summary{
     position: relative;
@@ -674,8 +677,8 @@ input{
     opacity: 0.65;
 }
 .np-result-container rect{
-    stroke: #125AA0;
-    fill: $brand-primary-light;
+    stroke: $brand-primary-light;
+    fill: $ANR2-color;
     stroke-width: 6;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -771,7 +774,7 @@ input{
     /*width: 135px;*/
 }
 .np-spinner{
-    color: $gold;
+    color: $ANR2-color;
     width: 155px;
 }
 .np-gold-pointer{
@@ -794,11 +797,11 @@ input{
 }
 .np-spinner svg rect{
     fill: rgba(0, 0, 0, 0.0);
-    stroke: #040A2B;
+    stroke: $brand-primary-light;
     stroke-width: 4;
 }
 .np-gold-pointer svg polygon{
-    fill: #040A2B !important;
+    fill: $ANR-bg-color !important;
     box-shadow: 10px 10px 25px -5px rgba(0,0,0,0.75);
     z-index: 10000;
 }
@@ -876,7 +879,7 @@ input{
     height: 62px;
     width: 62px;
     padding: 5.5%;
-    background-color:#FFFFFF;
+    background-color: $ANR2-color;
     overflow: hidden;
 }
 /*
@@ -904,7 +907,7 @@ input{
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #00518F;
+    background-color: $ANR2-color;
 }
 .reveal-button {
     position: relative;
@@ -962,14 +965,14 @@ input{
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #FFFFFF;
+    background-color: $ANR2-color;
     opacity: 0.75;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player List classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 .list-item{
-    color: $brand-primary;
+    color: $brand-primary-light;
     letter-spacing: 2px;
 }
 .column-1{
@@ -981,12 +984,12 @@ input{
 }
 .media-body{
     padding: 5%;
-    background-color: #FFFFFF;
+    background-color: $ANR2-color;
     opacity: 0.75;
     /*box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);*/
 }
 .list-body-text{
-    color: $brand-primary;
+    color: $brand-primary-light;
     letter-spacing: 2px;
     font-size: $font-size-base;
 }
@@ -1005,7 +1008,7 @@ input{
     left:0;
     bottom:0;
     right:0;
-    background-color: $brand-primary-light;
+    background-color: $ANR2-color;
     box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
 }
 .select-button-wrapper{
@@ -1039,10 +1042,10 @@ input{
     width: 90%;
 }
 .select-response-wrapper p, h2{
-    color: $brand-primary;
+    color: $brand-primary-light;
 }
 .select-response-wrapper polygon, .select-response-wrapper path{
-    fill: $brand-primary !important;
+    fill: $ANR2-color !important;
 }
 .select-response-background {
     position:absolute;
@@ -1052,7 +1055,7 @@ input{
     left:0;
     bottom:0;
     right:0;
-    background-color: $brand-primary-light;
+    background-color: $ANR2-color;
     box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
 }
 .select-response-correct{
@@ -1086,7 +1089,7 @@ input{
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*p ul ol{
     font-size: $font-size-17;
-    color: $brand-primary;
+    color: $brand-primary-light;
 }*/
 .button-prioritize-content{
     position: relative;
@@ -1100,7 +1103,7 @@ input{
 }
 .hit-area-number{
     font-size: 7em;
-    color: #000000;
+    color: $brand-primary-light;
     opacity: .15;
     text-align: center;
     padding-left: 20px;
@@ -1133,7 +1136,7 @@ input{
     bottom:0;
     right:0;
     text-align: left;
-    color: $brand-primary;
+    color: $brand-primary-light;
     margin-bottom: 1.5%;
 }
 .hit-area-background {
@@ -1144,7 +1147,7 @@ input{
     left:0;
     bottom:0;
     right:0;
-    background-color: #FFFFFF;
+    background-color: $ANR2-color;
     box-shadow: inset 0 0 6px 3px rgba(0, 0, 0, 0.25);
 }
 .boxElements svg{
@@ -1159,7 +1162,7 @@ input{
     bottom:0;
     right:0;
     text-align: left;
-    color: $brand-primary;
+    color: $brand-primary-light;
     margin-bottom: 2.5%;
 }
 foreignobject{
@@ -1196,8 +1199,8 @@ foreignobject{
     bottom: 0;
     width: 25px;
 }
-.positive-feedback-image polygon, path{
-    fill: $brand-primary;
+.positive-feedback-image polygon, .positive-feedback-image path{
+    fill: $ANR2-color;
 }
 .button-content{
     position: relative;
@@ -1220,9 +1223,9 @@ rect{
     cursor: pointer;
 }
 .draggableButton rect{
-    /*    stroke: $brand-primary;
-        stroke-width: 1.5px;*/
-    fill: $brand-primary-light;
+    stroke: $brand-primary-light;
+    /*stroke-width: 1.5px;*/
+    fill: $ANR2-color;
 }
 .hit-area{
     position: relative;
@@ -1245,7 +1248,7 @@ rect{
     opacity: .90;
 }  
 .hit-area svg rect{
-    fill: #FFFFFF;
+    fill: $ANR2-color;
     opacity: 0.75;
     stroke: #FFFFFF;
     stroke-width: 3;

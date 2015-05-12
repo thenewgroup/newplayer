@@ -3,8 +3,8 @@
         <div class="debug">
             <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
         </div>
-        <div ng-bind-html="npPage.title" class="npPage-title h3">{{npPage.title}}</div>
-        <div ng-bind-html="npPage.subTitle" class="npPage-subTitle h4">{{npPage.subTitle}}</div>
+        <div ng-bind-html="npPage.title" class="headline npPage-title">{{npPage.title}}</div>
+        <div ng-bind-html="npPage.subTitle" class="npPage-subTitle">{{npPage.subTitle}}</div>
         <div ng-bind-html="npPage.instructional" class="npPage-instructional">{{npPage.instructional}}</div>
         <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
     </main>

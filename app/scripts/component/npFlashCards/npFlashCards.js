@@ -265,7 +265,7 @@
                                         itemsOffsetLeft = itemsOffset.left,
                                         itemsOffsetCenter = (itemsOffsetLeft + currentIterationCenterWidth),
                                         windowCenterOffsetOne = ($(".flash-cards-object").width() / 3),
-                                        windowCenterOffsetTwo = $(".flash-cards-object").width() -100,
+                                        windowCenterOffsetTwo = $(".flash-cards-object").width(),
                                         itemTopCenter,
                                         itemAutoAlphaCenter,
                                         itemAutoAlphaOne,
@@ -279,6 +279,12 @@
                                 //get version for animation style from class
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 if ($("#" + 'ND').length === 0) {
+//                                    console.log(
+//                                            '\n::::::::::::::::::::::::::::::::::::::getOffsetRect::default settings:::::::::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                            '\n::$("#ND .np-flash-card")::', $("#ND .np-flash-card"),
+//                                            '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                            );
+                                    windowCenterOffsetTwo = windowCenterOffsetTwo + 10;
                                     itemTopCenter = '10px';
                                     itemAutoAlphaCenter = 1;
                                     itemAutoAlphaOne = 1;
@@ -294,6 +300,7 @@
 //                                            '\n::$("#ND .np-flash-card")::', $("#ND .np-flash-card"),
 //                                            '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
 //                                            );
+                                    windowCenterOffsetTwo = windowCenterOffsetTwo - 100;
                                     itemTopCenter = '10px';
                                     itemAutoAlphaCenter = 1;
                                     itemAutoAlphaOne = 0.75;

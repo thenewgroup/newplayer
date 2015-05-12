@@ -16,19 +16,19 @@
 }
 #background-image {
     position:fixed;
-    background-image: url('../assets/images/ESTL-005_ANR_bg_img.jpg');
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
+    background-image: url('../assets/images/ESTL-006-BSfL-bg.jpg');
+    background-repeat: repeat-y;
+    background-size: auto 100%;
     background-origin: content-box;
     width:100%;
     height:100%;
 }
 .renutriv-logo-image {
     position: relative;
-    background-image: url("../assets/images/AdvancedNightRepairLogoSm.png");
+    background-image: url("../assets/images/BSfLLogo.png");
     background-repeat: no-repeat;
-    width: 312px;
-    height: 19px;
+    width: 241px;
+    height: 12px;
     padding-bottom: 11px;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -36,13 +36,14 @@
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 .headline{
     font-family: $font-family-serif;
-    font-size: $font-size-36;
-    color: $brand-primary-light; 
+    font-size: $font-size-55;
+    color: $brand-primary; 
     letter-spacing: 2px;
-    padding-top: 10px;
+    padding-top: 1px;
     padding-bottom: 0px;
     margin-top: 10px;
     display: inline-block;
+    line-height: 1.2;
     margin-bottom: $line-height-computed;
 }
 .instructional{
@@ -57,7 +58,7 @@
     margin-bottom: $line-height-computed;
 }
 .h1, .h2, .h3, .h4, .h5{
-    color: $brand-primary-light;
+    color: $brand-primary;
 }
 .subhead-copy{
     font-family: $font-family-sans-serif;
@@ -119,14 +120,14 @@ small{
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 .npPage-title{
     font-family: $font-family-serif;
-    color: $brand-primary-light;
+    color: $brand-primary;
     letter-spacing: 2px;
     margin-top: 10px;
     margin-bottom: $line-height-computed;
 }
 .npPage-subTitle{
     font-family: $font-family-sans-serif;
-    color: $brand-primary-light;
+    color: $brand-primary;
     font-size: $font-size-18;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -134,7 +135,7 @@ small{
 }
 .npPage-instructional{
     font-size: $font-size-h5;
-    color: $brand-primary-light;
+    color: $brand-primary;
     letter-spacing: 1px;
     margin-bottom: 20px;
     margin-top: 0px;
@@ -261,7 +262,7 @@ small{
 }
 .content-background-svg rect{
     fill: hsla(100%,100%,100%,0.5);
-    stroke: #125aa0;
+    stroke: $brand-primary;
     stroke-width: 4px;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -301,20 +302,18 @@ small{
     right: 0;
     top: 0;
     bottom: 0;
-    background-color: #00518F;
+    background-color: #FFFFFF;
 }
-.flash-card-border {
+/*.flash-card-border {
     position: absolute;
     width: 100%;
-    visibility: hidden;
+    visibility: visible;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
-    border-color: $brand-primary;
-    border-width: 10px;
-    box-shadow: inset 0px 0px 10px 1px $brand-primary;
-}
+    box-shadow: inset 0px 0px 1px 1px $brand-primary;
+}*/
 ///////////////button/////////////////
 .flash-card-button {
     position: absolute;
@@ -326,7 +325,7 @@ small{
 }
 .button-holder{
     position: relative;
-    fill: #d9d9d9;
+    fill: $brand-primary;
 }
 ///////////////front/////////////////
 .flash-card-front-wrapper {
@@ -339,7 +338,7 @@ small{
 }
 @media (max-width: $screen-sm) {
     .flash-card-front-wrapper {
-        height: 235px;
+        /*height: 235px;*/
     }
 }
 .flash-card-content-front {
@@ -351,6 +350,7 @@ small{
     bottom: 0;
     overflow: hidden;
     background-color: #FFFFFF;
+    box-shadow: inset 0px 0px 1px 1px $brand-primary;
     min-height: 475px;
 }
 .flash-card-content-front p{
@@ -370,6 +370,7 @@ small{
     right: 0;
     top: 0;
     background-color: #FFFFFF;
+    box-shadow: inset 0px 0px 1px 1px $brand-primary;
     min-height: 475px;
 }
 .flash-card-content-back p{
@@ -427,7 +428,7 @@ small{
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 .quiz-label{
     font-family: $font-family-sans-serif;
-    color: $brand-primary-light;
+    color: $brand-primary;
     text-transform: uppercase;
     letter-spacing: 2px;
     display: inline-block;
@@ -435,10 +436,9 @@ small{
 input{ 
     font-family: $re-nu-serif;
     size: $font-size-small;
-    color: #737373;
+    color: #313131;
     text-transform: uppercase;
     letter-spacing: 2px;
-    color: #313131;
 }
 .answer-text-input{ 
     font-family: $re-nu-serif;
@@ -456,13 +456,13 @@ input{
     text-transform: uppercase;
     letter-spacing: 2px;
 }
-.answer-text-radio { 
+/*.answer-text-radio { 
     font-family: $re-nu-serif;
     size: $font-size-small;
     color: $brand-primary-light;
     text-transform: uppercase;
     letter-spacing: 2px;
-}
+}*/
 .answer-text span{ 
     font-family: $re-nu-serif;
     size: $font-size-small;
@@ -517,15 +517,13 @@ input{
 .answer-content-wrapper { 
     padding: 6px;
     opacity: .75;
-    background-color: #FFFFFF;
+    /*background-color: #FFFFFF;*/
     margin-left: 20px;
 }
 .answer-text{ 
     font-family: $font-family-sans-serif;
-    /*float: left;*/
-    color: $brand-primary-light;
+    color: $brand-primary;
     letter-spacing: 2px;
-    /*margin-right: 20px;*/
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Quiz Questions classes*/
@@ -533,7 +531,7 @@ input{
 .question-text{ 
     font-family: $font-family-serif;
     size: $font-size-h3;
-    color: $brand-primary-light;
+    color: $brand-primary;
     text-transform: uppercase;
     letter-spacing: 2px;
 }
@@ -551,7 +549,6 @@ input{
     height: 160px;
     margin-top: 10px;
     margin-bottom: 10px;
-    /*margin-right: 15px;*/
 }
 .question-feedback-outline{ 
     position: absolute;
@@ -674,7 +671,7 @@ input{
     opacity: 0.65;
 }
 .np-result-container rect{
-    stroke: #125AA0;
+    stroke: $brand-primary;
     fill: $brand-primary-light;
     stroke-width: 6;
 }
@@ -771,7 +768,7 @@ input{
     /*width: 135px;*/
 }
 .np-spinner{
-    color: $gold;
+    color: $brand-primary;
     width: 155px;
 }
 .np-gold-pointer{
@@ -787,7 +784,7 @@ input{
 }
 .np-spinner div{
     font-family: $re-nu-serif;
-    color: $ANR-bg-color;
+    color: lighten($brand-primary, 15%);
     font-size: floor(($font-size-base * 2.5));
     line-height: 2.1em;
     text-align: center;
@@ -904,7 +901,7 @@ input{
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #00518F;
+    background-color: $brand-primary-light;
 }
 .reveal-button {
     position: relative;

@@ -12,6 +12,7 @@
                         $log.debug('npQuestion::data', cmpData);
                         this.id = cmpData.id;
                         this.content = $sce.trustAsHtml(cmpData.content);
+                        this.questionImage = $sce.trustAsHtml(cmpData.questionImage);
                         this.type = cmpData.type;
                         this.feedback = '';
                         this.canContinue = false;
@@ -53,6 +54,7 @@
                                 TweenMax.set(negativeFeedbackIcon, {
                                     autoAlpha: 0,
                                     scale: 2.5,
+//                                    width: '2em',
                                     force3D: true
                                 });
                                 TweenMax.set(positiveFeedbackIcon, {
@@ -71,6 +73,7 @@
                             TweenMax.to(negativeFeedbackIcon, 0.25, {
                                 autoAlpha: 0,
                                 scale: 2.5,
+//                                width: '2em',
                                 force3D: true
                             });
                             TweenMax.to(positiveFeedbackIcon, 0.25, {
@@ -171,6 +174,7 @@
                                                 TweenMax.to(positiveFeedbackIcon, 0.75, {
                                                     autoAlpha: 1,
                                                     scale: 1,
+//                                                    width: '100%',
                                                     force3D: true
                                                 });
                                             }
@@ -212,6 +216,8 @@
                                                 TweenMax.to(negativeFeedbackIcon, 0.75, {
                                                     autoAlpha: 1,
                                                     scale: 1,
+//                                                    width: '100%',
+//                                                    width: '1em',
                                                     force3D: true
                                                 });
                                             }
@@ -237,8 +243,18 @@
                             function onPageLoadBuild() {
                                 negativeFeedbackIcon = $('.negative-feedback-icon');
                                 postiveFeedbackIcon = $('.positive-feedback-icon');
-                                TweenMax.set(negativeFeedbackIcon, {autoAlpha: 0, scale: 2.5, force3D: true});
-                                TweenMax.set(postiveFeedbackIcon, {autoAlpha: 0, scale: 2.5, force3D: true});
+                                TweenMax.set(negativeFeedbackIcon, {
+                                    autoAlpha: 0,
+                                    scale: 2.5,
+//                                    width: '2em',
+//                                    width: '250%',
+                                    force3D: true
+                                });
+                                TweenMax.set(postiveFeedbackIcon, {
+                                    autoAlpha: 0,
+                                    scale: 2.5,
+//                                    width: '250%',
+                                    force3D: true});
                             }
                             onPageLoadBuild();
                         });
