@@ -3736,6 +3736,7 @@
                         $log.debug('npQuestion::data', cmpData);
                         this.id = cmpData.id;
                         this.content = $sce.trustAsHtml(cmpData.content);
+                        this.questionImage = $sce.trustAsHtml(cmpData.questionImage);
                         this.type = cmpData.type;
                         this.feedback = '';
                         this.canContinue = false;
@@ -3777,6 +3778,7 @@
                                 TweenMax.set(negativeFeedbackIcon, {
                                     autoAlpha: 0,
                                     scale: 2.5,
+//                                    width: '2em',
                                     force3D: true
                                 });
                                 TweenMax.set(positiveFeedbackIcon, {
@@ -3795,6 +3797,7 @@
                             TweenMax.to(negativeFeedbackIcon, 0.25, {
                                 autoAlpha: 0,
                                 scale: 2.5,
+//                                width: '2em',
                                 force3D: true
                             });
                             TweenMax.to(positiveFeedbackIcon, 0.25, {
@@ -3895,6 +3898,7 @@
                                                 TweenMax.to(positiveFeedbackIcon, 0.75, {
                                                     autoAlpha: 1,
                                                     scale: 1,
+//                                                    width: '100%',
                                                     force3D: true
                                                 });
                                             }
@@ -3936,6 +3940,8 @@
                                                 TweenMax.to(negativeFeedbackIcon, 0.75, {
                                                     autoAlpha: 1,
                                                     scale: 1,
+//                                                    width: '100%',
+//                                                    width: '1em',
                                                     force3D: true
                                                 });
                                             }
@@ -3961,8 +3967,18 @@
                             function onPageLoadBuild() {
                                 negativeFeedbackIcon = $('.negative-feedback-icon');
                                 postiveFeedbackIcon = $('.positive-feedback-icon');
-                                TweenMax.set(negativeFeedbackIcon, {autoAlpha: 0, scale: 2.5, force3D: true});
-                                TweenMax.set(postiveFeedbackIcon, {autoAlpha: 0, scale: 2.5, force3D: true});
+                                TweenMax.set(negativeFeedbackIcon, {
+                                    autoAlpha: 0,
+                                    scale: 2.5,
+//                                    width: '2em',
+//                                    width: '250%',
+                                    force3D: true
+                                });
+                                TweenMax.set(postiveFeedbackIcon, {
+                                    autoAlpha: 0,
+                                    scale: 2.5,
+//                                    width: '250%',
+                                    force3D: true});
                             }
                             onPageLoadBuild();
                         });
@@ -4616,7 +4632,7 @@
                                         itemsOffsetLeft = itemsOffset.left,
                                         itemsOffsetCenter = (itemsOffsetLeft + currentIterationCenterWidth),
                                         windowCenterOffsetOne = ($(".flash-cards-object").width() / 3),
-                                        windowCenterOffsetTwo = $(".flash-cards-object").width() -100,
+                                        windowCenterOffsetTwo = $(".flash-cards-object").width(),
                                         itemTopCenter,
                                         itemAutoAlphaCenter,
                                         itemAutoAlphaOne,
@@ -4630,6 +4646,12 @@
                                 //get version for animation style from class
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 if ($("#" + 'ND').length === 0) {
+//                                    console.log(
+//                                            '\n::::::::::::::::::::::::::::::::::::::getOffsetRect::default settings:::::::::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                            '\n::$("#ND .np-flash-card")::', $("#ND .np-flash-card"),
+//                                            '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                            );
+                                    windowCenterOffsetTwo = windowCenterOffsetTwo + 10;
                                     itemTopCenter = '10px';
                                     itemAutoAlphaCenter = 1;
                                     itemAutoAlphaOne = 1;
@@ -4645,6 +4667,7 @@
 //                                            '\n::$("#ND .np-flash-card")::', $("#ND .np-flash-card"),
 //                                            '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
 //                                            );
+                                    windowCenterOffsetTwo = windowCenterOffsetTwo - 100;
                                     itemTopCenter = '10px';
                                     itemAutoAlphaCenter = 1;
                                     itemAutoAlphaOne = 0.75;
@@ -5176,11 +5199,17 @@
                                     scale: 2.5,
                                     force3D: true
                                 });
+                                TweenMax.to($element.find('.negative-feedback-icon svg'), 0.25, {
+                                    height: '100%',
+                                    force3D: true
+                                });
                                 TweenMax.set(positiveFeedbackIcon, {
                                     autoAlpha: 0,
                                     scale: 2.5,
                                     force3D: true
                                 });
+//                                TweenMax.set($element.find('.negative-feedback-icon svg'), {height: '100%'});
+                                TweenMax.set(positiveFeedbackIcon, {height: '100%'});
                             }
                         };
                         vm.evaluate = function () {
@@ -5195,11 +5224,17 @@
                                 scale: 2.5,
                                 force3D: true
                             });
+                            TweenMax.to($element.find('.negative-feedback-icon svg'), 0.25, {
+                                height: '100%',
+                                force3D: true
+                            });
                             TweenMax.to(positiveFeedbackIcon, 0.25, {
                                 autoAlpha: 0,
                                 scale: 2.5,
                                 force3D: true
                             });
+//                            TweenMax.set($element.find('.negative-feedback-icon svg'), {height: '100%'});
+                            TweenMax.set(positiveFeedbackIcon, {height: '100%'});
                             $log.debug('npAsQuestion::evaluating type to check', cmpData);
                             switch (cmpData.type) {
                                 case 'checkbox':
@@ -5273,13 +5308,16 @@
                                             onComplete: function () {
                                                 TweenMax.set(positiveFeedbackIcon, {
                                                     top: ((contentAreaHeight / 2) + (positiveFeedbackIcon / 2)),
+                                                    height: '100%',
                                                     force3D: true
                                                 });
                                                 TweenMax.to(positiveFeedbackIcon, 0.75, {
                                                     autoAlpha: 1,
                                                     scale: 1,
+                                                    height: '100%',
                                                     force3D: true
                                                 });
+                                                TweenMax.set(positiveFeedbackIcon, {height: '100%'});
                                             }
                                         });
                                     });
@@ -5321,6 +5359,7 @@
                                                     scale: 1,
                                                     force3D: true
                                                 });
+                                                TweenMax.set(negativeFeedbackIcon, {height: '100%'});
                                             }
                                         });
                                     });
@@ -5338,14 +5377,16 @@
             .directive('questionFeedbackBuild', function () {
                 return function ($scope, $element, attrs) {
                     var negativeFeedbackIcon = '';
-                    var postiveFeedbackIcon = '';
+                    var positiveFeedbackIcon = '';
                     setTimeout(function () {
                         $scope.$apply(function () {
                             function onPageLoadBuild() {
                                 negativeFeedbackIcon = $('.negative-feedback-icon');
-                                postiveFeedbackIcon = $('.positive-feedback-icon');
+                                positiveFeedbackIcon = $('.positive-feedback-icon');
                                 TweenMax.set(negativeFeedbackIcon, {autoAlpha: 0, scale: 2.5, force3D: true});
-                                TweenMax.set(postiveFeedbackIcon, {autoAlpha: 0, scale: 2.5, force3D: true});
+                                TweenMax.set(positiveFeedbackIcon, {autoAlpha: 0, scale: 2.5, force3D: true});
+                                TweenMax.set(negativeFeedbackIcon, {height: '100%'});
+                                TweenMax.set(positiveFeedbackIcon, {height: '100%'});
                             }
                             onPageLoadBuild();
                         });
@@ -7347,8 +7388,8 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "        <div class=\"debug\">\n" +
     "            <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
     "        </div>\n" +
-    "        <div ng-bind-html=\"npPage.title\" class=\"npPage-title h3\">{{npPage.title}}</div>\n" +
-    "        <div ng-bind-html=\"npPage.subTitle\" class=\"npPage-subTitle h4\">{{npPage.subTitle}}</div>\n" +
+    "        <div ng-bind-html=\"npPage.title\" class=\"headline npPage-title\">{{npPage.title}}</div>\n" +
+    "        <div ng-bind-html=\"npPage.subTitle\" class=\"npPage-subTitle\">{{npPage.subTitle}}</div>\n" +
     "        <div ng-bind-html=\"npPage.instructional\" class=\"npPage-instructional\">{{npPage.instructional}}</div>\n" +
     "        <div np-component ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
     "    </main>\n" +
@@ -7362,17 +7403,26 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "    <div class=\"debug\">\n" +
     "        <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>\n" +
     "    </div>\n" +
-    "    <p class=\"h5 quiz-label\">question:</p>\n" +
-    "    <div class=\"npQuestion-content question-text h4\" ng-bind-html=\"npQuestion.content\"></div>\n" +
-    "    <p class=\"h5 quiz-label\">answers:</p>\n" +
-    "    <div np-component class=\"response-item\" ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
     "    <div class=\"row\">\n" +
-    "        <div class=\"col-sm-6 question-submit-wrapper\">\n" +
+    "        <div class=\"col-sm-8\">\n" +
+    "            <p class=\"h5 quiz-label\">question:</p>\n" +
+    "            <div class=\"npQuestion-content question-text h4\" ng-bind-html=\"npQuestion.content\"></div>\n" +
+    "            <p class=\"h5 quiz-label\">answers:</p>\n" +
+    "            <div np-component class=\"response-item\" ng-if=\"subCmp\" ng-repeat=\"component in components\" idx=\"{{component.idx}}\"></div>\n" +
+    "        </div>\n" +
+    "        <div class=\"col-sm-4\">\n" +
+    "            <div class=\"npQuestion-content question-image\">\n" +
+    "                <img class=\"img-responsive\" ng-src=\"{{npQuestion.questionImage}}\">\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"row\">\n" +
+    "        <div class=\"col-sm-3 question-submit-wrapper\">\n" +
     "            <button type=\"submit\" class=\"btn-submit btn\" ng-click=\"npQuestion.evaluate()\">\n" +
     "                <span>Submit</span>\n" +
     "            </button>\n" +
     "        </div>\n" +
-    "        <div class=\"col-sm-6\">\n" +
+    "        <div class=\"col-sm-9\">\n" +
     "            <div question-feedback-build >\n" +
     "                <div  class=\"question-feedback\">\n" +
     "                    <div class=\"question-feedback-wrapper vertical-centered\">\n" +
@@ -7419,10 +7469,10 @@ angular.module('newplayer').run(['$templateCache', function($templateCache) {
     "                </div\n" +
     "            </div>\n" +
     "        </div>\n" +
-    "        <div class=\"col-sm-6\">\n" +
-    "        </div>\n" +
-    "        <div class=\"col-sm-6\">\n" +
-    "        </div>\n" +
+    "        <!--        <div class=\"col-sm-6\">\n" +
+    "                </div>\n" +
+    "                <div class=\"col-sm-6\">\n" +
+    "                </div>-->\n" +
     "    </div>\n" +
     "</div>"
   );
