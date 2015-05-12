@@ -188,6 +188,8 @@ small{
     padding: 0;
 }
 .btn-submit{
+    margin-top: 10px;
+    margin-left: 60px;
 }
 .btn-submit span{ 
 }
@@ -595,8 +597,8 @@ input{
     fill: $brand-primary;
 }
 .question-submit-wrapper{
-    text-align: center;
-    margin-top: 3em;
+/*    text-align: center;
+    margin-top: 3em;*/
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player Result classes*/
