@@ -2029,7 +2029,8 @@
                                 if (this.apiLink) {
                                     //TODO: we may need a `method` property to know what to use here
                                     // i.e. GET, POST, PUT, DELETE
-                                    TrackingService.trackApiCall(btnLink);
+                                    // don't track this for now
+                                    // TrackingService.trackApiCall(btnLink);
                                     APIService.postData(btnLink);
                                     return;
                                 }
