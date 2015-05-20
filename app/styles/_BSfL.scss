@@ -1,0 +1,1371 @@
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player page type wrapper classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*When setting this ID for New Player use: 'newplayer-background'*/
+#np_newplayer-background{
+    position: fixed;
+    background-color: $ANR-bg-color;
+    background-size: cover;
+    content: "";
+    width:100%;
+    height:auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+}
+#background-image {
+    position:fixed;
+    background-image: url('../assets/images/ESTL-006-BSfL-bg.jpg');
+    background-repeat: repeat-y;
+    background-size: auto 100%;
+    background-origin: content-box;
+    width:100%;
+    height:100%;
+}
+.renutriv-logo-image {
+    position: relative;
+    background-image: url("../assets/images/BSfLLogo.png");
+    background-repeat: no-repeat;
+    width: 241px;
+    height: 12px;
+    padding-bottom: 11px;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*ReNutriv font classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.headline{
+    font-family: $font-family-serif;
+    font-size: $font-size-55;
+    color: $brand-primary; 
+    letter-spacing: 2px;
+    padding-top: 1px;
+    padding-bottom: 0px;
+    margin-top: 10px;
+    display: inline-block;
+    line-height: 1.2;
+    margin-bottom: $line-height-computed;
+}
+.instructional{
+    font-family: $font-family-sans-serif;
+    font-size: $font-size-h5;
+    color: #000000;
+    letter-spacing: 1px;
+    padding-top: 0px;
+    padding-bottom: 20px;
+    margin-top: 0px;
+    display: inline-block;
+    margin-bottom: $line-height-computed;
+}
+.h1, .h2, .h3, .h4, .h5{
+    color: $brand-primary;
+}
+.subhead-copy{
+    font-family: $font-family-sans-serif;
+    color: $brand-primary;
+    font-size: $font-size-18;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: $line-height-computed;
+}
+.body-copy-strong{
+    font-family: $font-family-sans-serif;
+    color: $brand-primary;
+    font-size: $font-size-18;
+    letter-spacing: 2px;
+    margin-bottom: $line-height-computed;
+}
+@media (max-width: $screen-md) {
+    .subhead-copy{
+        font-size: $font-size-16;
+        letter-spacing: 1px;
+    }
+    .body-copy-strong{
+        font-size: $font-size-16;
+        letter-spacing: 1px;
+    }
+}
+.body-copy{
+    font-family: $font-family-sans-serif;
+    color: $brand-primary;
+    font-size: $font-size-17;
+    letter-spacing: 2px;
+    line-height: 1.35;
+    margin-bottom: $line-height-computed;
+}
+@media (max-width: $screen-md) {
+    .body-copy{
+        font-size: $font-size-base;
+        letter-spacing: 1px;
+        line-height: 1.25;
+    }
+}
+small{
+    color: $brand-primary;
+}
+.dark .h1, .h2, .h3, .h4, .h5 {
+    /*color: $gray-dark;*/
+}
+.header-dark {
+    font-family: $font-family-serif;
+    color: $gray-base;
+    font-size: $font-size-36;
+    letter-spacing: 2px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    display: inline-block;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player npPage classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.npPage-title{
+    font-family: $font-family-serif;
+    color: $brand-primary;
+    letter-spacing: 2px;
+    margin-top: 10px;
+    margin-bottom: $line-height-computed;
+}
+.npPage-subTitle{
+    font-family: $font-family-sans-serif;
+    color: $brand-primary;
+    font-size: $font-size-18;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: $line-height-computed;
+}
+.npPage-instructional{
+    font-size: $font-size-h5;
+    color: $brand-primary;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    margin-top: 0px;
+    display: inline-block;
+    margin-bottom: $line-height-computed;
+}
+.gold {
+    /*color: #9a7d46;*/
+    color: $gold;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player button classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.btn span{ 
+    font-family: $font-family-sans-serif;
+    color: $brand-primary-light;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+}
+.btn{ 
+    position: relative;
+    border-color: $brand-primary-light;
+    background-color: $brand-primary;
+    width: auto !important;
+    min-width: fit-content;
+    margin-top: 5px;
+    padding-left: 2em;
+    padding-right: 2em;
+    border-width: 1px;
+    padding-top: 5px;
+    padding-bottom: 3px;
+}
+.btn span{ 
+    font-family: $font-family-sans-serif;
+    color: $brand-primary-light;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+.btn-next{ 
+    position: absolute;
+    right: 80px;
+    bottom: 0px;
+    margin-right: 30px;
+    margin-bottom: 50px;
+}
+.btn-next span{ 
+    font-family: $font-family-sans-serif;
+    color: $brand-primary-light;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 0;
+}
+.btn-submit{
+    margin-top: 10px;
+    margin-left: 60px;
+}
+.btn-submit span{ 
+}
+@media (max-width: $screen-sm) {
+    .btn-next{ 
+        position: absolute;
+        right: 110px;
+        bottom: 0px;
+        margin-right: 0px;
+        margin-bottom: 50px;
+    }
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player padding wrapper classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*When setting this ID for New Player use: content-background */
+/*.npHotspot-feedback p{
+    position: relative;
+    height: 100%;
+
+}*/
+.content-background{
+    /*    position: absolute;
+    left: 10px;
+    right: 20px;*/
+    background-color:hsla(100%,100%,100%,0.5);
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player HotSpot classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.npHotspot{
+    top: 0;
+    left: 0;
+}
+.hotspotImage{
+    position: relative;
+    max-width: 575px;
+    margin-bottom: 10%;
+    /*overflow: hidden;*/
+}
+.content-area{
+    /*padding-left: 10px;*/
+}
+.hotspotButton{
+    position: absolute;
+    max-width:90px;
+    height: auto;
+    margin: 0;
+    margin-top: -.75rem;
+    margin-left: -3.25rem;
+    padding: 0;
+    cursor: pointer;
+}
+.hotspotButtonImage{
+    position: relative;
+    background-image: url("../assets/images/hotspot.png");
+    background-repeat: no-repeat;
+    width: 100px;
+    height: 50px;
+}
+.npHotspot-feedback{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding-top: 15px;
+    padding-bottom: 50px;
+    padding-left: 30px;
+    padding-right: 20px;
+}
+.content-background-svg rect{
+    fill: hsla(100%,100%,100%,0.5);
+    stroke: $brand-primary;
+    stroke-width: 4px;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player Flash Cards classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.np-flash-card{  
+    position: fixed;
+    content: "";
+    width: 100%;
+    left: 0;
+    right: 0;
+}
+#flash-cards {
+    position: relative;
+    padding-top: 45px !important;
+    margin-left: 0px;
+}
+///////////////cards/////////////////
+.flash-cards-object {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    width: 560px;
+    /*min-height: 800px;*/
+    margin-bottom: 222px;
+    padding-bottom: 15px;
+}
+@media (max-width: $screen-sm) {
+    .flash-cards-object {
+        width: 280px;
+    }
+}
+.flash-card-overlay {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: #FFFFFF;
+}
+/*.flash-card-border {
+    position: absolute;
+    width: 100%;
+    visibility: visible;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    box-shadow: inset 0px 0px 1px 1px $brand-primary;
+}*/
+///////////////button/////////////////
+.flash-card-button {
+    position: absolute;
+    top: 25px;
+    right: 20px;
+    width: 40px;
+    height: auto;
+    cursor: pointer;
+}
+.button-holder{
+    position: relative;
+    fill: $brand-primary;
+}
+///////////////front/////////////////
+.flash-card-front-wrapper {
+    position: absolute;
+    top:0;
+    bottom:0;
+    width: 100%;
+    overflow: hidden;
+    height: 475px;
+}
+@media (max-width: $screen-sm) {
+    .flash-card-front-wrapper {
+        /*height: 235px;*/
+    }
+}
+.flash-card-content-front {
+    position: absolute;
+    padding: 2em;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    overflow: hidden;
+    background-color: #FFFFFF;
+    box-shadow: inset 0px 0px 1px 1px $brand-primary;
+    min-height: 475px;
+}
+.flash-card-content-front p{
+    color: $brand-primary;
+}
+///////////////back/////////////////
+.flash-card-back-wrapper {
+    position: absolute;
+    top:0;
+    width: 100%;
+    height:100%;
+}
+.flash-card-content-back {
+    position: absolute;
+    padding: 2em;
+    left: 0;
+    right: 0;
+    top: 0;
+    background-color: #FFFFFF;
+    box-shadow: inset 0px 0px 1px 1px $brand-primary;
+    min-height: 475px;
+}
+.flash-card-content-back p{
+    color: $brand-primary;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player Matching Game classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*.matching-game{
+    height:450px;
+}
+.question-match{
+    position: relative;
+    height:auto;
+    float: left;
+    width: 100%;
+}
+.question-match-outline{
+    position: absolute;
+    height: 360px;
+    right: 39%;
+    left: 39%;
+    margin-top: -20px;
+    margin-bottom: 20px;
+    box-shadow: 10px 10px 105px 50px rgba(0,0,0,0.5);
+}
+.question-match-outline-inner{
+    height:100%;
+}
+.question-match-set{
+    position: absolute;
+    height:100%;
+    right: 0;
+    left: 0;
+}
+.btn-match-submit-wrapper{
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right:0;
+}
+.btn-match-submit{
+    font-family: $re-nu-serif;
+    color: $brand-primary-light;
+    border-color: #9a7d46;
+    background-color: #000000;
+    text-transform: uppercase;
+    padding-top: 5px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    margin-left: 33%;
+}*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player Quiz classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.quiz-label{
+    font-family: $font-family-sans-serif;
+    color: $brand-primary;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    display: inline-block;
+}
+input{ 
+    font-family: $re-nu-serif;
+    size: $font-size-small;
+    color: #313131;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+.answer-text-input{ 
+    font-family: $re-nu-serif;
+    size: $font-size-small;
+    color: #737373;
+    letter-spacing: 2px;
+    border-color: $gold;
+    background-color: $gray-dark;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
+}
+.answer-text-checkbox { 
+    font-family: $re-nu-serif;
+    size: $font-size-small;
+    color: $brand-primary-light;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+/*.answer-text-radio { 
+    font-family: $re-nu-serif;
+    size: $font-size-small;
+    color: $brand-primary-light;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}*/
+.answer-text span{ 
+    font-family: $re-nu-serif;
+    size: $font-size-small;
+    color: $brand-primary-light;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player Quiz Answer classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.answer-wrapper{ 
+    padding: 20px;
+}
+.answer-checkbox{ 
+    position: relative;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+.checkbox-box{ 
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    display: block;
+    margin: auto;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
+}
+.checkbox-box svg rect{
+    fill: $brand-primary;
+    opacity: 0.75;
+    stroke: #FFFFFF;
+    stroke-width: 3;
+}
+.checkbox-x{ 
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    display: block;
+    margin: auto;
+}
+.checkbox-x svg{ 
+    position: absolute;
+    top:0;
+    left:0;
+    /*opacity: 0;*/
+    display: block;
+    margin: auto;
+}
+.checkbox-x svg line{ 
+    stroke: $brand-primary-light !important;
+}
+.answer-content-wrapper { 
+    padding: 6px;
+    opacity: .75;
+    /*background-color: #FFFFFF;*/
+    margin-left: 20px;
+}
+.answer-text{ 
+    font-family: $font-family-sans-serif;
+    color: $brand-primary;
+    letter-spacing: 2px;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player Quiz Questions classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.question-text{ 
+    font-family: $font-family-serif;
+    size: $font-size-h3;
+    color: $brand-primary;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+.question-feedback-wrapper{ 
+    position: relative;
+    background-color: #FFFFFF;
+    box-shadow: inset 0 0 5px 3px rgba(0, 0, 0, 0.25);
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+}
+.question-feedback{ 
+    position: relative;
+    height: 160px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.question-feedback-outline{ 
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+.question-feedback-text{ 
+    font-family: $font-family-sans-serif;
+    float: left;
+    color: $brand-primary;
+    letter-spacing: 2px;
+    margin-bottom: 0;
+    margin-left: 40px;
+}
+.positive-feedback-icon{ 
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 25px;
+    left: 20px;
+}
+.negative-feedback-icon{ 
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 25px;
+    left: 20px;
+}
+.question-feedback-label{ 
+    font-family: $font-family-sans-serif;
+    size: $font-size-h3;
+    color: #737373;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 2px;
+}
+.question-feedback-wrapper svg polygon{ 
+    fill: $brand-primary;
+}
+.question-feedback-wrapper svg path{ 
+    fill: $brand-primary;
+}
+.question-submit-wrapper{
+/*    text-align: center;
+    margin-top: 3em;*/
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player Result classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.np-result{
+    font-family: $font-family-serif;
+    color: $brand-primary;
+}
+.np-result-summary{
+    position: relative;
+    padding-left: 100px;
+    padding-right: 100px;
+    font-size: 1.2em;
+}
+.results-wrapper-correct{
+    position: absolute;
+    top:0;
+    bottom:0;
+    letter-spacing: 2px;
+    left: 100px;
+    right: 100px;
+    padding: 50px;
+    text-align: center;
+}
+.results-wrapper-incorrect{
+    position: absolute;
+    top:0;
+    bottom:0;
+    letter-spacing: 2px;
+    left: 100px;
+    right: 100px;
+    padding: 50px;
+    text-align: center;
+}
+.results-summary-text{
+    font-size: $font-size-h1;
+    letter-spacing: 2px;
+    text-align: center;
+}
+.results-summary-amount-wrapper{
+    padding-top: 20px;
+    display: inline-block;
+}
+.results-summary-label-text{
+    font-family: $font-family-sans-serif;
+    font-size: $font-size-36;
+    letter-spacing: 2px;
+    float: left;
+    margin-left: auto;
+    width: auto;
+}
+.results-summary-pecentage{
+    font-size: 100px;
+    letter-spacing: 2px;
+    float: left;
+    margin-right: auto;
+    width: auto;
+    line-height: 1;
+}
+.results-summary-pecentage-character{
+    font-size: 60px;
+    letter-spacing: 2px;
+    float: right;
+    margin-right: auto;
+    width: auto;
+    line-height: 1;
+}
+.results-wrapper-incorrect .results-summary-pecentage{
+    line-height: 0.15;
+}
+.results-wrapper-incorrect .results-summary-pecentage-character{
+    /*line-height: 0;*/
+}
+.np-result-container {
+    opacity: 0.65;
+}
+.np-result-container rect{
+    stroke: $brand-primary;
+    fill: $brand-primary-light;
+    stroke-width: 6;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player Matching Game classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*.matching-game-row{
+    display: inline-block; 
+    width: 400px; 
+}
+#np_matchgame {
+    color: #fff;
+    background: #000;
+    position: relative;
+    background-image: url("../assets/images/ESTL-005_ReNutriv_bg_img.jpg");
+    background-position: right;
+    background-repeat: no-repeat;
+    background-size: 50%;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 10rem;
+    z-index: 9999;
+
+    .npMatchRow { 
+        background-color: transparent; 
+    }
+    .matchbox {
+        background-color: #fff;
+        color: #000; 
+    }
+    #np_matchgame .npMatch-content {
+        text-align: center;
+        padding: 50px; 
+    }
+    .npMatch-content {
+        text-align: center; 
+    }
+    button {
+        margin-top: 10px;
+        background-color: #000;
+        border: 2px solid $gold;
+    }
+    .question-feedback { 
+        position: relative;
+        height: 160px;
+        width: 100%;
+        margin-top: 50px;
+        margin-bottom: 10px;
+        margin-right: 30px;
+    }
+    .question-feedback-wrapper { 
+        width: 300px;
+    }
+    .negative-feedback-icon {
+        width: 20px;
+        margin-right: 10px ;
+        float: left;
+        margin-top: 45px;
+        &.bad-feedback {
+            opacity: 1 !important;
+        }
+    }
+    .question-feedback-label { 
+        font-family: $font-family-sans-serif;
+        size: $font-size-h3;
+        color: #737373;
+        text-transform: uppercase;
+        text-align: center;
+        letter-spacing: 2px;
+        padding-top: 12.5%;
+    }
+    .correct {
+        font-size: 100px;
+        top: 20%;
+        left: 30%;
+        position: absolute; 
+    }
+}*/
+
+// .rsContent {
+//     width: 100%;
+//     height: 300px;
+//     position: relative;
+// }
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player Trivia/Spinner classes*/
+
+.np-spinner-wrapper {
+    position: relative;
+    overflow: hidden;
+    height: 400px;
+    background-color: $brand-primary-light;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
+    /*width: 135px;*/
+}
+.np-spinner{
+    color: $brand-primary;
+    width: 155px;
+}
+.np-gold-pointer{
+    position: absolute;
+    top:0;
+    bottom:0;
+    right:0;
+    width:33px;
+}
+.method2 {
+    -webkit-mask-image: -webkit-linear-gradient(top, rgba(248,248,170,1), rgba(202,160,78,.5) 50%, rgba(248,248,170,1));
+    -webkit-mask-image: linear-gradient(top, rgba(248,248,170,1), rgba(202,160,78,.5) 50%, rgba(248,248,170,1));
+}
+.np-spinner div{
+    font-family: $re-nu-serif;
+    color: lighten($brand-primary, 15%);
+    font-size: floor(($font-size-base * 2.5));
+    line-height: 2.1em;
+    text-align: center;
+}
+.np-spinner svg rect{
+    fill: rgba(0, 0, 0, 0.0);
+    stroke: #040A2B;
+    stroke-width: 4;
+}
+.np-gold-pointer svg polygon{
+    fill: #040A2B !important;
+    box-shadow: 10px 10px 25px -5px rgba(0,0,0,0.75);
+    z-index: 10000;
+}
+.np-spinner-content div:nth-last-child(2) {
+    color: $brand-primary; 
+}
+.np-gold-border {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 400px;
+    box-shadow: inset 0 0 30px 15px rgba(0, 0, 0, 0.5);
+}
+/*
+////////////////////////////////////////////////////////////////////////////////
+:::::::::::::                 Spinner classes                      :::::::::::::
+// FROM - http://codepen.io/Aldlevine/pen/yGLqd
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+*/
+.wheels {
+    position: relative;
+    top: 100px;
+    text-align: center;
+    width: 100%;
+    /*height: 600px;*/
+    /*clip the container for those not supporting csstransforms3d*/ 
+    .no-csstransforms3d & {
+        overflow: hidden;
+        height: 65px;
+    }
+    .wheel {
+        position: relative;
+        // width: 100%;
+        height: 600px;
+        top: 69px;
+        > div {
+            position: absolute;
+            width: 100%;
+            height: 70px;
+            z-index: 999;
+            background-color: $brand-primary-light;
+            border-bottom: solid 1px;
+            border-bottom-color: $brand-primary;
+            outline: 1px solid transparent;
+            backface-visibility:hidden;
+        }
+    }
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player Reveal classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.reveal-object {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 100%;
+    max-width: 770px;
+}
+.np-reveal {
+    position: relative;
+    width: 100%;
+    height: 600px;
+}
+.reveal-button {
+    cursor: pointer;
+}
+.reveal-navigation {
+    width: 100%;
+    height: 100px;
+}
+.reveal-button-image  {
+    position: absolute;
+    height: 62px;
+    width: 62px;
+    padding: 5.5%;
+    background-color:#FFFFFF;
+    overflow: hidden;
+}
+/*
+////////////////////////////////////////////////////////////////////////////////
+::::::::::::: evenly ditribute navigation begin ::::::::::::::::::::::::::::::::
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+*/
+.reveal-button-container {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    max-width: 770px;
+}
+.reveal-button-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+.button-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: $brand-primary-light;
+}
+.reveal-button {
+    position: relative;
+    width: 4.46em;
+    height: 4.46em;
+    margin-left: 0.2em;
+    margin-right: 0.2em;
+}
+/*
+////////////////////////////////////////////////////////////////////////////////
+::::::::::::: evenly ditribute navigation end ::::::::::::::::::::::::::::::::::
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+*/
+.reveal-item-wrapper{
+    max-width: 100%;
+    display: table;
+    margin: 0 auto;
+}
+.reveal-item{
+    display: table;
+    margin: 0 auto;
+    max-width: 100%; 
+}
+.reveal-video{
+    height: auto;
+    max-width: 100%;
+}
+.reveal-content-wrapper{
+    position: relative;
+}
+.reveal-content-text{
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+.reveal-heading-text{
+    margin-top: -5px;
+    padding-top: 25px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.reveal-text-body{
+    padding-bottom: 15px;
+}
+.reveal-content-text{
+    padding-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.reveal-background{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #FFFFFF;
+    opacity: 0.75;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player List classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.list-item{
+    color: $brand-primary;
+    letter-spacing: 2px;
+}
+.column-1{
+    margin-bottom: 1.5%;
+}
+.list-object video{
+    max-width: 100%;
+    height: auto;
+}
+.media-body{
+    padding: 5%;
+    background-color: #FFFFFF;
+    opacity: 0.75;
+    /*box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);*/
+}
+.list-body-text{
+    color: $brand-primary;
+    letter-spacing: 2px;
+    font-size: $font-size-base;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player Drag and Drop Select classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+#hit-area-wrapper{
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+#select-hit-area-background {
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    background-color: $brand-primary-light;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
+}
+.select-button-wrapper{
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.btn-select-submit{
+    position: relative;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.btn-select-submit span{ 
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+.select-button-completion-content{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+.select-response-wrapper{
+    position: absolute;
+    right: 0;
+    left: 0;
+    margin: auto;
+    width: 90%;
+}
+.select-response-wrapper p, h2{
+    color: $brand-primary;
+}
+.select-response-wrapper polygon, .select-response-wrapper path{
+    fill: $brand-primary !important;
+}
+.select-response-background {
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    background-color: $brand-primary-light;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.65);
+}
+.select-response-correct{
+    position: absolute;
+    right: 0;
+    left: 0;
+    padding: 10px;
+}
+.select-response-incorrect{
+    position: absolute;
+    right: 0;
+    left: 0;
+    padding: 10px;
+}
+.left-column-select{
+    text-align: right;
+}
+.right-column-select{
+    text-align: left;
+    margin-top: 3px;
+}
+.response-icon-wrapper{
+    position: absolute;
+    right: 0;
+    width: 35px;
+    margin-top: 1px;
+    margin-bottom: 20px;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player Drag and Drop Prioritize classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*p ul ol{
+    font-size: $font-size-17;
+    color: $brand-primary;
+}*/
+.button-prioritize-content{
+    position: relative;
+    display:block;
+}
+.hit-area-prioritize-content{
+    position: absolute;
+    float: right;
+    right: 43%;
+    top: 43%;
+}
+.hit-area-number{
+    font-size: 7em;
+    color: #000000;
+    opacity: .15;
+    text-align: center;
+    padding-left: 20px;
+}
+.button-completion-prioritize-content{
+    position: absolute;
+    float: right;
+    right: 50%;
+    top: 36%;
+}
+.centered-prioritize-content{
+    width: 100%;
+    height: 100%;
+    float: right;
+    right: -50%;
+    position: relative;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player Drag and Drop match classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.column-no-wrap {
+    float: none;
+}
+.boxElements {
+    position:relative;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    text-align: left;
+    color: $brand-primary;
+    margin-bottom: 1.5%;
+}
+.hit-area-background {
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    background-color: #FFFFFF;
+    box-shadow: inset 0 0 6px 3px rgba(0, 0, 0, 0.25);
+}
+.boxElements svg{
+    /*fill:#313131;*/
+}
+.completeCheck {
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    text-align: left;
+    color: $brand-primary;
+    margin-bottom: 2.5%;
+}
+foreignobject{
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+}
+.button-completion-content{
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 10%;
+    bottom: 0;
+    margin: auto;
+}
+.centered-content{
+    padding-top: 3em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    resize: vertical;
+}
+.positive-feedback-content{
+    padding-top: 10px;
+    margin-left: 35px;
+}
+.positive-feedback-image{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 25px;
+}
+.positive-feedback-image polygon, path{
+    fill: $brand-primary;
+}
+.button-content{
+    position: relative;
+    padding: 5%;
+}
+rect{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+}
+.button-content p{
+    padding: 0;
+    margin: 0;
+}
+.draggableButton{
+    cursor: pointer;
+}
+.draggableButton rect{
+    /*    stroke: $brand-primary;
+        stroke-width: 1.5px;*/
+    fill: $brand-primary-light;
+}
+.hit-area{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.hit-area svg{
+    /*fill: #313131;*/
+}
+.hit-area rect{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    margin: 0;
+    padding: 0;
+    opacity: .90;
+}  
+.hit-area svg rect{
+    fill: #FFFFFF;
+    opacity: 0.75;
+    stroke: #FFFFFF;
+    stroke-width: 3;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/* Hotspot Grid */
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*Hotspot button left position classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.posA{
+    left: 0%;
+}
+.posB{
+    left: 6.25%;
+}
+.posC{
+    left: 12.50%;
+}
+.posD{
+    left: 18.75%;
+}
+.posE{
+    left: 25%;
+}
+.posF{
+    left: 31.25%;
+}
+.posG{
+    left: 37.5%;
+}
+.posH{
+    left: 43.75%;
+}
+.posI{
+    left: 50%;
+}
+.posJ{
+    left: 56.25%;
+}
+.posK{
+    left: 62.5%;
+}
+.posL{
+    left: 68.75%;
+}
+.posM{
+    left: 75%;
+}
+.posN{
+    left: 81.25%;
+}
+.posO{
+    left: 87.5%;
+}
+.posP{
+    left: 93.75%;
+}
+.posQ{
+    left: 100%;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*Hotspot button top position classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.pos1{
+    top: 0%;
+}
+.pos2{
+    top: 5.26%;
+}
+.pos3{
+    top: 10.52%;
+}
+.pos4{
+    top: 15.78%;
+}
+.pos5{
+    top: 21.05%;
+}
+.pos6{
+    top: 26.31%;
+}
+.pos7{
+    top: 31.57%;
+}
+.pos8{
+    top: 36.84%;
+}
+.pos9{
+    top: 42.10%;
+}
+.pos10{
+    top: 47.36%;
+}
+.pos11{
+    top: 52.63%;
+}
+.pos12{
+    top: 57.89%;
+}
+.pos13{
+    top: 63.15%;
+}
+.pos14{
+    top: 68.42%;
+}
+.pos15{
+    top: 73.68%;
+}
+.pos16{
+    top: 78.94%;
+}
+.pos17{
+    top: 84.21%;
+}
+.pos18{
+    top: 89.47%;
+}
+.pos19{
+    top: 94.73%;
+}
+.pos20{
+    top: 100%;
+}

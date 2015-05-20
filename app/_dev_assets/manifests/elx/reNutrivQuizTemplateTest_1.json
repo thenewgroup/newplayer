@@ -1,0 +1,392 @@
+[
+    {
+        "type": "npFeature",
+        "data": {
+            "id": "reNutriv",
+            "class": "",
+            "version": "0.0.1",
+            "timestamp": "2015-Apr-Sun_01:04:41"
+        },
+        "components": [
+            {
+                "type": "npContent",
+                "data": {
+                    "id": "content_en",
+                    "language": "en",
+                    "title": "Learning-Content-Re-Nutriv-7.0-Becoming-a-Re-Nutriv-Expert-Quiz---Doug",
+                    "description": "This manifest creates a Story or Learning Object content object . "
+                },
+                "components": [
+                    {
+                        "type": "npHTML",
+                        "data": {
+                            "id": "newplayer-background"
+                        },
+                        "components": [
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "background-image"
+                                },
+                                "components": [
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "npHTML",
+                        "data": {
+                            "class": "outside-padding"
+                        },
+                        "components": [
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "class": "renutriv-logo-image"
+                                },
+                                "components": [
+                                ]
+                            },
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "class": "h3 headline",
+                                    "content": "Re-Nutriv 7.0 Becoming a Re-Nutriv Expert Quiz"
+                                },
+                                "components": [
+                                ]
+                            },
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "class": "h6 instructional"
+                                },
+                                "components": [
+                                ]
+                            },
+                            {
+                                "type": "npQuiz",
+                                "data": {
+                                    "type": "assessment",
+                                    "assessed": "1",
+                                    "questions": "4",
+                                    "percentage": "80",
+                                    "forced": "true",
+                                    "randomized": "false",
+                                    "required": "true"
+                                },
+                                "components": [
+                                    {
+                                        "type": "npPage",
+                                        "data": {
+                                            "title": "<p>title Read each question, select the best choice and then select <strong>Submit.</strong></p>",
+                                            "subTitle": "<p>subTitle Read each question, select the best choice and then select <strong>Submit.</strong></p>",
+                                            "instructional": "<p>instructional Read each question, select the best choice and then select <strong>Submit.</strong></p>"
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npDragAndDropSelect",
+                                                "data": {
+                                                    
+                                                    "positiveFeedback": "That's right! These are all points of discussion when helping customers choose between Re-Nutriv and Beautiful Skin Solutions.",
+                                                    "negativeFeedback": "Sorry, thatâ€™s not it. A, B and E are all points of discussion when helping customers choose between Re-Nutriv and Beautiful Skin Solutions.",
+                                                    "required": true,
+                                                    "draggableButtons": [
+                                                        {
+                                                            "select": "true",
+                                                            "content": "<p>All EstÃ©e Lauder skincare is the highest performance and quality. Tell me what you&#39;re currently using, and I&#39;ll help you find the best option.</p>",
+                                                            "image": "",
+                                                            "matchingContent": "1",
+                                                            "matchingImage": ""
+                                                        },
+                                                        {
+                                                            "select": "true",
+                                                            "content": "<p>Let me show and describe both options to you; that will help you decide which is best for you.</p>",
+                                                            "image": "",
+                                                            "matchingContent": "1",
+                                                            "matchingImage": ""
+                                                        },
+                                                        {
+                                                            "select": "false",
+                                                            "content": "<p>Re-Nutriv is great for customers who are over 40.</p>",
+                                                            "image": "",
+                                                            "matchingContent": "0",
+                                                            "matchingImage": ""
+                                                        },
+                                                        {
+                                                            "select": "false",
+                                                            "content": "<p>How much is in your budget to spend?</p>",
+                                                            "image": "",
+                                                            "matchingContent": "0",
+                                                            "matchingImage": ""
+                                                        },
+                                                        {
+                                                            "select": "true",
+                                                            "content": "<p>Re-Nutriv luxury skincare combines rare and precious ingredients with scientific advancements.</p>",
+                                                            "image": "",
+                                                            "matchingContent": "1",
+                                                            "matchingImage": ""
+                                                        },
+                                                        {
+                                                            "select": "true",
+                                                            "content": "<p>Beautiful Skin Solutions is for targeting skincare solutions with advanced science and bestselling products.</p>",
+                                                            "image": "",
+                                                            "matchingContent": "1",
+                                                            "matchingImage": ""
+                                                        }
+                                                ]
+                                            },
+                                                "components": []
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "",
+                                                    "type": "btn-next",
+                                                    "class": "",
+                                                    "content": "Next"
+                                                },
+                                                "components": [
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npPage",
+                                        "data": {
+                                            "id": "6960",
+                                            "instructional": "<p>Your customer asks you why Re-Nutriv is worth the price. What should you say?</p>"
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npDragAndDropSelect",
+                                                "data": {
+                                                    
+                                                    "positiveFeedback": "Yes! Many customers are willing to spend more for luxury products if they believe they're worth the price. These are all great points of discussion.",
+                                                    "negativeFeedback": "Sorry, thatâ€™s not it. A, C and D are the correct choices. Many customers are willing to spend more for luxury products if they believe they're worth the price. These are all great points of discussion.",
+                                                    "required": true,
+                                                    "draggableButtons": [
+                                                        {
+                                                            "select": "true",
+                                                            "content": "<p>All Re-Nutriv formulas deliver powerful results you can see and feel immediately and over time.</p>",
+                                                            "image": "",
+                                                            "matchingContent": "1",
+                                                            "matchingImage": ""
+                                                        },
+                                                        {
+                                                            "select": "false",
+                                                            "content": "<p>You&#39;ll actually spend less because the products last a long time.</p>",
+                                                            "image": "",
+                                                            "matchingContent": "0",
+                                                            "matchingImage": ""
+                                                        },
+                                                        {
+                                                            "select": "true",
+                                                            "content": "<p>All Re-Nutriv formulas combine the ultimate in nature and science. We search the world for rare and precious ingredients and the latest scientific advancements.</p>",
+                                                            "image": "",
+                                                            "matchingContent": "1",
+                                                            "matchingImage": ""
+                                                        },
+                                                        {
+                                                            "select": "true",
+                                                            "content": "<p>Re-Nutriv offers the most indulgent texture and experience, and you&#39;ll feel the Re-Nutriv difference right away.</p>",
+                                                            "image": "",
+                                                            "matchingContent": "1",
+                                                            "matchingImage": ""
+                                                        },
+                                                        {
+                                                            "select": "false",
+                                                            "content": "<p>You deserve to treat yourself to a great product like Re-Nutriv.</p>",
+                                                            "image": "",
+                                                            "matchingContent": "0",
+                                                            "matchingImage": ""
+                                                        }
+                                                ]
+                                            },
+                                                "components": []
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "",
+                                                    "type": "btn-next",
+                                                    "class": "",
+                                                    "content": "Next"
+                                                },
+                                                "components": [
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npPage",
+                                        "data": {
+                                            "id": "6961",
+                                            "instructional": "<p>Your customer asks how Re-Nutriv compares to other luxury brands. What should you say?</p>"
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npDragAndDropSelect",
+                                                "data": {
+                                                    
+                                                    "positiveFeedback": "That's it! Be sure to explain everything that Re-Nutriv offers in comparison to other brands.",
+                                                    "negativeFeedback": "Sorry, thatâ€™s not it. B, C, D and E are all things you can say. Be sure to explain everything that Re-Nutriv offers in comparison to other brands.",
+                                                    "required": true,
+                                                    "draggableButtons": [
+                                                        {
+                                                            "select": "false",
+                                                            "content": "<p>There is no reason to try any other brand. Re-Nutriv has everything you need.</p>",
+                                                            "image": "",
+                                                            "matchingContent": "0",
+                                                            "matchingImage": ""
+                                                        },
+                                                        {
+                                                            "select": "true",
+                                                            "content": "<p>Re-Nutriv is one of a kind in luxury because it combines the ultimate in nature and science.</p>",
+                                                            "image": "",
+                                                            "matchingContent": "1",
+                                                            "matchingImage": ""
+                                                        },
+                                                        {
+                                                            "select": "true",
+                                                            "content": "<p>We never stop searching for the next big breakthrough.</p>",
+                                                            "image": "",
+                                                            "matchingContent": "1",
+                                                            "matchingImage": ""
+                                                        },
+                                                        {
+                                                            "select": "true",
+                                                            "content": "<p>This unique combination of nature and science allows us to deliver the most extraordinary results and textures.</p>",
+                                                            "image": "",
+                                                            "matchingContent": "1",
+                                                            "matchingImage": ""
+                                                        },
+                                                        {
+                                                            "select": "true",
+                                                            "content": "<p>Re-Nutriv was actually the world&#39;s first luxury skincare line. EstÃ©e Lauder wanted to create the world&#39;s ultimate skincare and spared no expense.</p>",
+                                                            "image": "",
+                                                            "matchingContent": "1",
+                                                            "matchingImage": ""
+                                                        }
+                                                ]
+                                            },
+                                                "components": []
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "",
+                                                    "type": "btn-next",
+                                                    "class": "",
+                                                    "content": "Next"
+                                                },
+                                                "components": [
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npPage",
+                                        "data": {
+                                            "id": "6962",
+                                            "instructional": "<p>Your customer asks what results she&#39;ll see with Re-Nutriv. What should you say?</p>"
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npDragAndDropSelect",
+                                                "data": {
+                                                    
+                                                    "positiveFeedback": "That's it! This is a very common question. Use all of these discussion points to explain the results she can expect from Re-Nutriv.",
+                                                    "negativeFeedback": "Sorry, thatâ€™s not it. This is a very common question. Use all of these discussion points to explain the results she can expect from Re-Nutriv.",
+                                                    "required": true,
+                                                    "draggableButtons": [
+                                                        {
+                                                            "select": "false",
+                                                            "content": "<p>You&#39;ll see and feel the difference as soon as it touches your skin. Each formula offers the most indulgent texture and experience.</p>",
+                                                            "image": "",
+                                                            "matchingContent": "0",
+                                                            "matchingImage": ""
+                                                        },
+                                                        {
+                                                            "select": "false",
+                                                            "content": "<p>Let me put it on your hand so you can compare the difference.</p>",
+                                                            "image": "",
+                                                            "matchingContent": "0",
+                                                            "matchingImage": ""
+                                                        },
+                                                        {
+                                                            "select": "false",
+                                                            "content": "<p>Each Re-Nutriv formula offers powerful, visible results that build over time.</p>",
+                                                            "image": "",
+                                                            "matchingContent": "0",
+                                                            "matchingImage": ""
+                                                        },
+                                                        {
+                                                            "select": "false",
+                                                            "content": "<p>Let&#39;s find the formula that&#39;s best for you, and I&#39;ll show you the specific results.</p>",
+                                                            "image": "",
+                                                            "matchingContent": "0",
+                                                            "matchingImage": ""
+                                                        },
+                                                        {
+                                                            "select": "true",
+                                                            "content": "<p>All of the above.</p>",
+                                                            "image": "",
+                                                            "matchingContent": "1",
+                                                            "matchingImage": ""
+                                                        }
+                                                    ]
+                                                },
+                                                "components": []
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "",
+                                                    "type": "btn-next",
+                                                    "class": "",
+                                                    "content": "Next"
+                                                },
+                                                "components": [
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npPage",
+                                        "data": {
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npAsResult",
+                                                "id": "summary",
+                                                "data": {
+                                                    "feedback": {
+                                                        "pass": "Congratulations, you scored :USERSCORE:% and have passed this module.",
+                                                        "fail": "Sorry, you scored :USERSCORE:% and you needed to score :MINSCORE:% to pass. Try it again!"
+                                                    },
+                                                    "achievements": [
+                                                        {
+                                                            "score": 0.8,
+                                                            "compare": "gte",
+                                                            "content": "In addition, you scored some points!"
+                                                        },
+                                                        {
+                                                            "score": 1,
+                                                            "compare": "eq",
+                                                            "content": "In addition, you get this badge and some points!"
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

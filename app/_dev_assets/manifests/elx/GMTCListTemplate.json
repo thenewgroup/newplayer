@@ -1,0 +1,252 @@
+[
+    {
+        "type": "npFeature",
+        "data": {
+            "id": "GMTC",
+            "class": " ",
+            "req": [],
+            "version": "0.0.1",
+            "timestamp": "1970-01-01_00:00:00"
+        },
+        "components": [
+            {
+                "type": "npContent",
+                "data": {
+                    "id": "content_en-US",
+                    "class": "",
+                    "language": "en-US",
+                    "title": "Re Nutriv",
+                    "description": "Re Nutriv template"
+                },
+                "components": [
+                    {
+                        "type": "npHTML",
+                        "data": {
+                            "id": "newplayer-background",
+                            "class": "",
+                            "content": ""
+                        },
+                        "components": [
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "background-image",
+                                    "class": ""
+                                },
+                                "components": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "npHTML",
+                        "data": {
+                            "id": "",
+                            "class": "outside-padding",
+                            "content": ""
+                        },
+                        "components": [
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "",
+                                    "class": "renutriv-logo-image"
+                                },
+                                "components": []
+                            },
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "",
+                                    "class": "h3 headline",
+                                    "content": "<p>(h3 Headline) Our Newest List Component: Ultimate Diamond</p>"
+                                },
+                                "components": []
+                            },
+                            {
+                                "type": "npList",
+                                "data": {
+                                    "id": "",
+                                    "class": "h6 instructional",
+                                    "data-ng:wrap": "true",
+                                    "heading": "<p>List heading for Video</p>",
+                                    "content": "<p>List content etc., Apply one pump of the Dual Infusion into your palm. Press hands together and lightly blend all over hands. </p>"
+                                },
+                                "components": [
+                                    {
+                                        "type": "npVideo",
+                                        "data": {
+                                            "id": "vidMain",
+                                            "poster": "",
+                                            "baseURL": "../_dev_assets/assets/video/EL_CREME_CLEAN_HD_ELX",
+                                            "types": ["mp4"]
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npList",
+                                "data": {
+                                    "id": "",
+                                    "class": "h6 instructional",
+                                    "data-ng:wrap": "true",
+                                    "heading": "<p>List heading for Video</p>",
+                                    "content": "<p>List content etc., Apply one pump of the Dual Infusion into your palm. Press hands together and lightly blend all over hands. </p>"
+                                },
+                                "components": [
+                                    {
+                                        "type": "npVideo",
+                                        "data": {
+                                            "id": "vidMain",
+                                            "poster": "",
+                                            "baseURL": "../_dev_assets/assets/video/ELX_Welcome_640x360_ENG",
+                                            "types": ["mp4"]
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npList",
+                                "data": {
+                                    "id": "",
+                                    "class": "h6 instructional",
+                                    "data-ng:wrap": "true",
+                                    "heading": "<p>List heading for Video</p>",
+                                    "content": "<p>List content etc., Apply one pump of the Dual Infusion into your palm. Press hands together and lightly blend all over hands. </p>"
+                                },
+                                "components": [
+                                    {
+                                        "type": "npVideo",
+                                        "data": {
+                                            "id": "vidMain",
+                                            "poster": "//ia700505.us.archive.org/3/items/Windows7WildlifeSampleVideo/Windows7WildlifeSampleVideo.thumbs/Wildlife_000001.jpg",
+                                            "baseURL": "//archive.org/download/Windows7WildlifeSampleVideo/Wildlife_512kb",
+                                            "types": ["mp4"]
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npList",
+                                "data": {
+                                    "id": "",
+                                    "class": "h6 instructional",
+                                    "data-ng:wrap": "true",
+                                    "heading": "<p>List heading </p>",
+                                    "content": "<p>List content etc., Apply one pump of the Dual Infusion into your palm. Press hands together and lightly blend all over hands. </p>"
+                                },
+                                "components": [
+                                ]
+                            },
+                            {
+                                "type": "npList",
+                                "data": {
+                                    "id": "",
+                                    "class": "h6 instructional",
+                                    "data-ng:wrap": "true",
+                                    "heading": "<p>List heading </p>",
+                                    "content": "<p>List content etc., Apply one pump of the Dual Infusion into your palm. Press hands together and lightly blend all over hands. </p>"
+                                },
+                                "components": [
+                                    {
+                                        "type": "npImage",
+                                        "data": {
+                                            "src": "../_dev_assets/assets/images/saturn1.jpg",
+                                            "alt": "saturn 1"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npList",
+                                "data": {
+                                    "id": "",
+                                    "class": "h6 instructional",
+                                    "data-ng:wrap": "false",
+                                    "heading": "<p>List heading </p>",
+                                    "content": "<p>List content etc., Apply one pump of the Dual Infusion into your palm. Press hands together and lightly blend all over hands. </p>"
+                                },
+                                "components": [
+                                    {
+                                        "type": "npImage",
+                                        "data": {
+                                            "src": "../_dev_assets/assets/images/saturn2.jpg",
+                                            "alt": "saturn 2"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npList",
+                                "data": {
+                                    "id": "",
+                                    "class": "h6 instructional",
+                                    "data-ng:wrap": "true",
+                                    "heading": "<p>List heading </p>",
+                                    "content": "<p>List content etc., Apply one pump of the Dual Infusion into your palm. Press hands together and lightly blend all over hands. </p>"
+                                },
+                                "components": [
+                                    {
+                                        "type": "npImage",
+                                        "data": {
+                                            "src": "../_dev_assets/assets/images/thesun.jpg",
+                                            "alt": "the sun"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npList",
+                                "data": {
+                                    "id": "",
+                                    "class": "h6 instructional",
+                                    "data-ng:wrap": "false",
+                                    "heading": "<p>List heading for Video</p>",
+                                    "content": "<p>List content etc., Apply one pump of the Dual Infusion into your palm. Press hands together and lightly blend all over hands. </p>"
+                                },
+                                "components": [
+                                    {
+                                        "type": "npVideo",
+                                        "data": {
+                                            "id": "vidMain",
+                                            "poster": "//ia700505.us.archive.org/3/items/Windows7WildlifeSampleVideo/Windows7WildlifeSampleVideo.thumbs/Wildlife_000001.jpg",
+                                            "baseURL": "//archive.org/download/Windows7WildlifeSampleVideo/Wildlife_512kb",
+                                            "types": ["mp4"]
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npList",
+                                "data": {
+                                    "id": "",
+                                    "class": "h6 instructional",
+                                    "data-ng:wrap": "false",
+                                    "heading": "<p>List heading for some audio</p>",
+                                    "content": "<p>List content etc., Apply one pump of the Dual Infusion into your palm. Press hands together and lightly blend all over hands. </p>"
+                                },
+                                "components": [
+                                    {
+                                        "type": "npAudio",
+                                        "data": {
+                                            "id": "audioMain",
+                                            "baseURL": "../_dev_assets/assets/audio/01CircadianCyclemix0",
+                                            "types": ["mp3"]
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

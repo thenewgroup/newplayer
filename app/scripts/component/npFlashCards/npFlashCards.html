@@ -1,0 +1,36 @@
+<div np-flash-cards id="{{npFlashCards.id}} " class="{{component.type}} np-cmp-wrapper np-flash-card" ng-controller="npFlashCardsController as npFlashCards">
+    <div class="debug">
+        <h3>{{component.type}} -- 
+            <small>{{component.idx}}</small>
+        </h3>
+    </div>
+    <!--::::::::::::  flash-card  ::::::::::::::::-->
+    <div id="flash-cards" class="row">
+        <div np-swipe-angular-draggable  class="col-sm-12">
+            <div id="flash-cards-swipe-container">
+                <div flash-card class="flash-cards-object " ng-repeat="flashCardComponent in npFlashCards.flashCardComponents">
+                    <div class="flash-card-front-wrapper">
+                        <div class="flash-card-background"></div>
+                        <div class="body-copy flash-card-content-front" ng-bind-html="flashCardComponent.contentFront"></div>
+                        <div class="flash-card-border"></div>
+                        <div class="flash-card-overlay"></div>
+                    </div>
+                    <div class="flash-card-back-wrapper">
+                        <div class="flash-card-background"></div>
+                        <div class="flash-card-content-back" ng-bind-html="flashCardComponent.contentBack"></div>
+                        <!--<p class="flash-card-content-back" ng-bind-html="flashCardComponent.contentBack"></p>-->
+                    </div>
+                    <div class="flash-card-button" ng-click="npFlashCards.update(flashCardComponent)">
+                        <svg version="1.0"  class='button-holder' xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="25px" height="19.7px" viewBox="343.2 692.6 25 19.7" xml:space="preserve">
+                            <g id="refresh-icon">
+                                <path id="refresh-icon-shape" d="M362.8,695.6l-2.3,2.301c-1.2-1.2-2.9-2-4.8-2c-3.8,0-6.8,3.1-6.8,6.8l0,0h2.699  l-4.199,4.2l-4.2-4.2h2.6l0,0c0-5.601,4.5-10.101,10.101-10.101C358.4,692.6,360.9,693.7,362.8,695.6z M368.2,702.3l-4.2-4.2  l-4.2,4.2h2.7l0,0c0,3.8-3.1,6.8-6.8,6.8c-1.9,0-3.601-0.8-4.8-2L348.6,709.4c1.801,1.8,4.301,2.899,7.101,2.899  c5.6,0,10.1-4.5,10.1-10.1l0,0h2.4V702.3z"/>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div> 
+</div> 
+<!--::::::::::::  flash-card  ::::::::::::::::-->
+<div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>

@@ -1,0 +1,491 @@
+[
+    {
+        "type": "npFeature",
+        "data": {
+            "id": "reNutriv",
+            "class": " ",
+            "req": [],
+            "version": "0.0.1",
+            "timestamp": "1970-01-01_00:00:00"
+        },
+        "components": [
+            {
+                "type": "npContent",
+                "data": {
+                    "id": "content_en-US",
+                    "class": "",
+                    "language": "en-US",
+                    "title": "Re Nutriv",
+                    "description": "Re Nutriv template"
+                },
+                "components": [
+                    {
+                        "type": "npHTML",
+                        "data": {
+                            "id": "newplayer-background",
+                            "class": "",
+                            "content": ""
+                        },
+                        "components": [
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "background-image",
+                                    "class": ""
+                                },
+                                "components": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "npHTML",
+                        "data": {
+                            "id": "",
+                            "class": "outside-padding",
+                            "content": ""
+                        },
+                        "components": [
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "",
+                                    "class": "renutriv-logo-image"
+                                },
+                                "components": []
+                            },
+                            {
+                                "type": "npQuiz",
+                                "data": {
+                                    "id": "npQuizID",
+                                    "assessed": "1",
+                                    "questions": "3",
+                                    "percentage": "80"
+                                },
+                                "components": [
+                                    {
+                                        "type": "npPage",
+                                        "data": {
+                                            "id": "",
+                                            "parentId": "",
+                                            "title": "How Much Do You Know About Re-Nutriv 1",
+                                            "required": false,
+                                            "first": true,
+                                            "last": false
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npQuestion",
+                                                "data": {
+                                                    "id": "npQuestionID",
+                                                    "required": false,
+                                                    "forced": false,
+                                                    "type": "checkbox",
+                                                    "difficulty": "1",
+                                                    "content": "How do you identify a Re-Nutriv customer?",
+                                                    "buttons": {
+                                                        "submit": "m.Submit",
+                                                        "next": "m.next"
+                                                    },
+                                                    "feedback": {
+                                                        "immediate": true,
+                                                        "correct": "That's it! Explain that we have two skincare lines, and share the benefits of each one.",
+                                                        "incorrect": "That's not it. Explain that we have two skincare lines, and share the benefits of each one."
+                                                    }
+                                                },
+                                                "components": [
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "Look at what she's wearing.",
+                                                            "correct": false,
+                                                            "feedback": {
+                                                                "incorrect": "That's not it. Explain that we have two skincare lines, and share the benefits of each one."
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "Assume every customer is a Re-Nutriv customer; introduce it to everyone.",
+                                                            "correct": false,
+                                                            "feedback": {
+                                                                "incorrect": "That's not it. Explain that we have two skincare lines, and share the benefits of each one."
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "Always explain to your customer that we have two skincare lines, Beautiful Skin Solutions and Re-Nutriv; share the benefits of each.",
+                                                            "correct": true,
+                                                            "feedback": {
+                                                                "correct": "That's it! Explain that we have two skincare lines, and share the benefits of each one."
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "Always explain to your customer that we have two skincare lines, Beautiful Skin Solutions and Re-Nutriv; tell her that Re-Nutriv is superior.",
+                                                            "correct": false,
+                                                            "feedback": {
+                                                                "incorrect": "That's not it. Explain that we have two skincare lines, and share the benefits of each one."
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "",
+                                                    "type": "btn-next",
+                                                    "class": "",
+                                                    "content": "Next"
+                                                },
+                                                "components": [
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npPage",
+                                        "data": {
+                                            "id": "",
+                                            "parentId": "question1",
+                                            "title": "Question 1",
+                                            "required": false,
+                                            "first": false,
+                                            "last": false
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npQuestion",
+                                                "data": {
+                                                    "class": "row",
+                                                    "required": true,
+                                                    "forced": false,
+                                                    "type": "checkbox",
+                                                    "difficulty": 2,
+                                                    "content": "What number am I thinking of? QUESTION 2",
+                                                    "buttons": {
+                                                        "submit": "m.Submit",
+                                                        "next": "m.next"
+                                                    },
+                                                    "feedback": {
+                                                        "immediate": true,
+                                                        "correct": "Hey, that's right!",
+                                                        "incorrect": "No! ... What are you thinking!?"
+                                                    }
+                                                },
+                                                "components": [
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "800000000",
+                                                            "correct": false
+                                                        },
+                                                        "components": [
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "7,433.6",
+                                                            "correct": false
+                                                        },
+                                                        "components": [
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "<img src=\"http://i.istockimg.com/file_thumbview_approve/33898764/2/stock-photo-33898764-isolated-chicken-with-egg.jpg\" height=\"50\" />",
+                                                            "correct": true
+                                                        },
+                                                        "components": [
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "<strong>Bologna!</strong>",
+                                                            "correct": true
+                                                        },
+                                                        "components": [
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "",
+                                                    "type": "btn-next",
+                                                    "class": "",
+                                                    "content": "Next"
+                                                },
+                                                "components": [
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npPage",
+                                        "data": {
+                                            "id": "",
+                                            "parentId": "QuizIntro",
+                                            "title": "Question 1",
+                                            "inMenu": true,
+                                            "required": false
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npQuestion",
+                                                "data": {
+                                                    "class": "row",
+                                                    "required": true,
+                                                    "forced": true,
+                                                    "type": "text",
+                                                    "difficulty": 3,
+                                                    "content": "What is the greatest thing ever!? QUESTION 3",
+                                                    "buttons": {
+                                                        "submit": "m.Submit",
+                                                        "next": "m.next"
+                                                    },
+                                                    "feedback": {
+                                                        "immediate": true,
+                                                        "correct": "Of course it is!",
+                                                        "incorrect": "Hmmm... yeeeaaa... no!"
+                                                    },
+                                                    "first": false,
+                                                    "last": true
+                                                },
+                                                "components": [
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "Answer:",
+                                                            "correct": "/ice\\s?cream/i"
+                                                        },
+                                                        "components": []
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "",
+                                                    "type": "btn-next",
+                                                    "class": "",
+                                                    "content": "Next"
+                                                },
+                                                "components": [
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npPage",
+                                        "data": {
+                                            "id": "",
+                                            "parentId": "QuizIntro",
+                                            "title": "Question 1",
+                                            "inMenu": true,
+                                            "required": false
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npQuestion",
+                                                "data": {
+                                                    "class": "row",
+                                                    "required": true,
+                                                    "forced": false,
+                                                    "type": "checkbox",
+                                                    "difficulty": 2,
+                                                    "content": "What number am I thinking of? QUESTION 2",
+                                                    "buttons": {
+                                                        "submit": "m.Submit",
+                                                        "next": "m.next"
+                                                    },
+                                                    "feedback": {
+                                                        "immediate": true,
+                                                        "correct": "Hey, that's right!",
+                                                        "incorrect": "No! ... What are you thinking!?"
+                                                    }
+                                                },
+                                                "components": [
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "800000000",
+                                                            "correct": false
+                                                        },
+                                                        "components": [
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "7,433.6",
+                                                            "correct": false
+                                                        },
+                                                        "components": [
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "<img src=\"http://i.istockimg.com/file_thumbview_approve/33898764/2/stock-photo-33898764-isolated-chicken-with-egg.jpg\" height=\"50\" />",
+                                                            "correct": true
+                                                        },
+                                                        "components": [
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "<strong>Bologna!</strong>",
+                                                            "correct": true
+                                                        },
+                                                        "components": [
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "",
+                                                    "type": "btn-next",
+                                                    "class": "",
+                                                    "content": "Next"
+                                                },
+                                                "components": [
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npPage",
+                                        "data": {
+                                            "id": "",
+                                            "parentId": "QuizIntro",
+                                            "title": "Question 1",
+                                            "inMenu": true,
+                                            "required": false
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npQuestion",
+                                                "data": {
+                                                    "class": "row",
+                                                    "required": true,
+                                                    "forced": false,
+                                                    "type": "checkbox",
+                                                    "difficulty": 2,
+                                                    "content": "What number am I thinking of? QUESTION 2",
+                                                    "buttons": {
+                                                        "submit": "m.Submit",
+                                                        "next": "m.next"
+                                                    },
+                                                    "feedback": {
+                                                        "immediate": true,
+                                                        "correct": "Hey, that's right!",
+                                                        "incorrect": "No! ... What are you thinking!?"
+                                                    }
+                                                },
+                                                "components": [
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "800000000",
+                                                            "correct": false
+                                                        },
+                                                        "components": [
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "7,433.6",
+                                                            "correct": false
+                                                        },
+                                                        "components": [
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "<img src=\"http://i.istockimg.com/file_thumbview_approve/33898764/2/stock-photo-33898764-isolated-chicken-with-egg.jpg\" height=\"50\" />",
+                                                            "correct": true
+                                                        },
+                                                        "components": [
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "npAnswer",
+                                                        "data": {
+                                                            "label": "<strong>Bologna!</strong>",
+                                                            "correct": true
+                                                        },
+                                                        "components": [
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "",
+                                                    "type": "btn-next",
+                                                    "class": "",
+                                                    "content": "Next"
+                                                },
+                                                "components": [
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npPage",
+                                        "data": {
+                                            "id": "",
+                                            "parentId": "QuizIntro",
+                                            "title": "How Much Do You Know About Re-Nutriv Summary",
+                                            "inMenu": false,
+                                            "required": false
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npQuizSummary",
+                                                "data": {
+                                                    "feedback": {
+                                                        "pass": "<p>Congratulations, you scored :USERSCORE:% and have passed this module.</p>",
+                                                        "fail": "<p>Sorry, you scored :USERSCORE:% and you needed to score :MINSCORE:% to pass. Try it again!</p>"
+                                                    },
+                                                    "achievements": [
+                                                        {
+                                                            "score": 0.8,
+                                                            "compare": "gte",
+                                                            "content": "In addition, you a grip of points!"
+                                                        },
+                                                        {
+                                                            "score": 1,
+                                                            "compare": "eq",
+                                                            "content": "In addition, you get this badge and a grip of points!"
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

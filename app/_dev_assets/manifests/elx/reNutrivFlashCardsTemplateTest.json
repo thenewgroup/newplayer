@@ -1,0 +1,83 @@
+[{
+        "type": "npFeature",
+        "data": {
+            "id": "reNutriv",
+            "class": "",
+            "version": "0.0.1",
+            "timestamp": "2015-Apr-Sun_05:04:02"
+        },
+        "components": [{
+                "type": "npContent",
+                "data": {
+                    "id": "content_en",
+                    "language": "en",
+                    "title": "Learning-Content-Re-Nutriv-6.0-Creating-a-Luxury-Re-Nutriv-Experience",
+                    "description": "This manifest creates a Story or Learning Object content object . "
+                },
+                "components": [{
+                        "type": "npHTML",
+                        "data": {
+                            "id": "newplayer-background"
+                        },
+                        "components": [{
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "background-image"
+                                },
+                                "components": []
+                            }]
+                    }, {
+                        "type": "npHTML",
+                        "data": {
+                            "class": "outside-padding"
+                        },
+                        "components": [{
+                                "type": "npHTML",
+                                "data": {
+                                    "class": "renutriv-logo-image"
+                                },
+                                "components": []
+                            }, {
+                                "type": "npHTML",
+                                "data": {
+                                    "class": "h3 headline",
+                                    "content": "Creating a Luxury Re-Nutriv Experience"
+                                },
+                                "components": []
+                            }, {
+                                "type": "npHTML",
+                                "data": {
+                                    "class": "h6 instructional",
+                                    "content": "<p>Select and move the cards by dragging them, and click on the top right button to flip the card over.</p>"
+                                },
+                                "components": []
+                            }, {
+                                "type": "npPage",
+                                "data": {},
+                                "components": [{
+                                        "type": "npFlashCards",
+                                        "data": {
+                                            "id": "flash-cards-test-id",
+                                            "class": "flash-cards-test-class"
+                                        },
+                                        "flashCards": [{
+                                                "contentFront": " <p><strong>Environment</strong></p><p><img alt= class=image-flash_card_image height=430 src=assets/styles/flash_card_image/public/ESTL-010_RN-6point0_Image1-Environment.jpg?itok=Z2rV0Ipa width=500 /></p>",
+                                                "contentBack": " <p><strong>Environment</strong></p><p>Make sure Re-Nutriv testers are always full and impeccable in presentation. Always present products on a special Re-Nutriv tray. Keep the area clean and freshly stocked with hygienic supplies.</p>"
+                                            }, {
+                                                "contentFront": " <p><strong>Presentation</strong></p><p><img alt= class=image-flash_card_image height=430 src=assets/styles/flash_card_image/public/ESTL-010_RN-6point0_Image2-Presentation.jpg?itok=LyT3ExlZ width=500 /></p>",
+                                                "contentBack": " <p><strong>Presentation </strong></p><p>Body language is essential when handling a luxury item&mdash;think about how you would hold a precious piece of jewelry or art. Your customer will respond to your demonstrated reverence for the product.</p><p>Hold the product with care&mdash;&quot;cradle&quot; it in your hands. Communicate product information with confidence and authority.</p>"
+                                            }, {
+                                                "contentFront": " <p><strong>Demonstration Ritual</strong></p><p><img alt= class=image-flash_card_image height=430 src=assets/styles/flash_card_image/public/ESTL-010_RN-6point0_Image3-DemoRitual.jpg?itok=H1VlxqYD width=500 /></p>",
+                                                "contentBack": " <p><strong>Demonstration Ritual</strong></p><p>Cleanse hands and place a folded tissue on the counter and use it to neatly display your Re-Nutriv tools. Tuck a tissue into the customer&#39;s sleeve to create a protective cuff.</p><p class=header-dark>Present the product with care, using the special Re-Nutriv spatula. Replace the lid on the jar before you demonstrate.</p><p>Warm product between your hands before applying. Place a tissue beneath the customer&#39;s hand, and gently massage the creme into the back of her hand.</p>"
+                                            }, {
+                                                "contentFront": " <p><strong>Re-Nutriv Massages</strong></p><p><img alt= class=image-flash_card_image height=430 src=assets/styles/flash_card_image/public/ESTL-010_RN-6point0_Image4-RNMassages.jpg?itok=7tGJ5CyX width=500 /></p>",
+                                                "contentBack": " <p><strong>Re-Nutriv Massages</strong></p><p>Offer the Re-Nutriv customer her choice of complimentary massages every time she shops at Estée Lauder. The massages are based on an East&ndash;West approach and combine principles of traditional Chinese massage as well as European spa techniques.</p>"
+                                            }, {
+                                                "contentFront": " <p><strong>Wrap-Up Ritual</strong></p><p><img alt= class=image-flash_card_image height=430 src=assets/styles/flash_card_image/public/ESTL-010_RN-6point0_Image5-WrapUpRitual.jpg?itok=KUP_RT2j width=500 /></p>",
+                                                "contentBack": " <p><strong>Wrap-Up Ritual</strong></p><p>Open every product in front of your customer to show its pristine condition. Summarize benefits and give use tips.</p><p>Wrap products individually in tissue and place in shopping bag. Compliment her purchase, thank her for shopping with you and offer to stay in touch. Step out from behind the counter and hand your customer her bag with two hands.</p>"
+                                            }]
+                                    }]
+                            }]
+                    }]
+            }]
+    }]

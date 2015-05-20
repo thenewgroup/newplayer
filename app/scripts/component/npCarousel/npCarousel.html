@@ -1,0 +1,26 @@
+<div np-carousel id="{{npCarousel.id}} " class="{{component.type}} np-cmp-wrapper np-carousel" ng-controller="npCarouselController as npCarousel">
+    <div class="debug">
+        <h3>{{component.type}}
+            <small>{{component.idx}}</small>
+        </h3>
+    </div>
+    <div id="carousel" class="row">
+        <div np-carousel-directive  class="col-sm-12">
+            <div id="carousel-container">
+                <div  class="carousel-object " ng-repeat="carouselComponent in npCarousel.carouselComponents">
+                    <div class="flash-card-front-wrapper">
+                        <div class="flash-card-background"></div>
+                        <div class="body-copy flash-card-content-front" ng-bind-html="carouselComponent.contentFront"></div>
+                        <div class="flash-card-border"></div>
+                        <div class="flash-card-overlay"></div>
+                    </div>
+                    <div class="flash-card-back-wrapper">
+                        <div class="flash-card-background"></div>
+                        <div class="flash-card-content-back" ng-bind-html="carouselComponent.contentBack"></div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div> 
+</div> 
+<div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>

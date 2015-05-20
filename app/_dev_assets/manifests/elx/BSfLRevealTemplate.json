@@ -1,0 +1,181 @@
+[
+    {
+        "type": "npFeature",
+        "data": {
+            "id": "BSFL",
+            "class": " ",
+            "req": [],
+            "version": "0.0.1",
+            "timestamp": "1970-01-01_00:00:00"
+        },
+        "components": [
+            {
+                "type": "npContent",
+                "data": {
+                    "id": "content_en-US",
+                    "class": "",
+                    "language": "en-US",
+                    "title": "Re Nutriv",
+                    "description": "Re Nutriv template"
+                },
+                "components": [
+                    {
+                        "type": "npHTML",
+                        "data": {
+                            "id": "newplayer-background",
+                            "class": "",
+                            "content": ""
+                        },
+                        "components": [
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "background-image",
+                                    "class": ""
+                                },
+                                "components": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "npHTML",
+                        "data": {
+                            "id": "",
+                            "class": "outside-padding",
+                            "content": ""
+                        },
+                        "components": [
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "",
+                                    "class": "renutriv-logo-image"
+                                },
+                                "components": []
+                            },
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "",
+                                    "class": "h3 headline",
+                                    "content": "<p>(h3 Headline) Our Newest List Component: Ultimate Diamond</p>"
+                                },
+                                "components": []
+                            },
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "",
+                                    "class": "h6 instructional",
+                                    "content": "<p>(Instructional copy) Select each image to learn more.</p>"
+                                },
+                                "components": []
+                            },
+                            {
+                                "type": "npReveal",
+                                "data": {
+                                    "id": "reveal-test-id",
+                                    "class": "reveal-test-class"
+                                },
+                                "revealItems": [
+                                    {
+                                        "id": "reveal-0",
+                                        "heading": "Reveal heading Item #0",
+                                        "content": "Reveal Item #0 content content content content content content content content content content content content content content!!",
+                                        "buttonImage": "../_dev_assets/assets/images/comet-sml.jpg",
+                                        "buttonAltText": "thumb",
+                                        "components": [
+                                            {
+                                                "type": "npImage",
+                                                "data": {
+                                                    "id": "reveal-1-image",
+                                                    "src": "../_dev_assets/assets/images/comet-lrg.jpg",
+                                                    "alt": "choice"
+                                                },
+                                                "components": []
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "reveal-1",
+                                        "heading": "Reveal heading Item #1",
+                                        "content": "Reveal Item #1 more content content content content content content content content content content content content content!!",
+                                        "buttonImage": "../_dev_assets/assets/images/ELX_Welcome_70x70.png",
+                                        "buttonAltText": "thumb",
+                                        "components": [
+                                            {
+                                                "type": "npVideo",
+                                                "data": {
+                                                    "id": "reveal-1-vid",
+                                                    "poster": "",
+                                                    "baseURL": "../_dev_assets/assets/video/oceans-clip",
+                                                    "types": ["mp4"]
+                                                },
+                                                "components": []
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "reveal-2",
+                                        "heading": "Reveal heading Item #2",
+                                        "content": "Reveal Item #2 content content content content content content content content content content content content content content!!",
+                                        "buttonImage": "../_dev_assets/assets/images/earth.jpg",
+                                        "buttonAltText": "thumb",
+                                        "components": [
+                                            {
+                                                "type": "npImage",
+                                                "data": {
+                                                    "id": "reveal-1-image",
+                                                    "src": "../_dev_assets/assets/images/earth.jpg",
+                                                    "alt": "choice"
+                                                },
+                                                "components": []
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "reveal-1",
+                                        "heading": "Reveal heading Item #1",
+                                        "content": "Reveal Item #1 more content content content content content content content content content content content content content!!",
+                                        "buttonImage": "../_dev_assets/assets/images/ELX_Welcome_70x70.png",
+                                        "buttonAltText": "thumb",
+                                        "components": [
+                                            {
+                                                "type": "npVideo",
+                                                "data": {
+                                                    "id": "reveal-1-vid",
+                                                    "poster": "../_dev_assets/assets/images/ELX_Welcome_640x360_ENG.png",
+                                                    "baseURL": "../_dev_assets/assets/video/ELX_Welcome_640x360_ENG",
+                                                    "types": ["mp4"]
+                                                },
+                                                "components": []
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "reveal-2",
+                                        "heading": "Reveal heading Item #2",
+                                        "content": "Reveal Item #2 content content content content content content content content content content content content content content!!",
+                                        "buttonImage": "../_dev_assets/assets/images/thesun.jpg",
+                                        "buttonAltText": "thumb",
+                                        "components": [
+                                            {
+                                                "type": "npImage",
+                                                "data": {
+                                                    "id": "reveal-1-image",
+                                                    "src": "../_dev_assets/assets/images/thesun.jpg",
+                                                    "alt": "choice"
+                                                },
+                                                "components": []
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

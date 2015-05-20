@@ -7,11 +7,11 @@
     <div class="npQuestion-content" ng-bind-html="npQuestion.content"></div>
 
     <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
-    
-  <button type="submit" class="btn btn-primary">Submit</button>
-<!--    <div class="btn btn-default">
-        <input type="submit" />
-    </div>-->
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <!--    <div class="btn btn-default">
+            <input type="submit" />
+        </div>-->
 
     <div class="npQuestion-feedback" ng-if="npQuestion.feedback" ng-bind-html="npQuestion.feedback"></div>
 
