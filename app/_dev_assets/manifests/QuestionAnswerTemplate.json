@@ -56,13 +56,21 @@
                             {
                                 "type": "npPage",
                                 "data": {
-                                    "id": "",
+                                    "id": "Welcome",
                                     "parentId": "",
-                                    "title": "Welcome pg1",
+                                    "title": "Welcome",
                                     "inMenu": true,
                                     "required": false
                                 },
                                 "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "renutriv-logo-image"
+                                        },
+                                        "components": []
+                                    },
                                     {
                                         "type": "npHTML",
                                         "data": {
@@ -90,7 +98,7 @@
                                 "data": {
                                     "id": "",
                                     "parentId": "",
-                                    "title": "How Much Do You Know About Re-Nutriv",
+                                    "title": "How Much Do You Know About Re-Nutriv 1",
                                     "required": false,
                                     "first": true,
                                     "last": false
@@ -104,7 +112,7 @@
                                             "forced": false,
                                             "type": "checkbox",
                                             "difficulty": "1",
-                                            "content": "How do you identify a Re-Nutriv customer?  pg2",
+                                            "content": "How do you identify a Re-Nutriv customer?",
                                             "submitLabel": "submit",
                                             "feedback": {
                                                 "immediate": true,
@@ -179,17 +187,6 @@
                                         "type": "npButton",
                                         "data": {
                                             "link": "",
-                                            "type": "btn-previous",
-                                            "class": "",
-                                            "content": "Previous"
-                                        },
-                                        "components": [
-                                        ]
-                                    },
-                                    {
-                                        "type": "npButton",
-                                        "data": {
-                                            "link": "",
                                             "type": "btn-next",
                                             "class": "",
                                             "content": "Next"
@@ -203,7 +200,7 @@
                                 "type": "npPage",
                                 "data": {
                                     "id": "",
-                                    "parentId": "",
+                                    "parentId": "question1",
                                     "title": "Question 1",
                                     "required": false,
                                     "first": false,
@@ -218,7 +215,7 @@
                                             "forced": false,
                                             "type": "checkbox",
                                             "difficulty": 2,
-                                            "content": "What number am I thinking of?  pg3",
+                                            "content": "What number am I thinking of? QUESTION 2",
                                             "submitLabel": "submit",
                                             "feedback": {
                                                 "immediate": true,
@@ -302,7 +299,7 @@
                                 "type": "npPage",
                                 "data": {
                                     "id": "",
-                                    "parentId": "",
+                                    "parentId": "QuizIntro",
                                     "title": "Question 1",
                                     "inMenu": true,
                                     "required": false
@@ -316,7 +313,7 @@
                                             "forced": true,
                                             "type": "text",
                                             "difficulty": 3,
-                                            "content": "What is the greatest thing ever!?  pg4",
+                                            "content": "What is the greatest thing ever!? QUESTION 3",
                                             "submitLabel": "submit",
                                             "feedback": {
                                                 "immediate": true,
@@ -361,7 +358,7 @@
                                 "type": "npPage",
                                 "data": {
                                     "id": "",
-                                    "parentId": "",
+                                    "parentId": "QuizIntro",
                                     "title": "Question 1",
                                     "inMenu": true,
                                     "required": false
@@ -375,7 +372,7 @@
                                             "forced": false,
                                             "type": "checkbox",
                                             "difficulty": 2,
-                                            "content": "What number am I thinking of? pg5",
+                                            "content": "What number am I thinking of? QUESTION 2",
                                             "submitLabel": "submit",
                                             "feedback": {
                                                 "immediate": true,
@@ -459,7 +456,7 @@
                                 "type": "npPage",
                                 "data": {
                                     "id": "",
-                                    "parentId": "",
+                                    "parentId": "QuizIntro",
                                     "title": "Question 1",
                                     "inMenu": true,
                                     "required": false
@@ -473,7 +470,7 @@
                                             "forced": false,
                                             "type": "checkbox",
                                             "difficulty": 2,
-                                            "content": "What number am I thinking of? pg6",
+                                            "content": "What number am I thinking of? QUESTION 2",
                                             "submitLabel": "submit",
                                             "feedback": {
                                                 "immediate": true,
