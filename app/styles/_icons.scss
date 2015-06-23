@@ -13,107 +13,59 @@
 	/*-webkit-font-smoothing: antialiased;*/
 	-moz-osx-font-smoothing: grayscale;
 }
-
 .elx-surveys-convo:before {
 	content: "\e616";
 }
-
 .elx-news-starburst:before {
 	content: "\e617";
 }
-
 .elx-carat-down:before {
 	content: "\e600";
 }
-
 .elx-carat-up:before {
 	content: "\e601";
 }
-
 .elx-comment:before {
 	content: "\e602";
 }
-
 .elx-comment-filled:before {
 	content: "\e603";
 }
-
 .elx-gem:before {
 	content: "\e604";
 }
-
-.elx-see-more .path1:before {
-	content: "\e605";
-	color: rgb(1, 5, 30);
-}
-.elx-see-more .path2:before {
-	content: "\e606";
-	margin-left: -1.0068359375em;
-	color: rgb(4, 10, 43);
-}
-.elx-see-more .path3:before {
-	content: "\e607";
-	margin-left: -1.0068359375em;
-	color: rgb(30, 35, 65);
-}
-.elx-see-more .path4:before {
-	content: "\e608";
-	margin-left: -1.0068359375em;
-	color: rgb(84, 87, 110);
-}
-.elx-see-more .path5:before {
-	content: "\e609";
-	margin-left: -1.0068359375em;
-	color: rgb(128, 132, 151);
-}
-.elx-see-more .path6:before {
-	content: "\e60a";
-	margin-left: -1.0068359375em;
-	color: rgb(173, 176, 191);
-}
-
 .elx-heart-filled:before {
 	content: "\e60b";
         color: $brand-info;
 }
-
 .elx-heart:before {
 	content: "\e60c";
         color: $brand-info;
 }
-
 .elx-menu-close:before {
 	content: "\e60d";
 }
-
 .elx-hamburger:before {
 	content: "\e60e";
 }
-
 .elx-search:before {
 	content: "\e60f";
 }
-
 .elx-settings-gear:before {
 	content: "\e610";
 }
-
 .elx-thin-x:before {
 	content: "\e611";
 }
-
 .elx-thin-minus:before {
 	content: "\e612";
 }
-
 .elx-thin-plus:before {
 	content: "\e613";
 }
-
 .elx-thin-carat-right:before {
 	content: "\e614";
 }
-
 .elx-gem-filled:before {
 	content: "\e615";
 }

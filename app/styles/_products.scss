@@ -1,4 +1,71 @@
 
+/*$body-bg:               $brand-offwhite !default;*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*page type background classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*When setting this ID for New Player use: 'newplayer-background'*/
+#np_newplayer-background{
+    background-color: $brand-offwhite;
+    background-size: cover;
+    position:fixed;
+    content: "";
+    width:100%;
+    height:auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    /*z-index: -1;*/
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player background color wrapper classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*When setting this class for New Player use: 'background-brand-primary-light'*/
+.np_background-brand-primary-light{
+    background-color: $brand-primary-light;
+}
+/*When setting this class for New Player use: 'background-brand-offwhite' */
+.np_background-brand-offwhite{
+    background-color: $brand-offwhite;
+    color: $brand-primary;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*Sans font overrides*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.sans-head{
+    font-family: $font-family-sans-serif_head;
+    text-transform: uppercase;
+    border-bottom: solid 1px;
+    border-bottom-color: $brand-lightgrey;
+    letter-spacing: 2px;
+    padding-top: 40px;
+    padding-bottom: 3px;
+    display: inline-block;
+}
+
+.np_inside-padding .sans-head{
+    border-bottom-color: $brand-primary-light;
+}
+/*#background-image { 
+    position: absolute;
+    background: none;
+    content: "";
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: -1;
+}*/
+/*#products { 
+    position: absolute;
+    background-color: $brand-offwhite;
+    content: "";
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: -1;
+}*/
 
 /*$body-bg:               $brand-offwhite !default;*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -69,14 +136,249 @@
 }*/
 
 /*$top-image: margin-left:-100px;*/
-#np_products .topImage{
+.btn.btn-open-favorites {
+    @extend .btn.btn-favorite;
+}
+
+ol,ul {
+    li {
+        letter-spacing: 2px;
+    }
+}
+
+.topImage{
     margin-left:-75px;
 }
+
+.np_h2 {
+    .h2 {
+        margin-top: 10px;
+        margin-bottom: 30px;
+    }
+}
+
+.h4 {
+    font-family: "akzidenz-grotesk_bqregular"; 
+    font-size: 18px;
+    line-height: 24px;
+    p, div {
+        margin: 0 0 24px 0;
+        em {
+            font-size: 75%;
+        }
+    }
+
+}
+
+.h3 {
+    font-size: 20px;
+}
+
+p {
+    letter-spacing: 2px;
+}
+
+.np_background-brand-offwhite {
+    .h3 {
+        padding-top: 17px;
+    }
+
+    &.np_inside-padding {
+        padding-left: 37px!important;
+        padding-right: 37px!important;
+        padding-bottom: 2px!important;
+    }
+
+    p {
+        font-size: 20px;
+    }
+}
+
+.img-responsive {
+    max-width: 531px;
+}
+
+.h1 {
+    margin-top: 0px;
+}
+
+.np_collapse-element .np-cmp-sub.np_col-sm-8,
+.np-cmp-main.col-sm-8.sans-small {
+    a {
+        text-transform: none;
+        color: $brand-primary;
+        font-size: 16px;
+        font-family: "optimadisplaylightlight";
+    }
+}
+
+.np-cmp-main.h5.sans-head-sub.col-sm-12 {
+    font-family: "akzidenz-grotesk_bqbold";
+    letter-spacing: 2px;
+    font-size: 15px;
+}
+
+@media (max-width: $screen-xs) {
+    #np_newplayer-background{
+        background-color: #fff;
+    }
+    .np_background-brand-offwhite {
+        &.np_inside-padding {
+            padding-left: 15px!important;
+            padding-right: 15px!important;
+            padding-bottom: 2px!important;
+        }
+    }
+
+    .np_outside-padding {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .h3.collapse-toggle {
+        margin-bottom: 2px;
+    }
+
+    .h4 {
+        font-size: 16px;
+    }
+
+    .sans-normal,
+    .sans-head.collapse-toggle {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .row {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+    .np_topImage {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .np_collapse-element .np-cmp-sub .np-cmp-wrapper {
+        .np-cmp-sub .img-responsive {
+            max-width: 30%;
+            float: left;
+        }
+    }
+
+    .np-cmp-sub .np-cmp-wrapper .np-cmp-main {  
+        a {
+            color: $brand-primary;
+        }
+    }
+}
+
+@media (max-width: $screen-lg) {
+    .img-responsive {
+        max-width: 100%;
+    }
+    .topImage {
+         margin-left: -27px;
+    }
+}
+
+@media (min-width: $screen-sm) {
+    .np_background-brand-offwhite {
+        background-color: $brand-offwhite;
+        color: inherit;
+        small {
+            color: inherit;
+        }
+    }
+
+    .np_outside-padding {
+        padding-left: 90px;
+        padding-right: 90px;
+    }
+}
+
+@media (min-width: $screen-md) {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
 @media (max-width: $screen-sm) {
-    #np_products .topImage{
+    #np_newplayer-background{
+        background-color: #fff;
+    }
+
+    .np_background-brand-offwhite {
+        background-color: $brand-primary;
+        color: #fff;
+        border-bottom: 2px solid #fff;
+        small {
+            color: #fff;
+        }
+        p {
+            font-size: 18px;
+        }
+        
+        .sans-normal {
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+    }
+
+    .np_background-brand-primary-light {
+        padding-top: 15px;
+    }
+
+    .h1 {
+        margin-top: inherit;
+    }
+
+    .np_h1,
+    .np_h2 {
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+
+     .center-padding {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .outside-padding{
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .img-responsive {
+        max-width: 100%;
+    }
+    .collapse-toggle{
+        background-color: $brand-offwhite;
+        cursor: pointer;
+        width: 100%;
+        border-bottom: none;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        padding-right: 7px;
+        padding-left: 7px;
+        &:hover,
+            &:focus {
+            background-color: darken($brand-offwhite, 5%);
+        }
+        &:before {
+            font-family: 'elx-icons';
+            content: "\e613";
+            float: right;
+            color: $brand-primary;
+            -webkit-transition: opacity 1s ease-in-out;
+            -moz-transition: opacity 1s ease-in-out;
+            -o-transition: opacity 1s ease-in-out;
+            transition: opacity 1s ease-in-out;
+        }
+    }
+
+
+    .topImage{
         margin-left:0;
     }
-    #np_products .sans-head{
+    .sans-head{
         font-family: $font-family-sans-serif_head;
         text-transform: uppercase;
         border-bottom: none;
@@ -85,5 +387,44 @@
         padding-bottom: 1.5rem;
         margin-top: 0;
         display: inline-block;
+    }
+
+    .np_collapse-element .np-cmp-sub .np-cmp-wrapper .np-cmp-sub .img-responsive {
+        max-width: 35%;
+        float: left;
+    }
+}
+/*Q and A text outdent*/
+.q-and-a-outdent{
+    text-indent:-28px;
+    margin-left:28px
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*Collapse responsive*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+@media (max-width: $screen-sm) {
+    .collapse-toggle{
+        background-color: $brand-offwhite;
+        cursor: pointer;
+        width: 100%;
+        border-bottom: none;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        padding-right: 7px;
+        padding-left: 7px;
+        &:hover,
+            &:focus {
+            background-color: darken($brand-offwhite, 5%);
+        }
+        &:before {
+            font-family: 'elx-icons';
+            content: "\e613";
+            float: right;
+            color: $brand-primary;
+            -webkit-transition: opacity 1s ease-in-out;
+            -moz-transition: opacity 1s ease-in-out;
+            -o-transition: opacity 1s ease-in-out;
+            transition: opacity 1s ease-in-out;
+        }
     }
 }

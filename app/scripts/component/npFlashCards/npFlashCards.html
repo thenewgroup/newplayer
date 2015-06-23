@@ -1,0 +1,48 @@
+<div np-flash-cards id="{{npFlashCards.id}} " class="{{component.type}} np-cmp-wrapper np-flash-card" ng-controller="npFlashCardsController as npFlashCards">
+    <div class="debug">
+        <h3>{{component.type}} -- 
+            <small>{{component.idx}}</small>
+        </h3>
+    </div>
+    <!--::::::::::::  flash-card  ::::::::::::::::-->
+    <div id="flash-cards" class="row">
+        <div np-swipe-angular-draggable  class="col-sm-12">
+            <div id="flash-cards-swipe-container">
+                <div class="flash-cards-object " ng-repeat="flashCardComponent in npFlashCards.flashCardComponents">
+                    <div class="flash-card-front-wrapper">
+                        <div class="flash-card-background"></div>
+                        <div class="body-copy flash-card-content-front" ng-bind-html="flashCardComponent.contentFront"></div>
+                        <div class="flash-card-border"></div>
+                        <div class="flash-card-overlay"></div>
+                        <div class="flash-card-button" ng-click="npFlashCards.update(flashCardComponent)">
+                            <svg version="1.2" baseProfile="tiny" id="flip-icon" class='button-holder' xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-255 347 100 100" xml:space="preserve">
+                                <g id="refresh-icon-shape">
+                                    <path d="M-247,389.6c0.3-0.5,0.9-1,1.4-1.3c3.4-2.6,8.6-5.2,18.6-6.8v-9.4c-8,1.1-14.3,2.9-20.4,6.7c-2.1,1.7-3.1,2.7-3.2,5 C-250.7,385.8-249.5,387.7-247,389.6z"/>
+                                    <path d="M-206,403.1c-10-0.1-19.2-1.1-28.6-3.3c-16.7-3.9-18.7-9.4-19.6-11.2c-0.6,7.3,0.2,12.8,0.2,13.3c0.6,6.5,8,11.6,13.3,13.5 c11,3.9,22.7,6,34.7,6.1v10.7l20.1-20.1L-206,392V403.1z"/>
+                                    <path d="M-208,380.2c10,0,21.4,1.5,32.5,4.8c4.5,1.4,8.2,3.4,11.2,5.6c2.1-0.7,5-3.2,4.6-5.6c-1-6-10.1-9.5-11.6-10 c-11-3.4-24.6-4.5-36.6-4.6V363l-12.5,12.5l12.5,12.5V380.2z"/>
+                                    <path d="M-155.9,388.3c-0.5,2.8-5.1,8.8-24.1,12.6v19.6c7-1.6,15.2-5.6,19.7-9.5c1.8-1.6,2.9-3.8,3.6-5.4 C-154.7,400.7-155.6,391.2-155.9,388.3z"/>
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="flash-card-back-wrapper">
+                        <div class="flash-card-background"></div>
+                        <div class="flash-card-content-back" ng-bind-html="flashCardComponent.contentBack"></div>
+                    </div>
+                    <div class="flash-card-back-button" ng-click="npFlashCards.updateBack(flashCardComponent)">
+                        <svg version="1.2" baseProfile="tiny" class='button-holder' xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-255 347 100 100" xml:space="preserve">
+                            <g>
+                                <path d="M-247,389.6c0.3-0.5,0.9-1,1.4-1.3c3.4-2.6,8.6-5.2,18.6-6.8v-9.4c-8,1.1-14.3,2.9-20.4,6.7c-2.1,1.7-3.1,2.7-3.2,5 C-250.7,385.8-249.5,387.7-247,389.6z"/>
+                                <path d="M-206,403.1c-10-0.1-19.2-1.1-28.6-3.3c-16.7-3.9-18.7-9.4-19.6-11.2c-0.6,7.3,0.2,12.8,0.2,13.3c0.6,6.5,8,11.6,13.3,13.5 c11,3.9,22.7,6,34.7,6.1v10.7l20.1-20.1L-206,392V403.1z"/>
+                                <path d="M-208,380.2c10,0,21.4,1.5,32.5,4.8c4.5,1.4,8.2,3.4,11.2,5.6c2.1-0.7,5-3.2,4.6-5.6c-1-6-10.1-9.5-11.6-10 c-11-3.4-24.6-4.5-36.6-4.6V363l-12.5,12.5l12.5,12.5V380.2z"/>
+                                <path d="M-155.9,388.3c-0.5,2.8-5.1,8.8-24.1,12.6v19.6c7-1.6,15.2-5.6,19.7-9.5c1.8-1.6,2.9-3.8,3.6-5.4 C-154.7,400.7-155.6,391.2-155.9,388.3z"/>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div> 
+</div> 
+<!--::::::::::::  flash-card  ::::::::::::::::-->
+<div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>

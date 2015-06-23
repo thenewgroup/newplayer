@@ -73,11 +73,9 @@ function ManifestController(
 				}
 			);
 		}
-		if ( $state.is( 'manifest.page' ) ||  $state.is( 'manifest.lang.page' ) )
-		{
+		if ( $state.is( 'manifest.page' ) ||  $state.is( 'manifest.lang.page' ) ){
 			pageId = $stateParams.pageId;
-			if ( pageId !== 'tbd' )
-			{
+			if ( pageId !== 'tbd' ){
 				ManifestService.setPageId( pageId );
 			}
 		}

@@ -1,6 +1,5 @@
 <!--I once read in a comment that 'smart developers read comments', so go ahead and pat yourself on the back.-->
-
-<header class="np-cmp-wrapper {{component.type}} navbar navbar-default navbar-fixed-top navbar-inverse" ng-controller="npHeaderController as npHeader">
+<header class="np-cmp-wrapper {{component.type}} navbar navbar-fixed-top " ng-controller="npHeaderController as npHeader">
 
     <div class="container">
         <div class="debug">
@@ -8,5 +7,4 @@
         </div>
         <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
     </div>
-
 </header>

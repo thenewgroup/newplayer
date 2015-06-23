@@ -1,0 +1,278 @@
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*main bootstrap override classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*main font clean-up classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+html, html a {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*main bootstrap override classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.scroller{
+    min-height: 1200px;
+}
+.debug,
+.hide {
+    display: none;
+}
+.np-bs strong, b{
+    /*font-family: $font-family-sans-serif_head;*/
+}
+svg {
+    width: 100%;
+    height: 100%;
+}
+img.blur {
+    width:367; 
+    height:459px; 
+    filter: url(blur.svg#blur); 
+    /*-webkit-filter: blur(3px);*/ 
+    filter: blur(3px); 
+}
+.inset-shadow {
+    /*    width:367; 
+        height:459px; */
+    filter: url(styles/inset-shadow.svg#inset-shadow); 
+    /*    -webkit-filter: blur(3px); 
+        filter: blur(3px); */
+}
+.vertical-centered {
+    /* Fallback for vh unit */
+    min-height: 100%;  
+
+    /* You might also want to use 'height' property instead.
+    Note that for percentage values of 'height' or 'min-height' properties, the 
+    'height' of the parent element should be specified explicitly.
+    In this case the parent of '.vertical-center' is the <body> element */
+    /*min-height: 100vh;*/ 
+
+    /* Make it a flex container */
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex; 
+
+    /* Align the bootstrap's container vertically */
+    -webkit-box-align : center;
+    -webkit-align-items : center;
+    -moz-box-align : center;
+    -ms-flex-align : center;
+    align-items : center;
+
+    /* In legacy web browsers such as Firefox 9 we need to specify the width of the flex container */
+    width: 100%;
+
+    /* Also 'margin: 0 auto' doesn't have any effect on flex items in such web browsers
+       hence the bootstrap's container won't be aligned to the center anymore.
+    
+       Therefore, we should use the following declarations to get it centered again */
+    -webkit-box-pack : center;
+    -moz-box-pack : center;
+    -ms-flex-pack : center;
+    -webkit-justify-content : center;
+    justify-content : center;
+}
+.vertical-alignment {
+    display: flex;
+    align-items: center;
+}
+.vertically-center-container {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 10%;
+    bottom: 0;
+    margin: auto;
+}
+.center-container {
+    position: relative;
+}
+.absolute-vertical-center {
+    margin: auto;
+    position: absolute;
+    top: 0; 
+    bottom: 0;
+}
+.absolute-center {
+    width: 50%;
+    height: 50%;
+    overflow: auto;
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+}
+.vertical-center {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.vertical-align {
+    display: flex;
+    flex-direction: row;
+}
+.vertical-align > [class^="col-"],
+.vertical-align > [class*=" col-"] {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Optional, to align inner items 
+                                horizontally inside the column */
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*Angular UI classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.nav, .pagination, .carousel, .panel-title a { 
+    cursor: pointer; 
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*Button overrides*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.btn {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 5px; 
+    margin-bottom: 10px;
+    min-width: 20%;
+    width:100%;
+}
+.btn.btn-favorite { 
+    margin-top: 5px; 
+    margin-bottom: 10px;
+    background-color: $brand-primary;
+    color: #FFFFFF;
+    &:hover,
+        &:focus {
+        background-color: darken($brand-primary, 5%);
+        color: darken(#FFFFFF, 5%);
+    }
+}
+.np_btn-info { 
+    margin-top: 5px; 
+    margin-bottom: 10px;
+    display: none;
+}
+.glyphicon-heart-empty{
+    color: $brand-info !important;
+}
+.icon {
+    background-image: url(../assets/svgs/heart-icon.svg);
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-size: 25%;
+    background-origin: content-box ;
+    padding-left: 16px; /* Or size of icon + spacing */
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*New Player padding wrapper classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*When setting this class for New Player use: 'outside-padding'*/
+/*.container:after {
+    content:"";
+    display:table;
+    clear:both;
+}*/
+/*.clearfix:before,
+.clearfix:after {
+    content: ".";    
+    display: block;    
+    height: 0;    
+    overflow: hidden; 
+}
+.clearfix:after {
+    clear: both; 
+}
+.clearfix {
+    zoom: 1; 
+}*/
+.np_outside-padding{
+    position: relative;
+    padding-top: 25px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-bottom: 75px;  
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+/*When setting this class for New Player use: 'inside-padding'*/
+.np_inside-padding{
+    position: relative;
+    padding-left: 5% !important;
+    padding-right: 5% !important;
+    padding-bottom: 35px;
+}
+/*When setting this class for New Player use: 'button-padding'*/
+.np_button-padding{
+    position: relative;
+    padding-top: 30px;
+    padding-left: 15%;
+    padding-right: 15%;
+    padding-bottom: 35px;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*responsive padding overrides*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+@media (max-width: $screen-sm) {
+    .np_outside-padding{
+        padding-left: 15px;
+        padding-right: 30px;
+        padding-bottom: 100px;
+    }
+    .np_inside-padding{
+        padding: 5%;
+    }
+    .np_button-padding{
+        padding: 5%;
+    }
+}
+@media (max-width: $screen-xs) {
+    .container {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*Sans font overrides*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+
+@media (max-width: $screen-sm) {
+    .sans-normal{
+        padding-right: 7px;
+        padding-left: 7px;
+    }
+    .sans-small{
+        padding-right: 7px;
+        padding-left: 7px;
+    }
+}
+@media (max-width: $screen-xs) {
+    .container {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/* FireFox bug fix drag and drop*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.hit-area svg {
+    filter: blur(0px);
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/* Safari bug fix for video widths*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.videoWidth {
+    width: 100%;
+}
+video {
+    max-width: 100%;
+    height: auto;
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/* FireFox image responsive bug fix */
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+.img-responsive, .thumbnail>img, .thumbnail a>img, .carousel-inner>.item>img, .carousel-inner>.item>a>img {
+    width: 100%;
+}

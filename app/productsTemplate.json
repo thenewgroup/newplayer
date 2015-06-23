@@ -108,8 +108,8 @@
                                 "data": {
                                     "id": "",
                                     "class": "h3 sans-head collapse-toggle",
-                                    "xplugin": "np-expandable",
-                                    "data-ng:click": "isCollapsed = !isCollapsed",
+                                    "xplugin": "",
+                                    "data-ng:click": "isCollapsed = !isCollapsed; testTest()",
                                     "data-collapse": "",
                                     "data-ng": "responsiveSetState",
                                     "plugin": "np-collapse",
@@ -135,7 +135,7 @@
                                 "data": {
                                     "id": "",
                                     "class": "h3 sans-head collapse-toggle",
-                                    "xplugin": "np-expandable",
+                                    "xplugin": "",
                                     "data-ng:click": "isCollapsed = !isCollapsed",
                                     "data-collapse": "",
                                     "content": "BENEFITS"
@@ -160,7 +160,7 @@
                                 "data": {
                                     "id": "",
                                     "class": "h3 sans-head  collapse-toggle",
-                                    "xplugin": "np-expandable",
+                                    "xplugin": "",
                                     "data-ng:click": "isCollapsed = !isCollapsed",
                                     "data-collapse": "",
                                     "content": "If she asks, share"
@@ -185,7 +185,7 @@
                                 "data": {
                                     "id": "",
                                     "class": "h3 sans-head  collapse-toggle",
-                                    "xplugin": "np-expandable",
+                                    "xplugin": "",
                                     "data-ng:click": "isCollapsed = !isCollapsed",
                                     "data-collapse": "",
                                     "content": "Perfect partners"
@@ -319,7 +319,7 @@
                                 "data": {
                                     "id": "",
                                     "class": "h3 sans-head  collapse-toggle",
-                                    "xplugin": "np-expandable",
+                                    "xplugin": "",
                                     "data-ng:click": "isCollapsed = !isCollapsed",
                                     "data-collapse": "",
                                     "content": "STORY"
@@ -344,7 +344,7 @@
                                 "data": {
                                     "id": "",
                                     "class": "h3 sans-head collapse-toggle",
-                                    "xplugin": "np-expandable",
+                                    "xplugin": "",
                                     "data-ng:click": "isCollapsed = !isCollapsed",
                                     "data-collapse": "",
                                     "content": "CUSTOMER QUESTIONS"

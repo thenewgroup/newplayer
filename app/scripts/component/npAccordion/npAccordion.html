@@ -1,0 +1,26 @@
+<section id="npAccordion" class="{{component.type}} np-cmp-wrapper" ng-controller="npAccordionController as npAccordion">
+    <div class="debug">
+        <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
+    </div>
+    <div class="accordion-wrapper" ng-click="npAccordion.update($event)">
+        <div class="row content-top ">
+            <div ng-if="npAccordion.visitedState" class="col-xs-1 accordion-visited-state">
+                <svg version="1.2" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 28.4 27" xml:space="preserve">
+                    <g id="Layer_2">
+                        <path fill="#FFFFFF" d="M27.4,27H1c-0.6,0-1-0.5-1-1V1c0-0.6,0.4-1,1-1h26.4c0.5,0,1,0.4,1,1v25C28.4,26.5,27.9,27,27.4,27z"/>
+                    </g>
+                    <g class="checkmark-icon">
+                        <path fill="#1EA848" d="M2.1,13.2l2.1-2.1c0,0,0.8-0.9,1.7,0c0.9,0.9,3.4,3.6,3.4,3.6s0.5,0.7,1.2,0L22,3.4c0,0,0.8-1.1,1.9-0.2 l1.9,2c0,0,0.8,0.8-0.1,1.7L10.3,21.6c0,0-0.9,0.4-1.6-0.1l-6.6-6.7C2.1,14.8,1.3,14.1,2.1,13.2z"/>
+                    </g>
+                </svg>
+            </div>
+            <div ng-bind-html="npAccordion.contentTop" class="col-xs-10 np-cmp-main body-sub-head accordion-body-sub-head"></div>
+            <div class="col-xs-1 content-top-icon elx-thin-plus"></div>
+            <div class="col-xs-1 content-top-icon elx-thin-minus"></div>
+        </div>
+        <div class="content-body">
+            <div ng-bind-html="npAccordion.contentItem" class="np-cmp-main body-copy"></div>
+        </div>
+    </div>
+    <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+</section

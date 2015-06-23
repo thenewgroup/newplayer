@@ -7,26 +7,14 @@ angular
                 );
 
 /** @ngInject */
-function npMediaElementDirective($log) {
-    $log.debug('\nmediaelementDirective::Init\n');
-    var Directive = function () {
-        this.restrict = 'A';
-        this.link = function (scope, element, attrs, controller) {
-            jQuery(element).attr('poster', scope.poster);
-            jQuery(element).attr('height', scope.height);
-            jQuery(element).attr('width', scope.width);
-            jQuery(element).attr('preload', scope.preload);
-            jQuery(element).attr('src', scope.mp4);
-            jQuery(element).prepend(scope.sources);
-            attrs.$observe('src', function () {
-                $log.debug('mediaelementDirective::element', element);
-                jQuery(element).mediaelementplayer({
-                    features: ['playpause', 'progress', 'current', 'duration', 'tracks', 'volume']
-                });
-            });
-        };
+function NpVideoDirective($log) {
+    $log.info('DEBUG | \npVideo::Init\n');
+    return {
+        restrict: 'EA',
+        controller: NpVideoController,
+        controllerAs: 'npVideo',
+        bindToController: true
     };
-    return new Directive();
 }
 
 angular
@@ -34,43 +22,54 @@ angular
         /** @ngInject */
         .controller('npVideoController',
                 function ($log, $scope, $sce, $element) {
-                    var cmpData = $scope.component.data;
+                    var cmpData = $scope.component.data,
+                            types = cmpData.types;
                     $log.debug('npVideo::data', cmpData, $element);
-
                     this.id = cmpData.id;
                     this.baseURL = cmpData.baseURL;
-
+                    this.sourceURL = '';
                     $scope.poster = this.poster = cmpData.poster;
                     $scope.height = this.height = cmpData.height || 360;
                     $scope.width = this.width = cmpData.width || 640;
                     $scope.preload = this.preload = cmpData.preload || 'none';
-
-                    // video source elements need to be static BEFORE mediaElement is initiated
-                    // binding the attributes to the model was not working
-                    // alternatively, fire the mediaelement after the source attributes are bound?
-                    var types = cmpData.types;
+                    $scope.videoUrl = $sce.trustAsResourceUrl(cmpData.baseURL + '.' + types);
+                    console.log(
+                            '\n::::::::::::::::::::::::::::::::::::::npVideoController:::::::::::::::::::::::::::::::::::::::::::::::::',
+                            '\n::cmpData::', cmpData,
+                            '\n::$scope.poster::', $scope.poster,
+                            '\n::this.baseURL::', this.baseURL,
+                            '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                            );
                     if (angular.isArray(types) && types.length > 0) {
                         $log.debug('npVideo::data:types', types);
-                        var sources = '';
-                        for (var typeIdx in types)
-                        {
+//                        var sources = '';
+                        for (var typeIdx in types) {
                             var type = types[typeIdx];
                             $log.debug('npVideo::data:types:type', typeIdx, type);
-                            sources += '<source type="video/' + type + '" src="' + this.baseURL + '.' + type + '" />';
+//                            sources += '<source type="video/' + type + '" ng-src="' + this.baseURL + '.' + type + '" />';
                             $scope[type] = this.baseURL + '.' + type;
                         }
-                        $scope.sources = sources;
+//                        this.sourceURL = $scope[type];
+                        $scope.videoType = cmpData.types[0];
+//                        $scope.sources = sources;
+                        console.log(
+                                '\n::::::::::::::::::::::::::::::::::::::npVideoController:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                '\n::cmpData::', cmpData,
+                                '\n::types.length::', types.length,
+                                '\n::$scope[type]::', $scope[type],
+                                '\n::this.sourceURL::', this.sourceURL,
+                                '\n::$scope.poster::', $scope.poster,
+                                '\n::this.baseURL::', this.baseURL,
+                                '\n::$scope.videoType::', $scope.videoType,
+                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                );
                     }
                 }
         )
-
-        .directive('mediaelement', npMediaElementDirective)
-
+//        .directive('mediaelement', NpVideoDirective)
         /** @ngInject */
         .run(
-                function ($log, $rootScope)
-                {
+                function ($log, $rootScope) {
                     $log.debug('npVideo::component loaded!');
                 }
         );
-

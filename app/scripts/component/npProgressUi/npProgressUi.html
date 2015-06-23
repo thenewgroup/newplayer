@@ -1,0 +1,52 @@
+
+<div class="progress-ui-wrapper">
+    <div np-progress-ui class="progress-ui">
+        <div class="progress-ui-padding progress-ui-end progress-previous-wrapper">
+            <button class="{{component.type}} {{npProgressUi.type}} {{buttonTypeClass}} np-cmp-main progress-previous" ng-controller="npProgressUiController as npProgressUi" ng-click="npProgressUi.goPrevious($event)">
+                <span class="debug">
+                    <span class="h3">{{component.type}} -- <small>{{component.idx}}</small></span>
+                </span>
+                <span ng-bind-html="npProgressUi.contentPrevious"></span>
+                <div class="arrow-previous">
+                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-391 88 17 26.4" xml:space="preserve">
+                        <polygon points="-374,111.1 -377.5,114.4 -391,101 -377.9,88 -374,91.1 -384.3,101 "/>
+                    </svg>
+                </div>
+                <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+            </button>
+        </div>
+        <div np-progress-indicator class="progress-ui-padding progress-ui-center">
+            <div class="page-progress-bar ">
+                <div class="progress-background vertical-centered">
+                    <svg version="1.2" baseProfile="tiny" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-239.5 95 301 11" xml:space="preserve" >
+                        <path id="path-1" class="progress-ui-background" fill="#222222" stroke="#585858" vector-effect="non-scaling-stroke" stroke-miterlimit="10" d="M-235.4,95.5H57.4c2,0,3.6,2.2,3.6,5 c0,2.8-1.6,5-3.6,5h-292.8c-2,0-3.6-2.2-3.6-5C-239,97.7-237.4,95.5-235.4,95.5z"/>
+                    </svg>
+                </div>
+                <div class="progress-indicator-holder">
+                    <div class="progress-indicator">
+                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="6.4 90.6 787 18.3" xml:space="preserve" preserveAspectRatio="none">
+                            <g>
+                                <path fill="#1B9C3B" vector-effect="non-scaling-stroke" d="M786.9,90.6h-774c-3.5,0-6.5,4-6.5,9.2c0,5.1,3,9.2,6.5,9.2h774c3.5,0,6.5-4,6.5-9.2 C793.3,94.7,790.4,90.6,786.9,90.6z"/>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+        </div>
+        <div class="progress-ui-padding progress-ui-end">
+            <button class="{{component.type}} {{npProgressUi.type}} {{buttonTypeClass}} np-cmp-main progress-next" ng-controller="npProgressUiController as npProgressUi" ng-click="npProgressUi.goNext($event)">
+                <span class="debug">
+                    <span class="h3">{{component.type}} -- <small>{{component.idx}}</small></span>
+                </span>
+                <span ng-bind-html="npProgressUi.contentNext"></span>
+                <div class="arrow-next">
+                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-391 88 17 26.4" xml:space="preserve">
+                        <polygon points="-391,111.1 -387.5,114.4 -374,101 -387.1,88 -391,91.1 -380.7,101 "/>
+                    </svg>
+                </div>
+                <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+            </button>
+        </div>
+    </div>
+</div>

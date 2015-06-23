@@ -1,0 +1,49 @@
+<np-carousel ng-controller="npCarouselController as npCarousel">
+    <div>
+        <div id="{{npCarousel.id}}" class="{{component.type}} np-cmp-wrapper np-carousel">
+            <div class="debug">
+                <h3>{{component.type}}
+                    <small>{{component.idx}}</small>
+                </h3>
+            </div>
+            <div id="carousel" class="row np-carousel-object-wrapper">
+                <!--<div np-swipe-carousel-directive class="col-sm-12">-->
+                <div class="col-sm-12">
+                    <div id="np-carousel-swipe-container">
+                        <div class="np-carousel-object" ng-repeat="carouselComponent in npCarousel.carouselComponents" ng-swipe-left="updateLeft()" ng-swipe-right="updateRight()">
+                            <div class="carousel-front-wrapper">
+                                <div class="carousel-background"></div>
+                                <div class="carousel-image" ng-bind-html="carouselComponent.carouselImage"></div>
+                                <div class="carousel-text-heading header-dark" ng-bind-html="carouselComponent.contentHeader"></div>
+                                <!--<div class="carousel-body-text-background"></div>-->
+                                <div class="body-copy carousel-text-body" ng-bind-html="carouselComponent.contentBody"></div>
+                                <!--<div class="carousel-border"></div>-->
+                                <!--<div class="carousel-overlay"></div>-->
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div> 
+        </div>
+        <div id="carousel-navigation" class="row">
+            <div class="col-sm-12">
+                <div id="carousel-button-left" class="carousel-buttons" ng-click="updateLeft()">
+                    <svg version="1.2" baseProfile="tiny" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-305 369.8 14 26.8" xml:space="preserve">
+                        <rect x="-305" y="369.8" width="14" height="26.8"/>
+                        <g id="Layer_2">
+                            <polygon fill="#FFFFFF" points="-291.7,396.6 -305,383.2 -291.7,369.8 -291,370.5 -303.6,383.2 -291,395.9 	"/>
+                        </g>
+                    </svg>
+                </div> 
+                <div id="carousel-button-right" class="carousel-buttons" ng-click="updateRight()">
+                    <svg version="1.2" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-305 369.8 14 26.8" xml:space="preserve">
+                        <rect x="-305" y="369.8" width="14" height="26.8"/>
+                        <g id="Layer_2">
+                            <polygon fill="#FFFFFF" points="-304.3,396.6 -291,383.2 -304.3,369.8 -305,370.5 -292.4,383.2 -305,395.9 	"/>
+                        </g>
+                    </svg>
+                </div>
+            </div> 
+        </div> 
+</np-carousel> 
+<div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>

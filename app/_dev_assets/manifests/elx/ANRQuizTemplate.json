@@ -1,0 +1,509 @@
+[
+    {
+        "type": "npFeature",
+        "data": {
+            "id": "ANR",
+            "class": "",
+            "version": "0.0.1",
+            "timestamp": "2015-Apr-Tue_05:04:50"
+        },
+        "components": [
+            {
+                "type": "npContent",
+                "data": {
+                    "id": "content_en",
+                    "language": "en",
+                    "title": "Learning-Content-Re-nutriv-3.7-Ultimate-Diamond-Quiz",
+                    "description": "This manifest creates a Story or Learning Object content object . "
+                },
+                "components": [
+                    {
+                        "type": "npHTML",
+                        "data": {
+                            "id": "newplayer-background"
+                        },
+                        "components": [
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "background-image"
+                                },
+                                "components": [
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "npHTML",
+                        "data": {
+                            "class": "outside-padding"
+                        },
+                        "components": [
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "class": "renutriv-logo-image"
+                                },
+                                "components": [
+                                ]
+                            },
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "class": "h3 headline",
+                                    "content": "Ultimate Diamond Quiz"
+                                },
+                                "components": [
+                                ]
+                            },
+                            {
+                                "type": "npHTML",
+                                "data": {
+                                    "class": "h6 instructional",
+                                    "content": "<p>Read each question, select the best choice and then select <strong>Submit.</strong></p>"
+                                },
+                                "components": [
+                                ]
+                            },
+                            {
+                                "type": "npQuiz",
+                                "data": {
+                                    "type": "assessment",
+                                    "assessed": "1",
+                                    "questions": "5",
+                                    "forced": "true",
+                                    "randomized": "false",
+                                    "required": "true"
+                                },
+                                "components": [
+                                    {
+                                        "type": "npPage",
+                                        "data": {
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npDragAndDropSelect",
+                                                "data": {
+                                                    "positiveFeedback": "<p>That's it!</p><p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p><p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
+                                                    "negativeFeedback": "<p>ehh?!?!</p>",
+                                                    "image": "",
+                                                    "required": true,
+                                                    "req": [
+                                                        "mediaelement/GreenSock/TweenMax.min.js",
+                                                        "mediaelement/GreenSock/utils/Draggable.min.js",
+                                                        "mediaelement/jquery-1.11.1.min.js"
+                                                    ],
+                                                    "draggableButtons": [
+                                                        {
+                                                            "select": "true",
+                                                            "content": "<p>slide right</p>",
+                                                            "image": "/assets/images/hotspot.png",
+                                                            "matchingContent": "<p>this is the content1!this is the content1! this is the content1!this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
+                                                            "matchingImage": "/assets/images/hotspot.png"
+                                                        },
+                                                        {
+                                                            "select": "false",
+                                                            "content": "<p>slide left</p>",
+                                                            "image": "",
+                                                            "matchingContent": "<p>this is the content1!this is the content1! this is the content1.2 !this is the content1! this is the content1! this is the content1! this is the content1!this is the content1! this is the content1!</p>",
+                                                            "matchingImage": ""
+                                                        },
+                                                        {
+                                                            "select": "true",
+                                                            "content": "<p>slide right</p>",
+                                                            "image": "/assets/images/hotspot.png",
+                                                            "matchingContent": "<p>this is the matching content2!</p>",
+                                                            "matchingImage": "/assets/images/hotspot.png"
+                                                        },
+                                                        {
+                                                            "select": "true",
+                                                            "content": "<p>slide right</p>",
+                                                            "image": "/assets/images/hotspot.png",
+                                                            "matchingContent": "<p>this is the matching content3!</p>",
+                                                            "matchingImage": "/assets/images/hotspot.png"
+                                                        },
+                                                        {
+                                                            "select": "false",
+                                                            "content": "<p>slide left</p>",
+                                                            "image": "",
+                                                            "matchingContent": "<p>this is the matching content4!</p>",
+                                                            "matchingImage": ""
+                                                        }
+                                                    ]
+                                                },
+                                                "components": []
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "",
+                                                    "type": "btn-next",
+                                                    "class": "",
+                                                    "content": "Next"
+                                                },
+                                                "components": [
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npPage",
+                                        "data": {
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npAsQuestion",
+                                                "data": {
+                                                    "required": true,
+                                                    "forced": false,
+                                                    "type": "checkbox",
+                                                    "difficulty": "",
+                                                    "content": "Which of the following instantly provides skin with natural radiance?",
+                                                    "buttons": {
+                                                        "submit": "Submit",
+                                                        "next": "Next"
+                                                    },
+                                                    "feedback": {
+                                                        "immediate": "true",
+                                                        "correct": "That's it! South Sea Pearls and illuminating optics are featured in all Re-Nutriv collections, instantly providing skin with natural radiance.",
+                                                        "incorrect": "That's not right. South Sea Pearls and illuminating optics are featured in all Re-Nutriv collections, instantly providing skin with natural radiance."
+                                                    }
+                                                },
+                                                "components": [
+                                                    {
+                                                        "type": "npAsAnswer",
+                                                        "data": {
+                                                            "label": "South Sea Pearls and illuminating optics",
+                                                            "correct": true,
+                                                            "feedback": {
+                                                                "correct": "That's it! South Sea Pearls and illuminating optics are featured in all Re-Nutriv collections, instantly providing skin with natural radiance."
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "npAsAnswer",
+                                                        "data": {
+                                                            "label": "Black Sea Optical Pearls",
+                                                            "correct": false,
+                                                            "feedback": {
+                                                                "incorrect": "That's not right. South Sea Pearls and illuminating optics are featured in all Re-Nutriv collections, instantly providing skin with natural radiance."
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "npAsAnswer",
+                                                        "data": {
+                                                            "label": "White South American Pearls",
+                                                            "correct": false,
+                                                            "feedback": {
+                                                                "incorrect": "That's not right. South Sea Pearls and illuminating optics are featured in all Re-Nutriv collections, instantly providing skin with natural radiance."
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "npAsAnswer",
+                                                        "data": {
+                                                            "label": "Black Sea Pearl Drops",
+                                                            "correct": false,
+                                                            "feedback": {
+                                                                "incorrect": "That's not right. South Sea Pearls and illuminating optics are featured in all Re-Nutriv collections, instantly providing skin with natural radiance."
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "",
+                                                    "type": "btn-next",
+                                                    "class": "",
+                                                    "content": "Next"
+                                                },
+                                                "components": [
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npPage",
+                                        "data": {
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npAsQuestion",
+                                                "data": {
+                                                    "required": true,
+                                                    "forced": false,
+                                                    "type": "checkbox",
+                                                    "difficulty": "",
+                                                    "content": "Which of the following includes an exclusive luxurious gold spatula?",
+                                                    "buttons": {
+                                                        "submit": "Submit",
+                                                        "next": "Next"
+                                                    },
+                                                    "feedback": {
+                                                        "immediate": "true",
+                                                        "correct": "Yes. The luxurious applicator is featured in all Re-Nutriv cremes, and is included in the packaging for the customer to use at home.",
+                                                        "incorrect": "That's not it. Actually, the luxurious applicator is featured in all Re-Nutriv cremes, and is included in the packaging for the customer to use at home."
+                                                    }
+                                                },
+                                                "components": [
+                                                    {
+                                                        "type": "npAsAnswer",
+                                                        "data": {
+                                                            "label": "Intensive Age-Renewal",
+                                                            "correct": false,
+                                                            "feedback": {
+                                                                "incorrect": "Yes. The luxurious applicator is featured in all Re-Nutriv cremes, and is included in the packaging for the customer to use at home."
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "npAsAnswer",
+                                                        "data": {
+                                                            "label": "Ultimate Lift",
+                                                            "correct": false,
+                                                            "feedback": {
+                                                                "incorrect": "Yes. The luxurious applicator is featured in all Re-Nutriv cremes, and is included in the packaging for the customer to use at home."
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "npAsAnswer",
+                                                        "data": {
+                                                            "label": "Dual Infusion",
+                                                            "correct": false,
+                                                            "feedback": {
+                                                                "incorrect": "That's not it. Actually, the luxurious applicator is featured in all Re-Nutriv cremes, and is included in the packaging for the customer to use at home."
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "npAsAnswer",
+                                                        "data": {
+                                                            "label": "Transformative Energy Creme",
+                                                            "correct": true,
+                                                            "feedback": {
+                                                                "correct": "Yes. The luxurious applicator is featured in all Re-Nutriv cremes, and is included in the packaging for the customer to use at home."
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "",
+                                                    "type": "btn-next",
+                                                    "class": "",
+                                                    "content": "Next"
+                                                },
+                                                "components": [
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npPage",
+                                        "data": {
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npAsQuestion",
+                                                "data": {
+                                                    "required": true,
+                                                    "forced": false,
+                                                    "type": "checkbox",
+                                                    "difficulty": "",
+                                                    "content": "The Dual Infusion and Transformative Energy Creme both feature beautiful herbaceous floral scents, including fresh green and citrus notes of lemon and grapefruit, along with which of the following?",
+                                                    "buttons": {
+                                                        "submit": "Submit",
+                                                        "next": "Next"
+                                                    },
+                                                    "feedback": {
+                                                        "immediate": "true",
+                                                        "correct": "You got it. Ask the customer to smell the product, and point out that the beautiful herbaceous floral scent features fresh green and citrus notes of lemon and grapefruit, as well as muguet, jasmine and rose petals.",
+                                                        "incorrect": "That's not right. Actually, ask the customer to smell the product, and point out that the beautiful herbaceous floral scent features fresh green and citrus notes of lemon and grapefruit, as well as muguet, jasmine and rose petals."
+                                                    }
+                                                },
+                                                "components": [
+                                                    {
+                                                        "type": "npAsAnswer",
+                                                        "data": {
+                                                            "label": "Lilies, rosemary and violets",
+                                                            "correct": false,
+                                                            "feedback": {
+                                                                "incorrect": "That's not right. Actually, ask the customer to smell the product, and point out that the beautiful herbaceous floral scent features fresh green and citrus notes of lemon and grapefruit, as well as muguet, jasmine and rose petals."
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "npAsAnswer",
+                                                        "data": {
+                                                            "label": "Muguet, jasmine and rose petals",
+                                                            "correct": true,
+                                                            "feedback": {
+                                                                "correct": "You got it. Ask the customer to smell the product, and point out that the beautiful herbaceous floral scent features fresh green and citrus notes of lemon and grapefruit, as well as muguet, jasmine and rose petals."
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "npAsAnswer",
+                                                        "data": {
+                                                            "label": "Sage, ylang ylang and lavender",
+                                                            "correct": false,
+                                                            "feedback": {
+                                                                "incorrect": "That's not right. Actually, ask the customer to smell the product, and point out that the beautiful herbaceous floral scent features fresh green and citrus notes of lemon and grapefruit, as well as muguet, jasmine and rose petals."
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "npAsAnswer",
+                                                        "data": {
+                                                            "label": "Thyme, petunias and bergamot",
+                                                            "correct": false,
+                                                            "feedback": {
+                                                                "incorrect": "That's not right. Actually, ask the customer to smell the product, and point out that the beautiful herbaceous floral scent features fresh green and citrus notes of lemon and grapefruit, as well as muguet, jasmine and rose petals."
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "type": "npButton",
+                                                "data": {
+                                                    "link": "",
+                                                    "type": "btn-next",
+                                                    "class": "",
+                                                    "content": "Next"
+                                                },
+                                                "components": [
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npPage",
+                                        "data": {
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npTrivia",
+                                                "data": {
+                                                    "required": true,
+                                                    "forced": false,
+                                                    "difficulty": 1,
+                                                    "content": " This is the 'What number am I thinking of?' trivia!",
+                                                    "feedback": {
+                                                        "immediate": true,
+                                                        "correct": "Hey, that's right!",
+                                                        "incorrect": "No! ... What are you thinking!?"
+                                                    }
+                                                },
+                                                "components": [
+                                                    {
+                                                        "type": "npAsQuestion",
+                                                        "data": {
+                                                            "class": "row",
+                                                            "required": true,
+                                                            "forced": false,
+                                                            "type": "checkbox",
+                                                            "difficulty": 1,
+                                                            "content": "What number am I thinking of? QUESTION 1",
+                                                            "feedback": {
+                                                                "correct": "Hey, that's right!",
+                                                                "incorrect": "No! ... What are you thinking!?"
+                                                            }
+                                                        },
+                                                        "components": [
+                                                            {
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "class": "answer-text",
+                                                                    "label": "8",
+                                                                    "correct": false
+                                                                },
+                                                                "components": [
+                                                                ]
+                                                            },
+                                                            {
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "class": "answer-text",
+                                                                    "label": "7,433.6",
+                                                                    "correct": false
+                                                                },
+                                                                "components": [
+                                                                ]
+                                                            },
+                                                            {
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "class": "answer-text",
+                                                                    "label": "<img src=\"http://i.istockimg.com/file_thumbview_approve/33898764/2/stock-photo-33898764-isolated-chicken-with-egg.jpg\" height=\"50\" />",
+                                                                    "correct": true
+                                                                },
+                                                                "components": [
+                                                                ]
+                                                            },
+                                                            {
+                                                                "type": "npAsAnswer",
+                                                                "data": {
+                                                                    "class": "answer-text",
+                                                                    "label": "<strong>Bologna!</strong>",
+                                                                    "correct": true
+                                                                },
+                                                                "components": [
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npPage",
+                                        "data": {
+                                            "id": "How Much Do You Know About Re-Nutriv Summary",
+                                            "parentId": "QuizIntro",
+                                            "title": "",
+                                            "inMenu": false,
+                                            "required": false
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npAsResult",
+                                                "data": {
+                                                    "feedback": {
+                                                        "passLabel": "You scored",
+                                                        "pass": "Congratulations, you've completed this topic!",
+                                                        "failLabel": "You scored",
+                                                        "fail": "Consider going back and reviewing the material again."
+                                                    },
+                                                    "achievements": [
+                                                        {
+                                                            "score": 0.8,
+                                                            "compare": "gte",
+                                                            "content": "In addition, you a grip of points!"
+                                                        },
+                                                        {
+                                                            "score": 1,
+                                                            "compare": "eq",
+                                                            "content": "In addition, you get this badge and a grip of points!"
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

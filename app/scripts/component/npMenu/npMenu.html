@@ -1,16 +1,21 @@
-<nav class="np-cmp-wrapper {{component.type}}" ng-class="menuStatus" ng-controller="npMenuController as npMenu">
-
-	<div class="debug">
-		<h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
-	</div>
-
-	<a class="hamburger fa fa-bars" ng-click="menuStatus=(menuStatus==='show')?'':'show'"></a>
-	<ul class="np-cmp-main">
-		<li ng-repeat="child in npMenu.items">
-			<span np-menu menuitem="child"></span>
-		</li>
-	</ul>
-
-	<div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
-
-</nav>
+<div class="np-cmp-wrapper {{component.type}} np-menu" ng-class="menuStatus" ng-controller="npMenuController as npMenu">
+    <div class="debug">
+        <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
+    </div>
+    <div class="menu-head-wrapper row">
+        <div class="col-sm-11">
+            <span class="menu-item-title" ng-bind-html="npMenu.title" ></span>
+            <span class="menu-item-title-default" ng-bind-html="npMenu.titleDefault" ng-click="menuStatus()"></span>
+        </div>
+        <div class="col-sm-1 menu-icon-wrapper">
+            <a class="menu-icon elx-carat-down menu-icon-open" ng-click="menuStatus()"></a>
+            <a class="menu-icon elx-menu-close menu-icon-close" ng-click="menuStatus()"></a>
+        </div>
+    </div>
+    <div class="np-cmp-main row menu-item-wrapper">
+        <div class="col-sm-12 menu-item" ng-repeat="child in npMenu.items">
+            <div class="menu-item-header" np-menu menuitem="child"></div>
+        </div>
+    </div>
+    <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+</div>
