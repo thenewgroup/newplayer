@@ -118,8 +118,8 @@
     margin-left: auto;
     margin-right: auto;
 }
-.btn-open-favorites{
-    /*width: 7em;*/
+.btn.btn-open-favorites {
+    @extend .btn.btn-favorite;
 }
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*New Player button wrapper classes*/

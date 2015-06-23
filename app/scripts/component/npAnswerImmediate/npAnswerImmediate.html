@@ -1,0 +1,17 @@
+<div class="debug">
+    <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
+</div>
+<div np-answer-checkbox class="row np-cmp-wrapper {{component.type}} answer-immediate-wrapper" ng-controller="npAnswerImmediateController as npAnswerImmediate" ng-click="update($event); npQuestionImmediate.update($event)">
+    <div class="answer-immediate-content-wrapper">
+        <span class="npAnswer-label  body-copy" for="{{npAnswerImmediate.id}}_input" ng-bind-html="npAnswerImmediate.label"></span>
+    </div>
+    <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+</div>
+<div ng-if="npMatch" class="np-cmp-wrapper {{component.type}} matchbox" ng-controller="npAnswerImmediateController as npAnswerImmediate">
+    <div class="slide-wrapper reveal-slide rsContent">
+        <label>
+            <span class="npAnswer-label" for="{{npAnswerImmediate.id}}_input" ng-bind-html="npAnswerImmediate.label"></span>
+        </label>
+        <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+    </div>
+</div>

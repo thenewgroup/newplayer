@@ -2,8 +2,8 @@
     {
         "type": "npFeature",
         "data": {
-            "id": "reNutriv",
-            "class": "np-bs",
+            "id": "NikeDigiMerch1",
+            "class": " ",
             "req": [],
             "version": "0.0.1",
             "timestamp": "1970-01-01_00:00:00"
@@ -15,8 +15,8 @@
                     "id": "content_en-US",
                     "class": "",
                     "language": "en-US",
-                    "title": "Re Nutriv",
-                    "description": "Re Nutriv template"
+                    "title": "Nike Digi Merch",
+                    "description": "Nike template"
                 },
                 "components": [
                     {
@@ -46,85 +46,2726 @@
                         },
                         "components": [
                             {
+                                "type": "npHTML",
+                                "data": {
+                                    "id": "",
+                                    "class": "renutriv-logo-image"
+                                },
+                                "components": []
+                            },
+                            {
                                 "type": "npMenu",
                                 "data": {
-                                    "id": "",
-                                    "class": "renutriv-logo-image"
-                                },
-                                "components": []
-                            },
-                            {
-                                "type": "npHTML",
-                                "data": {
-                                    "id": "",
-                                    "class": "renutriv-logo-image"
-                                },
-                                "components": []
-                            },
-                            {
-                                "type": "npHTML",
-                                "data": {
-                                    "id": "",
-                                    "class": "h3 headline",
-                                    "content": "<p>(h3 Headline) Our Newest List Component: Ultimate Diamond</p>"
-                                },
-                                "components": []
-                            },
-                            {
-                                "type": "npHTML",
-                                "data": {
-                                    "id": "",
-                                    "class": "h6 instructional",
-                                    "content": "<p>(Instructional copy) Select each image to learn more drag to select other images.</p>"
-                                },
-                                "components": []
-                            },
-                            {
-                                "type": "npCarousel",
-                                "data": {
-                                    "id": "carousel-test-id",
-                                    "class": "carousel-test-class",
+                                    "id": "globalMenu",
+                                    "title": "<p>SELECT A CHAPTER</p>",
+                                    "titleDefault": "<p>CHAPTERS</p>",
+                                    "items": [
+                                        "pages"
+                                    ],
                                     "req": [
-                                        "mediaelement/jquery-2.1.4.min.js",
-                                        "mediaelement/GreenSock/TweenMax.min.js",
-                                        "mediaelement/GreenSock/utils/Draggable.min.js",
-                                        "mediaelement/GreenSock/utils/ThrowPropsPlugin.min.js",
-                                        "mediaelement/imagesloaded/imagesloaded.pkgd.js"
+                                        "mediaelement/GSAP/TweenMax.min.js"
                                     ]
                                 },
-                                "carouselItem": [
+                                "components": [
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "title": "INTRO",
+                                    "parentId": "",
+                                    "backgroundImage": "./assets/images/Chapter_1_bkgd.jpg",
+                                    "backgroundAlpha": 0.95,
+                                    "inMenu": true,
+                                    "required": false
+                                },
+                                "components": [
                                     {
-                                        "contentFront": "<span class='header-dark'>Heading.0 contentFront.</span><p>Copy here contentFront.</p><p class='h4 carousel-text-heading'>Heading.0 here.</p><p>Copy here. And here.</p>",
-                                        "contentBack": "<p class='header-dark'>Heading.0 here contentBack.</p><p>Copy here contentBack.</p><p class='h4 carousel-text-heading'>Heading.0 here.</p><p>Copy here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here.</p><p>Copy here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here.</p><p>Copy here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here.</p><p>Copy here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here.</p><p class='h4 carousel-text-heading'>Heading.0 here.</p><p>Copy here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here.</p><p>Copy here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here.</p><p>Copy here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here.</p><p>Copy here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here. Copy here. And here.</p>"
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>INTRO</p>"
+                                        },
+                                        "components": []
                                     },
                                     {
-                                        "contentFront": "<span class='header-dark'>Heading.0 contentFront.</span><p>Copy here contentFront.</p><p><img alt='' class='img-responsive' src='../_dev_assets/assets/images/saturn1.jpg' /></p><p class='h4 carousel-text-heading'>Heading.0 here.</p><p>Copy here.</p>",
-                                        "contentBack": "<p class='header-dark'>Heading.0 here contentBack.</p><p>Copy here contentBack.</p><p><img alt='' class='img-responsive' src='../_dev_assets/assets/images/saturn1.jpg' /></p><p class='h4 carousel-text-heading'>Heading.0 here.</p><p>Copy here.</p>"
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>Welcome to the NIKE, Inc.'s Premier Digital Merchandising Experience. </p>"
+                                        },
+                                        "components": []
                                     },
                                     {
-                                        "contentFront": "<p class='h4 carousel-text-heading'>Heading.0 here.</p><p>Copy here.</p><p><img alt='' class='carousel-image' height='auto' src='../_dev_assets/assets/images/OrionsHeart.jpg' width='100%' /></p><p class='h4 carousel-text-heading'>Heading.0 here.</p><p>Copy here.</p>",
-                                        "contentBack": "<p class='h4 carousel-text-heading'>Heading.0 here.</p><p>Copy here.</p>"
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>This course is filled with content and resources developed by some of NIKE, Inc.'s most experienced Digital Merchandisers. It was designed exclusively with you in mind.</p>"
+                                        },
+                                        "components": []
                                     },
                                     {
-                                        "contentFront": "<p class='h4 carousel-text-heading'>Heading.0 here.</p><p>Copy here.</p><p><img alt='' class='carousel-image' height='auto' src='../_dev_assets/assets/images/earth.jpg' width='100%' /></p><p class='h4 carousel-text-heading'>Heading.0 here.</p><p>Copy here.</p>",
-                                        "contentBack": "<p class='h4 carousel-text-heading'>Heading.0 here.</p><p>Copy here.</p><p><img alt='' class='carousel-image' height='auto' src='../_dev_assets/assets/images/earth.jpg' width='100%' /></p><p class='h4 carousel-text-heading'>Heading.0 here.</p><p>Copy here.</p>"
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>During this course, we'll shed some light on the ever-changing consumer. We will:</p>"
+                                        },
+                                        "components": []
                                     },
                                     {
-                                        "contentFront": "<p class='h4 carousel-text-heading'>Heading.0 here.</p><p>Copy here.</p><p><img alt='' class='carousel-image' height='auto' src='../_dev_assets/assets/images/thesun.jpg' width='100%' /></p><p class='h4 carousel-text-heading'>Heading.0 here.</p><p>Copy here.</p>",
-                                        "contentBack": "<p class='h4 carousel-text-heading'>Heading.0 here.</p><p>Copy here.</p><p><img alt='' class='carousel-image' height='auto' src='../_dev_assets/assets/images/thesun.jpg' width='100%' /></p><p class='h4 carousel-text-heading'>Heading.0 here.</p><p>Copy here.</p>"
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<ul><li>Provide a clear picture of our consumer and their expectations, habits, and experiences.</li><li>Describe what we're doing to meet our consumers customers where and how they want to be met.</li><li>Show you ways merchandisers are evolving to keep up with an ever-changing digital world.</li></ul>"
+                                        },
+                                        "components": []
                                     },
                                     {
-                                        "contentFront": "<p class='h4 carousel-text-heading'>Heading.0 here.</p><p>Copy here.</p><p><img alt='' class='carousel-image' height='auto' src='../_dev_assets/assets/images/earth.jpg' width='100%' /></p><p class='h4 carousel-text-heading'>Heading.0 here.</p><p>Copy here.</p>",
-                                        "contentBack": "<p class='h4 carousel-text-heading'>Heading.0 here.</p><p>Copy here.</p><p><img alt='' class='carousel-image' height='auto' src='../_dev_assets/assets/images/earth.jpg' width='100%' /></p><p class='h4 carousel-text-heading'>Heading.0 here.</p><p>Copy here.</p>"
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>[Insert navigation instructions]</p>"
+                                        },
+                                        "components": []
                                     },
                                     {
-                                        "contentFront": "<p class='h4 carousel-text-heading'>Heading.0 here.</p><p>Copy here.</p><p><img alt='' class='carousel-image' height='auto' src='../_dev_assets/assets/images/thesun2.jpg' width='100%' /></p><p class='h4 carousel-text-heading'>Heading.0 here.</p><p>Copy here.</p>",
-                                        "contentBack": "<p class='h4 carousel-text-heading'>Heading.0 here.</p><p>Copy here.</p><p><img alt='' class='carousel-image' height='auto' src='../_dev_assets/assets/images/thesun2.jpg' width='100%' /></p><p class='h4 carousel-text-heading'>Heading.0 here.</p><p>Copy here.</p>"
-                                    },
-                                    {
-                                        "contentFront": "<p class='h4 carousel-text-heading'>Heading.0 here.</p><p>Copy here.</p><p><img alt='' class='carousel-image' height='auto' src='../_dev_assets/assets/images/saturn2.jpg' width='100%' /></p><p class='h4 carousel-text-heading'>Heading.0 here.</p><p>Copy here.</p>",
-                                        "contentBack": "<p class='h4 carousel-text-heading'>Heading.0 here.</p><p>Copy here.</p><p><img alt='' class='carousel-image' height='auto' src='../_dev_assets/assets/images/saturn2.jpg' width='100%' /></p><p class='h4 carousel-text-heading'>Heading.0 here.</p><p>Copy here.</p>"
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>Click <b>Next</b> to get started.</p>"
+                                        },
+                                        "components": []
                                     }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "title": "Global Trends",
+                                    "backgroundImage": "./assets/images/Chapter_1_bkgd.jpg",
+                                    "backgroundAlpha": 0.45,
+                                    "inMenu": true,
+                                    "required": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>Global Trends</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npQuote",
+                                        "data": {
+                                            "id": "",
+                                            "class": "",
+                                            "content": "<p>The digital and physical worlds are starting to come together more seamlessly – it's only the tip of the iceberg in terms of what's coming.</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "quote-signature",
+                                            "content": "<p>—Mark Parker, NIKE CEO</p>"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "inMenu": false,
+                                    "required": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>Global Trends</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-page",
+                                            "content": "<p>Overview</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npList",
+                                        "data": {
+                                            "class": "body-copy",
+                                            "data-ng:wrap": "true",
+                                            "content": " <p>Consumers are changing, even as you're reading this. They're connecting at amazing speeds and sharing their opinions even faster. They're experiencing NIKE in 30-second clips and making decisions even faster. <p>"
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npImage",
+                                                "data": {
+                                                    "src": "./assets/images/SHOW__0000_FPO_GT_1.0.jpg"
+                                                },
+                                                "components": []
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>We have their attention for a moment. In that moment, they'll decide to stay or go.</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>In this section, we'll share the latest trends and disruptors challenging how we do business around the globe.</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>First, a question.</p>"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "title": "Question 1",
+                                    "required": false,
+                                    "first": false,
+                                    "last": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>Global Trends</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-page",
+                                            "content": "<p>Q&A</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npQuestionImmediate",
+                                        "data": {
+                                            "id": "npQuestionImmediateID",
+                                            "required": false,
+                                            "forced": false,
+                                            "type": "checkbox",
+                                            "difficulty": "1",
+                                            "content": "How much of the world will be able to use a single, mobile device to connect to NIKE this year?",
+                                            "feedback": {
+                                                "immediate": true,
+                                                "correct": "There are more than 7.3 billion people on this planet. <b>40%</b> of those people will be able to access Nike.com on their phone. That means about <b>2.9 BILLION</b> people will be able to access your assortments. Many of them have never owned a computer and will never set foot in a Nike store.  ",
+                                                "incorrect": "There are more than 7.3 billion people on this planet. <b>40%</b> of those people will be able to access Nike.com on their phone. That means about <b>2.9 BILLION</b> people will be able to access your assortments. Many of them have never owned a computer and will never set foot in a Nike store.  "
+                                            },
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GreenSock/TweenMax.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npAnswerImmediate",
+                                                "data": {
+                                                    "label": "20%",
+                                                    "correct": false,
+                                                    "feedback": {
+                                                        "incorrect": "That's not it. Explain that we have two skincare lines, and share the benefits of each one."
+                                                    },
+                                                    "req": [
+                                                        "mediaelement/jquery-2.1.4.min.js",
+                                                        "mediaelement/GreenSock/TweenMax.min.js"
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "type": "npAnswerImmediate",
+                                                "data": {
+                                                    "label": "30%",
+                                                    "correct": true,
+                                                    "feedback": {
+                                                        "correct": "That's it! Explain that we have two skincare lines, and share the benefits of each one."
+                                                    },
+                                                    "req": [
+                                                        "mediaelement/jquery-2.1.4.min.js",
+                                                        "mediaelement/GreenSock/TweenMax.min.js"
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "type": "npAnswerImmediate",
+                                                "data": {
+                                                    "label": "40%",
+                                                    "correct": false,
+                                                    "feedback": {
+                                                        "incorrect": "That's not it. Explain that we have two skincare lines, and share the benefits of each one."
+                                                    },
+                                                    "req": [
+                                                        "mediaelement/jquery-2.1.4.min.js",
+                                                        "mediaelement/GreenSock/TweenMax.min.js"
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "type": "npAnswerImmediate",
+                                                "data": {
+                                                    "label": "50%",
+                                                    "correct": false,
+                                                    "feedback": {
+                                                        "incorrect": "That's not it. Explain that we have two skincare lines, and share the benefits of each one."
+                                                    },
+                                                    "req": [
+                                                        "mediaelement/jquery-2.1.4.min.js",
+                                                        "mediaelement/GreenSock/TweenMax.min.js"
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "inMenu": false,
+                                    "required": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>Global Trends</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-page",
+                                            "content": "<p>Think Digital First</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npList",
+                                        "data": {
+                                            "class": "body-copy",
+                                            "data-ng:wrap": "true",
+                                            "content": " <p>Consumers' connected devices drive the way we do business. The marketplace is integrated – they're getting exactly what they want, as well as when, where, and how they want it. <p>"
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npImage",
+                                                "data": {
+                                                    "src": "./assets/images/Anya_1.2.jpg"
+                                                },
+                                                "components": []
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>They're browsing stores, checking stock online, and getting products delivered right to their doorstep. </p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>They're influencing their friends and trusting others' opinions about our products. </p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>Most importantly, they're demanding we change how we do business with them. </p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>To keep pace, we need to learn how to run their race. We need to do things differently. </p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>We need to <b>Think Digital First.</b></p>"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "inMenu": false,
+                                    "required": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>Global Trends</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-page",
+                                            "content": "<p>Our Digital Future</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npList",
+                                        "data": {
+                                            "class": "body-copy",
+                                            "data-ng:wrap": "true",
+                                            "content": " <p>The retail storefront has been our focus for years. We designed amazing products, built amazing stores in which to sell them, and repeated that 100 or more times around the world. <p>"
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npImage",
+                                                "data": {
+                                                    "src": "./assets/images/SHOW__0001_FPO_GT_1.3.jpg"
+                                                },
+                                                "components": []
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>Developing digital markets are bigger than our brick-and-mortar (B&M) markets. Retail innovation is connecting the on- and off-line worlds. </p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>Our future looks different. We'll connect with consumers in and outside of stores. We'll give them the information they need and the products they want exactly when and how they want them. </p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>Their experience will change. It will be <b>Premium. Unique. Mobile.</b> </p>"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "inMenu": false,
+                                    "required": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>Global Trends</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-page",
+                                            "content": "<p>The Digital Commuter</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npList",
+                                        "data": {
+                                            "class": "body-copy",
+                                            "data-ng:wrap": "true",
+                                            "content": " <p>Consider this.<p>"
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npImage",
+                                                "data": {
+                                                    "src": "./assets/images/SHOW__0002_FPO_GT_1.4.jpg"
+                                                },
+                                                "components": []
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>Hisato passes through Shinjuku Station every day, along with 3.5 million other people. He barely notices the high-rent storefronts on his way to and from his train.  </p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>He finds his seat and focuses on his phone, much like the rest of the passengers. He looks at a text from his sister, Anya. She's bragging again about her latest distance and run time. He jumps over to his feeds and begins the search. There they are. A click away. Jordans.  </p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>He clicks for size. He clicks for style. He clicks to pay. Done, done, and done.  </p>"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "inMenu": false,
+                                    "required": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>Global Trends</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-page",
+                                            "content": "<p>The Digital Consumer</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npList",
+                                        "data": {
+                                            "class": "body-copy",
+                                            "data-ng:wrap": "true",
+                                            "content": "<p>Consider this:</p>"
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npImage",
+                                                "data": {
+                                                    "src": "./assets/images/SHOW__0003_FPO_GT_1.5.jpg"
+                                                },
+                                                "components": []
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": " <p>14.6 billion passengers just like Hisato ride the Japanese rails every year. <p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>Their digital lives mimic our own: </p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<ul><li>They give their digital devices their total attention. </li><li>They click on exclusive ads and check out the reviews before they buy.</li><li>They browse and shop online and have products delivered to their doorstep. </li></ul>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>They no longer wait for the store to open. They don't shop like that. They shop like Hisato. </p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p><b>They shop like you.</b></p>"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "title": "Global Consumers",
+                                    "backgroundImage": "./assets/images/Chapter_2_bkgd.jpg",
+                                    "backgroundAlpha": 0.45,
+                                    "inMenu": true,
+                                    "required": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>Global Consumers</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npQuote",
+                                        "data": {
+                                            "id": "",
+                                            "class": "",
+                                            "content": "<p>The challenge of the unknown future is so much more exciting than the stories of the accomplished past.</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "quote-signature",
+                                            "content": "<p>—Simon Sinek</p>"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "inMenu": false,
+                                    "required": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>Global Consumers</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-page",
+                                            "content": "<p>Overview</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npList",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "data-ng:wrap": "true",
+                                            "heading": "<p></p>",
+                                            "content": ""
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npVideo",
+                                                "data": {
+                                                    "id": "vidMain",
+                                                    "poster": "",
+                                                    "baseURL": "./assets/video/FPO_Video_Anya_2.1",
+                                                    "types": ["mp4"]
+                                                },
+                                                "components": []
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": " <p>Meet Anya. She provides us everything we need to know about her ­– what she wants, what means the most to her, how she wants to stay informed, what products are best for her, and where she wants to find them.<p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": " <p>We have never before known so much about our consumer.<p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>In this section, we'll discover new ways some of the best retailers are listening and responding to Anya and the rest of our global consumers.</p>"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "inMenu": false,
+                                    "required": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>Global Consumers</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-page",
+                                            "content": "<p>A New Mindset</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npList",
+                                        "data": {
+                                            "class": "body-copy",
+                                            "data-ng:wrap": "true",
+                                            "content": "<p>NIKE's digital businesses work relentlessly to keep pace with consumers like Anya. They track the clicks, capture the numbers, analyze the metrics, and give us amazing insights into our consumers.</p>"
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npImage",
+                                                "data": {
+                                                    "src": "./assets/images/Anya_2.2.jpg"
+                                                },
+                                                "components": []
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": " <p> They tell us:<p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": " <p><ul><li>What devices consumers use to find us</li><li>How they use the search bar and filters when they land on Nike.com</li><li>How they search for products</li><li>How they get to our product pages</li><li>The product images they like best </li><li>How many stories they read on Nike.com </li></ul><p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>Yes. All of our consumers are unique. However, they act like Anya in many ways.</p>"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "title": "",
+                                    "required": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>Global Consumers</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-page",
+                                            "content": "<p>Q&A</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npQuestionImmediate",
+                                        "data": {
+                                            "id": "npQuestionImmediateID",
+                                            "required": false,
+                                            "forced": false,
+                                            "type": "checkbox",
+                                            "difficulty": "1",
+                                            "content": "How often do the most successful digital merchants shop their own sites on their own device?",
+                                            "feedback": {
+                                                "immediate": true,
+                                                "correct": "",
+                                                "incorrect": "As much as it takes to know their consumer. They shop their sites on all devices and search for products in multiple ways. They know that real-time, digital information and experiences are critical to Thinking Digital First."
+                                            },
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GreenSock/TweenMax.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npAnswerImmediate",
+                                                "data": {
+                                                    "label": "Once a day",
+                                                    "correct": false,
+                                                    "feedback": {
+                                                        "incorrect": ""
+                                                    },
+                                                    "req": [
+                                                        "mediaelement/jquery-2.1.4.min.js",
+                                                        "mediaelement/GreenSock/TweenMax.min.js"
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "type": "npAnswerImmediate",
+                                                "data": {
+                                                    "label": "Once a week",
+                                                    "correct": true,
+                                                    "feedback": {
+                                                        "correct": ""
+                                                    },
+                                                    "req": [
+                                                        "mediaelement/jquery-2.1.4.min.js",
+                                                        "mediaelement/GreenSock/TweenMax.min.js"
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "type": "npAnswerImmediate",
+                                                "data": {
+                                                    "label": "Once a month",
+                                                    "correct": false,
+                                                    "feedback": {
+                                                        "incorrect": ""
+                                                    },
+                                                    "req": [
+                                                        "mediaelement/jquery-2.1.4.min.js",
+                                                        "mediaelement/GreenSock/TweenMax.min.js"
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "inMenu": false,
+                                    "required": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>Global Consumers</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-page",
+                                            "content": "<p>Expectations</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npCarousel",
+                                        "data": {
+                                            "id": "np-carousel",
+                                            "class": "carousel",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GreenSock/TweenMax.min.js",
+                                                "mediaelement/GreenSock/utils/Draggable.min.js",
+                                                "mediaelement/GreenSock/utils/ThrowPropsPlugin.min.js",
+                                                "mediaelement/imagesloaded/imagesloaded.pkgd.js"
+                                            ]
+                                        },
+                                        "carouselItem": [
+                                            {
+                                                "carouselImage": "<img alt='' class='carousel-image' src='./assets/images/1_carousel.jpg' />",
+                                                "contentHeader": "<span class='header-dark carousel-text-heading carousel-text'>MAKE THE EXPERIENCE UNIQUE TO ME.</span>",
+                                                "contentBody": "<p>Show me the things that mean the most to me. Make it easy.</p><p>Retailers are finding creative ways to build unique experiences. For example, Guitar Center sends email reminders when it's time to replace guitar strings. </p>"
+                                            },
+                                            {
+                                                "carouselImage": "<img alt='' class='carousel-image' src='./assets/images/2_carousel.jpg' />",
+                                                "contentHeader": "<span class='header-dark carousel-text-heading carousel-text'>INVITE ME TO THE EXPERIENCE. </span>",
+                                                "contentBody": "<p>Include me in the conversation. Show me what others are saying about the things I want. </p><p>We learn about consumers so we can customize their experiences. Retailers can fuel this sense of exclusivity.</p><p>For example, Gilt tells select members when exclusive items are on sale. Then it will resend those same messages only to those who didn't click the first time. </p>"
+                                            },
+                                            {
+                                                "carouselImage": "<img alt='' class='carousel-image' src='./assets/images/3_carousel.jpg' />",
+                                                "contentHeader": "<span class='header-dark carousel-text-heading carousel-text'>I WANT A SIMPLE EXPERIENCE ON ALL DEVICES AND IN ALL LOCATIONS.</span>",
+                                                "contentBody": "<p>One click. One stop. My size. My style. </p><p>More than 50% of our digital consumers shop on mobile devices. Thinking Digital First means considering all their devices early and often. </p><p>For example, the Nike SNKRS app provides one-click access to high-heat products.</p>"
+                                            },
+                                            {
+                                                "carouselImage": "<img alt='' class='carousel-image' src='./assets/images/4_carousel.jpg' />",
+                                                "contentHeader": "<span class='header-dark carousel-text-heading carousel-text'>I WANT IT WHEN, WHERE AND HOW I WANT IT.</span>",
+                                                "contentBody": "<p>There are no walls or reasons I can't get the things I want. I'll try it on here, buy it online, and have it shipped to me. </p><p>Accessibility and convenience keeps consumers engaged and loyal. Once they're gone, it's difficult to get them back. </p><p>For example, Tesla will help you choose and order a car online, and then deliver it to your home. They'll bring a Tesla loaner vehicle when yours needs maintenance so you're never without a Tesla. </p>"
+                                            },
+                                            {
+                                                "carouselImage": "<img alt='' class='carousel-image' src='./assets/images/5_carousel.jpg' />",
+                                                "contentHeader": "<span class='header-dark carousel-text-heading carousel-text'>I HAVE ALL OF THE INFORMATION I NEED AT MY FINGERTIPS. </span>",
+                                                "contentBody": "<p>I can't get to your store, but I can easily get to your site. </p><p>Consumers are well informed and don't need brands to tell them what's hot. There's never been a greater demand for giving consumers exactly what they want.</p><p>For example NIKE's SNKRS and Nike Training Club (NTC) apps connect consumers to exclusive products, amazing stories, and unique NIKE experiences. </p>"
+                                            },
+                                            {
+                                                "carouselImage": "<img alt='' class='carousel-image' src='./assets/images/6_carousel.jpg' />",
+                                                "contentHeader": "<span class='header-dark carousel-text-heading carousel-text'>MAKE IT SEAMLESS.</span>",
+                                                "contentBody": "<p>I want the same, NIKE experience regardless of the store or device. Everything is connected. </p><p>Consumers expect our on- and offline stores to be one, great, NIKE experience. Leading retailers are tearing down walls and building storefronts for the digital and connected consumer. </p><p>For example, in some places you can now order and pay for your Starbucks on your phone so it's waiting when you walk into the store.  </p>"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "inMenu": false,
+                                    "required": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>Global Consumers</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-page",
+                                            "content": "<p>The Seamless Day</p>"
+                                        },
+                                        "components": []
+                                    }, {
+                                        "type": "npCarousel",
+                                        "data": {
+                                            "id": "np-carousel",
+                                            "class": "carousel",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GreenSock/TweenMax.min.js",
+                                                "mediaelement/GreenSock/utils/Draggable.min.js",
+                                                "mediaelement/GreenSock/utils/ThrowPropsPlugin.min.js",
+                                                "mediaelement/imagesloaded/imagesloaded.pkgd.js"
+                                            ]
+                                        },
+                                        "carouselItem": [
+                                            {
+                                                "carouselImage": "<img alt='' class='carousel-image' src='./assets/images/Anya_2.5_a.jpg' /><",
+                                                "contentHeader": "<span class='header-dark carousel-text-heading carousel-text'></span>",
+                                                "contentBody": "<p>Anya's watching a cool video on Nike.com when it hits her that she needs a new pair of running shoes for her 10K at the end of the month. </p><p>She clicks open her SNKRS app, reads some reviews, and checks to see if they have the Nike Free 5.0 in her size. There it is in a really cool color. She adds them to her cart, realizes she's already late, and heads to work. </p>"
+                                            },
+                                            {
+                                                "carouselImage": "<img alt='' class='carousel-image' src='./assets/images/Anya_2.5_b.jpg' /><",
+                                                "contentHeader": "<span class='header-dark carousel-text-heading carousel-text'></span>",
+                                                "contentBody": "<span class='carousel-text-body'><p>Later that day, she gets back to thinking about her shoes. She goes to Nike.com and finds them in her cart, right where she left them. She reads a helpful recommendation for running tights and adds those to her shipment. <p> </span>"
+                                            },
+                                            {
+                                                "carouselImage": "<img alt='' class='carousel-image' src='./assets/images/Anya_2.5_c.jpg' /><",
+                                                "contentHeader": "<span class='header-dark carousel-text-heading carousel-text'></span>",
+                                                "contentBody": "<span class='carousel-text-body'><p>Her stuff arrives in a couple of days. The shoes don't feel quite right, but the tights are awesome. She goes to Nike.com, sends back the shoes, and adds another pair of tights and LunarGlides to the purchase that she picks up at her local store. <p> </span>"
+                                            },
+                                            {
+                                                "carouselImage": "<img alt='' class='carousel-image' src='./assets/images/Anya_2.5_d.jpg' /><",
+                                                "contentHeader": "<span class='header-dark carousel-text-heading carousel-text'></span>",
+                                                "contentBody": "<span class='carousel-text-body'><p>Anya's next run is under blue skies and ahead of light tailwinds. Her shoes feel great, the trail is clear, and her time is stellar. She can't wait to brag about it to her brother back in Japan. Click. Sent. Done. <p> </span>"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "title": "The Seamless Experience",
+                                    "backgroundImage": "./assets/images/Chapter_3_bkgd.jpg",
+                                    "backgroundAlpha": 0.45,
+                                    "inMenu": true,
+                                    "required": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>The Seamless Experience</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npQuote",
+                                        "data": {
+                                            "id": "",
+                                            "class": "",
+                                            "content": "<p>There is only one boss. The customer. And he can fire everybody in the company from the chairman on down, simply by spending his money somewhere else.</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "quote-signature",
+                                            "content": "<p>—Sam Walton</p>"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "inMenu": false,
+                                    "required": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>The Seamless Experience</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-page",
+                                            "content": "<p>Overview</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npList",
+                                        "data": {
+                                            "class": "body-copy",
+                                            "data-ng:wrap": "true",
+                                            "content": "<p><b>Seamless Experience // Definition:</b> An authentic and connected Nike experience regardless of our consumers' location or device. </p>"
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npImage",
+                                                "data": {
+                                                    "src": "./assets/images/SHOW__0004_FPO_SE_3.1.jpg"
+                                                },
+                                                "components": []
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": " <p>In this section, we'll:<p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": " <p><ul><li>Define the Seamless Experience.</li><li>Show you how merchants are planning for this new, connected world.</li><li>Look at the current way of doing things.</li><li>Identify how things will change.</li><li>Look at the connections between digital and brick-and-mortar worlds.</li></ul><p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>Yes. All of our consumers are unique. However, they act like Anya in many ways.</p>"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "title": "Question 1",
+                                    "required": false,
+                                    "first": false,
+                                    "last": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>The Seamless Experience</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-page",
+                                            "content": "<p>Q&A</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npQuestionImmediate",
+                                        "data": {
+                                            "id": "npQuestionImmediateID",
+                                            "required": false,
+                                            "forced": false,
+                                            "type": "checkbox",
+                                            "difficulty": "1",
+                                            "content": "If you were to remember only one thing from this lesson, what is it?",
+                                            "feedback": {
+                                                "immediate": true,
+                                                "correct": "",
+                                                "incorrect": "<b>BE IN STOCK.</b> They can't buy it if they can't find it. "
+                                            },
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GreenSock/TweenMax.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npAnswerImmediate",
+                                                "data": {
+                                                    "label": "The digital store is much more valuable than the retail store.",
+                                                    "correct": false,
+                                                    "feedback": {
+                                                        "incorrect": ""
+                                                    },
+                                                    "req": [
+                                                        "mediaelement/jquery-2.1.4.min.js",
+                                                        "mediaelement/GreenSock/TweenMax.min.js"
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "type": "npAnswerImmediate",
+                                                "data": {
+                                                    "label": "We must always BE IN STOCK.",
+                                                    "correct": true,
+                                                    "feedback": {
+                                                        "correct": "That's it! Explain that we have two skincare lines, and share the benefits of each one."
+                                                    },
+                                                    "req": [
+                                                        "mediaelement/jquery-2.1.4.min.js",
+                                                        "mediaelement/GreenSock/TweenMax.min.js"
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "type": "npAnswerImmediate",
+                                                "data": {
+                                                    "label": "Merchants must take big risks to create great experiences.",
+                                                    "correct": false,
+                                                    "feedback": {
+                                                        "incorrect": ""
+                                                    },
+                                                    "req": [
+                                                        "mediaelement/jquery-2.1.4.min.js",
+                                                        "mediaelement/GreenSock/TweenMax.min.js"
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "inMenu": false,
+                                    "required": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>The Seamless Experience</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-page",
+                                            "content": "<p>Touch Points</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npList",
+                                        "data": {
+                                            "class": "body-copy",
+                                            "data-ng:wrap": "true",
+                                            "content": "<p><b></b>There are numerous touch points in our consumers' lives that merchants already impact and influence. Thinking Digital simply means thinking about some very powerful and connected touch points. Get this right, and your consumers will pay you back with their loyalty and influence.  </p>"
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npImage",
+                                                "data": {
+                                                    "src": "./assets/images/Anya_3.3.jpg"
+                                                },
+                                                "components": []
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>The goal remains simple – make it easy to experience Nike. Start by asking yourself:<p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": " <p><ul><li>How many different places and ways are my consumers experiencing my assortments?  </li><li>What are their digital and physical experiences?  </li><li>Am I getting in the way or preparing for the way? </li></ul><p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>Tap into your consumer information early and often, consider your touch points, and plan for ALL your touch points.  </p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>How? Glad you asked. </p>"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            }, {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "inMenu": false,
+                                    "required": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>The Seamless Experience</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-page",
+                                            "content": "<p>Planning for the Experience</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p><b>Instructions: </b></p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>Read each statement from Anya. Then click it to reveal what question you should ask yourself first, and a solution to meet her needs. <p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npFlashCards",
+                                        "data": {
+                                            "id": "flash-cards-test-id",
+                                            "class": "flash-cards-test-class",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GreenSock/TweenMax.min.js",
+                                                "mediaelement/GreenSock/utils/Draggable.min.js",
+                                                "mediaelement/GreenSock/utils/ThrowPropsPlugin.min.js",
+                                                "mediaelement/imagesloaded/imagesloaded.pkgd.js"
+                                            ]
+                                        },
+                                        "flashCards": [
+                                            {
+                                                "contentFront": "<img class='flash-card-content-front-background' src='./assets/images/FC_FPO_1.jpg'><p><span class='sub-head-x-bd'>Anya says: </span><span class='header-bold-obl'>\"WHAT'S THE RIGHT SHOE FOR ME?\"</span></p>",
+                                                "contentBack": "<img class='flash-card-content-back-background' src='./assets/images/FC_FPO_back_1.jpg'><div class='flash-card-content-back-top'><p class='head-section'>Ask yourself:</p><p class='body-copy'>What's the most convenient way for her to try it on?</p></div><div class='flash-card-content-back-bottom'><p class='head-section dark'>The implication: </p><p class='body-copy dark'>Anya will look for local stores with her size and style, or she'll order the shoes on Nike.com for delivery to her home. The local store needs to be in stock or to try to get her first choice on Nike.com quickly. </p></div>"
+                                            },
+                                            {
+                                                "contentFront": "<img class='flash-card-content-front-background' src='./assets/images/FC_FPO_2.jpg'><p><span class='sub-head-x-bd'>Anya says: </span><span class='header-bold-obl'>\"YOU DON'T CARRY THE LATEST SHOES IN THE NIKE FACTORY STORE NEAR ME.\"</span></p>",
+                                                "contentBack": "<img class='flash-card-content-back-background' src='./assets/images/FC_FPO_back_1.jpg'><div class='flash-card-content-back-top'><p class='head-section'>Ask yourself:</p><p class='body-copy'>Can I show her what's new in some other way? </p></div><div class='flash-card-content-back-bottom'><p class='head-section dark'>The implication: </p><p class='body-copy dark'>A Nike Athlete will look up the styles online together with Anya and have the ones she likes shipped to the store. Nike.com will need to have the right depth of the right product to get Anya's choices to her store.</p></div>"
+                                            },
+                                            {
+                                                "contentFront": "<img class='flash-card-content-front-background' src='./assets/images/FC_FPO_3.jpg'><p><span class='sub-head-x-bd'>Anya says: </span><span class='header-bold-obl'>\"I FOUND THE RUNNING TOP I WANT IN NIKE PORTLAND, BUT YOU DON'T HAVE THE SHOES I LIKE IN THE STORE.\"</span></p>",
+                                                "contentBack": "<img class='flash-card-content-back-background' src='./assets/images/FC_FPO_back_1.jpg'><div class='flash-card-content-back-top'><p class='head-section'>Ask yourself:</p><p class='body-copy'>Can I find them and get them to her quickly?</p></div><div class='flash-card-content-back-bottom'><p class='head-section dark'>The implication: </p><p class='body-copy dark'>Help Anya find them online. Items should be smartly curated and easy to find. Make sure you know how people are using Nike.com's site search to find their products so that you can better curate your assortments. </p></div>"
+                                            },
+                                            {
+                                                "contentFront": "<p><span class='body-copy dark'>Anya says: </span><span class='header-dark'>\"I NEED SOME ADVICE ON TRAINING FOR MY NEXT 10K.\"</span></p>",
+                                                "contentBack": "<span class='body-copy dark'>Ask yourself: </span><span class='body-copy dark'>Can you show her an app that will help with her training? </span></p><p><span class='body-copy dark'>The implication: </span><span class='body-copy dark'><p>Nike has an app for that ¬– Anya can use her smartphone to find customized training plans for her next race.</p><p>Partner with the right groups to plan for the connections. For example, ensure that there is additional information on the Running SLP to link consumers to our on-site resources and our Nike+ pages.</p> </span>"
+                                            },
+                                            {
+                                                "contentFront": "<p><span class='body-copy dark'>Anya says: </span><span class='header-dark'>\"I CAN'T TELL IF THIS SHOE IS RIGHT FOR THE WAY I RUN.\"</span></p>",
+                                                "contentBack": "<p><span class='body-copy dark'>Ask yourself: </span><span class='body-copy dark'>Where and when can she talk to an expert? </span></p><p><span class='body-copy dark'>The implication: </span><span class='body-copy dark'>Show her the information within a couple of clicks. Make sure things are in the right place. Ensure that products are easy to find and that descriptions focus on the benefits. Consider ALL of our touch points when assorting the products correctly. </span></p>"
+                                            },
+                                            {
+                                                "contentFront": "<p><span class='body-copy dark'>Anya says: </span><span class='header-dark'>\"I WANT TO KNOW MORE ABOUT THE NIKES SHE'S WEARING AND WHERE I CAN GET A PAIR.\"</span></p>",
+                                                "contentBack": "<p><span class='body-copy dark'>Ask yourself: </span><span class='body-copy dark'>Is it easy to find this information on her phone? </span></p><p><span class='body-copy dark'>The implication: </span><span class='body-copy dark'>Search should take her straight to the correct product page on Nike.com. Celebrate your hero items and consider the on-site searches. Shop your site on all devices to make sure your best products are showing up the right way. </span></p>"
+                                            },
+                                            {
+                                                "contentFront": "<p><span class='body-copy dark'>Anya says: </span><span class='header-dark'>\"I'D LIKE TO KNOW ABOUT OTHER RACES LIKE THE NEW YORK CITY MARATHON.\"</span></p>",
+                                                "contentBack": "<p><span class='body-copy dark'>Ask yourself: </span><span class='body-copy dark'>How will Nike inform her? </span></p><p><span class='body-copy dark'>The implication: </span><span class='body-copy dark'>Use targeted messages to provide the information Anya wants and needs. Work together with Nike's digital groups to connect with Anya. Learn how to take advantage of this touch point. </span></p>"
+                                            },
+                                            {
+                                                "contentFront": "<p><span class='body-copy dark'>Anya says: </span><span class='header-dark'>\"I WANT TO TRY IT ON BEFORE I BUY IT ON NIKE.COM.\"</span></p>",
+                                                "contentBack": "<p><span class='body-copy dark'>Ask yourself: </span><span class='body-copy dark'>Where is the closest location with the product she wants?</span></p><p><span class='body-copy dark'>The implication: </span><span class='body-copy dark'>Show her the closest store that has what she needs to try on. Make sure she can get it online if it's not in the store. BE IN STOCK!  </span></p>"
+                                            },
+                                            {
+                                                "contentFront": "<p><span class='body-copy dark'>Anya says: </span><span class='header-dark'>\"I FOUND A RUNNING TOP ONLINE THAT I WANT TO BUY, BUT I NEED IT TODAY.\"</span></p>",
+                                                "contentBack": "<p><span class='body-copy dark'>Ask yourself: </span><span class='body-copy dark'>Can she buy it here and pick it up there? </span></p><p><span class='body-copy dark'>The implication: </span><span class='body-copy dark'>Show Anya the stores near her that have her product in stock. Prepare for those who shop online and want to pick up their product in the store.  </span></p>"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "title": "Think Digital First",
+                                    "backgroundImage": "./assets/images/Chapter_4_bkgd.jpg",
+                                    "backgroundAlpha": 0.45,
+                                    "inMenu": true,
+                                    "required": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>Think Digital First</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npQuote",
+                                        "data": {
+                                            "id": "",
+                                            "class": "",
+                                            "content": "<p>We can't solve problems by using the same kind of thinking we used when we created them.</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "quote-signature",
+                                            "content": "<p>—Albert Einstein</p>"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "inMenu": false,
+                                    "required": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>Think Digital First</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-page",
+                                            "content": "<p>Overview</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>In this section, we'll share some examples of what it means to Think Digital First. <p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>We'll show you the old way of doing things as well as how to better navigate our digital marketplace. We'll talk a bit about our strategy, the plan, and the benefits of Thinking Digital First. </p>"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "required": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>Think Digital First</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-page",
+                                            "content": "<p>The Power of Data</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>Sure, you may already know a lot about your consumers. But what's missing? <p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npList",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "data-ng:wrap": "true",
+                                            "heading": "<p></p>",
+                                            "content": ""
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npVideo",
+                                                "data": {
+                                                    "id": "vidMain",
+                                                    "poster": "",
+                                                    "baseURL": "./assets/video/Wildlife_1",
+                                                    "types": ["mp4"]
+                                                },
+                                                "components": []
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p><b>Consider this: </b><p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>What if you could get more information about Anya, including her digital preferences? <p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p><b>You can if you Think Digital.</b><p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>You now have amazing opportunities to access data about every one of your consumers, so you can see how they're behaving at any moment. You have all the information needed to create the best consumer right assortments – any time, anywhere, and on any device. <p>"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "required": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>Think Digital First</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-page",
+                                            "content": "<p>The New Strategy</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p><b>Think Digital First: The Strategy </b><p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>Remember the old way of doing things? We designed a great product, built an amazing store to sell it in, and repeated it over and over. <p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>We will evolve and innovate once again. Our consumers are living digital lives, and they want us to come along for the ride. <p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>By <b>leading with digital, we will better serve our customers and drive a relentless flow of different assortments for different segments, across all our digital channels. </b><p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>The end game? Explosive growth across a digital, global, and integrated marketplace. <p>"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "required": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>Think Digital First </p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-page",
+                                            "content": "<p>The New Plan </p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>We are Thinking Digital First because it is the best way to give our consumers what they need – any time, anywhere. <p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>Instructions: Click each statement to see how NIKE is already Thinking Digital First. <p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npAccordion",
+                                        "collapseAll": true,
+                                        "visited": false,
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "contentTop": "<p>Providing unique, personalized store experiences<p>",
+                                            "contentItem": "<p>In the not so distant future, consumers will enjoy unique, personalized store experiences. Imagine walking in and having all your preferences available at your disposal while you shop. <p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npAccordion",
+                                        "collapseAll": true,
+                                        "visited": false,
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "contentTop": "<p><b>Creating consumer right assortments – any time, anywhere</b><p>",
+                                            "contentItem": "<p>Whether Anya wants to customize a pair of LunarGlides, find a Nike+ run club, or check what's on clearance, she will always be able to find what she needs on Nike.com using any of her devices, no matter the time or place. <p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npAccordion",
+                                        "collapseAll": true,
+                                        "visited": false,
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "contentTop": "<p><b>Designing personal experiences so they’re connected on all devices</b><p>",
+                                            "contentItem": "<p>Today's digitally savvy consumers want the same personal experience on all their devices, from smartphones to tablets. We are designing consistent user interfaces, telling targeted stories, and letting consumers take their shopping carts with them on all devices and in all stores. <p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npAccordion",
+                                        "collapseAll": true,
+                                        "visited": false,
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "contentTop": "<p><b>Making certain all recommendations are timely and on point</b><p>",
+                                            "contentItem": "<p>Our recommendations are based on what we know about the consumer, the season, and our high-heat items. We will use rich data together with technology to make the right recommendations to each and every consumer.<p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npAccordion",
+                                        "collapseAll": true,
+                                        "visited": false,
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "contentTop": "<p><b>Making it easy</b><p>",
+                                            "contentItem": "<p>We will be in stock. If shoes aren't available online, they will be in the nearest store. If a popular T-shirt is sold out downtown, we'll get it for the consumer online and have it to them in days. They will get options. Not apologies.<p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npAccordion",
+                                        "collapseAll": true,
+                                        "visited": false,
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "contentTop": "<p><b>Ensuring Nike.com is the Premier destination for Nike products.</b><p>",
+                                            "contentItem": "<p>Consumers will go to Nike.com first because it is the Premier destination for everything Nike. <p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npAccordion",
+                                        "collapseAll": true,
+                                        "visited": false,
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "contentTop": "<p><b>Creating memberships for more access, exclusivity, and personalized experiences </b><p>",
+                                            "contentItem": "<p>A Nike membership will reward consumers with exclusive, personalized experiences, invitations, and messages. <p>"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "inMenu": false,
+                                    "required": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>Think Digital First</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-page",
+                                            "content": "<p>The Payoff</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p><b>Thinking Digital First = Huge Payoff</b></p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>Companies who lead with digital are seeing: </p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": " <p><ul><li><b>Better connections and access </b>to their consumers </li><li><b>Opportunities to capture information </b>to better serve their consumers </li><li><b>Brand loyalty </b>built through personalization, future membership programs, and availability of product </li><li><b>Improved conversion rates </b>rooted in digital services and analytics </li><li><b>Growth </b>in their most profitable channels </li></ul><p>"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "inMenu": false,
+                                    "required": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>Think Digital First</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-page",
+                                            "content": "<p>Digital First Checklist</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p><b>Instructions: </b><p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>Click each item in the<b> Digital First Checklist </b>to learn why it is critical to complete these tasks.<p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npAccordion",
+                                        "collapseAll": true,
+                                        "visited": true,
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "contentTop": "<p><b>I will make sure stock is always available.</b><p>",
+                                            "contentItem": "<p><ul><li>We lose as soon as the consumer cannot find the product they want.  </li><li>If it's not in the store, you know it will be online. Period. Done. Enough said. </li></ul><p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npAccordion",
+                                        "collapseAll": true,
+                                        "visited": true,
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "contentTop": "<p><b>I will lead for Nike.com because it's my largest storefront.</b><p>",
+                                            "contentItem": "<p><ul><li>Nike.com is our Premier source for all things Nike. Plan for it first, not last.  </li><li>Be a digital consumer and visit Nike.com to pinpoint what's unique about your consumers' online experience. Be smart. Tell your story. Learn. Evolve. </li></ul><p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npAccordion",
+                                        "collapseAll": true,
+                                        "visited": true,
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "contentTop": "<p><b>I will create a Digital Roadmap strategy. </b><p>",
+                                            "contentItem": "<p><ul><li>Start with your digital consumer right assortment. Then, move to your Brand Experience before planning for the rest of your Marketplace.  </li></ul><p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npAccordion",
+                                        "collapseAll": true,
+                                        "visited": true,
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "contentTop": "<p><b>I will begin the journey with product. </b><p>",
+                                            "contentItem": "<p><ul><li>Nike's relentless pursuit of innovation is seen in our products.  </li><li>Begin and end with product. </li></ul><p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npAccordion",
+                                        "collapseAll": true,
+                                        "visited": true,
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "contentTop": "<p><b>I will learn how to use all my digital merchandising levers to build the most profitable consumer right assortments. </b><p>",
+                                            "contentItem": "<p><ul><li>Choose your Exclusive concepts for Nike.com.  </li><li>Choose your Accelerated Sell-Through Concepts.   </li><li>Choose your Early Access Models/Concepts.  </li><li>Choose your Service Enablers.  </li></ul><p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npAccordion",
+                                        "collapseAll": true,
+                                        "visited": true,
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "contentTop": "<p><b>I will create premium experiences where and when they matter most.  </b><p>",
+                                            "contentItem": "<p><ul><li>Celebrate your hero items.  </li><li>Learn how and when to tell great stories that interest your consumers the most.  </li></ul><p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npAccordion",
+                                        "collapseAll": true,
+                                        "visited": true,
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "contentTop": "<p><b>I will win with mobile.  </b><p>",
+                                            "contentItem": "<p><ul><li>Use mobile-first designs. </li><li>Consider the device and how your consumers are using it to connect to Nike. </li></ul><p>"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "title": "Leading with Nike.com",
+                                    "backgroundImage": "./assets/images/Chapter_5_bkgd.jpg",
+                                    "backgroundAlpha": 0.45,
+                                    "inMenu": true,
+                                    "required": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>Leading with Nike.com</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npQuote",
+                                        "data": {
+                                            "id": "",
+                                            "class": "",
+                                            "content": "<p>You know what the most popular ice-cream flavors ALWAYS are? Chocolate and vanilla. People like consistency and you have to have this in stock.</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "quote-signature",
+                                            "content": "<p>—Mickey Drexler, J.Crew</p>"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "inMenu": false,
+                                    "required": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>Leading with Nike.com</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-page",
+                                            "content": "<p>Overview</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>In this section, you'll learn why and how to lead with Nike.com. </p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>Let's kick off this section with a question.</p>"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "required": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>Leading with Nike.com</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-page",
+                                            "content": "<p>Q&A</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npQuestionImmediate",
+                                        "data": {
+                                            "id": "npQuestionImmediateID",
+                                            "required": false,
+                                            "forced": false,
+                                            "type": "checkbox",
+                                            "difficulty": "1",
+                                            "content": " Approximately how many visitors per month walk through the doors at Nike Harajuku, Nike Shanghai, and Niketown NY combined?",
+                                            "feedback": {
+                                                "immediate": true,
+                                                "correct": "",
+                                                "incorrect": "Close to 310,000.  "
+                                            },
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GreenSock/TweenMax.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "npAnswerImmediate",
+                                                "data": {
+                                                    "label": "More than 310,000",
+                                                    "correct": false,
+                                                    "feedback": {
+                                                        "incorrect": ""
+                                                    },
+                                                    "req": [
+                                                        "mediaelement/jquery-2.1.4.min.js",
+                                                        "mediaelement/GreenSock/TweenMax.min.js"
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "type": "npAnswerImmediate",
+                                                "data": {
+                                                    "label": "About 500,000",
+                                                    "correct": false,
+                                                    "feedback": {
+                                                        "incorrect": ""
+                                                    },
+                                                    "req": [
+                                                        "mediaelement/jquery-2.1.4.min.js",
+                                                        "mediaelement/GreenSock/TweenMax.min.js"
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "type": "npAnswerImmediate",
+                                                "data": {
+                                                    "label": "1,000,000",
+                                                    "correct": true,
+                                                    "feedback": {
+                                                        "correct": ""
+                                                    },
+                                                    "req": [
+                                                        "mediaelement/jquery-2.1.4.min.js",
+                                                        "mediaelement/GreenSock/TweenMax.min.js"
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "type": "npAnswerImmediate",
+                                                "data": {
+                                                    "label": "5,000,00",
+                                                    "correct": false,
+                                                    "feedback": {
+                                                        "incorrect": ""
+                                                    },
+                                                    "req": [
+                                                        "mediaelement/jquery-2.1.4.min.js",
+                                                        "mediaelement/GreenSock/TweenMax.min.js"
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "inMenu": false,
+                                    "required": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>Leading with Nike.com</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-page",
+                                            "content": "<p>Consider This</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p><b>But consider this:  </b></p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>These three busy retail locations – Harajuku, Shanghai, and New York – draw a mere fraction of the traffic seen during the same month on Nike.com, Nike.jp and Nike.cn.  </p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>Here's a breakout of those numbers. </p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>Nike Harajuku = 74,911 </p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>Nike.jp = 22,800,000 </p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>Nike Shanghai = 26,642  </p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>Nike.cn = 5,840,000 </p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>Niketown NY = 208,705 </p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>Nike.com = 35,063,000 </p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>Which storefront is getting most of your attention? </p>"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "inMenu": false,
+                                    "required": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>Leading with Nike.com</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-page",
+                                            "content": "<p>Creating the Ultimate Experience</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p><b>Instructions: </b>Click each panel to reveal how you can help make Nike.com the Premier source for NIKE products and experiences. </p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npFlashCards",
+                                        "data": {
+                                            "id": "flash-cards-test-id",
+                                            "class": "flash-cards-test-class",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GreenSock/TweenMax.min.js",
+                                                "mediaelement/GreenSock/utils/Draggable.min.js",
+                                                "mediaelement/GreenSock/utils/ThrowPropsPlugin.min.js",
+                                                "mediaelement/imagesloaded/imagesloaded.pkgd.js"
+                                            ]
+                                        },
+                                        "flashCards": [
+                                            {
+                                                "contentFront": "<img class='flash-card-content-front-background' src='./assets/images/FC1.jpg'><p></p>",
+                                                "contentBack": "<img class='flash-card-content-back-background' src='./assets/images/FC_FPO_back_1.jpg'><div class='flash-card-content-back-bottom'><p class='head-section dark'>Make Access Easy </p><p class='body-copy dark'>Consumers want what they want, when they want it. Our products need to be easy to find, experience, and purchase.</span><p><span class='body-copy dark'>Make products or assortments on Nike.com:</span></p><p><ul><li>Available </li><li>Convenient  </li><li>Curated </li></ul></p></div>"
+                                            },
+                                            {
+                                                "contentFront": "<img class='flash-card-content-front-background' src='./assets/images/FC2.jpg'><p></p>",
+                                                "contentBack": "<img class='flash-card-content-back-background' src='./assets/images/FC_FPO_back_1.jpg'><div class='flash-card-content-back-bottom'><p class='head-section dark'>Do More </p><p class='body-copy dark'>Nike.com must do more for our consumers. It must be the hub for Nike services, apps, and communities. And it must provide:  </p><p><ul><li>Inspiration </li><li>Innovation </li><li>Connections </li><li>Community  </li></ul><p></div>"
+                                            },
+                                            {
+                                                "contentFront": "<span class='header-dark'><p>DO MORE</p></span>",
+                                                "contentBack": "<span class='body-copy dark'><p><b>Do More </b></p><p>Nike.com must do more for our consumers. It must be the hub for Nike services, apps, and communities. And it must provide:  </p><p><ul><li>Inspiration </li><li>Innovation </li><li>Connections </li><li>Community  </li></ul><p></span>"
+                                            },
+                                            {
+                                                "contentFront": "<span class='header-dark'><p>MAKE THEM BETTER</p></span>",
+                                                "contentBack": "<span class='body-copy dark'><p><b>Make Them Better </b></p><p>Nike.com must continue to help athletes be the best. We will help them: </p><p><ul><li>Easily find product that measures up to their expectations. </li><li>Set goals. </li><li>Track and share their accomplishments. </li><li>Access coaches and their communities. </li>/ul><p></span>"
+                                            },
+                                            {
+                                                "contentFront": "<span class='header-dark'><p>OFFER THE BEST</p></span>",
+                                                "contentBack": "<span class='body-copy dark'><p><b>Offer the Best </b></p><p>Nike.com is the source for our best products. It will include the broadest and deepest selections of the latest premium products.  </p><p>Nike.com will showcase our products' </p><p><ul><li>Benefits </li><li>Fit </li><li>Aesthetic </li><li>Performance  </li></ul><p></span>"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "inMenu": false,
+                                    "required": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>Leading with Nike.com</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-page",
+                                            "content": "<p>Set Your Vision</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npCarousel",
+                                        "data": {
+                                            "id": "np-carousel",
+                                            "class": "carousel",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GreenSock/TweenMax.min.js",
+                                                "mediaelement/GreenSock/utils/Draggable.min.js",
+                                                "mediaelement/GreenSock/utils/ThrowPropsPlugin.min.js",
+                                                "mediaelement/imagesloaded/imagesloaded.pkgd.js"
+                                            ]
+                                        },
+                                        "carouselItem": [
+                                            {
+                                                "carouselImage": "<img alt='' class='carousel-image' src='./assets/images/1_carousel.jpg' />",
+                                                "contentHeader": "<span class='header-dark carousel-text-heading carousel-text'></span>",
+                                                "contentBody": "<span class='carousel-text-body'><p>Use the same strategic thinking you employ for a brick-and-mortar retail location when you set your vision for Nike.com. </p><p>Use these guidelines to Think Digital First: </p><p><ol><li>Decide how you'll build consumer right assortments that support the vision of Nike.com as the ultimate source for everything Nike. </li><li>Plan to reshape the marketplace by leading with Nike.com. </li><li>Define your target goal year by year for owned digital: </li><ul><li>Define your digital business as a percentage by brand.  </li><li>Obsess the assortment and support it with Brand and Digital RBP.  </li></ul></ol><p> </span>"
+                                            },
+                                            {
+                                                "carouselImage": "<img alt='' class='carousel-image' src='./assets/images/2_carousel.jpg' />",
+                                                "contentHeader": "<span class='header-dark carousel-text-heading carousel-text'></span>",
+                                                "contentBody": "<span class='carousel-text-body'><p>With a digital strategy in place, you can begin the real work.  </p><p><b>Instructions:</b> Click each image to reveal different ways you can implement a strategy to lead with Nike.com. </p></span>"
+                                            },
+                                            {
+                                                "carouselImage": "<img alt='' class='carousel-image' src='./assets/images/3_carousel.jpg' />",
+                                                "contentHeader": "<span class='header-dark carousel-text-heading carousel-text'></span>",
+                                                "contentBody": "<span class='carousel-text-body'><p>Build to the Consumer's Digital Journey </p><p><ul><li>Choose your stories with smart edits and bold distortions. </li><li>Identify all the digital levers you are going to use to define items and consumer priorities. </li><li>Work with brand to assign and embed stories at the right connections. </li><li>Confirm your NIKEiD integration. </li></ul><p></span>"
+                                            },
+                                            {
+                                                "carouselImage": "<img alt='' class='carousel-image' src='./assets/images/4_carousel.jpg' />",
+                                                "contentHeader": "<span class='header-dark carousel-text-heading carousel-text'></span>",
+                                                "contentBody": "<span class='carousel-text-body'><p><b>Point and Pull Consumers to Nike.com </b></p><p><ul><li>Lead with innovation on Nike.com. </li><li>Consider all the touch points and how they all lead back to Nike.com. </li><li>Be aware of the plan! <ul><li>Know the calendar. </li><li>Look for ways to influence and connect with the retail calendar. </li></ul></li></ul> </p></span>"
+                                            },
+                                            {
+                                                "carouselImage": "<img alt='' class='carousel-image' src='./assets/images/5_carousel.jpg' />",
+                                                "contentHeader": "<span class='header-dark carousel-text-heading carousel-text'></span>",
+                                                "contentBody": "<span class='carousel-text-body'><p><b>Learn About Your Consumers </b></p><p>Always be ready to answer these questions about your consumers: </p><p><ul><li>What device do they use? </li><li>What are they purchasing? </li><li>How did they enter the site? </li><li>What are their most common paths within the site? </li><li>Which styles get the most traffic? </li><li>What are they searching for on the site? </li></ul><p></span>"
+                                            }, {
+                                                "carouselImage": "<img alt='' class='carousel-image' src='./assets/images/6_carousel.jpg' />",
+                                                "contentHeader": "<span class='header-dark carousel-text-heading carousel-text'></span>",
+                                                "contentBody": "<span class='carousel-text-body'><p><b>Make Product the Payoff </b></p><p>Nike.com is the Premier source for Nike and the first point of contact. </p><p><ul><li>Be in stock. </li><li>Optimize sell-through – don't send it to the factory. </li><li>Take a risk and buy with courage.  </li><li>Overinvest in your key business drivers, key looks, and campaigns. </li><li>Make stock rates your obsession – use the reporting tool. </li><li>Always lead with your best product.  </li></ul><p></span>"
+                                            },
+                                            {
+                                                "carouselImage": "<img alt='' class='carousel-image' src='./assets/images/6_carousel.jpg' />",
+                                                "contentHeader": "<span class='header-dark carousel-text-heading carousel-text'></span>",
+                                                "contentBody": "<span class='carousel-text-body'><p><b>Conversion Is Your Scorecard </b></p><p>Use analytics to measure your success. Find out: </p><p><ul><li>What tools are available to measure success? </li><li>Which analytics determine success? </li><li>Which levers are best to use to make an impact? </li><li>What are successful teams doing? </li></ul><p></span>"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "title": "The 9 Digital Merchandising Principles",
+                                    "backgroundImage": "./assets/images/Chapter_6_bkgd.jpg",
+                                    "backgroundAlpha": 0.45,
+                                    "inMenu": true,
+                                    "required": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>The 9 Digital Merchandising Principles</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npQuote",
+                                        "data": {
+                                            "id": "",
+                                            "class": "",
+                                            "content": "<p>When we follow these principles and we've done our job, consumers will feel inspired, and we will have won that moment of truth. And we all know – winning feels like nothing else. </p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "quote-signature",
+                                            "content": "<p>—Tim Hershey</p>"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "inMenu": false,
+                                    "required": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>The 9 Digital Merchandising Principles</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-page",
+                                            "content": "<p>Overview</p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>Nike's 9 Merchandising Principles are evolving together with our business and the global consumer. We must ask how we can look at these principles through a digital lens. The principles stay the same. How we use them will change as we get smarter, better, and more connected. <p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p><ol><li><b>We tell stories. </b> </li><li><b>Edit to amplify. </b> </li><li><b>Distort hero items.</b> </li><li><b>Make powerful statements.</b> </li><li><b>Plan to the space.</b> </li><li><b>Create credible outfits. </b> </li><li><b>Keep it fresh.</b> </li><li><b>Amplify and accelerate.</b> </li><li><b>Win at the moment of truth. </b> </li></ol><p>"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "inMenu": false,
+                                    "required": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>Link to Merchandising Principles video </p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p><a href='http://www.w3.org/2010/05/video/mediaevents.html' target='_blank'>CLICK HERE</a> to learn more about Nike's updated 9 Merchandising Principles. <p>"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "inMenu": false,
+                                    "required": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>Course Summary </p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>We are Thinking Digital First at NIKE. It requires us to use new tools, information, skills, and connections to build the seamless experiences our consumers want. <p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p>Here is how you can help us reach our true potential: <p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": " <p><ul><li>Help build and <b>plan for Premium consumer experiences on all devices. </b> </li><li>Meet our global consumers when, where, and <b>how they want to be met. </b> </li><li><b>Provide a seamless experience </b>that's authentic, connected, and personal. </li><li><b>Lead with digital. </b>Use the consumers' connections to drive your consumer right assortments. Learn how to use levers to adjust along the way.  </li><li><b>Set your vision and strategy for Nike.com. </b>Let the data tell you about your consumers' habits. Treat Nike.com as your largest retail storefront.  </li><li><b>Anchor yourself in our 9 Merchandising Principles. </b>Evolve together with our consumer and our business. Look at things through a digital lens. </li></ul><p>"
+                                        },
+                                        "components": []
+                                    },
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "body-copy",
+                                            "content": "<p> </p>"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "npPage",
+                                "data": {
+                                    "id": "",
+                                    "parentId": "",
+                                    "inMenu": false,
+                                    "required": false
+                                },
+                                "components": [
+                                    {
+                                        "type": "npHTML",
+                                        "data": {
+                                            "id": "",
+                                            "class": "head-section",
+                                            "content": "<p>fill</p>"
+                                        },
+                                        "components": []
+                                    }
+                                ]
+                            }
+
+                        ]
+                    },
+                    {
+                        "type": "npNavBar",
+                        "data": {
+                            "id": "",
+                            "position": "bottom"
+                        },
+                        "components": [
+                            {
+                                "type": "npProgressUi",
+                                "data": {
+                                    "link": "",
+                                    "class": "",
+                                    "contentNext": "Next",
+                                    "contentPrevious": "Previous",
+                                    "req": [
+                                        "mediaelement/jquery-2.1.4.min.js",
+                                        "mediaelement/GSAP/TweenMax.min.js",
+                                        "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                    ]
+                                },
+                                "components": [
                                 ]
                             }
                         ]

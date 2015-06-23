@@ -29,17 +29,24 @@ angular
                     $scope.image = this.image = cmpData.image;
                     $log.debug('npFlashCards::data', cmpData, buttonData);
                     //////////////////////////////////////////////////////////////////////////////////////
-                    //on button click do these things
+                    //on front button click do these things
                     //////////////////////////////////////////////////////////////////////////////////////
                     this.update = function (flashCardButton) {
+                        Draggable.get("#flash-cards").disable();
                         var idx = flashCards.indexOf(flashCardButton),
                                 clickedFlashCard = $(".flash-cards-object")[idx],
                                 flipped;
                         TweenMax.killAll(false, true, false);
+                        var maxHeight = $(clickedFlashCard).find('.flash-card-content-back').outerHeight(true);
                         TweenMax.to(clickedFlashCard, 1, {
                             rotationY: 180,
+                            height: maxHeight,
                             ease: Power4.easeOut,
                             overwrite: 0
+                        });
+                        TweenMax.to($(clickedFlashCard).find('.flash-card-back-button'), 1, {
+                            autoAlpha: 1,
+                            ease: Power4.easeOut
                         });
                         TweenMax.to(clickedFlashCard.getElementsByClassName('flash-card-back-wrapper'), 1, {
                             autoAlpha: 1,
@@ -49,23 +56,6 @@ angular
                             autoAlpha: 0,
                             ease: Power4.easeOut
                         });
-                        TweenMax.to($('.flash-card-button'), 1, {
-                            autoAlpha: 0,
-                            ease: Power4.easeOut
-                        });
-//                            if (flipped === !flipped){
-//                                TweenMax.to($('.flash-card-button'), 1, {
-//                                    autoAlpha: 0,
-//                                    ease: Power4.easeOut
-//                                });
-//                                TweenMax.set($('.flash-card-button'), {
-//                                    left: '15px'
-//                                });
-//                                TweenMax.to($('.flash-card-button'), 1, {
-//                                    autoAlpha: 1,
-//                                    ease: Power4.easeOut
-//                                });
-//                            }
                         //////////////////////////////////////////////////////////////////////////////////////
                         //on navigation change stop and reset all video files
                         //////////////////////////////////////////////////////////////////////////////////////
@@ -74,6 +64,40 @@ angular
 //                                this.currentTime = 0;
 //                                this.load();
 //                            });
+                    };
+                    //////////////////////////////////////////////////////////////////////////////////////
+                    // on back button click do these things
+                    // TODO: If possible roll below method and center match method into single function
+                    //////////////////////////////////////////////////////////////////////////////////////
+                    this.updateBack = function (flashCardButton) {
+                        Draggable.get("#flash-cards").enable();
+//                        console.log(
+//                                '\n::::::::::::::::::::::::::::::::::::::flashCard::updateBack:::::::::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                '\n::$( #npHTML\\:0_0_1 )::', $("#npHTML\\:0_0_1").height(),
+//                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                );
+                        var idx = flashCards.indexOf(flashCardButton),
+                                clickedFlashCard = $(".flash-cards-object")[idx];
+                        TweenMax.killAll(false, true, false);
+                        var maxHeight = $(clickedFlashCard).find('.flash-card-content-back').outerHeight(true);
+                        TweenMax.to(clickedFlashCard, 1, {
+                            rotationY: 0,
+                            height: '400px',
+                            ease: Power4.easeOut,
+                            overwrite: 0
+                        });
+                        TweenMax.to($(clickedFlashCard).find('.flash-card-back-button'), 1, {
+                            autoAlpha: 0,
+                            ease: Power4.easeOut
+                        });
+                        TweenMax.to(clickedFlashCard.getElementsByClassName('flash-card-back-wrapper'), 1, {
+                            autoAlpha: 0,
+                            ease: Power4.easeOut
+                        });
+                        TweenMax.to(clickedFlashCard.getElementsByClassName('flash-card-front-wrapper'), 1, {
+                            autoAlpha: 1,
+                            ease: Power4.easeOut
+                        });
                     };
                     //////////////////////////////////////////////////////////////////////////////////////
                     //set drag and drag end event handlers
@@ -112,11 +136,14 @@ angular.module('npFlashCardsDirective', [])
                             TweenMax.set($('.flash-card-button'), {
                                 autoAlpha: 0
                             });
+                            TweenMax.set($('.flash-card-back-button'), {
+                                autoAlpha: 0
+                            });
                             TweenMax.set($('.flash-card-back-wrapper'), {
                                 rotationY: -180
                             });
                             TweenMax.set([$('.flash-card-content-back'), $('.flash-card-content-front')], {
-                                backfaceVisibility: "hidden"
+//                                backfaceVisibility: "hidden"
                             });
                             //////////////////////////////////////////////////////////////////////////////////////
                             //get actuall height
@@ -127,30 +154,32 @@ angular.module('npFlashCardsDirective', [])
 //                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
 //                                        );
                             imagesLoaded(document.querySelector('.np-flash-card'), function (instance) {
-                                var maxHeight = Math.max.apply(null, $('.flash-card-content-back').map(function () {
-                                    return $(this).outerHeight(true);
-                                }).get());
+//                                var maxHeight = Math.max.apply(null, $('.flash-card-content-back').map(function () {
+//                                    return $(this).outerHeight(true);
+//                                }).get());
 //                                    $('.flash-card-content-back').outerHeight(true);
-                                var maxHeight = $('.flash-card-content-back').outerHeight(true);
+                                var maxHeightCard = $('.flash-card-content-back').outerHeight(true);
+                                var maxHeight = '400px';
                                 var outsidePaddingHeight = $('.np_outside-padding').outerHeight(true);
                                 var outsideHeight = $("#npHTML\\:0_0_1").outerHeight(true);
                                 console.log(
                                         '\n::::::::::::::::::::::::::::::::::::::npFlashCards::max Height:::::::::::::::::::::::::::::::::::::::::::::::::',
                                         '\n::maxHeight:', maxHeight,
-                                        '\n::outsideHeight:', outsideHeight,
-                                        '\n::outsidePaddingHeight:', outsidePaddingHeight,
-                                        '\n::$(.flash-card-content-back).outerHeight(true):', $('.flash-card-content-back').outerHeight(true),
-                                        '\n::$(div .flash-card-content-back).outerHeight(true):', $('div .flash-card-content-back').outerHeight(true),
+                                        '\n::instance:', instance,
+//                                        '\n::outsideHeight:', outsideHeight,
+//                                        '\n::outsidePaddingHeight:', outsidePaddingHeight,
+//                                        '\n::$(.flash-card-content-back).outerHeight(true):', $('.flash-card-content-back').outerHeight(true),
+//                                        '\n::$(div .flash-card-content-back).outerHeight(true):', $('div .flash-card-content-back').outerHeight(true),
                                         '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
                                         );
                                 TweenMax.set($('.flash-cards-object'), {
                                     height: maxHeight
                                 });
-                                TweenMax.set($('.np_outside-padding'), {
-                                    height: maxHeight + outsideHeight + 350
-                                });
+//                                TweenMax.set($('.np_outside-padding'), {
+//                                    height: maxHeightCard + outsideHeight + 550
+//                                });
                                 TweenMax.set($('.btn-next'), {
-                                    marginTop: maxHeight + 50
+                                    marginTop: maxHeightCard + 50
                                 });
                                 //////////////////////////////////////////////////////////////////////////////////////
                                 //page build
@@ -160,27 +189,143 @@ angular.module('npFlashCardsDirective', [])
                                     ease: Power4.easeOut
                                 });
                                 TweenMax.from($('#flash-cards'), 2, {
-                                    left: '1000px',
+//                                    left: '1000px',
                                     force3D: true,
                                     ease: Power4.easeOut
                                 });
-                                var $cardTwo = $(".flash-cards-object")[1];
-                                TweenMax.set($($cardTwo).find('.flash-card-overlay'), {
+//                                var itemMarginOffset_1 = '0em';
+//                                var itemMarginOffset_2 = '0em';
+//                                var itemMarginOffset_3 = '0em';
+                                var itemMarginOffset_1 = '18em';
+                                var itemMarginOffset_2 = '36em';
+                                var itemMarginOffset_3 = '52em';
+//                                var $cardTwo = $(".flash-cards-object")[1];
+//                                var $cardThree = $(".flash-cards-object")[2];
+//                                var $cardFour = $(".flash-cards-object")[3];
+//                                console.log(
+//                                        '\n::::::::::::::::::::::::::::::::::::::CENTER:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                        '\n::$(".flash-cards-object")[0].position().left:', $(".flash-cards-object")[0].offsetLeft,
+//                                        '\n::windowHorizontalCenter:', $(window).width() / 2,
+//                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+//                                        );
+//                                if ($(".flash-cards-object")[0].offsetLeft < $(window).width() / 2) {
+//                                    TweenMax.set($($cardTwo).find('.flash-card-overlay'), {
+//                                        force3D: true,
+//                                        opacity: 0.5
+//                                    });
+//                                    TweenMax.to($cardTwo, .75, {
+//                                        force3D: true,
+//                                        zIndex: level_1,
+//                                        top: '10px',
+//                                        rotationY: 0,
+//                                        marginLeft: '-' + itemMarginOffset_1,
+//                                        marginRight: itemMarginOffset_1,
+//                                        scale: 0.9,
+////                                    z: '-35',
+//                                        ease: Power4.easeOut
+//                                    });
+//                                    TweenMax.set($($cardThree).find('.flash-card-overlay'), {
+//                                        force3D: true,
+//                                        opacity: 0.5
+//                                    });
+//                                    TweenMax.to($cardThree, .75, {
+//                                        force3D: true,
+//                                        zIndex: level_2,
+//                                        top: '10px',
+//                                        rotationY: 0,
+//                                        marginLeft: '-' + itemMarginOffset_2,
+//                                        marginRight: itemMarginOffset_2,
+//                                        scale: 0.7,
+////                                    z: '-35',
+//                                        ease: Power4.easeOut
+//                                    });
+//                                    TweenMax.set($($cardFour).find('.flash-card-overlay'), {
+//                                        force3D: true,
+//                                        opacity: 0.5
+//                                    });
+//                                    TweenMax.to($cardFour, .75, {
+//                                        force3D: true,
+//                                        zIndex: level_3,
+//                                        top: '10px',
+//                                        rotationY: 0,
+//                                        marginLeft: '-' + itemMarginOffset_3,
+//                                        marginRight: itemMarginOffset_3,
+//                                        scale: 0.5,
+////                                    z: '-35',
+//                                        ease: Power4.easeOut
+//                                    });
+//                                }
+                                var $card_0 = $(".flash-cards-object")[0];
+                                var $card_1 = $(".flash-cards-object")[1];
+                                var $card_2 = $(".flash-cards-object")[2];
+                                var $card_3 = $(".flash-cards-object")[3];
+                                console.log(
+                                        '\n::::::::::::::::::::::::::::::::::::::CENTER:::::::::::::::::::::::::::::::::::::::::::::::::',
+                                        '\n::$(".flash-cards-object")[0].position().left:', $(".flash-cards-object")[0].offsetLeft,
+                                        '\n::windowHorizontalCenter:', $(window).width() / 2,
+                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                        );
+//                                if ($(".flash-cards-object")[0].offsetLeft > $(window).width() / 2) {
+                                TweenMax.set($($card_0).find('.flash-card-overlay'), {
+                                    force3D: true,
+                                    opacity: 0
+                                });
+                                TweenMax.to($card_0, .75, {
+                                    force3D: true,
+                                    zIndex: level_0,
+                                    opacity: 1,
+                                    top: '10px',
+                                    rotationY: 0,
+                                    marginLeft: '-' + 0,
+                                    marginRight: 0,
+                                    scale: 1,
+                                    ease: Power4.easeOut
+                                });
+                                TweenMax.set($($card_1).find('.flash-card-overlay'), {
                                     force3D: true,
                                     opacity: 0.5
                                 });
-                                TweenMax.to($cardTwo, .75, {
+                                TweenMax.to($card_1, .75, {
                                     force3D: true,
-                                    zIndex: middle,
+                                    zIndex: level_1,
                                     top: '10px',
                                     rotationY: 0,
-                                    marginLeft: '-7em',
-                                    marginRight: '7em',
+                                    marginLeft: '-' + itemMarginOffset_1,
+                                    marginRight: itemMarginOffset_1,
                                     scale: 0.9,
-                                    z: '-35',
                                     ease: Power4.easeOut
                                 });
+                                TweenMax.set($($card_2).find('.flash-card-overlay'), {
+                                    force3D: true,
+                                    opacity: 0.5
+                                });
+                                TweenMax.to($card_2, .75, {
+                                    force3D: true,
+                                    zIndex: level_2,
+                                    top: '10px',
+                                    rotationY: 0,
+                                    marginLeft: '-' + itemMarginOffset_2,
+                                    marginRight: itemMarginOffset_2,
+                                    scale: 0.7,
+                                    ease: Power4.easeOut
+                                });
+                                TweenMax.set($($card_3).find('.flash-card-overlay'), {
+                                    force3D: true,
+                                    opacity: 0.5
+                                });
+                                TweenMax.to($card_3, .75, {
+                                    force3D: true,
+                                    zIndex: level_3,
+                                    top: '10px',
+                                    rotationY: 0,
+                                    marginLeft: '-' + itemMarginOffset_3,
+                                    marginRight: itemMarginOffset_3,
+                                    scale: 0.5,
+                                    ease: Power4.easeOut
+                                });
+//                                }
                             });
+
                             //////////////////////////////////////////////////////////////////////////////////////
                             //offset top on scroll
                             //////////////////////////////////////////////////////////////////////////////////////
@@ -240,9 +385,11 @@ angular.module('npFlashCardsDirective', [])
                     //////////////////////////////////////////////////////////////////////////////////////
                     //drag and throw vars
                     //////////////////////////////////////////////////////////////////////////////////////
-                    var front = '12003';
-                    var middle = '12002';
-                    var back = '12001';
+                    var level_0 = '12004';
+                    var level_1 = '12003';
+                    var level_2 = '12002';
+                    var level_3 = '12001';
+                    var level_4 = '12000';
                     var flashCardsDraggable;
                     var windowWidth;
                     var maxScroll;
@@ -257,225 +404,469 @@ angular.module('npFlashCardsDirective', [])
                     //drag and throw conditionals & animation
                     //////////////////////////////////////////////////////////////////////////////////////
                     function updateAnimation() {
-                        var windowCenter = $(window).width() / 2;
-                        for (var i = elementIteration.length - 1; i >= 0; i--) {
-                            TweenMax.set(elementIteration, {
-                                transformPerspective: "1000"
+//                        var windowCenter = $(window).width() / 2;
+//                        for (var i = elementIteration.length - 1; i >= 0; i--) {
+                        TweenMax.set(elementIteration, {
+                            transformPerspective: "700"
+                        });
+//                            var currentIteration = elementIteration[0],
+                        var centerIteration,
+                                previousIndex,
+                                nextIterationRight_1,
+                                nextIterationRight_2,
+                                nextIterationRight_3,
+                                nextIterationRight_4,
+                                nextIterationLeft_1,
+                                nextIterationLeft_2,
+                                nextIterationLeft_3,
+                                nextIterationLeft_4,
+                                scaleLevel_0,
+                                scaleLevel_1,
+                                scaleLevel_2,
+                                scaleLevel_3,
+                                scaleLevel_4,
+                                defaultHeight = '400px',
+                                windowCenterOffsetTwo = $(".flash-cards-object").width(),
+                                itemTopCenter,
+                                itemAutoAlpha_0,
+                                itemAutoAlpha_1,
+                                itemAutoAlpha_2,
+                                itemAutoAlpha_3,
+                                itemAutoAlpha_4,
+                                itemBlur_0,
+                                itemBlur_1,
+                                itemBlur_2,
+                                itemBlur_3,
+                                itemBlur_4,
+                                itemMarginOffset_1,
+                                itemMarginOffset_2,
+                                itemMarginOffset_3,
+                                itemMarginOffset_4,
+                                overwriteSetting = 2;
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //get version for animation style from class
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        if (!!$("#ND .np-flash-card").length) {
+                            windowCenterOffsetTwo = windowCenterOffsetTwo - 100;
+                            itemTopCenter = '10px';
+                            itemAutoAlpha_0 = 1;
+                            itemAutoAlpha_1 = 0.75;
+                            itemAutoAlpha_2 = 0.45;
+                            itemBlur_0 = 0;
+                            itemBlur_1 = 3;
+                            itemBlur_2 = 6;
+                            itemMarginOffset_1 = '15em';
+                            itemMarginOffset_2 = '33em';
+                        } else if (!!$("#NikeDigiMerch1 .np-flash-card").length) {
+                            windowCenterOffsetTwo = windowCenterOffsetTwo - 160;
+                            itemTopCenter = '10px';
+                            itemAutoAlpha_0 = 1;
+                            itemAutoAlpha_1 = 1;
+                            itemAutoAlpha_2 = 1;
+                            itemAutoAlpha_3 = 1;
+                            itemAutoAlpha_4 = 0;
+                            itemBlur_0 = 0;
+                            itemBlur_1 = 0;
+                            itemBlur_2 = 0;
+                            itemBlur_3 = 0;
+                            itemBlur_4 = 0;
+//                            itemMarginOffset_1 = '2em';
+//                            itemMarginOffset_2 = '5em';
+//                            itemMarginOffset_3 = '7em';
+//                            itemMarginOffset_4 = '8em';
+                            itemMarginOffset_1 = '20em';
+                            itemMarginOffset_2 = '40em';
+                            itemMarginOffset_3 = '60em';
+                            itemMarginOffset_4 = '30em';
+//                            itemMarginOffset_1 = '26em';
+//                            itemMarginOffset_2 = '52em';
+//                            itemMarginOffset_3 = '78em';
+//                            itemMarginOffset_4 = '58em';
+                            scaleLevel_0 = 1;
+                            scaleLevel_1 = 0.9;
+                            scaleLevel_2 = 0.8;
+                            scaleLevel_3 = 0.7;
+                            scaleLevel_4 = 0.7;
+                        } else {
+                            windowCenterOffsetTwo = windowCenterOffsetTwo + 10;
+                            itemTopCenter = '10px';
+                            itemAutoAlpha_0 = 1;
+                            itemAutoAlpha_1 = 1;
+                            itemAutoAlpha_2 = 1;
+                            itemBlur_0 = 0;
+                            itemBlur_1 = 0;
+                            itemBlur_2 = 0;
+                            itemMarginOffset_1 = '7em';
+                            itemMarginOffset_2 = '20em';
+                        }
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //drag and throw CENTER item animation
+                        //////////////////////////////////////////////////////////////////////////////////////
+//                        if (previousIndex === 'undefined') {
+//                            previousIndex = 0;
+//                        }
+                        var windowHorizontalCenter = $(window).width() / 2;
+//                        var windowVerticalCenter = $(window).height() / 2;
+                        var windowVerticalOffset = $(".flash-cards-object").offset();
+                        var windowVerticalCenter = ($(".flash-cards-object").height() / 2) + (windowVerticalOffset.top);
+                        console.log(
+                                '\n::::::::::::::::::::::::::::::::::::::         CENTER         :::::::::::::::::::::::::::::::::::::::::::::::::',
+                                '\n::windowVerticalCenter.top:', windowVerticalCenter.top,
+                                '\n::$(".flash-cards-object").offsetTop:', $(".flash-cards-object").offsetTop,
+                                '\n::windowHorizontalCenter:', $(window).width() / 2,
+                                '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                );
+//                            elementIteration = document.getElementsByClassName("flash-cards-object")
+                        var elementAtCenter = document.elementFromPoint(windowHorizontalCenter, windowVerticalCenter).parentElement.parentElement;
+                        var className = 'flash-cards-object';
+                        var elementAtCenterClassName = document.elementFromPoint(windowHorizontalCenter, windowVerticalCenter).parentElement.parentElement.className;
+//                        if ((' ' + elementAtCenter.className + ' ').indexOf(' ' + className + ' ') > -1 && $(elementAtCenter).css('z-index') === 12003) {
+                        if ((' ' + elementAtCenter.className + ' ').indexOf(' ' + className + ' ') > -1) {
+
+                            console.log(
+                                    '\n::::::::::::::::::::::::::::::::::::::         CENTER         :::::::::::::::::::::::::::::::::::::::::::::::::',
+                                    '\n::$(elementAtCenter.className):', $(elementAtCenter.className),
+                                    '\n::level_1:', level_1,
+                                    '\n::windowVerticalCenter:', windowVerticalCenter,
+                                    '\n::$(elementAtCenter.className).css(z-index):', $(elementAtCenter).css('z-index'),
+                                    '\n::$(elementAtCenter.className).css(z-index):', typeof ($(elementAtCenter).css('z-index')),
+                                    '\n::elementAtCenter.offsetLeft:', elementIteration[0].offsetLeft,
+                                    '\n::getOffsetRect(elementIteration[0]):', getOffsetRect(elementIteration[0]).left,
+                                    '\n::windowHorizontalCenter:', $(window).width() / 2,
+                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                    );
+                            if ($(elementAtCenter).css('z-index') === '0' || $(elementAtCenter).css('z-index') === level_1 || $(elementAtCenter).css('z-index') === level_3) {
+                                var index = $('.flash-cards-object').index(elementAtCenter);
+                                previousIndex = index;
+                                centerIteration = elementIteration[index];
+                                nextIterationRight_1 = elementIteration[index + 1];
+                                nextIterationRight_2 = elementIteration[index + 2];
+                                nextIterationRight_3 = elementIteration[index + 3];
+                                nextIterationRight_4 = elementIteration[index + 4];
+                                nextIterationLeft_1 = elementIteration[index - 1];
+                                nextIterationLeft_2 = elementIteration[index - 2];
+                                nextIterationLeft_3 = elementIteration[index - 3];
+                                nextIterationLeft_4 = elementIteration[index - 4];
+                            }
+                        }
+//                        if ($(centerIteration).) {
+//                            
+//                        }
+
+                        if (!!$(centerIteration).length) {
+//                            TweenMax.set($('.flash-cards-object'), {
+//                                force3D: true,
+//                                top: itemTopCenter,
+//                                height: defaultHeight,
+//                                marginLeft: '0em',
+//                                marginRight: '0em',
+//                                scale: scaleLevel_0,
+//                                autoAlpha: 0,
+//                                filter: "blur(" + itemBlur_0 + "px)",
+//                                webkitFilter: "blur(" + itemBlur_0 + "px)"
+//                            });
+                            TweenMax.to(centerIteration, 1.75, {
+                                force3D: true,
+                                top: itemTopCenter,
+                                height: defaultHeight,
+                                marginLeft: '0em',
+                                marginRight: '0em',
+                                scale: scaleLevel_0,
+                                autoAlpha: itemAutoAlpha_0,
+                                filter: "blur(" + itemBlur_0 + "px)",
+                                webkitFilter: "blur(" + itemBlur_0 + "px)",
+                                overwrite: overwriteSetting,
+                                ease: Power4.easeOut
                             });
-                            var currentIteration = elementIteration[i],
-                                    currentIterationWidth = currentIteration.offsetWidth,
-                                    currentIterationCenterWidth = (currentIterationWidth / 2),
-                                    itemsOffset = getOffsetRect(currentIteration),
-                                    itemsOffsetLeft = itemsOffset.left,
-                                    itemsOffsetCenter = (itemsOffsetLeft + currentIterationCenterWidth),
-                                    windowCenterOffsetOne = ($(".flash-cards-object").width() / 3),
-                                    windowCenterOffsetTwo = $(".flash-cards-object").width(),
-                                    itemTopCenter,
-                                    itemAutoAlphaCenter,
-                                    itemAutoAlphaOne,
-                                    itemAutoAlphaTwo,
-                                    itemBlurCenter,
-                                    itemBlurOne,
-                                    itemBlurTwo,
-                                    itemMarginOffsetOne,
-                                    itemMarginOffsetTwo;
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            //get version for animation style from class
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            if ($("#" + 'ND').length === 0) {
-//                                    console.log(
-//                                            '\n::::::::::::::::::::::::::::::::::::::getOffsetRect::default settings:::::::::::::::::::::::::::::::::::::::::::::::::::::::',
-//                                            '\n::$("#ND .np-flash-card")::', $("#ND .np-flash-card"),
-//                                            '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-//                                            );
-                                windowCenterOffsetTwo = windowCenterOffsetTwo + 10;
-                                itemTopCenter = '10px';
-                                itemAutoAlphaCenter = 1;
-                                itemAutoAlphaOne = 1;
-                                itemAutoAlphaTwo = 1;
-                                itemBlurCenter = 0;
-                                itemBlurOne = 0;
-                                itemBlurTwo = 0;
-                                itemMarginOffsetOne = '7em';
-                                itemMarginOffsetTwo = '20em';
-                            } else {
-//                                    console.log(
-//                                            '\n::::::::::::::::::::::::::::::::::::::getOffsetRect::#ND .np-flash-card exists:::::::::::::::::::::::::::::::::::::::::::::::::::::::',
-//                                            '\n::$("#ND .np-flash-card")::', $("#ND .np-flash-card"),
-//                                            '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-//                                            );
-                                windowCenterOffsetTwo = windowCenterOffsetTwo - 100;
-                                itemTopCenter = '10px';
-                                itemAutoAlphaCenter = 1;
-                                itemAutoAlphaOne = 0.75;
-                                itemAutoAlphaTwo = 0.45;
-                                itemBlurCenter = 0;
-                                itemBlurOne = 3;
-                                itemBlurTwo = 6;
-                                itemMarginOffsetOne = '15em';
-                                itemMarginOffsetTwo = '33em';
-                            }
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            //drag and throw CENTER item animation
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            if ((itemsOffsetCenter <= (windowCenter + windowCenterOffsetOne)) && (itemsOffsetCenter >= (windowCenter - windowCenterOffsetTwo))) {
-                                TweenMax.to(currentIteration, 1.75, {
-                                    force3D: true,
-                                    top: itemTopCenter,
-                                    marginLeft: '0em',
-                                    marginRight: '0em',
-                                    scale: 1,
-                                    autoAlpha: itemAutoAlphaCenter,
-                                    filter: "blur(" + itemBlurCenter + "px)",
-                                    webkitFilter: "blur(" + itemBlurCenter + "px)",
-                                    z: '0',
-                                    ease: Power4.easeOut
-                                });
-                                TweenMax.to($(currentIteration).find('.flash-card-content-front'), 1.75, {
-                                    force3D: true,
-                                    marginLeft: 0,
-                                    marginRight: 0,
-                                    ease: Power4.easeOut
-                                });
-                                TweenMax.to($(currentIteration).find('.flash-card-overlay'), 1.75, {
-                                    force3D: true,
-                                    opacity: 0,
-                                    ease: Power4.easeOut
-                                });
-                                TweenMax.to($(currentIteration).find('.flash-card-button'), 1.75, {
-                                    autoAlpha: 1,
-                                    ease: Power4.easeOut
-                                });
-                                TweenMax.set(currentIteration, {
-                                    zIndex: front
-                                });
-                            }
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            //drag and throw RIGHT items animation
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            if ((itemsOffsetCenter >= (windowCenter + (windowCenterOffsetOne + 1))) && (itemsOffsetCenter <= (windowCenter + windowCenterOffsetTwo))) {
-                                TweenMax.set(currentIteration, {
-                                    zIndex: middle
-                                });
-                                TweenMax.to(currentIteration, 1.75, {
-                                    force3D: true,
-                                    top: itemTopCenter,
-                                    rotationY: 0,
-                                    marginLeft: '-' + itemMarginOffsetOne,
-                                    marginRight: itemMarginOffsetOne,
-                                    scale: 0.9,
-                                    autoAlpha: itemAutoAlphaOne,
-                                    filter: "blur(" + itemBlurOne + "px)",
-                                    webkitFilter: "blur(" + itemBlurOne + "px)",
-                                    z: '-35',
-                                    ease: Power4.easeOut
-                                });
-                                TweenMax.to($(currentIteration).find('.flash-card-overlay'), 1.75, {
-                                    force3D: true,
-                                    opacity: 0.5,
-                                    ease: Power4.easeOut
-                                });
-                                TweenMax.to($(currentIteration).find('.flash-card-button'), 1.75, {
-                                    autoAlpha: 0,
-                                    ease: Power4.easeOut
-                                });
-                                TweenMax.to($(currentIteration).find('.flash-card-front-wrapper'), 1.75, {
-                                    autoAlpha: 1,
-                                    ease: Power4.easeOut
-                                });
-                                TweenMax.to($(currentIteration).find('.flash-card-back-wrapper'), 1.75, {
-                                    autoAlpha: 0,
-                                    ease: Power4.easeOut
-                                });
-                            } else if (itemsOffsetCenter >= (windowCenter + (windowCenterOffsetTwo + 1))) {
-                                TweenMax.set(currentIteration, {
-                                    zIndex: back
-                                });
-                                TweenMax.to(currentIteration, 1.75, {
-                                    force3D: true,
-                                    top: itemTopCenter,
-                                    marginLeft: '-' + itemMarginOffsetTwo,
-                                    marginRight: itemMarginOffsetTwo,
-                                    scale: 0.75,
-                                    autoAlpha: itemAutoAlphaTwo,
-                                    filter: "blur(" + itemBlurTwo + "px)",
-                                    webkitFilter: "blur(" + itemBlurTwo + "px)",
-                                    z: '-70',
-                                    ease: Power4.easeOut
-                                });
-                                TweenMax.to($(currentIteration).find('.flash-card-overlay'), 1.75, {
-                                    force3D: true,
-                                    opacity: 0.75,
-                                    ease: Power4.easeOut
-                                });
-                                TweenMax.to($(currentIteration).find('.flash-card-button'), 1.75, {
-                                    autoAlpha: 0,
-                                    ease: Power4.easeOut
-                                });
-                            }
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            //drag and throw LEFT items animation
-                            //////////////////////////////////////////////////////////////////////////////////////
-                            if ((itemsOffsetCenter <= (windowCenter - (windowCenterOffsetOne + 1))) && (itemsOffsetCenter >= (windowCenter - windowCenterOffsetTwo))) {
-                                TweenMax.set(currentIteration, {
-                                    zIndex: middle
-                                });
-                                TweenMax.to(currentIteration, 1.75, {
-                                    force3D: true,
-                                    top: itemTopCenter,
-                                    rotationY: 0,
-                                    marginRight: '-' + itemMarginOffsetOne,
-                                    marginLeft: itemMarginOffsetOne,
-                                    scale: 0.9,
-                                    autoAlpha: itemAutoAlphaOne,
-                                    filter: "blur(" + itemBlurOne + "px)",
-                                    webkitFilter: "blur(" + itemBlurOne + "px)",
-                                    z: '-50',
-                                    ease: Power4.easeOut
-                                });
-                                TweenMax.to($(currentIteration).find('.flash-card-overlay'), 1.75, {
-                                    force3D: true,
-                                    opacity: 0.5,
-                                    ease: Power4.easeOut
-                                });
-                                TweenMax.to($(currentIteration).find('.flash-card-button'), 1.75, {
-                                    autoAlpha: 0,
-                                    ease: Power4.easeOut
-                                });
-                                TweenMax.to($(currentIteration).find('.flash-card-front-wrapper'), 1.75, {
-                                    autoAlpha: 1,
-                                    ease: Power4.easeOut
-                                });
-                                TweenMax.to($(currentIteration).find('.flash-card-back-wrapper'), 1.75, {
-                                    autoAlpha: 0,
-                                    ease: Power4.easeOut
-                                });
-                            } else if (itemsOffsetCenter <= (windowCenter - (windowCenterOffsetTwo + 1))) {
-                                TweenMax.set(currentIteration, {
-                                    zIndex: middle
-                                });
-                                TweenMax.to(currentIteration, 1.75, {
-                                    force3D: true,
-                                    top: itemTopCenter,
-                                    z: '-70',
-                                    marginRight: '-' + itemMarginOffsetTwo,
-                                    marginLeft: itemMarginOffsetTwo,
-                                    scale: 0.75,
-                                    autoAlpha: itemAutoAlphaTwo,
-                                    filter: "blur(" + itemBlurTwo + "px)",
-                                    webkitFilter: "blur(" + itemBlurTwo + "px)",
-                                    ease: Power4.easeOut
-                                });
-                                TweenMax.to($(currentIteration).find('.flash-card-overlay'), 1.75, {
-                                    force3D: true,
-                                    opacity: 0.75,
-                                    ease: Power4.easeOut
-                                });
-                                TweenMax.to($(currentIteration).find('.flash-card-button'), 1.75, {
-                                    autoAlpha: 0,
-                                    ease: Power4.easeOut
-                                });
-                            }
+                            TweenMax.to($(centerIteration).find('.flash-card-content-front'), 1.75, {
+                                force3D: true,
+                                marginLeft: 0,
+                                marginRight: 0,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($(centerIteration).find('.flash-card-overlay'), 1.75, {
+                                force3D: true,
+                                opacity: 0,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($(centerIteration).find('.flash-card-button'), 1.75, {
+                                autoAlpha: 1,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($('.flash-card-back-button'), 1.75, {
+                                autoAlpha: 0,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.set(centerIteration, {
+                                zIndex: level_0
+                            });
+                        }
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //drag and throw RIGHT items animation
+                        //////////////////////////////////////////////////////////////////////////////////////
+//                        for()
+                        if (!!$(nextIterationRight_1).length) {
+                            TweenMax.set(nextIterationRight_1, {
+                                zIndex: level_1
+                            });
+                            TweenMax.to(nextIterationRight_1, 1.75, {
+                                force3D: true,
+                                top: itemTopCenter,
+                                rotationY: 0,
+                                height: defaultHeight,
+                                marginLeft: '-' + itemMarginOffset_1,
+                                marginRight: itemMarginOffset_1,
+                                scale: scaleLevel_1,
+                                autoAlpha: itemAutoAlpha_1,
+                                filter: "blur(" + itemBlur_1 + "px)",
+                                webkitFilter: "blur(" + itemBlur_1 + "px)",
+                                overwrite: overwriteSetting,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($(nextIterationRight_1).find('.flash-card-overlay'), 1.75, {
+                                force3D: true,
+                                opacity: 0.5,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($('.flash-card-back-button'), 1.75, {
+                                autoAlpha: 0,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($(nextIterationRight_1).find('.flash-card-button'), 1.75, {
+                                autoAlpha: 0,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($(nextIterationRight_1).find('.flash-card-front-wrapper'), 1.75, {
+                                autoAlpha: 1,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($(nextIterationRight_1).find('.flash-card-back-wrapper'), 1.75, {
+                                autoAlpha: 0,
+                                ease: Power4.easeOut
+                            });
+                        }
+                        if (!!$(nextIterationRight_2).length) {
+                            TweenMax.set(nextIterationRight_2, {
+                                zIndex: level_2
+                            });
+                            TweenMax.to(nextIterationRight_2, 1.75, {
+                                force3D: true,
+                                top: itemTopCenter,
+                                marginLeft: '-' + itemMarginOffset_2,
+                                marginRight: itemMarginOffset_2,
+                                scale: scaleLevel_2,
+                                autoAlpha: itemAutoAlpha_2,
+                                filter: "blur(" + itemBlur_2 + "px)",
+                                webkitFilter: "blur(" + itemBlur_2 + "px)",
+                                overwrite: overwriteSetting,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($(nextIterationRight_2).find('.flash-card-overlay'), 1.75, {
+                                force3D: true,
+                                opacity: 0.75,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($('.flash-card-back-button'), 1.75, {
+                                autoAlpha: 0,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($(nextIterationRight_2).find('.flash-card-button'), 1.75, {
+                                autoAlpha: 0,
+                                ease: Power4.easeOut
+                            });
+                        }
+                        if (!!$(nextIterationRight_3).length) {
+                            TweenMax.set(nextIterationRight_3, {
+                                zIndex: level_3
+                            });
+                            TweenMax.to(nextIterationRight_3, 1.75, {
+                                force3D: true,
+                                top: itemTopCenter,
+                                marginLeft: '-' + itemMarginOffset_3,
+                                marginRight: itemMarginOffset_3,
+                                scale: scaleLevel_3,
+                                autoAlpha: itemAutoAlpha_3,
+                                filter: "blur(" + itemBlur_3 + "px)",
+                                webkitFilter: "blur(" + itemBlur_3 + "px)",
+                                overwrite: overwriteSetting,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($(nextIterationRight_3).find('.flash-card-overlay'), 1.75, {
+                                force3D: true,
+                                opacity: 0.75,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($('.flash-card-back-button'), 1.75, {
+                                autoAlpha: 0,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($(nextIterationRight_3).find('.flash-card-button'), 1.75, {
+                                autoAlpha: 0,
+                                ease: Power4.easeOut
+                            });
+                        }
+                        if (!!$(nextIterationRight_4).length) {
+                            TweenMax.set(nextIterationRight_4, {
+                                zIndex: level_4
+                            });
+                            TweenMax.to(nextIterationRight_4, 1.75, {
+                                force3D: true,
+                                top: itemTopCenter,
+                                marginLeft: '-' + itemMarginOffset_4,
+                                marginRight: itemMarginOffset_4,
+                                scale: scaleLevel_4,
+                                autoAlpha: itemAutoAlpha_4,
+                                filter: "blur(" + itemBlur_4 + "px)",
+                                webkitFilter: "blur(" + itemBlur_4 + "px)",
+                                overwrite: overwriteSetting,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($(nextIterationRight_4).find('.flash-card-overlay'), 1.75, {
+                                force3D: true,
+                                opacity: 0.75,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($('.flash-card-back-button'), 1.75, {
+                                autoAlpha: 0,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($(nextIterationRight_4).find('.flash-card-button'), 1.75, {
+                                autoAlpha: 0,
+                                ease: Power4.easeOut
+                            });
+                        }
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        //drag and throw LEFT items animation
+                        //////////////////////////////////////////////////////////////////////////////////////
+                        if (!!$(nextIterationLeft_1).length) {
+                            TweenMax.set(nextIterationLeft_1, {
+                                zIndex: level_1
+                            });
+                            TweenMax.to(nextIterationLeft_1, 1.75, {
+                                force3D: true,
+                                top: itemTopCenter,
+                                height: defaultHeight,
+                                rotationY: 0,
+                                marginRight: '-' + itemMarginOffset_1,
+                                marginLeft: itemMarginOffset_1,
+                                scale: scaleLevel_1,
+                                autoAlpha: itemAutoAlpha_1,
+                                filter: "blur(" + itemBlur_1 + "px)",
+                                webkitFilter: "blur(" + itemBlur_1 + "px)",
+                                overwrite: overwriteSetting,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($(nextIterationLeft_1).find('.flash-card-overlay'), 1.75, {
+                                force3D: true,
+                                opacity: 0.5,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($('.flash-card-back-button'), 1.75, {
+                                autoAlpha: 0,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($(nextIterationLeft_1).find('.flash-card-button'), 1.75, {
+                                autoAlpha: 0,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($(nextIterationLeft_1).find('.flash-card-front-wrapper'), 1.75, {
+                                autoAlpha: 1,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($(nextIterationLeft_1).find('.flash-card-back-wrapper'), 1.75, {
+                                autoAlpha: 0,
+                                ease: Power4.easeOut
+                            });
+                        }
+                        if (!!$(nextIterationLeft_2).length) {
+                            TweenMax.set(nextIterationLeft_2, {
+                                zIndex: level_2
+                            });
+                            TweenMax.to(nextIterationLeft_2, 1.75, {
+                                force3D: true,
+                                top: itemTopCenter,
+                                marginRight: '-' + itemMarginOffset_2,
+                                marginLeft: itemMarginOffset_2,
+                                scale: scaleLevel_2,
+                                autoAlpha: itemAutoAlpha_2,
+                                filter: "blur(" + itemBlur_2 + "px)",
+                                webkitFilter: "blur(" + itemBlur_2 + "px)",
+                                overwrite: overwriteSetting,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($(nextIterationLeft_2).find('.flash-card-overlay'), 1.75, {
+                                force3D: true,
+                                opacity: 0.75,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($('.flash-card-back-button'), 1.75, {
+                                autoAlpha: 0,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($(nextIterationLeft_2).find('.flash-card-button'), 1.75, {
+                                autoAlpha: 0,
+                                ease: Power4.easeOut
+                            });
+                        }
+                        if (!!$(nextIterationLeft_3).length) {
+                            TweenMax.set(nextIterationLeft_3, {
+                                zIndex: level_3
+                            });
+                            TweenMax.to(nextIterationLeft_3, 1.75, {
+                                force3D: true,
+                                top: itemTopCenter,
+                                marginRight: '-' + itemMarginOffset_3,
+                                marginLeft: itemMarginOffset_3,
+                                scale: scaleLevel_3,
+                                autoAlpha: itemAutoAlpha_3,
+                                filter: "blur(" + itemBlur_3 + "px)",
+                                webkitFilter: "blur(" + itemBlur_3 + "px)",
+                                overwrite: overwriteSetting,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($(nextIterationLeft_3).find('.flash-card-overlay'), 1.75, {
+                                force3D: true,
+                                opacity: 0.75,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($('.flash-card-back-button'), 1.75, {
+                                autoAlpha: 0,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($(nextIterationLeft_3).find('.flash-card-button'), 1.75, {
+                                autoAlpha: 0,
+                                ease: Power4.easeOut
+                            });
+                        }
+                        if (!!$(nextIterationLeft_4).length) {
+                            TweenMax.set(nextIterationLeft_4, {
+                                zIndex: level_4
+                            });
+                            TweenMax.to(nextIterationLeft_4, 1.75, {
+                                force3D: true,
+                                top: itemTopCenter,
+                                marginRight: '-' + itemMarginOffset_4,
+                                marginLeft: itemMarginOffset_4,
+                                scale: scaleLevel_4,
+                                autoAlpha: itemAutoAlpha_4,
+                                filter: "blur(" + itemBlur_4 + "px)",
+                                webkitFilter: "blur(" + itemBlur_4 + "px)",
+                                overwrite: overwriteSetting,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($(nextIterationLeft_4).find('.flash-card-overlay'), 1.75, {
+                                force3D: true,
+                                opacity: 0.75,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($('.flash-card-back-button'), 1.75, {
+                                autoAlpha: 0,
+                                ease: Power4.easeOut
+                            });
+                            TweenMax.to($(nextIterationLeft_4).find('.flash-card-button'), 1.75, {
+                                autoAlpha: 0,
+                                ease: Power4.easeOut
+                            });
                         }
                     }
                     function update() {
@@ -495,7 +886,7 @@ angular.module('npFlashCardsDirective', [])
                                 dragAreaWidth = (elementWidth * sections) + (dragAreaLeftPadding * 2);
                                 TweenMax.set(elementWrapper, {
                                     width: dragAreaWidth,
-                                    paddingLeft: dragAreaLeftPadding
+                                    paddingLeft: dragAreaLeftPadding - 14
                                 });
                                 dragContent = Draggable.get(content);
                                 updateAnimation();
@@ -510,7 +901,8 @@ angular.module('npFlashCardsDirective', [])
                         content.addEventListener("DOMMouseScroll", killTweens);
                         flashCardsDraggable = Draggable.create(content, {
                             type: "scrollLeft",
-                            edgeResistance: 0.015,
+                            edgeResistance: 0.005,
+                            dragResistance: 0.75,
                             throwProps: true,
                             snap: function (endValue) {
                                 var step = elementWidth;
@@ -531,36 +923,22 @@ angular.module('npFlashCardsDirective', [])
                         });
                     }
                     update();
-                    function nScrollSNAP(Array, val) {
-                        var SPoint, range = 400, i = 0;
-                        for (i in Array) {
-                            var MResult = Math.abs(val - Array[i]);
-                            if (MResult < range) {
-                                range = MResult;
-                                SPoint = Array[i];
-                            }
-                        }
-                        return SPoint;
-                    }
-                    function NScrollSnap() {
-                        if (nativeSCrl) {
-//                                console.log(
-//                                        '\n::::::::::::::::::::::::::::::::::::::npFlashCards::NScrollSnap:::::::::::::::::::::::::::::::::::::::::::::::::',
-//                                        '\n::nativeSCrl:', nativeSCrl,
-//                                        '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
-//                                        );
-                            var S = nScrollSNAP(flashCardsDraggable[0].vars.snap,
-                                    flashCardsDraggable[0].scrollProxy.scrollTop());
-                            TweenMax.to(flashCardsDraggable[0].scrollProxy.element,
-                                    0.5, {
-                                        scrollTo: {x: S}
-                                    });
-                        }
-                    }
-                    document.getElementById("flash-cards").onscroll = function () {
-                        TweenMax.killDelayedCallsTo(NScrollSnap);
-                        TweenMax.delayedCall(0.35, NScrollSnap);
-                    };
+                    $(window).resize(function () {
+                        update();
+                    });
+                    var delay = 1000;
+                    var timeout = null;
+                    $('#flash-cards').bind('scroll', function () {
+                        clearTimeout(timeout);
+                        timeout = setTimeout(function () {
+                            update();
+                            console.log(
+                                    '\n::::::::::::::::::::::::::::::::::::::npFlashCards::NScrollSnap:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                '\n::nativeSCrl:', nativeSCrl,
+                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
+                                    );
+                        }, delay);
+                    });
                 }
             };
         })

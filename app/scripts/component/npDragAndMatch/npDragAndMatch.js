@@ -47,8 +47,9 @@ angular
 //////////////////////////////////////////////////////////////////////////////////////
 //GSAP draggable Angular directive
 //////////////////////////////////////////////////////////////////////////////////////
-angular.module('npDragAndMatchDragDirective', []).
-        directive("dragButton", function () {
+angular
+        .module('npDragAndMatchDragDirective', [])
+        .directive("dragButton", function () {
             return {
                 restrict: "A",
                 $scope: {

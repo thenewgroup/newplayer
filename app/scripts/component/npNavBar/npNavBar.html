@@ -1,0 +1,13 @@
+<!--I once read in a comment that 'smart developers read comments', so go ahead and pat yourself on the back.-->
+<!--<header class="np-cmp-wrapper {{component.type}} navbar " ng-controller="npNavBarController as npNavBar">-->
+
+<nav class="np-cmp-wrapper {{component.type}} nav " ng-controller="npNavBarController as npNavBar">
+    <div class="container navbar-container">
+        <div class="debug">
+            <h2>{{component.type}} -- <small>{{component.idx}}</small></h2>
+        </div>
+        <div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+    </div>
+</nav>
+
+<!--</header>-->

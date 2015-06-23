@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'FuturaNDforNike365Cn-XBd';
+  src: url('FuturaNDforNike365Cn-XBd.eot');
+  src: url('FuturaNDforNike365Cn-XBd.eot?#iefix') format('embedded-opentype'),
+       url('FuturaNDforNike365Cn-XBd.woff2') format('woff2'),
+       url('FuturaNDforNike365Cn-XBd.woff') format('woff'),
+       url('FuturaNDforNike365Cn-XBd.ttf') format('truetype'),
+       url('FuturaNDforNike365Cn-XBd.svg#FuturaNDforNike365Cn-XBd') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+

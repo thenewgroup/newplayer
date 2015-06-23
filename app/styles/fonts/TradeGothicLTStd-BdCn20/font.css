@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'TradeGothicLTStd-BdCn20';
+  src: url('TradeGothicLTStd-BdCn20.eot');
+  src: url('TradeGothicLTStd-BdCn20.eot?#iefix') format('embedded-opentype'),
+       url('TradeGothicLTStd-BdCn20.woff2') format('woff2'),
+       url('TradeGothicLTStd-BdCn20.woff') format('woff'),
+       url('TradeGothicLTStd-BdCn20.ttf') format('truetype'),
+       url('TradeGothicLTStd-BdCn20.svg#TradeGothicLTStd-BdCn20') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+

@@ -1,6 +1,17 @@
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*main bootstrap override classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*main font clean-up classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+html, html a {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+}
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*main bootstrap override classes*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 .scroller{
     min-height: 1200px;
 }
@@ -13,7 +24,7 @@
 }
 svg {
     width: 100%;
-    height:100%;
+    height: 100%;
 }
 img.blur {
     width:367; 
@@ -32,13 +43,13 @@ img.blur {
 .vertical-centered {
     /* Fallback for vh unit */
     min-height: 100%;  
-    
+
     /* You might also want to use 'height' property instead.
     Note that for percentage values of 'height' or 'min-height' properties, the 
     'height' of the parent element should be specified explicitly.
     In this case the parent of '.vertical-center' is the <body> element */
-    min-height: 100vh; 
-    
+    /*min-height: 100vh;*/ 
+
     /* Make it a flex container */
     display: -webkit-box;
     display: -moz-box;
@@ -159,12 +170,32 @@ img.blur {
 /*New Player padding wrapper classes*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*When setting this class for New Player use: 'outside-padding'*/
+/*.container:after {
+    content:"";
+    display:table;
+    clear:both;
+}*/
+/*.clearfix:before,
+.clearfix:after {
+    content: ".";    
+    display: block;    
+    height: 0;    
+    overflow: hidden; 
+}
+.clearfix:after {
+    clear: both; 
+}
+.clearfix {
+    zoom: 1; 
+}*/
 .np_outside-padding{
     position: relative;
-    padding-top: 35px;
-    padding-left: 90px;
-    padding-right: 90px;
-    padding-bottom: 135px;
+    padding-top: 25px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-bottom: 75px;  
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 /*When setting this class for New Player use: 'inside-padding'*/
 .np_inside-padding{
@@ -206,68 +237,7 @@ img.blur {
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*Sans font overrides*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/*.sans-head{
-    font-family: $font-family-sans-serif_head !important;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    border-bottom: solid 1px;
-    border-bottom-color: $brand-lightgrey;
-    padding-top: 40px;
-    padding-bottom: 3px;
-    display: inline-block;
-}*/
-/*
-@media (max-width: $screen-sm) {
-    .collapse-toggle{
-        background-color: $brand-offwhite;
-        cursor: pointer;
-        width: 100%;
-        border-bottom: none;
-        padding-top: 15px;
-        padding-bottom: 15px;
-        padding-right: 7px;
-        padding-left: 7px;
-        &:hover,
-            &:focus {
-            background-color: darken($brand-offwhite, 5%);
-        }
-        &:before {
-            font-family: 'elx-icons';
-            content: "\e613";
-            float: right;
-            color: $brand-primary;
-            -webkit-transition: opacity 1s ease-in-out;
-            -moz-transition: opacity 1s ease-in-out;
-            -o-transition: opacity 1s ease-in-out;
-            transition: opacity 1s ease-in-out;
-        }
-    }
-}*/
-/*.np_inside-padding .sans-head{
-    border-bottom-color: $brand-primary-light;
-}
-.sans-head-sub{
-    font-family: $font-family-sans-serif_head;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    padding-bottom: 3px;
-}
-.sans-normal{
-    font-family: $font-family-sans-serif;
-    text-transform: none;
-    letter-spacing: 2px;
-    line-height: 130%;
-}
-.sans-small{
-    font-family: $font-family-sans-serif;
-    text-transform: none;
-    letter-spacing: 2px;
-    line-height: 130%;
-    font-size: $font-size-small;
-    p{
-        padding-bottom: 10px;
-    }
-}*/
+
 @media (max-width: $screen-sm) {
     .sans-normal{
         padding-right: 7px;
@@ -284,57 +254,6 @@ img.blur {
         padding-right: 0px;
     }
 }
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/*New Player background color wrapper classes*/
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/*When setting this class for New Player use: 'background-brand-primary-light'*/
-/*.np_background-brand-primary-light{
-    background-color: $brand-primary-light;
-}*/
-/*When setting this class for New Player use: 'background-brand-offwhite' */
-/*.np_background-brand-offwhite{
-    background-color: $brand-offwhite;
-}*/
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/* text treatment classes*/
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/*Q and A text outdent*/
-/*.q-and-a-outdent{
-    text-indent:-28px;
-    margin-left:28px
-}*/
-
-/*////////////////////////////////////////////////////////////////////////////////*/
-/*.browsehappy {
-    display: none;
-    background: #ccc;
-    color: #000;
-    margin: 0.2em 0;
-    padding: 0.2em 0;
-}*/
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/* FireFox image responsive bug fix */
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/*video {
-    width: 100%    !important;
-    height: auto   !important;
-}*/
-/*_::-webkit-full-page-media, _:future, :root video {
-    width: none !important; 
-}*/
-
-/*@media screen and (-webkit-min-device-pixel-ratio:0) { 
-     Safari and Chrome 
-    video {
-        width: 100%;
-        max-width: 100%;
-        height: auto;
-    }
-     Safari only override 
-    ::i-block-chrome, video {
-        width: none !important; 
-    }
-}*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /* FireFox bug fix drag and drop*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
