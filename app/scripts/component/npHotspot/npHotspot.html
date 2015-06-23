@@ -1,0 +1,45 @@
+<div class="{{component.type}} npHotspot" ng-controller="npHotspotController as npHotspot" id="{{npHotspot.id}}">
+    <div class="row">
+        <div class="col-md-7 ">
+            <div class="hotspotImage">
+                <div class="debug">
+                    <h3>{{component.type}} -- <small>{{component.idx}}</small></h3>
+                </div>
+                <img class="{{component.type}} np-cmp-main img-responsive" ng-controller="npHotspotController as npHotspot" ng-src="{{npHotspot.src}}" alt="{{npHotspot.alt}}" />
+                <div ng-repeat="hotspotButton in npHotspot.hotspotButtons">
+                    <div class="{{hotspotButton.class}} hotspotButton" ng-click="npHotspot.update(hotspotButton)">
+                        <!--<img class="hotspotButtonImage" ng-src="{{hotspotButton.image}}" alt="{{npHotspot.alt}}" />-->
+                        <div class="hotspotButtonImage" ></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="content-area">
+            <div class="content-background">
+                <svg  version="1.2" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 368 222" xml:space="preserve" preserveAspectRatio="none">
+                    <style type="text/css">
+                        <![CDATA[
+                        .st0{fill:url(#SVGID_1_);}
+                        .st1{display:inline;}
+                        .st2{display:none;}
+                        ]]>
+                    </style>
+                    <g id="Layer_2">
+                        <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="0.8359" y1="0.9399" x2="367.8515" y2="221.4724">
+                            <stop  offset="0" style="stop-color:#CAA04C"/>
+                            <stop  offset="0.3497" style="stop-color:#F8E4AA"/>
+                            <stop  offset="0.638" style="stop-color:#CAA04D"/>
+                            <stop  offset="0.9816" style="stop-color:#F3DB7E"/>
+                        </linearGradient>
+                        <rect fill="url(#MyGradient)" stroke="url(#SVGID_1_)" vector-effect="non-scaling-stroke" stroke-width="3" x="0" y="0" width="100%" height="100%"/>
+                    </g>
+                </svg>
+            </div>
+            <div class="npHotspot-feedback" ng-bind-html="npHotspot.feedback"></div>
+        </div>
+    </div>
+</div>
+</div>
+<div np-component ng-if="subCmp" ng-repeat="component in components" idx="{{component.idx}}"></div>
+</div>

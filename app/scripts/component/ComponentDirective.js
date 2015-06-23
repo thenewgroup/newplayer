@@ -110,9 +110,7 @@ function ComponentDirective(
                                             for (var ii in classArraySpace) {
                                                 $element.addClass('np_' + classArraySpace[ii]);
                                             }
-
                                         }
-
                                         var attrPlugin = cmp.data.plugin;
                                         if (angular.isString(attrPlugin))
                                         {
@@ -125,7 +123,6 @@ function ComponentDirective(
                                         $scope.subCmp = true;
                                         $scope.components = cmp.components;
                                     }
-
                                     ComponentService.getTemplate(
                                             cmp
                                             )
