@@ -12,8 +12,14 @@ angular
                             btnContentPrevious = cmpData.contentPrevious,
                             btnLink = cmpData.link,
                             buttonType = cmpData.type,
-                            $closestPage = '',
-                            $closestPageIDX = '';
+                            firstPage = '',
+                            firstPageIDX = '',
+                            firstPageNumber = '',
+                            currentPage = '',
+                            numberOfPages = '',
+                            closestPage = '',
+                            closestPageIDX = '';
+
                     $log.debug('npProgressUi::data', cmpData);
                     this.content = '';
                     if (angular.isString(btnContentNext)) {
@@ -80,24 +86,21 @@ angular
                         $log.debug('npProgressUi::link', btnLink);
                         this.link = $sce.trustAsResourceUrl(btnLink);
                     }
-//                    $closestPage = $element.closest("[data-cmptype='npPage']");
-//                    var currentPage = $element.find("[ng-show=true]");
-                    var currentPage = $element.find("[data-cmptype='npPage']");
-                    var pageArray = $("[data-cmptype='npPage']");
-//                    $closestPageIDX = $closestPage.attr("idx");
-                    var ind = $.inArray($closestPage, pageArray);
-//                    var currentPage = ManifestService.getRelativePagePosition($closestPageIDX);
-//                    var currentPage = ManifestService.getRelativePagePosition($activePage);
-                    var numberOfPages = ManifestService.getAll('npPage').length;
+                    closestPage = $($element).closest("[data-cmptype='npPage']");
+                    firstPage = $("[data-cmptype='npPage']")[0];
+                    firstPageIDX = $(firstPage).attr("idx");
+                    firstPageNumber = ManifestService.getRelativePagePosition(firstPageIDX);
+                    closestPageIDX = $(closestPage).attr("idx");
+                    currentPage = ManifestService.getRelativePagePosition(closestPageIDX);
+                    numberOfPages = ManifestService.getAll('npPage').length +1;
                     console.log(
                             '\n::::::::::::::::::::::::::::::::::::::percentageValue:::::::::::::::::::::::::::::::::::::::::::::::::',
-                            '\n::$closestPage::', $closestPage,
-//                            '\n::$activePage::', $activePage,
+                            '\n::firstPage::', firstPage,
+                            '\n::firstPageIDX::', firstPageIDX,
+                            '\n::firstPageNumber::', firstPageNumber,
+                            '\n::closestPage::', closestPage,
                             '\n::currentPage::', currentPage,
                             '\n::numberOfPages::', numberOfPages,
-//                            '\n::$closestPageIDX::', $closestPageIDX,
-                            '\n::pageArray::', pageArray,
-                            '\n::ind::', ind,
                             '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
                             );
                     //////////////////////////////////////////////////////////////////////////////////////
@@ -127,36 +130,36 @@ angular
                         strokeWidth: '5px',
 //                        drawSVG: "20% 80%",
 //                        drawSVG: '50%',
-                                ease: Power4.easeOut
+                        ease: Power4.easeOut
                     });
                     if (currentPage !== numberOfPages) {
                         this.goNext = function () {
-                            ManifestService.getRelativePagePosition($closestPageIDX);
+                            ManifestService.getRelativePagePosition(closestPageIDX);
 //                            console.log(
-//                                    '\n::::::::::::::::::::::::::::::::::::::$closestPageIDX::goNext:::::::::::::::::::::::::::::::::::::::::::::::',
+//                                    '\n::::::::::::::::::::::::::::::::::::::closestPageIDX::goNext:::::::::::::::::::::::::::::::::::::::::::::::',
 //                                    '\n::$element::', $element,
 //                                    '\n::currentPage::', currentPage,
-//                                    '\n::$closestPageIDX::', $closestPageIDX,
+//                                    '\n::closestPageIDX::', closestPageIDX,
 //                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
 //                                    );
-                            ManifestService.goToNextPage($closestPageIDX);
+                            ManifestService.goToNextPage(closestPageIDX);
                         };
                     }
 
-                    if (currentPage !== 1) {
+                    if (currentPage !== firstPageNumber) {
                         this.goPrevious = function () {
 //                            console.log(
-//                                    '\n::::::::::::::::::::::::::::::::::::::$closestPageIDX:::::::::::::::::::::::::::::::::::::::::::::::::',
+//                                    '\n::::::::::::::::::::::::::::::::::::::closestPageIDX:::::::::::::::::::::::::::::::::::::::::::::::::',
 //                                    '\n::$element::', $element,
 //                                    '\n::currentPage::', currentPage,
-//                                    '\n::$closestPageIDX::', $closestPageIDX,
+//                                    '\n::closestPageIDX::', closestPageIDX,
 //                                    '\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'
 //                                    );
-                            ManifestService.goToPreviousPage($closestPageIDX);
+                            ManifestService.goToPreviousPage(closestPageIDX);
                         };
                     }
 
-                    if (currentPage === 1) {
+                    if (currentPage === firstPageNumber) {
                         TweenMax.to($('.progress-previous'), 0.5, {
                             autoAlpha: 0.25,
                             ease: Power4.easeOut
