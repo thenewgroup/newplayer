@@ -131,17 +131,6 @@ $font-family-serif:       Georgia, "Times New Roman", Times, serif !default;*/
     font-weight: normal;
     font-style: normal;
 }
-@font-face {
-    font-family: 'BauerBodoniStd-Roman';
-    src: url('./fonts/BauerBodoniRoman/BauerBodoniStd-Roman.eot');
-    src: url('./fonts/BauerBodoniRoman/BauerBodoniStd-Roman.eot?#iefix') format('embedded-opentype'),
-         url('./fonts/BauerBodoniRoman/BauerBodoniStd-Roman.woff2') format('woff2'),
-         url('./fonts/BauerBodoniRoman/BauerBodoniStd-Roman.woff') format('woff'),
-         url('./fonts/BauerBodoniRoman/BauerBodoniStd-Roman.ttf') format('truetype'),
-         url('./fonts/BauerBodoniRoman/BauerBodoniStd-Roman.svg#BauerBodoniStd-Roman') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
 
 //## Font, line-height, and color for body text, headings, and more.
 $font-family-sans-serif_head:  "akzidenz-grotesk_bqbold";
