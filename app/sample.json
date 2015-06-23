@@ -143,6 +143,22 @@
                                             "content": "<p>Click <b>Next</b> to get started.</p>"
                                         },
                                         "components": []
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                        ]
                                     }
                                 ]
                             },
@@ -184,6 +200,22 @@
                                             "content": "<p>—Mark Parker, NIKE CEO</p>"
                                         },
                                         "components": []
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                        ]
                                     }
                                 ]
                             },
@@ -257,6 +289,22 @@
                                             "content": "<p>First, a question.</p>"
                                         },
                                         "components": []
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                        ]
                                     }
                                 ]
                             },
@@ -366,6 +414,22 @@
                                                 }
                                             }
                                         ]
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                        ]
                                     }
                                 ]
                             },
@@ -457,6 +521,22 @@
                                             "content": "<p>We need to <b>Think Digital First.</b></p>"
                                         },
                                         "components": []
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                        ]
                                     }
                                 ]
                             },
@@ -530,6 +610,22 @@
                                             "content": "<p>Their experience will change. It will be <b>Premium. Unique. Mobile.</b> </p>"
                                         },
                                         "components": []
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                        ]
                                     }
                                 ]
                             },
@@ -603,6 +699,22 @@
                                             "content": "<p>He clicks for size. He clicks for style. He clicks to pay. Done, done, and done.  </p>"
                                         },
                                         "components": []
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                        ]
                                     }
                                 ]
                             },
@@ -694,6 +806,22 @@
                                             "content": "<p><b>They shop like you.</b></p>"
                                         },
                                         "components": []
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                        ]
                                     }
                                 ]
                             },
@@ -735,6 +863,22 @@
                                             "content": "<p>—Simon Sinek</p>"
                                         },
                                         "components": []
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                        ]
                                     }
                                 ]
                             },
@@ -813,6 +957,22 @@
                                             "content": "<p>In this section, we'll discover new ways some of the best retailers are listening and responding to Anya and the rest of our global consumers.</p>"
                                         },
                                         "components": []
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                        ]
                                     }
                                 ]
                             },
@@ -886,6 +1046,22 @@
                                             "content": "<p>Yes. All of our consumers are unique. However, they act like Anya in many ways.</p>"
                                         },
                                         "components": []
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                        ]
                                     }
                                 ]
                             },
@@ -979,6 +1155,22 @@
                                                 }
                                             }
                                         ]
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                        ]
                                     }
                                 ]
                             },
@@ -1054,6 +1246,22 @@
                                                 "contentBody": "<p>I want the same, NIKE experience regardless of the store or device. Everything is connected. </p><p>Consumers expect our on- and offline stores to be one, great, NIKE experience. Leading retailers are tearing down walls and building storefronts for the digital and connected consumer. </p><p>For example, in some places you can now order and pay for your Starbucks on your phone so it's waiting when you walk into the store.  </p>"
                                             }
                                         ]
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                        ]
                                     }
                                 ]
                             },
@@ -1118,6 +1326,22 @@
                                                 "contentBody": "<span class='carousel-text-body'><p>Anya's next run is under blue skies and ahead of light tailwinds. Her shoes feel great, the trail is clear, and her time is stellar. She can't wait to brag about it to her brother back in Japan. Click. Sent. Done. <p> </span>"
                                             }
                                         ]
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                        ]
                                     }
                                 ]
                             },
@@ -1159,6 +1383,22 @@
                                             "content": "<p>—Sam Walton</p>"
                                         },
                                         "components": []
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                        ]
                                     }
                                 ]
                             },
@@ -1232,6 +1472,22 @@
                                             "content": "<p>Yes. All of our consumers are unique. However, they act like Anya in many ways.</p>"
                                         },
                                         "components": []
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                        ]
                                     }
                                 ]
                             },
@@ -1327,6 +1583,22 @@
                                                 }
                                             }
                                         ]
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                        ]
                                     }
                                 ]
                             },
@@ -1409,6 +1681,22 @@
                                             "content": "<p>How? Glad you asked. </p>"
                                         },
                                         "components": []
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                        ]
                                     }
                                 ]
                             }, {
@@ -1507,6 +1795,22 @@
                                                 "contentBack": "<p><span class='body-copy dark'>Ask yourself: </span><span class='body-copy dark'>Can she buy it here and pick it up there? </span></p><p><span class='body-copy dark'>The implication: </span><span class='body-copy dark'>Show Anya the stores near her that have her product in stock. Prepare for those who shop online and want to pick up their product in the store.  </span></p>"
                                             }
                                         ]
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                        ]
                                     }
                                 ]
                             },
@@ -1548,6 +1852,22 @@
                                             "content": "<p>—Albert Einstein</p>"
                                         },
                                         "components": []
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                        ]
                                     }
                                 ]
                             },
@@ -1595,6 +1915,22 @@
                                             "content": "<p>We'll show you the old way of doing things as well as how to better navigate our digital marketplace. We'll talk a bit about our strategy, the plan, and the benefits of Thinking Digital First. </p>"
                                         },
                                         "components": []
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                        ]
                                     }
                                 ]
                             },
@@ -1690,6 +2026,22 @@
                                             "content": "<p>You now have amazing opportunities to access data about every one of your consumers, so you can see how they're behaving at any moment. You have all the information needed to create the best consumer right assortments – any time, anywhere, and on any device. <p>"
                                         },
                                         "components": []
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                        ]
                                     }
                                 ]
                             },
@@ -1763,6 +2115,22 @@
                                             "content": "<p>The end game? Explosive growth across a digital, global, and integrated marketplace. <p>"
                                         },
                                         "components": []
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                        ]
                                     }
                                 ]
                             },
@@ -1893,6 +2261,22 @@
                                             "contentItem": "<p>A Nike membership will reward consumers with exclusive, personalized experiences, invitations, and messages. <p>"
                                         },
                                         "components": []
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                        ]
                                     }
                                 ]
                             },
@@ -1949,6 +2333,22 @@
                                             "content": " <p><ul><li><b>Better connections and access </b>to their consumers </li><li><b>Opportunities to capture information </b>to better serve their consumers </li><li><b>Brand loyalty </b>built through personalization, future membership programs, and availability of product </li><li><b>Improved conversion rates </b>rooted in digital services and analytics </li><li><b>Growth </b>in their most profitable channels </li></ul><p>"
                                         },
                                         "components": []
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                        ]
                                     }
                                 ]
                             },
@@ -2080,6 +2480,22 @@
                                             "contentItem": "<p><ul><li>Use mobile-first designs. </li><li>Consider the device and how your consumers are using it to connect to Nike. </li></ul><p>"
                                         },
                                         "components": []
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                        ]
                                     }
                                 ]
                             },
@@ -2121,6 +2537,22 @@
                                             "content": "<p>—Mickey Drexler, J.Crew</p>"
                                         },
                                         "components": []
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                        ]
                                     }
                                 ]
                             },
@@ -2168,6 +2600,22 @@
                                             "content": "<p>Let's kick off this section with a question.</p>"
                                         },
                                         "components": []
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                        ]
                                     }
                                 ]
                             },
@@ -2273,6 +2721,22 @@
                                                     ]
                                                 }
                                             }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
                                         ]
                                     }
                                 ]
@@ -2393,6 +2857,22 @@
                                             "content": "<p>Which storefront is getting most of your attention? </p>"
                                         },
                                         "components": []
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                        ]
                                     }
                                 ]
                             },
@@ -2466,6 +2946,22 @@
                                                 "contentFront": "<span class='header-dark'><p>OFFER THE BEST</p></span>",
                                                 "contentBack": "<span class='body-copy dark'><p><b>Offer the Best </b></p><p>Nike.com is the source for our best products. It will include the broadest and deepest selections of the latest premium products.  </p><p>Nike.com will showcase our products' </p><p><ul><li>Benefits </li><li>Fit </li><li>Aesthetic </li><li>Performance  </li></ul><p></span>"
                                             }
+                                        ]
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
                                         ]
                                     }
                                 ]
@@ -2546,6 +3042,22 @@
                                                 "contentBody": "<span class='carousel-text-body'><p><b>Conversion Is Your Scorecard </b></p><p>Use analytics to measure your success. Find out: </p><p><ul><li>What tools are available to measure success? </li><li>Which analytics determine success? </li><li>Which levers are best to use to make an impact? </li><li>What are successful teams doing? </li></ul><p></span>"
                                             }
                                         ]
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                        ]
                                     }
                                 ]
                             },
@@ -2587,6 +3099,22 @@
                                             "content": "<p>—Tim Hershey</p>"
                                         },
                                         "components": []
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                        ]
                                     }
                                 ]
                             },
@@ -2634,6 +3162,22 @@
                                             "content": "<p><ol><li><b>We tell stories. </b> </li><li><b>Edit to amplify. </b> </li><li><b>Distort hero items.</b> </li><li><b>Make powerful statements.</b> </li><li><b>Plan to the space.</b> </li><li><b>Create credible outfits. </b> </li><li><b>Keep it fresh.</b> </li><li><b>Amplify and accelerate.</b> </li><li><b>Win at the moment of truth. </b> </li></ol><p>"
                                         },
                                         "components": []
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                        ]
                                     }
                                 ]
                             },
@@ -2663,6 +3207,22 @@
                                             "content": "<p><a href='http://www.w3.org/2010/05/video/mediaevents.html' target='_blank'>CLICK HERE</a> to learn more about Nike's updated 9 Merchandising Principles. <p>"
                                         },
                                         "components": []
+                                    },
+                                    {
+                                        "type": "npProgressUi",
+                                        "data": {
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
+                                        },
+                                        "components": [
+                                        ]
                                     }
                                 ]
                             },
@@ -2719,53 +3279,23 @@
                                             "content": "<p> </p>"
                                         },
                                         "components": []
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "npPage",
-                                "data": {
-                                    "id": "",
-                                    "parentId": "",
-                                    "inMenu": false,
-                                    "required": false
-                                },
-                                "components": [
+                                    },
                                     {
-                                        "type": "npHTML",
+                                        "type": "npProgressUi",
                                         "data": {
-                                            "id": "",
-                                            "class": "head-section",
-                                            "content": "<p>fill</p>"
+                                            "link": "",
+                                            "class": "",
+                                            "contentNext": "Next",
+                                            "contentPrevious": "Previous",
+                                            "req": [
+                                                "mediaelement/jquery-2.1.4.min.js",
+                                                "mediaelement/GSAP/TweenMax.min.js",
+                                                "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
+                                            ]
                                         },
-                                        "components": []
+                                        "components": [
+                                        ]
                                     }
-                                ]
-                            }
-
-                        ]
-                    },
-                    {
-                        "type": "npNavBar",
-                        "data": {
-                            "id": "",
-                            "position": "bottom"
-                        },
-                        "components": [
-                            {
-                                "type": "npProgressUi",
-                                "data": {
-                                    "link": "",
-                                    "class": "",
-                                    "contentNext": "Next",
-                                    "contentPrevious": "Previous",
-                                    "req": [
-                                        "mediaelement/jquery-2.1.4.min.js",
-                                        "mediaelement/GSAP/TweenMax.min.js",
-                                        "mediaelement/GSAP/plugins/DrawSVGPlugin.min.js"
-                                    ]
-                                },
-                                "components": [
                                 ]
                             }
                         ]
