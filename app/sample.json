@@ -356,10 +356,6 @@
                                                 "mediaelement/GreenSock/TweenMax.min.js"
                                             ]
                                         },
-                                        "feedback": {
-                                            "correct": "correct",
-                                            "incorrect": "No! ... incorrect!?"
-                                        },
                                         "components": [
                                             {
                                                 "type": "npAnswerImmediate",
